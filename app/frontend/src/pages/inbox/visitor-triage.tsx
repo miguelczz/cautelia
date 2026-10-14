@@ -33,10 +33,10 @@ import { useLocale } from "../../shared/i18n/locale-provider";
 import { Button } from "../../shared/ui/button";
 import { InlineAlert } from "../../shared/ui/inline-alert";
 import { Input } from "../../shared/ui/input";
-import { BLOCK_TITLE } from "../../shared/ui/page-layout";
 import { Select } from "../../shared/ui/select";
 import { formatPesos, PESOS_POR_UNIDAD } from "../policies/policies-page";
 import { ruleReasonLabel } from "./inbox-labels";
+import { StepHeading } from "./step-heading";
 import { answerOf, parseAmount, valueOf, type Answer } from "./triage-note";
 
 /** Lo que las reglas dijeron con lo que se acaba de guardar. */
@@ -85,6 +85,11 @@ export interface VisitorTriageBlockProps {
   readonly amountSteps: readonly number[] | undefined;
   /** Lo que la pantalla hace al guardar: lo manda y vuelve a leer el caso. */
   readonly onSave: (note: TriageNoteIn) => Promise<TriageSaveResult>;
+  /**
+   * El numero de paso de su titulo, cuando el panel del ajustador tiene mas de uno. Sin el, el
+   * titulo se dibuja sin marca. El bloque es un paso del panel: su titulo es de nivel 3.
+   */
+  readonly step?: number | undefined;
 }
 
 const ID_MONTO = "visitor-triage-amount";
@@ -96,6 +101,7 @@ export function VisitorTriageBlock({
   canAnnotate,
   amountSteps,
   onSave,
+  step,
 }: VisitorTriageBlockProps) {
   const { t, locale } = useLocale();
   const [monto, setMonto] = useState(
@@ -128,9 +134,9 @@ export function VisitorTriageBlock({
         className="flex flex-col gap-3"
         data-testid="visitor-triage"
       >
-        <h2 id="visitor-triage-title" className={BLOCK_TITLE}>
+        <StepHeading id="visitor-triage-title" step={step}>
           {t("visitor.triage.title")}
-        </h2>
+        </StepHeading>
         {note === null || note === undefined ? null : (
           <dl className="flex flex-col gap-2" data-testid="visitor-triage-readonly">
             <div>
@@ -243,9 +249,9 @@ export function VisitorTriageBlock({
       className="flex flex-col gap-3"
       data-testid="visitor-triage"
     >
-      <h2 id="visitor-triage-title" className={BLOCK_TITLE}>
+      <StepHeading id="visitor-triage-title" step={step}>
         {t("visitor.triage.title")}
-      </h2>
+      </StepHeading>
       <p className="text-caption text-fg-secondary">{t("visitor.triage.intro")}</p>
 
       <form

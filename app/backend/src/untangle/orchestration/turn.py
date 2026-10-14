@@ -76,6 +76,7 @@ from untangle.orchestration import (
     outcome_claim,
     quote_reply,
     rhythm,
+    stated_purpose,
     transcript_writer,
 )
 from untangle.orchestration.checkpoint import TenantCheckpointSaver
@@ -1535,6 +1536,7 @@ async def _capturar(  # noqa: PLR0913 -- lo que el turno ya resolvio arriba, por
             "spoken": turn.channel == "voice",
             "previous_block": _bloque_anterior(previo),
             "policy_repeat_asked": _poliza_repetida(previo),
+            "policy_confirm_reasked": _confirmacion_repetida(previo),
         }
     )
     if entendido is not None:
@@ -1957,9 +1959,14 @@ def _con_la_pregunta_de_la_consulta(
 ) -> understanding.UnderstandingResponse:
     """En una consulta, la pregunta que la abrio queda guardada aunque el modelo no la
     haya puesto como dato: es lo que se responde cuando llega la poliza (fase 1)."""
-    if sugerencias.is_option(turn.text):
+    if sugerencias.is_option(turn.text) or stated_purpose.only_announces_a_policy_question(
+        turn.text, language=turn.language
+    ):
         # El boton «Preguntar por mi poliza» no es la pregunta: se guardaba como tal y
-        # la respuesta era «no encuentro una clausula que hable de eso» (2026-10-09).
+        # la respuesta era «no encuentro una clausula que hable de eso» (2026-10-09). Lo
+        # mismo dicho con palabras --«queria preguntar por mi poliza»--: en una llamada
+        # del 2026-10-14 se reviso la poliza contra ese anuncio y la consulta termino con
+        # un ajustador sin que la persona hubiera hecho su pregunta.
         return entendido.model_copy(
             update={
                 "items": tuple(i for i in entendido.items if i.field_key != "question_asked"),
@@ -2615,12 +2622,18 @@ def _poliza_repetida(state: GraphState) -> bool:
     return state.node_writes.get("intake_policy_repeat_asked") is True
 
 
+def _confirmacion_repetida(state: GraphState) -> bool:
+    """Si ya se volvio a preguntar "¿eres tu?" en esta conversacion (2026-10-14). Como
+    `_poliza_repetida`: solo vale el `True` guardado."""
+    return state.node_writes.get("intake_policy_confirm_reasked") is True
+
+
 def _writes_del_turno(previo: GraphState, salida: IntakeNodeOutput) -> dict[str, Any]:
     """Lo que el punto de control guarda tras la captura: lo anterior, con lo que escribio el nodo.
 
-    Casi todo se reemplaza turno a turno. **Una excepcion**: que ya se pidio repetir la poliza
-    sobrevive, porque se pide una sola vez por conversacion y el nodo de un turno cualquiera
-    escribe `False` por omision.
+    Casi todo se reemplaza turno a turno. **Dos excepciones**: que ya se pidio repetir la poliza
+    y que ya se volvio a preguntar "¿eres tu?" sobreviven, porque cada una se hace una sola vez
+    por conversacion y el nodo de un turno cualquiera escribe `False` por omision.
     """
     nuevos: dict[str, Any] = {
         **previo.node_writes,
@@ -2628,6 +2641,8 @@ def _writes_del_turno(previo: GraphState, salida: IntakeNodeOutput) -> dict[str,
     }
     if _poliza_repetida(previo):
         nuevos["intake_policy_repeat_asked"] = True
+    if _confirmacion_repetida(previo):
+        nuevos["intake_policy_confirm_reasked"] = True
     return nuevos
 
 

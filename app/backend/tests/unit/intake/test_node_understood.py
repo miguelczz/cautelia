@@ -302,3 +302,56 @@ async def test_corregir_el_dato_de_heridos_ya_dicho_no_pide_respaldo() -> None:
     )
 
     assert "injuries" in {c.field_key for c in salida.intake_extracted}
+
+
+# --- Una respuesta dudosa a "¿eres tu?" (2026-10-14) -------------------------------------
+
+
+async def test_una_respuesta_que_no_es_ni_si_ni_no_vuelve_a_preguntar_una_vez() -> None:
+    """En una llamada, una frase mal oida tras "¿eres tu?" hizo pedir otra vez nombre y poliza."""
+    salida = await _nodo(_Extractor(), lookup=_Buscador()).run(
+        _estado(
+            turn_text="¿No sería mejor que fuera solamente con el?",
+            awaiting_policy_confirmation=TITULAR,
+            completeness=_completitud("injuries", "identity_and_policy"),
+            understood=_entendido(answer=Answer.NONE),
+        )
+    )
+
+    assert salida.intake_policy_confirmed is None
+    assert salida.intake_policy_match == TITULAR, "la poliza sigue esperando el si"
+    assert salida.intake_policy_confirm_reasked
+    assert salida.intake_response_key == "intake.policy.confirm_again_driver"
+    assert TITULAR.holder_name in salida.intake_response_text
+    assert salida.intake_readback_resolved is None
+
+
+async def test_si_tampoco_la_segunda_vez_es_un_si_se_trata_como_no() -> None:
+    salida = await _nodo(_Extractor(), lookup=_Buscador()).run(
+        _estado(
+            turn_text="eh, no sé, ¿cómo así?",
+            awaiting_policy_confirmation=TITULAR,
+            policy_confirm_reasked=True,
+            completeness=_completitud("injuries", "identity_and_policy"),
+            understood=_entendido(answer=Answer.NONE),
+        )
+    )
+
+    assert salida.intake_policy_confirmed is None
+    assert salida.intake_policy_match is None
+    assert salida.intake_response_key == "intake.policy.declined"
+
+
+async def test_en_una_consulta_se_vuelve_a_preguntar_sin_hablar_del_carro() -> None:
+    salida = await _nodo(_Extractor(), lookup=_Buscador()).run(
+        _estado(
+            record_type=RecordType.COVERAGE_INQUIRY,
+            turn_text="¿perdón?",
+            awaiting_policy_confirmation=TITULAR,
+            completeness=_completitud("identity_and_policy"),
+            understood=_entendido(answer=Answer.NONE),
+        )
+    )
+
+    assert salida.intake_response_key == "intake.policy.confirm_again"
+    assert "carro" not in salida.intake_response_text

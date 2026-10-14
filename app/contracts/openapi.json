@@ -2746,6 +2746,17 @@
           },
           "unpriced": {
             "$ref": "#/components/schemas/UnpricedUsage"
+          },
+          "trace_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trace Url"
           }
         },
         "additionalProperties": false,
@@ -5427,6 +5438,17 @@
             "type": "array",
             "title": "Comparisons",
             "default": []
+          },
+          "langfuse_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Langfuse Url"
           }
         },
         "additionalProperties": false,

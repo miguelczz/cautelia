@@ -39,6 +39,21 @@ que quedo registrada al abrirlo) y que lo abrio el mismo navegador. Un navegador
 tiene una conversacion por aseguradora a la vez, asi que sus casos de comparacion
 son, a lo sumo, uno por aseguradora en cada ronda. El resumen del navegador nunca
 sale de aqui: la comparacion se identifica por su posicion en la respuesta.
+
+## El enlace a Langfuse (2026-10-14)
+
+Las trazas de cada turno salen a Langfuse y cada una es publica por su direccion, pero el
+proyecto entero pide iniciar sesion y los visitantes no tienen cuenta: solo se puede abrir
+**una traza por su direccion**. Por eso el tablero ofrece, a quien llega, **las de su propio
+navegador** y a nadie mas: `SpendPanel.langfuse_url` es la traza `ready` mas reciente entre
+los casos de este navegador, y `CaseSpendItem.trace_url` la de ese caso, solo si es suyo.
+
+La regla de "hay enlace" es la de la bandeja (`links.summary_url`: solo con el resumen
+`ready`, y nada si Langfuse no esta configurado o no se supo el proyecto). El dueno se
+comprueba **dos veces**: el caso sale de las consultas por la clave del navegador y el resumen
+tambien se compara contra su resumen (`trace_summaries_for_visitor`), asi que una URL no sale
+por un solo descuido. Se lee **una vez por aseguradora** y no una por fila. Y como el cuerpo
+va con `Cache-Control: private, no-store`, ningun intermediario se la puede servir a otro.
 """
 
 from __future__ import annotations
@@ -49,10 +64,10 @@ from collections import Counter, defaultdict
 from collections.abc import Mapping, Sequence
 from datetime import UTC, date, datetime, timedelta
 from decimal import Decimal
-from typing import Annotated
+from typing import Annotated, NamedTuple, Self
 
 from fastapi import APIRouter, Cookie, Response
-from pydantic import Field
+from pydantic import Field, model_validator
 
 from untangle.base import Frozen, ProviderName
 from untangle.case_record import api as casos
@@ -63,6 +78,8 @@ from untangle.surface_spec import SurfaceId, SurfaceProbe, SurfaceSpec
 from untangle.telemetry.spend import api as spend
 from untangle.telemetry.spend import budget, repository
 from untangle.telemetry.spend.models import BudgetState, SpendActivity, SpendTotal, UnpricedUsage
+from untangle.telemetry.traces import api as trazas
+from untangle.telemetry.traces import links as trace_links
 from untangle.tenancy import api as tenancy
 from untangle.voice import api as voz
 
@@ -147,6 +164,20 @@ class CaseSpendItem(Frozen):
     by_provider: tuple[ProviderSpend, ...]
     #: Los tokens de lo que no tiene precio publicado. Aditivo.
     unpriced: UnpricedUsage = Field(default_factory=UnpricedUsage)
+    #: Donde abrir la traza de este caso en Langfuse. **Solo en el caso de este navegador**
+    #: y solo con la traza lista: en el de cualquier otro, siempre `None`. Aditivo.
+    trace_url: str | None = None
+
+    @model_validator(mode="after")
+    def _la_traza_es_de_quien_la_pide(self) -> Self:
+        if self.trace_url is not None and not self.yours:
+            msg = (
+                "un caso que no es de este navegador no lleva el enlace a su traza: las "
+                "trazas de Langfuse son publicas por su direccion y quien llega no puede "
+                "recibir la de otro visitante"
+            )
+            raise ValueError(msg)
+        return self
 
 
 class ComparisonPart(Frozen):
@@ -194,6 +225,10 @@ class SpendPanel(Frozen):
     #: `comparisons`, cada grupo como una sola entrada.
     cases: tuple[CaseSpendItem, ...]
     comparisons: tuple[ComparisonSpendItem, ...] = ()
+    #: La traza lista mas reciente entre los casos **de este navegador**, para abrirla en
+    #: Langfuse; `None` si no tiene ninguna, si Langfuse no esta configurado o si no se
+    #: sabe el proyecto. Nunca la de otro visitante. Aditivo.
+    langfuse_url: str | None = None
 
 
 # --- El armado ----------------------------------------------------------------
@@ -216,6 +251,18 @@ class _Comparacion(Frozen):
     """Los casos de un mismo clic en "Comparar", de la primera a la ultima aseguradora."""
 
     members: tuple[_Caso, ...]
+
+
+class _Enlaces(NamedTuple):
+    """Las trazas de Langfuse que este navegador puede abrir."""
+
+    #: Del caso a la direccion de su traza, solo los casos de este navegador.
+    por_caso: Mapping[str, str]
+    #: La de la traza lista mas reciente de todas, o `None`.
+    ultimo: str | None
+
+
+_SIN_ENLACES = _Enlaces(por_caso={}, ultimo=None)
 
 
 class _Comun(Frozen):
@@ -432,24 +479,72 @@ def _planos(entradas: Sequence[_Caso | _Comparacion]) -> tuple[_Caso, ...]:
     )
 
 
-async def _de_este_navegador(lista: Sequence[_Caso], visitor_key: str | None) -> frozenset[str]:
-    """Cuales de esos casos abrio este navegador, por chat o por llamada."""
+async def _de_este_navegador(lista: Sequence[_Caso], visitor_key: str | None) -> dict[str, str]:
+    """Los casos que abrio este navegador, por chat o por llamada, con su aseguradora.
+
+    Mira todas las aseguradoras de la lista y trae **todos** los casos del navegador en
+    ellas, salgan o no en la lista: el enlace a "tu ultima conversacion" no tiene por que
+    depender de que esa conversacion siga entre las treinta mas recientes del tablero.
+    """
     if not visitor_key:
-        return frozenset()
+        return {}
     resumen = tenancy.visitor_key_digest(visitor_key)
-    aseguradoras = {caso.tenant_id for caso in lista}
+    consultas = [
+        (tenant, consulta)
+        for tenant in {caso.tenant_id for caso in lista}
+        for consulta in (chat.case_ids_of_visitor, voz.case_ids_of_visitor)
+    ]
     grupos = await asyncio.gather(
         *(
             consulta(tenant_id=tenancy.require(tenant).tenant_id, visitor_key_digest=resumen)
-            for tenant in aseguradoras
-            for consulta in (chat.case_ids_of_visitor, voz.case_ids_of_visitor)
+            for tenant, consulta in consultas
         )
     )
-    return frozenset().union(*grupos)
+    return {
+        caso: tenant
+        for (tenant, _consulta), grupo in zip(consultas, grupos, strict=True)
+        for caso in grupo
+    }
+
+
+async def _enlaces_de(suyos: Mapping[str, str], visitor_key: str | None) -> _Enlaces:
+    """Las trazas de Langfuse de los casos de este navegador, con una lectura por aseguradora.
+
+    Solo pregunta por los casos que ya son suyos, y el almacen compara ademas el dueno de
+    cada resumen: una traza que no sea de esta clave no llega a este punto. Sin Langfuse
+    configurado no hace ni una lectura. La mas reciente se decide por la fecha del resumen,
+    con el identificador de la traza para desempatar.
+    """
+    if not suyos or not visitor_key or not trace_links.available():
+        return _SIN_ENLACES
+    resumen = tenancy.visitor_key_digest(visitor_key)
+    por_aseguradora: dict[str, list[str]] = defaultdict(list)
+    for caso, tenant in suyos.items():
+        por_aseguradora[tenant].append(caso)
+    grupos = await asyncio.gather(
+        *(
+            trazas.trace_summaries_for_visitor(
+                ids, tenant_id=tenancy.require(tenant).tenant_id, visitor_key_hash=resumen
+            )
+            for tenant, ids in por_aseguradora.items()
+        )
+    )
+    listas = [
+        (traza, direccion)
+        for grupo in grupos
+        for traza in grupo.values()
+        if (direccion := trace_links.summary_url(traza)) is not None
+    ]
+    if not listas:
+        return _SIN_ENLACES
+    _traza, ultimo = max(listas, key=lambda par: (par[0].created_at, par[0].trace_id))
+    return _Enlaces(
+        por_caso={traza.case_id: direccion for traza, direccion in listas}, ultimo=ultimo
+    )
 
 
 def _item_de_comparacion(
-    comparacion: _Comparacion, *, key: str, suyos: frozenset[str]
+    comparacion: _Comparacion, *, key: str, suyos: Mapping[str, str]
 ) -> ComparisonSpendItem:
     miembros = comparacion.members
     return ComparisonSpendItem(
@@ -466,9 +561,10 @@ def _item_de_comparacion(
 
 
 async def build_panel(visitor_key: str | None = None) -> SpendPanel:
-    """El tablero, con los casos de este navegador marcados como suyos."""
+    """El tablero, con los casos de este navegador marcados como suyos y con sus trazas."""
     comun = await _lo_comun()
     suyos = await _de_este_navegador(_planos(comun.entradas), visitor_key)
+    enlaces = await _enlaces_de(suyos, visitor_key)
     sueltos: list[CaseSpendItem] = []
     comparaciones: list[ComparisonSpendItem] = []
     for entrada in comun.entradas:
@@ -477,6 +573,7 @@ async def build_panel(visitor_key: str | None = None) -> SpendPanel:
                 _item_de_comparacion(entrada, key=f"c{len(comparaciones)}", suyos=suyos)
             )
         else:
+            suyo = entrada.case_id in suyos
             sueltos.append(
                 CaseSpendItem(
                     key=str(len(sueltos)),
@@ -484,14 +581,19 @@ async def build_panel(visitor_key: str | None = None) -> SpendPanel:
                     record_type=entrada.record_type,
                     channel=entrada.channel,
                     started_at=entrada.started_at,
-                    yours=entrada.case_id in suyos,
+                    yours=suyo,
                     total=entrada.total,
                     by_provider=entrada.by_provider,
                     unpriced=entrada.unpriced,
+                    trace_url=enlaces.por_caso.get(entrada.case_id) if suyo else None,
                 )
             )
     return comun.panel.model_copy(
-        update={"cases": tuple(sueltos), "comparisons": tuple(comparaciones)}
+        update={
+            "cases": tuple(sueltos),
+            "comparisons": tuple(comparaciones),
+            "langfuse_url": enlaces.ultimo,
+        }
     )
 
 

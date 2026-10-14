@@ -924,6 +924,75 @@ describe("la correccion de un campo", () => {
   });
 });
 
+// El rediseno de la pantalla del visitante (2026-10-14) comparte con esta pantalla las piezas
+// `OpenBlock` y `DecisionForm` y la frase del comentario. La del personal no cambia de diseno:
+// una sola columna ancha, el encabezado pegajoso con las acciones y los seis bloques en su
+// orden de siempre.
+describe("la pantalla del personal no cambio de diseno", () => {
+  const antes = (a: Node, b: Node): boolean =>
+    (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
+
+  it("sigue siendo una columna de 75 rem, sin los dos paneles ni los pasos del visitante", async () => {
+    await dibujarYEsperarEncabezado();
+
+    const pantalla = screen.getByTestId("inbox-case");
+    expect(pantalla.className).toContain("max-w-content");
+    expect(pantalla.className).not.toContain("max-w-[76rem]");
+    for (const propio of [
+      "visitor-panes",
+      "visitor-data",
+      "visitor-adjuster",
+      "visitor-decision",
+      "step-mark",
+    ]) {
+      expect(screen.queryByTestId(propio), propio).toBeNull();
+    }
+    // Ninguna region del visitante: ni el panel del ajustador ni los datos de su reporte.
+    expect(screen.queryByRole("region", { name: t("visitor.adjuster.title") })).toBeNull();
+    expect(screen.queryByRole("region", { name: t("visitor.block.fields") })).toBeNull();
+  });
+
+  it("los seis bloques van en su orden de siempre, y el de los campos conserva su nombre", async () => {
+    await dibujarYEsperarEncabezado();
+
+    const orden = [
+      "block-fields",
+      "block-transcript",
+      "block-citations",
+      "block-rule",
+      "block-controls",
+      "block-trace",
+    ].map((id) => screen.getByTestId(id));
+    orden.slice(1).forEach((bloque, indice) => {
+      const previo = orden.at(indice);
+      expect(previo !== undefined && antes(previo, bloque)).toBe(true);
+    });
+    // Y su superficie de siempre: la de segundo nivel es solo de los datos del visitante.
+    for (const bloque of orden) {
+      expect(bloque.className.split(/\s+/)).toContain("bg-surface");
+      expect(bloque.className.split(/\s+/)).not.toContain("bg-surface-alt");
+    }
+    // «Completitud por campo» es del personal; «Datos de tu reporte» es del visitante.
+    expect(within(screen.getByTestId("block-fields")).getByRole("heading").textContent).toBe(
+      t("inbox.block.fields"),
+    );
+    expect(screen.queryByText(t("visitor.block.fields"))).toBeNull();
+  });
+
+  it("las acciones siguen en el encabezado pegajoso, con la nota nueva del comentario", async () => {
+    const encabezado = await dibujarYEsperarEncabezado();
+
+    expect(encabezado.className).toContain("sticky");
+    const formulario = within(encabezado).getByTestId("decision-form");
+    // La frase de la nota la comparten las dos pantallas.
+    expect(formulario.textContent).toContain(t("inbox.decision.comment_hint"));
+    expect(t("inbox.decision.comment_hint")).toBe("Queda en el registro del caso.");
+    // El titulo del grupo de botones es el de siempre, no el paso del visitante.
+    expect(within(formulario).getByRole("group", { name: t("inbox.decision.title") })).toBeTruthy();
+    expect(within(formulario).queryByRole("heading")).toBeNull();
+  });
+});
+
 describe("el aviso en vivo de la vista", () => {
   it("vuelve a pedir el caso cuando un aviso habla de el (BR6.1)", async () => {
     const cable = dibujar();

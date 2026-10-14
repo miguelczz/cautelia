@@ -22,6 +22,7 @@ import re
 import unicodedata
 
 from untangle.base import Locale
+from untangle.orchestration import coverage_detour
 
 #: Las palabras de una frase que **solo anuncia** que se quiere consultar o preguntar algo,
 #: ya plegadas (sin tildes ni apostrofes). Una frase es vaga si **todas** sus palabras estan
@@ -88,4 +89,39 @@ def says_nothing_about_purpose(text: str, *, language: Locale) -> bool:
     return any(p in anuncian for p in palabras)
 
 
-__all__ = ["says_nothing_about_purpose"]
+#: Nombrar la poliza como tema --"una duda de mi poliza", "about my policy"-- sin
+#: estar dando su numero. Plegado; las tildes se aceptan con y sin ellas. Vivia en
+#: `voice/first_turn.py`; vive aqui desde el 2026-10-14 porque la consulta tambien lo
+#: necesita para no guardar el anuncio como si fuera la pregunta.
+_SOBRE_LA_POLIZA = re.compile(
+    r"\b(duda|dudas|pregunta|preguntas|consulta|consultar|preguntar|saber|informaci[oó]n|"
+    r"referente|respecto|acerca|sobre|hablar\w*)\b.{0,40}\b(p[oó]liza|seguro)\b"
+    r"|\b(question|questions|ask|asking|know|about|regarding)\b.{0,40}\b(policy|insurance)\b",
+    re.IGNORECASE,
+)
+
+
+def names_the_policy_as_topic(text: str) -> bool:
+    """Si la frase nombra la poliza como tema de lo que se quiere preguntar."""
+    return _SOBRE_LA_POLIZA.search(text) is not None
+
+
+def only_announces_a_policy_question(text: str, *, language: Locale) -> bool:
+    """Si la frase dice que quiere preguntar por su poliza **sin hacer todavia la pregunta**.
+
+    «Queria preguntar por mi poliza», «I have a question about my policy»: dicen a que viene
+    la persona --una consulta, no un reporte-- pero no que quiere saber. Guardarla como la
+    pregunta mandaba a revisar la poliza contra nada: no salia ninguna clausula y la
+    consulta terminaba con un ajustador (llamada del 2026-10-14). Una pregunta de verdad
+    («¿me cubren si me roban el carro?») la reconoce el desvio de cobertura y no cuenta aqui.
+    """
+    return names_the_policy_as_topic(text) and not coverage_detour.is_coverage_question(
+        text, language=language
+    )
+
+
+__all__ = [
+    "names_the_policy_as_topic",
+    "only_announces_a_policy_question",
+    "says_nothing_about_purpose",
+]

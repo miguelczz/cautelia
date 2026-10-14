@@ -47,6 +47,38 @@ export const CASE_PAGE_TITLE = `${DETAIL_TITLE} tablet:text-figure tablet:font-l
  */
 export const CASE_COLUMN_WIDTH = "max-w-[52rem]";
 
+/**
+ * El ancho de la pantalla del visitante que abre su caso (Miguel, 2026-10-14): lleva dos
+ * paneles lado a lado --el del ajustador y los datos del reporte-- y no caben en la columna
+ * de `CASE_COLUMN_WIDTH`, que sigue siendo la del caso de ejemplo. 76 rem como maximo, con
+ * el mismo relleno lateral; en un telefono `w-full` manda y no cambia nada.
+ */
+export const CASE_WORKSPACE_WIDTH = "max-w-[76rem]";
+
+/**
+ * Los dos paneles de la pantalla del visitante. Por debajo de `desktop` (64 rem) es una sola
+ * columna y **manda el orden del documento**: primero los datos del reporte, despues el panel
+ * del ajustador. Desde `desktop` son dos columnas, 7/12 para el panel del ajustador y 5/12
+ * para los datos, alineadas arriba (sin eso la celda de los datos se estiraria hasta el alto
+ * de la otra y no tendria por donde quedarse a la vista).
+ */
+export const CASE_WORKSPACE_PANES =
+  "grid gap-4 desktop:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] desktop:items-start";
+
+/** El panel del ajustador: en escritorio va a la izquierda aunque en el documento sea el segundo. */
+export const CASE_ADJUSTER_PANE = "desktop:col-start-1 desktop:row-start-1";
+
+/**
+ * Los datos del reporte y las reglas: en escritorio van a la derecha y **se quedan a la vista
+ * al desplazar la pagina**. La cabecera del sitio mide unos 3,3 rem (el control de la marca de
+ * 44 px, 8 px de relleno y la raya), asi que se pega a 4,5 rem y mide, como mucho, la ventana
+ * menos ese margen y 1 rem de aire abajo; si no cabe, se desplaza por dentro y se funde con el
+ * fondo por el borde que sigue (`ut-scroll-fade-y`). El anillo de foco va por dentro: la
+ * mascara de la fundida recortaria el de fuera.
+ */
+export const CASE_DATA_PANE =
+  "flex flex-col gap-4 desktop:col-start-2 desktop:row-start-1 desktop:sticky desktop:top-[4.5rem] desktop:max-h-[calc(100dvh_-_5.5rem)] desktop:overflow-y-auto ut-scroll-fade-y focus-visible:-outline-offset-2";
+
 /** El titulo de un bloque dentro de una pantalla de detalle. */
 export const BLOCK_TITLE = "font-display text-lead font-medium text-fg";
 

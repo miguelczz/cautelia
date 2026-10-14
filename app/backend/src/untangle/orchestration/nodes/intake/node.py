@@ -155,6 +155,10 @@ class IntakeNodeInput(Frozen):
     #: (2026-10-13). Sale del punto de control y **sobrevive a los turnos**: la repeticion se
     #: pide una sola vez por conversacion, y si tampoco sale, sigue sin poliza identificada.
     policy_repeat_asked: bool = False
+    #: Si ya se volvio a preguntar "¿eres tu?" porque la respuesta no fue ni si ni no
+    #: (2026-10-14). Como la anterior, sale del punto de control y sobrevive a los turnos: se
+    #: pregunta otra vez una sola vez por conversacion.
+    policy_confirm_reasked: bool = False
     #: El bloque que la agente pregunto en el turno anterior (2026-10-10). Sale del
     #: punto de control, como la lectura pendiente. Sirve para una sola cosa: saber
     #: si un "no" corto contesta a "¿hubo alguien herido?" o a otra pregunta.
@@ -197,6 +201,9 @@ class IntakeNodeOutput(Frozen):
     #: oyo no llevo a ninguna. Quien guarda el punto de control lo conserva, para no pedirlo dos
     #: veces (`turn._writes_del_turno`).
     intake_policy_repeat_asked: bool = False
+    #: Este turno volvio a preguntar "¿eres tu?" (2026-10-14). Quien guarda el punto de control
+    #: lo conserva, para no preguntarlo una tercera vez (`turn._writes_del_turno`).
+    intake_policy_confirm_reasked: bool = False
     #: El numero de poliza que la persona acaba de confirmar como suyo (P3): quien
     #: aplica el conjunto de escritura la ata al caso.
     intake_policy_confirmed: str | None = None
@@ -684,13 +691,32 @@ class IntakeNode:
         trae vehiculo, el vehiculo con el titular al volante, los dos con la
         evidencia de este turno; y deja la poliza para atarla al caso. Un no
         devuelve la identidad a "nadie lo dijo" y se vuelve a pedir, esta vez con
-        nombre. Lo que no es ni si ni no se trata como no: la agente no afirma
-        quien es alguien que no lo confirmo.
+        nombre. Lo que no es ni si ni no se pregunta **una vez mas** (2026-10-14: en una
+        llamada, una frase mal oida tras "¿eres tu?" hizo que la agente volviera a pedir el
+        nombre y la poliza que ya tenia); si tampoco entonces es un si, se trata como no: la
+        agente no afirma quien es alguien que no lo confirmo.
         """
         pendiente = state.awaiting_policy_confirmation
         if pendiente is None:
             return None
         acepto = _acepta(state)
+        if not acepto and not _niega(state) and not state.policy_confirm_reasked:
+            clave, texto = policy.compose_confirm_again(
+                pendiente,
+                language=state.language,
+                asks_driver=state.record_type is RecordType.CLAIM,
+            )
+            return IntakeNodeOutput(
+                intake_next_block=Block.IDENTITY_AND_POLICY,
+                intake_extracted=(),
+                intake_awaiting_confirmation=None,
+                intake_readback_resolved=None,
+                intake_response_key=str(clave),
+                intake_response_text=texto,
+                intake_session_ended=None,
+                intake_policy_match=pendiente,
+                intake_policy_confirm_reasked=True,
+            )
         if not acepto:
             completitud = _con_la_confirmacion(
                 state.completeness,

@@ -4,7 +4,8 @@ import { describe, expect, it } from "vitest";
 import { renderWithProviders } from "../../app/testing";
 import type { CaseDetailOut } from "../../shared/api-client/inbox";
 import { createTranslate } from "../../shared/i18n/translate";
-import { isSafeExternalLink, ResponseBlock } from "./evidence-blocks";
+import { isSafeExternalLink } from "../../shared/ui/external-link";
+import { ResponseBlock } from "./evidence-blocks";
 
 // El enlace para ver en Langfuse como trabajo la agente (2026-10-14). El servidor lo manda solo
 // por las dos puertas con dueno; aqui se comprueba como se pinta, y que una direccion que no sea

@@ -74,7 +74,6 @@ from untangle.rules import api as reglas
 from untangle.rules.models import RuleEvaluation, RuleNotConfiguredError
 from untangle.surface_spec import SurfaceId, SurfaceProbe, SurfaceSpec
 from untangle.telemetry.traces import links as trace_links
-from untangle.telemetry.traces.models import TraceSummaryStatus
 from untangle.tenancy import api as tenancy
 from untangle.tenancy import session as db
 from untangle.tenancy import staff_identity
@@ -613,14 +612,10 @@ def _pasos_del_monto(tenant: TenantConfig) -> tuple[int, ...]:
 def _enlace_a_la_traza(detalle: case_view.CaseDetail) -> str | None:
     """La direccion de la traza mas reciente del caso en el backend de trazas, o `None`.
 
-    Solo cuando el resumen esta `ready`: uno que se esta registrando todavia no salio, y uno
-    `lost` no llego, asi que la direccion llevaria a una pagina que no existe. Y `None` si el
-    backend no esta configurado o no se supo el proyecto (ver `telemetry.traces.links`).
+    La regla (solo con el resumen `ready`, y `None` si el backend no esta configurado) es
+    `telemetry.traces.links.summary_url`: el tablero de gasto usa la misma.
     """
-    traza = detalle.trace
-    if traza is None or traza.status is not TraceSummaryStatus.READY:
-        return None
-    return trace_links.trace_url(traza.trace_id)
+    return trace_links.summary_url(detalle.trace)
 
 
 def _al_cable(  # noqa: PLR0913 -- el caso, la aseguradora y lo que cambia segun quien lo pide

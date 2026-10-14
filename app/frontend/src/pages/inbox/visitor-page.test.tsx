@@ -228,13 +228,18 @@ describe("el caso se nombra por lo que es, no por su codigo (C10, 2026-10-12)", 
     expect(screen.getByRole("heading", { level: 1 }).textContent).not.toMatch(/reporte/i);
   });
 
-  it("la columna es mas ancha que la de antes, y en telefono sigue ocupando el ancho", async () => {
+  it("el contenedor es el de dos paneles (76 rem), y en telefono sigue ocupando el ancho", async () => {
     dibujar();
 
+    // 2026-10-14: la columna de 52 rem de antes no alcanzaba para dos paneles lado a lado.
+    // Esa columna sigue siendo la del caso de ejemplo (`cases.test.tsx`).
     const pantalla = await screen.findByTestId("visitor-case");
-    expect(pantalla.className).toContain("max-w-[52rem]");
+    expect(pantalla.className).toContain("max-w-[76rem]");
+    expect(pantalla.className).not.toContain("max-w-[52rem]");
     expect(pantalla.className).not.toContain("max-w-2xl");
     expect(pantalla.className).toContain("w-full");
+    // El mismo relleno lateral de antes.
+    expect(pantalla.className).toContain("px-4");
   });
 });
 
@@ -577,6 +582,19 @@ describe("un caso que cerraron las reglas, o que la agente aun evalua", () => {
     expect(pantalla).not.toContain(t("inbox.explanation.by_visitor"));
     expect(pantalla).not.toMatch(/system|deciding|direct_close|registered/i);
     expect(pantalla.toLowerCase()).not.toContain("bandeja");
+  });
+
+  it("sin nada que decidir ni anotar, el panel dice el estado del caso y no invita a hacer de ajustador", async () => {
+    pedido.mockResolvedValue({ ok: true, value: caso(cierreDirecto) });
+    dibujar();
+    const panel = await screen.findByTestId("visitor-adjuster");
+
+    expect(within(panel).getByRole("heading", { level: 2 }).textContent).toBe(
+      t("visitor.status.title"),
+    );
+    expect(panel.textContent).not.toContain(t("visitor.adjuster.title"));
+    expect(panel.textContent).not.toContain(t("visitor.decision.title"));
+    expect(panel.className).not.toContain("border-l-brand");
   });
 
   it.each(["verifying", "deciding"] as const)(
@@ -948,6 +966,295 @@ describe("decidir su propio caso", () => {
   });
 });
 
+// Los dos paneles (Miguel, 2026-10-14): a la izquierda el del ajustador --anotar y decidir-- y a la
+// derecha los datos del reporte con las reglas; debajo de los dos, a todo el ancho, la conversacion
+// y lo demas. jsdom no calcula estilos ni puntos de quiebre: lo que aqui se prueba es el orden del
+// documento (que es el de pantalla angosta), la estructura y las clases que arman la rejilla en
+// escritorio. Que la rejilla se vea como se dice solo se comprueba en el navegador.
+describe("los dos paneles: el del ajustador y los datos del reporte", () => {
+  const OFRECE: Partial<CaseDetailOut> = {
+    can_annotate_triage: true,
+    triage_amount_steps: [1000, 10000],
+  };
+
+  /** Verdadero si `a` queda antes que `b` en el orden del documento. */
+  const antes = (a: Node, b: Node): boolean =>
+    (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
+
+  async function abrir(extra: Partial<CaseDetailOut> = {}) {
+    pedido.mockResolvedValue({ ok: true, value: caso(extra) });
+    dibujar();
+    await screen.findByTestId("visitor-case");
+  }
+
+  const panelDelAjustador = () => screen.getByRole("region", { name: t("visitor.adjuster.title") });
+  const panelDeDatos = () => screen.getByRole("region", { name: t("visitor.block.fields") });
+
+  it("cada panel es una region con nombre, y los datos no se llaman «completitud por campo»", async () => {
+    await abrir(OFRECE);
+
+    expect(within(panelDelAjustador()).getByRole("heading", { level: 2 }).textContent).toBe(
+      t("visitor.adjuster.title"),
+    );
+    expect(within(panelDeDatos()).getByRole("heading", { level: 2 }).textContent).toBe(
+      t("visitor.block.fields"),
+    );
+    // «Completitud por campo» es la jerga de quien decide con credencial.
+    expect(screen.getByTestId("visitor-case").textContent).not.toContain(t("inbox.block.fields"));
+    expect(panelDeDatos()).toBe(screen.getByTestId("block-fields"));
+  });
+
+  it("los encabezados bajan de a un nivel: titulo, paneles y pasos", async () => {
+    await abrir(OFRECE);
+
+    const niveles = within(screen.getByTestId("visitor-case"))
+      .getAllByRole("heading")
+      .map((titulo) => Number(titulo.tagName.slice(1)));
+    expect(niveles[0]).toBe(1);
+    niveles.slice(1).forEach((nivel, indice) => {
+      // Cada encabezado es, como mucho, un nivel mas hondo que el anterior.
+      expect(nivel).toBeLessThanOrEqual((niveles.at(indice) ?? 0) + 1);
+    });
+    // Los dos pasos cuelgan del panel del ajustador, como encabezados de nivel 3.
+    // El nombre accesible no cuenta la marca numerica, que va oculta para el lector de pantalla.
+    const panel = panelDelAjustador();
+    expect(within(panel).getAllByRole("heading", { level: 3 })).toHaveLength(2);
+    for (const paso of [t("visitor.triage.title"), t("visitor.decision.title")]) {
+      expect(within(panel).getByRole("heading", { level: 3, name: paso })).toBeTruthy();
+    }
+  });
+
+  it("en el orden del documento --el de pantalla angosta-- los datos y las reglas van antes que el panel del ajustador", async () => {
+    await abrir(OFRECE);
+
+    const datos = screen.getByTestId("visitor-data");
+    const ajustador = panelDelAjustador();
+    expect(antes(datos, ajustador)).toBe(true);
+    // Las reglas viven en la columna de los datos, despues de ellos y antes del ajustador.
+    expect(datos.contains(screen.getByTestId("block-fields"))).toBe(true);
+    expect(datos.contains(screen.getByTestId("block-rule"))).toBe(true);
+    expect(antes(screen.getByTestId("block-fields"), screen.getByTestId("block-rule"))).toBe(true);
+    expect(antes(screen.getByTestId("block-rule"), ajustador)).toBe(true);
+    // Y cada panel es hermano del otro, en el mismo contenedor de la rejilla.
+    const rejilla = screen.getByTestId("visitor-panes");
+    expect(datos.parentElement).toBe(rejilla);
+    expect(ajustador.parentElement).toBe(rejilla);
+  });
+
+  it("la conversacion, las citas, los controles y la respuesta van despues de los dos, en ese orden", async () => {
+    await abrir(OFRECE);
+
+    const rejilla = screen.getByTestId("visitor-panes");
+    const debajo = ["block-transcript", "block-citations", "block-controls", "block-trace"].map(
+      (id) => screen.getByTestId(id),
+    );
+    for (const bloque of debajo) {
+      expect(rejilla.contains(bloque)).toBe(false);
+      expect(antes(panelDelAjustador(), bloque)).toBe(true);
+      expect(antes(screen.getByTestId("visitor-data"), bloque)).toBe(true);
+    }
+    debajo.slice(1).forEach((bloque, indice) => {
+      const previo = debajo.at(indice);
+      expect(previo !== undefined && antes(previo, bloque)).toBe(true);
+    });
+    // Las reglas ya no estan abajo: subieron junto a los datos.
+    expect(rejilla.contains(screen.getByTestId("block-rule"))).toBe(true);
+  });
+
+  it("en escritorio: 7/12 para el ajustador a la izquierda y 5/12 para los datos a la derecha, alineados arriba", async () => {
+    await abrir(OFRECE);
+
+    const rejilla = screen.getByTestId("visitor-panes").className;
+    expect(rejilla).toContain("grid");
+    expect(rejilla).toContain("desktop:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]");
+    expect(rejilla).toContain("desktop:items-start");
+    // Por debajo de `desktop` no hay columnas: una sola, con el orden del documento.
+    expect(rejilla.split(/\s+/).filter((clase) => clase.startsWith("grid-cols"))).toEqual([]);
+
+    const ajustador = panelDelAjustador().className;
+    expect(ajustador).toContain("desktop:col-start-1");
+    expect(ajustador).toContain("desktop:row-start-1");
+    const datos = screen.getByTestId("visitor-data").className;
+    expect(datos).toContain("desktop:col-start-2");
+    expect(datos).toContain("desktop:row-start-1");
+    // El orden visual lo pone la rejilla, no un `order` que separe el orden del teclado.
+    for (const clases of [rejilla, ajustador, datos]) {
+      expect(clases).not.toMatch(/(^|\s)(desktop:|max-desktop:)?order-/);
+    }
+  });
+
+  it("la columna de los datos se queda a la vista: pegajosa bajo la cabecera, con alto maximo y desplazamiento propio", async () => {
+    await abrir(OFRECE);
+
+    const datos = screen.getByTestId("visitor-data");
+    expect(datos.className).toContain("desktop:sticky");
+    expect(datos.className).toContain("desktop:top-[4.5rem]");
+    expect(datos.className).toContain("desktop:max-h-[calc(100dvh_-_5.5rem)]");
+    expect(datos.className).toContain("desktop:overflow-y-auto");
+    // Una region que se desplaza se alcanza con el teclado (`scrollable-region-focusable`), y
+    // tiene nombre.
+    expect(datos.getAttribute("tabindex")).toBe("0");
+    expect(datos.getAttribute("role")).toBe("group");
+    expect(datos.getAttribute("aria-label")).toBe(t("visitor.block.fields"));
+  });
+
+  it("el panel del ajustador lleva el color de la marca con tokens: raya, titulo y marcas", async () => {
+    await abrir(OFRECE);
+
+    const clasesDe = (elemento: HTMLElement) => elemento.className.split(/\s+/);
+    const panel = panelDelAjustador();
+    expect(clasesDe(panel)).toEqual(
+      expect.arrayContaining(["border-l-4", "border-l-brand", "bg-surface"]),
+    );
+    // Sin tinte de fondo: un campo sobre un fondo con tinte de cobre baja el borde del campo de
+    // los 3 a 1 que pide un control (2,6 a 1 medido en oscuro).
+    expect(clasesDe(panel)).not.toContain("bg-selected");
+    // El titulo va en el token de la marca --la tinta en modo claro, nunca el cobre sobre claro--.
+    const titulo = within(panel).getByRole("heading", { level: 2 });
+    expect(clasesDe(titulo)).toContain("text-brand");
+    expect(clasesDe(titulo)).not.toContain("text-fg");
+    for (const marca of within(panel).getAllByTestId("step-mark")) {
+      expect(clasesDe(marca)).toEqual(expect.arrayContaining(["bg-brand", "text-on-brand"]));
+      // La marca es decoracion: el lector de pantalla lee el titulo del paso.
+      expect(marca.getAttribute("aria-hidden")).toBe("true");
+    }
+  });
+
+  it("los datos van en una superficie neutra distinta a la del panel, sin nada de la marca", async () => {
+    await abrir(OFRECE);
+
+    const clasesDe = (elemento: HTMLElement) => elemento.className.split(/\s+/);
+    for (const bloque of [panelDeDatos(), screen.getByTestId("block-rule")]) {
+      expect(clasesDe(bloque)).toContain("bg-surface-alt");
+      expect(clasesDe(bloque)).not.toContain("bg-surface");
+      expect(bloque.className).not.toMatch(/brand|selected/);
+    }
+    // El panel del ajustador, en cambio, usa la superficie normal: es la que distingue a los dos.
+    expect(clasesDe(panelDelAjustador())).not.toContain("bg-surface-alt");
+  });
+
+  it("ningun elemento de la pantalla escribe un color a mano ni usa el cobre como letra", async () => {
+    await abrir(OFRECE);
+
+    for (const elemento of screen.getByTestId("visitor-case").querySelectorAll("[class]")) {
+      const clases = elemento.getAttribute("class") ?? "";
+      expect(clases, clases).not.toMatch(/copper|\[#|\[rgb|\[hsl|\[oklch|text-\[color/);
+    }
+  });
+
+  it("dos pasos numerados: revisa (1) y decide (2), y el formulario va dentro del segundo", async () => {
+    await abrir(OFRECE);
+
+    const panel = panelDelAjustador();
+    expect(
+      within(panel)
+        .getAllByTestId("step-mark")
+        .map((marca) => marca.textContent),
+    ).toEqual(["1", "2"]);
+    const revisa = screen.getByTestId("visitor-triage");
+    const decide = screen.getByTestId("visitor-decision");
+    expect(
+      within(revisa).getByRole("heading", { level: 3, name: t("visitor.triage.title") }),
+    ).toBeTruthy();
+    expect(
+      within(decide).getByRole("heading", { level: 3, name: t("visitor.decision.title") }),
+    ).toBeTruthy();
+    expect(decide.contains(screen.getByTestId("decision-form"))).toBe(true);
+    expect(antes(revisa, decide)).toBe(true);
+    // La introduccion del panel dice que hacer; la del paso 1, para que sirve anotar.
+    expect(panel.textContent).toContain(t("visitor.decide_intro"));
+    expect(revisa.textContent).toContain(t("visitor.triage.intro"));
+  });
+
+  it("sin que el servidor ofrezca anotar, el paso de decidir va solo y sin numero", async () => {
+    await abrir({ can_annotate_triage: false, triage_note: null });
+
+    const panel = panelDelAjustador();
+    expect(within(panel).queryByTestId("step-mark")).toBeNull();
+    expect(screen.queryByTestId("visitor-triage")).toBeNull();
+    expect(
+      within(panel).getByRole("heading", { level: 3, name: t("visitor.decision.title") }),
+    ).toBeTruthy();
+    expect(within(panel).getByTestId("decision-form")).toBeTruthy();
+  });
+
+  it("un caso que espera al asegurado: el paso de decidir dice por que no se decide, dentro del panel", async () => {
+    await abrir({ ...OFRECE, state: "awaiting_insured", available_actions: [] });
+
+    const panel = panelDelAjustador();
+    expect(within(panel).getByTestId("visitor-no-actions").textContent).toBe(
+      t("inbox.decision.none_awaiting"),
+    );
+    expect(within(panel).queryByTestId("decision-form")).toBeNull();
+    // Se anota (paso 1) y se lee por que no se decide (paso 2).
+    expect(
+      within(panel)
+        .getAllByTestId("step-mark")
+        .map((marca) => marca.textContent),
+    ).toEqual(["1", "2"]);
+    // Sin botones no se invita a decidir.
+    expect(panel.textContent).not.toContain(t("visitor.decide_intro"));
+  });
+
+  it("mientras la agente evalua no hay panel del ajustador, y los datos quedan solos, sin pegarse a nada", async () => {
+    await abrir({ state: "deciding", derivation_reason: null, available_actions: [] });
+
+    expect(screen.queryByRole("region", { name: t("visitor.adjuster.title") })).toBeNull();
+    const datos = screen.getByTestId("visitor-data");
+    expect(datos.contains(screen.getByTestId("block-fields"))).toBe(true);
+    // Sin otra columna no hay nada a lo que pegarse: ni rejilla, ni pegajosa, ni foco.
+    expect(screen.getByTestId("visitor-panes").className).not.toContain("grid");
+    expect(datos.className).not.toContain("sticky");
+    expect(datos.hasAttribute("tabindex")).toBe(false);
+    // Y no se estiran a los 76 rem: conservan la columna de lectura.
+    expect(datos.className).toContain("max-w-[52rem]");
+  });
+
+  it("decidido el caso no hay paso de decidir ni marcas, y lo que anoto se lee en el panel", async () => {
+    decidido.mockResolvedValue({ ok: true, value: { decision_id: "d1", resolution: "approved" } });
+    pedido.mockResolvedValueOnce({ ok: true, value: caso(OFRECE) }).mockResolvedValueOnce({
+      ok: true,
+      value: caso({
+        state: "closed",
+        resolution: "approved",
+        available_actions: [],
+        can_annotate_triage: false,
+        triage_note: { claim_amount: 2500, coverage_disputed: false, fraud_suspected: true },
+      }),
+    });
+    dibujar();
+    await screen.findByTestId("visitor-triage-form");
+
+    await userEvent.type(screen.getByLabelText(t("inbox.decision.comment_label")), "Lo apruebo");
+    await userEvent.click(screen.getByRole("button", { name: t("inbox.decision.approve") }));
+    await screen.findByTestId("visitor-resolution");
+
+    const panel = panelDelAjustador();
+    expect(within(panel).getByTestId("visitor-triage-readonly")).toBeTruthy();
+    expect(screen.queryByTestId("visitor-decision")).toBeNull();
+    expect(screen.queryByTestId("step-mark")).toBeNull();
+    // Los datos siguen a la vista, y siguen antes que el panel.
+    expect(antes(screen.getByTestId("visitor-data"), panel)).toBe(true);
+  });
+
+  it("en ingles los dos paneles se leen en ingles", async () => {
+    const en = createTranslate("en");
+    pedido.mockResolvedValue({ ok: true, value: caso(OFRECE) });
+    renderWithProviders(
+      <VisitorCasePage token="un-token" conversationHref={() => "/"} renderRejected={rechazo} />,
+      "en",
+    );
+    await screen.findByTestId("visitor-case");
+
+    expect(screen.getByRole("region", { name: en("visitor.adjuster.title") })).toBeTruthy();
+    expect(screen.getByRole("region", { name: en("visitor.block.fields") })).toBeTruthy();
+    expect(
+      screen.getByRole("heading", { level: 3, name: en("visitor.decision.title") }),
+    ).toBeTruthy();
+    expect(screen.getByTestId("visitor-case").textContent).not.toContain(en("inbox.block.fields"));
+  });
+});
+
 describe("lo que anota el personal para las reglas", () => {
   it("la pantalla del personal no se dibuja aqui, aunque el cable trajera lo mismo", async () => {
     // El servidor no le manda al visitante la nota del personal (`triage_note` en null y
@@ -1006,14 +1313,12 @@ describe("anotar antes de decidir", () => {
     anotado.mockResolvedValue({ ok: true, value: RESPUESTA });
   });
 
-  it("se pinta dentro de la seccion de decidir, antes del formulario de la decision", async () => {
+  it("se pinta dentro del panel del ajustador, antes del formulario de la decision", async () => {
     dibujar();
     const triage = await screen.findByTestId("visitor-triage");
 
-    const seccion = triage.parentElement;
-    if (seccion === null) {
-      throw new Error("el bloque de anotar no esta dentro de ninguna seccion");
-    }
+    const seccion = screen.getByRole("region", { name: t("visitor.adjuster.title") });
+    expect(seccion.contains(triage)).toBe(true);
     expect(seccion.textContent).toContain(t("visitor.decide_intro"));
     expect(seccion.contains(screen.getByTestId("decision-form"))).toBe(true);
     expect(
@@ -1067,11 +1372,15 @@ describe("anotar antes de decidir", () => {
       { claim_amount: 2500, coverage_disputed: null, fraud_suspected: true },
       expect.stringMatching(/^visitor-note-/),
     );
-    // El caso se volvio a leer y el bloque de las reglas de abajo cuenta lo nuevo.
+    // El caso se volvio a leer y el bloque de las reglas cuenta lo nuevo --el que vive en la
+    // columna de los datos, a la vista mientras se anota--.
     expect(pedido).toHaveBeenCalledTimes(2);
     expect(screen.getByTestId("rule-reference").textContent).toBe(
       t("inbox.rule.reference", { rules: "SUN-R-03, SUN-R-07" }),
     );
+    expect(
+      within(screen.getByTestId("visitor-data")).getByTestId("rule-reference").textContent,
+    ).toBe(t("inbox.rule.reference", { rules: "SUN-R-03, SUN-R-07" }));
     // Y el bloque de anotar dice, en su sitio, como quedo clasificado.
     const estado = bloque().getByTestId("visitor-triage-result");
     expect(estado.textContent).toContain(t("visitor.triage.result"));

@@ -169,22 +169,21 @@ async def test_la_sesion_se_cierra_si_cancelan_la_llamada(catalogo: None) -> Non
     assert doble.cierres == 1
 
 
-async def test_una_interrupcion_cierra_la_frase_cortada_antes_de_decir_la_siguiente(
+async def test_lo_dicho_encima_de_la_apertura_no_la_corta_y_todo_sale_por_la_sesion(
     catalogo: None,
 ) -> None:
-    """La persona corta a la agente en plena apertura: el flujo de esa frase se cierra, y la
-    apertura repetida --y la frase de cortesia, si la hay-- salen por la misma sesion, una a la
-    vez. Con el defecto de antes (la frase de cortesia se decia con el flujo cortado todavia
-    abierto) esta llamada no terminaba."""
+    """La persona habla en plena apertura: la apertura no se corta ni se repite (decision de
+    Miguel, 2026-10-14) y sale una sola vez por la sesion de la llamada. Que una frase cortada
+    se cierre antes de la siguiente lo prueban las dos de abajo, con una frase cualquiera."""
     motor = await _motor()
     doble = VozConSesion(guion=[final_con_tiempos("wait I need to correct something")])
     doble.antes_del_audio = True
-    canal = CanalFalso(entrantes=[SILENCIO], seguir=lambda: len(doble.boca.dicho) < 2)
+    canal = CanalFalso(entrantes=[SILENCIO], seguir=lambda: motor.disclosed_at is None)
 
     await asyncio.wait_for(_correr(motor, canal, doble).run(), timeout=5)
 
-    assert canal.de_tipo(voz.StopAudio), "no se mando la orden de vaciar la cola"
-    assert len(doble.boca.dicho) >= 2, "la apertura cortada no se repitio por la misma sesion"
+    assert canal.de_tipo(voz.StopAudio) == [], "lo dicho encima corto la apertura"
+    assert len(doble.boca.dicho) == 1, "la apertura se repitio"
     assert doble.boca.abiertas_a_la_vez == 1, "dos frases a la vez por una sola conexion"
     assert doble.aperturas == 1
     assert doble.dicho_suelto == []

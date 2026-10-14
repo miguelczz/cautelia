@@ -23,7 +23,6 @@ porque el respaldo por reglas del chat usa el mismo.
 
 from __future__ import annotations
 
-import re
 from enum import StrEnum
 
 from untangle.base import Locale
@@ -38,16 +37,6 @@ class CallPurpose(StrEnum):
     NOT_STATED = "not_stated"
 
 
-#: Nombrar la poliza como tema --"una duda de mi poliza", "about my policy"-- sin
-#: estar dando su numero. Plegado; las tildes se aceptan con y sin ellas.
-_SOBRE_LA_POLIZA = re.compile(
-    r"\b(duda|dudas|pregunta|preguntas|consulta|consultar|preguntar|saber|informaci[oó]n|"
-    r"referente|respecto|acerca|sobre|hablar\w*)\b.{0,40}\b(p[oó]liza|seguro)\b"
-    r"|\b(question|questions|ask|asking|know|about|regarding)\b.{0,40}\b(policy|insurance)\b",
-    re.IGNORECASE,
-)
-
-
 def purpose_of(text: str, *, language: Locale, quote_enabled: bool) -> CallPurpose:
     """A que llama, por lo que dijo.
 
@@ -57,10 +46,9 @@ def purpose_of(text: str, *, language: Locale, quote_enabled: bool) -> CallPurpo
     """
     if quote_enabled and quote_reply.is_quote_request(text, language=language):
         return CallPurpose.QUOTE
-    if (
-        coverage_detour.is_coverage_question(text, language=language)
-        or _SOBRE_LA_POLIZA.search(text) is not None
-    ):
+    if coverage_detour.is_coverage_question(
+        text, language=language
+    ) or stated_purpose.names_the_policy_as_topic(text):
         return CallPurpose.POLICY_QUESTION
     if stated_purpose.says_nothing_about_purpose(text, language=language):
         return CallPurpose.NOT_STATED

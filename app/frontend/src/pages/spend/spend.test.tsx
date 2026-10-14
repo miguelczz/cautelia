@@ -466,6 +466,127 @@ describe.each<Locale>(["es", "en"])("el tablero de gasto en %s", (idioma) => {
   });
 });
 
+// El acceso a Langfuse (2026-10-14): arriba un boton-enlace a la ultima conversacion de este
+// navegador, y en el caso propio un enlace a su traza. Lo que manda el servidor se pinta
+// tal cual si es https y en ningun otro caso: esta pantalla no arma direcciones.
+
+const TRAZA = "https://us.cloud.langfuse.com/project/proyecto-local/traces/48215069371502846913";
+const TRAZA_DEL_CASO = "https://us.cloud.langfuse.com/project/proyecto-local/traces/7777777777";
+
+describe.each<Locale>(["es", "en"])("el acceso a Langfuse, en %s", (idioma) => {
+  it("con la direccion que manda el servidor, un boton-enlace que abre otra pestana sin pasar el origen y la nota debajo", async () => {
+    servir(panel({ langfuse_url: TRAZA }));
+    const t = await dibujar(idioma);
+
+    const enlace = screen.getByTestId<HTMLAnchorElement>("spend-langfuse-link");
+    expect(enlace.textContent).toBe(t("spend_panel.langfuse.link"));
+    expect(enlace.getAttribute("href")).toBe(TRAZA);
+    expect(enlace.getAttribute("target")).toBe("_blank");
+    expect(enlace.getAttribute("rel")).toBe("noopener noreferrer");
+    // La nota es la de la bandeja: dice que Langfuse es externa y que no muestra la conversacion.
+    const nota = screen.getByTestId("spend-langfuse").querySelector("p");
+    expect(nota?.textContent).toBe(t("inbox.trace.langfuse_note"));
+    expect(enlace.getAttribute("aria-describedby")).toBe(nota?.id);
+    expect(screen.queryByTestId("spend-langfuse-empty")).toBeNull();
+  });
+
+  it("sin direccion no hay boton: una linea discreta dice cuando lo habra", async () => {
+    servir(panel({ langfuse_url: null }));
+    const t = await dibujar(idioma);
+
+    expect(screen.queryByTestId("spend-langfuse-link")).toBeNull();
+    expect(screen.queryByTestId("spend-langfuse")).toBeNull();
+    expect(screen.getByTestId("spend-langfuse-empty").textContent).toBe(
+      t("spend_panel.langfuse.empty"),
+    );
+  });
+
+  it("un servidor que no conoce el campo se trata como sin direccion", async () => {
+    servir(panel());
+    await dibujar(idioma);
+
+    expect(screen.queryByTestId("spend-langfuse-link")).toBeNull();
+    expect(screen.queryByTestId("spend-langfuse-empty")).not.toBeNull();
+  });
+
+  it.each([
+    "javascript:alert(1)",
+    "http://us.cloud.langfuse.com/project/p/traces/t",
+    "//us.cloud.langfuse.com/project/p/traces/t",
+    "data:text/html,hola",
+    "https://con espacio/x",
+    "",
+  ])("una direccion que no es https no llega a un href: %s", async (direccion) => {
+    servir(
+      panel({ langfuse_url: direccion, cases: [caso({ yours: true, trace_url: direccion })] }),
+    );
+    await dibujar(idioma);
+
+    expect(screen.queryByTestId("spend-langfuse-link")).toBeNull();
+    expect(screen.queryByTestId("spend-case-langfuse-link")).toBeNull();
+    expect(document.querySelectorAll("a[target='_blank']")).toHaveLength(0);
+    // Lo que no se puede abrir se dice igual que cuando no hay nada que abrir.
+    expect(screen.queryByTestId("spend-langfuse-empty")).not.toBeNull();
+  });
+
+  it("el caso propio con traza lleva su enlace pequeno, y uno ajeno no, aunque el servidor lo mandara", async () => {
+    servir(
+      panel({
+        langfuse_url: TRAZA,
+        cases: [
+          // Esto el servidor no lo hace (el tipo lo impide); la pantalla tampoco lo pinta.
+          caso({ key: "0", yours: false, trace_url: TRAZA_DEL_CASO }),
+          caso({ key: "1", yours: true, trace_url: TRAZA_DEL_CASO }),
+        ],
+      }),
+    );
+    const t = await dibujar(idioma);
+
+    const selector = screen.getByTestId<HTMLSelectElement>("spend-case-select");
+    expect(selector.value).toBe("1");
+    const propio = screen.getByTestId<HTMLAnchorElement>("spend-case-langfuse-link");
+    expect(propio.textContent).toBe(t("spend_panel.langfuse.case_link"));
+    expect(propio.getAttribute("href")).toBe(TRAZA_DEL_CASO);
+    expect(propio.getAttribute("target")).toBe("_blank");
+    expect(propio.getAttribute("rel")).toBe("noopener noreferrer");
+    expect(within(screen.getByTestId("spend-case-detail")).queryByRole("link")).toBe(propio);
+
+    fireEvent.change(selector, { target: { value: "0" } });
+    expect(screen.queryByTestId("spend-case-langfuse-link")).toBeNull();
+  });
+
+  it("el caso propio sin traza lista no lleva enlace, y una comparacion tampoco", async () => {
+    const comparacion: ComparisonSpendItem = {
+      key: "c0",
+      started_at: "2026-10-11T20:02:00Z",
+      yours: true,
+      total: { measured_usd: "0.03", unmeasured_count: 3 },
+      unpriced: GRATIS,
+      parts: [
+        { tenant_id: "otra-aseguradora", total: { measured_usd: "0.01", unmeasured_count: 1 } },
+        { tenant_id: "tercera-aseguradora", total: { measured_usd: "0.02", unmeasured_count: 1 } },
+      ],
+    };
+    servir(
+      panel({
+        langfuse_url: TRAZA,
+        cases: [caso({ key: "0", yours: true, trace_url: null })],
+        comparisons: [comparacion],
+      }),
+    );
+    await dibujar(idioma);
+
+    const selector = screen.getByTestId<HTMLSelectElement>("spend-case-select");
+    // La comparacion propia abre elegida y no tiene enlace propio.
+    expect(selector.value).toBe("c0");
+    expect(screen.queryByTestId("spend-case-langfuse-link")).toBeNull();
+    fireEvent.change(selector, { target: { value: "0" } });
+    expect(screen.queryByTestId("spend-case-langfuse-link")).toBeNull();
+    // El de arriba sigue donde estaba.
+    expect(screen.queryByTestId("spend-langfuse-link")).not.toBeNull();
+  });
+});
+
 describe.each<Locale>(["es", "en"])("las cifras caben en su tarjeta, en %s", (idioma) => {
   const TARJETAS = ["spend-total", "spend-budget", "spend-per-call", "spend-per-chat"] as const;
 

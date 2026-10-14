@@ -361,6 +361,10 @@ export type CaseSpendItem = {
      */
     by_provider: Array<ProviderSpend>;
     unpriced?: UnpricedUsage;
+    /**
+     * Trace Url
+     */
+    trace_url?: string | null;
 };
 
 /**
@@ -2070,6 +2074,10 @@ export type SpendPanel = {
      * Comparisons
      */
     comparisons?: Array<ComparisonSpendItem>;
+    /**
+     * Langfuse Url
+     */
+    langfuse_url?: string | null;
 };
 
 /**

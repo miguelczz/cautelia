@@ -52,7 +52,7 @@ Quien lo instala es la raiz de composicion (C-24), en el paso 22 de esta unidad.
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from typing import Any
 
 from pydantic import TypeAdapter
@@ -113,6 +113,15 @@ LEER_ULTIMO_DEL_CASO = """
      WHERE case_id = :case_id
      ORDER BY created_at DESC, trace_id DESC
      LIMIT 1
+"""
+
+#: El ultimo resumen de **cada** caso de una lista, en una sola lectura: el mismo orden
+#: que `LEER_ULTIMO_DEL_CASO`, aplicado por caso. Para las superficies que muestran
+#: varios casos y no pueden pagar una consulta por fila.
+LEER_ULTIMOS_DE_VARIOS_CASOS = """
+    SELECT DISTINCT ON (case_id) * FROM trace_summary
+     WHERE case_id = ANY(:case_ids)
+     ORDER BY case_id, created_at DESC, trace_id DESC
 """
 
 
@@ -184,10 +193,23 @@ class DatabaseSummaryStore:
             fila = await session.fetch_one(sesion, LEER_ULTIMO_DEL_CASO, case_id=case_id)
         return _a_resumen(fila) if fila is not None else None
 
+    async def latest_for_cases(
+        self, case_ids: Sequence[str], *, tenant_id: str
+    ) -> dict[str, TraceSummary]:
+        if not case_ids:
+            return {}
+        async with session.session_for(tenant_id) as sesion:
+            filas = await session.fetch_all(
+                sesion, LEER_ULTIMOS_DE_VARIOS_CASOS, case_ids=list(case_ids)
+            )
+        resumenes = (_a_resumen(fila) for fila in filas)
+        return {resumen.case_id: resumen for resumen in resumenes}
+
 
 __all__ = [
     "GUARDAR",
     "LEER_POR_TRAZA",
+    "LEER_ULTIMOS_DE_VARIOS_CASOS",
     "LEER_ULTIMO_DEL_CASO",
     "DatabaseSummaryStore",
 ]

@@ -330,26 +330,30 @@ async def test_el_cierre_dice_el_numero_digito_a_digito_en_espanol(
     assert [len(grupo.split()) for grupo in dicho.split(",")] == [3, 3]
 
 
-# --- La interrupción, sobre el ciclo (AC1.30.1) ------------------------------
+# --- La apertura no se corta, tampoco en español (AC1.30.1, cambiado el 2026-10-14) ---
 
 
-async def test_la_apertura_interrumpida_se_repite_entera_en_espanol(catalogo: None) -> None:
-    """AC1.30.1, y media divulgación no es divulgación (BR4.5 de U16).
+async def test_lo_dicho_encima_de_la_apertura_en_espanol_no_la_corta_ni_cuenta(
+    catalogo: None,
+) -> None:
+    """AC1.30.1 pedía que la apertura cortada se repitiera entera en español (BR4.5 de U16).
+    Desde el 2026-10-14, por decisión de Miguel, la apertura no se corta y lo dicho mientras
+    suena no se escucha: suena una sola vez, entera y en español.
 
-    Es la única de este archivo que pasa por el ciclo completo: la interrupción es
-    del transporte y no del motor.
+    Es la única de este archivo que pasa por el ciclo completo: el descarte es del
+    transporte y no del motor.
     """
     motor, _ = await _motor_es()
     doble = VozDoble(guion=[_final("espere, me equivoque en algo")], antes_del_audio=True)
-    canal = CanalFalso(seguir=lambda: len(doble.dicho) < 2)
+    canal = CanalFalso(seguir=lambda: motor.disclosed_at is None)
 
     await asyncio.wait_for(_correr(motor, canal, doble).run(), timeout=10)
 
-    assert canal.de_tipo(voz.StopAudio), "no se mando la orden de vaciar la cola"
-    assert len(doble.dicho) >= 2, "la apertura cortada no se repitio"
-    assert motor.disclosed_at is not None, "la apertura nunca llego a registrarse"
-    for dicho in doble.dicho[:2]:
-        assert "transcri" in dicho.lower(), dicho
+    assert canal.de_tipo(voz.StopAudio) == [], "lo dicho encima cortó la apertura"
+    assert len(doble.dicho) == 1, "la apertura se repitió"
+    assert motor.disclosed_at is not None, "la apertura nunca llegó a registrarse"
+    assert "transcri" in doble.dicho[0].lower(), doble.dicho[0]
+    assert [c for c in canal.de_tipo(voz.Transcript) if c.speaker == "insured"] == []
 
 
 # --- Lo que esta unidad vigila de sí misma (BR5.2) ---------------------------

@@ -65,6 +65,8 @@ _POLICY_NUMBER_IN_TEXT = re.compile(r"\bPOL-\d{6}\b")
 POLICY_FOUND = CopyKey("intake.policy.found")
 POLICY_FOUND_NO_VEHICLE = CopyKey("intake.policy.found_no_vehicle")
 POLICY_DECLINED = CopyKey("intake.policy.declined")
+POLICY_CONFIRM_AGAIN = CopyKey("intake.policy.confirm_again")
+POLICY_CONFIRM_AGAIN_DRIVER = CopyKey("intake.policy.confirm_again_driver")
 POLICY_CONFIRMED_IDENTITY = CopyKey("intake.policy.confirmed_identity")
 POLICY_CONFIRMED_VEHICLE = CopyKey("intake.policy.confirmed_vehicle")
 #: Lo que se dice cuando el numero oido no existe o llego incompleto y no hay a quien
@@ -455,6 +457,23 @@ def compose_found(
     )
 
 
+def compose_confirm_again(
+    match: PolicyMatch, *, language: Locale, asks_driver: bool = True
+) -> tuple[CopyKey, str]:
+    """La misma pregunta otra vez, cuando la respuesta no fue ni si ni no (2026-10-14).
+
+    Pregunta lo mismo que `compose_found` --identidad y, en un reporte con vehiculo, quien
+    manejaba--, para que un si confirme exactamente lo que confirmaba la primera vez.
+    """
+    if match.vehicle is None or not asks_driver:
+        return POLICY_CONFIRM_AGAIN, copy_api.t(
+            POLICY_CONFIRM_AGAIN, locale=language, name=match.holder_name
+        )
+    return POLICY_CONFIRM_AGAIN_DRIVER, copy_api.t(
+        POLICY_CONFIRM_AGAIN_DRIVER, locale=language, name=match.holder_name
+    )
+
+
 def compose_declined(*, language: Locale) -> str:
     """Lo que se dice cuando la persona dice que no es ella: se vuelve a pedir."""
     return copy_api.t(POLICY_DECLINED, locale=language)
@@ -484,6 +503,8 @@ def confirmed_vehicle_value(match: PolicyMatch, *, language: Locale) -> str | No
 
 
 __all__ = [
+    "POLICY_CONFIRM_AGAIN",
+    "POLICY_CONFIRM_AGAIN_DRIVER",
     "POLICY_DECLINED",
     "POLICY_FOUND",
     "POLICY_FOUND_NO_VEHICLE",
@@ -493,6 +514,7 @@ __all__ = [
     "PolicyByHolderPort",
     "PolicyMatch",
     "PolicyMatchPort",
+    "compose_confirm_again",
     "compose_declined",
     "compose_found",
     "compose_not_found_repeat",

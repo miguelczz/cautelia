@@ -16,6 +16,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from urllib.parse import quote
 
+from untangle.telemetry.traces.models import TraceSummary, TraceSummaryStatus
+
 
 @dataclass(frozen=True)
 class TraceLinks:
@@ -48,8 +50,21 @@ def trace_url(trace_id: str) -> str | None:
     return _links.url_for(trace_id)
 
 
+def summary_url(resumen: TraceSummary | None) -> str | None:
+    """La direccion de la traza de este resumen, o `None` si todavia no hay a donde llevar.
+
+    **La regla de "hay enlace" es una sola y vive aqui**, para que la bandeja y el tablero de
+    gasto no la escriban cada uno: solo cuando el resumen esta `ready`. Uno que se esta
+    registrando todavia no salio y uno `lost` no llego, asi que su direccion llevaria a una
+    pagina que no existe. Y `None` si el backend no esta configurado o no se supo el proyecto.
+    """
+    if resumen is None or resumen.status is not TraceSummaryStatus.READY:
+        return None
+    return trace_url(resumen.trace_id)
+
+
 def available() -> bool:
     return _links is not None
 
 
-__all__ = ["TraceLinks", "available", "install", "trace_url"]
+__all__ = ["TraceLinks", "available", "install", "summary_url", "trace_url"]

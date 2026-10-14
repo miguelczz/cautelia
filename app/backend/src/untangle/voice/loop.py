@@ -491,12 +491,32 @@ class CallRunner:
                 self._voces_oidas += 1
             await self._oido.put(oido)
 
+    def _durante_la_apertura(self, momento: datetime | None) -> bool:
+        """Si esto se dijo mientras sonaba la apertura: entonces no se escucha (2026-10-14).
+
+        Mientras la apertura se envia --todavia no se registro (`disclosed_at`)-- todo es
+        durante. Despues, lo que termino de decirse antes de su hora de fin estimada, que es
+        cuando deja de sonar en el navegador. Lo que no trae hora (`None`) ya no se descarta
+        aqui: lo filtra el eco. Una frase que empezo encima y sigue despues se oye entera.
+        """
+        fin = self.engine.disclosed_at
+        if fin is None:
+            return True
+        return momento is not None and momento < fin
+
+    def _cuando_termino(self, transcrito: Transcript) -> datetime | None:
+        """Cuando termino de decirse esto, por su ultima palabra; `None` si no lo trae."""
+        if not transcrito.words or self._flujo_empezo_a is None:
+            return None
+        return self._flujo_empezo_a + timedelta(seconds=max(p.end_s for p in transcrito.words))
+
     def _sin_la_voz_de_la_agente(self, oido: ListenEvent) -> ListenEvent | None:
         """Lo que el reconocedor oyo, sin lo que es la agente sonando por el altavoz.
 
         **Es el unico sitio por donde entra lo oido**, y por eso el eco se quita aqui y no
         en cada sitio que decide algo con un transcrito: ni interrumpe a la agente, ni abre
-        un turno, ni se pinta como dicho por la persona. Nulo si no queda nada.
+        un turno, ni se pinta como dicho por la persona. Lo dicho mientras suena la apertura
+        tampoco entra (2026-10-14). Nulo si no queda nada.
         """
         ahora = self.now()
         if isinstance(oido, SpeechStarted):
@@ -505,8 +525,19 @@ class CallRunner:
                 if self._flujo_empezo_a is None
                 else self._flujo_empezo_a + timedelta(seconds=oido.at_s)
             )
+            if self._durante_la_apertura(None if self._flujo_empezo_a is None else momento):
+                return None
             # Una senal de voz no dice de quien es: mientras la agente suena, es ella.
             return None if self._propia_voz.sounding(momento) else oido
+        if self._durante_la_apertura(self._cuando_termino(oido)):
+            if oido.is_final:
+                observability.emit(
+                    "voice.heard_during_opening_discarded",
+                    tenant_id=self.engine.call.tenant_id,
+                    call_id=self.engine.call.call_id,
+                    words=len(str(oido.text).split()),
+                )
+            return None
         limpio = self._propia_voz.strip(
             oido, heard_at=ahora, stream_started_at=self._flujo_empezo_a
         )
@@ -857,22 +888,20 @@ class CallRunner:
     async def _abrir(self) -> EndReason | None:
         """La apertura y, si la hay, la oferta de retomar (BR2.1 a BR2.4, BR6.2).
 
-        La apertura **se repite entera** mientras no llegue a registrarse: media
-        divulgacion no es divulgacion (BR4.5). Quien lo decide es el motor, que
-        lo sabe por la hora de fin y no por una bandera de este ciclo.
+        **La apertura no se interrumpe y mientras suena no se escucha** (decision de Miguel,
+        2026-10-14). Antes se podia cortar y se repetia entera hasta oirse completa (media
+        divulgacion no es divulgacion, BR4.5): quien hablaba al conectar la oia tres veces. Ahora
+        suena entera una sola vez, lo que la persona diga encima se descarta
+        (`_sin_la_voz_de_la_agente`) y la conversacion empieza cuando la agente termina.
         """
-        while self.engine.needs_opening_again:
+        if self.engine.needs_opening_again:
             if self._colgo:
                 return EndReason.HANGUP
             if self._cerrado:
                 return EndReason.DROPPED
-            # La duracion maxima se mira **aqui tambien**: quien interrumpe cada
-            # apertura dejaria este bucle repitiendola sin final, y un bucle sin
-            # final en el camino de la llamada es peor que cualquier corte.
             if self.now() >= self._hora_de_despedirse:
                 return await self._despedirse_por_tiempo()
-            if await self._decir(self.engine.opening()):
-                continue
+            await self._decir(self.engine.opening(), interrumpible=False)
             # Con la hora en que **termina de sonar**, que es cuando esta dicha
             # (BR2.3), no la del fin del envio.
             await self.engine.opening_finished(at=self.silent_since())
@@ -1070,7 +1099,12 @@ class CallRunner:
             # descarta como el ruido que no interrumpe; la apertura sigue sonando y
             # termina de registrarse con su hora.
             return
-        if self._escucha_pendiente and self.engine.interrupted_by(transcrito):
+        # La apertura tampoco se corta por este camino, ya enviada y sonando (2026-10-14).
+        if (
+            self._escucha_pendiente
+            and not self.engine.opening_is_sounding(now=ahora)
+            and self.engine.interrupted_by(transcrito)
+        ):
             await self.channel.send(StopAudio())
             self._sonando_hasta = ahora
             self._propia_voz.cut(ahora)

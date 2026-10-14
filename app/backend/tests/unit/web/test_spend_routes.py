@@ -12,14 +12,16 @@ registro de verdad --las agregaciones en SQL, los casos que existen-- esta en
 from __future__ import annotations
 
 import ast
+import asyncio
 import inspect
-from collections.abc import Iterator
+from collections.abc import Iterator, Sequence
 from datetime import UTC, date, datetime, timedelta
 from decimal import Decimal
 from typing import Any
 
 import pytest
 from fastapi.testclient import TestClient
+from pydantic import ValidationError
 
 from untangle import paths
 from untangle.base import ProviderName
@@ -34,9 +36,18 @@ from untangle.telemetry.spend import api as spend
 from untangle.telemetry.spend import repository
 from untangle.telemetry.spend.models import (
     BudgetWindow,
+    Money,
     SpendActivity,
     SpendTotal,
     UnpricedUsage,
+)
+from untangle.telemetry.traces import api as trazas
+from untangle.telemetry.traces import links
+from untangle.telemetry.traces.models import (
+    NodeName,
+    NodeTiming,
+    TraceSummary,
+    TraceSummaryStatus,
 )
 from untangle.tenancy import api as tenancy
 from untangle.voice import api as voz
@@ -55,10 +66,14 @@ CASO_NUMERO = "STO-482913"
 @pytest.fixture(autouse=True)
 def proceso_limpio() -> Iterator[None]:
     spend_routes.reset_cache()
+    trazas.reset_summaries()
+    links.install(None)
     yield
     copy_api.reset()
     spend.reset()
     spend_routes.reset_cache()
+    trazas.reset_summaries()
+    links.install(None)
 
 
 def _cliente(**cookies: str) -> TestClient:
@@ -539,6 +554,277 @@ def test_la_comparacion_empieza_cuando_empezo_su_primer_caso(
     primera = cuerpo["comparisons"][0]
     esperado = registro.casos_["a-uno"][1].isoformat().replace("+00:00", "Z")
     assert primera["started_at"] == esperado
+
+
+# --- El enlace a Langfuse: solo el de este navegador (2026-10-14) -------------------
+
+CLAVE = "clave-del-navegador"
+CLAVE_DE_OTRO = "clave-de-otro-navegador"
+HOST = "https://us.cloud.langfuse.com"
+PROYECTO = "proyecto-local"
+#: Los identificadores de traza son reconocibles: si uno aparece en la respuesta de quien no
+#: es dueno, el tablero publico entrego la traza de un visitante.
+TRAZA_DEL_CASO = "48215069371502846913720465183927"
+TRAZA_FUERA_DE_LA_LISTA = "99999999999999999999999999999999"
+TRAZA_DE_OTRO = "77777777777777777777777777777777"
+FUERA_DE_LA_LISTA = "case-del-navegador-fuera-de-la-lista"
+ENLACE = f"{HOST}/project/{PROYECTO}/traces/{TRAZA_DEL_CASO}"
+ENLACE_FUERA_DE_LA_LISTA = f"{HOST}/project/{PROYECTO}/traces/{TRAZA_FUERA_DE_LA_LISTA}"
+
+
+class _RegistroPorNavegador(_Registro):
+    """Como el registro de siempre, pero cada navegador abrio sus propios casos."""
+
+    def __init__(
+        self, monkeypatch: pytest.MonkeyPatch, *, casos_de: dict[str, frozenset[str]]
+    ) -> None:
+        self._casos_de = casos_de
+        super().__init__(monkeypatch, ventana=_ventana())
+
+    async def _del_navegador(self, **consulta: Any) -> frozenset[str]:
+        return self._casos_de.get(consulta["visitor_key_digest"], frozenset())
+
+
+class _AlmacenQueCuenta:
+    """El almacen de resumenes del proceso, anotando cuantas lecturas se pidieron."""
+
+    def __init__(self) -> None:
+        self._dentro = trazas.InProcessSummaryStore()
+        self.lecturas_por_caso = 0
+        self.lecturas_por_lista: list[tuple[str, ...]] = []
+
+    async def put(self, summary: TraceSummary) -> None:
+        await self._dentro.put(summary)
+
+    async def get(self, trace_id: str, *, tenant_id: str) -> TraceSummary | None:
+        return await self._dentro.get(trace_id, tenant_id=tenant_id)
+
+    async def latest_for_case(self, case_id: str, *, tenant_id: str) -> TraceSummary | None:
+        self.lecturas_por_caso += 1
+        return await self._dentro.latest_for_case(case_id, tenant_id=tenant_id)
+
+    async def latest_for_cases(
+        self, case_ids: Sequence[str], *, tenant_id: str
+    ) -> dict[str, TraceSummary]:
+        self.lecturas_por_lista.append(tuple(sorted(case_ids)))
+        return await self._dentro.latest_for_cases(case_ids, tenant_id=tenant_id)
+
+
+def _con_langfuse() -> None:
+    links.install(links.TraceLinks(host=HOST, project_id=PROYECTO))
+
+
+def _traza(
+    trace_id: str,
+    case_id: str,
+    *,
+    de: str = CLAVE,
+    estado: TraceSummaryStatus = TraceSummaryStatus.READY,
+    minutos: int = 0,
+) -> TraceSummary:
+    listo = estado is TraceSummaryStatus.READY
+    ahora = datetime(2026, 10, 14, 15, 0, tzinfo=UTC)
+    return TraceSummary(
+        trace_id=trace_id,
+        tenant_id=tenancy.available_ids()[0],
+        case_id=case_id,
+        visitor_key_hash=tenancy.visitor_key_digest(de),
+        nodes=(
+            (
+                NodeTiming(
+                    node=NodeName.INTAKE,
+                    started_at=ahora,
+                    duration_ms=40,
+                    cost=Money.not_measured(),
+                ),
+            )
+            if listo
+            else ()
+        ),
+        latency_ms=120 if listo else None,
+        status=estado,
+        created_at=ahora + timedelta(minutes=minutos),
+    )
+
+
+def _sembrar_trazas(*resumenes: TraceSummary, almacen: _AlmacenQueCuenta | None = None) -> None:
+    if almacen is not None:
+        trazas.install_summary_store(almacen)
+
+    async def poner() -> None:
+        for resumen in resumenes:
+            await trazas.current_summary_store().put(resumen)
+
+    asyncio.run(poner())
+
+
+def _navegador(*casos: str, de: str = CLAVE) -> dict[str, frozenset[str]]:
+    return {tenancy.visitor_key_digest(de): frozenset(casos)}
+
+
+def test_el_navegador_con_traza_lista_recibe_su_enlace_en_su_caso_y_arriba(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _RegistroPorNavegador(monkeypatch, casos_de=_navegador(CASO_ID))
+    _con_langfuse()
+    _sembrar_trazas(_traza(TRAZA_DEL_CASO, CASO_ID))
+    with _cliente(untangle_visitor=CLAVE) as cliente:
+        cuerpo = cliente.get("/api/spend").json()
+
+    assert cuerpo["langfuse_url"] == ENLACE
+    (caso,) = cuerpo["cases"]
+    assert caso["yours"] is True
+    assert caso["trace_url"] == ENLACE
+
+
+def test_otro_navegador_o_ninguno_no_recibe_ninguna_url_aunque_el_caso_tenga_traza(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Las tres peticiones van seguidas, dentro del tiempo que se guarda lo comun.
+
+    Si el enlace se colara en lo que se guarda para todos, el segundo y el tercero lo
+    recibirian: la prueba es tambien que lo comun no lo lleva.
+    """
+    _RegistroPorNavegador(monkeypatch, casos_de=_navegador(CASO_ID))
+    _con_langfuse()
+    _sembrar_trazas(_traza(TRAZA_DEL_CASO, CASO_ID))
+
+    with _cliente(untangle_visitor=CLAVE) as cliente:
+        del_dueno = cliente.get("/api/spend")
+    with _cliente(untangle_visitor=CLAVE_DE_OTRO) as cliente:
+        de_otro = cliente.get("/api/spend")
+    with _cliente() as cliente:
+        sin_galleta = cliente.get("/api/spend")
+
+    assert del_dueno.json()["langfuse_url"] == ENLACE
+    for respuesta in (de_otro, sin_galleta):
+        cuerpo = respuesta.json()
+        assert cuerpo["langfuse_url"] is None
+        (caso,) = cuerpo["cases"]
+        assert caso["yours"] is False
+        assert caso["trace_url"] is None
+        # Ni la direccion, ni el host, ni el identificador de la traza.
+        assert TRAZA_DEL_CASO not in respuesta.text
+        assert "langfuse.com" not in respuesta.text
+
+
+def test_un_caso_que_el_navegador_dice_suyo_pero_cuya_traza_es_de_otro_no_da_enlace(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Segunda comprobacion de dueno: el resumen se compara contra la clave, no solo el caso."""
+    _RegistroPorNavegador(monkeypatch, casos_de=_navegador(CASO_ID))
+    _con_langfuse()
+    _sembrar_trazas(_traza(TRAZA_DEL_CASO, CASO_ID, de=CLAVE_DE_OTRO))
+    with _cliente(untangle_visitor=CLAVE) as cliente:
+        respuesta = cliente.get("/api/spend")
+
+    cuerpo = respuesta.json()
+    assert cuerpo["langfuse_url"] is None
+    assert cuerpo["cases"][0]["trace_url"] is None
+    assert TRAZA_DEL_CASO not in respuesta.text
+
+
+@pytest.mark.parametrize("estado", [TraceSummaryStatus.RECORDING, TraceSummaryStatus.LOST])
+def test_una_traza_que_no_esta_lista_no_da_enlace(
+    monkeypatch: pytest.MonkeyPatch, estado: TraceSummaryStatus
+) -> None:
+    _RegistroPorNavegador(monkeypatch, casos_de=_navegador(CASO_ID))
+    _con_langfuse()
+    _sembrar_trazas(_traza(TRAZA_DEL_CASO, CASO_ID, estado=estado))
+    with _cliente(untangle_visitor=CLAVE) as cliente:
+        cuerpo = cliente.get("/api/spend").json()
+
+    # El caso sigue siendo suyo: lo que falta es a donde llevar.
+    assert cuerpo["cases"][0]["yours"] is True
+    assert cuerpo["cases"][0]["trace_url"] is None
+    assert cuerpo["langfuse_url"] is None
+
+
+def test_sin_langfuse_configurado_no_hay_enlace_ni_se_lee_ninguna_traza(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _RegistroPorNavegador(monkeypatch, casos_de=_navegador(CASO_ID))
+    almacen = _AlmacenQueCuenta()
+    _sembrar_trazas(_traza(TRAZA_DEL_CASO, CASO_ID), almacen=almacen)
+    with _cliente(untangle_visitor=CLAVE) as cliente:
+        cuerpo = cliente.get("/api/spend").json()
+
+    assert cuerpo["langfuse_url"] is None
+    assert cuerpo["cases"][0]["trace_url"] is None
+    assert almacen.lecturas_por_lista == []
+    assert almacen.lecturas_por_caso == 0
+
+
+def test_arriba_va_la_traza_mas_reciente_de_este_navegador_y_cada_fila_la_suya(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """La mas reciente puede ser de un caso que ya no sale entre los de la lista."""
+    _RegistroPorNavegador(monkeypatch, casos_de=_navegador(CASO_ID, FUERA_DE_LA_LISTA))
+    _con_langfuse()
+    _sembrar_trazas(
+        _traza(TRAZA_DEL_CASO, CASO_ID, minutos=1),
+        _traza(TRAZA_FUERA_DE_LA_LISTA, FUERA_DE_LA_LISTA, minutos=30),
+        # La de otro navegador es todavia mas reciente y no cuenta.
+        _traza(TRAZA_DE_OTRO, "case-de-otro", de=CLAVE_DE_OTRO, minutos=90),
+    )
+    with _cliente(untangle_visitor=CLAVE) as cliente:
+        respuesta = cliente.get("/api/spend")
+
+    cuerpo = respuesta.json()
+    assert cuerpo["langfuse_url"] == ENLACE_FUERA_DE_LA_LISTA
+    assert cuerpo["cases"][0]["trace_url"] == ENLACE
+    assert TRAZA_DE_OTRO not in respuesta.text
+
+
+def test_las_trazas_se_leen_en_una_sola_lectura_por_aseguradora_y_no_una_por_fila(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _RegistroPorNavegador(monkeypatch, casos_de=_navegador(CASO_ID, FUERA_DE_LA_LISTA))
+    _con_langfuse()
+    almacen = _AlmacenQueCuenta()
+    _sembrar_trazas(
+        _traza(TRAZA_DEL_CASO, CASO_ID),
+        _traza(TRAZA_FUERA_DE_LA_LISTA, FUERA_DE_LA_LISTA),
+        almacen=almacen,
+    )
+    with _cliente(untangle_visitor=CLAVE) as cliente:
+        cliente.get("/api/spend")
+
+    assert almacen.lecturas_por_lista == [tuple(sorted((CASO_ID, FUERA_DE_LA_LISTA)))]
+    assert almacen.lecturas_por_caso == 0
+
+
+def test_quien_no_tiene_casos_no_lee_ninguna_traza(monkeypatch: pytest.MonkeyPatch) -> None:
+    _RegistroPorNavegador(monkeypatch, casos_de={})
+    _con_langfuse()
+    almacen = _AlmacenQueCuenta()
+    _sembrar_trazas(_traza(TRAZA_DEL_CASO, CASO_ID), almacen=almacen)
+    with _cliente(untangle_visitor=CLAVE) as cliente:
+        cuerpo = cliente.get("/api/spend").json()
+
+    assert cuerpo["langfuse_url"] is None
+    assert almacen.lecturas_por_lista == []
+
+
+def test_el_tipo_no_deja_construir_el_enlace_de_un_caso_que_no_es_del_navegador() -> None:
+    """Imposible por construccion: no depende de que `build_panel` se acuerde."""
+    base: dict[str, Any] = {
+        "key": "0",
+        "tenant_id": "knotwell",
+        "record_type": "claim",
+        "channel": "chat",
+        "started_at": datetime(2026, 10, 14, 15, 0, tzinfo=UTC),
+        "total": _total("0"),
+        "by_provider": (),
+    }
+
+    suyo = spend_routes.CaseSpendItem(**base, yours=True, trace_url=ENLACE)
+    ajeno = spend_routes.CaseSpendItem(**base, yours=False)
+
+    assert suyo.trace_url == ENLACE
+    assert ajeno.trace_url is None
+    with pytest.raises(ValidationError, match="no es de este navegador"):
+        spend_routes.CaseSpendItem(**base, yours=False, trace_url=ENLACE)
 
 
 # --- BR3.3: el tablero no contiene ningun umbral ------------------------------------

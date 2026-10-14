@@ -444,6 +444,43 @@ describe("cuando ya no se puede anotar", () => {
   });
 });
 
+// El bloque es el primer paso del panel del ajustador (2026-10-14): su titulo es un encabezado de
+// nivel 3 --cuelga del titulo del panel-- y lleva una marca numerica solo cuando el panel tiene
+// mas de un paso.
+describe("el titulo como paso del panel", () => {
+  it("con numero de paso lleva su marca, oculta para el lector de pantalla, y el titulo es de nivel 3", () => {
+    dibujar({ step: 1 });
+
+    // El nombre accesible es el titulo solo: la marca no se lee.
+    const titulo = screen.getByRole("heading", { level: 3, name: t("visitor.triage.title") });
+    const marca = within(titulo).getByTestId("step-mark");
+    expect(marca.textContent).toBe("1");
+    expect(marca.getAttribute("aria-hidden")).toBe("true");
+    expect(marca.className).toContain("bg-brand");
+    expect(marca.className).toContain("text-on-brand");
+    expect(screen.queryByRole("heading", { level: 2 })).toBeNull();
+  });
+
+  it("sin numero de paso el titulo no lleva marca", () => {
+    dibujar();
+
+    expect(screen.queryByTestId("step-mark")).toBeNull();
+    expect(screen.getByRole("heading", { level: 3, name: t("visitor.triage.title") })).toBeTruthy();
+  });
+
+  it("la lectura de lo anotado, sin formulario, es el mismo paso con el mismo titulo y su marca", () => {
+    dibujar({
+      canAnnotate: false,
+      note: { claim_amount: 2500, coverage_disputed: false, fraud_suspected: true },
+      step: 1,
+    });
+
+    expect(screen.queryByTestId("visitor-triage-form")).toBeNull();
+    const titulo = screen.getByRole("heading", { level: 3, name: t("visitor.triage.title") });
+    expect(within(titulo).getByTestId("step-mark").textContent).toBe("1");
+  });
+});
+
 describe("lo que lee quien reporto", () => {
   it("no dice una palabra de la jerga del sistema (U-07)", () => {
     dibujar();

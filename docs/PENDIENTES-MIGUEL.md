@@ -4,7 +4,7 @@ Lo que solo puedes hacer tú, ordenado por cuánto trabajo destraba. Cada entrad
 dice **qué destraba**, **por qué no puedo hacerlo yo** y **qué hacer**, en ese
 orden, para que no tengas que reconstruir el contexto.
 
-Última revisión: 2026-10-13. La sección que sigue es el estado de hoy, comprobado
+Última revisión: 2026-10-14. La sección que sigue es el estado de hoy, comprobado
 contra el código; de ahí para abajo queda el registro como se escribió hasta el
 2026-10-07, y varias de sus entradas ya no valen (se dice cuáles).
 
@@ -21,15 +21,15 @@ repositorio y va aparte.
 
 | Fecha | Qué vence | De quién |
 | --- | --- | --- |
-| 2026-11-01 | Los topes de los proveedores (párrafo de abajo) | Miguel: solo él entra a esas consolas |
 | 2026-11-03 | El aviso de seguridad aceptado de `braces` (interfaz), en `app/frontend/DEPENDENCIES.md` | Mío: revisar si ya hay versión corregida, o renovar con su razón |
+| 2026-11-13 | Los topes de los proveedores (párrafo de abajo) | Miguel: solo él entra a esas consolas |
 | 2026-11-13 | El aviso de seguridad aceptado de `langgraph-sdk`, misma tabla | Mío: igual |
 
 
-Los topes de Deepgram, Cartesia y Gemini que guarda `app/config/providers/prices.yaml`
-se comprobaron el 2026-10-02 y valen 30 días. Desde el **2026-11-02 la revisión de
-GitHub sale en rojo** en cualquier subida hasta que se vuelvan a leer en las consolas
-y se actualice la fecha. Es de Miguel: solo él entra a esas consolas.
+Los topes que guarda `app/config/providers/prices.yaml` se leyeron en las consolas el
+2026-10-13 (Claude) y el 2026-10-14 (Deepgram, Cartesia y Gemini) y valen 30 días. Desde
+el **2026-11-13 la revisión de GitHub sale en rojo** en cualquier subida hasta que se
+vuelvan a leer y se actualice la fecha. Es de Miguel: solo él entra a esas consolas.
 
 ### Falta, y es trabajo de código
 
@@ -49,14 +49,15 @@ y se actualice la fecha. Es de Miguel: solo él entra a esas consolas.
 
 ### Falta, y depende de Miguel o de terceros
 
-- Probar lo del 12 y el 13 de octubre (chat, llamada, landing en el teléfono) y decir «publica».
-- Decidir: si se queda la muletilla de la llamada; si el reconocedor vuelve a oír los dos idiomas a la vez; si el enlace del caso sirve también para seguir por chat.
-- Aprobar el gasto de la corrida completa de evaluaciones (unos 20 centavos).
-- Las 20 grabaciones de llamadas (10 por idioma) y las 40 etiquetas del juez.
-- Volver a leer las consolas de los proveedores antes del 2026-11-01.
-- Los textos del README que están a su nombre y el video. (El correo para los avisos ya no hace falta: los manda GitHub.)
-- Decidir si el repositorio se publica; de eso dependen la licencia (no hay archivo `LICENSE`) y el enlace de cada cifra a su corrida.
-- La validación con dos o tres personas del sector: no hay rastro de que se haya hecho.
+- Probar en la demo lo del 13 y el 14 de octubre y decir «publica».
+- Volver a leer los topes en las consolas antes del 2026-11-13 (párrafo de arriba), si el proyecto sigue recibiendo cambios para entonces.
+- Decidir el juez (etiquetar unas 130 respuestas, cerca de una hora) y las 20 grabaciones de llamadas de la prueba de voz, o dejarlas fuera con su «no medida».
+- El README ya está escrito (2026-10-14, con capturas, una animación y el video). Falta cambiar sus cifras cuando se publique la línea base, después de «publica».
+- Decidir si el repositorio se hace público, con la revisión del 2026-10-14 a la vista (abajo).
+
+**Aprobado el 2026-10-14:** la frase del reporte incompleto (`intake.unfinished`), los textos de las anotaciones guiadas (`visitor.triage.*`) y la muletilla de la llamada («Okey…», «Listo…»), que se queda. **Descartado el 2026-10-14:** la validación con personas del sector («no es necesario»).
+
+**Revisión para hacerlo público (2026-10-14).** Ninguna clave en los 786 commits (`gitleaks`, historial completo) y ningún archivo de entorno ni de llaves subido nunca. Lo que sí queda a la vista si se publica: el correo de la universidad como autor de 779 commits (dato de cada commit, no de un archivo); los dos correos personales que nombraba `docs/PLAN-AIDLC.md` --ya quitados del archivo, siguen en el primer commit--; la dirección directa del servicio de Cloud Run en `site/functions/[[path]].js` (pública de todos modos, no es secreta); y la ruta de usuario de la Mac en tres documentos. Quitar los dos primeros del historial exige reescribirlo (cambian todos los identificadores de commit) o publicar un repositorio nuevo sin historial; es decisión de Miguel.
 
 ### Ya está hecho, aunque más abajo diga lo contrario
 
@@ -73,7 +74,9 @@ y se actualice la fecha. Es de Miguel: solo él entra a esas consolas.
 - La llamada simulada puede terminar un reporte (`app/evals/fixtures/voice-sim/cierre-directo.json`), y con ella se oyó el cierre directo por voz de punta a punta.
 - **Alguien se entera** (2026-10-13): un chequeo diario en GitHub Actions (7:30 de Bogotá, cerca de un minuto de GitHub al día) lee la salud del sitio, si el reinicio nocturno está al día y el estado del gasto, y falla cuando algo está mal; GitHub manda el correo del fallo. La salud pública dice ahora cuándo fue el último reinicio exitoso. A mano: `mise run ops:check`. Empieza a correr con la primera subida que lo traiga, y la parte del reinicio dice «no medida» hasta que se publique la versión que trae el dato. Se descartó Google Cloud Monitoring porque cobra cada mes por condición de alerta.
 - **Quien hace de ajustador anota, con ayuda** (2026-10-13): en «Ver mi caso», antes de decidir, un paso opcional pregunta cuánto costaría el arreglo (en pesos, con la línea de desde qué montos cambian las reglas y tres montos de ejemplo que salen del archivo de reglas), si hay dudas de cobertura y si algo hace sospechar de fraude, cada una con un ejemplo; al guardar dice cómo quedó clasificado el caso. Solo sobre su propio caso, con tope de 30 cambios, sin ver ni pisar lo que anote un ajustador con credencial. Los textos (`visitor.triage.*`) esperan el visto bueno de Miguel.
-- **Langfuse conectado** (2026-10-14, Langfuse Cloud, plan gratuito, región de Estados Unidos, proyecto `cautelia-local`): cada turno de chat y de llamada sale cada 15 segundos en segundo plano, con sus pasos, el modelo, los tokens, el tiempo y el costo, agrupado por caso y público por su enlace; nunca el texto de la conversación. «Ver mi caso» enlaza a esa traza («Ver en Langfuse cómo trabajó la agente»). El reinicio nocturno borra de Langfuse lo anterior a su corte; si Langfuse no responde, no cierra la demo y se reintenta la noche siguiente. Comprobado de verdad: un turno enviado llegó con modelo, tokens y costo, se listó y se borró. Se retiró el Langfuse para instalar a mano y sus variables. De paso apareció y se arregló que la redacción estropeaba a veces los identificadores de las trazas.
+- **Langfuse conectado** (2026-10-14, Langfuse Cloud, plan gratuito, región de Estados Unidos, proyecto `cautelia-local`): cada turno de chat y de llamada sale cada 15 segundos en segundo plano, con sus pasos, el modelo, los tokens, el tiempo y el costo, agrupado por caso y público por su enlace; nunca el texto de la conversación. «Ver mi caso» enlaza a esa traza («Ver en Langfuse cómo trabajó la agente»), y la vista de costo de Telemetría tiene un botón «Ver tu última conversación en Langfuse» (solo con las conversaciones de ese navegador: sin cuenta, Langfuse solo abre una traza por su enlace). El reinicio nocturno borra de Langfuse lo anterior a su corte; si Langfuse no responde, no cierra la demo y se reintenta la noche siguiente. Comprobado de verdad: un turno enviado llegó con modelo, tokens y costo, se listó y se borró. Se retiró el Langfuse para instalar a mano y sus variables. De paso apareció y se arregló que la redacción estropeaba a veces los identificadores de las trazas.
+- **Dos fallos de la llamada del 2026-10-14, arreglados**: «quería preguntar por mi póliza» ya no se guarda como la pregunta de la consulta (la agente pregunta qué quiere saber en vez de revisar la póliza contra nada y pasar el caso a un ajustador), y una respuesta dudosa a «¿eres tú?» se pregunta otra vez, una sola, en vez de volver a pedir nombre y póliza. Además, la pantalla del caso va en dos paneles (el ajustador a la izquierda, los datos a la derecha, la conversación debajo) con menos texto, y un caso que ya no se decide dice «Estado de tu caso».
+- **El saludo de la llamada ya no se corta** (decisión de Miguel, 2026-10-14: «mientras ella hable no debe escuchar, obviamente tampoco se puede interrumpir»). Suena entero una sola vez; lo que la persona diga mientras suena no se escucha ni se muestra, y la conversación empieza cuando la agente termina. Una frase que empieza encima del final y sigue después se oye entera, para no cortarle el principio. En el resto de la llamada la persona sigue pudiendo interrumpir. Cambia el criterio AC1.30.1, que pedía repetir entera la apertura cortada. Consecuencia para la prueba de voz: si se graban las 20 llamadas, cada grabación tiene que dejar sonar el saludo antes de hablar (unos 15 s de silencio al principio), o lo dicho encima se pierde. Las pruebas de la llamada que fijaban lo de antes se reescribieron; las de integración piden la base de pruebas en Docker y no se corrieron en la Mac.
 - Los límites diarios de la llamada (3 por visitante, 15 del sitio, 4 minutos).
 - El reinicio nocturno con sus casos sembrados, el aprovisionamiento y la ventana de 24 horas.
 - El trabajo de fondo completo: cobertura, reglas y revisión, también al cerrar un reporte.

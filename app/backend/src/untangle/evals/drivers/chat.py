@@ -44,7 +44,9 @@ la corrida.
 
 from __future__ import annotations
 
+import asyncio
 import time
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from typing import Any
@@ -61,6 +63,7 @@ from untangle.evals.models import Channel, ChatTurnLatency, GoldenCase
 from untangle.evals.runner import api as runner
 from untangle.evals.runner.failures import TargetUnavailableError
 from untangle.evals.scripted_insured import ScriptedInsured
+from untangle.orchestration import closing_plan
 from untangle.orchestration.contracts import InboundTurn
 from untangle.orchestration.nodes.intake import blocks
 from untangle.orchestration.nodes.intake.blocks import Block
@@ -309,6 +312,7 @@ class ChatDriver:
             if viva is not None:
                 conversacion = viva
 
+        await _resolver_como_si_cerrara_la_pestana(tenant_id, conversacion.case_id)
         vista = await _vista(tenant_id, conversacion.case_id)
         return runner.CaseTranscript(
             case_key=case.case_key,
@@ -351,6 +355,52 @@ async def _vista(tenant_id: TenantId, case_id: str | None) -> casos.CaseView | N
     if case_id is None:
         return None
     return await casos.get_case(tenant_id, case_id)
+
+
+#: Cuanto espera el conductor a que el fondo resuelva un reporte terminado.
+ESPERA_DEL_DESENLACE_S = 20.0
+
+#: Quien da por rechazada la oferta abierta y lanza el cierre: `orchestration.turn.settle_review`.
+#: Lo enchufa quien arma la aplicacion de la corrida (`server.understanding_cli`), porque desde
+#: aqui no se puede importar la orquestacion: LangGraph solo vive alli.
+type ReviewSettler = Callable[[str, TenantId], Awaitable[None]]
+
+_RESOLVEDOR: ReviewSettler | None = None
+
+
+def install_review_settler(settler: ReviewSettler | None) -> None:
+    """Enchufa (o quita, con `None`) quien resuelve la revision al terminar la conversacion."""
+    global _RESOLVEDOR
+    _RESOLVEDOR = settler
+
+
+async def _resolver_como_si_cerrara_la_pestana(tenant_id: TenantId, case_id: str | None) -> None:
+    """Lo que pasa cuando la persona se va con la oferta de datos opcionales sin contestar.
+
+    Desde el 2026-10-13 un reporte completo no se deriva en el turno: queda en revision,
+    ofrece agregar el vehiculo o las otras personas, y el cierre espera esa respuesta; en el
+    chat, si nadie contesta en dos minutos, la oferta se da por rechazada. Los guiones de
+    los casos terminan sin contestarla, y leer el caso en ese momento lo encontraba aun en
+    revision: once casos en rojo en la corrida del 2026-10-14 sin que la agente fallara.
+
+    Aqui se hace lo mismo que el chat hace a los dos minutos, sin esperarlos: la oferta se
+    da por rechazada por el mismo camino que una llamada que termina (`settle_review`), y
+    se espera a que el fondo saque el caso de revision. Un caso que no esta en revision --un
+    reporte a medias, una consulta-- no se toca, y sin resolvedor enchufado tampoco: el caso
+    se lee como quedo.
+    """
+    if case_id is None or _RESOLVEDOR is None:
+        return
+    vista = await casos.get_case(tenant_id, case_id)
+    if vista is None or vista.state not in closing_plan.REVIEW_STATES:
+        return
+    await _RESOLVEDOR(case_id, tenant_id)
+    limite = time.monotonic() + ESPERA_DEL_DESENLACE_S
+    while time.monotonic() < limite:
+        await asyncio.sleep(0.2)
+        vista = await casos.get_case(tenant_id, case_id)
+        if vista is None or vista.state not in closing_plan.REVIEW_STATES:
+            return
 
 
 def _registro(vista: casos.CaseView | None) -> dict[str, Any]:

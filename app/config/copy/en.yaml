@@ -894,6 +894,20 @@ spend_panel:
     empty:
       text: "No cases with spend yet. Talk to the agent by chat or by call and your case will show up here."
       surface: system
+  # Access to Langfuse (2026-10-14). Only the trace of this browser's conversation is
+  # opened: Langfuse asks for a sign-in except for a trace opened by its address, and this
+  # screen is public. The note that explains what Langfuse is comes from the inbox
+  # (`inbox.trace.langfuse_note`): there is only one.
+  langfuse:
+    link:
+      text: "See your latest conversation in Langfuse"
+      surface: system
+    case_link:
+      text: "See in Langfuse"
+      surface: system
+    empty:
+      text: "Once you talk to the agent, you will be able to open your conversation in Langfuse here."
+      surface: system
 
 surface:
   telemetry:
@@ -1365,7 +1379,7 @@ compliance:
       surface: chat
   handoff:
     adjuster_review:
-      text: Of course. I'm passing this to an adjuster with everything we've captured so you won't have to repeat it.
+      text: Based on what you told me, an adjuster reviews this case. I'm passing along everything we recorded so you won't have to repeat it.
       surface: chat
     # En una consulta nadie conto nada: la frase de toda derivacion decia "con lo que
     # me conto" (2026-10-08).
@@ -2711,6 +2725,13 @@ intake:
     declined:
       text: Understood. What is your full name and policy number?
       surface: chat
+    # The answer to "is that you?" was neither yes nor no (2026-10-14): ask once more.
+    confirm_again:
+      text: "Sorry, I didn't catch that. Are you {name}? You can just say yes or no."
+      surface: chat
+    confirm_again_driver:
+      text: "Sorry, I didn't catch that. Are you {name}, and were you driving that car? You can just say yes or no."
+      surface: chat
     # The number that was heard leads to no policy (2026-10-13): it does not exist, it came
     # through incomplete, or the holder has more than one. The person is asked once to repeat
     # it digit by digit, which is how the recognizer hears it best. No numbers inside: there is
@@ -3050,7 +3071,7 @@ inbox:
     # Each piece of personal data appears as a label naming its type, and the full
     # value lives in the case field, which is visible above.
     redacted_hint:
-      text: Personal data appears as a label naming its type. The full value lives in the case field, above.
+      text: Personal data appears as a label naming its type. The full value is in the case details.
       surface: inbox
     empty:
       text: No conversation has been recorded yet.
@@ -3282,7 +3303,7 @@ inbox:
       text: Your note
       surface: inbox
     comment_hint:
-      text: It stays in the case record and it is what makes the decision auditable.
+      text: It stays in the case record.
       surface: inbox
     recorded:
       text: The decision was recorded.
@@ -3330,18 +3351,38 @@ visitor:
   title_quote:
     text: Your quote request
     surface: inbox
+  # The panel where the visitor plays the adjuster (2026-10-14): its title, the title of the
+  # decide step and the data block that replaces, on this screen, "Completeness by field"
+  # (jargon for whoever decides with a credential).
+  # With nothing to decide or note, the panel says how the case stands (2026-10-14).
+  status:
+    title:
+      text: Your case status
+      surface: inbox
+  adjuster:
+    title:
+      text: Play the adjuster
+      surface: inbox
+  decision:
+    title:
+      text: Decide
+      surface: inbox
+  block:
+    fields:
+      text: Your report details
+      surface: inbox
   number:
-    text: "Your case number: {case_number}. Use it to pick the case back up or look it up."
+    text: "Case {case_number} · use it to pick it up again or look it up"
     surface: inbox
   # What you are looking at and how long the link lasts (Flow 3, step 4).
   intro:
-    text: "This is what came of your case: what you told us, what we found in your policy, and what an adjuster would decide."
+    text: What you told us, what your policy says and what the adjuster decides.
     surface: inbox
   valid_until:
     text: This link works until {time} today.
     surface: inbox
   decide_intro:
-    text: "In this demo you can play the adjuster: take the decision and see how the conversation goes on."
+    text: Check the details and decide. The conversation continues with your decision.
     surface: inbox
   opening:
     text: Opening your case…
@@ -3372,21 +3413,21 @@ visitor:
   # system jargon (U-07): nothing here says inbox, queue or triage.
   triage:
     title:
-      text: "Before deciding: what an adjuster would review"
+      text: Review (optional)
       surface: inbox
     intro:
-      text: It is optional. The agent collects what happened; only an adjuster can assess these three things. If you note them, the insurer's rules classify the case again and you see right here what changed.
+      text: If you note these, the rules classify the case again.
       surface: inbox
     amount_label:
-      text: How much would it cost to repair the damage? (in pesos)
+      text: How much would the repair cost? (in pesos)
       surface: inbox
     # The amounts come from the insurer's rules file, never from the screen: three phrases
     # depending on how many thresholds it has (two or more, one, none).
     amount_help:
-      text: A rough estimate. From {first} the rules ask an adjuster to review the amount; from {last}, a more detailed review.
+      text: "From {first} the amount is reviewed; from {last}, in more detail."
       surface: inbox
     amount_help_one:
-      text: A rough estimate. From {first} the rules ask an adjuster to review the amount.
+      text: "From {first} the amount is reviewed."
       surface: inbox
     amount_help_none:
       text: A rough estimate.
@@ -3401,25 +3442,25 @@ visitor:
       text: Type numbers only, with no dots, commas or letters.
       surface: inbox
     coverage_label:
-      text: Is there any doubt about whether the policy covers this damage?
+      text: Any doubt the policy covers it?
       surface: inbox
     coverage_help:
-      text: For example, whether what happened might fall under a policy exclusion.
+      text: For example, if it might be an exclusion.
       surface: inbox
     fraud_label:
-      text: Does anything make you suspect fraud?
+      text: Anything that suggests fraud?
       surface: inbox
     fraud_help:
-      text: For example, versions that do not match, or a report made long after the event.
+      text: For example, accounts that don't match.
       surface: inbox
     unset:
       text: I have not checked
       surface: inbox
     save:
-      text: Save and see what the rules say
+      text: Save and see the rules
       surface: inbox
     result:
-      text: The rules evaluated the case again.
+      text: Rules updated.
       surface: inbox
     limit:
       text: These notes cannot be changed any more on this case.

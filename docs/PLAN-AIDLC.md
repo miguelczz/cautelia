@@ -75,7 +75,7 @@ Abiertas, ninguna bloquea el paso 1:
 1. **Raíz del repo** (D-002): **resuelta**, `untangle/` es la raíz del repo git desde el 2026-09-15.
 2. **Linear**: **resuelta** el 2026-09-18, no se usa (D-020).
 3. **Keycloak**: reutilizar la experiencia previa o simplificar (ajuste 10). Se decide como ADR en Application Design.
-4. **Cuenta de Drive**: el conector de esta sesión está en [correo retirado] y la carpeta pertenece a [correo retirado]. No hace falta ya; si agregas material nuevo al Drive, compártelo con la cuenta del conector.
+4. **Cuenta de Drive**: el conector de esta sesión y la carpeta estaban en cuentas personales distintas de Miguel. No hace falta ya; si agregas material nuevo al Drive, compártelo con la cuenta del conector.
 
 ---
 

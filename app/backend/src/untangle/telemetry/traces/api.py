@@ -95,10 +95,11 @@ La forma del cable tampoco se pierde: `export.py` escribe OTLP/JSON, que es el
 
 from __future__ import annotations
 
+import asyncio
 import hmac
 import re
 from collections import deque
-from collections.abc import Iterator, Mapping
+from collections.abc import Iterator, Mapping, Sequence
 from contextlib import contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass, field
@@ -814,6 +815,16 @@ class SummaryStore(Protocol):
 
     async def latest_for_case(self, case_id: str, *, tenant_id: str) -> TraceSummary | None: ...
 
+    async def latest_for_cases(
+        self, case_ids: Sequence[str], *, tenant_id: str
+    ) -> dict[str, TraceSummary]:
+        """El ultimo resumen de **cada** caso de la lista, en una sola lectura.
+
+        Del caso a su resumen; el caso sin resumen no aparece. Es `latest_for_case` sin una
+        consulta por caso: lo piden las superficies que muestran varios casos a la vez.
+        """
+        ...
+
 
 class InProcessSummaryStore:
     """El almacen del proceso. Para las pruebas y para el camino sin base.
@@ -843,6 +854,22 @@ class InProcessSummaryStore:
         if not delcaso:
             return None
         return max(delcaso, key=lambda s: (s.created_at, s.trace_id))
+
+    async def latest_for_cases(
+        self, case_ids: Sequence[str], *, tenant_id: str
+    ) -> dict[str, TraceSummary]:
+        pedidos = set(case_ids)
+        ultimos: dict[str, TraceSummary] = {}
+        for resumen in self._por_traza.values():
+            if resumen.tenant_id != tenant_id or resumen.case_id not in pedidos:
+                continue
+            previo = ultimos.get(resumen.case_id)
+            if previo is None or (resumen.created_at, resumen.trace_id) > (
+                previo.created_at,
+                previo.trace_id,
+            ):
+                ultimos[resumen.case_id] = resumen
+        return ultimos
 
 
 _store: SummaryStore = InProcessSummaryStore()
@@ -994,6 +1021,24 @@ async def trace_summary_for_staff(case_id: str, *, tenant_id: str) -> TraceSumma
     return await _store.latest_for_case(case_id, tenant_id=tenant_id)
 
 
+async def trace_summaries_for_visitor(
+    case_ids: Sequence[str], *, tenant_id: str, visitor_key_hash: str
+) -> dict[str, TraceSummary]:
+    """El ultimo resumen de cada caso, **solo los del navegador que los produjo** (BR6.6).
+
+    Es `trace_summary_for` para varios casos con una sola lectura. La comparacion de dueno
+    es la misma funcion, no una copia: el resumen de un caso de otro navegador no aparece
+    en la respuesta, **igual que si no existiera**.
+    """
+    if not case_ids:
+        return {}
+    leidos = await _store.latest_for_cases(case_ids, tenant_id=tenant_id)
+    propios = await asyncio.gather(
+        *(_del_dueno(resumen, visitor_key_hash) for resumen in leidos.values())
+    )
+    return {resumen.case_id: resumen for resumen in propios if resumen is not None}
+
+
 async def summary_by_trace(
     trace_id: TraceId, *, tenant_id: str, visitor_key_hash: str | None
 ) -> TraceSummary | None:
@@ -1047,6 +1092,7 @@ __all__ = [
     "reset",
     "reset_summaries",
     "summary_by_trace",
+    "trace_summaries_for_visitor",
     "trace_summary_for",
     "trace_summary_for_staff",
     "turn_span",

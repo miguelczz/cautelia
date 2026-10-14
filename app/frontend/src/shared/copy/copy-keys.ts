@@ -473,6 +473,8 @@ export type CopyKey =
   | "intake.degraded"
   | "intake.emergency.continuation"
   | "intake.identity.name_permission"
+  | "intake.policy.confirm_again"
+  | "intake.policy.confirm_again_driver"
   | "intake.policy.confirmed_identity"
   | "intake.policy.confirmed_vehicle"
   | "intake.policy.declined"
@@ -848,6 +850,9 @@ export type CopyKey =
   | "spend_panel.kpi.per_chat_hint"
   | "spend_panel.kpi.total"
   | "spend_panel.kpi.total_hint"
+  | "spend_panel.langfuse.case_link"
+  | "spend_panel.langfuse.empty"
+  | "spend_panel.langfuse.link"
   | "spend_panel.loading"
   | "spend_panel.not_measured"
   | "spend_panel.provider.anthropic"
@@ -913,7 +918,10 @@ export type CopyKey =
   | "trace.summary.lost"
   | "trace.summary.ready"
   | "trace.summary.recording"
+  | "visitor.adjuster.title"
+  | "visitor.block.fields"
   | "visitor.decide_intro"
+  | "visitor.decision.title"
   | "visitor.decision_not_saved"
   | "visitor.done_body"
   | "visitor.done_title"
@@ -921,6 +929,7 @@ export type CopyKey =
   | "visitor.intro"
   | "visitor.number"
   | "visitor.opening"
+  | "visitor.status.title"
   | "visitor.title_claim"
   | "visitor.title_inquiry"
   | "visitor.title_quote"
@@ -1520,6 +1529,8 @@ export const COPY_KEYS = [
   "intake.degraded",
   "intake.emergency.continuation",
   "intake.identity.name_permission",
+  "intake.policy.confirm_again",
+  "intake.policy.confirm_again_driver",
   "intake.policy.confirmed_identity",
   "intake.policy.confirmed_vehicle",
   "intake.policy.declined",
@@ -1895,6 +1906,9 @@ export const COPY_KEYS = [
   "spend_panel.kpi.per_chat_hint",
   "spend_panel.kpi.total",
   "spend_panel.kpi.total_hint",
+  "spend_panel.langfuse.case_link",
+  "spend_panel.langfuse.empty",
+  "spend_panel.langfuse.link",
   "spend_panel.loading",
   "spend_panel.not_measured",
   "spend_panel.provider.anthropic",
@@ -1960,7 +1974,10 @@ export const COPY_KEYS = [
   "trace.summary.lost",
   "trace.summary.ready",
   "trace.summary.recording",
+  "visitor.adjuster.title",
+  "visitor.block.fields",
   "visitor.decide_intro",
+  "visitor.decision.title",
   "visitor.decision_not_saved",
   "visitor.done_body",
   "visitor.done_title",
@@ -1968,6 +1985,7 @@ export const COPY_KEYS = [
   "visitor.intro",
   "visitor.number",
   "visitor.opening",
+  "visitor.status.title",
   "visitor.title_claim",
   "visitor.title_inquiry",
   "visitor.title_quote",

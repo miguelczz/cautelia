@@ -48,10 +48,12 @@ from untangle.evals import (
     understanding_probes,
 )
 from untangle.evals import cli as evals_cli
+from untangle.evals.drivers import chat as chat_driver
 from untangle.evals.gates.baseline import build_digest
 from untangle.evals.gates.gate import blocking_criteria_from_registry
 from untangle.evals.gates.loading import save_last_run_digest
 from untangle.evals.runner import runner
+from untangle.orchestration import turn as orchestration_turn
 from untangle.orchestration.nodes.policy_verification import node as policy_verification_node
 from untangle.orchestration.nodes.policy_verification.proposal import ProposerPort
 from untangle.providers import config as provider_config
@@ -172,6 +174,14 @@ def main(argv: list[str] | None = None) -> int:
     # cola de etiquetado de DS-7 (`mise run evals:label:queue`). El reporte solo guarda
     # veredictos por caso. Las otras corridas no conversan y no tienen nada que guardar.
     grabador = transcript_recorder.TranscriptRecorder() if aplicacion is not None else None
+    if aplicacion is not None:
+        # Al terminar cada conversacion, la oferta de datos opcionales que nadie contesto se da
+        # por rechazada, como hace el chat a los dos minutos (2026-10-14).
+        chat_driver.install_review_settler(
+            lambda case_id, tenant_id: orchestration_turn.settle_review(
+                case_id, tenant_id=tenant_id
+            )
+        )
 
     async def _correr() -> tuple[runner.RunOutcome, object]:
         await manual_ledger.open_ledger(config, url)

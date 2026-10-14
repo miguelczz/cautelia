@@ -25,7 +25,13 @@
 // monto, cobertura en duda y sospecha de fraude (`visitor-triage.tsx`). Es opcional; el
 // servidor dice si se ofrece (`can_annotate_triage`) y desde que montos cambian las reglas de
 // esta aseguradora (`triage_amount_steps`), y al guardar la pagina vuelve a leer el caso para
-// que el bloque de las reglas de abajo muestre la evaluacion nueva.
+// que el bloque de las reglas muestre la evaluacion nueva.
+//
+// **Dos paneles lado a lado** (Miguel, 2026-10-14: quien decide tenia que bajar y subir para ver
+// los datos): a la izquierda el panel del ajustador --anotar y decidir-- y a la derecha los
+// datos del reporte con las reglas, que se quedan a la vista al desplazar. Debajo de los dos, a
+// todo el ancho, la conversacion, las citas, los controles y la respuesta. En pantalla angosta
+// es una columna con los datos primero.
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 
@@ -43,8 +49,17 @@ import { useLocale } from "../../shared/i18n/locale-provider";
 import { recallAll } from "../../shared/own-text/own-text";
 import { startBoundedReread } from "../../shared/polling/bounded-reread";
 import { Button } from "../../shared/ui/button";
+import { cn } from "../../shared/ui/cn";
 import { InlineAlert } from "../../shared/ui/inline-alert";
-import { CASE_COLUMN_WIDTH, CASE_PAGE_TITLE } from "../../shared/ui/page-layout";
+import {
+  BLOCK_TITLE,
+  CASE_ADJUSTER_PANE,
+  CASE_COLUMN_WIDTH,
+  CASE_DATA_PANE,
+  CASE_PAGE_TITLE,
+  CASE_WORKSPACE_PANES,
+  CASE_WORKSPACE_WIDTH,
+} from "../../shared/ui/page-layout";
 import { PageSkeleton } from "../../shared/ui/page-skeletons";
 import { DecisionForm } from "./decision-form";
 import {
@@ -64,6 +79,7 @@ import {
   resolutionLabel,
   reviewHint,
 } from "./inbox-labels";
+import { StepHeading } from "./step-heading";
 import { VisitorTriageBlock, type TriageSaveResult } from "./visitor-triage";
 
 /**
@@ -72,6 +88,13 @@ import { VisitorTriageBlock, type TriageSaveResult } from "./visitor-triage";
  */
 const REREAD_MS = 3000;
 const REREAD_MAX = 10;
+
+/**
+ * La superficie de los bloques de datos del reporte (2026-10-14): la de segundo nivel, que en
+ * modo claro es un gris suave y en oscuro la mas clara, para que el panel donde se decide --en
+ * la superficie normal, con la raya de la marca-- se distinga de lo que se mira.
+ */
+const SUPERFICIE_DE_DATOS = "bg-surface-alt";
 
 /** Lo que el canje deja: el caso al que da acceso y hasta cuando. */
 export interface CaseSession {
@@ -334,35 +357,57 @@ export function VisitorCasePage({
   // agente aun lo evalua, o lo cerraron las reglas sin ajustador. En ninguna hay botones.
   const cerradoPorReglas = isClosedByRules(caso);
   const enRevision = reviewHint(caso.state);
+  const decidido = estado.paso === "decided";
 
-  const conSeccionDeDecidir = estado.paso !== "decided" && caso.available_actions.length > 0;
+  // El paso de decidir existe cuando hay botones o cuando hay que decir por que no los hay. En
+  // revision no hay aviso aparte: la introduccion ya dice que la agente evalua, y la pagina se
+  // actualiza sola al salir de ahi.
+  const conSeccionDeDecidir = !decidido && caso.available_actions.length > 0;
+  const avisoSinDecision = !decidido && !conSeccionDeDecidir && enRevision === undefined;
+  const hayPasoDeDecidir = conSeccionDeDecidir || avisoSinDecision;
 
   // Lo anotado para las reglas: lo que el servidor ofrece y lo que el visitante dejo escrito.
   const ofreceAnotar = caso.can_annotate_triage === true;
   const hayNota = caso.triage_note !== null && caso.triage_note !== undefined;
-  const anotaciones = (
-    <VisitorTriageBlock
-      note={caso.triage_note}
-      canAnnotate={ofreceAnotar}
-      amountSteps={caso.triage_amount_steps}
-      onSave={anotar}
-    />
+  const hayAnotaciones = ofreceAnotar || hayNota;
+
+  // El panel del ajustador existe mientras tenga algo que ofrecer o que leer. Sin el, los datos
+  // quedan solos y no se pegan a una columna vacia.
+  const conPanel = hayPasoDeDecidir || hayAnotaciones;
+  // Sin nada que decidir ni que anotar --lo cerraron las reglas, ya se decidio, espera al
+  // asegurado-- el panel no invita a hacer de ajustador: dice como esta el caso (2026-10-14).
+  const soloEstado = avisoSinDecision && !hayAnotaciones;
+
+  // Los datos del reporte y la evaluacion de las reglas: es lo que el ajustador mira mientras
+  // decide, y lo que cambia al guardar las anotaciones. Van en la superficie neutra de segundo
+  // nivel, distinta a la del panel donde se decide.
+  const datos = (
+    <>
+      <OpenBlock
+        title={t("visitor.block.fields")}
+        testId="block-fields"
+        className={SUPERFICIE_DE_DATOS}
+      >
+        <FieldCompleteness fields={caso.fields} />
+      </OpenBlock>
+      <RuleBlock detail={caso} className={SUPERFICIE_DE_DATOS} />
+    </>
   );
 
   return (
     <main
-      className={`mx-auto flex w-full ${CASE_COLUMN_WIDTH} flex-col gap-4 px-4 py-6`}
+      className={`mx-auto flex w-full ${CASE_WORKSPACE_WIDTH} flex-col gap-4 px-4 py-6`}
       data-testid="visitor-case"
     >
       <header className="flex flex-col gap-2">
         <h1 className={CASE_PAGE_TITLE}>
-          {estado.paso === "decided" ? t("visitor.done_title") : ownCaseTitle(caso.record_type)(t)}
+          {decidido ? t("visitor.done_title") : ownCaseTitle(caso.record_type)(t)}
         </h1>
         {/* El codigo no es el titulo: es un renglon pequeno que dice para que sirve (C10). */}
         <p className="text-caption text-fg-secondary" data-testid="visitor-case-number">
           {t("visitor.number", { case_number: caso.case_number })}
         </p>
-        {estado.paso === "decided" ? (
+        {decidido ? (
           <>
             <p>{t("visitor.done_body")}</p>
             {caso.resolution === null ? null : (
@@ -395,41 +440,118 @@ export function VisitorCasePage({
         )}
       </header>
 
-      {estado.paso === "decided" ? null : conSeccionDeDecidir ? (
-        <section className="flex flex-col gap-4 rounded-surface border border-hairline bg-surface p-4">
-          <p>{t("visitor.decide_intro")}</p>
-          {/* Antes de decidir, lo que revisaria un ajustador. El bloque no se pinta si el
-              servidor no lo ofrece y no hay nada anotado. */}
-          {anotaciones}
-          <DecisionForm actions={caso.available_actions} onSubmit={decidir} idPrefix="visitor" />
-        </section>
-      ) : enRevision !== undefined ? null : (
-        // En revision no hay aviso aparte: la introduccion ya dice que la agente evalua, y
-        // la pagina se actualiza sola al salir de ahi.
-        <InlineAlert tone="info" data-testid="visitor-no-actions">
-          {caso.state === "awaiting_insured"
-            ? t("inbox.decision.none_awaiting")
-            : cerradoPorReglas
-              ? t("inbox.closed_by_rules.note")
-              : caso.state === "closed"
-                ? t("inbox.decision.none_closed")
-                : t("inbox.decision.none_in_conversation")}
-        </InlineAlert>
-      )}
+      {/*
+        Los dos paneles (2026-10-14): quien decide necesita ver los datos mientras responde.
+        **El orden del documento es el de pantalla angosta --los datos primero, despues el panel
+        del ajustador--** y desde `desktop` la rejilla pone el del ajustador a la izquierda (ver
+        `CASE_WORKSPACE_PANES`). El precio: en escritorio el lector de pantalla y el teclado
+        pasan por los datos antes de llegar al formulario, que es tambien el orden en que se lee
+        para decidir.
+      */}
+      <div
+        className={conPanel ? CASE_WORKSPACE_PANES : "flex flex-col gap-4"}
+        data-testid="visitor-panes"
+      >
+        {conPanel ? (
+          <div
+            // Una region que se desplaza tiene que poder recibir el foco (la regla
+            // `scrollable-region-focusable` del arnes); el linter opina lo contrario y aqui manda
+            // el arnes. El nombre es el del bloque de dentro: dice que se esta leyendo.
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- region desplazable, exigido por axe
+            tabIndex={0}
+            role="group"
+            aria-label={t("visitor.block.fields")}
+            className={CASE_DATA_PANE}
+            data-testid="visitor-data"
+          >
+            {datos}
+          </div>
+        ) : (
+          <div
+            className={`flex w-full flex-col gap-4 ${CASE_COLUMN_WIDTH}`}
+            data-testid="visitor-data"
+          >
+            {datos}
+          </div>
+        )}
 
-      {/* Sin seccion de decidir --el caso espera al asegurado, o ya esta decidido-- lo anotado
-          va aparte: el formulario si el servidor lo ofrece, y si no, la lectura de lo que anoto. */}
-      {!conSeccionDeDecidir && (ofreceAnotar || hayNota) ? (
-        <section className="rounded-surface border border-hairline bg-surface p-4">
-          {anotaciones}
-        </section>
-      ) : null}
+        {conPanel ? (
+          <section
+            aria-labelledby="visitor-adjuster-title"
+            data-testid="visitor-adjuster"
+            // La raya de la marca a la izquierda, el titulo y las marcas de los pasos en la marca:
+            // es el unico panel de la pantalla que pide algo, y el resto son superficies neutras.
+            // Sin tinte de fondo a proposito: un campo sobre un fondo con tinte de cobre bajaba el
+            // borde del campo a 2,6 a 1 en oscuro, por debajo de los 3 a 1 que pide un control.
+            className={cn(
+              "flex flex-col gap-5 rounded-surface border border-hairline bg-surface p-4",
+              !soloEstado && "border-l-4 border-l-brand",
+              CASE_ADJUSTER_PANE,
+            )}
+          >
+            <div className="flex flex-col gap-1">
+              <h2
+                id="visitor-adjuster-title"
+                className={cn(BLOCK_TITLE, !soloEstado && "text-brand")}
+              >
+                {soloEstado ? t("visitor.status.title") : t("visitor.adjuster.title")}
+              </h2>
+              {conSeccionDeDecidir ? (
+                <p className="text-small text-fg-secondary">{t("visitor.decide_intro")}</p>
+              ) : null}
+            </div>
 
-      {/* Los mismos seis bloques, sin corregir campos: eso es de quien decide con credencial. */}
-      <OpenBlock title={t("inbox.block.fields")} testId="block-fields">
-        <FieldCompleteness fields={caso.fields} />
-      </OpenBlock>
+            {/* Paso 1, antes de decidir: lo que revisaria un ajustador. El bloque no se pinta
+                si el servidor no lo ofrece y no hay nada anotado. */}
+            <VisitorTriageBlock
+              note={caso.triage_note}
+              canAnnotate={ofreceAnotar}
+              amountSteps={caso.triage_amount_steps}
+              onSave={anotar}
+              step={hayPasoDeDecidir ? 1 : undefined}
+            />
 
+            {hayPasoDeDecidir ? (
+              <section
+                aria-labelledby={soloEstado ? "visitor-adjuster-title" : "visitor-decision-title"}
+                data-testid="visitor-decision"
+                className={cn(
+                  "flex flex-col gap-3",
+                  hayAnotaciones && "border-t border-hairline pt-5",
+                )}
+              >
+                {soloEstado ? null : (
+                  <StepHeading id="visitor-decision-title" step={hayAnotaciones ? 2 : undefined}>
+                    {t("visitor.decision.title")}
+                  </StepHeading>
+                )}
+                {conSeccionDeDecidir ? (
+                  <DecisionForm
+                    actions={caso.available_actions}
+                    onSubmit={decidir}
+                    idPrefix="visitor"
+                  />
+                ) : (
+                  <InlineAlert tone="info" data-testid="visitor-no-actions">
+                    {caso.state === "awaiting_insured"
+                      ? t("inbox.decision.none_awaiting")
+                      : cerradoPorReglas
+                        ? t("inbox.closed_by_rules.note")
+                        : caso.state === "closed"
+                          ? t("inbox.decision.none_closed")
+                          : t("inbox.decision.none_in_conversation")}
+                  </InlineAlert>
+                )}
+              </section>
+            ) : null}
+          </section>
+        ) : null}
+      </div>
+
+      {/* Debajo de los dos paneles y a todo el ancho: la conversacion, las citas, lo que se
+          reviso y como se respondio. Sin corregir campos: eso es de quien decide con credencial.
+          Los dos ultimos dicen en una frase lo que tienen, y el que no tiene nada que decir no
+          se pinta (E3, 2026-10-12). */}
       <OpenBlock title={t("inbox.block.transcript")} testId="block-transcript">
         <TranscriptView detail={caso} own={propios} />
       </OpenBlock>
@@ -442,9 +564,6 @@ export function VisitorCasePage({
         />
       </OpenBlock>
 
-      {/* Los tres ultimos dicen en una frase lo que tienen, y el que no tiene nada que
-          decir no se pinta (E3, 2026-10-12). */}
-      <RuleBlock detail={caso} />
       <ControlsBlock detail={caso} />
       <ResponseBlock detail={caso} />
     </main>

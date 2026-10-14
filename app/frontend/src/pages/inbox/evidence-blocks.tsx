@@ -36,6 +36,8 @@ import {
   type OwnTexts,
   type StoredTurn,
 } from "../../shared/own-text/own-text";
+import { cn } from "../../shared/ui/cn";
+import { isSafeExternalLink } from "../../shared/ui/external-link";
 import { BLOCK_TITLE } from "../../shared/ui/page-layout";
 import { Tag } from "../../shared/ui/tag";
 import { Citation, withPositions } from "../chat/citation";
@@ -48,21 +50,27 @@ import {
   ruleReasonLabel,
 } from "./inbox-labels";
 
-/** Un bloque abierto: su titulo y su contenido, siempre a la vista. */
+/**
+ * Un bloque abierto: su titulo y su contenido, siempre a la vista. `className` cambia su
+ * superficie cuando la pantalla lo pide (la del visitante pone los datos en una superficie
+ * distinta a la del panel donde decide); sin el, queda como siempre.
+ */
 export function OpenBlock({
   title,
   testId,
+  className,
   children,
 }: {
   readonly title: string;
   readonly testId: string;
+  readonly className?: string | undefined;
   readonly children: ReactNode;
 }) {
   return (
     <section
       aria-label={title}
       data-testid={testId}
-      className="rounded-surface border border-hairline bg-surface p-4"
+      className={cn("rounded-surface border border-hairline bg-surface p-4", className)}
     >
       <h2 className={BLOCK_TITLE}>{title}</h2>
       <div className="mt-3">{children}</div>
@@ -283,7 +291,14 @@ export function CitationList({
  * referencia. Sin categoria las reglas todavia no corrieron y no hay nada que decir, asi
  * que el bloque no se pinta.
  */
-export function RuleBlock({ detail }: { readonly detail: CaseDetailOut }) {
+export function RuleBlock({
+  detail,
+  className,
+}: {
+  readonly detail: CaseDetailOut;
+  /** La superficie del bloque, igual que en `OpenBlock`. */
+  readonly className?: string | undefined;
+}) {
   const { t } = useLocale();
   // Mientras la agente aun evalua el caso la categoria puede estar guardada y el caso no
   // haberse movido: decir «por que se cerro» o «por que paso a un ajustador» seria contar
@@ -299,6 +314,7 @@ export function RuleBlock({ detail }: { readonly detail: CaseDetailOut }) {
           : t("inbox.block.rule")
       }
       testId="block-rule"
+      className={className}
     >
       <p>{ruleReasonLabel(detail.rule_category)(t)}</p>
       {detail.fired_rules.length === 0 ? null : (
@@ -344,15 +360,6 @@ export function ControlsBlock({ detail }: { readonly detail: CaseDetailOut }) {
       <p className="mt-3 text-caption text-fg-secondary">{t("inbox.controls.reviewed")}</p>
     </OpenBlock>
   );
-}
-
-/**
- * Una direccion que se puede abrir en otra pestana: solo `https`. La manda el servidor, que ya
- * valida el host al arrancar; aqui se comprueba otra vez porque es lo ultimo antes de un
- * `href`, y un esquema distinto (`javascript:`) no tiene que llegar a pintarse nunca.
- */
-export function isSafeExternalLink(direccion: string | null | undefined): direccion is string {
-  return typeof direccion === "string" && /^https:\/\/[^\s]+$/.test(direccion);
 }
 
 /**

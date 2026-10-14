@@ -374,45 +374,67 @@ class _RelojQueAvanza:
 # --- La interrupcion (BR4.1, BR4.3, BR4.5) ------------------------------------
 
 
-async def test_interrumpir_manda_stop_audio_y_la_apertura_llega_a_terminar(
-    catalogo: None,
-) -> None:
-    """Dos cosas juntas, y la segunda nacio de un defecto de verdad.
+async def test_lo_dicho_durante_la_apertura_ni_la_corta_ni_cuenta(catalogo: None) -> None:
+    """Decision de Miguel del 2026-10-14: la apertura no se interrumpe y mientras suena no
+    se escucha; la conversacion empieza cuando ella termina.
 
-    La primera es BR4.3: el servidor no puede retirar el audio que ya mando, asi
-    que manda `stop_audio` y quien vacia la cola es el navegador.
-
-    La segunda es que la apertura interrumpida **termina**. La primera version
-    devolvia el transcrito que interrumpio a la cola de escucha; la apertura se
-    repetia entera (BR4.5), volvia a encontrar el mismo transcrito y se
-    interrumpia otra vez, sin final. Sin esta mitad, la prueba pasaria con el
-    ciclo colgado para siempre en produccion.
+    Antes una frase con contenido la cortaba (`stop_audio`) y la apertura se repetia entera
+    (BR4.5): quien hablaba al conectar la oia hasta tres veces. El evento del descarte es lo
+    que distingue "se oyo y se descarto" de "no llego nada".
     """
-    motor = await _motor()
-    doble = VozDoble(guion=[_final("wait I need to correct something")], antes_del_audio=True)
-    # El navegador sigue mandando audio hasta que la agente haya hablado dos
-    # veces: la apertura cortada y la que se repite entera.
-    canal = CanalFalso(entrantes=[SILENCIO], seguir=lambda: len(doble.dicho) < 2)
+    salida = io.StringIO()
+    observability.set_stream(salida)
+    try:
+        motor = await _motor()
+        doble = VozDoble(guion=[_final("wait I need to correct something")], antes_del_audio=True)
+        canal = CanalFalso(entrantes=[SILENCIO], seguir=lambda: motor.disclosed_at is None)
 
-    await asyncio.wait_for(_correr(motor, canal, doble).run(), timeout=5)
+        await asyncio.wait_for(_correr(motor, canal, doble).run(), timeout=5)
+    finally:
+        observability.set_stream(sys.stdout)
 
-    assert canal.de_tipo(voz.StopAudio), "no se mando la orden de vaciar la cola"
-    assert len(doble.dicho) >= 2, "la apertura cortada no se repitio"
+    assert canal.de_tipo(voz.StopAudio) == [], "lo dicho encima corto la apertura"
+    assert len(doble.dicho) == 1, "la apertura se repitio"
     assert motor.disclosed_at is not None, "la apertura nunca llego a registrarse"
+    assert _lo_que_vio_la_persona(canal) == [], "lo dicho encima se trato como un turno"
+    descartes = _eventos(salida, "voice.heard_during_opening_discarded")
+    assert [e["words"] for e in descartes] == [6]
+
+
+async def test_fuera_de_la_apertura_interrumpir_manda_stop_audio(catalogo: None) -> None:
+    """BR4.3, en cualquier frase que no sea la apertura: el servidor no puede retirar el
+    audio que ya mando, asi que manda `stop_audio` y quien vacia la cola es el navegador."""
+    motor = await _motor()
+    await _abierta(motor)
+    canal = CanalFalso()
+    ciclo = _correr(motor, canal, VozDoble())
+    ciclo._oido.put_nowait(_final("wait I need to correct something"))
+
+    frase = motor._hablar(c14.FinalText(message_id="m-1", text="Noted, thanks.", language="en"))
+    interrumpida = await ciclo._decir(frase)
+
+    assert interrumpida
+    assert len(canal.de_tipo(voz.StopAudio)) == 1
+    assert "wait I need to correct something" in _lo_que_vio_la_persona(canal)
 
 
 async def test_el_ruido_de_una_palabra_no_interrumpe(catalogo: None) -> None:
     """BR4.2: el eco del altavoz y el ruido de carro no callan a la agente.
 
     Lo que los filtra es el piso de palabras, y sin esta prueba la interrupcion
-    pasaria igual con el piso en uno --que es decir sin piso--.
+    pasaria igual con el piso en uno --que es decir sin piso--. Sobre una frase que no es
+    la apertura, porque lo dicho encima de la apertura no se escucha (2026-10-14).
     """
     motor = await _motor()
-    doble = VozDoble(guion=[_final("uh", confianza=0.4)], antes_del_audio=True)
-    canal = CanalFalso(entrantes=[SILENCIO], seguir=lambda: len(doble.dicho) < 1)
+    await _abierta(motor)
+    canal = CanalFalso()
+    ciclo = _correr(motor, canal, VozDoble())
+    ciclo._oido.put_nowait(_final("uh", confianza=0.4))
 
-    await asyncio.wait_for(_correr(motor, canal, doble).run(), timeout=5)
+    frase = motor._hablar(c14.FinalText(message_id="m-1", text="Noted, thanks.", language="en"))
+    interrumpida = await ciclo._decir(frase)
 
+    assert not interrumpida
     assert canal.de_tipo(voz.StopAudio) == []
 
 
@@ -423,8 +445,10 @@ async def test_la_persona_ve_en_su_consola_lo_que_dijo_tal_cual(catalogo: None) 
     """Decision de Miguel del 2026-10-09: sus propias palabras no le salen tapadas.
     Lo que se guarda en el caso sigue redactado; eso lo prueba `transcript_writer`."""
     motor = await _motor()
-    canal = CanalFalso(entrantes=[SILENCIO])
     doble = VozDoble(guion=[_final("call me at 305 555 0147")])
+    # Despues de la apertura: lo dicho encima no se escucha (2026-10-14).
+    doble.esperar_a = lambda: motor.disclosed_at is not None
+    canal = CanalFalso(entrantes=[SILENCIO], seguir=lambda: not _lo_que_vio_la_persona(canal))
 
     await asyncio.wait_for(_correr(motor, canal, doble).run(), timeout=5)
 
@@ -503,10 +527,9 @@ async def test_la_latencia_que_va_a_la_consola_es_la_que_quedo_en_la_traza(
         # turno sale hacia la consola.
         doble = VozDoble(guion=[_final("does my policy cover a rental car?")])
         canal = CanalFalso(seguir=lambda: not canal.de_tipo(voz.Latency))
-        doble.esperar_a = lambda: len(doble.dicho) >= 1
-        # Con un reloj que avanza: el guion interrumpe la apertura, la apertura se
-        # repite, y el turno se atiende cuando la repeticion **termina de sonar**;
-        # con el reloj quieto ese instante no llega nunca.
+        doble.esperar_a = lambda: motor.disclosed_at is not None
+        # Con un reloj que avanza: el turno se atiende cuando la apertura **termina de
+        # sonar**; con el reloj quieto ese instante no llega nunca.
         ciclo = CallRunner(
             engine=motor,
             channel=canal,
@@ -1186,10 +1209,9 @@ async def test_el_eco_de_la_apertura_no_la_corta_ni_cuenta_como_turno(catalogo: 
     assert _lo_que_vio_la_persona(canal) == [], "el eco se pinto como dicho por la persona"
 
 
-async def test_quien_interrumpe_con_sus_palabras_sigue_cortando_aunque_haya_eco(
-    catalogo: None,
-) -> None:
-    """La otra mitad: el filtro quita el eco, no calla el microfono."""
+async def test_durante_la_apertura_ni_el_eco_ni_la_persona_la_cortan(catalogo: None) -> None:
+    """El eco de la apertura y, pegada, una frase de la persona: ninguna de las dos la corta
+    ni se pinta como dicha, porque mientras suena la apertura no se escucha (2026-10-14)."""
     motor = await _motor()
 
     @dataclass
@@ -1203,12 +1225,31 @@ async def test_quien_interrumpe_con_sus_palabras_sigue_cortando_aunque_haya_eco(
                 pass
 
     doble = _EcoYLuegoLaPersona()
-    canal = CanalFalso(entrantes=[SILENCIO], seguir=lambda: len(doble.dicho) < 2)
+    canal = CanalFalso(entrantes=[SILENCIO], seguir=lambda: motor.disclosed_at is None)
 
     await asyncio.wait_for(_correr(motor, canal, doble).run(), timeout=5)
 
-    assert canal.de_tipo(voz.StopAudio), "la interrupcion de verdad dejo de cortar"
-    assert "wait I need to correct something" in _lo_que_vio_la_persona(canal)
+    assert canal.de_tipo(voz.StopAudio) == [], "algo corto la apertura"
+    assert len(doble.dicho) == 1, "la apertura se repitio"
+    assert _lo_que_vio_la_persona(canal) == []
+
+
+async def test_fuera_de_la_apertura_el_filtro_quita_el_eco_y_deja_pasar_a_la_persona(
+    catalogo: None,
+) -> None:
+    """La otra mitad: el filtro quita el eco, no calla el microfono. Con la apertura ya
+    dicha, el eco de una frase de la agente se quita y las palabras de la persona pasan
+    enteras, que es lo que despues puede cortarla."""
+    motor = await _motor()
+    await _abierta(motor)
+    ciclo = _correr(motor, CanalFalso(), VozDoble())
+    ciclo._flujo_empezo_a = _reloj()
+    frase = "Thanks. What is the license plate of your car?"
+    ciclo._propia_voz.begin(frase, starts_at=_reloj())
+    persona = _final("wait I need to correct something")
+
+    assert ciclo._sin_la_voz_de_la_agente(_final(" ".join(frase.split()[:6]))) is None
+    assert ciclo._sin_la_voz_de_la_agente(persona) is persona
 
 
 @pytest.mark.parametrize("saludo", ["hola", "hello", "yes", "buenas tardes", "sí"])
@@ -1225,30 +1266,43 @@ async def test_los_saludos_y_muletillas_sobre_la_apertura_siguen_de_largo(
     assert len(doble.dicho) == 1
 
 
-async def test_un_alo_con_la_apertura_ya_enviada_pero_sonando_tampoco_la_corta(
+async def test_lo_dicho_con_la_apertura_ya_enviada_pero_sonando_tampoco_cuenta(
     catalogo: None,
 ) -> None:
     """El caso que se oye en una llamada de verdad: el servidor manda la apertura en un
-    segundo y el navegador la dice durante veinte. El "¿alo?" llega con todo enviado,
-    por el camino de `_oir` y no por el de `_decir`.
+    segundo y el navegador la dice durante veinte. Lo dicho mientras suena llega con todo
+    enviado, por el camino de `_oir` y no por el de `_decir`.
 
-    Lo que llega despues, con contenido, **si** la corta: la unica forma de distinguir
-    que el saludo se dejo pasar por ser un saludo y no porque nada interrumpiera.
+    Ni el "¿alo?" ni la frase con contenido la cortan ni cuentan (2026-10-14). Antes la
+    frase con contenido si la cortaba. Los dos eventos de descarte son los que distinguen
+    "se oyo y se descarto" de "no llego nada".
     """
-    motor = await _motor()
-    doble = VozDoble(
-        guion=[_final("¿Aló?"), _final("tuve un choque en la calle diez")], trozos=2000
-    )
-    doble.esperar_a = lambda: motor.disclosed_at is not None
-    canal = CanalFalso(entrantes=[SILENCIO], seguir=lambda: not canal.de_tipo(voz.StopAudio))
+    salida = io.StringIO()
+    observability.set_stream(salida)
+    try:
+        motor = await _motor()
+        doble = VozDoble(
+            guion=[_final("¿Aló?"), _final("tuve un choque en la calle diez")], trozos=2000
+        )
+        doble.esperar_a = lambda: motor.disclosed_at is not None
+        canal = CanalFalso(
+            entrantes=[SILENCIO],
+            seguir=lambda: (
+                salida.getvalue().count("voice.heard_during_opening_discarded") < 2
+                and not canal.de_tipo(voz.StopAudio)
+            ),
+        )
 
-    await asyncio.wait_for(_correr(motor, canal, doble).run(), timeout=5)
+        await asyncio.wait_for(_correr(motor, canal, doble).run(), timeout=5)
+    finally:
+        observability.set_stream(sys.stdout)
 
-    # El saludo no se mostro ni cortó; la frase con contenido si.
-    assert _lo_que_vio_la_persona(canal) == ["tuve un choque en la calle diez"]
-    assert len(canal.de_tipo(voz.StopAudio)) == 1
+    assert _lo_que_vio_la_persona(canal) == []
+    assert canal.de_tipo(voz.StopAudio) == []
     aperturas = [d for d in doble.dicho if "transcrib" in d.lower()]
     assert len(aperturas) == 1, "la apertura no tenia por que repetirse"
+    descartes = _eventos(salida, "voice.heard_during_opening_discarded")
+    assert [e["words"] for e in descartes] == [1, 7]
 
 
 async def test_el_permiso_de_un_saludo_dura_lo_que_dura_la_apertura(catalogo: None) -> None:

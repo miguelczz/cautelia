@@ -1384,6 +1384,8 @@ def _cablear_el_chat(
     controles: ComplianceControls,
     cifrador: crypto.Cipher | None,
     claude: ClaudePorts,
+    *,
+    wait_for_offer: bool = True,
 ) -> GraphWiring:
     """El grafo del turno, y la agente que entiende y contesta."""
     chat_api.install_understanding(claude.understander, orchestration_turn.ChatCaseTurnSupport())
@@ -1391,7 +1393,9 @@ def _cablear_el_chat(
     # pregunta de quien es el caso con el mismo resumen de la clave del navegador que la voz
     # guardo, y la voz no se importa desde el chat (son hermanos en el contrato de capas).
     chat_resume.install_call_cases(voice_session.case_ids_of_visitor)
-    return build_graph_wiring(plataforma, controles, cipher=cifrador, claude=claude)
+    return build_graph_wiring(
+        plataforma, controles, cipher=cifrador, claude=claude, wait_for_offer=wait_for_offer
+    )
 
 
 @dataclass(frozen=True)
@@ -1409,12 +1413,18 @@ def build_graph_wiring(
     *,
     cipher: crypto.Cipher | None,
     claude: ClaudePorts | None = None,
+    wait_for_offer: bool = True,
 ) -> GraphWiring:
     """El runtime del ritmo del turno, o la razon de que no haya (C-24).
 
     Sin cifrador no hay runtime: los puntos de control del grafo van cifrados y
     los campos del caso tambien, y un runtime con un cifrador inventado escribiria
     datos personales que nadie podria volver a abrir.
+
+    `wait_for_offer` apagado quita la espera de la oferta sin contestar (2026-10-14): la
+    corrida de evaluaciones la resuelve ella misma al terminar cada conversacion
+    (`evals.drivers.chat`), y la espera de dos minutos quedaba viva despues de cerrar la
+    aplicacion, buscando una base que ya no estaba.
     """
     if cipher is None:
         return GraphWiring(runtime=None, missing=crypto.KEY_ENV_VAR)
@@ -1442,7 +1452,7 @@ def build_graph_wiring(
             policy_lookup=_buscador_de_poliza,
             # La respuesta de cobertura llega sola al chat cuando el fondo termina.
             notifier=CASE_NOTIFIER,
-            offer_wait=_esperar_la_respuesta_a_la_oferta,
+            offer_wait=_esperar_la_respuesta_a_la_oferta if wait_for_offer else None,
             # Ver el docstring de `GraphWiring`: el ritmo de fondo va con su propio
             # trabajo, y hasta entonces `preload` lo dice en vez de suponerlo.
             background_graph=None,
@@ -1828,6 +1838,7 @@ def build_app(  # noqa: PLR0915 -- la raiz de composicion crece una linea por pi
         controles,
         cifrador,
         _piezas_de_claude(opciones, configuracion, for_evals=for_evals),
+        wait_for_offer=not for_evals,
     )
     if cableado.runtime is not None:
         orchestration_turn.install_runtime(cableado.runtime)

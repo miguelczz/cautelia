@@ -166,6 +166,18 @@ entries:
 # que no hay cuenta de facturacion--, que es mas fuerte que "el plan gratuito no
 # factura": sin cuenta de facturacion no hay forma de que un excedente se cobre.
 # Ningun proveedor del proyecto tiene hoy un medio de cobro activo.
+#
+# **Comprobacion del 2026-10-14** (Miguel, con captura de cada pantalla). Deepgram:
+# 199,79 USD de credito restante, plan Pay As You Go, recarga automatica apagada, y 0,13
+# USD gastados del 7 al 14 de octubre. Cartesia: plan Free, 2.726 de los 20.000 creditos
+# del mes restantes (aviso de cupo bajo) y renovacion el 2026-10-31, sin excedentes
+# activados: al agotarse, la voz principal se detiene y entra la de respaldo. Claude: 4,05
+# USD restantes del credito prepagado el 2026-10-13, sin recarga. Gemini no se alcanzo a
+# mirar ese dia: se miro despues, el mismo 2026-10-14, en Google AI Studio. Solo tres
+# proyectos tienen consumo en los ultimos 28 dias --`untangle-corpus`, `untangle-chat` y
+# `untangle-datos`-- y los tres dicen "Nivel gratuito": sin facturacion, asi que ningun
+# excedente se puede cobrar. Sus errores son los del propio tier (429 por frecuencia, 503
+# del proveedor), no cobros.
 caps:
   - provider: gemini
     use: voice
@@ -175,7 +187,7 @@ caps:
       se detiene con la aplicacion parada. El proyecto de pago y su saldo se
       crean el dia que la voz se publique, y esta fila se actualiza entonces con
       la figura, su valor y su fecha. Hasta ese dia no hay uso de pago que topar.
-    last_checked_at: 2026-10-02
+    last_checked_at: 2026-10-14
   - provider: gemini
     use: chat
     cap_kind: none_available
@@ -185,7 +197,7 @@ caps:
       son los limites del propio tier, que son del proveedor y no una cifra que
       este proyecto configure, mas las cuotas por sesion, por visitante y por dia
       que aplica la aplicacion.
-    last_checked_at: 2026-10-02
+    last_checked_at: 2026-10-14
   - provider: gemini
     use: evals
     cap_kind: none_available
@@ -193,7 +205,7 @@ caps:
       Mismo caso que el chat, con proyecto y clave propios para que una cuota
       agotada en uno no detenga al otro. La corrida de evaluaciones admite ademas
       un subconjunto declarado cuando no cabe en los limites del tier.
-    last_checked_at: 2026-10-02
+    last_checked_at: 2026-10-14
   - provider: gemini
     use: operations
     cap_kind: none_available
@@ -201,7 +213,7 @@ caps:
       Mismo caso que el chat, con proyecto y clave propios. La generacion de
       datos sinteticos es determinista y sembrada: su salida se commitea, asi que
       no se regenera en cada corrida.
-    last_checked_at: 2026-10-02
+    last_checked_at: 2026-10-14
   # --- La voz (U15, PA-9.2) -----------------------------------------------------
   # Transcripcion y voz de respaldo. La cuenta usa el credito gratuito de alta en
   # el plan Pay As You Go, con la recarga automatica apagada: cuando el saldo
@@ -217,8 +229,8 @@ caps:
   - provider: deepgram
     use: voice
     cap_kind: prepaid_balance
-    cap_value: "199,92 USD de credito prepagado restante, recarga automatica apagada"
-    last_checked_at: 2026-10-02
+    cap_value: "199,79 USD de credito prepagado restante, recarga automatica apagada"
+    last_checked_at: 2026-10-14
   # Catalina. El plan gratuito trae un cupo mensual de creditos que se detiene al
   # agotarse, sin cobro de excedentes; el 402 de cupo agotado esta documentado y
   # tampoco se capturo, por la misma razon. La cifra salio de la pagina publica de
@@ -237,19 +249,19 @@ caps:
     use: voice
     cap_kind: monthly_cap
     cap_value: "20.000 creditos al mes del plan gratuito (1 credito = 1 caracter), sin excedentes"
-    last_checked_at: 2026-10-02
+    last_checked_at: 2026-10-14
   # La redaccion natural del chat. Saldo prepagado comprado por Miguel el
   # 2026-10-07 en la consola de Claude, con la recarga automatica apagada: al
   # agotarse, la API deja de responder tambien con la aplicacion detenida.
   - provider: anthropic
     use: chat_reply
     cap_kind: prepaid_balance
-    cap_value: "5,00 USD de credito prepagado, recarga automatica apagada"
-    last_checked_at: 2026-10-07
+    cap_value: "4,05 USD de credito prepagado restante, recarga automatica apagada"
+    last_checked_at: 2026-10-13
   # Las evaluaciones de la comprension, con su propia clave de la misma cuenta: el
   # credito prepagado es de la organizacion, asi que comparten los mismos 5 USD.
   - provider: anthropic
     use: evals_chat
     cap_kind: prepaid_balance
-    cap_value: "el mismo credito prepagado de la cuenta (5,00 USD), recarga automatica apagada"
-    last_checked_at: 2026-10-08
+    cap_value: "el mismo credito prepagado de la cuenta (4,05 USD restantes), recarga automatica apagada"
+    last_checked_at: 2026-10-13

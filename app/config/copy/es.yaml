@@ -908,6 +908,20 @@ spend_panel:
     empty:
       text: "Todavía no hay casos con gasto. Habla con la agente por chat o por llamada y tu caso aparecerá aquí."
       surface: system
+  # El acceso a Langfuse (2026-10-14). Solo se abre la traza de la conversación de este
+  # navegador: Langfuse pide iniciar sesión salvo para una traza que se abre por su
+  # dirección, y esta pantalla es pública. La nota que explica qué es Langfuse es la de
+  # la bandeja (`inbox.trace.langfuse_note`), una sola.
+  langfuse:
+    link:
+      text: "Ver tu última conversación en Langfuse"
+      surface: system
+    case_link:
+      text: "Ver en Langfuse"
+      surface: system
+    empty:
+      text: "Cuando converses con la agente, aquí podrás abrir tu conversación en Langfuse."
+      surface: system
 
 # Los nombres de las superficies que el inicio y la barra enlazan cuando estan
 # montadas (U-03: sin jerga de proyecto).
@@ -2841,6 +2855,13 @@ intake:
     declined:
       text: Entendido. ¿Cuál es tu nombre completo y el número de tu póliza?
       surface: chat
+    # La respuesta a "¿eres tú?" no fue ni sí ni no (2026-10-14): se pregunta una vez más.
+    confirm_again:
+      text: "Perdona, no te entendí. ¿Eres {name}? Puedes responder sí o no."
+      surface: chat
+    confirm_again_driver:
+      text: "Perdona, no te entendí. ¿Eres {name} y conducías ese carro? Puedes responder sí o no."
+      surface: chat
     # El número que se oyó no lleva a ninguna póliza (2026-10-13): no existe, llegó
     # incompleto o el titular tiene más de una. Se pide una sola vez que lo repita, cifra
     # por cifra, que es como mejor lo oye el reconocedor. Sin números dentro: no hay
@@ -3195,9 +3216,9 @@ inbox:
       surface: inbox
     # BR2.3: la transcripción llega redactada y la bandeja no la destapa. Cada
     # dato personal aparece como etiqueta de su tipo, y el valor completo está en
-    # el campo del caso, que se ve arriba.
+    # los datos del caso (arriba en la bandeja, al lado en la pantalla del visitante).
     redacted_hint:
-      text: Los datos personales aparecen como una etiqueta de su tipo. El valor completo está en el campo del caso, arriba.
+      text: Los datos personales aparecen como una etiqueta de su tipo. El valor completo está en los datos del caso.
       surface: inbox
     empty:
       text: Todavía no hay conversación registrada.
@@ -3428,7 +3449,7 @@ inbox:
       text: Tu nota
       surface: inbox
     comment_hint:
-      text: Queda en el registro del caso y es lo que hace auditable la decisión.
+      text: Queda en el registro del caso.
       surface: inbox
     recorded:
       text: La decisión quedó registrada.
@@ -3477,18 +3498,38 @@ visitor:
   title_quote:
     text: Tu solicitud de cotización
     surface: inbox
+  # El panel donde el visitante hace de ajustador (2026-10-14): su título, el del paso de
+  # decidir y el bloque de datos que reemplaza, en esta pantalla, a «Completitud por campo»
+  # (jerga de quien decide con credencial).
+  # Sin nada que decidir ni que anotar, el panel dice cómo está el caso (2026-10-14).
+  status:
+    title:
+      text: Estado de tu caso
+      surface: inbox
+  adjuster:
+    title:
+      text: Haz de ajustador
+      surface: inbox
+  decision:
+    title:
+      text: Decide
+      surface: inbox
+  block:
+    fields:
+      text: Datos de tu reporte
+      surface: inbox
   number:
-    text: "Número de tu caso: {case_number}. Sirve para retomarlo o consultarlo."
+    text: "Caso {case_number} · sirve para retomarlo o consultarlo"
     surface: inbox
   # Qué estás viendo y hasta cuándo vale el enlace (Flujo 3, paso 4).
   intro:
-    text: "Esto es lo que quedó de tu caso: lo que contaste, lo que encontramos en tu póliza y qué decidiría un ajustador."
+    text: Lo que contaste, lo que dice tu póliza y lo que decide el ajustador.
     surface: inbox
   valid_until:
     text: Este enlace funciona hasta las {time} de hoy.
     surface: inbox
   decide_intro:
-    text: "En esta demo puedes hacer de ajustador: toma la decisión y mira cómo sigue la conversación."
+    text: Revisa los datos y decide. La conversación sigue con tu decisión.
     surface: inbox
   opening:
     text: Abriendo tu caso…
@@ -3518,21 +3559,21 @@ visitor:
   # qué mira un ajustador. Sin jerga del sistema (U-07): aquí no se dice bandeja, cola ni triaje.
   triage:
     title:
-      text: "Antes de decidir: lo que revisaría un ajustador"
+      text: Revisa (opcional)
       surface: inbox
     intro:
-      text: Es opcional. La agente recoge lo que pasó; estas tres cosas solo las puede valorar un ajustador. Si las anotas, las reglas de la aseguradora vuelven a clasificar el caso y aquí mismo ves qué cambió.
+      text: Si anotas estos datos, las reglas vuelven a clasificar el caso.
       surface: inbox
     amount_label:
-      text: ¿Cuánto costaría reparar el daño? (en pesos)
+      text: ¿Cuánto costaría el arreglo? (en pesos)
       surface: inbox
     # Los montos salen del archivo de reglas de la aseguradora, nunca de la pantalla: tres
     # frases según cuántos umbrales tenga (dos o más, uno, ninguno).
     amount_help:
-      text: Un cálculo aproximado. Desde {first} las reglas piden que un ajustador revise el monto; desde {last}, una revisión más detallada.
+      text: "Desde {first} se revisa el monto; desde {last}, con más detalle."
       surface: inbox
     amount_help_one:
-      text: Un cálculo aproximado. Desde {first} las reglas piden que un ajustador revise el monto.
+      text: "Desde {first} se revisa el monto."
       surface: inbox
     amount_help_none:
       text: Un cálculo aproximado.
@@ -3547,25 +3588,25 @@ visitor:
       text: Escribe solo números, sin puntos, comas ni letras.
       surface: inbox
     coverage_label:
-      text: ¿Hay dudas sobre si la póliza cubre este daño?
+      text: ¿Hay dudas de que la póliza lo cubra?
       surface: inbox
     coverage_help:
-      text: Por ejemplo, si lo ocurrido podría caer en una exclusión de la póliza.
+      text: Por ejemplo, si podría ser una exclusión.
       surface: inbox
     fraud_label:
-      text: ¿Algo te hace sospechar de fraude?
+      text: ¿Algo hace sospechar fraude?
       surface: inbox
     fraud_help:
-      text: Por ejemplo, versiones que no coinciden o un reporte hecho mucho después del hecho.
+      text: Por ejemplo, versiones que no coinciden.
       surface: inbox
     unset:
       text: No lo he revisado
       surface: inbox
     save:
-      text: Guardar y ver qué dicen las reglas
+      text: Guardar y ver las reglas
       surface: inbox
     result:
-      text: Las reglas volvieron a evaluar el caso.
+      text: Reglas actualizadas.
       surface: inbox
     limit:
       text: Ya no se pueden cambiar más estas anotaciones en este caso.

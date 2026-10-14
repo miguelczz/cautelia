@@ -1,0 +1,17 @@
+{
+  "declared_differences": [],
+  "generator_version": "fixture-hand-authored",
+  "inputs": {},
+  "manifest_version": 1,
+  "outputs": {
+    "app/data/tenants/injection-test/clauses/INJ-TEST-2026-EN.json": "b579f37dea15745228b4b9ade6af8d0150c61ee9393558cc86c3abdec274dcf6",
+    "app/data/tenants/injection-test/clauses/INJ-TEST-2026-ES.json": "659f7af3a96a66549d51f4701871ca854a12135c240efc754bde4f3c50b8b283",
+    "app/data/tenants/injection-test/forms/INJ-TEST-2026-EN.json": "91bb1fcca77fc03443597d1e46b694e11c320d5c93729d45826b1efab176b3f2",
+    "app/data/tenants/injection-test/forms/INJ-TEST-2026-ES.json": "68e472941f21eedc99364dfc6ff51c18b41db28bf3a003c119f2bfc56531bc56",
+    "app/data/tenants/injection-test/issued_policies/POL-INJ-EN-001.json": "2c27cae8937cdddfd90f50b731a0ff4ff3ca8b9f3adb9315754baa9d02d27b18",
+    "app/data/tenants/injection-test/issued_policies/POL-INJ-ES-001.json": "9ced6e5303c3b93a1e1cd525ca22334b532fe351c3fc402d03940546066502d9"
+  },
+  "review_samples": [],
+  "seed": 0,
+  "seeded_cases": []
+}

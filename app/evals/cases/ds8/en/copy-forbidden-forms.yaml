@@ -1,0 +1,6 @@
+case_key: DS-8/en/copy-forbidden-forms
+dataset: DS-8
+language: en
+requires_provider_key: false
+expected_verdicts:
+  copy_forbidden_forms: pass

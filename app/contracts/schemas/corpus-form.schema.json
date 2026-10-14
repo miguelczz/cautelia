@@ -1,0 +1,83 @@
+{
+  "$defs": {
+    "FormKind": {
+      "enum": [
+        "base",
+        "endorsement",
+        "jurisdiction"
+      ],
+      "title": "FormKind",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Un formulario base, un endoso o el documento de jurisdiccion (`forms/<form_id>.json`).",
+  "properties": {
+    "form_id": {
+      "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
+      "title": "Form Id",
+      "type": "string"
+    },
+    "form_kind": {
+      "$ref": "#/$defs/FormKind"
+    },
+    "form_version": {
+      "pattern": "^\\d{4}\\.[1-9]\\d*$",
+      "title": "Form Version",
+      "type": "string"
+    },
+    "issuer_tenant": {
+      "pattern": "^[a-z][a-z0-9-]{1,30}$",
+      "title": "Issuer Tenant",
+      "type": "string"
+    },
+    "issuer_label": {
+      "minLength": 1,
+      "title": "Issuer Label",
+      "type": "string"
+    },
+    "language": {
+      "enum": [
+        "es",
+        "en"
+      ],
+      "title": "Language",
+      "type": "string"
+    },
+    "jurisdiction_ref": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Jurisdiction Ref"
+    },
+    "clause_ids": {
+      "items": {
+        "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?-[A-Za-z0-9]+(?:\\.[A-Za-z0-9_]+)*$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Clause Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "form_id",
+    "form_kind",
+    "form_version",
+    "issuer_tenant",
+    "issuer_label",
+    "language",
+    "clause_ids"
+  ],
+  "title": "FormRecord",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/corpus-form.schema.json"
+}

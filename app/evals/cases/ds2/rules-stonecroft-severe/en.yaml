@@ -1,0 +1,23 @@
+# Expected category for Stonecroft with injuries (BR1.1, BR2.2, FR6.1), English turn. Stonecroft is strict and refers injuries with no other signal needed (CG-U9-1).
+#
+# Criterio de aceptacion: sobre la fila `category-expected/01` de
+# `app/evals/fixtures/rules/en.yaml`, el motor real de `stonecroft` da la
+# categoria declarada en esa fila.
+#
+# Veredicto esperado: `pass`.
+#
+# Los mismos insumos y la misma meta viven en el idioma pareja, medidos por
+# idioma y nunca como promedio combinado (P12).
+#
+# Lo que este caso no mide: la explicacion que ve el asegurado (BR2.5, en
+# `copy:check`) ni el nodo `decision`, que llega en el paso 7 de esta unidad.
+case_key: DS-2/en/rules-stonecroft-severe
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - rules-engine
+  - category-precedence
+expected_verdicts:
+  rules_category_expected: pass

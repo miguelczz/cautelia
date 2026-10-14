@@ -1,0 +1,27 @@
+# Sin falsas alarmas (AC1.6.5, BR3.2), turno en ingles.
+#
+# Criterio de aceptacion: sobre las filas `turns` del escenario
+# `emergency-negatives` de `app/evals/fixtures/compliance/en.yaml` --las
+# dos primeras son las literales del criterio--, la senal de emergencia no se
+# levanta en ninguna.
+#
+# Veredicto esperado: `pass`.
+#
+# No es compuerta dura por si solo, pero corre en cada entrega y un caso que
+# pasa a fallar es una regresion (definicion de regresion de `team.md`).
+#
+# La pareja en espanol es `DS-2/es/emergency-negatives`: los mismos criterios
+# y la misma meta, medidos por idioma y nunca como promedio combinado (P12).
+#
+# Lo que este caso no mide: que la conversacion siga en su orden normal, que
+# es de U12.
+case_key: DS-2/en/emergency-negatives
+dataset: DS-2
+language: en
+requires_provider_key: false
+axes:
+  - emergency
+  - turn-signals
+  - negatives
+expected_verdicts:
+  emergency_negatives_no_alarm: pass

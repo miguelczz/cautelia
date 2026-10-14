@@ -1,0 +1,26 @@
+# Preguntar si el seguro paga dentro de un reporte se ve como pregunta de cobertura (C2).
+#
+# Comprension de un mensaje (fase 0 de docs/propuesta-2026-10/03-propuesta-y-diseno.md).
+# Escrito antes del codigo que la implementa: falla hasta que la agente entienda con el modelo.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/understand-coverage-inside-report
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  record_type: claim
+  captured:
+  - injuries
+  last_agent_text: ¿Me dices tu nombre y el número de tu póliza?
+  message: Antes de eso, ¿el seguro me va a pagar el arreglo del bómper?
+  asks_about_coverage: true
+  asks_question: true
+  wants:
+  - policy_question
+  - continue
+expected_verdicts:
+  understanding_coverage_inside_report: pass

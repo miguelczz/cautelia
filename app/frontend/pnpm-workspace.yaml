@@ -1,0 +1,85 @@
+# Ajustes de pnpm.
+#
+# Desde pnpm 10 los ajustes propios de pnpm viven aquí y **no** en `.npmrc`:
+# ahí se ignoran en silencio, sin aviso, y el archivo parece configurado sin
+# estarlo. `.npmrc` se queda solo con lo compatible con npm (registro y
+# autenticación).
+
+# Espera de versiones recién publicadas (SEC-U1.4): tres días, en minutos.
+# Una versión publicada hace menos de 72 horas no se instala. El ataque típico
+# de cadena de suministro vive en las primeras horas de una versión, y la
+# mayoría de los paquetes comprometidos se retiran dentro del primer día.
+#
+# La excepción escrita es la versión que corrige un aviso de seguridad conocido:
+# entra sin esperar, porque esperarla dejaría abierta la vulnerabilidad que
+# cierra. Esa excepción se aplica a mano, con su razón al lado del cambio.
+minimumReleaseAge: 4320
+
+# Los scripts de instalación quedan bloqueados (ADR-002): un script de
+# instalación es código ajeno corriendo con los permisos de quien instala.
+ignoreScripts: true
+
+# La lista permitida de scripts de instalación (ADR-002) está **vacía**, y no por
+# descuido: ninguna dependencia del lockfile declara `preinstall`, `install` ni
+# `postinstall` (comprobado con U6 el 2026-09-21, recorriendo el `package.json`
+# de cada paquete instalado, y vuelto a comprobar ese mismo dia al agregar el
+# enrutador, Radix, los iconos y las fuentes de la interfaz: ninguno trae
+# script). Vite 8 compila con rolldown y Tailwind 4 con oxide,
+# los dos por binarios opcionales por plataforma, y Playwright no descarga sus
+# navegadores al instalarse: lo hace `mise run browsers:install`, fuera del
+# camino del clon al reporte (NFR21.3). Con la lista vacía, `ignoreScripts: true`
+# es la regla entera. El día que una dependencia necesite su script, esa
+# excepción se escribe aquí con su razón, en el mismo cambio que la instala.
+
+# Una sustitucion de version, acotada y con su razon (U6, 2026-09-21).
+#
+# `@hey-api/openapi-ts` --el generador del cliente de la API-- trae
+# `@hey-api/json-schema-ref-parser` 1.4.4, que fija `js-yaml` **exactamente** en
+# 4.2.0, y esa version tiene tres avisos altos de consumo de CPU al leer YAML
+# (GHSA-52cp-r559-cp3m, GHSA-5p4m-2wfm-xmqj, GHSA-2883-xcg3-v3hh), corregidos en
+# 4.3.2. No hay version del generador ni del lector de esquemas que suba sola: la
+# 1.4.4 es la ultima. Se fija la corregida en vez de escribir una excepcion,
+# igual que `cryptography>=50` en el servidor: la excepcion se escribe cuando no
+# hay version que arregle el aviso, y aqui la hay. 4.3.2 es de la misma rama 4.x
+# (compatible) y se publico el 2026-08-26, asi que ademas cumple la espera de
+# tres dias. El dia que el lector de esquemas suba `js-yaml` por su cuenta, esta
+# linea sobra y se quita en el mismo cambio.
+#
+# Y una segunda, del 2026-10-06, por la misma regla: `source-map-js` < 1.2.2
+# bloquea el bucle de eventos al leer un mapa de fuentes indexado con
+# desplazamientos absurdos (GHSA-68fv-2mgg-jv7q). Llega por veinticuatro caminos
+# --vite, postcss, el generador del cliente de la API--, todos de compilacion y
+# ninguno del navegador, pero hay version corregida: 1.2.2, de la misma rama,
+# publicada el 2026-09-30, y por eso se fija en vez de escribir una excepcion.
+# El dia que todos esos paquetes la pidan por su cuenta, esta linea sobra.
+overrides:
+  "@hey-api/json-schema-ref-parser>js-yaml": "4.3.2"
+  "source-map-js": ">=1.2.2"
+  # `handlebars` 4.7.9 y anteriores dejan inyectar codigo al compilar una plantilla
+  # (GHSA-8r5x-fm3f-whwj y GHSA-p8wg-vrv2-v86f, criticos, avisados el 2026-10-11;
+  # pusieron `main` en rojo). Llega solo por `eslint-plugin-boundaries`, la cadena
+  # del linter: no va al navegador ni procesa nada de un visitante. Hay version
+  # corregida, 4.7.10, y por eso se fija en vez de escribir una excepcion.
+  "handlebars": ">=4.7.10"
+
+# Un aviso de seguridad aceptado, con su razón y su fecha de revisión
+# (2026-10-03). Se escribe aquí porque **no hay versión que lo arregle**, que es
+# la condición que la nota de arriba pone para una excepción: `braces` 3.0.3 es
+# la última publicada y el aviso la nombra vulnerable, así que ni una sustitución
+# de versión ni una subida la cierran.
+#
+# GHSA-vfj7-8cjw-p6xm: agotamiento de pila al expandir un patrón de glob muy
+# anidado. Llega por `eslint-plugin-boundaries > micromatch > braces`, que es
+# **la cadena del linter**: corre sobre los archivos de este repositorio, con los
+# patrones que escribimos nosotros, en la máquina de quien desarrolla y en la
+# tubería. No llega al navegador, no procesa nada que escriba un visitante y no
+# está en el camino de ninguna petición.
+#
+# Lo que la mantiene acotada no es este comentario: `mise run supply:check` exige
+# que cada aviso ignorado tenga su fila en `DEPENDENCIES.md` con una fecha de
+# revisión **en el futuro**, así que la excepción caduca y la compuerta vuelve a
+# preguntar. Si ese día sigue sin parche, se renueva con su razón; si hay parche,
+# se sube y esta sección sobra.
+auditConfig:
+  ignoreGhsas:
+    - GHSA-vfj7-8cjw-p6xm

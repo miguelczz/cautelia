@@ -1,0 +1,69 @@
+{
+  "$defs": {
+    "Surface": {
+      "description": "Donde se muestra una frase. Agrupa el catalogo por consumidor.",
+      "enum": [
+        "voice",
+        "chat",
+        "inbox",
+        "panel",
+        "system"
+      ],
+      "title": "Surface",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Una frase que lee una persona, en un idioma.\n\nEl catalogo es la unica fuente de texto visible del sistema; ningun modulo\nescribe texto en linea (BR3.3).",
+  "properties": {
+    "key": {
+      "pattern": "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)+$",
+      "title": "Key",
+      "type": "string"
+    },
+    "locale": {
+      "enum": [
+        "es",
+        "en"
+      ],
+      "title": "Locale",
+      "type": "string"
+    },
+    "text": {
+      "minLength": 1,
+      "title": "Text",
+      "type": "string"
+    },
+    "version": {
+      "default": 1,
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    },
+    "decision": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Decision"
+    },
+    "surface": {
+      "$ref": "#/$defs/Surface"
+    }
+  },
+  "required": [
+    "key",
+    "locale",
+    "text",
+    "surface"
+  ],
+  "title": "CopyEntry",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/copy-entry.schema.json"
+}

@@ -1,0 +1,247 @@
+{
+  "stage": "code-generation",
+  "unit": "u11-intake",
+  "version": 1,
+  "writes": [
+    {
+      "path": "app/backend/migrations/versions/u11_intake_0001_reporter_party.py"
+    },
+    {
+      "path": "app/backend/migrations/versions/u11_intake_0002_alt_version.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/history.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/parties.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/repository.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/intake_probes.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/intake/blocks.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/intake/budget.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/intake/composition.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/intake/confirmation.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/intake/contradictions.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/intake/extraction.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/intake/identity.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/intake/node.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/intake/normalization.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/intake/reporter.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/intake/spelling.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/intake/tone.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/intake/versions.py"
+    },
+    {
+      "path": "app/backend/src/untangle/paths.py"
+    },
+    {
+      "path": "app/backend/src/untangle/policy_rag/corpus/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/policy_rag/corpus/repository.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/models.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u11/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u11/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u11/test_contradictions.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u11/test_identity.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u4/test_api.py"
+    },
+    {
+      "path": "app/backend/tests/unit/case_record/test_history.py"
+    },
+    {
+      "path": "app/backend/tests/unit/intake/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/intake/test_blocks.py"
+    },
+    {
+      "path": "app/backend/tests/unit/intake/test_budget.py"
+    },
+    {
+      "path": "app/backend/tests/unit/intake/test_composition.py"
+    },
+    {
+      "path": "app/backend/tests/unit/intake/test_confirmation.py"
+    },
+    {
+      "path": "app/backend/tests/unit/intake/test_contradictions.py"
+    },
+    {
+      "path": "app/backend/tests/unit/intake/test_extraction.py"
+    },
+    {
+      "path": "app/backend/tests/unit/intake/test_identity.py"
+    },
+    {
+      "path": "app/backend/tests/unit/intake/test_node.py"
+    },
+    {
+      "path": "app/backend/tests/unit/intake/test_normalization.py"
+    },
+    {
+      "path": "app/backend/tests/unit/intake/test_spelling.py"
+    },
+    {
+      "path": "app/backend/tests/unit/intake/test_tone.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_config.py"
+    },
+    {
+      "path": "app/config/copy/en.yaml"
+    },
+    {
+      "path": "app/config/copy/es.yaml"
+    },
+    {
+      "path": "app/config/intake/forbidden_register.yaml"
+    },
+    {
+      "path": "app/config/intake/spelling_alphabet.yaml"
+    },
+    {
+      "path": "app/config/intake/tone_signals.yaml"
+    },
+    {
+      "path": "app/config/prompts/intake_composition.en.md"
+    },
+    {
+      "path": "app/config/prompts/intake_composition.es.md"
+    },
+    {
+      "path": "app/config/prompts/intake_extraction.en.md"
+    },
+    {
+      "path": "app/config/prompts/intake_extraction.es.md"
+    },
+    {
+      "path": "app/config/tenants/knotwell/tenant.yaml"
+    },
+    {
+      "path": "app/config/tenants/stonecroft/tenant.yaml"
+    },
+    {
+      "path": "app/config/tenants/sunmeadow/tenant.yaml"
+    },
+    {
+      "path": "app/contracts/schemas/tenant.schema.json"
+    },
+    {
+      "path": "app/data/manifest.json"
+    },
+    {
+      "path": "app/evals/cases/ds2/intake-advanced-field/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/intake-advanced-field/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/intake-anger/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/intake-anger/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/intake-disordered-story/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/intake-disordered-story/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/intake-distress-crying/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/intake-distress-crying/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/intake-ordered-story/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/intake-ordered-story/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt11-insults/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt11-insults/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt7-two-versions/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt7-two-versions/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt9-third-party-reporter/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt9-third-party-reporter/es.yaml"
+    },
+    {
+      "path": "app/evals/manifest.yaml"
+    },
+    {
+      "path": "app/evals/subsets/smoke.yaml"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-keys.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-texts.ts"
+    },
+    {
+      "path": "mise.toml"
+    }
+  ]
+}

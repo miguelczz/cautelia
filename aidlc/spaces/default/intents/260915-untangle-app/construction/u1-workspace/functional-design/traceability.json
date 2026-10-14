@@ -1,0 +1,31 @@
+{
+  "stage": "functional-design",
+  "unit": "u1-workspace",
+  "upstream_ids": [
+    "AC4.4.1", "AC4.4.2", "AC4.4.3", "AC4.4.4", "AC4.4.5", "AC4.4.6",
+    "AC4.7.1", "AC4.7.2", "AC4.7.3", "AC4.7.4", "AC4.7.5",
+    "AC5.8.1", "AC5.8.2", "AC5.8.3", "AC5.8.4"
+  ],
+  "coverage": [
+    { "id": "AC4.4.1", "status": "OK", "target": "BR1.1, BR1.8" },
+    { "id": "AC4.4.2", "status": "OK", "target": "BR1.1" },
+    { "id": "AC4.4.3", "status": "OK", "target": "BR1.9, BR1.10" },
+    { "id": "AC4.4.4", "status": "OK", "target": "BR1.6, BR1.7" },
+    { "id": "AC4.4.5", "status": "OK", "target": "BR1.8" },
+    { "id": "AC4.4.6", "status": "OK", "target": "BR1.2, BR1.3" },
+    { "id": "AC4.7.1", "status": "OK", "target": "BR2.1" },
+    { "id": "AC4.7.2", "status": "OK", "target": "BR2.2" },
+    { "id": "AC4.7.3", "status": "OK", "target": "BR2.3" },
+    { "id": "AC4.7.4", "status": "OK", "target": "BR2.4" },
+    { "id": "AC4.7.5", "status": "OK", "target": "BR1.11" },
+    { "id": "AC5.8.1", "status": "OK", "target": "BR3.1, BR3.2" },
+    { "id": "AC5.8.2", "status": "OK", "target": "BR3.3" },
+    { "id": "AC5.8.3", "status": "OK", "target": "BR3.5" },
+    { "id": "AC5.8.4", "status": "OK", "target": "BR3.6" }
+  ],
+  "reverse": [
+    { "id": "BR1.4", "status": "N/A", "target": "Decision Q5 del diseno funcional de U1: que hace el corredor con un caso que no se puede medir. No nace de un criterio de aceptacion; lo exige la regla del proyecto sobre corridas no comparables." },
+    { "id": "BR1.5", "status": "N/A", "target": "Decision Q5 del diseno funcional de U1: una corrida con casos no medidos queda no comparable. Misma razon que BR1.4." },
+    { "id": "BR3.4", "status": "N/A", "target": "Decision Q3 del diseno funcional de U1: claves jerarquicas y siempre literales. Es la condicion tecnica que hace exacto el chequeo de AC5.8.1, no un criterio propio." }
+  ]
+}

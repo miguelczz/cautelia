@@ -1,0 +1,62 @@
+# La cuarta aseguradora: la que existe **solo** para la bateria de humo de U20.
+#
+# Anadir una aseguradora es anadir una carpeta como esta (AC5.1.1, FR9.3): el
+# cargador recorre el directorio y no una lista escrita a mano. Esta carpeta vive
+# en las fixtures y **nunca** en `app/config/tenants/`, asi que ninguna corrida
+# del aplicativo la carga: no se publica, no aparece en el inicio del sitio y no
+# tiene corpus ingerido.
+#
+# Aqui **no hay ninguna credencial**, igual que en las tres de verdad: la de la
+# bandeja se emite con un comando y no se publica (D23, BR2.6).
+config_version: 1
+tenant_id: testhaven
+display_name: Testhaven Mutual
+kind: carrier
+default_language: es
+jurisdiction: corvane
+quote_enabled: false
+# Su poliza de ejemplo esta en el corpus de esta misma fixture, y la validacion
+# de la carpeta comprueba que el archivo existe y que declara este numero.
+example_policy: POL-777001
+# Tres letras que no se confunden con STO, SUN ni KNO al dictarse: dos prefijos
+# iguales harian que dos casos distintos compartieran numero, y el arranque falla
+# ante eso (BR4.2).
+case_number_prefix: TST
+copy_overrides: []
+voice:
+  primary_voice: catalina
+  language_default: es
+  stt:
+    provider: deepgram
+    model: nova-3
+    mode: multi
+  primary:
+    es:
+      provider: cartesia
+      model: sonic-3.6
+      voice_id: 162e0f37-8504-474c-bb33-c606c01890dc
+    en:
+      provider: cartesia
+      model: sonic-3.6
+      voice_id: 162e0f37-8504-474c-bb33-c606c01890dc
+  fallback:
+    es:
+      provider: deepgram
+      model: aura-2
+      voice_id: aura-2-celeste-es
+    en:
+      provider: deepgram
+      model: aura-2
+      voice_id: aura-2-thalia-en
+staff:
+  - principal_id: tess-haven
+    role: adjuster
+    display_name: Tess Haven
+brand:
+  accent: "#2C5F68"
+  accent_on_dark: "#7DB4BD"
+  monogram: arch
+character_key: insurer.character.conservative
+intake:
+  calm_after_insults: 2
+  close_after_insults: 3

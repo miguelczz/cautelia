@@ -1,0 +1,49 @@
+# Lo que NO entra en el contexto de construccion.
+#
+# **Sin esto la imagen llevaba la venv de la maquina de quien construye**, con sus
+# enlaces apuntando a `/Users/...`: el `COPY app/backend/` de la ultima etapa pisaba
+# la venv que la etapa de dependencias habia resuelto, y el contenedor arrancaba sin
+# poder importar nada. Lo delato `ModuleNotFoundError: No module named 'uvicorn'`.
+#
+# Y ademas el contexto entero viajaba al demonio en cada construccion: la venv, los
+# modulos de node, el historial de git y los directorios de trabajo.
+
+# Entornos y dependencias resueltas en la maquina
+**/.venv
+**/node_modules
+**/__pycache__
+**/*.pyc
+
+# Lo que se compila dentro de la imagen, no fuera
+app/frontend/dist
+
+# Historial y herramientas
+.git
+.github
+.claude
+aidlc
+docs
+spikes
+review
+tmp
+# Solo la landing de la raiz. Sin la barra inicial el patron excluye tambien
+# cualquier carpeta llamada `site` dentro del aplicativo: el 2026-10-06 se trago
+# `app/frontend/src/shared/site/` y la imagen no compilaba (modulo ausente).
+/site
+
+# Cachés de las herramientas de calidad
+.mypy_cache
+.pytest_cache
+.ruff_cache
+.grimp_cache
+.import_linter_cache
+.coverage
+
+# Secretos: nunca, y la negacion de `.env.example` no aplica aqui porque la imagen
+# no necesita ninguna plantilla.
+.env
+.env.*
+
+# Las pruebas no se publican: la imagen sirve, no se verifica a si misma.
+app/backend/tests
+app/frontend/e2e

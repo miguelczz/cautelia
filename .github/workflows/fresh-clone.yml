@@ -1,0 +1,108 @@
+# La medicion de los quince minutos (NFR21.2).
+#
+# Cronometra el camino de quien llega limpio al repositorio: clonar, instalar,
+# correr, ver el reporte. Corre **sin cache de ningun tipo**, porque eso es
+# exactamente lo que mide.
+#
+# **No bloquea la entrega.** Es una medicion, no una compuerta: su numero entra
+# en la matriz de verificacion y su caida se investiga, pero un cambio no se
+# detiene porque una medicion semanal este vieja. La compuerta que si corre en
+# cada cambio es `verify.yml`.
+#
+# Corre aparte y semanal porque catorce minutos por cambio era el mayor gasto
+# evitable del proyecto.
+
+name: fresh-clone
+
+on:
+  schedule:
+    # Lunes a las 06:00 UTC. Lo que mide se mueve por semanas, no por horas.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  fresh-clone:
+    name: del clon al reporte
+    # Siempre en un servidor de GitHub: lo que mide es el camino desde una maquina
+    # limpia, y en una que ya tiene las herramientas instaladas publicaria un tiempo
+    # que nadie mas puede reproducir. Gasta cerca de un minuto por semana.
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # Dos ajustes, y los dos son la razon de ser de este trabajo.
+      #
+      # `cache: false` porque mide a quien llega limpio, y una cache le regalaria
+      # un minuto que el recien llegado no tiene.
+      #
+      # `install: false` porque la accion, por defecto, corre `mise install` ella
+      # misma: instalaria Python, Node, uv y pnpm **antes** de que arranque el
+      # cronometro, y el `mise install` medido abajo no tendria nada que hacer.
+      # Eso es exactamente lo que pasaba: la corrida del 2026-09-20 publico
+      # "camino completo: 7 s" porque los diez segundos caros quedaban fuera de
+      # la medicion. Con `install: false` la accion solo deja el binario de
+      # `mise` disponible --que es el prerequisito, como git-- y la instalacion
+      # del toolchain cae dentro del cronometro, que es donde la promesa de
+      # NFR21 la pone.
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+        with:
+          cache: false
+          install: false
+
+      - name: cronometrar cada paso
+        run: |
+          set -Eeuo pipefail
+          medir() {
+            local nombre="$1"; shift
+            local inicio; inicio=$(date +%s)
+            "$@"
+            local fin; fin=$(date +%s)
+            printf '%s\t%s\n' "$nombre" "$((fin - inicio))" >> pasos.tsv
+          }
+
+          : > pasos.tsv
+          total_inicio=$(date +%s)
+
+          # Los tres pasos del camino de arranque. Son tres y no cinco porque U1
+          # no crea tablas (decision CG-1): el camino ya no necesita la base de
+          # datos ni las migraciones.
+          medir herramientas mise install
+          medir dependencias mise run deps:install
+          medir evaluaciones mise run evals:run -- --subset smoke
+
+          total_fin=$(date +%s)
+          printf 'total\t%s\n' "$((total_fin - total_inicio))" >> pasos.tsv
+
+          {
+            echo "commit: ${GITHUB_SHA}"
+            echo "fecha: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo
+            echo "paso\tsegundos"
+            cat pasos.tsv
+          } > tiempos.txt
+
+          cat tiempos.txt >> "$GITHUB_STEP_SUMMARY"
+
+          # El numero se publica tal cual, cumpla la meta o no. Un tiempo que
+          # solo se publica cuando es bueno deja de ser una medicion. El umbral
+          # no se baja: si no cabe, se recorta `smoke` o se dice que no se
+          # alcanzo, con el numero real.
+          total=$(awk -F'\t' '$1=="total"{print $2}' pasos.tsv)
+          echo "camino completo: ${total} s (presupuesto 900 s)"
+
+      - name: tiempos por paso
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fresh-clone-${{ github.sha }}
+          path: |
+            tiempos.txt
+            app/evals/reports/
+          if-no-files-found: warn
+          retention-days: 90

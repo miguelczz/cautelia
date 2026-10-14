@@ -1,0 +1,542 @@
+{
+  "stage": "code-generation",
+  "unit": "u12-graph-runtime",
+  "upstream_ids": [
+    "AC4.9.1",
+    "AC4.9.2",
+    "AC4.9.3",
+    "AC4.9.4",
+    "AC4.9.5",
+    "AC1.19.1",
+    "AC1.19.2",
+    "AC1.19.3",
+    "AC1.19.4",
+    "AC1.19.5",
+    "AC1.25.1",
+    "AC1.25.2",
+    "AC1.25.3",
+    "AC1.25.4",
+    "AC2.4.1",
+    "AC2.4.2",
+    "AC2.4.3",
+    "AC2.10.1",
+    "AC2.10.2",
+    "AC2.10.5",
+    "AC2.10.3",
+    "AC2.10.4",
+    "AC1.9.1",
+    "AC1.9.2",
+    "AC1.9.3",
+    "AC1.9.4",
+    "AC1.15.1",
+    "AC1.15.2",
+    "AC1.15.3",
+    "AC1.15.4",
+    "AC1.15.5",
+    "AC1.16.1",
+    "AC1.16.2",
+    "AC1.16.3",
+    "AC1.16.4",
+    "AC2.6.1",
+    "AC2.6.2",
+    "AC2.6.3",
+    "AC2.6.4",
+    "AC4.8.1",
+    "AC4.8.2",
+    "AC4.8.3",
+    "AC4.8.4",
+    "AC4.8.5",
+    "AC4.10.1",
+    "AC4.10.2",
+    "AC4.10.3",
+    "AC4.10.4",
+    "AC4.10.5",
+    "AC4.11.1",
+    "AC4.11.2",
+    "AC4.11.3",
+    "AC4.11.4",
+    "AC4.11.5",
+    "BR1.1",
+    "BR1.2",
+    "BR1.3",
+    "BR1.4",
+    "BR1.5",
+    "BR1.6",
+    "BR2.1",
+    "BR2.2",
+    "BR2.3",
+    "BR2.4",
+    "BR2.5",
+    "BR3.1",
+    "BR3.2",
+    "BR3.3",
+    "BR3.4",
+    "BR3.5",
+    "BR4.1",
+    "BR4.2",
+    "BR4.3",
+    "BR4.4",
+    "BR5.1",
+    "BR5.2",
+    "BR5.3",
+    "BR5.4",
+    "BR5.5",
+    "BR5.6",
+    "BR6.1",
+    "BR6.2",
+    "BR6.3",
+    "BR6.4",
+    "NFR1.1",
+    "NFR4.2",
+    "NFR11.11",
+    "NFR12.5",
+    "NFR13.5"
+  ],
+  "coverage": [
+    {
+      "id": "AC4.9.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/transition.py"
+    },
+    {
+      "id": "AC4.9.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/transition.py"
+    },
+    {
+      "id": "AC4.9.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/transition.py"
+    },
+    {
+      "id": "AC4.9.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/transition.py"
+    },
+    {
+      "id": "AC4.9.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/transition.py"
+    },
+    {
+      "id": "AC1.19.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/resume.py"
+    },
+    {
+      "id": "AC1.19.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/resume.py"
+    },
+    {
+      "id": "AC1.19.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/resume.py"
+    },
+    {
+      "id": "AC1.19.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/resume.py"
+    },
+    {
+      "id": "AC1.19.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/resume.py"
+    },
+    {
+      "id": "AC1.25.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/rhythm.py"
+    },
+    {
+      "id": "AC1.25.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/rhythm.py"
+    },
+    {
+      "id": "AC1.25.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/rhythm.py"
+    },
+    {
+      "id": "AC1.25.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/rhythm.py"
+    },
+    {
+      "id": "AC2.4.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/coverage_detour.py"
+    },
+    {
+      "id": "AC2.4.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/coverage_detour.py"
+    },
+    {
+      "id": "AC2.4.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/coverage_detour.py"
+    },
+    {
+      "id": "AC2.10.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/turn.py"
+    },
+    {
+      "id": "AC2.10.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/turn.py"
+    },
+    {
+      "id": "AC2.10.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/turn.py"
+    },
+    {
+      "id": "AC2.10.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/turn.py"
+    },
+    {
+      "id": "AC2.10.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/turn.py"
+    },
+    {
+      "id": "AC1.9.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/turn.py"
+    },
+    {
+      "id": "AC1.9.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/turn.py"
+    },
+    {
+      "id": "AC1.9.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/turn.py"
+    },
+    {
+      "id": "AC1.9.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/turn.py"
+    },
+    {
+      "id": "AC1.15.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/pause.py"
+    },
+    {
+      "id": "AC1.15.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/pause.py"
+    },
+    {
+      "id": "AC1.15.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/pause.py"
+    },
+    {
+      "id": "AC1.15.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/pause.py"
+    },
+    {
+      "id": "AC1.15.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/pause.py"
+    },
+    {
+      "id": "AC1.16.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/pause_repository.py"
+    },
+    {
+      "id": "AC1.16.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/pause_repository.py"
+    },
+    {
+      "id": "AC1.16.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/pause_repository.py"
+    },
+    {
+      "id": "AC1.16.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/pause_repository.py"
+    },
+    {
+      "id": "AC2.6.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/executor.py"
+    },
+    {
+      "id": "AC2.6.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/executor.py"
+    },
+    {
+      "id": "AC2.6.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/executor.py"
+    },
+    {
+      "id": "AC2.6.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/executor.py"
+    },
+    {
+      "id": "AC4.8.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/graph_runtime.py"
+    },
+    {
+      "id": "AC4.8.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/graph_runtime.py"
+    },
+    {
+      "id": "AC4.8.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/graph_runtime.py"
+    },
+    {
+      "id": "AC4.8.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/graph_runtime.py"
+    },
+    {
+      "id": "AC4.8.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/graph_runtime.py"
+    },
+    {
+      "id": "AC4.10.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/executor.py"
+    },
+    {
+      "id": "AC4.10.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/executor.py"
+    },
+    {
+      "id": "AC4.10.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/executor.py"
+    },
+    {
+      "id": "AC4.10.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/executor.py"
+    },
+    {
+      "id": "AC4.10.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/executor.py"
+    },
+    {
+      "id": "AC4.11.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/checkpoint.py"
+    },
+    {
+      "id": "AC4.11.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/checkpoint.py"
+    },
+    {
+      "id": "AC4.11.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/checkpoint.py"
+    },
+    {
+      "id": "AC4.11.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/checkpoint.py"
+    },
+    {
+      "id": "AC4.11.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/checkpoint.py"
+    },
+    {
+      "id": "BR1.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/transition.py"
+    },
+    {
+      "id": "BR1.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/transition.py"
+    },
+    {
+      "id": "BR1.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/transition.py"
+    },
+    {
+      "id": "BR1.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/state.py"
+    },
+    {
+      "id": "BR1.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/graph.py"
+    },
+    {
+      "id": "BR1.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/node_run_repository.py"
+    },
+    {
+      "id": "BR2.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/turn.py"
+    },
+    {
+      "id": "BR2.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/rhythm.py"
+    },
+    {
+      "id": "BR2.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/rhythm.py"
+    },
+    {
+      "id": "BR2.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/rhythm.py"
+    },
+    {
+      "id": "BR2.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/output.py"
+    },
+    {
+      "id": "BR3.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/checkpoint.py"
+    },
+    {
+      "id": "BR3.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/checkpoint.py"
+    },
+    {
+      "id": "BR3.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/abandonment.py"
+    },
+    {
+      "id": "BR3.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/resume.py"
+    },
+    {
+      "id": "BR3.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/checkpoint.py"
+    },
+    {
+      "id": "BR4.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/pause.py"
+    },
+    {
+      "id": "BR4.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/coverage_detour.py"
+    },
+    {
+      "id": "BR4.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/turn.py"
+    },
+    {
+      "id": "BR4.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/pause_repository.py"
+    },
+    {
+      "id": "BR5.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/executor.py"
+    },
+    {
+      "id": "BR5.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/executor.py"
+    },
+    {
+      "id": "BR5.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/executor.py"
+    },
+    {
+      "id": "BR5.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/node_run.py"
+    },
+    {
+      "id": "BR5.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/sweep.py"
+    },
+    {
+      "id": "BR5.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/executor.py"
+    },
+    {
+      "id": "BR6.1",
+      "status": "OK",
+      "target": "app/backend/migrations/versions/u12_graph_0001_runtime_tables.py"
+    },
+    {
+      "id": "BR6.2",
+      "status": "OK",
+      "target": "app/backend/migrations/versions/u12_graph_0002_checkpointer.py"
+    },
+    {
+      "id": "BR6.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/checkpoint.py"
+    },
+    {
+      "id": "BR6.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/purge.py"
+    },
+    {
+      "id": "NFR1.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/turn.py"
+    },
+    {
+      "id": "NFR4.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/turn.py"
+    },
+    {
+      "id": "NFR11.11",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/checkpoint.py"
+    },
+    {
+      "id": "NFR12.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/resume.py"
+    },
+    {
+      "id": "NFR13.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/rhythm.py"
+    }
+  ]
+}

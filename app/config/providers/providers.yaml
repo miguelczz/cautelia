@@ -1,0 +1,324 @@
+# Con que se habla, bajo que plan y con que limites (U5 `provider-platform`).
+#
+# Este archivo y su hermano `prices.yaml` son la unica configuracion del
+# proyecto que puede costar dinero de verdad. Cambiar una linea de aqui es un
+# cambio de codigo: queda en el historial y dispara la compuerta de evaluaciones,
+# porque el identificador del modelo y sus parametros mueven cifras publicadas.
+#
+# Aqui **no hay ninguna clave**. Las claves se leen del entorno, separadas por
+# uso, en `settings.py`, que es el unico punto que lee variables (SEC-U1.2).
+config_version: 1
+
+# --- Proveedores y modelos anclados -------------------------------------------
+# Anclados por **identificador exacto**, nunca por un alias que el proveedor
+# pueda reapuntar (BR1.4). El cargador rechaza los segmentos que delatan un alias
+# movil --`latest`, `stable`, `preview`, `experimental`, `exp`--, porque un alias
+# movido convierte dos corridas del mismo commit en dos corridas de modelos
+# distintos, y con eso la linea base de evaluaciones deja de comparar nada.
+#
+# Los proveedores de voz los ancla U15 `speech-providers`, con **las voces** que
+# usa cada aseguradora. Esa lista de voces es contra la que se valida el bloque
+# `voice` de cada `tenant.yaml` al arrancar: una voz que no esta aqui apaga la voz
+# de esa aseguradora con su motivo, y el chat sigue (BR2.2). Que cada voz existe
+# de verdad lo comprueba `mise run voice:contract-live` contra la lista del
+# proveedor, que no cuesta; arrancar no le pregunta a nadie.
+providers:
+  - name: gemini
+    models:
+      # El modelo de ADR-006, elegido por la regla escrita antes de correr el
+      # experimento 2: el mas barato que no invente y cumpla el tiempo. Google
+      # anuncia su retiro el 2027-05-07, despues de los noventa dias.
+      - id: gemini-3.1-flash-lite
+        kind: generation
+      # El que atiende el turno desde el 2026-10-06. El plan gratuito del 3.1
+      # quedo saturado: medido ese dia desde fuera, siete extracciones dieron de
+      # 5,4 a 17,8 s, un 503 de "alta demanda" y una sin respuesta en 20 s, y en
+      # produccion cuatro de cinco corridas del nodo se degradaron por tiempo.
+      # El 3.5-flash-lite, en la misma clave, respondio doce de doce entre 0,9 y
+      # 3,7 s (mediana 1,9 s), sin tokens de razonamiento y respetando el
+      # esquema. Mismo nivel de la familia, misma condicion del plan gratuito
+      # (ADR-006 sigue valiendo). El juez de las evaluaciones no cambia: su
+      # calibracion es contra el 3.1 (ADR-014).
+      - id: gemini-3.5-flash-lite
+        kind: generation
+      # Vectores truncados a 768 y normalizados (ADR-006). La dimension va en
+      # configuracion y no en el codigo porque cambiarla invalida el indice
+      # entero, y eso tiene que verse en un diff.
+      - id: gemini-embedding-001
+        kind: embedding
+        dimensions: 768
+  # Transcripcion y voz de respaldo (ADR-007, ADR-008 y su enmienda del
+  # 2026-09-21). Una sola cuenta y una sola clave del uso `voice`.
+  - name: deepgram
+    models:
+      # En modo `multi`, que detecta el idioma en cada palabra: el menor error
+      # medido en espanol (5,6 %) y sin selector de idioma (ADR-007).
+      - id: nova-3
+        kind: transcription
+      # La familia de voces de respaldo. Se ancla la familia porque es la que la
+      # tabla de precios cobra --0,030 USD por mil caracteres-- y la voz concreta
+      # va aparte, en `voices`.
+      - id: aura-2
+        kind: synthesis
+    voices:
+      # La que midio el experimento 1: 609 ms de mediana al primer audio.
+      # Colombiana, femenina.
+      - id: aura-2-celeste-es
+        model: aura-2
+        languages: [es]
+      # La de ingles, elegida en U15 (CG-U15-2) y comprobada el 2026-09-21 contra
+      # la lista de modelos de Deepgram: femenina, clara y energica, pensada para
+      # atencion al cliente, que es el perfil mas cercano al de Celeste. Ninguna
+      # voz de Aura-2 habla los dos idiomas, asi que en modo de respaldo la voz
+      # cambia con el idioma: es la excepcion declarada D17, y la consola lo avisa
+      # (US5.11).
+      - id: aura-2-thalia-en
+        model: aura-2
+        languages: [en]
+  # La voz principal: Catalina, definitiva desde la enmienda del 2026-09-21 de
+  # ADR-008. Una sola voz para los dos idiomas, con la misma identidad
+  # (experimento 4).
+  - name: cartesia
+    models:
+      - id: sonic-3.6
+        kind: synthesis
+    voices:
+      # El identificador del catalogo publico de Cartesia. No es un secreto: vivio
+      # en el `.env` del experimento 1 y paso aqui en U15 (CG-U15-5), porque el
+      # proyecto declara proveedor, modelo y voz en configuracion versionada.
+      - id: 162e0f37-8504-474c-bb33-c606c01890dc
+        model: sonic-3.6
+        languages: [es, en]
+  # La redaccion natural del chat (decision de Miguel del 2026-10-07). El codigo
+  # elige que decir y este modelo lo dice con naturalidad. Medido ese dia: mediana
+  # 1,1 s y peor caso 1,5 s por respuesta, y se mantuvo en su papel ante intentos
+  # de hacerle prometer cobertura.
+  - name: anthropic
+    models:
+      - id: claude-haiku-5-5
+        kind: generation
+
+# --- El plan de cada uso ------------------------------------------------------
+# Cada uso vive en su propio proyecto del proveedor y con su propia clave
+# (ADR-006, enmienda del 2026-09-17): Gemini aplica los limites por proyecto y no
+# por clave, asi que una cuota agotada en el chat no debe apagar la voz.
+#
+# `billable` se escribe aparte del plan **y el cargador lo comprueba contra el**.
+# No es redundancia: es la columna de la que depende el techo, y que el archivo
+# la diga en voz alta es lo que permite leer en un diff el dia que un uso pasa a
+# pagarse (BR3.6, BR4.2).
+#
+# Cada uso declara ademas sus dos tiempos maximos hacia el proveedor, en
+# milisegundos. Son **por uso** y no globales porque los usos tienen paciencias
+# distintas: el turno de voz no puede esperar lo que una corrida de evaluaciones
+# si (`nfr-design/performance-design.md`). Ninguno lleva valor por defecto en el
+# codigo, por la misma razon que los limites de la voz: un tiempo maximo que
+# este archivo no escriba seria un tiempo maximo que nadie decidio.
+#
+# La **conexion es 2 s en los cuatro, a proposito**: un apreton de manos que no
+# cierra en dos segundos no es lentitud del modelo, es que la red no esta, y eso
+# no depende de para que se llame. Lo que cambia entre usos es la lectura, y
+# cada una lleva abajo su razon.
+uses:
+  # Plan de pago con credito prepagado y sin recarga automatica. Se activa solo
+  # cuando la voz se publique, y el prepago lo decide Miguel en ese momento.
+  #
+  # Lectura de 2 s: la meta del turno es p95 menor que 800 ms hasta el primer
+  # audio. Pasados dos segundos el turno ya se perdio, y lo que corresponde es la
+  # frase de espera, no seguir esperando.
+  - use: voice
+    provider: gemini
+    model: gemini-3.5-flash-lite
+    plan: paid
+    billable: true
+    connect_timeout_ms: 2000
+    read_timeout_ms: 2000
+  # Plan gratuito con su proyecto y su clave, con el aviso de no escribir datos
+  # reales antes de cualquier texto del visitante (ADR-006, riesgo aceptado en
+  # Q5). Su costo se registra igual, a precio de lista y sin sumar contra el
+  # techo: sin esa fila, el costo por caso del chat desapareceria.
+  #
+  # Lectura de 12 s: ADR-006 midio en plan gratuito un primer token de 1,1 a
+  # 2,4 s en p50 **con colas de mas de 10 s**. Doce segundos quedan justo detras
+  # de esa cola medida: por debajo se cortarian llamadas que iban a responder, y
+  # por encima el visitante mira una pantalla quieta cuando ya hay un mensaje
+  # honesto que darle.
+  - use: chat
+    provider: gemini
+    model: gemini-3.5-flash-lite
+    plan: free
+    billable: false
+    connect_timeout_ms: 2000
+    read_timeout_ms: 12000
+  # Lectura de 30 s: nadie espera mirando. Lo que acota la corrida de
+  # evaluaciones es su presupuesto de diez minutos, y para eso esta el
+  # subconjunto declarado, no el tiempo maximo de cada llamada.
+  - use: evals
+    provider: gemini
+    model: gemini-3.1-flash-lite
+    plan: free
+    billable: false
+    connect_timeout_ms: 2000
+    read_timeout_ms: 30000
+  # Lectura de 60 s: generacion de datos por lotes, sin nadie esperando y sin
+  # presupuesto de corrida que respetar.
+  - use: operations
+    provider: gemini
+    model: gemini-3.1-flash-lite
+    plan: free
+    billable: false
+    connect_timeout_ms: 2000
+    read_timeout_ms: 60000
+  # Embeddings del corpus de polizas (U8): la ingesta por lotes de
+  # `corpus:ingest` y la consulta que hace el nodo `policy_verification` al
+  # recuperar para verificar una respuesta. Las dos comparten uso porque las
+  # dos llaman al mismo modelo, `gemini-embedding-001` (BR1.6), y las dos
+  # toleran la cola del plan gratuito: la ingesta corre sola, sin nadie
+  # mirando, y la consulta corre en el ritmo de fondo del nodo, nunca dentro
+  # del turno de voz (D22, BR3.7) -- por eso su lectura es tan paciente como
+  # la de `operations` y no la de 2 s de la voz.
+  - use: corpus
+    provider: gemini
+    model: gemini-embedding-001
+    plan: free
+    billable: false
+    connect_timeout_ms: 2000
+    read_timeout_ms: 60000
+  # Plan de pago con 5 USD de saldo prepagado y sin recarga automatica, comprado
+  # por Miguel el 2026-10-07: al acabarse, Anthropic deja de responder y el chat
+  # vuelve a las frases del catalogo. Su gasto cuenta contra el techo de la
+  # ventana, como el de la voz.
+  #
+  # Lectura de 6 s (2026-10-12): la llamada que entiende tambien redacta la respuesta, y
+  # el chat espera hasta 6,5 s antes de mandar la frase del catalogo
+  # (`understanding.UNDERSTANDING_TIMEOUT_CHAT_S`); el corte lo hace ese plazo y no el
+  # transporte. La voz usa este mismo uso pero espera 3,5 s
+  # (`understanding.UNDERSTANDING_TIMEOUT_VOICE_S`), asi que su corte sigue siendo el
+  # suyo, antes que esta lectura.
+  - use: chat_reply
+    provider: anthropic
+    model: claude-haiku-5-5
+    plan: paid
+    billable: true
+    connect_timeout_ms: 2000
+    read_timeout_ms: 6000
+  # Las evaluaciones de la comprension del chat (`mise run evals:entender`,
+  # 2026-10-08): el mismo modelo que entiende en el chat, con su propia clave y
+  # facturable, para que su gasto cuente contra el techo como cualquier otro.
+  - use: evals_chat
+    provider: anthropic
+    model: claude-haiku-5-5
+    plan: paid
+    billable: true
+    connect_timeout_ms: 2000
+    read_timeout_ms: 3500
+
+# --- El cortacircuitos --------------------------------------------------------
+# Uno por pareja (proveedor, uso), dentro del adaptador. Los numeros son los del
+# patron y viven aqui para poder cambiarlos sin un despliegue de logica.
+#
+# Que tipos de error cuentan **no** es un ajuste y no esta aqui:
+# `invalid_response` no abre el circuito, porque es un problema del contenido y
+# no de la salud del proveedor, y contarlo abriria el circuito por un prompt mal
+# hecho.
+circuit_breaker:
+  failure_threshold: 5
+  open_seconds: 30
+  half_open_probes: 1
+
+# --- Los limites del enlace publico de voz (FR3.9) ----------------------------
+# Ninguno lleva valor por defecto en el codigo: un limite que este archivo no
+# escriba seria un limite que nadie decidio, y este es el archivo que se lee
+# cuando hay que explicar por que se rechazo una llamada.
+#
+# `site_daily_cap` es el **tope** del cupo diario del sitio, no el cupo: el cupo
+# real se deriva cada dia del presupuesto publico que queda y los dias que faltan
+# de la ventana (BR5.6). Un cupo fijo se llevaria el presupuesto en un dia bueno
+# y dejaria sin voz los ochenta y nueve siguientes.
+voice_limits:
+  # Cuatro minutos desde el 2026-10-11 (decision de Miguel): con tres, la llamada
+  # cortaba antes de terminar un reporte normal. El cupo del dia se deriva de aqui.
+  max_call_seconds: 240
+  # Tres y no una desde el 2026-10-07: con una, quien prueba la demo dos veces en
+  # un dia ve "llegaste al limite de hoy" a la segunda. El gasto lo acota el cupo
+  # diario del sitio, no este carril (BR1.4).
+  calls_per_visitor_per_day: 3
+  site_daily_cap: 15
+
+# --- Lo que consume una llamada publica (U17, tanda 2) ------------------------
+# La reserva por llamada es lo que divide el presupuesto para sacar el cupo del
+# dia y lo que decide si la voz principal cabe. Hasta esta tanda se preguntaba por
+# el precio de los **segundos de audio del modelo**, y el modelo se cobra por
+# tokens: esa linea no existe ni va a existir. La reserva salia sin medir, el cupo
+# del sitio salia cero y el enlace publico de voz no abria ninguna llamada.
+#
+# Una llamada tiene tres costos y aqui se declaran los tres. Los **precios** salen
+# de `prices.yaml`; lo que este bloque declara es **cuanto se consume**, que es una
+# suposicion del proyecto y no un precio de nadie. Los segundos de audio no se
+# declaran: son `voice_limits.max_call_seconds`, y escribirlos aqui seria la misma
+# duracion en dos sitios.
+call_reserve:
+  # La transcripcion corre todo el tiempo de la llamada.
+  transcription:
+    provider: deepgram
+    model: nova-3
+  # La sintesis cambia con el modo, y es la razon por la que la voz de respaldo
+  # existe: cuesta tres quintos de la principal (0,00003 frente a 0,00005 por
+  # caracter), asi que con el presupuesto justo el enlace sigue vivo con ella.
+  synthesis:
+    primary:
+      provider: cartesia
+      model: sonic-3.6
+    fallback:
+      provider: deepgram
+      model: aura-2
+    # La agente habla aproximadamente la mitad de la llamada --la otra mitad
+    # escucha-- y una voz de atencion dicta unos 850 caracteres por minuto (150
+    # palabras por minuto, de cinco a seis caracteres por palabra). Minuto y medio
+    # de habla son unos 1.300 caracteres.
+    characters: 1300
+  # Diez turnos de ida y vuelta en tres minutos. El prompt lleva el estado del
+  # caso y las frases del catalogo, asi que la entrada pesa mucho mas que la
+  # salida: 1.500 tokens de entrada por turno y unos 100 de salida.
+  model:
+    provider: gemini
+    model: gemini-3.5-flash-lite
+    input_tokens: 15000
+    output_tokens: 1000
+
+# --- Los limites del chat publico (FR4.6, RT-13) ------------------------------
+# No protegen el presupuesto: el chat corre en plan gratuito y no suma contra el
+# techo. Protegen contra el **abuso** y contra la cuota del propio plan
+# gratuito, que es compartida y se agota para todos los visitantes a la vez.
+#
+# Treinta por sesion: una captura completa de los siete campos son diez a veinte
+# turnos, asi que treinta dejan explorar sin obligar a abrir otra sesion.
+# Sesenta al dia son dos conversaciones completas.
+#
+# **Es un valor de arranque**: U13 `chat` lo confirma con sus propios criterios
+# cuando construya la superficie que lo aplica. Lo que no se puede es publicar
+# el chat sin limite mientras tanto.
+chat_limits:
+  messages_per_session: 30
+  messages_per_day: 60
+
+# --- La zona en la que se cierra el dia de una cuota (BR5.2) ------------------
+# Se declara y no se deduce del servidor: la del servidor moveria la medianoche
+# al cambiar de maquina y regalaria o quitaria una llamada.
+#
+# `America/Bogota` porque la demostracion es colombiana y la voz es paisa: la
+# medianoche que importa es la de quien visita, no la de la maquina donde el
+# proceso resulte estar corriendo.
+quota_timezone: America/Bogota
+
+# --- La reserva de grabacion (FR3.11, BR4.9) ----------------------------------
+# En **minutos** y no en dolares: el precio por minuto de la voz lo fija el
+# experimento 1, y un numero en dolares cubriria otra cantidad de minutos el dia
+# que se mida, sin que nadie lo hubiera decidido.
+#
+# Cuarenta y cinco minutos son quince llamadas de la duracion maxima. La razon
+# esta a la vista: el video tiene que mostrar la escena de la llamada (FR14.2),
+# el proyecto es bilingue y una escena utilizable exige varias tomas por idioma,
+# y la sesion de escucha necesita material suficiente para juzgar el acento.
+recording_reserve:
+  minutes: 45

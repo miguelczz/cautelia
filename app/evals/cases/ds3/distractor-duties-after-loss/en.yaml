@@ -1,0 +1,26 @@
+# Distractor (AC2.1.2): existe una clausula parecida en la version anterior del formulario (marcada is_distractor); la vigente es la del formulario 2026.1.
+# Criterio(s): AC2.1.2. Par ES/EN: 'distractor-duties-after-loss'.
+# Lo mide `mise run evals:citas` (fase 1, 2026-10-08): recupera, propone las citas con
+# Claude y las verifica, igual que el chat. La prueba estatica CG-U8-2 sigue comprobando
+# que clause_id exista en app/data/, sea de esta aseguradora y de esta poliza y no sea
+# distractor.
+# No prueba el numero de poliza ajeno (eso es DS-8) ni la clausula con instrucciones (eso es DS-6, FD-U8-3).
+
+case_key: DS-3/en/distractor-duties-after-loss
+dataset: DS-3
+language: en
+tenant: sunmeadow
+axes:
+- distractor
+- citation-verification
+citation:
+  policy_number: POL-200117
+  clause_id: SUN-PAP-2026-E.DUTIES.A.1
+  expected_outcome: verified
+  question: What do I have to do after an accident?
+  forbidden_clause_ids:
+  - SUN-PAP-2025-E.DUTIES.A.1.ALT
+expected_verdicts:
+  citation_distractor_duties_after_loss: pass
+  citation_exists_distractor_duties_after_loss: pass
+requires_provider_key: true

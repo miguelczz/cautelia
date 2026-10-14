@@ -1,0 +1,52 @@
+{
+  "case_key": "SEED/knotwell/es/awaiting-insured",
+  "channel": "chat",
+  "derivation_reason": "rule",
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Un camión le golpeó la parte trasera al retroceder."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Rebecca Miller, póliza POL-943669"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Carrera 5 con calle 40, Corvane"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Honda CR-V 2017, placa GPZ-3317, lo conducía Rebecca"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-943669",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "awaiting_insured",
+  "tenant_id": "knotwell",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Soy Rebecca Miller, póliza POL-943669. Un camión me golpeó la parte trasera al retroceder."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué vehículo manejaba?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Mi Honda CR-V 2017, placa GPZ-3317."
+    },
+    {
+      "speaker": "staff",
+      "text": "Para seguir con su caso necesito una foto del daño en la parte trasera."
+    }
+  ],
+  "used_by": []
+}

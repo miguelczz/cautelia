@@ -1,0 +1,134 @@
+{
+  "stage": "nfr-requirements",
+  "unit": "u10-compliance",
+  "upstream_ids": [
+    "NFR1",
+    "NFR2",
+    "NFR3",
+    "NFR4",
+    "NFR5",
+    "NFR6",
+    "NFR7",
+    "NFR8",
+    "NFR9",
+    "NFR10",
+    "NFR11",
+    "NFR12",
+    "NFR13",
+    "NFR14",
+    "NFR15",
+    "NFR16",
+    "NFR17",
+    "NFR18",
+    "NFR19",
+    "NFR20",
+    "NFR21"
+  ],
+  "coverage": [
+    {
+      "id": "NFR1",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U16 segun la tabla de metas de `unit-of-work.md` (Latencia del turno de voz, del fin del habla al primer audio: p50 menor que 500 ms y p95 menor que 800 ms, por idioma). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR2",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U16 segun la tabla de metas de `unit-of-work.md` (Parada ante interrupción: menor que 300 ms). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR3",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U16 segun la tabla de metas de `unit-of-work.md` (Recuperación tras interrupción sin perder estado: mayor que 90 %). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR4",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U13 segun la tabla de metas de `unit-of-work.md` (Latencia del chat, del envío a la primera palabra: p95 menor que 3 s). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR5",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Precisión de citación: 95 % o más). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR6",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U8 segun la tabla de metas de `unit-of-work.md` (Citas inexistentes: exactamente 0 (compuerta dura)). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR7",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Completitud del primer aviso en los siete campos: 95 % o más). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR8",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Exactitud de extracción: 95 % o más por campo). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR9",
+      "status": "OK",
+      "target": "NFR9.1, NFR9.2"
+    },
+    {
+      "id": "NFR10",
+      "status": "OK",
+      "target": "NFR10.6"
+    },
+    {
+      "id": "NFR11",
+      "status": "OK",
+      "target": "NFR11.8"
+    },
+    {
+      "id": "NFR12",
+      "status": "OK",
+      "target": "NFR12.2, NFR12.3"
+    },
+    {
+      "id": "NFR13",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Derivaciones: 100 % correctas y 10 % o menos innecesarias). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR14",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U5 segun la tabla de metas de `unit-of-work.md` (Costo por caso exitoso, publicado por versión; voz de 0,02 USD o menos por llamada de cuatro minutos, con la meta del modelo de D7). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR15",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U5 segun la tabla de metas de `unit-of-work.md` (Gasto acumulado: 5 USD o menos en 90 días, con alerta en 3 USD). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR16",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U6 segun la tabla de metas de `unit-of-work.md` (Disponibilidad mensual del enlace en vivo: 95 % o más). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR17",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Duración de la corrida de evaluación de texto: 10 minutos o menos). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR18",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U1 segun la tabla de metas de `unit-of-work.md` (Cobertura de líneas: 80 % o más agregado y en los cinco módulos críticos). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR19",
+      "status": "OK",
+      "target": "NFR19.4"
+    },
+    {
+      "id": "NFR20",
+      "status": "OK",
+      "target": "NFR20.2"
+    },
+    {
+      "id": "NFR21",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U1 segun la tabla de metas de `unit-of-work.md` (De clonar el repositorio a ver el reporte de evaluación: menos de 15 minutos en máquina limpia). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    }
+  ]
+}

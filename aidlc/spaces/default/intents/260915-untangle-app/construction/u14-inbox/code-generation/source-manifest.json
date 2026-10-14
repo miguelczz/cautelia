@@ -1,0 +1,335 @@
+{
+  "stage": "code-generation",
+  "unit": "u14-inbox",
+  "version": 1,
+  "writes": [
+    {
+      "path": "aidlc/spaces/default/intents/260915-untangle-app/construction/u14-inbox/code-generation/hallazgos-tanda-1.md"
+    },
+    {
+      "path": "aidlc/spaces/default/intents/260915-untangle-app/construction/u14-inbox/code-generation/hallazgos-tanda-2.md"
+    },
+    {
+      "path": "aidlc/spaces/default/intents/260915-untangle-app/construction/u14-inbox/code-generation/hallazgos-tanda-3.md"
+    },
+    {
+      "path": "aidlc/spaces/default/intents/260915-untangle-app/construction/u14-inbox/code-generation/hallazgos-tanda-4.md"
+    },
+    {
+      "path": "aidlc/spaces/default/intents/260915-untangle-app/construction/u14-inbox/code-generation/source-manifest.json"
+    },
+    {
+      "path": "aidlc/spaces/default/intents/260915-untangle-app/construction/u14-inbox/code-generation/traceability.json"
+    },
+    {
+      "path": "aidlc/spaces/default/intents/260915-untangle-app/construction/u14-inbox/code-summary.md"
+    },
+    {
+      "path": "aidlc/spaces/default/intents/260915-untangle-app/inception/contract-design/contract-summary.md"
+    },
+    {
+      "path": "app/backend/migrations/versions/u14_inbox_0001_tables.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/history.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/labels.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/repository.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/rules.py"
+    },
+    {
+      "path": "app/backend/src/untangle/chat/citation.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/controls/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/controls/repository.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/inbox_fixtures.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/inbox_probes.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/live_probes.py"
+    },
+    {
+      "path": "app/backend/src/untangle/inbox/actions.py"
+    },
+    {
+      "path": "app/backend/src/untangle/inbox/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/inbox/case_view.py"
+    },
+    {
+      "path": "app/backend/src/untangle/inbox/correction.py"
+    },
+    {
+      "path": "app/backend/src/untangle/inbox/decision.py"
+    },
+    {
+      "path": "app/backend/src/untangle/inbox/events.py"
+    },
+    {
+      "path": "app/backend/src/untangle/inbox/explanation.py"
+    },
+    {
+      "path": "app/backend/src/untangle/inbox/purge.py"
+    },
+    {
+      "path": "app/backend/src/untangle/inbox/queue.py"
+    },
+    {
+      "path": "app/backend/src/untangle/inbox/receipts.py"
+    },
+    {
+      "path": "app/backend/src/untangle/inbox/visitor.py"
+    },
+    {
+      "path": "app/backend/src/untangle/policy_rag/citations/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/policy_rag/citations/repository.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/composition.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/problems.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/ds8.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/traces/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/visitor_access.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u14/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u14/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u14/test_case_explanation.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u14/test_case_view.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u14/test_correction.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u14/test_decision.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u14/test_events.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u14/test_queue.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u14/test_queue_isolation.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u14/test_tables.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u14/test_visitor_link.py"
+    },
+    {
+      "path": "app/backend/tests/unit/case_record/test_labels.py"
+    },
+    {
+      "path": "app/backend/tests/unit/chat/test_stream.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_cli.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_purge.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_staff_identity.py"
+    },
+    {
+      "path": "app/config/copy/en.yaml"
+    },
+    {
+      "path": "app/config/copy/es.yaml"
+    },
+    {
+      "path": "app/config/role-permissions.yaml"
+    },
+    {
+      "path": "app/contracts/openapi.json"
+    },
+    {
+      "path": "app/data/fixtures/ds8_isolation.json"
+    },
+    {
+      "path": "app/data/manifest.json"
+    },
+    {
+      "path": "app/evals/cases/ds2/inbox-agency-actions/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/inbox-agency-actions/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/inbox-derived-explanation/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/inbox-derived-explanation/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt4-inbox-queue/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt4-inbox-queue/es.yaml"
+    },
+    {
+      "path": "app/evals/fixtures/inbox/en.yaml"
+    },
+    {
+      "path": "app/evals/fixtures/inbox/es.yaml"
+    },
+    {
+      "path": "app/evals/manifest.yaml"
+    },
+    {
+      "path": "app/evals/subsets/rt4-live.yaml"
+    },
+    {
+      "path": "app/evals/subsets/smoke.yaml"
+    },
+    {
+      "path": "app/frontend/e2e/support/harness.ts"
+    },
+    {
+      "path": "app/frontend/e2e/visitable-routes.ts"
+    },
+    {
+      "path": "app/frontend/eslint.config.ts"
+    },
+    {
+      "path": "app/frontend/src/app/router.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/shell/app-shell.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/shell/frame.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/visitable-routes.test.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/chat/citation.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/inbox/case-page.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/inbox/case-page.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/inbox/decision-form.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/inbox/evidence-blocks.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/inbox/field-correction.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/inbox/inbox-events.test.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/inbox/inbox-events.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/inbox/inbox-labels.test.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/inbox/inbox-labels.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/inbox/inbox-routes.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/inbox/inbox-routes.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/inbox/queue-page.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/inbox/queue-page.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/inbox/visitor-page.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/inbox/visitor-page.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/inbox.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/problems.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/@tanstack/react-query.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/index.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/sdk.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/types.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-keys.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-texts.ts"
+    },
+    {
+      "path": "docs/reference/como-se-revisa-el-codigo.md"
+    },
+    {
+      "path": "mise.toml"
+    },
+    {
+      "path": "scripts/servidor-local.py"
+    }
+  ],
+  "notes": "La lista sale de `git diff --name-only 4ca184e~1` mas los archivos nuevos sin seguir: es el arbol real de las cuatro tandas y no una lista escrita a mano, que es la que se queda atras. Los turnos de auditoria del flujo quedan fuera."
+}

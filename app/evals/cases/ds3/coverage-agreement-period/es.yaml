@@ -1,0 +1,24 @@
+# Pregunta corriente de cobertura: la clausula esperada se recupera y se cita (AC2.1.3, AC2.2.1).
+# Criterio(s): AC2.1.3, AC2.2.1. Par ES/EN: 'coverage-agreement-period'.
+# Lo mide `mise run evals:citas` (fase 1, 2026-10-08): recupera, propone las citas con
+# Claude y las verifica, igual que el chat. La prueba estatica CG-U8-2 sigue comprobando
+# que clause_id exista en app/data/, sea de esta aseguradora y de esta poliza y no sea
+# distractor.
+# No prueba distractores, endosos ni idioma cruzado.
+
+case_key: DS-3/es/coverage-agreement-period
+dataset: DS-3
+language: es
+tenant: stonecroft
+axes:
+- corriente
+- citation-verification
+citation:
+  policy_number: POL-245782
+  clause_id: STO-PAP-2026-AGREEMENT.2
+  expected_outcome: verified
+  question: ¿Durante qué periodo tengo protección?
+expected_verdicts:
+  citation_coverage_agreement_period: pass
+  citation_exists_coverage_agreement_period: pass
+requires_provider_key: true

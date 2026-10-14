@@ -1,0 +1,45 @@
+{
+  "drivers": [
+    {
+      "full_name": "Rosa Iturbe"
+    }
+  ],
+  "endorsement_ids": [
+    "STO-PAP-2026-END-1",
+    "STO-PAP-2026-END-2",
+    "STO-PAP-2026-END-3",
+    "STO-PAP-2026-END-4",
+    "STO-PAP-2026-END-5"
+  ],
+  "form_id": "STO-PAP-2026",
+  "form_version": "2026.1",
+  "issuer_tenant": "stonecroft",
+  "limits_and_deductibles": {
+    "a.bodily_injury_per_accident": 100000,
+    "a.bodily_injury_per_person": 50000,
+    "a.property_damage": 100000,
+    "b.medical_payments_per_person": 5000,
+    "c.uninsured_per_accident": 100000,
+    "c.uninsured_per_person": 50000,
+    "d.collision_deductible": 500,
+    "d.other_than_collision_deductible": 500
+  },
+  "named_insured": {
+    "email": "rosa.iturbe@example.org",
+    "full_name": "Rosa Iturbe",
+    "national_id": "27.961.616",
+    "persona_id": "kno-per-173620",
+    "phone": "316 555 0115"
+  },
+  "period_end": "2027-02-01",
+  "period_start": "2026-02-01",
+  "policy_number": "POL-173620",
+  "tenant_id": "knotwell",
+  "vehicles": [
+    {
+      "make_model_year": "Nissan Versa 2015",
+      "plate": "MKD653",
+      "vin": "YG1PSXEM9X8936133"
+    }
+  ]
+}

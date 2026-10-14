@@ -1,0 +1,93 @@
+# Una solicitud de cotizacion de punta a punta por el canal chat (AC6.1.1, AC6.1.2, AC6.1.4,
+# BR1.1, BR1.2), turno en espanol.
+#
+# Criterio de aceptacion: Quien pregunta pide cotizar en su primer mensaje, la agente abre una
+# solicitud (no un siniestro) y la captura como se conversa hoy (2026-10-08): abre pidiendo todo
+# de una vez, pregunta agrupado lo que falta --hasta tres datos por mensaje, del primer bloque
+# que tenga algo sin decir-- y lee la solicitud entera **una sola vez** al final. Hasta ese si
+# ningun campo cuenta como completo; con el, la solicitud tiene sus 17 campos completos y el
+# grafo sigue siendo de cuatro nodos.
+#
+# Se corre por el conductor de texto de U13, por el canal chat de verdad. **Lo que contesta cada
+# turno es lo que el nodo va a preguntar**, y eso lo dice `blocks.next_ask` --el espejo del nodo
+# `intake` que una prueba ata a el--: el primer dato sin decir del primer bloque que tenga algo
+# pendiente, y al final la confirmacion de la solicitud entera. La agente pregunta de a hasta
+# tres datos por mensaje; el guion los contesta de uno en uno, ligados a su campo, y el grafo
+# anota lo que llega. La confirmacion final se indexa por `quote_history`, el ultimo bloque, que
+# es donde el nodo deja la lectura en espera (`intake_awaiting_confirmation`).
+#
+# Historia (2026-10-12): el guion se escribio con una confirmacion por bloque (`quote_driver`,
+# `quote_vehicle`, `quote_usage`, `quote_history`), la conversacion de antes del 2026-10-08, y
+# nunca se habia corrido contra un modelo. La primera corrida lo mostro: el conductor le
+# contestaba "si, es correcto" a una agente que preguntaba por el vehiculo, veinte veces
+# seguidas, y el registro quedo en 0 de 17. Fallaba la evaluacion, no el producto: la solicitud
+# ya no se lee de vuelta por bloques, se lee entera una vez, y hasta ese si ninguno de sus 17
+# campos cuenta. Se corrigieron el conductor y los guiones.
+#
+# `requires_provider_key: true`: la extraccion llama al modelo. Queda fuera del subconjunto de
+# arranque, que corre sin clave, y corre en la corrida completa por hito.
+#
+# Veredicto esperado: `pass`.
+#
+# El registro esperado: 17 de 17 despues del si final. El estado queda en `capturing` porque el
+# perfil del guion es elegible --sin siniestros con culpa, ocho anos de licencia, uso para ir al
+# trabajo--: la elegibilidad no deriva la solicitud a un suscriptor (solo una derivada
+# terminaria en `derived`). Una prueba (`tests/unit/evals/test_ds4_quote_scripts.py`) lo
+# comprueba contra el motor de reglas de la aseguradora.
+#
+# La pareja en ingles es `DS-4/en/quote-end-to-end`: los mismos criterios y la misma meta,
+# medidos por idioma y nunca como promedio combinado (P12).
+#
+# Lo que este caso no mide: la elegibilidad de la solicitud ya capturada, que corre en el ritmo
+# de fondo y mide `DS-4/es/quote-eligibility-expected`; la exactitud por campo (95 % o mas, por
+# idioma) se mide por hito sobre el conjunto entero, no por caso.
+case_key: DS-4/es/quote-end-to-end
+dataset: DS-4
+language: es
+tenant: sunmeadow
+channel: chat
+axes:
+  - chat-channel
+  - quote-request
+  - language-adherence
+script:
+  - field_key: driver_name
+    text: "Quiero una cotización. Me llamo Marta Diaz Lopez."
+  - field_key: driver_birth_date
+    text: "Nací el 12 de abril de 1990."
+  - field_key: license_years
+    text: "Hace como ocho años."
+  - field_key: license_jurisdiction
+    text: "Medellín."
+  - field_key: vehicle_year
+    text: "Es un 2014."
+  - field_key: vehicle_make
+    text: "Mazda."
+  - field_key: vehicle_model
+    text: "Tres."
+  - field_key: vin
+    text: "JM1BL1SF7A1234567."
+  - field_key: salvage_title
+    text: "No, nunca."
+  - field_key: use_type
+    text: "Para ir al trabajo."
+  - field_key: annual_mileage_band
+    text: "Normal."
+  - field_key: garaging_jurisdiction
+    text: "Envigado."
+  - field_key: at_fault_losses_3y
+    text: "Ninguno."
+  - field_key: claims_3y
+    text: "Uno."
+  - field_key: prior_coverage_active
+    text: "Sí, tengo seguro vigente."
+  - field_key: quote_history
+    text: "Sí, es correcto."
+expected_record:
+  record_type: quote_request
+  state: capturing
+  complete: 17
+  total: 17
+  language: es
+expected_verdicts: {}
+requires_provider_key: true

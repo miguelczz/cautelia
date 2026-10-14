@@ -1,0 +1,276 @@
+/*
+ * Los tokens del sistema de diseno (design-system-mapping.md).
+ *
+ * **Es el unico archivo del aplicativo con valores de color** (BR1.5): una
+ * prueba recorre `src/` y falla ante un color literal fuera de aqui. Todo lo
+ * demas pide un token por su nombre de uso (`page`, `text`, `brand`...), nunca
+ * por su valor.
+ *
+ * Dos modos completos, que elige la persona (BR1.1, BR1.3): el atributo
+ * `data-theme` del documento lo pone `/theme-boot.js` antes de pintar y lo
+ * cambia el selector de modo. Los nombres de uso son los mismos en los dos
+ * modos; lo que cambia es el valor. Sin atributo --si el paso de modo no corrio--
+ * manda el oscuro, que es el modo por defecto desde la enmienda de BR1.1 del
+ * 2026-10-06 (el de la landing), para que nunca haya un cuadro sin modo (BR1.2).
+ *
+ * El cobre de la marca (`#E0873A`) **solo existe en el modo oscuro**. En el
+ * claro, la marca es la tinta `#9A4F12`: el cobre sobre blanco da 2,73:1 y no
+ * pasa el contraste de texto (project.md, Corrections).
+ */
+
+/*
+ * El cobre base de la marca (`#E0873A`), igual en los dos modos: solo para trazos que
+ * no son texto --la linea bajo el enlace de la barra--, porque como letra sobre fondo
+ * claro no pasa el contraste (la tinta `#9A4F12` es la marca en texto sobre claro).
+ */
+:root {
+  --ut-copper: #e0873a;
+}
+
+/* --- Modo oscuro -------------------------------------------------------------- */
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ut-page: #0b0b12;
+  --ut-bar: #07070c;
+  --ut-surface: #13131d;
+  --ut-surface-alt: #1b1b28;
+  --ut-hairline: #2a2a3c;
+  --ut-control-border: #66667f;
+  --ut-text: #f0ece6;
+  --ut-text-secondary: #a9a7b3;
+  --ut-text-tertiary: #8b8997;
+  --ut-brand: #e0873a;
+  --ut-brand-hover: #f0a35c;
+  --ut-on-brand: #120b06;
+  --ut-link: #9ca4f4;
+  --ut-indigo: #4a57e0;
+  --ut-thread: #e9c29a;
+  --ut-success: #7cc49a;
+  --ut-warning: #e3c25c;
+  --ut-danger: #f28b82;
+  /* Las series de la telemetria (2026-10-09): cobre las llamadas, lavanda el chat,
+     verde las pruebas, gris la lectura de polizas. Cuatro tonos que se distinguen
+     tambien por luminosidad, y cada serie lleva ademas su nombre en la leyenda. */
+  --ut-chart-calls: #e0873a;
+  --ut-chart-chat: #9ca4f4;
+  --ut-chart-tests: #6fc3a5;
+  --ut-chart-reading: #8b8997;
+  /* El texto sobre el acento de una aseguradora en este modo: la tinta del fondo. */
+  --ut-on-tenant: #0b0b12;
+  --ut-shadow-raised: 0 16px 40px rgb(0 0 0 / 0.5);
+  /* Lo que oscurece la pagina detras de una ventana modal (`::backdrop`). */
+  --ut-scrim: rgb(4 4 8 / 0.72);
+  /* Lo elegido o activo: un tinte tenue de la marca, visible sobre el fondo en este modo. */
+  --ut-selected-mix: 22%;
+  --ut-selected: color-mix(in srgb, var(--ut-brand) var(--ut-selected-mix), transparent);
+}
+
+/* --- Modo claro --------------------------------------------------------------- */
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --ut-page: #f5f6f8;
+  --ut-bar: #ffffff;
+  --ut-surface: #ffffff;
+  --ut-surface-alt: #eef0f3;
+  --ut-hairline: #e1e4e9;
+  --ut-control-border: #7a808d;
+  --ut-text: #15161d;
+  --ut-text-secondary: #525866;
+  --ut-text-tertiary: #5f6573;
+  --ut-brand: #9a4f12;
+  --ut-brand-hover: #7f410f;
+  --ut-on-brand: #ffffff;
+  --ut-link: #4a57e0;
+  --ut-indigo: #4a57e0;
+  --ut-thread: #b8753a;
+  --ut-success: #22704a;
+  --ut-warning: #8a5a00;
+  --ut-danger: #b3372e;
+  --ut-chart-calls: #b8641f;
+  --ut-chart-chat: #4a57e0;
+  --ut-chart-tests: #1f7a5c;
+  --ut-chart-reading: #8a909c;
+  --ut-on-tenant: #ffffff;
+  --ut-shadow-raised: 0 1px 2px rgb(21 22 29 / 0.06), 0 8px 24px rgb(21 22 29 / 0.08);
+  /* Lo que oscurece la pagina detras de una ventana modal (`::backdrop`). */
+  --ut-scrim: rgb(21 22 29 / 0.42);
+  /* Lo elegido o activo: el mismo tinte, con la tinta de la marca (el cobre no existe en este modo). */
+  --ut-selected-mix: 13%;
+  --ut-selected: color-mix(in srgb, var(--ut-brand) var(--ut-selected-mix), transparent);
+}
+
+/*
+ * Sin atributo: el paso de modo no corrio (JavaScript apagado, o un error antes
+ * de el). Se copia el juego oscuro, que es el modo por defecto desde la
+ * enmienda de BR1.1 del 2026-10-06: el de la landing. La preferencia del
+ * dispositivo ya no decide, ni aqui ni en el paso de modo.
+ */
+:root:not([data-theme]) {
+  color-scheme: dark;
+  --ut-page: #0b0b12;
+  --ut-bar: #07070c;
+  --ut-surface: #13131d;
+  --ut-surface-alt: #1b1b28;
+  --ut-hairline: #2a2a3c;
+  --ut-control-border: #66667f;
+  --ut-text: #f0ece6;
+  --ut-text-secondary: #a9a7b3;
+  --ut-text-tertiary: #8b8997;
+  --ut-brand: #e0873a;
+  --ut-brand-hover: #f0a35c;
+  --ut-on-brand: #120b06;
+  --ut-link: #9ca4f4;
+  --ut-indigo: #4a57e0;
+  --ut-thread: #e9c29a;
+  --ut-success: #7cc49a;
+  --ut-warning: #e3c25c;
+  --ut-danger: #f28b82;
+  /* Las series de la telemetria (2026-10-09): cobre las llamadas, lavanda el chat,
+     verde las pruebas, gris la lectura de polizas. Cuatro tonos que se distinguen
+     tambien por luminosidad, y cada serie lleva ademas su nombre en la leyenda. */
+  --ut-chart-calls: #e0873a;
+  --ut-chart-chat: #9ca4f4;
+  --ut-chart-tests: #6fc3a5;
+  --ut-chart-reading: #8b8997;
+  /* El texto sobre el acento de una aseguradora en este modo: la tinta del fondo. */
+  --ut-on-tenant: #0b0b12;
+  --ut-shadow-raised: 0 16px 40px rgb(0 0 0 / 0.5);
+  /* Lo que oscurece la pagina detras de una ventana modal (`::backdrop`). */
+  --ut-scrim: rgb(4 4 8 / 0.72);
+  /* Lo elegido o activo: un tinte tenue de la marca, visible sobre el fondo en este modo. */
+  --ut-selected-mix: 22%;
+  --ut-selected: color-mix(in srgb, var(--ut-brand) var(--ut-selected-mix), transparent);
+}
+
+/*
+ * El acento de una aseguradora (BR1.6). Sus dos valores llegan de su
+ * configuracion (`brand.accent` y `brand.accent_on_dark`) como variables en
+ * linea del elemento que la representa --`tenantAccentStyle()`--, sin ninguna
+ * condicion por aseguradora en el codigo. Aqui solo se elige cual de los dos
+ * vale en el modo actual. Solo marca identidad: los estados de exito, aviso y
+ * error nunca lo usan.
+ *
+ * Sin marca configurada, el acento es el de Cautelia (CG-U6-4).
+ */
+:root {
+  --ut-tenant: var(--ut-brand);
+  --ut-focus: var(--ut-brand);
+}
+
+[data-tenant-scope] {
+  --ut-tenant: var(--tenant-accent, var(--ut-brand));
+  --ut-focus: var(--ut-tenant);
+  /* Dentro de una aseguradora, lo elegido se tine con su acento. */
+  --ut-selected: color-mix(in srgb, var(--ut-tenant) var(--ut-selected-mix), transparent);
+}
+
+:root[data-theme="dark"] [data-tenant-scope] {
+  --ut-tenant: var(--tenant-accent-on-dark, var(--ut-brand));
+}
+
+:root[data-theme="light"] [data-tenant-scope] {
+  --ut-tenant: var(--tenant-accent, var(--ut-brand));
+}
+
+/* --- Los tokens como utilidades de Tailwind ----------------------------------- */
+/*
+ * `--color-*: initial` borra la paleta de Tailwind: `bg-red-500` deja de
+ * existir y el unico color disponible es un token. Lo mismo con los tamanos de
+ * texto y los puntos de quiebre, que tienen su propia escala aqui.
+ */
+@theme inline {
+  --color-*: initial;
+  --color-page: var(--ut-page);
+  --color-bar: var(--ut-bar);
+  --color-surface: var(--ut-surface);
+  --color-surface-alt: var(--ut-surface-alt);
+  --color-hairline: var(--ut-hairline);
+  --color-control: var(--ut-control-border);
+  --color-fg: var(--ut-text);
+  --color-fg-secondary: var(--ut-text-secondary);
+  --color-fg-tertiary: var(--ut-text-tertiary);
+  --color-brand: var(--ut-brand);
+  --color-brand-hover: var(--ut-brand-hover);
+  --color-on-brand: var(--ut-on-brand);
+  --color-link: var(--ut-link);
+  --color-indigo: var(--ut-indigo);
+  --color-thread: var(--ut-thread);
+  --color-success: var(--ut-success);
+  --color-warning: var(--ut-warning);
+  --color-danger: var(--ut-danger);
+  --color-chart-calls: var(--ut-chart-calls);
+  --color-chart-chat: var(--ut-chart-chat);
+  --color-chart-tests: var(--ut-chart-tests);
+  --color-chart-reading: var(--ut-chart-reading);
+  --color-tenant: var(--ut-tenant);
+  --color-on-tenant: var(--ut-on-tenant);
+  --color-focus: var(--ut-focus);
+  --color-copper: var(--ut-copper);
+  --color-selected: var(--ut-selected);
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --color-scrim: var(--ut-scrim);
+
+  --shadow-raised: var(--ut-shadow-raised);
+}
+
+@theme {
+  /* Tipografia: tres familias, servidas desde el propio origen (FD-U6-4). */
+  --font-*: initial;
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* Escala fija en rem, razon 1,2 entre pasos; sin tamanos fluidos. */
+  --text-*: initial;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.4;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.45;
+  --text-body: 1rem;
+  --text-body--line-height: 1.55;
+  --text-lead: 1.2rem;
+  --text-lead--line-height: 1.4;
+  --text-title: 1.44rem;
+  --text-title--line-height: 1.25;
+  --text-figure: 2.5rem;
+  --text-figure--line-height: 1.1;
+  --text-display: 3rem;
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.02em;
+
+  /* Forma. El espaciado es la escala de 4 px de Tailwind: 4, 8, 12, 16, 24, 32, 48 y 64. */
+  --radius-*: initial;
+  --radius-control: 12px;
+  /* Botones y controles de la barra: esquinas apenas suavizadas, no pastillas. */
+  --radius-button: 10px;
+  --radius-surface: 12px;
+  --radius-bubble: 16px;
+  --radius-pill: 999px;
+
+  /* Movimiento: menos de 300 ms y con curvas propias. */
+  --ease-*: initial;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* Puntos de quiebre: una columna desde 360 px. */
+  --breakpoint-*: initial;
+  --breakpoint-tablet: 48rem;
+  --breakpoint-desktop: 64rem;
+  --breakpoint-wide: 80rem;
+
+  /* Anchos maximos. */
+  --container-content: 75rem;
+  --container-conversation: 45rem;
+  --container-measure: 70ch;
+
+  /* Duraciones, para las clases que las piden por nombre. */
+  --ut-duration-press: 120ms;
+  --ut-duration-state: 160ms;
+  --ut-duration-expand: 200ms;
+  --ut-duration-sheet: 260ms;
+}

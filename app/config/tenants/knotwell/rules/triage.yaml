@@ -1,0 +1,149 @@
+# Reglas de triage de Agencia Castilla (C-25, CG-U9-1, BR2.6, FR6.4).
+#
+# La agencia nunca cierra un siniestro: su primera regla deriva siempre al
+# ajustador de la aseguradora que emitio la poliza, sin rama de codigo (BR2.6).
+# Trae ademas las mismas reglas de severidad y de dinero que las dos
+# aseguradoras, para que la evaluacion registre la senal concreta cuando la
+# hay, aunque la agencia derive de todas formas.
+#
+# El vocabulario de `when` es el de `rules/fields.py`; las claves de
+# `then.explanation_key` viven en `app/config/copy/{es,en}.yaml` bajo
+# `rules.explain.*`, sin nombrar esta regla ni esta aseguradora (BR2.5).
+ruleset_version: v1
+rules:
+  # Primera en el archivo a proposito: cuando esta regla y otra de severidad
+  # disparan a la vez, las dos quedan en `fired_rules` y la explicacion es la de
+  # esta, por ser la primera del archivo entre las de igual categoria (BR2.2).
+  # Se deriva por politica de la agencia, no por severidad (FR6.4). La
+  # excepcion es una regla de dinero o de cobertura: esa fuerza la derivacion y
+  # aporta su propia explicacion (BR2.3), que es lo correcto, porque ahi lo que
+  # el asegurado necesita saber es que hay un monto por revisar.
+  - id: KNO-R-01
+    version: 1
+    when: { always: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.agency_case
+    tests:
+      - given: {}
+        expect: true
+
+  - id: KNO-R-02
+    version: 1
+    when: { operator: equals, field: coverage_disputed, value: true }
+    then:
+      category: referral
+      touches_money: true
+      explanation_key: rules.explain.coverage_review
+    tests:
+      - given: { coverage_disputed: true }
+        expect: true
+      - given: { coverage_disputed: false }
+        expect: false
+
+  - id: KNO-R-03
+    version: 1
+    when: { operator: gte, field: claim_amount, value: 1000 }
+    then:
+      category: referral
+      touches_money: true
+      explanation_key: rules.explain.amount_review
+    tests:
+      - given: { claim_amount: 1000 }
+        expect: true
+      - given: { claim_amount: 500 }
+        expect: false
+
+  - id: KNO-R-04
+    version: 1
+    when: { operator: gte, field: claim_amount, value: 10000 }
+    then:
+      category: referral
+      touches_money: true
+      explanation_key: rules.explain.high_value_review
+    tests:
+      - given: { claim_amount: 10000 }
+        expect: true
+      - given: { claim_amount: 5000 }
+        expect: false
+
+  - id: KNO-R-05
+    version: 1
+    when: { operator: equals, field: injuries_present, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.injuries_reported
+    tests:
+      - given: { injuries_present: true }
+        expect: true
+      - given: { injuries_present: false }
+        expect: false
+
+  - id: KNO-R-06
+    version: 1
+    when: { operator: equals, field: other_parties_data_pending, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.third_party_pending
+    tests:
+      - given: { other_parties_data_pending: true }
+        expect: true
+      - given: {}
+        expect: false
+
+  - id: KNO-R-07
+    version: 1
+    when: { operator: equals, field: fraud_suspected, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.fraud_review
+    tests:
+      - given: { fraud_suspected: true }
+        expect: true
+      - given: { fraud_suspected: false }
+        expect: false
+
+  - id: KNO-R-08
+    version: 1
+    when: { operator: equals, field: unlisted_driver, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.unlisted_driver_review
+    tests:
+      - given: { unlisted_driver: true }
+        expect: true
+      - given: { unlisted_driver: false }
+        expect: false
+
+  - id: KNO-R-09
+    version: 1
+    when: { operator: lte, field: claim_amount, value: 999 }
+    then:
+      category: standard_review
+      touches_money: false
+      explanation_key: rules.explain.amount_noted
+    tests:
+      - given: { claim_amount: 999 }
+        expect: true
+      - given: { claim_amount: 1000 }
+        expect: false
+
+  # Exigida por BR1.3 aunque en la practica nunca decida sola: KNO-R-01 ya
+  # dispara siempre, asi que `evaluate_ruleset` nunca llega a necesitar esta
+  # regla para completar `disparadas`. Sigue siendo obligatoria: el conjunto
+  # tiene que traer exactamente una regla por defecto (BR1.3).
+  - id: KNO-R-10
+    version: 1
+    when: { always: true }
+    then:
+      category: standard_review
+      touches_money: false
+      explanation_key: rules.explain.default
+    tests:
+      - given: {}
+        expect: true

@@ -1,0 +1,169 @@
+{
+  "stage": "code-generation",
+  "unit": "u4-case-record",
+  "version": 1,
+  "writes": [
+    {
+      "path": ".env.example"
+    },
+    {
+      "path": "app/backend/migrations/versions/u4_case_0001_case_tables.py"
+    },
+    {
+      "path": "app/backend/pyproject.toml"
+    },
+    {
+      "path": "app/backend/src/untangle/base.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/crypto.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/fields.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/history.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/labels.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/numbering.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/parties.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/purge.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/repository.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/rules.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/schema/fields.yaml"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/schema/transitions.yaml"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/schema_loading.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/transcript.py"
+    },
+    {
+      "path": "app/backend/src/untangle/copy_catalog/checks.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/composition.py"
+    },
+    {
+      "path": "app/backend/src/untangle/settings.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/case_constructor.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/case_transitions.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/redaction_constructor.py"
+    },
+    {
+      "path": "app/backend/tests/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u3/test_constructor_check.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u4/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u4/test_api.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u4/test_constructor_check.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u4/test_migration.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u4/test_purge.py"
+    },
+    {
+      "path": "app/backend/tests/unit/case_record/test_crypto.py"
+    },
+    {
+      "path": "app/backend/tests/unit/case_record/test_fields.py"
+    },
+    {
+      "path": "app/backend/tests/unit/case_record/test_labels.py"
+    },
+    {
+      "path": "app/backend/tests/unit/case_record/test_numbering.py"
+    },
+    {
+      "path": "app/backend/tests/unit/case_record/test_parties.py"
+    },
+    {
+      "path": "app/backend/tests/unit/case_record/test_rules.py"
+    },
+    {
+      "path": "app/backend/tests/unit/case_record/test_schema.py"
+    },
+    {
+      "path": "app/backend/tests/unit/copy_catalog/test_checks.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_cli.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_config.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_purge.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_rls_assertion.py"
+    },
+    {
+      "path": "app/config/copy/en.yaml"
+    },
+    {
+      "path": "app/config/copy/es.yaml"
+    },
+    {
+      "path": "app/config/tenants/knotwell/tenant.yaml"
+    },
+    {
+      "path": "app/config/tenants/stonecroft/tenant.yaml"
+    },
+    {
+      "path": "app/config/tenants/sunmeadow/tenant.yaml"
+    },
+    {
+      "path": "app/contracts/schemas/tenant.schema.json"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-keys.ts"
+    },
+    {
+      "path": "mise.toml"
+    },
+    {
+      "path": "scripts/verify.sh"
+    }
+  ]
+}

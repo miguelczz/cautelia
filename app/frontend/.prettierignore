@@ -1,0 +1,19 @@
+coverage/
+dist/
+node_modules/
+pnpm-lock.yaml
+
+# Artefacto generado desde el catalogo de textos (C-28). Lo escribe
+# `mise run contracts:gen` y el chequeo de deriva lo compara byte a byte; si
+# Prettier lo reformateara, el generador y el formateador se pelearian en cada
+# corrida y la compuerta fallaria sin que nadie hubiera cambiado nada.
+src/shared/copy/copy-keys.ts
+src/shared/copy/copy-texts.es.ts
+src/shared/copy/copy-texts.en.ts
+src/shared/copy/tenant-characters.ts
+
+# El cliente de la API generado desde el esquema OpenAPI (C-28), por la misma
+# razon que el modulo de claves: lo escribe `mise run contracts:gen`, el chequeo
+# de deriva lo compara byte a byte, y si Prettier lo reformateara el generador y
+# el formateador se pelearian en cada corrida.
+src/shared/api/

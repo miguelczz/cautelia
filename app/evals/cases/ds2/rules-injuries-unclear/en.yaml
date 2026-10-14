@@ -1,0 +1,24 @@
+# Doubtful injuries, from the case field to the category, English turn. "I don't know", "I think not", "nothing serious" and "we are all fine" do not clearly say nobody got hurt: the input stays absent and the case stays in standard review. This is the case that catches the expensive error: closing without an adjuster a report with injured people.
+#
+# Criterio de aceptacion: sobre las filas `injuries-unclear/*` de
+# `app/evals/fixtures/rules/en.yaml`, el campo `injuries` del caso se deriva a
+# `injuries_present` con la misma funcion del aplicativo y el motor real de
+# Sunmeadow da `standard_review` en todas: ninguna cierra directo.
+#
+# Veredicto esperado: `pass`. Pasa tambien antes de que exista la derivacion (sin
+# el insumo nada cierra), y por eso su trabajo no es fallar primero sino romperse
+# si alguien amplia la derivacion hasta decir "falso" ante una duda.
+#
+# La pareja en espanol es `DS-2/es/rules-injuries-unclear`:
+# los mismos escenarios y la misma meta, medidos por idioma y nunca como promedio
+# combinado (P12).
+case_key: DS-2/en/rules-injuries-unclear
+dataset: DS-2
+language: en
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - rules-engine
+  - injuries-derivation
+expected_verdicts:
+  triage_from_injuries_unclear: pass

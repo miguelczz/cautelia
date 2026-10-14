@@ -1,0 +1,30 @@
+{
+  "case_key": "SEED/sunmeadow/es/coverage-inquiry",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "identity_and_policy": {
+      "status": "stated",
+      "value": "Marco Parker, póliza POL-200117"
+    },
+    "question_asked": {
+      "status": "stated",
+      "value": "¿La póliza cubre el transporte mientras reparan el carro?"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-200117",
+  "record_type": "coverage_inquiry",
+  "resolution": null,
+  "state": "capturing",
+  "tenant_id": "sunmeadow",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Soy Marco Parker, póliza POL-200117. ¿La póliza cubre el transporte mientras reparan el carro?"
+    }
+  ],
+  "used_by": [
+    "AC4.10.3"
+  ]
+}

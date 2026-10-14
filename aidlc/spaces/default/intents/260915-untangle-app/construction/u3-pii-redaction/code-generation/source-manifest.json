@@ -1,0 +1,139 @@
+{
+  "stage": "code-generation",
+  "unit": "u3-pii-redaction",
+  "version": 1,
+  "writes": [
+    {
+      "path": "app/backend/.importlinter"
+    },
+    {
+      "path": "app/backend/pyproject.toml"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/detector.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/labels.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/recognizers/__init__.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/recognizers/en.yaml"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/recognizers/es.yaml"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/recognizers/loading.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/recognizers/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/sinks.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/streaming.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/redaction_fixtures.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/redaction_probes.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/generate_contracts.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/redaction_constructor.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/redaction_report.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/schema_check.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u3/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u3/test_constructor_check.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u3/test_import_contracts.py"
+    },
+    {
+      "path": "app/backend/tests/unit/redaction/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/redaction/test_api.py"
+    },
+    {
+      "path": "app/backend/tests/unit/redaction/test_detector.py"
+    },
+    {
+      "path": "app/backend/tests/unit/redaction/test_labels.py"
+    },
+    {
+      "path": "app/backend/tests/unit/redaction/test_recognizers.py"
+    },
+    {
+      "path": "app/backend/tests/unit/redaction/test_report_command.py"
+    },
+    {
+      "path": "app/backend/tests/unit/redaction/test_streaming.py"
+    },
+    {
+      "path": "app/backend/uv.lock"
+    },
+    {
+      "path": "app/config/copy/en.yaml"
+    },
+    {
+      "path": "app/config/copy/es.yaml"
+    },
+    {
+      "path": "app/contracts/schemas/recognizer-set.schema.json"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt14/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt14/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt15/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt15/es.yaml"
+    },
+    {
+      "path": "app/evals/fixtures/redaction/en.yaml"
+    },
+    {
+      "path": "app/evals/fixtures/redaction/es.yaml"
+    },
+    {
+      "path": "app/evals/manifest.yaml"
+    },
+    {
+      "path": "app/evals/subsets/rt14.yaml"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-keys.ts"
+    },
+    {
+      "path": "mise.toml"
+    },
+    {
+      "path": "scripts/verify.sh"
+    }
+  ]
+}

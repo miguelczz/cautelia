@@ -1,0 +1,38 @@
+# Las acciones que ofrece un caso salen de la configuracion, no del codigo
+# (AC3.6.2, AC3.6.3, AC3.4.4, BR4.5, BR4.3 de U14), lado ingles.
+#
+# Priya, en Knotwell, no ve aprobar ni rechazar: la agencia coloca polizas que
+# emite otra y su unica accion es marcar el caso como enviado a la emisora. Diana,
+# en Stonecroft, ve aprobar y rechazar y no ve marcar como enviado. La diferencia
+# vive en el campo `kind` de la carpeta de configuracion de cada aseguradora, y
+# **ninguna condicion del codigo de decision nombra una aseguradora**.
+#
+# Criterio de aceptacion, sobre las filas del escenario `agency-actions` de
+# `app/evals/fixtures/inbox/en.yaml`: para cada fila, las acciones que la bandeja
+# ofrece a esa aseguradora en ese estado son exactamente las declaradas --con las
+# dos mitades, la que ofrece y la que no-- y ningun identificador de aseguradora
+# aparece en el texto del modulo que las decide.
+#
+# Veredicto esperado: `pass`.
+#
+# Las filas cubren tambien el estado: un caso que espera al asegurado y uno ya
+# cerrado no ofrecen ninguna accion, ni en la emisora que mas ofrece (BR4.3,
+# BR4.4). Sin esas dos filas, una lista vacia devuelta siempre pasaria la de la
+# agencia.
+#
+# Lo que este caso no mide: que la peticion directa se rechace, que es la prueba
+# de integracion de U14 por la puerta --la pantalla que no ofrece la accion es
+# cortesia, y el rechazo del servidor es lo que la impide--.
+#
+# La pareja en espanol es `DS-2/es/inbox-agency-actions`: los mismos insumos y la
+# misma meta, medidos por idioma y nunca como promedio combinado (P12).
+case_key: DS-2/en/inbox-agency-actions
+dataset: DS-2
+language: en
+tenant: knotwell
+requires_provider_key: false
+axes:
+  - inbox
+  - tenant-policy
+expected_verdicts:
+  inbox_actions_from_tenant_config: pass

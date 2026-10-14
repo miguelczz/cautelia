@@ -1,0 +1,94 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u2-tenancy",
+  "upstream_ids": [
+    "SEC-U2.1",
+    "SEC-U2.3",
+    "SEC-U2.4",
+    "SEC-U2.5",
+    "SEC-U2.12",
+    "SEC-U2.14",
+    "NFR10.2",
+    "NFR18.2",
+    "NFR12.1"
+  ],
+  "coverage": [
+    {
+      "id": "SEC-U2.1",
+      "status": "OK",
+      "target": "cicd-pipeline.md > Lo que anade U2 (rls:check, invocado desde el paso 6 del guion)"
+    },
+    {
+      "id": "SEC-U2.3",
+      "status": "OK",
+      "target": "cicd-pipeline.md > De donde sale la base de datos (la suite levanta su propia base con la imagen anclada por huella; las colisiones de DS-8 corren ahi)"
+    },
+    {
+      "id": "SEC-U2.4",
+      "status": "OK",
+      "target": "cicd-pipeline.md > De donde sale la base de datos > El rol importa mas que la imagen"
+    },
+    {
+      "id": "SEC-U2.5",
+      "status": "OK",
+      "target": "cicd-pipeline.md > Variables de entorno nuevas (dos claves declaradas por nombre, comparadas por env:check en las dos direcciones)"
+    },
+    {
+      "id": "SEC-U2.12",
+      "status": "OK",
+      "target": "cicd-pipeline.md > Lo que anade U2 (migrate:check) y > Cada cuanto corre cada cosa"
+    },
+    {
+      "id": "SEC-U2.14",
+      "status": "OK",
+      "target": "cicd-pipeline.md > Lo que anade U2 (tenancy:literals)"
+    },
+    {
+      "id": "NFR10.2",
+      "status": "OK",
+      "target": "cicd-pipeline.md > Cada cuanto corre cada cosa (en cada corrida, sin filtro de ruta) y > Lo que no cambia (el guion sigue siendo la compuerta autoritativa)"
+    },
+    {
+      "id": "NFR18.2",
+      "status": "OK",
+      "target": "cicd-pipeline.md > Lo que anade U2 (test:u2 acotado a la unidad, que es lo que permite medir su cobertura por separado)"
+    },
+    {
+      "id": "NFR12.1",
+      "status": "N/A",
+      "target": "Resistencia a los escenarios de red-team. Su dueno es U10 `compliance`, y `../nfr-requirements/correcciones-tras-revision.md` (R-02) comprobo contra `stories.md` que US4.11 no lo realiza."
+    }
+  ],
+  "reverse": [
+    {
+      "id": "NFR21.1",
+      "status": "N/A",
+      "target": "No es objetivo medible de U2 sino de U1, que lo declaro en su propia etapa de requisitos de calidad. U2 lo nombra porque la decision Q1 de esta etapa existe para no empeorarlo, pero no lo posee ni lo mide."
+    },
+    {
+      "id": "Decision Q1 de infrastructure-design",
+      "status": "N/A",
+      "target": "El camino del clon al reporte sigue sin base de datos. Protege NFR21.1 y a quien clona el repositorio para evaluarlo; no realiza un control de seguridad propio."
+    },
+    {
+      "id": "Decision Q2 de infrastructure-design",
+      "status": "N/A",
+      "target": "Los dos chequeos con base corren en cada corrida, sin filtro por ruta. Refuerza SEC-U2.12 y NFR10.2, pero la decision en si es de frecuencia y no de control."
+    },
+    {
+      "id": "Coste de la corrida",
+      "status": "Deferred",
+      "target": "El coste del contenedor de PostgreSQL en la tuberia no se estima aqui: se mide en la primera corrida verde de U2 y entra en el resumen de la generacion de codigo. Publicar una estimacion al lado de metricas medidas contradiria la practica del proyecto."
+    },
+    {
+      "id": "infrastructure-specification",
+      "status": "N/A",
+      "target": "No aplica a esta unidad: produces_kinds lo asigna a las unidades service, ui o packaging. U2 es library, va embebida en el proceso unico y no despliega nada por su cuenta."
+    },
+    {
+      "id": "monitoring-design",
+      "status": "N/A",
+      "target": "No aplica a esta unidad por la misma razon: U2 no tiene superficie propia que monitorizar. La observabilidad del proceso unico es de otra unidad."
+    }
+  ]
+}

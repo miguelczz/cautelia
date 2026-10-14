@@ -1,0 +1,29 @@
+# La peticion de hablar con una persona, juego en ingles (U10, BR2.1).
+#
+# La pareja de `es/human_request.yaml`; como se lee esta explicado alla. Aqui
+# tambien lo que separa pedir de contar es el verbo: "can i talk to someone?"
+# pide y "i talked to someone at the scene" cuenta. "talked" no coincide con
+# "talk" porque el patron exige la palabra entera.
+language: en
+family: human_request
+version: "2026-09-21.1"
+
+patterns:
+  # "i want to speak to a person", "can i talk to someone?" (literal de
+  # AC1.9.3), "can i talk to an adjuster?".
+  - id: human_request.en.signal.001
+    regex: '\b(speak|talk|chat)\s+(to|with)\s+(a\s+|an\s+|some\s+|one\s+)?(real\s+|live\s+|actual\s+)?(person|human|human\s+being|someone|somebody|anyone|anybody|adjuster|agent|representative|operator|una\s+persona|un\s+humano|alguien)\b'
+  # "put me through to a human", "connect me with someone".
+  - id: human_request.en.signal.002
+    regex: '\b(put|connect|transfer|patch)\s+me\s+(through\s+)?(to|with)\b'
+  # "isn't there anyone else i can talk to?".
+  - id: human_request.en.signal.003
+    regex: '\b(anyone|anybody|someone|somebody)\s+(else\s+)?(i|we)\s+(can|could)\s+(talk|speak)\s+(to|with)\b'
+  # "i'd rather have a person review my case", "i'd rather someone from your
+  # team called me".
+  - id: human_request.en.signal.004
+    regex: '\b(rather|prefer)\s+(to\s+)?(have\s+|that\s+)?(a\s+|an\s+)?(real\s+)?(person|human|someone|somebody|adjuster)\b'
+  # "i need a real human to help me". Sin "real" o "live" delante, "i need a
+  # person to sign" seria una peticion que nadie hizo.
+  - id: human_request.en.signal.005
+    regex: '\b(need|want)\s+(a\s+|an\s+)?((real|live|actual)\s+(person|human)|human|human\s+being)\b'

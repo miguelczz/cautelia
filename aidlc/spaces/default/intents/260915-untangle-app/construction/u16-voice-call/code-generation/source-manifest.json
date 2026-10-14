@@ -1,0 +1,268 @@
+{
+  "stage": "code-generation",
+  "unit": "u16-voice-call",
+  "version": 1,
+  "writes": [
+    {
+      "path": ".claude/skills/revisar-tanda/SKILL.md"
+    },
+    {
+      "path": "app/backend/.importlinter"
+    },
+    {
+      "path": "app/backend/migrations/versions/u16_voice_0001_call_sessions.py"
+    },
+    {
+      "path": "app/backend/migrations/versions/u16_voice_0002_end_completed.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/drivers/voice.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/intake/spelling.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/composition.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/voice_cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/voice_routes.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/visitor_access.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/availability.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/barge_in.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/call.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/case_number.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/case_opening.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/closing.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/latency.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/loop.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/notice.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/opening.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/purge.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/readback.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/resume.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/retry.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/session.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/silence.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/tokens.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/turn_detection.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/wire.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/voice_phrases.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u16/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u16/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u16/test_call_engine.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u16/test_call_loop.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u16/test_call_session_repository.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u16/test_call_session_table.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u16/test_eval_driver.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u16/test_import_contracts.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u16/test_resume.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u16/test_voice_routes.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u16/test_voice_socket.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_purge.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice/dobles.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice/test_barge_in.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice/test_closing.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice/test_notice.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice/test_opening.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice/test_readback.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice/test_retry.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice/test_silence.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice/test_tokens.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice/test_turn_detection.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice/test_wire.py"
+    },
+    {
+      "path": "app/config/copy/en.yaml"
+    },
+    {
+      "path": "app/config/copy/es.yaml"
+    },
+    {
+      "path": "app/config/intake/spelling_alphabet.yaml"
+    },
+    {
+      "path": "app/contracts/openapi.json"
+    },
+    {
+      "path": "app/contracts/schemas/tenant.schema.json"
+    },
+    {
+      "path": "app/frontend/e2e/visitable-routes.ts"
+    },
+    {
+      "path": "app/frontend/eslint.config.ts"
+    },
+    {
+      "path": "app/frontend/public/voice-capture-worklet.js"
+    },
+    {
+      "path": "app/frontend/public/voice-playback-worklet.js"
+    },
+    {
+      "path": "app/frontend/src/app/router.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/visitable-routes.test.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/voice/voice-copy.test.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/voice/voice-copy.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/voice/voice-events.test.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/voice/voice-events.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/voice/voice-page.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/voice/voice-page.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/voice/voice-routes.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/voice/voice-transport.test.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/voice/voice-transport.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/voice.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/@tanstack/react-query.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/index.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/sdk.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/types.gen.ts"
+    },
+    {
+      "path": "docs/reference/como-se-revisa-el-codigo.md"
+    },
+    {
+      "path": "mise.toml"
+    },
+    {
+      "path": "scripts/verify.sh"
+    }
+  ]
+}

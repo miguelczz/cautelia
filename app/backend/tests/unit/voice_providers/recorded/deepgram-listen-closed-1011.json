@@ -1,0 +1,90 @@
+{
+  "_about": [
+    "Respuesta grabada de un proveedor de voz, para la prueba de contrato de U15 (BR6.1).",
+    "La estructura de cada mensaje es la exacta del proveedor: claves, tipos y orden.",
+    "Todo audio es un marcador: 20 ms de silencio PCM de 16 bits, mono, a 24 kHz, en la",
+    "misma codificacion que usa el proveedor (binario o base64). Ninguna voz vive aqui.",
+    "No lleva clave, ni cabecera de autorizacion, ni identificador de cuenta.",
+    "DOCUMENTADA, NO CAPTURADA: armada a mano con la forma de error que documenta el proveedor, porque provocarla de verdad cuesta saldo o no se puede a voluntad."
+  ],
+  "provenance": "documented-not-captured",
+  "why_not_captured": "Un error interno del proveedor a mitad del flujo no se puede provocar. El cierre 1011 es el que Deepgram documenta para sus fallos internos; el primer resultado es el capturado.",
+  "probe": "deepgram-listen-closed-1011",
+  "provider": "deepgram",
+  "model": "nova-3",
+  "kind": "duplex",
+  "request": {
+    "path": "v1/listen",
+    "query": {
+      "model": "nova-3",
+      "language": "multi",
+      "encoding": "linear16",
+      "sample_rate": "24000",
+      "channels": "1",
+      "interim_results": "true"
+    }
+  },
+  "sent": [
+    {
+      "binary_bytes": 960
+    }
+  ],
+  "rejected": null,
+  "response": null,
+  "received": [
+    {
+      "text": {
+        "type": "Results",
+        "channel_index": [
+          0,
+          1
+        ],
+        "duration": 1.0,
+        "start": 0.0,
+        "is_final": false,
+        "speech_final": false,
+        "channel": {
+          "alternatives": [
+            {
+              "transcript": "hola es",
+              "confidence": 0.97802734,
+              "languages": [
+                "es"
+              ],
+              "words": [
+                {
+                  "word": "hola",
+                  "start": 0.0,
+                  "end": 0.71999997,
+                  "confidence": 0.97802734,
+                  "language": "es"
+                },
+                {
+                  "word": "es",
+                  "start": 0.71999997,
+                  "end": 0.96,
+                  "confidence": 0.82470703,
+                  "language": "es"
+                }
+              ]
+            }
+          ]
+        },
+        "metadata": {
+          "request_id": "retirado-al-grabar",
+          "model_info": {
+            "name": "general-nova-3",
+            "version": "2026-01-27.9249",
+            "arch": "nova-3"
+          },
+          "model_uuid": "421ebff2-e130-4867-8461-7567efe5bc91"
+        },
+        "from_finalize": false
+      }
+    }
+  ],
+  "closed": {
+    "code": 1011
+  },
+  "audio_frames_omitted": 0
+}

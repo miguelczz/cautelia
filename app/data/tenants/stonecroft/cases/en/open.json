@@ -1,0 +1,19 @@
+{
+  "case_key": "SEED/stonecroft/en/open",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {},
+  "language": "en",
+  "policy_number": "POL-100042",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "open",
+  "tenant_id": "stonecroft",
+  "transcript": [
+    {
+      "speaker": "agent",
+      "text": "Could you tell me your full name and your policy number?"
+    }
+  ],
+  "used_by": []
+}

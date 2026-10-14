@@ -1,0 +1,156 @@
+{
+  "stage": "nfr-design",
+  "unit": "u2-tenancy",
+  "upstream_ids": [
+    "SEC-U2.1",
+    "SEC-U2.2",
+    "SEC-U2.3",
+    "SEC-U2.4",
+    "SEC-U2.5",
+    "SEC-U2.6",
+    "SEC-U2.7",
+    "SEC-U2.8",
+    "SEC-U2.9",
+    "SEC-U2.10",
+    "SEC-U2.11",
+    "SEC-U2.12",
+    "SEC-U2.13",
+    "SEC-U2.14",
+    "NFR10.1",
+    "NFR10.2",
+    "NFR10.3",
+    "NFR18.2",
+    "NFR19.1",
+    "NFR12.1",
+    "NFR18.1"
+  ],
+  "coverage": [
+    {
+      "id": "SEC-U2.1",
+      "status": "OK",
+      "target": "security-design.md > Capa 1 > La asercion, contra el catalogo vivo"
+    },
+    {
+      "id": "SEC-U2.2",
+      "status": "OK",
+      "target": "security-design.md > Capa 1 > Punto unico de sesion; logical-components.md > regla de direccion 2"
+    },
+    {
+      "id": "SEC-U2.3",
+      "status": "OK",
+      "target": "security-design.md > Capa 1 > Punto unico de sesion (lectura tolerante de la variable de sesion, falla cerrado)"
+    },
+    {
+      "id": "SEC-U2.4",
+      "status": "OK",
+      "target": "security-design.md > Capa 1 > La asercion, contra el catalogo vivo (segunda pregunta: privilegios del rol vivo)"
+    },
+    {
+      "id": "SEC-U2.5",
+      "status": "OK",
+      "target": "security-design.md > Capa 2 > Dos claves, dos mecanismos"
+    },
+    {
+      "id": "SEC-U2.6",
+      "status": "OK",
+      "target": "security-design.md > Capa 2 > Verificacion, en cada peticion (respuesta identica en bytes, comparada entre si)"
+    },
+    {
+      "id": "SEC-U2.7",
+      "status": "OK",
+      "target": "security-design.md > Capa 2 > Verificacion, en cada peticion (paso 5, en un punto por el que pasan todas las rutas)"
+    },
+    {
+      "id": "SEC-U2.8",
+      "status": "OK",
+      "target": "security-design.md > Capa 3 > Acceso del visitante"
+    },
+    {
+      "id": "SEC-U2.9",
+      "status": "OK",
+      "target": "security-design.md > Capa 4 > Configuracion (las credenciales no viven en la configuracion)"
+    },
+    {
+      "id": "SEC-U2.10",
+      "status": "OK",
+      "target": "security-design.md > Capa 2 > Dos claves, dos mecanismos (rotar invalida en el acto)"
+    },
+    {
+      "id": "SEC-U2.11",
+      "status": "OK",
+      "target": "security-design.md > Capa 2 > El rastro"
+    },
+    {
+      "id": "SEC-U2.12",
+      "status": "OK",
+      "target": "security-design.md > Capa 1 > Migraciones"
+    },
+    {
+      "id": "SEC-U2.13",
+      "status": "OK",
+      "target": "logical-components.md > pieza Borrado de datos de visitante; security-design.md > Capa 3"
+    },
+    {
+      "id": "SEC-U2.14",
+      "status": "OK",
+      "target": "security-design.md > Capa 4 > Configuracion (tenancy:literals)"
+    },
+    {
+      "id": "NFR10.1",
+      "status": "OK",
+      "target": "security-design.md > Capa 1 > Punto unico de sesion y La politica, literal en cada migracion"
+    },
+    {
+      "id": "NFR10.2",
+      "status": "OK",
+      "target": "security-design.md > Capa 1 completa; el rol sin privilegio de salto es la condicion sin la cual esta medicion es falsa"
+    },
+    {
+      "id": "NFR10.3",
+      "status": "OK",
+      "target": "security-design.md > Capa 3 (el enlace y la clave de navegador son lo que RT-4 ataca contra el despliegue vivo)"
+    },
+    {
+      "id": "NFR18.2",
+      "status": "OK",
+      "target": "logical-components.md > Donde vive en el codigo (el modulo de aislamiento queda acotado a un solo prefijo, que es lo que hace medible su cobertura por separado)"
+    },
+    {
+      "id": "NFR19.1",
+      "status": "OK",
+      "target": "logical-components.md > pieza Borrado de datos de visitante (registro explicito con los dos purgadores de U2)"
+    },
+    {
+      "id": "NFR12.1",
+      "status": "N/A",
+      "target": "Resistencia a los escenarios de red-team. Su dueno es U10 `compliance`, y `../nfr-requirements/correcciones-tras-revision.md` (R-02) comprobo contra `stories.md` que US4.11 no lo realiza."
+    },
+    {
+      "id": "NFR18.1",
+      "status": "N/A",
+      "target": "Cobertura agregada del aplicativo. Su dueno es U1, que declara el comando y el umbral; esta unidad aporta su piso de modulo critico (NFR18.2) y no el agregado."
+    }
+  ],
+  "reverse": [
+    {
+      "id": "Decision Q1 de nfr-design",
+      "status": "N/A",
+      "target": "La politica de aislamiento se escribe literal en cada migracion, no con una funcion compartida. No realiza un control propio: es la forma que hace legible en la revision que aislamiento dejo cada migracion."
+    },
+    {
+      "id": "Decision Q2 de nfr-design",
+      "status": "N/A",
+      "target": "El proceso no arranca si la asercion de aislamiento no se puede ejecutar. Precisa SEC-U2.1 para el caso en que la asercion no falla sino que no corre; ningun control lo cubria por separado."
+    },
+    {
+      "id": "Superficie unica del modulo",
+      "status": "N/A",
+      "target": "logical-components.md declara una sola superficie publica para las veinte unidades que consumen tenancy. Nace del contrato C-10 y de la conveniencia de ADR-001, no de un control de seguridad."
+    },
+    {
+      "id": "NFR12.1",
+      "status": "N/A",
+      "target": "Retirado. La etapa anterior lo habia creado atribuyendo NFR12 a U2, pero ni US4.11 ni US5.7 lo declaran en su linea Realiza, y NFR10.3 ya media lo mismo. Ver correcciones-tras-revision.md de nfr-requirements."
+    }
+  ]
+}

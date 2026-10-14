@@ -1,0 +1,24 @@
+# Ordered story (AC1.5.2, BR3.2), English turn. See `es.yaml` for the full
+# rationale -- same criteria, same target, measured separately per language
+# and never as a combined average (P12).
+case_key: DS-2/en/intake-ordered-story
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - intake
+  - turn-order
+script:
+  - field_key: identity_and_policy
+    text: "I'm Laura Gomez, my policy is POL-480915."
+  - field_key: description
+    text: "Another car rear-ended me while I was stopped at a light."
+  - field_key: incident_datetime
+    text: "It happened yesterday, around five in the afternoon."
+  - field_key: location
+    text: "On Boyaca Avenue and 80th Street, in Bogota."
+  - field_key: vehicle_and_driver
+    text: "My car is a gray Mazda 3, plate ABC123."
+expected_verdicts:
+  intake_ordered_story: pass

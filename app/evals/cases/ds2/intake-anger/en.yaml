@@ -1,0 +1,20 @@
+# Anger (AC1.13.3, BR5.4), English turn. See `es.yaml`.
+case_key: DS-2/en/intake-anger
+dataset: DS-2
+language: en
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - intake
+  - emotion
+script:
+  - field_key: description
+    text: "This is ridiculous, you people are useless, I've been here for half an hour."
+  - field_key: description
+    sequence: 2
+    text: "I already told you, you're incompetent, fix this now."
+  - field_key: description
+    sequence: 3
+    text: "You are all idiots, sort this out now."
+expected_verdicts:
+  intake_anger: pass

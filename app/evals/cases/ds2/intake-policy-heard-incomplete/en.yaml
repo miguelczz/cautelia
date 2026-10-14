@@ -1,0 +1,40 @@
+# The policy the recognizer delivered incomplete, looked up by the holder's name and
+# confirmed (2026-10-13; P3, BR1.2, BR1.6), English turn.
+#
+# Acceptance criterion: given that on a call the person said their full name and their policy,
+# and the recognizer delivered the number incomplete ("Paul 201 17" for "POL-200117"), when that
+# holder has a single policy at the insurer and the digits heard resemble theirs -- at most two
+# are missing, in order, or with all six heard just one is different --, then the agent
+# proposes that policy with the same sentence as the chat and binds nothing; "Yes, that's me"
+# binds it and "No, that's not me" binds nothing.
+#
+# Expected verdict: `pass`.
+#
+# Origin: the real call of 2026-10-13 with the demo card ("I'm Marco Parker, my policy is
+# POL-200117"). The case ended with no policy identified, and in the chat the agent would have
+# found it. The policy and the holder are those of the insurer's versioned corpus. What the
+# node writes is covered by `tests/unit/intake/test_policy_unresolved.py`; here what the person
+# reads is measured, and that nothing they did not confirm is ever bound.
+#
+# Its Spanish pair is `DS-2/es/intake-policy-heard-incomplete`: same criteria and same target,
+# measured per language (P12).
+case_key: DS-2/en/intake-policy-heard-incomplete
+dataset: DS-2
+language: en
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - intake
+  - conversation
+script:
+  - field_key: identity_and_policy
+    sequence: 1
+    text: "Sure, my full name is Marco Parker and my policy is Paul 201 17."
+  - field_key: identity_and_policy
+    sequence: 2
+    text: "Yes, that's me"
+  - field_key: identity_and_policy
+    sequence: 3
+    text: "No, that's not me"
+expected_verdicts:
+  intake_policy_heard_incomplete: pass

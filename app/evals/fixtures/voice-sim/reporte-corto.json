@@ -1,0 +1,15 @@
+{
+  "descripcion": "Alguien reporta un choque sin heridos en cuatro turnos. Sin datos con forma de dato (placas, nombres, números): la voz de quien llama pasa por la redacción antes de sintetizarse.",
+  "cola": 3,
+  "pasos": [
+    { "esperar_agente": true },
+    { "decir": "Hola, tuve un choque hace un rato y quiero reportarlo" },
+    { "esperar_agente": true, "y": 0.6 },
+    { "decir": "No, gracias a Dios nadie salió herido" },
+    { "esperar_agente": true, "y": 0.6 },
+    { "decir": "Fue en la autopista sur, me chocaron por detrás en un semáforo" },
+    { "esperar_agente": true, "y": 0.6 },
+    { "decir": "El otro carro era una camioneta blanca y el conductor se bajó a hablar conmigo" },
+    { "esperar_agente": true, "y": 1.0 }
+  ]
+}

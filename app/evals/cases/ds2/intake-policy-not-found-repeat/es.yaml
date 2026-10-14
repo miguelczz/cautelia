@@ -1,0 +1,34 @@
+# La póliza que no se encuentra: se pide repetirla cifra por cifra, una sola vez (2026-10-13;
+# P3, BR1.6), turno en español.
+#
+# Criterio de aceptación: dado que en una llamada la persona dijo un nombre completo que no es
+# de ningún titular de la aseguradora y un número incompleto («Paul 201 17»), cuando no hay a
+# quién proponer, entonces la agente dice que no encontró la póliza y pide que la repita cifra
+# por cifra, con la frase del catálogo, sin proponer ni atar ninguna; y si tampoco sale en el
+# segundo intento, no lo pide otra vez y la captura sigue sin póliza identificada.
+#
+# Veredicto esperado: `pass`.
+#
+# Origen: la llamada real del 2026-10-13. Sin esta frase, un número oído a medias dejaba la
+# captura seguir como si nada y el caso sin póliza identificada, sin que la persona supiera que
+# había que repetirla. El nombre del caso es inventado y no figura en ningún corpus.
+#
+# La pareja en inglés es `DS-2/en/intake-policy-not-found-repeat`: los mismos criterios y la
+# misma meta, medidos por idioma (P12).
+case_key: DS-2/es/intake-policy-not-found-repeat
+dataset: DS-2
+language: es
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - intake
+  - conversation
+script:
+  - field_key: identity_and_policy
+    sequence: 1
+    text: "Me llamo Camila Restrepo Vélez y mi póliza es Paul 201 17."
+  - field_key: identity_and_policy
+    sequence: 2
+    text: "Camila Restrepo Vélez, mi póliza es Paul 201 17."
+expected_verdicts:
+  intake_policy_not_found_repeat: pass

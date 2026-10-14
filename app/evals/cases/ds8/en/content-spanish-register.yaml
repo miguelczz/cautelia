@@ -1,0 +1,12 @@
+# La pareja en ingles, que la paridad exige (P12, NFR20.2). **El chequeo no mide
+# nada aqui a proposito**: el registro de tu/usted no existe en ingles, asi que el
+# criterio responde "no aplica" con esa razon en su detalle, y eso es lo que el
+# reporte muestra. Copiar el veredicto del espanol daria a entender que se midio
+# algo en ingles; omitir el caso dejaria una fila sin pareja, que es lo que la
+# paridad existe para impedir.
+case_key: DS-8/en/content-spanish-register
+dataset: DS-8
+language: en
+requires_provider_key: false
+expected_verdicts:
+  content_spanish_register: pass

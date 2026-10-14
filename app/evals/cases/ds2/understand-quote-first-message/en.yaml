@@ -1,0 +1,19 @@
+# Un primer mensaje que pide cotizar abre una cotizacion (E1: la agente hablo de un accidente).
+#
+# Comprension de un mensaje (fase 0 de docs/propuesta-2026-10/03-propuesta-y-diseno.md).
+# Escrito antes del codigo que la implementa: falla hasta que la agente entienda con el modelo.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/en/understand-quote-first-message
+dataset: DS-2
+language: en
+tenant: sunmeadow
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  message: Give me a quote
+  wants:
+  - quote
+expected_verdicts:
+  understanding_quote_first_message: pass

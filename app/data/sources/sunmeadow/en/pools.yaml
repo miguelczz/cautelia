@@ -1,0 +1,99 @@
+# Repertorios de datos ficticios en ingles (U7, CG-U7-2): escritos a mano y revisados.
+# Los usan todas las aseguradoras para las personas y vehiculos en ingles; el generador
+# compone cada nombre, telefono, documento, placa y VIN desde la semilla (BR7.1).
+format_version: 1
+tenant_id: sunmeadow
+language: en
+part_key: pools
+texts:
+- source_id: SUN-POOL-GIVEN-NAMES
+  kind: persona_pool
+  version: '2026.2'
+  text: |-
+    Olivia
+    Daniel
+    Sofia
+    Lucas
+    Emma
+    Gabriel
+    Laura
+    Adrian
+    Julia
+    David
+    Sara
+    Samuel
+    Paula
+    Victor
+    Diana
+    Martin
+    Elena
+    Mario
+    Clara
+    Oscar
+    Nora
+    Hugo
+    Ana
+    Leo
+    Lina
+    Marco
+    Carla
+    Simon
+    Rebecca
+    Ivan
+  reviewed_at: '2026-10-09'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-POOL-FAMILY-NAMES
+  kind: persona_pool
+  version: '2026.2'
+  text: |-
+    Reyes
+    Torres
+    Rivera
+    Castro
+    Morales
+    Ortiz
+    Ramos
+    Navarro
+    Vega
+    Silva
+    Romero
+    Mendoza
+    Herrera
+    Medina
+    Flores
+    Diaz
+    Ruiz
+    Cruz
+    Miller
+    Parker
+    Lewis
+    Bennett
+    Carter
+    Hayes
+    Foster
+    Russo
+    Delgado
+    Moreno
+  reviewed_at: '2026-10-09'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-POOL-VEHICLES
+  kind: vehicle_pool
+  version: '2026.1'
+  text: |-
+    Honda Civic
+    Toyota Camry
+    Ford F-150
+    Subaru Outback
+    Chevrolet Equinox
+    Hyundai Elantra
+    Nissan Rogue
+    Toyota RAV4
+    Jeep Cherokee
+    Honda CR-V
+    Kia Soul
+    Ford Escape
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand

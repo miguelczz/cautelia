@@ -1,0 +1,66 @@
+{
+  "case_key": "SEED/knotwell/es/deciding",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Esquivó una moto y se golpeó contra un poste."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Rebecca Miller, póliza POL-943669"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "Sin lesionados"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Carrera 5 con calle 40, Corvane"
+    },
+    "other_parties": {
+      "status": "confirmed",
+      "value": "Ninguno"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Honda CR-V 2017, placa GPZ-3317, lo conducía Rebecca"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-943669",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "deciding",
+  "tenant_id": "knotwell",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Hola, soy Rebecca Miller. Mi póliza es POL-943669."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Alguien resultó herido?"
+    },
+    {
+      "speaker": "insured",
+      "text": "No, estoy bien."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué pasó?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Esquivé una moto y me golpeé contra un poste. No hubo nadie más."
+    }
+  ],
+  "used_by": [
+    "AC1.16.1"
+  ]
+}

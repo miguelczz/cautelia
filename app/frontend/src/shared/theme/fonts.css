@@ -1,0 +1,25 @@
+/*
+ * Las tres familias tipograficas, servidas **desde el propio origen** (FD-U6-4).
+ *
+ * Ninguna visita le habla a un servicio de fuentes externo: la politica de
+ * contenido solo admite `font-src 'self'` (CG-U6-2) y el arnes cuenta cualquier
+ * peticion a otro origen como fallo (SEC-U6.2). Los archivos vienen de los
+ * paquetes de Fontsource, con la version fijada en el lockfile; el compilador los
+ * copia a `dist/assets/` con huella en el nombre.
+ *
+ * Solo el subconjunto latino, que cubre el espanol y el ingles de la interfaz, y
+ * solo los pesos que pide el sistema de diseno. `font-display: swap` viene de
+ * Fontsource: el texto se pinta de inmediato con la fuente del sistema y cambia
+ * cuando llega la propia, en vez de quedar invisible.
+ *
+ * El navegador descarga una fuente solo cuando algo pintado la usa. Por eso la
+ * pagina de espera baja unicamente la del cuerpo de texto, y las otras dos llegan
+ * cuando hacen falta (PERF-U6.1). Licencias: SIL OFL 1.1, registradas en
+ * `app/frontend/DEPENDENCIES.md`.
+ */
+@import "@fontsource/ibm-plex-sans/latin-400.css";
+@import "@fontsource/ibm-plex-sans/latin-500.css";
+@import "@fontsource/bricolage-grotesque/latin-300.css";
+@import "@fontsource/bricolage-grotesque/latin-500.css";
+@import "@fontsource/bricolage-grotesque/latin-600.css";
+@import "@fontsource/jetbrains-mono/latin-400.css";

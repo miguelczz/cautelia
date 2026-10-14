@@ -1,0 +1,102 @@
+# Textos fuente revisados de Seguros Aburrá, en espanol (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: stonecroft
+language: es
+part_key: part_f
+texts:
+- source_id: STO-PAP-2026-F.BANKRUPTCY
+  kind: clause
+  clause_key: F.BANKRUPTCY
+  part: Parte F — Disposiciones generales
+  version: '2026.1'
+  text: Si el asegurado entra en quiebra o insolvencia, Seguros Aburrá sigue respondiendo por lo que
+    cubre esta póliza.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-F.CHANGES
+  kind: clause
+  clause_key: F.CHANGES
+  part: Parte F — Disposiciones generales
+  version: '2026.1'
+  text: Este contrato solo cambia por escrito, mediante un endoso que emitimos nosotros. Si un cambio
+    que usted pide modifica el riesgo, ajustamos la prima desde la fecha del cambio.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-F.FRAUD
+  kind: clause
+  clause_key: F.FRAUD
+  part: Parte F — Disposiciones generales
+  version: '2026.1'
+  text: No damos cobertura a quien haya mentido u ocultado a propósito un hecho importante sobre el accidente,
+    la pérdida o la información que nos dio al contratar.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-F.LEGAL_ACTION
+  kind: clause
+  clause_key: F.LEGAL_ACTION
+  part: Parte F — Disposiciones generales
+  version: '2026.1'
+  text: Nadie puede demandarnos por esta póliza sin haber atendido antes las obligaciones que ella impone,
+    y la demanda debe presentarse dentro del plazo que fija el documento de jurisdicción de Corvane.
+  refers_to:
+  - STO-JUR-2026-J.5
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-F.RECOVERY
+  kind: clause
+  clause_key: F.RECOVERY
+  part: Parte F — Disposiciones generales
+  version: '2026.1'
+  text: Cuando pagamos por un daño que causó otra persona, podemos cobrarle a esa persona lo que pagamos,
+    en lugar del asegurado. El asegurado nos ayuda a hacerlo y no hace nada que perjudique ese cobro.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-F.PERIOD_TERRITORY
+  kind: clause
+  clause_key: F.PERIOD_TERRITORY
+  part: Parte F — Disposiciones generales
+  version: '2026.1'
+  text: La póliza cubre los accidentes y pérdidas ocurridos durante el periodo que muestra la carátula
+    y dentro del territorio de Corvane.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-F.TERMINATION
+  kind: clause
+  clause_key: F.TERMINATION
+  part: Parte F — Disposiciones generales
+  version: '2026.1'
+  text: Usted puede cancelar la póliza en cualquier momento avisándonos por escrito. Nosotros solo podemos
+    cancelarla con el aviso previo que exige el documento de jurisdicción de Corvane, y le devolvemos
+    la prima del tiempo que no alcanzó a correr.
+  refers_to:
+  - STO-JUR-2026-J.2
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-F.TRANSFER
+  kind: clause
+  clause_key: F.TRANSFER
+  part: Parte F — Disposiciones generales
+  version: '2026.1'
+  text: Sus derechos por esta póliza no pasan a otra persona sin nuestro consentimiento escrito.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-F.TWO_POLICIES
+  kind: clause
+  clause_key: F.TWO_POLICIES
+  part: Parte F — Disposiciones generales
+  version: '2026.1'
+  text: Si dos o más pólizas de Seguros Aburrá cubren el mismo accidente, lo máximo que pagamos es
+    el límite más alto de una sola de ellas.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite

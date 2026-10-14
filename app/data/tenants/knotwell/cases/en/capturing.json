@@ -1,0 +1,69 @@
+{
+  "case_key": "SEED/knotwell/en/capturing",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Camilo Muñoz Correa, policy POL-916742"
+    },
+    "incident_datetime": {
+      "status": "stated",
+      "value": "2026-09-14 18:40"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Harbor Avenue and 12th Street, Corvane"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-916742",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "capturing",
+  "tenant_id": "knotwell",
+  "transcript": [
+    {
+      "speaker": "agent",
+      "text": "Could you tell me your full name and your policy number?"
+    },
+    {
+      "speaker": "insured",
+      "text": "I'm Camilo Muñoz Correa, the policy is POL-916742."
+    },
+    {
+      "speaker": "agent",
+      "text": "When was the accident?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Yesterday, around six forty in the evening."
+    },
+    {
+      "speaker": "agent",
+      "text": "Where did it happen?"
+    },
+    {
+      "speaker": "insured",
+      "text": "At Harbor Avenue and 12th Street."
+    },
+    {
+      "speaker": "agent",
+      "text": "I'm noting Harbor Avenue and 12th Street. Is that right?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Yes, that's right."
+    },
+    {
+      "speaker": "agent",
+      "text": "Which vehicle was it, and who was driving?"
+    }
+  ],
+  "used_by": [
+    "AC1.10.2",
+    "AC1.6.2",
+    "AC1.9.1",
+    "AC4.7.2"
+  ]
+}

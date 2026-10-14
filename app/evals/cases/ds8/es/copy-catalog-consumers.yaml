@@ -1,0 +1,6 @@
+case_key: DS-8/es/copy-catalog-consumers
+dataset: DS-8
+language: es
+requires_provider_key: false
+expected_verdicts:
+  copy_catalog_consumers: pass

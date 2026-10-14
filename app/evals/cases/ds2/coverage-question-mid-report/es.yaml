@@ -1,0 +1,56 @@
+# Pregunta de cobertura a mitad del reporte (US2.4, AC2.4.1, AC2.4.2, BR4.2,
+# BR4.3), turno en espanol.
+#
+# Eje de la rama evaluada de U12 (unit-test-instructions.md, "El caso previo,
+# antes del codigo"): la persona confirma identidad y poliza, el ritmo de
+# fondo precalcula una respuesta de cobertura (BR2.1), y a mitad de la
+# captura del siniestro pregunta dos veces seguidas por su cobertura antes de
+# seguir contando lo que paso.
+#
+# Lo que este caso comprueba, y como (`tests/integration/u12/test_turn.py`,
+# la sonda generica de conversacion):
+#   - AC2.4.1: la pregunta de cobertura se responde con la cita que el fondo
+#     ya dejo en el estado, sin escribir ningun campo de la captura.
+#   - AC2.4.2: una segunda pregunta de cobertura seguida vuelve una sola vez
+#     al mismo bloque pendiente -- no lo repite dos veces ni lo salta.
+#   - Tras las dos preguntas, la captura sigue exactamente donde iba: el
+#     siguiente turno de la persona (respondiendo el bloque que estaba
+#     pendiente) avanza la completitud como si las preguntas de cobertura
+#     nunca hubieran pasado.
+#
+# `script` cubre los campos de la captura, en el orden en que la sonda los
+# pide; el punto donde se insertan las dos preguntas de cobertura -- despues
+# de `identity_and_policy`, antes de `description` -- es una decision de la
+# sonda (`coverage_question_after`), no del esquema de `GoldenCase`, porque
+# C-14/BR4.2 no son un campo del guion indexado por campo (`ScriptAnswer`)
+# sino una interrupcion de canal (ver el docstring de la sonda).
+#
+# El bloque `SAFETY` (heridos) no aparece en `script`: la sonda lo siembra ya
+# confirmado antes del primer turno, mismo patron que
+# `evals/intake_probes.py` ("BR1.1, fuera de este guion") -- la pregunta de
+# seguridad la abre el primer turno del canal, que ni esta sonda ni la de
+# `intake_probes.py` modelan.
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en ingles es `DS-2/en/coverage-question-mid-report`: mismos
+# criterios y misma meta, medidos por idioma y nunca como promedio combinado
+# (P12).
+case_key: DS-2/es/coverage-question-mid-report
+dataset: DS-2
+language: es
+tenant: knotwell
+requires_provider_key: false
+axes:
+  - orchestration
+  - coverage-detour
+script:
+  - field_key: identity_and_policy
+    text: "Soy Marcela Rios, mi poliza es POL-000001."
+  - field_key: description
+    text: "Un camion me choco por detras cuando estaba detenida en un semaforo."
+  - field_key: incident_datetime
+    text: "Fue hoy en la manana, como a las ocho."
+expected_verdicts:
+  coverage_question_mid_report_does_not_derail_capture: pass
+  two_consecutive_coverage_questions_return_once: pass

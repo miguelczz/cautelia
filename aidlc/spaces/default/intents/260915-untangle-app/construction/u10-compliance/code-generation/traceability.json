@@ -1,0 +1,416 @@
+{
+  "stage": "code-generation",
+  "unit": "u10-compliance",
+  "upstream_ids": [
+    "AC1.6.1",
+    "AC1.6.2",
+    "AC1.6.3",
+    "AC1.6.4",
+    "AC1.6.5",
+    "AC1.9.1",
+    "AC1.9.2",
+    "AC1.9.3",
+    "AC1.9.4",
+    "AC1.10.1",
+    "AC1.10.2",
+    "AC1.10.3",
+    "AC1.10.4",
+    "AC1.10.5",
+    "AC1.11.1",
+    "AC1.11.2",
+    "AC1.11.3",
+    "AC1.11.4",
+    "AC1.11.5",
+    "AC1.11.6",
+    "AC4.15.1",
+    "AC4.15.2",
+    "AC4.15.3",
+    "AC4.15.4",
+    "AC4.15.5",
+    "AC1.16.1",
+    "AC1.16.2",
+    "AC1.16.3",
+    "AC1.16.4",
+    "NFR9.1",
+    "NFR9.2",
+    "NFR12.2",
+    "NFR12.3",
+    "NFR10.6",
+    "NFR11.8",
+    "NFR19.4",
+    "NFR20.2",
+    "BR1.1",
+    "BR1.2",
+    "BR1.3",
+    "BR1.4",
+    "BR1.5",
+    "BR1.6",
+    "BR1.7",
+    "BR1.8",
+    "BR2.1",
+    "BR2.2",
+    "BR2.3",
+    "BR2.4",
+    "BR2.5",
+    "BR3.1",
+    "BR3.2",
+    "BR3.3",
+    "BR4.1",
+    "BR4.2",
+    "BR5.1",
+    "BR5.2",
+    "BR5.3",
+    "BR6.1",
+    "BR6.2",
+    "BR6.3",
+    "BR6.4",
+    "BR7.1",
+    "BR8.1",
+    "BR8.2",
+    "BR9.1",
+    "BR9.2",
+    "NFR12.1"
+  ],
+  "coverage": [
+    {
+      "id": "AC1.6.1",
+      "status": "OK",
+      "target": "app/evals/cases/ds2/serious-injury/en.yaml"
+    },
+    {
+      "id": "AC1.6.2",
+      "status": "OK",
+      "target": "app/evals/cases/ds2/serious-injury/en.yaml"
+    },
+    {
+      "id": "AC1.6.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/controls/api.py"
+    },
+    {
+      "id": "AC1.6.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/controls/phrases.py"
+    },
+    {
+      "id": "AC1.6.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/compliance_probes.py"
+    },
+    {
+      "id": "AC1.9.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/controls/phrases.py"
+    },
+    {
+      "id": "AC1.9.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/controls/phrases.py"
+    },
+    {
+      "id": "AC1.9.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/compliance_probes.py"
+    },
+    {
+      "id": "AC1.9.4",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_wiring.py"
+    },
+    {
+      "id": "AC1.10.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/controls/api.py"
+    },
+    {
+      "id": "AC1.10.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/controls/api.py"
+    },
+    {
+      "id": "AC1.10.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/compliance_probes.py"
+    },
+    {
+      "id": "AC1.10.4",
+      "status": "Deferred",
+      "target": "U21: el juez calibrado revisa las insinuaciones con su rubrica; U10 no llama al modelo (Q3)"
+    },
+    {
+      "id": "AC1.10.5",
+      "status": "OK",
+      "target": "app/evals/cases/ds6/rt1-humanity-claim/en.yaml"
+    },
+    {
+      "id": "AC1.11.1",
+      "status": "OK",
+      "target": "app/config/compliance/en/guard.yaml"
+    },
+    {
+      "id": "AC1.11.2",
+      "status": "OK",
+      "target": "app/config/compliance/en/guard.yaml"
+    },
+    {
+      "id": "AC1.11.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_guard.py"
+    },
+    {
+      "id": "AC1.11.4",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_tables.py"
+    },
+    {
+      "id": "AC1.11.5",
+      "status": "OK",
+      "target": "app/config/compliance/en/guard.yaml"
+    },
+    {
+      "id": "AC1.11.6",
+      "status": "OK",
+      "target": "app/evals/subsets/smoke.yaml"
+    },
+    {
+      "id": "AC4.15.1",
+      "status": "OK",
+      "target": "app/config/compliance/en/guard.yaml"
+    },
+    {
+      "id": "AC4.15.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/controls/delimitation.py"
+    },
+    {
+      "id": "AC4.15.3",
+      "status": "OK",
+      "target": "app/config/compliance/en/guard.yaml"
+    },
+    {
+      "id": "AC4.15.4",
+      "status": "OK",
+      "target": "app/evals/subsets/smoke.yaml"
+    },
+    {
+      "id": "AC4.15.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/controls/patterns.py"
+    },
+    {
+      "id": "AC1.16.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_node.py"
+    },
+    {
+      "id": "AC1.16.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/controls/review.py"
+    },
+    {
+      "id": "AC1.16.3",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_tables.py"
+    },
+    {
+      "id": "AC1.16.4",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_wiring.py"
+    },
+    {
+      "id": "NFR9.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_eval_probes.py"
+    },
+    {
+      "id": "NFR9.2",
+      "status": "Deferred",
+      "target": "U12 y U13: las conversaciones completas de DS-2 y DS-6 necesitan el grafo y el conductor de texto; hoy no medida"
+    },
+    {
+      "id": "NFR12.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_eval_probes.py"
+    },
+    {
+      "id": "NFR12.3",
+      "status": "Deferred",
+      "target": "Pasada de publicacion (DP-14): DS-6 contra el despliegue publico en cada hito"
+    },
+    {
+      "id": "NFR10.6",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_tables.py"
+    },
+    {
+      "id": "NFR11.8",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_tables.py"
+    },
+    {
+      "id": "NFR19.4",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_tables.py"
+    },
+    {
+      "id": "NFR20.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_eval_probes.py"
+    },
+    {
+      "id": "BR1.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_guard.py"
+    },
+    {
+      "id": "BR1.2",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_tables.py"
+    },
+    {
+      "id": "BR1.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_guard.py"
+    },
+    {
+      "id": "BR1.4",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_tables.py"
+    },
+    {
+      "id": "BR1.5",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_repository.py"
+    },
+    {
+      "id": "BR1.6",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_tables.py"
+    },
+    {
+      "id": "BR1.7",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_guard.py"
+    },
+    {
+      "id": "BR1.8",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_guard.py"
+    },
+    {
+      "id": "BR2.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_signals.py"
+    },
+    {
+      "id": "BR2.2",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_wiring.py"
+    },
+    {
+      "id": "BR2.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/models.py"
+    },
+    {
+      "id": "BR2.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_signals.py"
+    },
+    {
+      "id": "BR2.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/models.py"
+    },
+    {
+      "id": "BR3.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_signals.py"
+    },
+    {
+      "id": "BR3.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_signals.py"
+    },
+    {
+      "id": "BR3.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_api.py"
+    },
+    {
+      "id": "BR4.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_models.py"
+    },
+    {
+      "id": "BR4.2",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_repository.py"
+    },
+    {
+      "id": "BR5.1",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_tables.py"
+    },
+    {
+      "id": "BR5.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_node.py"
+    },
+    {
+      "id": "BR5.3",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_wiring.py"
+    },
+    {
+      "id": "BR6.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_node.py"
+    },
+    {
+      "id": "BR6.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_node.py"
+    },
+    {
+      "id": "BR6.3",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_repository.py"
+    },
+    {
+      "id": "BR6.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_guard.py"
+    },
+    {
+      "id": "BR7.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/compliance/test_delimitation.py"
+    },
+    {
+      "id": "BR8.1",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_repository.py"
+    },
+    {
+      "id": "BR8.2",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u10/test_compliance_tables.py"
+    },
+    {
+      "id": "BR9.1",
+      "status": "OK",
+      "target": "app/evals/subsets/smoke.yaml"
+    },
+    {
+      "id": "BR9.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/controls/patterns.py"
+    },
+    {
+      "id": "NFR12.1",
+      "status": "N/A",
+      "target": "No existe: U2 lo uso y lo retiro en sus correcciones tras revision. security-requirements.md de U10 lo nombra solo para explicar por que su numeracion empieza en NFR12.2"
+    }
+  ]
+}

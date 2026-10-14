@@ -1,0 +1,236 @@
+# Agencia Castilla (C-25, FR9.5, FR9.6).
+#
+# El nombre que se lee cambio el 2026-10-03; `tenant_id` no. Esa separacion es el
+# motivo de que renombrar las tres aseguradoras sean tres lineas y no trescientos
+# archivos: el identificador es ingles y estable, y lo que una persona lee sale de
+# aqui o del catalogo de textos.
+#
+# La agencia coloca polizas de las otras dos y **nunca cierra un siniestro**: su
+# regla unica es derivar al ajustador de la aseguradora emisora. Esa diferencia
+# vive en su configuracion y en sus reglas, nunca en una rama dentro del codigo
+# de decision (BR4.2).
+#
+# Aqui **no hay ninguna credencial**: se emiten con un comando y no se publican
+# (D23, BR2.6).
+config_version: 1
+tenant_id: knotwell
+display_name: Agencia Castilla
+kind: agency
+default_language: en
+jurisdiction: corvane
+quote_enabled: false
+# El chat sigue un caso que se empezo por llamada si la persona escribe su numero desde el mismo
+# navegador (US1.20). Apagado, explica que un caso se retoma por el canal donde empezo (AC1.19.5).
+voice_to_chat_continuity: true
+# La poliza de ejemplo de una agencia la **emite otra aseguradora**: Knotwell la
+# coloco, no la expidio. Por eso el numero no lleva iniciales de nadie. Quien la
+# emitio es dato del corpus, y lo genera U7 (decision CG-U2-2 del plan).
+example_policy: POL-200341
+# Quien emitio esa poliza (U23, Q2). Obligatorio porque esta es la agencia: coloca
+# polizas de quien las emite, y la vista de comparacion lo nombra. Se declara el
+# identificador y no el nombre: el nombre vive en la carpeta de esa aseguradora.
+# Un chequeo lo compara con el `issuer_tenant` de la poliza en `app/data/`.
+example_policy_issuer: sunmeadow
+# El prefijo del numero de caso (FR1.5, BR4.1). Una agencia tambien abre casos
+# propios, aunque siempre los derive al ajustador de quien emitio la poliza.
+case_number_prefix: KNO
+copy_overrides: []
+voice:
+  # El nombre con el que el proyecto habla de la voz principal: Catalina, la voz
+  # paisa que paso las dos escuchas a ciegas (ADR-008, enmienda del 2026-09-21).
+  # Es un nombre, no un identificador: lo que suena lo fijan `primary` y
+  # `fallback`, abajo.
+  primary_voice: catalina
+  language_default: en
+  # Si la agente cambia de idioma sola cuando la persona habla dos turnos seguidos en el
+  # otro, sin que se lo pidan (U18, AC1.32.1). Encendido desde el 2026-10-13, junto con el
+  # cambio pedido ("in English", "en español"). Ojo: con `stt.mode: monolingual`, como
+  # esta ahora, el reconocedor no dice en que idioma hablaron y la deteccion se apoya
+  # solo en el texto transcrito; con `multi` se apoya ademas en el idioma de cada palabra.
+  auto_language_detection: true
+  # Lo que usa la llamada (U15, CG-U15-4). Cambiar proveedor, modelo o voz es
+  # cambiar estas lineas y nada mas (AC5.10.1). Si falta algo o nombra algo que
+  # `app/config/providers/providers.yaml` no declara, la voz de esta aseguradora
+  # queda apagada con su motivo y el chat sigue (BR2.2).
+  #
+  # Transcripcion: Deepgram nova-3 en modo multiidioma (ADR-007).
+  stt:
+    provider: deepgram
+    model: nova-3
+    # En el idioma de la llamada (2026-10-09): en modo multiidioma una frase dicha
+    # con poca claridad salia en portugues («não todas são mobidas»), y el idioma lo
+    # elige la persona antes de llamar. Si la llamada cambia de idioma a mitad
+    # (2026-10-13), el ciclo cierra el reconocedor y lo abre otra vez en el idioma nuevo.
+    mode: monolingual
+    # El codigo de idioma que recibe el reconocedor por cada idioma de la llamada
+    # (2026-10-13). El aplicativo sigue hablando `es` y `en`; en espanol se pide la variante
+    # de Latinoamerica, que oye mejor el acento colombiano que el espanol a secas.
+    language_codes:
+      es: es-419
+      en: en
+    # Lo que el reconocedor debe esperar oir, por idioma de la llamada (2026-10-13). Nace de
+    # una llamada real en la que «Itagüí» llego como «Nitahui», «Luv D-Max» como «Lub
+    # Dimas» y «POL-200117» como «Paul 201 17». Un termino por linea: el proveedor lee un
+    # parametro `keyterm` por termino y NO admite comas, punto y coma ni pesos (los acepta
+    # sin error y no hace nada). Tope por idioma: 50 terminos y 700 caracteres (el
+    # proveedor admite 500 piezas de texto en total), que el cargador comprueba. Entre los
+    # terminos van el nombre de esta aseguradora y el de su agente; **nunca nombres de
+    # personas**, ni los titulares de las polizas de ejemplo.
+    keyterms:
+      es:
+        # La forma del numero de poliza tal como se dice
+        - póliza
+        - POL
+        # El valle de Aburra: municipios y barrios
+        - Medellín
+        - Itagüí
+        - Envigado
+        - Sabaneta
+        - Bello
+        - La Estrella
+        - Caldas
+        - Copacabana
+        - El Poblado
+        - Laureles
+        - Belén
+        - Robledo
+        - Castilla
+        - Guayabal
+        - Manrique
+        - Aranjuez
+        # Las vias que la gente nombra
+        - Autopista Sur
+        - Autopista Norte
+        - Avenida Las Vegas
+        - Avenida El Poblado
+        - Regional
+        - Avenida Oriental
+        - Avenida 80
+        - Avenida 33
+        - Vía Las Palmas
+        # Los carros mas comunes en Colombia
+        - Renault Logan
+        - Renault Duster
+        - Renault Sandero
+        - Chevrolet Spark
+        - Chevrolet Onix
+        - Luv D-Max
+        - Mazda 3
+        - Mazda CX-30
+        - Kia Picanto
+        - Kia Sportage
+        - Toyota Hilux
+        - Toyota Corolla
+        - Nissan Versa
+        - Hyundai Accent
+        - Suzuki Swift
+        - Hyundai Elantra
+        # Esta aseguradora y su agente
+        - Agencia Castilla
+        - Isabel
+      en:
+        # La forma del numero de poliza tal como se dice
+        - policy
+        - POL
+        # El valle de Aburra: municipios y barrios
+        - Medellín
+        - Itagüí
+        - Envigado
+        - Sabaneta
+        - Bello
+        - La Estrella
+        - Caldas
+        - Copacabana
+        - El Poblado
+        - Laureles
+        - Belén
+        - Robledo
+        - Castilla
+        - Guayabal
+        - Manrique
+        - Aranjuez
+        # Las vias que la gente nombra
+        - Autopista Sur
+        - Autopista Norte
+        - Avenida Las Vegas
+        - Avenida El Poblado
+        - Regional
+        - Avenida Oriental
+        - Avenida 80
+        - Avenida 33
+        - Vía Las Palmas
+        # Los carros mas comunes en Colombia
+        - Renault Logan
+        - Renault Duster
+        - Renault Sandero
+        - Chevrolet Spark
+        - Chevrolet Onix
+        - Luv D-Max
+        - Mazda 3
+        - Mazda CX-30
+        - Kia Picanto
+        - Kia Sportage
+        - Toyota Hilux
+        - Toyota Corolla
+        - Nissan Versa
+        - Hyundai Accent
+        - Suzuki Swift
+        - Hyundai Elantra
+        # Esta aseguradora y su agente
+        - Agencia Castilla
+        - Isabel
+  # Voz principal: Catalina, la misma en los dos idiomas.
+  primary:
+    es:
+      provider: cartesia
+      model: sonic-3.6
+      voice_id: 162e0f37-8504-474c-bb33-c606c01890dc
+    en:
+      provider: cartesia
+      model: sonic-3.6
+      voice_id: 162e0f37-8504-474c-bb33-c606c01890dc
+  # Voz de respaldo: Aura-2 de Deepgram, decidida en la enmienda del 2026-09-21
+  # de ADR-008. Cambia con el idioma --ninguna voz de Aura-2 habla los dos--, y
+  # esa es la excepcion declarada D17 que la consola avisa (US5.11).
+  fallback:
+    es:
+      provider: deepgram
+      model: aura-2
+      voice_id: aura-2-celeste-es
+    en:
+      provider: deepgram
+      model: aura-2
+      voice_id: aura-2-thalia-en
+staff:
+  # Agente de cuenta: marca "enviado a la aseguradora" y **no decide cobertura**.
+  # Que no pueda decidir no lo dice este campo: lo dice la tabla de permisos
+  # (BR2.5, AC5.7.3).
+  - principal_id: priya-raman
+    role: account_agent
+    display_name: Priya Raman
+
+# La marca minima que dibuja el inicio (U6, FD-U6-5): el acento de cada modo y el
+# monograma. Los valores son los de `design-system-mapping.md`, con su contraste
+# medido alli; el codigo no sabe que aseguradora usa que forma (BR1.6).
+brand:
+  accent: "#6B3E8E"
+  accent_on_dark: "#C4A3E4"
+  # Dos anillos enlazados.
+  monogram: rings
+
+# El caracter que el inicio escribe junto al nombre, como clave del catalogo de
+# textos en los dos idiomas (U6, FD-U6-5). La consume esta configuracion y no el
+# codigo: `copy:check` la cuenta como consumidor y falla si no existe en el
+# catalogo, y la interfaz la resuelve por la tabla cerrada que genera
+# `mise run contracts:gen` (BR4.2).
+character_key: insurer.character.agency
+# La agente de esta aseguradora (2026-10-11): cada una tiene la suya.
+agent_name: Isabel
+
+# BR5.4, TECH-U11.5, U11: al segundo insulto, la frase de calma; al tercero,
+# el cierre por abuso. Son los numeros de AC1.13.3 ("dado que insulto a la
+# agente dos veces seguidas ... y si vuelvo a insultar"). El numero lo fija esta
+# configuracion, no el codigo.
+intake:
+  calm_after_insults: 2
+  close_after_insults: 3

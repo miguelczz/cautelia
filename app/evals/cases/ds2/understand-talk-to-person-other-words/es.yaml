@@ -1,0 +1,19 @@
+# Pedir un asesor de otra forma es pedir una persona.
+#
+# Comprension de un mensaje (fase 0 de docs/propuesta-2026-10/03-propuesta-y-diseno.md).
+# Escrito antes del codigo que la implementa: falla hasta que la agente entienda con el modelo.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/understand-talk-to-person-other-words
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  message: Prefiero que me atienda un asesor de carne y hueso
+  wants:
+  - talk_to_person
+expected_verdicts:
+  understanding_talk_to_person_other_words: pass

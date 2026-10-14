@@ -1,0 +1,33 @@
+# Sin clausula en la poliza (AC2.5.1, AC2.5.4): la poliza no dice nada sobre el tema preguntado.
+# Criterio(s): AC2.5.1, AC2.5.4. Par ES/EN: 'no-clause-vehicle-tax'.
+# Lo mide `mise run evals:citas` (fase 1, 2026-10-08): recupera, propone las citas con
+# Claude y las verifica, igual que el chat. La prueba estatica CG-U8-2 sigue comprobando
+# que clause_id exista en app/data/, sea de esta aseguradora y de esta poliza y no sea
+# distractor.
+# No prueba un fallo de recuperacion (`unverifiable`): esto es un resultado verificado de 'no hay clausula', no un fallo de infraestructura (BR3.4).
+# Por que no hay clausula (buscado el 2026-10-11 en todo el corpus de la poliza: formulario base, endosos,
+# documento de jurisdiccion y version anterior). Se busco impuesto, tributo, matricula y placas en espanol, y
+# tax, registration, fee y plates en ingles, y no aparece nada que la poliza pague de eso. Lo unico que sale
+# es 'fee' en el honorario del arbitro (C.ARBITRATION), que no tiene relacion. Lo mas cercano por tema es la
+# prueba de seguro obligatoria (J.1, J.4), que es del seguro y no del vehiculo. La poliza paga danos y gastos
+# medicos, no los costos de tener el auto.
+# Escrito el 2026-10-11 para reponer los 'sin clausula' que se perdieron al corregir tres casos que si tenian
+# respuesta (auditoria del 2026-10-10, E10), y aun sin correr contra un modelo. Si `evals:citas` encuentra una
+# clausula que la toca, se corrige el caso con su razon: no se baja el criterio.
+
+case_key: DS-3/es/no-clause-vehicle-tax
+dataset: DS-3
+language: es
+tenant: stonecroft
+axes:
+- sin_clausula
+- citation-verification
+citation:
+  policy_number: POL-245782
+  clause_id: null
+  expected_outcome: no_clause_found
+  question: ¿Esta póliza paga el impuesto anual de mi vehículo o su matrícula?
+expected_verdicts:
+  citation_no_clause_vehicle_tax: pass
+  citation_exists_no_clause_vehicle_tax: pass
+requires_provider_key: true

@@ -1,0 +1,12 @@
+case_key: DS-2/es/017
+dataset: DS-2
+language: es
+channel: chat
+tenant: stonecroft
+requires_provider_key: true
+script:
+  - field_key: incident.location
+    sequence: 1
+    text: Choque en la 80 con la 33
+expected_record:
+  state: derived

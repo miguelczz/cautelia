@@ -1,0 +1,35 @@
+# The policy that is not found: the person is asked to repeat it digit by digit, only once
+# (2026-10-13; P3, BR1.6), English turn.
+#
+# Acceptance criterion: given that on a call the person said a full name that belongs to no
+# holder at the insurer and an incomplete number ("Paul 201 17"), when there is nobody to
+# propose, then the agent says it did not find the policy and asks the person to repeat it digit
+# by digit, with the catalog sentence, proposing and binding none; and if the second attempt
+# does not work either, it does not ask again and the capture goes on with no policy identified.
+#
+# Expected verdict: `pass`.
+#
+# Origin: the real call of 2026-10-13. Without this sentence, a half-heard number let the
+# capture carry on as if nothing had happened, with the case left with no policy identified and
+# the person unaware it had to be repeated. The name in the case is made up and appears in no
+# corpus.
+#
+# Its Spanish pair is `DS-2/es/intake-policy-not-found-repeat`: same criteria and same target,
+# measured per language (P12).
+case_key: DS-2/en/intake-policy-not-found-repeat
+dataset: DS-2
+language: en
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - intake
+  - conversation
+script:
+  - field_key: identity_and_policy
+    sequence: 1
+    text: "My name is Camila Restrepo and my policy is Paul 201 17."
+  - field_key: identity_and_policy
+    sequence: 2
+    text: "Camila Restrepo, my policy is Paul 201 17."
+expected_verdicts:
+  intake_policy_not_found_repeat: pass

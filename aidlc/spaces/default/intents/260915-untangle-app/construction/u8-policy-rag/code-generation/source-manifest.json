@@ -1,0 +1,349 @@
+{
+  "stage": "code-generation",
+  "unit": "u8-policy-rag",
+  "version": 1,
+  "writes": [
+    {
+      "path": "app/backend/.importlinter"
+    },
+    {
+      "path": "app/backend/migrations/versions/u8_policy_0001_corpus_tables.py"
+    },
+    {
+      "path": "app/backend/pyproject.toml"
+    },
+    {
+      "path": "app/backend/src/untangle/base.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/purge.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/controls/phrases.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/runner/failures.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/runner/runner.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/policy_verification/node.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/policy_verification/phrases.py"
+    },
+    {
+      "path": "app/backend/src/untangle/paths.py"
+    },
+    {
+      "path": "app/backend/src/untangle/policy_rag/citations/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/policy_rag/citations/backing.py"
+    },
+    {
+      "path": "app/backend/src/untangle/policy_rag/citations/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/policy_rag/citations/repository.py"
+    },
+    {
+      "path": "app/backend/src/untangle/policy_rag/citations/verifier.py"
+    },
+    {
+      "path": "app/backend/src/untangle/policy_rag/corpus/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/policy_rag/corpus/ingest.py"
+    },
+    {
+      "path": "app/backend/src/untangle/policy_rag/corpus/loading.py"
+    },
+    {
+      "path": "app/backend/src/untangle/policy_rag/corpus/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/policy_rag/corpus/prompting.py"
+    },
+    {
+      "path": "app/backend/src/untangle/policy_rag/corpus/repository.py"
+    },
+    {
+      "path": "app/backend/src/untangle/policy_rag/corpus/retrieval.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/factory.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/corpus_ingest.py"
+    },
+    {
+      "path": "app/backend/src/untangle/settings.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u8/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u8/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u8/test_citations.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u8/test_ingest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u8/test_retrieval.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u8/test_schema.py"
+    },
+    {
+      "path": "app/backend/tests/unit/evals/test_runner.py"
+    },
+    {
+      "path": "app/backend/tests/unit/policy_rag/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/policy_rag/citations/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/policy_rag/citations/test_backing.py"
+    },
+    {
+      "path": "app/backend/tests/unit/policy_rag/citations/test_record_answer.py"
+    },
+    {
+      "path": "app/backend/tests/unit/policy_rag/citations/test_verifier.py"
+    },
+    {
+      "path": "app/backend/tests/unit/policy_rag/corpus/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/policy_rag/corpus/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/unit/policy_rag/corpus/test_ingest_batching.py"
+    },
+    {
+      "path": "app/backend/tests/unit/policy_rag/corpus/test_injection_fixture.py"
+    },
+    {
+      "path": "app/backend/tests/unit/policy_rag/corpus/test_loading.py"
+    },
+    {
+      "path": "app/backend/tests/unit/policy_rag/corpus/test_models.py"
+    },
+    {
+      "path": "app/backend/tests/unit/policy_rag/corpus/test_prompting.py"
+    },
+    {
+      "path": "app/backend/tests/unit/policy_rag/corpus/test_retrieval.py"
+    },
+    {
+      "path": "app/backend/tests/unit/policy_rag/policy_verification/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/policy_rag/policy_verification/test_node.py"
+    },
+    {
+      "path": "app/backend/tests/unit/policy_rag/test_ds3_golden_cases.py"
+    },
+    {
+      "path": "app/backend/tests/unit/providers/test_config.py"
+    },
+    {
+      "path": "app/backend/tests/unit/providers/test_factory.py"
+    },
+    {
+      "path": "app/backend/tests/unit/providers/test_gemini.py"
+    },
+    {
+      "path": "app/config/copy/en.yaml"
+    },
+    {
+      "path": "app/config/copy/es.yaml"
+    },
+    {
+      "path": "app/config/providers/providers.yaml"
+    },
+    {
+      "path": "app/contracts/schemas/eval-report.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/eval-run.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/prices.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/providers.schema.json"
+    },
+    {
+      "path": "app/evals/cases/ds3/coverage-agreement-period/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/coverage-agreement-period/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/coverage-agreement-scope/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/coverage-agreement-scope/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/coverage-collision-limit/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/coverage-collision-limit/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/coverage-liability-limit/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/coverage-liability-limit/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/coverage-medical-limit/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/coverage-medical-limit/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/coverage-uninsured-limit/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/coverage-uninsured-limit/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/cross-language-other-insurance-liability/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/cross-language-other-insurance-liability/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/cross-language-other-insurance-medical/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/cross-language-other-insurance-medical/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/distractor-def-you/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/distractor-def-you/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/distractor-duties-after-loss/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/distractor-duties-after-loss/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/distractor-uninsured-coverage/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/distractor-uninsured-coverage/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/endorsement-electronics-exclusion/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/endorsement-electronics-exclusion/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/endorsement-excludes-carrying-for-hire/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/endorsement-excludes-carrying-for-hire/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/knotwell-collision-coverage/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/knotwell-collision-coverage/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/knotwell-medical-limit/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/knotwell-medical-limit/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/no-clause-earthquake/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/no-clause-earthquake/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/no-clause-pet-injury/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/no-clause-pet-injury/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/no-clause-rental-abroad/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/no-clause-rental-abroad/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/no-clause-scuba/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/no-clause-scuba/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/no-clause-war-zone/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds3/no-clause-war-zone/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt2-policy-clause-injection/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt2-policy-clause-injection/es.yaml"
+    },
+    {
+      "path": "app/evals/fixtures/injection-corpus/app/data/manifest.json"
+    },
+    {
+      "path": "app/evals/fixtures/injection-corpus/app/data/tenants/injection-test/clauses/INJ-TEST-2026-EN.json"
+    },
+    {
+      "path": "app/evals/fixtures/injection-corpus/app/data/tenants/injection-test/clauses/INJ-TEST-2026-ES.json"
+    },
+    {
+      "path": "app/evals/fixtures/injection-corpus/app/data/tenants/injection-test/forms/INJ-TEST-2026-EN.json"
+    },
+    {
+      "path": "app/evals/fixtures/injection-corpus/app/data/tenants/injection-test/forms/INJ-TEST-2026-ES.json"
+    },
+    {
+      "path": "app/evals/fixtures/injection-corpus/app/data/tenants/injection-test/issued_policies/POL-INJ-EN-001.json"
+    },
+    {
+      "path": "app/evals/fixtures/injection-corpus/app/data/tenants/injection-test/issued_policies/POL-INJ-ES-001.json"
+    },
+    {
+      "path": "app/evals/manifest.yaml"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-keys.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-texts.ts"
+    },
+    {
+      "path": "mise.toml"
+    },
+    {
+      "path": "scripts/db-init/02-pgvector-extension.sh"
+    }
+  ]
+}

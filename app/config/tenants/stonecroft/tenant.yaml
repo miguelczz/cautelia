@@ -1,0 +1,229 @@
+# Seguros Aburra (C-25, FR9.5, FR9.6).
+#
+# El nombre que se lee cambio el 2026-10-03; `tenant_id` no.
+#
+# Anadir una cuarta aseguradora es anadir una carpeta como esta: el cargador
+# recorre el directorio y no una lista escrita a mano (FR9.3, BR4.3).
+#
+# Aqui **no hay ninguna credencial**. Las de la bandeja se emiten con un comando
+# para Miguel, el despliegue local y las pruebas, y no se publican (D23, BR2.6).
+config_version: 1
+tenant_id: stonecroft
+display_name: Seguros Aburrá
+# Una aseguradora decide; una agencia deriva siempre a quien emitio la poliza.
+# La diferencia la aplican las reglas y las politicas, no el codigo de U2.
+kind: carrier
+# Espanol, coherente con el recorrido 7.1 del PRD. El llamante puede cambiar a
+# ingles: esto es el idioma con el que se abre, no una restriccion.
+default_language: es
+jurisdiction: corvane
+quote_enabled: false
+# El chat sigue un caso que se empezo por llamada si la persona escribe su numero desde el mismo
+# navegador (US1.20). Apagado, explica que un caso se retoma por el canal donde empezo (AC1.19.5).
+voice_to_chat_continuity: true
+# La poliza de ejemplo que muestra el chat publico. El corpus que la contiene lo
+# genera U7 `synthetic-data`; aqui solo vive su identificador, que es lo que la
+# configuracion tiene que declarar (decision CG-U2-2 del plan).
+example_policy: POL-100042
+# El prefijo del numero de caso (FR1.5, BR4.1). Tres letras que **no se
+# confunden al dictarse**: las maquetas usaban SMU y SMA, que se diferencian en
+# una letra y nombran aseguradoras distintas, y la agente lo dicta por telefono
+# (decision FD-U4-1 de Miguel).
+case_number_prefix: STO
+copy_overrides: []
+voice:
+  # El nombre con el que el proyecto habla de la voz principal: Catalina, la voz
+  # paisa que paso las dos escuchas a ciegas (ADR-008, enmienda del 2026-09-21).
+  # Es un nombre, no un identificador: lo que suena lo fijan `primary` y
+  # `fallback`, abajo.
+  primary_voice: catalina
+  language_default: es
+  # Si la agente cambia de idioma sola cuando la persona habla dos turnos seguidos en el
+  # otro, sin que se lo pidan (U18, AC1.32.1). Encendido desde el 2026-10-13, junto con el
+  # cambio pedido ("in English", "en español"). Ojo: con `stt.mode: monolingual`, como
+  # esta ahora, el reconocedor no dice en que idioma hablaron y la deteccion se apoya
+  # solo en el texto transcrito; con `multi` se apoya ademas en el idioma de cada palabra.
+  auto_language_detection: true
+  # Lo que usa la llamada (U15, CG-U15-4). Cambiar proveedor, modelo o voz es
+  # cambiar estas lineas y nada mas (AC5.10.1). Si falta algo o nombra algo que
+  # `app/config/providers/providers.yaml` no declara, la voz de esta aseguradora
+  # queda apagada con su motivo y el chat sigue (BR2.2).
+  #
+  # Transcripcion: Deepgram nova-3 en modo multiidioma (ADR-007).
+  stt:
+    provider: deepgram
+    model: nova-3
+    # En el idioma de la llamada (2026-10-09): en modo multiidioma una frase dicha
+    # con poca claridad salia en portugues («não todas são mobidas»), y el idioma lo
+    # elige la persona antes de llamar. Si la llamada cambia de idioma a mitad
+    # (2026-10-13), el ciclo cierra el reconocedor y lo abre otra vez en el idioma nuevo.
+    mode: monolingual
+    # El codigo de idioma que recibe el reconocedor por cada idioma de la llamada
+    # (2026-10-13). El aplicativo sigue hablando `es` y `en`; en espanol se pide la variante
+    # de Latinoamerica, que oye mejor el acento colombiano que el espanol a secas.
+    language_codes:
+      es: es-419
+      en: en
+    # Lo que el reconocedor debe esperar oir, por idioma de la llamada (2026-10-13). Nace de
+    # una llamada real en la que «Itagüí» llego como «Nitahui», «Luv D-Max» como «Lub
+    # Dimas» y «POL-200117» como «Paul 201 17». Un termino por linea: el proveedor lee un
+    # parametro `keyterm` por termino y NO admite comas, punto y coma ni pesos (los acepta
+    # sin error y no hace nada). Tope por idioma: 50 terminos y 700 caracteres (el
+    # proveedor admite 500 piezas de texto en total), que el cargador comprueba. Entre los
+    # terminos van el nombre de esta aseguradora y el de su agente; **nunca nombres de
+    # personas**, ni los titulares de las polizas de ejemplo.
+    keyterms:
+      es:
+        # La forma del numero de poliza tal como se dice
+        - póliza
+        - POL
+        # El valle de Aburra: municipios y barrios
+        - Medellín
+        - Itagüí
+        - Envigado
+        - Sabaneta
+        - Bello
+        - La Estrella
+        - Caldas
+        - Copacabana
+        - El Poblado
+        - Laureles
+        - Belén
+        - Robledo
+        - Castilla
+        - Guayabal
+        - Manrique
+        - Aranjuez
+        # Las vias que la gente nombra
+        - Autopista Sur
+        - Autopista Norte
+        - Avenida Las Vegas
+        - Avenida El Poblado
+        - Regional
+        - Avenida Oriental
+        - Avenida 80
+        - Avenida 33
+        - Vía Las Palmas
+        # Los carros mas comunes en Colombia
+        - Renault Logan
+        - Renault Duster
+        - Renault Sandero
+        - Chevrolet Spark
+        - Chevrolet Onix
+        - Luv D-Max
+        - Mazda 3
+        - Mazda CX-30
+        - Kia Picanto
+        - Kia Sportage
+        - Toyota Hilux
+        - Toyota Corolla
+        - Nissan Versa
+        - Hyundai Accent
+        - Suzuki Swift
+        - Hyundai Elantra
+        # Esta aseguradora y su agente
+        - Seguros Aburrá
+        - Catalina
+      en:
+        # La forma del numero de poliza tal como se dice
+        - policy
+        - POL
+        # El valle de Aburra: municipios y barrios
+        - Medellín
+        - Itagüí
+        - Envigado
+        - Sabaneta
+        - Bello
+        - La Estrella
+        - Caldas
+        - Copacabana
+        - El Poblado
+        - Laureles
+        - Belén
+        - Robledo
+        - Castilla
+        - Guayabal
+        - Manrique
+        - Aranjuez
+        # Las vias que la gente nombra
+        - Autopista Sur
+        - Autopista Norte
+        - Avenida Las Vegas
+        - Avenida El Poblado
+        - Regional
+        - Avenida Oriental
+        - Avenida 80
+        - Avenida 33
+        - Vía Las Palmas
+        # Los carros mas comunes en Colombia
+        - Renault Logan
+        - Renault Duster
+        - Renault Sandero
+        - Chevrolet Spark
+        - Chevrolet Onix
+        - Luv D-Max
+        - Mazda 3
+        - Mazda CX-30
+        - Kia Picanto
+        - Kia Sportage
+        - Toyota Hilux
+        - Toyota Corolla
+        - Nissan Versa
+        - Hyundai Accent
+        - Suzuki Swift
+        - Hyundai Elantra
+        # Esta aseguradora y su agente
+        - Seguros Aburrá
+        - Catalina
+  # Voz principal: Catalina, la misma en los dos idiomas.
+  primary:
+    es:
+      provider: cartesia
+      model: sonic-3.6
+      voice_id: 162e0f37-8504-474c-bb33-c606c01890dc
+    en:
+      provider: cartesia
+      model: sonic-3.6
+      voice_id: 162e0f37-8504-474c-bb33-c606c01890dc
+  # Voz de respaldo: Aura-2 de Deepgram, decidida en la enmienda del 2026-09-21
+  # de ADR-008. Cambia con el idioma --ninguna voz de Aura-2 habla los dos--, y
+  # esa es la excepcion declarada D17 que la consola avisa (US5.11).
+  fallback:
+    es:
+      provider: deepgram
+      model: aura-2
+      voice_id: aura-2-celeste-es
+    en:
+      provider: deepgram
+      model: aura-2
+      voice_id: aura-2-thalia-en
+staff:
+  - principal_id: diana
+    role: adjuster
+    display_name: Diana
+
+# La marca minima que dibuja el inicio (U6, FD-U6-5): el acento de cada modo y el
+# monograma. Los valores son los de `design-system-mapping.md`, con su contraste
+# medido alli; el codigo no sabe que aseguradora usa que forma (BR1.6).
+brand:
+  accent: "#2C5F68"
+  accent_on_dark: "#7DB4BD"
+  # Arco de piedra.
+  monogram: arch
+
+# El caracter que el inicio escribe junto al nombre, como clave del catalogo de
+# textos en los dos idiomas (U6, FD-U6-5). La consume esta configuracion y no el
+# codigo: `copy:check` la cuenta como consumidor y falla si no existe en el
+# catalogo, y la interfaz la resuelve por la tabla cerrada que genera
+# `mise run contracts:gen` (BR4.2).
+character_key: insurer.character.conservative
+# La agente de esta aseguradora (2026-10-11): cada una tiene la suya.
+agent_name: Catalina
+
+# BR5.4, TECH-U11.5, U11: al segundo insulto, la frase de calma; al tercero,
+# el cierre por abuso. Son los numeros de AC1.13.3 ("dado que insulto a la
+# agente dos veces seguidas ... y si vuelvo a insultar"). El numero lo fija esta
+# configuracion, no el codigo.
+intake:
+  calm_after_insults: 2
+  close_after_insults: 3

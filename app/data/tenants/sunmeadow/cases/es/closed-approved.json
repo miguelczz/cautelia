@@ -1,0 +1,92 @@
+{
+  "case_key": "SEED/sunmeadow/es/closed-approved",
+  "channel": "chat",
+  "derivation_reason": "rule",
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Otro carro se pasó el semáforo en rojo y le pegó en la puerta del conductor."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Marco Parker, póliza POL-200117"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "Sin lesionados"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Carrera 5 con calle 40, Corvane"
+    },
+    "other_parties": {
+      "status": "stated",
+      "value": "Un conductor, Andrés Betancur Salazar, en un vehículo de placa MNL849"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Ford Escape 2020, placa NUH-3733, lo conducía Marco"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-200117",
+  "record_type": "claim",
+  "resolution": "approved",
+  "state": "closed",
+  "tenant_id": "sunmeadow",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Buenos días, quiero reportar un choque. Soy Marco Parker, póliza POL-200117."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Alguien resultó herido?"
+    },
+    {
+      "speaker": "insured",
+      "text": "No, nadie."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Cuándo y dónde fue?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Hoy a las siete y cuarto de la mañana, en la carrera 5 con calle 40."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué pasó?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Otro carro se pasó el semáforo en rojo y me pegó en la puerta del conductor."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué vehículo manejaba?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Mi Ford Escape 2020, placa NUH-3733. Lo manejaba yo."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Tienes los datos del otro conductor?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Sí, se llama Andrés Betancur Salazar y la placa de su carro es MNL849."
+    },
+    {
+      "speaker": "staff",
+      "text": "Revisé su caso y quedó aprobado. En su caso está el detalle de la decisión."
+    }
+  ],
+  "used_by": []
+}

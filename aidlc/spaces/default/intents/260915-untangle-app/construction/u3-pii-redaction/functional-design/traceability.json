@@ -1,0 +1,124 @@
+{
+  "stage": "functional-design",
+  "unit": "u3-pii-redaction",
+  "upstream_ids": [
+    "AC4.12.1",
+    "AC4.12.2",
+    "AC4.12.3",
+    "AC4.12.4",
+    "AC4.12.5",
+    "AC4.13.1",
+    "AC4.13.2",
+    "AC4.13.3",
+    "AC4.13.4"
+  ],
+  "coverage": [
+    {
+      "id": "AC4.12.1",
+      "status": "OK",
+      "target": "BR1.4, BR1.5"
+    },
+    {
+      "id": "AC4.12.2",
+      "status": "OK",
+      "target": "BR1.1, BR1.2, BR1.3"
+    },
+    {
+      "id": "AC4.12.3",
+      "status": "OK",
+      "target": "BR3.1, BR3.2, BR3.5"
+    },
+    {
+      "id": "AC4.12.4",
+      "status": "OK",
+      "target": "BR4.3"
+    },
+    {
+      "id": "AC4.12.5",
+      "status": "OK",
+      "target": "BR4.4"
+    },
+    {
+      "id": "AC4.13.1",
+      "status": "OK",
+      "target": "BR2.1"
+    },
+    {
+      "id": "AC4.13.2",
+      "status": "OK",
+      "target": "BR2.2"
+    },
+    {
+      "id": "AC4.13.3",
+      "status": "OK",
+      "target": "BR4.1, BR2.7"
+    },
+    {
+      "id": "AC4.13.4",
+      "status": "OK",
+      "target": "BR2.3, BR2.9"
+    }
+  ],
+  "reverse": [
+    {
+      "id": "BR1.8",
+      "status": "N/A",
+      "target": "Hallazgo R-02 de la revision: el chequeo de analisis estatico que prohibe invocar el constructor de `Redacted` fuera de `compliance/redaction/api.py`. Ningun criterio lo pedia; hace falta porque `NewType` no existe en tiempo de ejecucion y sin el la garantia de AC4.12.2 se apoyaria en que a nadie se le ocurra escribir esa llamada."
+    },
+    {
+      "id": "BR1.6",
+      "status": "N/A",
+      "target": "Decision FD-U3-2: el tapado es irreversible, sin boveda de tokens. Ningun criterio lo pedia; lo exige que una via de vuelta seria el unico sitio del sistema con todos los datos personales juntos."
+    },
+    {
+      "id": "BR1.7",
+      "status": "N/A",
+      "target": "Contrato C-13: si el detector no puede cargar, el punto de salida no emite texto. Fallar cerrado no aparece en ningun criterio de US4.12 ni de US4.13."
+    },
+    {
+      "id": "BR2.4",
+      "status": "N/A",
+      "target": "Decision de Miguel en Q2 del diseno funcional de U3: los reconocedores apuntan a formatos reales de Colombia y EE. UU. Los criterios hablan de 'los formatos de las tres aseguradoras', que son sinteticos; por el chat publico entran datos reales (M10)."
+    },
+    {
+      "id": "BR2.5",
+      "status": "N/A",
+      "target": "Decision de Miguel en Q3 del diseno funcional de U3: regla de respaldo por contexto para lo que ningun reconocedor declara. Ningun criterio la pedia."
+    },
+    {
+      "id": "BR2.6",
+      "status": "N/A",
+      "target": "Decision FD-U3-3 y criterio AC4.14.1, que es de U21: cada reconocedor declara su mecanismo. U3 lo declara porque sin esa declaracion U21 no puede comprobar que su detector no comparte mecanismo."
+    },
+    {
+      "id": "BR2.8",
+      "status": "N/A",
+      "target": "Decision FD-U3-3 y convencion 9 de team.md: anadir un formato es anadir configuracion versionada, no tocar codigo."
+    },
+    {
+      "id": "BR3.3",
+      "status": "N/A",
+      "target": "Decision de Q1 del diseno funcional de U3: la etiqueta lleva numero por tipo. AC4.12.3 exige la etiqueta pero no distingue dos datos del mismo tipo."
+    },
+    {
+      "id": "BR3.4",
+      "status": "N/A",
+      "target": "Convencion 4 de team.md y P12: cada tipo de entidad tiene su clave en el catalogo de textos, en los dos idiomas, comprobada por el chequeo de paridad."
+    },
+    {
+      "id": "BR4.2",
+      "status": "N/A",
+      "target": "Decision FD-U3-4: el respaldo se cuenta aparte. Nace de la decision de Q3 y no de un criterio; es lo que evita que un reconocedor roto quede escondido tras el respaldo."
+    },
+    {
+      "id": "BR4.5",
+      "status": "N/A",
+      "target": "NFR11, compuerta dura del PRD 11.2: cero datos personales en trazas, logs, exportaciones y reporte. Es un objetivo medible de la unidad, no un criterio de sus dos historias."
+    },
+    {
+      "id": "BR4.6",
+      "status": "N/A",
+      "target": "ADR-013 y contrato C-13: esta unidad no importa el segundo detector. Lo verifica un contrato de importacion; AC4.14.1 pertenece a U21."
+    }
+  ]
+}

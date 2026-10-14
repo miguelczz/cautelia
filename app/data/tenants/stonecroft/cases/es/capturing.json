@@ -1,0 +1,69 @@
+{
+  "case_key": "SEED/stonecroft/es/capturing",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Felipe Giraldo Villegas, póliza POL-784054"
+    },
+    "incident_datetime": {
+      "status": "stated",
+      "value": "2026-09-14 18:40"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Avenida del Puerto con calle 12, Corvane"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-784054",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "capturing",
+  "tenant_id": "stonecroft",
+  "transcript": [
+    {
+      "speaker": "agent",
+      "text": "¿Me dices tu nombre completo y el número de tu póliza?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Soy Felipe Giraldo Villegas, la póliza es POL-784054."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Cuándo fue el accidente?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Ayer, como a las seis y cuarenta de la tarde."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Dónde pasó?"
+    },
+    {
+      "speaker": "insured",
+      "text": "En la Avenida del Puerto con calle 12."
+    },
+    {
+      "speaker": "agent",
+      "text": "Anoto Avenida del Puerto con calle 12. ¿Es correcto?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Sí, correcto."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué vehículo manejaba y quién lo conducía?"
+    }
+  ],
+  "used_by": [
+    "AC1.10.1",
+    "AC1.6.2",
+    "AC1.9.1",
+    "AC4.7.2"
+  ]
+}

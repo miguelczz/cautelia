@@ -1,0 +1,58 @@
+# Servicios locales del aplicativo.
+#
+# Una sola descripcion para la maquina de quien desarrolla y para la tuberia: lo
+# que corre GitHub Actions es literalmente lo que corre en local, asi que un
+# fallo que solo aparece en la tuberia deja de ser un misterio.
+#
+# **Las imagenes van ancladas por huella digital, no por etiqueta.** Una etiqueta
+# se puede reescribir en el registro, y entonces el mismo comando baja otra
+# imagen y mueve la medicion de los quince minutos sin que nadie tocara el
+# proyecto. La etiqueta legible va en el comentario de al lado para saber que
+# version es sin resolver nada; para subir de version:
+#
+#     mise run images:digest -- pgvector/pgvector:pg18
+#
+# Los puertos se publican solo en `localhost` y se leen de variables con valor
+# por defecto, para que quien ya tenga una PostgreSQL corriendo pueda cambiarlos
+# sin editar este archivo.
+
+name: untangle
+
+services:
+  # La base de datos del aplicativo, con su extension vectorial. La busqueda
+  # lexica y la vectorial viven aqui, sin un servicio de busqueda aparte
+  # (ADR-010).
+  #
+  # U2 trae las dos primeras tablas del proyecto (U1 no creo ninguna, decision
+  # CG-1). Este servicio **no arranca** en el camino de los quince minutos: el
+  # subconjunto de arranque sigue sin tocar la base, y un contrato de importacion
+  # lo hace cumplir en vez de confiar en que siga siendo cierto por accidente.
+  #
+  # El aplicativo **nunca** se conecta con el superusuario de abajo: el guion de
+  # arranque crea el rol `untangle_app`, sin privilegio de saltarse las politicas
+  # de fila, y ese es el que usan el aplicativo y las pruebas. Con el
+  # superusuario, la suite de aislamiento pasaria sin que exista aislamiento
+  # (BR1.7, C-10).
+  db:
+    image: pgvector/pgvector@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f # pg17
+    environment:
+      POSTGRES_USER: ${UNTANGLE_POSTGRES_USER:-untangle}
+      POSTGRES_PASSWORD: ${UNTANGLE_POSTGRES_PASSWORD:?defina UNTANGLE_POSTGRES_PASSWORD en su .env}
+      POSTGRES_DB: ${UNTANGLE_POSTGRES_DB:-untangle}
+      UNTANGLE_POSTGRES_APP_USER: ${UNTANGLE_POSTGRES_APP_USER:-untangle_app}
+      UNTANGLE_POSTGRES_APP_PASSWORD: ${UNTANGLE_POSTGRES_APP_PASSWORD:?defina UNTANGLE_POSTGRES_APP_PASSWORD en su .env}
+    ports:
+      - "127.0.0.1:${UNTANGLE_POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      # El **mismo** guion que monta la base efimera de las pruebas. Dos guiones
+      # que se parecen acaban divergiendo justo en la linea que importa.
+      - ./scripts/db-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${UNTANGLE_POSTGRES_USER:-untangle}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  db-data:

@@ -1,0 +1,27 @@
+# Driver listed on the policy, from the case field to the category (FR6.1), English turn. Whoever was driving is the policyholder, or an additional driver the policy declares and the person named in full: the `unlisted_driver` input reaches the engine false and the driver rule does not fire. It does not hold back Sunmeadow's direct close.
+#
+# Criterio de aceptacion: sobre las filas `driver-listed/*` de
+# `app/evals/fixtures/rules/en.yaml`, el campo `vehicle_and_driver` del caso y los
+# conductores que declara la poliza se derivan a `unlisted_driver` con la misma funcion del
+# aplicativo, el insumo sale como `listed` (falso) y el motor real de la aseguradora de cada
+# fila da la categoria declarada en ella.
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en espanol es `DS-2/es/rules-driver-listed`:
+# los mismos escenarios y la misma meta, medidos por idioma y nunca como promedio
+# combinado (P12).
+#
+# Lo que este caso no mide: la lectura del campo sellado ni de la poliza en la base, ni el
+# cableado del nodo `decision` (lo cubre la prueba de integracion de la cadena de fondo), ni la
+# frase que recibe la persona.
+case_key: DS-2/en/rules-driver-listed
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - rules-engine
+  - driver-derivation
+expected_verdicts:
+  triage_from_driver_listed: pass

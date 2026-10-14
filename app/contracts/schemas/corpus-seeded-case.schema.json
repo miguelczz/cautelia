@@ -1,0 +1,215 @@
+{
+  "$defs": {
+    "SeededChannel": {
+      "description": "Por donde entro el caso. Copia de `case_record.models.Channel`.",
+      "enum": [
+        "voice",
+        "chat"
+      ],
+      "title": "SeededChannel",
+      "type": "string"
+    },
+    "SeededDerivationReason": {
+      "description": "Por que se derivo. Copia de `case_record.models.DerivationReason`.",
+      "enum": [
+        "demo_limit",
+        "person_requested",
+        "rule"
+      ],
+      "title": "SeededDerivationReason",
+      "type": "string"
+    },
+    "SeededField": {
+      "additionalProperties": false,
+      "description": "Un campo de un caso sembrado: su valor y si se dijo o ya se confirmo.\n\nEl estado importa: tres campos del siniestro solo cuentan confirmados (BR2.2\nde U4), y un criterio como \"tres de siete campos confirmados\" no se puede\nsembrar con solo el valor.",
+      "properties": {
+        "value": {
+          "minLength": 1,
+          "title": "Value",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/SeededFieldStatus"
+        }
+      },
+      "required": [
+        "value",
+        "status"
+      ],
+      "title": "SeededField",
+      "type": "object"
+    },
+    "SeededFieldStatus": {
+      "description": "Los dos estados de un campo que se ha dicho. Copia parcial de\n`case_record.models.FieldStatus`: un campo que no se ha dicho no se siembra,\nsimplemente no esta.",
+      "enum": [
+        "stated",
+        "confirmed"
+      ],
+      "title": "SeededFieldStatus",
+      "type": "string"
+    },
+    "SeededRecordType": {
+      "description": "Los tres tipos de registro. Copia de `case_record.models.RecordType`.",
+      "enum": [
+        "claim",
+        "coverage_inquiry",
+        "quote_request"
+      ],
+      "title": "SeededRecordType",
+      "type": "string"
+    },
+    "SeededResolution": {
+      "description": "Las cuatro resoluciones. Copia de `case_record.models.Resolution`.",
+      "enum": [
+        "registered",
+        "approved",
+        "rejected",
+        "sent_to_insurer"
+      ],
+      "title": "SeededResolution",
+      "type": "string"
+    },
+    "SeededSpeaker": {
+      "description": "Quien habla en un turno. Copia de `case_record.models.Speaker`.",
+      "enum": [
+        "insured",
+        "agent",
+        "staff"
+      ],
+      "title": "SeededSpeaker",
+      "type": "string"
+    },
+    "SeededState": {
+      "description": "Los siete estados del caso. Copia de `case_record.models.CaseState`.",
+      "enum": [
+        "open",
+        "capturing",
+        "verifying",
+        "deciding",
+        "derived",
+        "awaiting_insured",
+        "closed"
+      ],
+      "title": "SeededState",
+      "type": "string"
+    },
+    "SeededTurn": {
+      "additionalProperties": false,
+      "description": "Un turno corto de un caso sembrado, escrito a mano (CG-U7-2).",
+      "properties": {
+        "speaker": {
+          "$ref": "#/$defs/SeededSpeaker"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "speaker",
+        "text"
+      ],
+      "title": "SeededTurn",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Un caso sembrado, listo para cargarse por la API de U4 (US5.6).",
+  "properties": {
+    "case_key": {
+      "pattern": "^SEED/[a-z][a-z0-9-]{1,30}/(?:es|en)/[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Case Key",
+      "type": "string"
+    },
+    "tenant_id": {
+      "pattern": "^[a-z][a-z0-9-]{1,30}$",
+      "title": "Tenant Id",
+      "type": "string"
+    },
+    "language": {
+      "enum": [
+        "es",
+        "en"
+      ],
+      "title": "Language",
+      "type": "string"
+    },
+    "record_type": {
+      "$ref": "#/$defs/SeededRecordType"
+    },
+    "channel": {
+      "$ref": "#/$defs/SeededChannel"
+    },
+    "state": {
+      "$ref": "#/$defs/SeededState"
+    },
+    "resolution": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SeededResolution"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "derivation_reason": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SeededDerivationReason"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "policy_number": {
+      "pattern": "^POL-\\d{6}$",
+      "title": "Policy Number",
+      "type": "string"
+    },
+    "fields": {
+      "patternProperties": {
+        "^[a-z][a-z0-9_]*(?:\\.[a-z0-9_]+)*$": {
+          "$ref": "#/$defs/SeededField"
+        }
+      },
+      "title": "Fields",
+      "type": "object"
+    },
+    "transcript": {
+      "items": {
+        "$ref": "#/$defs/SeededTurn"
+      },
+      "title": "Transcript",
+      "type": "array"
+    },
+    "used_by": {
+      "items": {
+        "pattern": "^AC\\d+\\.\\d+\\.\\d+$",
+        "type": "string"
+      },
+      "title": "Used By",
+      "type": "array"
+    }
+  },
+  "required": [
+    "case_key",
+    "tenant_id",
+    "language",
+    "record_type",
+    "channel",
+    "state",
+    "policy_number",
+    "fields",
+    "transcript",
+    "used_by"
+  ],
+  "title": "SeededCaseRecord",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/corpus-seeded-case.schema.json"
+}

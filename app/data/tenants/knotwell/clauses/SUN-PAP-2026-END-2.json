@@ -1,0 +1,16 @@
+{
+  "clauses": [
+    {
+      "clause_id": "SUN-PAP-2026-END-2-D.EXCL.5",
+      "clause_key": "D.EXCL.5",
+      "form_id": "SUN-PAP-2026-END-2",
+      "form_version": "2026.1",
+      "is_distractor": false,
+      "issuer_label": "Autos Poblado",
+      "language": "en",
+      "part": "Endorsements",
+      "text": "The tire exclusion does not apply to road hazard damage, such as a puncture or a blowout caused by a pothole. We pay up to $300 per tire, minus the deductible for damage that does not come from a crash."
+    }
+  ],
+  "form_id": "SUN-PAP-2026-END-2"
+}

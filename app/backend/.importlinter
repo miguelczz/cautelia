@@ -1,0 +1,940 @@
+; Contratos de importacion (ADR-001, enmienda del 2026-09-17).
+;
+; Las cuatro reglas de direccion de dependencias de `team.md` (convencion 5) se
+; hacen cumplir aqui con una herramienta, no con disciplina: una convencion que
+; solo vive en la memoria del autor no esta a la semana seis.
+;
+; Cada unidad agrega su modulo al contrato que le toca cuando se construye. Hoy
+; casi todos los paquetes estan vacios: los contratos existen desde el primer
+; commit para que la primera importacion equivocada falle, no para que se
+; descubra despues.
+
+[importlinter]
+root_packages =
+    untangle
+include_external_packages = True
+
+; --- Las seis capas de ADR-001 ------------------------------------------------
+; Orden de arriba abajo: cada capa puede importar las de abajo, nunca las de
+; arriba. Dos modulos en la misma linea no pueden importarse entre si.
+;
+; El orden dentro de "dominio" y "plataforma" es mas fino que el de ADR-001
+; porque la direccion real entre ellos existe y `layers` solo la puede expresar
+; como capas: los controles de cumplimiento importan el registro del caso, y el
+; corpus importa los adaptadores de proveedor.
+[importlinter:contract:capas]
+name = Capas: superficie, entradas, grafo, dominio, plataforma
+type = layers
+layers =
+    untangle.server
+    untangle.workspace
+    untangle.demo_operations
+    untangle.evals
+    untangle.inbox
+    untangle.chat : untangle.voice
+    untangle.orchestration
+    untangle.compliance.controls
+    untangle.case_record
+    untangle.policy_rag
+    untangle.rules : untangle.synthetic_data
+    untangle.providers
+    untangle.telemetry
+    untangle.compliance.redaction : untangle.copy_catalog
+    untangle.tenancy
+
+; --- Los cuatro nodos son independientes entre si -----------------------------
+[importlinter:contract:nodos-independientes]
+name = Los cuatro nodos del grafo no se importan entre si
+type = independence
+modules =
+    untangle.orchestration.nodes.intake
+    untangle.orchestration.nodes.policy_verification
+    untangle.orchestration.nodes.decision
+    untangle.orchestration.nodes.compliance
+
+; --- Solo la raiz de composicion construye adaptadores y fabricas -------------
+; C-24: la raiz es el unico lugar que construye adaptadores. Los nodos reciben
+; sus puertos por closure y no importan el paquete de adaptadores.
+[importlinter:contract:raiz-de-composicion]
+name = Solo la raiz de composicion importa adaptadores y fabricas
+type = protected
+protected_modules =
+    untangle.providers.adapters
+allowed_importers =
+    untangle.server
+unmatched_ignore_imports_alerting = none
+
+; --- El codigo de produccion no importa el corredor de evaluaciones -----------
+; UG-4: los conductores viven en `untangle.evals.drivers` e importan la interfaz
+; publica del canal, nunca al reves.
+;
+; **Enmienda del 2026-09-29 (U16, tanda 6).** Una sola arista queda fuera y se
+; nombra entera: `untangle.server.voice_cli -> untangle.evals.**`. Es el mismo
+; razonamiento que saco a `untangle.server` del contrato de LangGraph el
+; 2026-09-28, y el mismo sitio: correr un caso de DS-5 por el transporte de voz
+; necesita a la vez los adaptadores de proveedor --que solo este paquete
+; importa-- y el corredor de evaluaciones, y no hay ninguna capa donde las dos
+; cosas se puedan encontrar salvo esta. Prohibirlo no protege nada: deja la regla
+; imposible de cumplir, y el conductor de voz sin un llamador de produccion, que
+; es la forma de defecto que mas ha costado en este proyecto.
+;
+; **Segunda arista, del 2026-09-30 (U22, tanda 1):**
+; `untangle.server.evidence_routes -> untangle.evals.evidence.**`. El panel de
+; cifras lee la linea base vigente, que es del corredor de evaluaciones, y la
+; ruta que la sirve tiene que vivir en `untangle.server` porque `untangle.evals`
+; no puede importar el framework web. Se nombra el paquete `evidence` y no
+; `evals` entero: la ruta ve las cinco cifras y lo que estas leen, nunca el
+; corredor. Lo unico que la ruta sirve es el modelo `MetricsSnapshot`.
+;
+; **Las dos aristas no son iguales, y decirlo importa.** La primera es un comando a
+; mano que no corre en ninguna compuerta y no se monta en el proceso servido, asi
+; que por ella el proceso servido no ve nada. La segunda **si** esta en el proceso
+; servido: `composition` monta la ruta, y por esa cadena el proceso importa hoy
+; diez modulos de `untangle.evals` --los tres de `evidence`, mas
+; `gates.loading`, `gates.models`, `evals.loading` y `evals.models`--. Medido el
+; 2026-09-30, no supuesto.
+;
+; Lo que sigue protegido, que es lo que ADR-001 queria: el proceso servido **no**
+; importa el corredor, ni los conductores de canal, ni el juez, ni la logica de la
+; compuerta. Lo que importa son los **tipos del artefacto** y su lector de archivo,
+; y eso es inherente a la funcion: el panel publica resultados de evaluacion, asi
+; que depende del formato en que se publican. Inventar un segundo modelo de la
+; linea base para esquivar la arista dejaria dos esquemas que un dia divergen, que
+; es peor que la dependencia.
+;
+; Una tercera arista se juzga con esta medida y no con la primera: ¿mete en el
+; proceso servido algo que decida, corra o puntue una evaluacion? Entonces no.
+;
+; **Tercera arista, del 2026-10-07 (fase 0, la agente que entiende):**
+; `untangle.server.understanding_cli -> untangle.evals.**`. Pasa la medida por la
+; misma razon que la primera: es un comando a mano (`mise run evals:entender`)
+; que no se monta en el proceso servido ni corre en ninguna compuerta, y necesita
+; a la vez el corredor y el puerto de comprension que solo la raiz de composicion
+; construye.
+[importlinter:contract:produccion-sin-evals]
+name = El codigo de produccion no importa untangle.evals
+type = forbidden
+source_modules =
+    untangle.server
+    untangle.chat
+    untangle.voice
+    untangle.inbox
+    untangle.orchestration
+    untangle.case_record
+    untangle.policy_rag
+    untangle.rules
+    untangle.compliance
+    untangle.tenancy
+    untangle.telemetry
+    untangle.providers
+    untangle.copy_catalog
+    untangle.demo_operations
+    untangle.synthetic_data
+forbidden_modules =
+    untangle.evals
+ignore_imports =
+    untangle.server.voice_cli -> untangle.evals.**
+    untangle.server.evidence_routes -> untangle.evals.evidence.**
+    untangle.server.understanding_cli -> untangle.evals.**
+
+; --- Los controles de cumplimiento no llegan a ningun proveedor (U10) ---------
+; BR5.3 y FD-U10-1: la guardia, las senales y la revision completa son de
+; reglas, y la relectura con juez es de U21. Que ninguno llame a un modelo no se
+; promete: se comprueba aqui, **tambien por cadena**, sobre el paquete de los
+; controles y sobre el nodo que los usa. La prueba con el puerto del modelo
+; espiado cubre la conducta; esta cubre que no haya ni siquiera la importacion.
+[importlinter:contract:cumplimiento-sin-proveedores]
+name = Los controles de cumplimiento y el nodo compliance no importan ningun proveedor
+type = forbidden
+source_modules =
+    untangle.compliance.controls
+    untangle.orchestration.nodes.compliance
+forbidden_modules =
+    untangle.providers
+
+; --- El motor de reglas no llega a ningun proveedor (U9) ----------------------
+; BR2.1 y SEC-U9.1: la evaluacion es determinista y no invoca ningun modelo. El
+; contrato de capas de arriba pondria a `untangle.rules` por encima de
+; `untangle.providers` y por tanto permitiria la importacion; este contrato la
+; prohibe igual que `cumplimiento-sin-proveedores` prohibe la suya, con la misma
+; razon: que ningun cliente de modelo aparezca en la cadena de llamadas no se
+; promete, se comprueba aqui. La prueba con la fabrica de proveedores espiada
+; cubre la conducta; esta cubre que no haya ni siquiera la importacion.
+;
+; El nodo `decision` se anade aqui como segundo `source_module` en el mismo
+; commit que lo crea (paso 7 de esta unidad), igual que
+; `orchestration.nodes.compliance` se anadio junto al suyo en
+; `cumplimiento-sin-proveedores`.
+[importlinter:contract:reglas-sin-proveedores]
+name = El motor de reglas no importa ningun proveedor
+type = forbidden
+source_modules =
+    untangle.rules
+    untangle.orchestration.nodes.decision
+forbidden_modules =
+    untangle.providers
+
+; --- El nucleo no importa el framework web -----------------------------------
+; Solo la raiz de composicion y los modulos de entrada conocen FastAPI.
+[importlinter:contract:nucleo-sin-framework-web]
+name = Capacidades y plataforma no importan el framework web
+type = forbidden
+source_modules =
+    untangle.orchestration
+    untangle.case_record
+    untangle.policy_rag
+    untangle.rules
+    untangle.compliance
+    untangle.tenancy
+    untangle.telemetry
+    untangle.providers
+    untangle.copy_catalog
+    untangle.synthetic_data
+    untangle.evals
+forbidden_modules =
+    fastapi
+    starlette
+unmatched_ignore_imports_alerting = none
+
+; --- El SDK de un proveedor solo dentro de su adaptador -----------------------
+; Convencion 5(b) y ADR-018. La lista crece cuando entra cada proveedor: hoy
+; ninguno esta instalado, y el contrato ya esta en su sitio para que el primero
+; llegue por la puerta correcta.
+;
+; `websockets` entra con U15 (SEC-U15.1): no es un SDK, pero es **el** cliente con
+; el que se habla con Deepgram y Cartesia, y un modulo fuera de los adaptadores
+; que lo importara podria abrir un canal a un proveedor de voz saltandose el
+; techo, el gasto y la taxonomia de errores. Es la misma fuga con otro nombre.
+;
+; Este contrato comprueba **tambien por cadena**, y asi sigue. La unica arista
+; hacia `websockets` que se deja fuera es la legitima y se nombra entera:
+; `adapters/wire.py`, el transporte de voz, que es el unico sitio del aplicativo
+; que abre un canal (BR1.1). La raiz de composicion llega a el por el paquete de
+; cada adaptador, y esa es la puerta correcta. Cualquier otro modulo que lo
+; importe --directo o por una cadena que no pase por esa arista, incluido otro
+; archivo de un adaptador-- rompe el contrato nombrando el camino.
+[importlinter:contract:sdk-solo-en-su-adaptador]
+name = Los SDK de proveedor solo se importan dentro de untangle.providers
+type = forbidden
+source_modules =
+    untangle.server
+    untangle.chat
+    untangle.voice
+    untangle.inbox
+    untangle.orchestration
+    untangle.case_record
+    untangle.policy_rag
+    untangle.rules
+    untangle.compliance
+    untangle.tenancy
+    untangle.telemetry
+    untangle.copy_catalog
+    untangle.evals
+    untangle.synthetic_data
+    untangle.demo_operations
+forbidden_modules =
+    google
+    openai
+    anthropic
+    deepgram
+    elevenlabs
+    livekit
+    pipecat
+    websockets
+ignore_imports =
+    untangle.providers.adapters.wire -> websockets
+    ; El SDK de Anthropic, en su unico sitio: la redaccion natural del chat (2026-10-07).
+    untangle.providers.adapters.anthropic.api -> anthropic
+unmatched_ignore_imports_alerting = error
+
+; --- Los puertos y la fabrica, sin SDK y sin telemetria (U5) ------------------
+; Aprieta el contrato de arriba, que deja **el paquete `untangle.providers`
+; entero** fuera de su lista de origenes y por tanto permitiria importar el SDK
+; en los puertos, que es justo lo que ven seis unidades. ADR-018 dice "dentro de
+; su adaptador", y `adapters/` es el unico sitio que cumple esa frase.
+;
+; Lo prohibido incluye **cualquier cliente de red**, no solo los SDK de
+; proveedor: un `httpx` en `ports.py` seria la misma fuga con otro nombre, y
+; entonces un nodo ya no se podria probar con un doble sin instalar nada.
+;
+; `untangle.providers.config` **si** esta entre los origenes, al reves que en el
+; contrato de telemetria de abajo: leer el tipo del dinero es legitimo, abrir una
+; conexion desde el cargador de configuracion no lo es en ningun caso.
+;
+; U15 anade sus tres piezas de fuera de `adapters/`: la forma de la frontera de
+; voz (`speech_wire`), la disponibilidad de la voz por aseguradora
+; (`voice_availability`) y el techo (`ceiling`). Las tres las ve el nucleo o la
+; raiz, y ninguna habla con la red: la que si lo hace es `adapters/wire.py`. Y
+; `websockets` entra en la lista de lo prohibido por la razon del contrato de
+; arriba. Aqui **no** se permite la cadena: ninguno de estos modulos llega a un
+; adaptador, asi que tampoco tiene por que llegar, ni de lejos, a un cliente.
+[importlinter:contract:puertos-sin-sdk-ni-cliente-de-red]
+name = Fuera de adapters, untangle.providers no importa ningun SDK ni cliente de red
+type = forbidden
+source_modules =
+    untangle.providers.ports
+    untangle.providers.factory
+    untangle.providers.transport
+    untangle.providers.prompts
+    untangle.providers.config
+    untangle.providers.speech_wire
+    untangle.providers.voice_availability
+    untangle.providers.ceiling
+forbidden_modules =
+    google
+    openai
+    anthropic
+    deepgram
+    elevenlabs
+    livekit
+    pipecat
+    httpx
+    httpx2
+    httpcore
+    requests
+    aiohttp
+    websockets
+unmatched_ignore_imports_alerting = none
+
+; --- El protocolo de voz solo dentro de su adaptador (U15) --------------------
+; BR1.1 y SEC-U15.1: **cero** archivos fuera de los adaptadores usan el protocolo
+; de un proveedor de voz. El protocolo son las rutas, las consultas, los mensajes
+; y los errores de cada uno, y vive en su `protocol.py`; `adapters/speech_common.py`
+; es lo que los tres adaptadores comparten alrededor de el. Quien no es un
+; adaptador recibe los puertos (`TextToSpeech`, `SpeechToText`) o, si es la raiz,
+; lo que exporta el paquete de cada adaptador --el adaptador, su raiz de red y su
+; catalogo de voces--, nunca el protocolo.
+;
+; Se prohibe el import **directo**: la raiz importa el paquete del adaptador, que
+; por dentro llega a su protocolo, y esa es la puerta correcta. El contrato nacio
+; porque el comando a mano de U15 armaba la consulta de la lista de voces con el
+; protocolo de los dos proveedores; ahora la hace el catalogo de cada adaptador.
+[importlinter:contract:protocolo-de-voz-solo-en-su-adaptador]
+name = El protocolo de Deepgram y de Cartesia solo se usa dentro de su adaptador
+type = forbidden
+source_modules =
+    untangle.server
+    untangle.workspace
+    untangle.chat
+    untangle.voice
+    untangle.inbox
+    untangle.orchestration
+    untangle.case_record
+    untangle.policy_rag
+    untangle.rules
+    untangle.compliance
+    untangle.tenancy
+    untangle.telemetry
+    untangle.copy_catalog
+    untangle.evals
+    untangle.synthetic_data
+    untangle.demo_operations
+    untangle.providers.ports
+    untangle.providers.factory
+    untangle.providers.transport
+    untangle.providers.prompts
+    untangle.providers.config
+    untangle.providers.speech_wire
+    untangle.providers.voice_availability
+    untangle.providers.ceiling
+    untangle.providers.adapters.gemini
+    untangle.providers.adapters.anthropic
+forbidden_modules =
+    untangle.providers.adapters.deepgram.protocol
+    untangle.providers.adapters.cartesia.protocol
+    untangle.providers.adapters.speech_common
+    websockets
+allow_indirect_imports = true
+unmatched_ignore_imports_alerting = none
+
+; --- `ports.py` no importa nada de `telemetry/` (U5) --------------------------
+; La primera regla de direccion de `nfr-design/logical-components.md`, escrita
+; **entera** y sin excepciones. Se puede escribir asi porque el bloque F subio a
+; `untangle/base.py` los seis nombres cerrados que este archivo necesitaba de
+; alli --`Use`, `ProviderName`, `UnitKind`, `SpendSource`, `UnitCount` y
+; `ProviderErrorKind`--, que no eran vocabulario de la contabilidad sino del
+; aplicativo. Sin esa mudanza, la regla habria tenido que decir "no importa
+; `telemetry.*.api` ni `telemetry.*.repository`", y quien la leyera en seis
+; semanas se preguntaria por que si puede importar `telemetry.*.models`. Una
+; regla con excepciones no se sabe leer.
+;
+; **Solo `ports.py`**, y es a proposito. `factory.py` llega a la contabilidad por
+; cadena, a traves de `config.py`, que lee `PriceEntry` y el tipo del dinero de
+; su dueno; duplicarlos para cumplir una regla dejaria dos definiciones de dinero
+; en el aplicativo, que es peor que la arista. Lo que la regla protege es que
+; **lo que ven seis unidades** se pueda probar con un doble sin instalar nada, y
+; eso es `ports.py`.
+[importlinter:contract:puertos-sin-telemetria]
+name = Los puertos de proveedor no importan nada de telemetry
+type = forbidden
+source_modules =
+    untangle.providers.ports
+forbidden_modules =
+    untangle.telemetry
+unmatched_ignore_imports_alerting = none
+
+; --- El SDK de trazas solo dentro del modulo de trazas (U5) -------------------
+; Hermano del de proveedor, y es lo que sostiene que ningun tramo se emita
+; saltandose la lista cerrada de atributos: el ayudante de `telemetry/traces/`
+; valida cada nombre y cada valor, y un tramo emitido con el SDK directamente
+; desde otro modulo no pasaria por ahi. Es la capa 4 del diseno de seguridad.
+;
+; El SDK **no esta instalado hoy** y el contrato existe igual, por la misma razon
+; que los demas nacieron vacios: para que la primera importacion llegue por la
+; puerta correcta en vez de descubrirse despues.
+[importlinter:contract:sdk-de-trazas-solo-en-telemetry-traces]
+name = El SDK de trazas solo se importa dentro de untangle.telemetry.traces
+type = forbidden
+source_modules =
+    untangle.server
+    untangle.workspace
+    untangle.chat
+    untangle.voice
+    untangle.inbox
+    untangle.orchestration
+    untangle.case_record
+    untangle.policy_rag
+    untangle.rules
+    untangle.compliance
+    untangle.tenancy
+    untangle.telemetry.spend
+    untangle.providers
+    untangle.copy_catalog
+    untangle.evals
+    untangle.synthetic_data
+    untangle.demo_operations
+forbidden_modules =
+    opentelemetry
+unmatched_ignore_imports_alerting = none
+
+; --- La contabilidad no importa las trazas (U5) -------------------------------
+; Es la regla que hace verdadera la frase "el corte funciona aunque la
+; observacion falle" (BR4.8): si el backend de trazas cae, el gasto se sigue
+; registrando y el techo sigue cortando. La flecha contraria **si existe** y
+; sigue permitida: las trazas leen el costo para los resumenes.
+;
+; Se declara aparte del contrato de capas de abajo, que ya la implica, porque lo
+; que importa cuando se rompe es el mensaje: este nombra la regla, y el de capas
+; nombraria un renglon.
+[importlinter:contract:contabilidad-sin-trazas]
+name = La contabilidad no importa las trazas
+type = forbidden
+source_modules =
+    untangle.telemetry.spend
+forbidden_modules =
+    untangle.telemetry.traces
+unmatched_ignore_imports_alerting = none
+
+; --- Las capas internas de `telemetry` (U5) -----------------------------------
+; Mismo patron que `tenancy` y `redaction` ya tienen: el contrato general vigila
+; las fronteras **entre** modulos, y este las de **dentro**.
+;
+; Las trazas van arriba y el dinero abajo, que es la direccion real: los tipos
+; del rastro leen `Money` para el costo de un resumen, y nada del dinero mira
+; hacia arriba.
+;
+; `spend.models` esta en el suelo: los modelos no importan el repositorio, que es
+; la quinta regla de direccion del diseno.
+;
+; **Los dos renglones con `:` no prohiben lo que parece**, y eso se comprobo
+; plantandolo: en `import-linter` 2.6 el separador solo dice que ninguno de los
+; dos esta por encima del otro, y dos modulos del mismo renglon **si** se pueden
+; importar. Es la misma trampa que este archivo ya documenta para `labels` y
+; `detector` en la redaccion. Las dos parejas que si tienen que ser
+; independientes llevan su propio contrato, justo debajo.
+[importlinter:contract:capas-de-telemetry]
+name = Las capas internas de telemetry: exportacion, forma para Langfuse, trazas, superficie del gasto, repositorio, aritmetica, modelos
+type = layers
+layers =
+    untangle.telemetry.traces.export
+    untangle.telemetry.traces.langfuse_shape
+    untangle.telemetry.traces.api : untangle.telemetry.traces.repository : untangle.telemetry.traces.labels
+    untangle.telemetry.traces.models
+    untangle.telemetry.spend.api : untangle.telemetry.spend.purge
+    untangle.telemetry.spend.repository
+    untangle.telemetry.spend.budget : untangle.telemetry.spend.quota : untangle.telemetry.spend.pricing : untangle.telemetry.spend.labels
+    untangle.telemetry.spend.models
+
+; La superficie de las trazas **no importa su repositorio**: se lo instala la
+; raiz de composicion. No es gusto. `untangle.evals` tiene prohibido llegar a
+; `untangle.tenancy.session` incluso por cadena, y el reporte de evaluaciones
+; enlaza trazas: el dia que esta superficie arrastrara la base, el camino "del
+; clon al reporte" sin base de datos se rompe y con el la cifra publicada de
+; NFR21, sin que nadie lo hubiera pedido.
+[importlinter:contract:superficie-de-trazas-sin-su-repositorio]
+name = La superficie de las trazas y su repositorio no se importan entre si
+type = independence
+modules =
+    untangle.telemetry.traces.api
+    untangle.telemetry.traces.repository
+
+; La superficie del gasto y su purgador tampoco. El purgador borra contadores de
+; cuota y la superficie los consume; si uno llamara al otro, el reinicio nocturno
+; podria acabar consumiendo cuota, o una consulta de cuota borrando filas. Que
+; sean dos piezas sueltas que la raiz junta es lo que lo impide.
+[importlinter:contract:superficie-del-gasto-y-su-purgador-independientes]
+name = La superficie del gasto y su purgador no se importan entre si
+type = independence
+modules =
+    untangle.telemetry.spend.api
+    untangle.telemetry.spend.purge
+
+; --- Las capas internas de la activacion (U6) ------------------------------------
+; La superficie y el purgador van en el mismo renglon y **no se importan**, por la
+; misma razon que en el gasto: registrar un hito no puede acabar borrando avance,
+; ni el reinicio nocturno registrando hitos. Los dos se apoyan en el repositorio
+; o en la sesion de U2, y la raiz de composicion es quien los junta.
+[importlinter:contract:capas-de-activacion]
+name = Las capas internas de la activacion: superficie y purgador, repositorio, modelos
+type = layers
+layers =
+    untangle.telemetry.activation.api : untangle.telemetry.activation.purge
+    untangle.telemetry.activation.repository
+    untangle.telemetry.activation.models
+
+; --- El runtime del grafo es el unico que conoce la libreria del grafo --------
+; ADR-003: cambiar el framework del grafo no debe tocar ningun canal ni ninguna
+; capacidad. Los once modulos de abajo son eso: canales y capacidades.
+;
+; **Enmienda del 2026-09-28 (U13).** `untangle.server` salio de la lista. No es un
+; modulo de capacidad: es la **raiz de composicion**, y su trabajo es justamente
+; conocer todas las piezas para enchufarlas unas a otras. Prohibirle importar el
+; runtime hacia la regla imposible de cumplir en vez de estricta -- nadie podia
+; enchufar el grafo al proceso servido, que es lo que C-14 existe para permitir --.
+; Lo que la regla protege sigue entero: ningun canal conoce LangGraph, y el chat
+; lo comprueba de la manera dura, declarando su puerto (`chat/delivery.py`,
+; `TurnHandler`) para que la raiz le enchufe el manejador sin que la unidad
+; importe el modulo que lo implementa.
+[importlinter:contract:grafo-solo-en-orchestration]
+name = LangGraph solo dentro del runtime del grafo
+type = forbidden
+source_modules =
+    untangle.chat
+    untangle.voice
+    untangle.inbox
+    untangle.case_record
+    untangle.policy_rag
+    untangle.rules
+    untangle.compliance
+    untangle.tenancy
+    untangle.telemetry
+    untangle.providers
+    untangle.copy_catalog
+    untangle.evals
+    untangle.synthetic_data
+    untangle.demo_operations
+forbidden_modules =
+    langgraph
+unmatched_ignore_imports_alerting = none
+
+; --- La transicion del grafo no ve LangGraph, canales ni proveedores (U12) ----
+; BR1.2, AC4.9.2: la funcion es pura y cerrada. El contrato de capas de arriba ya
+; le prohibe llegar a `chat` o `voice` -- estan por encima de
+; `untangle.orchestration` -- y "grafo-solo-en-orchestration" ya prohibe a todo
+; el resto del aplicativo importar LangGraph; lo que ninguno de los dos cubre es
+; que **este modulo en concreto**, dentro de `orchestration`, tampoco lo importe
+; a el, ni a ningun proveedor. Se nombra aparte para que el mensaje de fallo diga
+; la regla de negocio y no un renglon de capas.
+[importlinter:contract:transicion-sin-grafo-ni-proveedores]
+name = La transicion del grafo no importa LangGraph, canales ni proveedores
+type = forbidden
+source_modules =
+    untangle.orchestration.transition
+forbidden_modules =
+    langgraph
+    untangle.chat
+    untangle.voice
+    untangle.providers
+    google
+    openai
+    anthropic
+    deepgram
+    elevenlabs
+    livekit
+    pipecat
+allow_indirect_imports = true
+unmatched_ignore_imports_alerting = none
+
+; --- El ritmo del turno no llega a verificacion ni a reglas (U12, paso 5) ----
+; BR2.3, AC1.25.4: dentro del turno solo corren los tres controles baratos. El
+; contrato de capas ya deja pasar `untangle.compliance.controls` -- ahi viven la
+; guardia de salida y las dos detecciones, que si son de este modulo -- pero no
+; dice nada de `policy_rag` ni de `rules`, que son la verificacion de poliza y el
+; motor de reglas: los dos son del ritmo de fondo (D22) y este contrato es lo que
+; hace que "no los llama" sea una propiedad comprobada y no una promesa de quien
+; escribio el modulo. Lo que este contrato no puede decir -- que tampoco llega a
+; la revision completa de cumplimiento, que vive en el mismo paquete que la
+; guardia que si esta permitida -- lo cierra la prueba de BR2.3 analizando el
+; arbol de importaciones del modulo.
+[importlinter:contract:ritmo-del-turno-sin-verificacion-ni-reglas]
+name = El ritmo del turno no importa la verificacion de poliza ni el motor de reglas
+type = forbidden
+source_modules =
+    untangle.orchestration.rhythm
+; U19, BR2.5: la elegibilidad de una cotizacion corre en el ritmo de fondo, nunca en el
+; turno. El manejador del turno y las frases fijas de la cotizacion
+; tampoco llegan al motor de reglas, ni siquiera de rebote: las frases reciben la salida
+; y la banda como texto, justamente para no importarlo.
+    untangle.orchestration.turn
+    untangle.orchestration.quote_reply
+forbidden_modules =
+    untangle.policy_rag
+    untangle.rules
+; `allow_indirect_imports` se queda en su valor por omision (falso) **a
+; proposito**, al contrario que los demas contratos de este archivo: lo que BR2.3
+; prohibe no es nombrar la verificacion, es llegar a ella. Con los saltos
+; permitidos, un modulo puente de una sola linea dentro de `orchestration` la
+; alcanzaba y este contrato seguia en verde (comprobado el 2026-09-27 metiendo
+; ese puente).
+unmatched_ignore_imports_alerting = none
+
+; --- Las seis piezas de `tenancy`, por capas ---------------------------------
+; El contrato de arriba vigila las fronteras **entre** modulos; este vigila las
+; que hay **dentro** de `tenancy`, que son las que sostienen el aislamiento. Sin
+; el, "Identidad del personal" podria construirse su propia sesion y nada lo
+; diria: exactamente el tipo de regla que sobrevive en la memoria del autor y no
+; llega a la semana seis.
+;
+; Cada capa solo puede importar las de abajo. Las cuatro piezas del nivel
+; intermedio son independientes entre si.
+[importlinter:contract:capas-de-tenancy]
+name = Las capas internas de tenancy: superficie, piezas, sesion, configuracion
+type = layers
+layers =
+    untangle.tenancy.api
+    untangle.tenancy.staff_identity : untangle.tenancy.visitor_access : untangle.tenancy.purge : untangle.tenancy.rls_assertion
+    untangle.tenancy.session
+    untangle.tenancy.config
+
+; --- El cliente de base de datos, solo en el punto unico ----------------------
+; Dentro de `tenancy`, **solo la pieza de sesion** importa el driver y el
+; mapeador. Las demas reciben su sesion y ejecutan por los ayudantes de esa
+; pieza, con los parametros ligados. Asi "todo lo que toca la base pasa por la
+; sesion" es una regla de herramienta y no una frase de un documento.
+;
+; `untangle.tenancy.ephemeral` queda fuera de la lista con su razon: **crea la
+; base**, que es el unico trabajo que por definicion ocurre antes de que exista
+; ninguna sesion. No es una de las seis piezas del modulo.
+[importlinter:contract:cliente-de-base-solo-en-la-sesion]
+name = Dentro de tenancy, solo la pieza de sesion importa el cliente de base
+type = forbidden
+source_modules =
+    untangle.tenancy.api
+    untangle.tenancy.config
+    untangle.tenancy.models
+    untangle.tenancy.staff_identity
+    untangle.tenancy.visitor_access
+    untangle.tenancy.purge
+    untangle.tenancy.rls_assertion
+forbidden_modules =
+    psycopg
+    sqlalchemy
+; Lo prohibido es el import **directo**: una pieza que importa el driver se
+; construye su propia conexion, y ahi es donde el aislamiento se pierde. Llegar
+; al mapeador **a traves** de `tenancy.session` es justamente lo que se quiere
+; que hagan, y el contrato de capas de arriba ya dice quien puede importar a
+; quien. Sin esta linea, el contrato prohibiria la unica via correcta.
+allow_indirect_imports = true
+unmatched_ignore_imports_alerting = none
+
+; --- El corredor de evaluaciones no pasa por la raiz ni por la sesion ---------
+; Es lo que mantiene vivo el camino "del clon al reporte" sin base de datos, y
+; con ello la cifra publicada de NFR21. Hasta U2 era cierto **por accidente** de
+; como quedo cableado U1: ningun documento decia que fuera una frontera, asi que
+; la asercion de aislamiento podia engancharse al corredor sin querer y empeorar
+; una metrica publicada sin que nadie lo notara.
+;
+; El dia que una unidad necesite base dentro del subconjunto de arranque, este
+; contrato fallara y obligara a decidirlo a la vista, con la cifra de NFR21
+; vuelta a medir. Que es exactamente lo que queremos que pase.
+;
+; ENMIENDA (U13, tanda 4). Ese dia llego, y la decision se toma aqui a la vista.
+; `untangle.evals.drivers` queda fuera del alcance, y **solo esa carpeta**. La
+; razon es que un conductor de canal no es el corredor: su trabajo es correr la
+; conversacion por donde de verdad ocurre --conversacion, limites, idioma,
+; entrega al grafo y transcripcion--, y todo eso vive en una base de datos. Un
+; conductor que no la tocara estaria simulando el canal, que es justo lo que ya
+; hacen las sondas de U11 y lo que no sirve para calibrar al juez con
+; transcripciones reales (DS-7).
+;
+; **Lo que el contrato protege no cambia**: el camino "del clon al reporte" sin
+; base de datos sigue siendo cierto, porque ningun caso que corra por un
+; conductor esta en el subconjunto de arranque. Eso no depende de la buena
+; voluntad: cada uno de esos casos declara `requires_provider_key: true` y el
+; subconjunto es una lista explicita. La cifra de NFR21 se mide sobre esa lista y
+; no se movio.
+;
+; El resto del corredor --el propio corredor, las sondas, el reporte, la
+; compuerta y los chequeos-- sigue dentro del alcance y sin base.
+[importlinter:contract:evals-sin-base-de-datos]
+name = El corredor de evaluaciones no importa la raiz de composicion ni la sesion
+type = forbidden
+source_modules =
+    untangle.evals
+forbidden_modules =
+    untangle.server.composition
+    untangle.tenancy.session
+ignore_imports =
+    untangle.evals.drivers.* -> **
+    untangle.evals.cli -> untangle.evals.drivers.chat
+
+; --- Ninguna conexion fuera del punto unico de sesion -------------------------
+; El punto unico lo construye U2 en `untangle.tenancy`. El contrato nace aqui
+; para que la primera consulta que lo saltee falle.
+[importlinter:contract:sesion-unica-de-base-de-datos]
+name = Ningun modulo abre una conexion fuera del punto unico de sesion
+type = forbidden
+source_modules =
+    untangle.chat
+    untangle.voice
+    untangle.inbox
+    untangle.orchestration
+    untangle.case_record
+    untangle.policy_rag
+    untangle.rules
+    untangle.compliance
+    untangle.telemetry
+    untangle.providers
+    untangle.copy_catalog
+    untangle.evals
+    untangle.synthetic_data
+    untangle.demo_operations
+forbidden_modules =
+    psycopg
+    sqlalchemy
+; Igual que dentro de `tenancy`: lo prohibido es el import **directo**, que es lo
+; que permite construirse un motor por fuera. Toda unidad con tablas consume
+; `untangle.tenancy.api`, y esa via llega al mapeador por definicion; sin esta
+; linea el contrato se romperia con la primera unidad que hiciera lo correcto, y
+; se acabaria debilitando bajo presion en vez de a la vista. Anadida por U2, que
+; es quien construye el punto unico que este contrato protege.
+allow_indirect_imports = true
+unmatched_ignore_imports_alerting = none
+
+; --- Las cuatro capas de `redaction`, y el registro que queda fuera ----------
+; El contrato de arriba vigila las fronteras **entre** modulos; este vigila las
+; que hay **dentro** de la redaccion.
+;
+; `streaming` va **encima** de `api` y no debajo: el flujo de la transcripcion en
+; vivo exige que llame a `redact()` con lo acumulado, asi que es un consumidor de
+; la superficie que vive dentro del mismo paquete, no una pieza interna por
+; debajo de ella. Ponerlo en medio habria bloqueado esa llamada el dia de
+; implementarla.
+;
+; `labels` y `detector` comparten renglon y no pueden importarse: escribir la
+; etiqueta no puede depender de por que se detecto algo, que es lo que impide
+; que un dia la etiqueta lleve "una pista" del valor original para depurar.
+[importlinter:contract:capas-de-redaction]
+name = Las capas internas de redaction: transcripcion en vivo, superficie, piezas, base
+type = layers
+layers =
+    untangle.compliance.redaction.streaming
+    untangle.compliance.redaction.api
+    untangle.compliance.redaction.detector : untangle.compliance.redaction.labels
+    untangle.compliance.redaction.recognizers
+
+; `labels` y `detector` estan en el mismo renglon del contrato de capas, y en
+; `import-linter` 2.6 el separador `:` **no** prohibe que dos modulos del mismo
+; renglon se importen entre si: solo dice que ninguno esta por encima del otro.
+; Comprobado al construir U3, plantando la importacion y viendo el contrato de
+; capas pasar en verde. Este contrato es el que la prohibe de verdad.
+[importlinter:contract:etiquetas-y-detector-independientes]
+name = Las etiquetas y el detector no se importan entre si
+type = independence
+modules =
+    untangle.compliance.redaction.detector
+    untangle.compliance.redaction.labels
+
+; El registro de puntos de salida queda **fuera de la escalera**, con su propio
+; contrato: no importa ninguna otra pieza del modulo. Colocarlo en una capa le
+; habria dado permiso para importar las de abajo, y un registro que llamara a la
+; redaccion seria un septimo punto de salida encubierto.
+[importlinter:contract:sinks-sin-dependencias]
+name = El registro de puntos de salida no importa ninguna pieza de la redaccion
+type = forbidden
+source_modules =
+    untangle.compliance.redaction.sinks
+forbidden_modules =
+    untangle.compliance.redaction.api
+    untangle.compliance.redaction.detector
+    untangle.compliance.redaction.labels
+    untangle.compliance.redaction.recognizers
+    untangle.compliance.redaction.streaming
+unmatched_ignore_imports_alerting = none
+
+; --- La redaccion no habla con nada fuera del proceso (SEC-U3.12, ADR-013) ---
+; Es lo unico del aplicativo que ve el dato en claro. Un cliente de red aqui
+; dentro convertiria al control en el punto de fuga, y no hay ninguna razon
+; legitima para que exista uno: por eso se prohibe en vez de revisarse.
+;
+; El contrato general de SDK ya cubre `untangle.compliance` entero; este lo
+; repite acotado al modulo porque la consecuencia es distinta: alli seria una
+; capa saltada, y aqui seria el dato personal viajando fuera.
+;
+; Lo prohibido es el import **directo**. Lo que hagan por dentro las bibliotecas
+; de deteccion es asunto suyo; lo que este contrato garantiza es que **nuestro**
+; codigo no abre ninguna conexion desde el unico sitio que ve el texto sin tapar.
+[importlinter:contract:redaccion-sin-red]
+name = La redaccion no importa ningun cliente de red ni SDK de proveedor
+type = forbidden
+source_modules =
+    untangle.compliance.redaction
+forbidden_modules =
+    httpx
+    httpx2
+    httpcore
+    requests
+    aiohttp
+    urllib3
+    socket
+    websockets
+    google
+    openai
+    anthropic
+    deepgram
+    elevenlabs
+    livekit
+    pipecat
+allow_indirect_imports = true
+unmatched_ignore_imports_alerting = none
+
+; --- La composicion del generador no llega a ningun proveedor (U7) ------------
+; BR1.5 y SEC-U7.5: generar no llama a ningun modelo ni lee ninguna clave. Dentro
+; de `untangle.synthetic_data` hay un solo modulo que habla con un modelo, la
+; redaccion (`drafting`), y lo hace por los puertos y el cargador de prompts de
+; U5; sus dos aristas son las unicas que se dejan fuera y se nombran enteras. Con
+; `unmatched_ignore_imports_alerting = error`, el dia que la redaccion deje de
+; importar alguna de las dos, el contrato lo dice en vez de quedar una excepcion
+; que ya no excusa nada. La prueba de la conducta --generar con el entorno vacio y
+; la fabrica espiada-- cubre lo que hace; esta cubre que ni siquiera se importe.
+[importlinter:contract:composicion-sintetica-sin-proveedores]
+name = La composicion del generador no importa ningun proveedor; solo su redaccion
+type = forbidden
+source_modules =
+    untangle.synthetic_data
+forbidden_modules =
+    untangle.providers
+ignore_imports =
+    untangle.synthetic_data.drafting -> untangle.providers.ports
+    untangle.synthetic_data.drafting -> untangle.providers.prompts
+unmatched_ignore_imports_alerting = error
+
+; --- La redaccion solo la importa la raiz de composicion (U7) -----------------
+; Lo que cierra el contrato de arriba: si un modulo de la composicion importara la
+; redaccion, llegaria a los proveedores por ella sin romper el anterior, porque
+; sus aristas estan exentas. Asi, la unica puerta a la redaccion es el comando que
+; construye la raiz (`untangle.server.synthetic_draft`) con la fabrica, el techo y
+; el registro de gasto.
+[importlinter:contract:redaccion-sintetica-solo-desde-la-raiz]
+name = Solo la raiz de composicion importa la redaccion del generador
+type = protected
+protected_modules =
+    untangle.synthetic_data.drafting
+allowed_importers =
+    untangle.server
+
+; --- El corredor de evaluaciones no invoca el generador (U7, BR8.1) ----------
+; El corredor lee los datos versionados --el corpus, los casos sembrados, las
+; huellas-- y nunca los produce: si pudiera importar el generador, una corrida de
+; evaluaciones podria regenerar lo que mide, y el reporte compararia contra algo
+; que nadie reviso. La normalizacion de las huellas que los dos comparten vive en
+; `untangle.text_fingerprints`, fuera de los dos, justo para que esto se pueda
+; prohibir entero.
+[importlinter:contract:evals-sin-generador]
+name = El corredor de evaluaciones no importa el generador sintetico
+type = forbidden
+source_modules =
+    untangle.evals
+forbidden_modules =
+    untangle.synthetic_data
+
+; --- El segundo detector no llega a la redaccion (U21, BR4.1, AC4.14.1) -------
+; El primero y el segundo detector tienen que ser de mecanismo distinto: si el
+; segundo importara la redaccion de U3, un error del primero se heredaria en el
+; segundo y la compuerta dejaria de ser una segunda opinion independiente. El
+; segundo lee los archivos de reconocedores de U3 como YAML, sin importar este
+; modulo, solo para comprobar que sus expresiones no coinciden (BR4.1); esa
+; lectura de archivo no es una importacion y este contrato no la afecta.
+[importlinter:contract:segundo-detector-sin-redaccion]
+name = El segundo detector de U21 no importa la redaccion de U3
+type = forbidden
+source_modules =
+    untangle.evals.gates.audit
+forbidden_modules =
+    untangle.compliance.redaction
+
+; --- El generador no llega a la base (U7, BR6.3) ------------------------------
+; La siembra carga los casos por la API de U4 con origen `generator`, y vive en
+; la raiz de composicion (`untangle.server.synthetic_seed`, FD-U7-9). El generador
+; no abre sesion ni llega al registro del caso, **tampoco por cadena**: un modulo
+; suyo que lo hiciera podria escribir en la base saltandose las reglas de U4. El
+; contrato de capas ya lo deja debajo del registro del caso; este lo dice con el
+; nombre de la regla, que es lo que se lee cuando se rompe.
+[importlinter:contract:generador-sin-base]
+name = El generador no abre sesion ni llega al registro del caso
+type = forbidden
+source_modules =
+    untangle.synthetic_data
+forbidden_modules =
+    untangle.tenancy.session
+    untangle.tenancy.api
+    untangle.case_record
+    sqlalchemy
+    psycopg
+
+; --- El respaldo de la afirmacion no corre en el camino del turno (U8) --------
+; BR3.7, D22: dentro del turno solo corren los tres controles baratos de
+; cumplimiento (la guardia, la peticion de persona, la emergencia); ni el nodo
+; `policy_verification` (ritmo de fondo) ni esos tres controles llegan a la
+; segunda pasada del juez sobre una cita ya verificada por codigo. Que no la
+; llamen no se promete, se comprueba aqui, igual que `cumplimiento-sin-
+; proveedores` comprueba que la guardia no llega a ningun proveedor.
+[importlinter:contract:respaldo-nunca-en-el-turno]
+name = El respaldo de la afirmacion no corre en el camino del turno
+type = forbidden
+source_modules =
+    untangle.orchestration.nodes.policy_verification
+    untangle.compliance.controls
+forbidden_modules =
+    untangle.policy_rag.citations.backing
+
+; --- El detector de idioma es una hoja de verdad (U18, BR3.4) -----------------
+; Subio de `untangle.chat` el 2026-09-29 porque los dos canales lo necesitan y son
+; hermanos en el contrato de capas. Que sea "una hoja" no se promete: se comprueba,
+; porque un modulo que no aparece en ninguna regla no esta limpio --esta sin mirar--
+; y nada le impediria importar la raiz de composicion manana.
+;
+; Lo unico que puede ver del aplicativo es `untangle.base`, de donde sale `Locale`.
+; `lingua` si entra: es una biblioteca local que no habla con la red, y por eso no
+; esta en la lista de SDK de proveedor.
+[importlinter:contract:idioma-es-una-hoja]
+name = El detector de idioma no importa nada del aplicativo salvo base
+type = forbidden
+source_modules =
+    untangle.language
+forbidden_modules =
+    untangle.server
+    untangle.workspace
+    untangle.demo_operations
+    untangle.evals
+    untangle.inbox
+    untangle.chat
+    untangle.voice
+    untangle.orchestration
+    untangle.compliance
+    untangle.case_record
+    untangle.policy_rag
+    untangle.rules
+    untangle.synthetic_data
+    untangle.providers
+    untangle.telemetry
+    untangle.copy_catalog
+    untangle.tenancy
+unmatched_ignore_imports_alerting = none
+
+; --- Sin ciclos entre modulos hermanos ----------------------------------------
+[importlinter:contract:sin-ciclos]
+name = Los modulos hermanos no forman ciclos
+type = acyclic_siblings
+ancestors =
+    untangle

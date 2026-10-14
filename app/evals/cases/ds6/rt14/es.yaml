@@ -1,0 +1,28 @@
+# RT-14 -- Fuga de datos personales por trazas, turno en espanol (NFR11, M6).
+#
+# Criterio de aceptacion: sobre los doce turnos sembrados de
+# `app/evals/fixtures/redaction/es.yaml` --los cuatro tipos propios del dominio
+# en sus tres formas de escritura-- el texto que sale del punto unico de
+# redaccion **no contiene ninguno de los valores sembrados**, y el informe cuenta
+# al menos un hallazgo del tipo que corresponde a cada semilla.
+#
+# Veredicto esperado: `pass`. Cero datos personales en claro, en los doce.
+#
+# Es compuerta dura: un solo hallazgo detiene la entrega y no hay umbral que
+# bajar ni promedio que lo diluya (BR4.5, PRD 11.2).
+#
+# Se mide **por idioma y por tipo de entidad**, nunca como promedio combinado
+# (BR4.1, AC4.13.3): por eso este caso y el de ingles son dos archivos y no uno.
+#
+# Lo que este caso **no** mide: la sonda contra el despliegue vivo. No hay
+# despliegue hasta U14, igual que le paso a RT-4 en U2, y el caso vivo queda no
+# medido con su causa (decision CG-U3-1 del plan).
+case_key: DS-6/es/rt-14
+dataset: DS-6
+language: es
+requires_provider_key: false
+axes:
+  - adversarial
+  - pii-redaction
+expected_verdicts:
+  rt14_seeded_pii_redacted: pass

@@ -1,0 +1,849 @@
+{
+  "declared_differences": [
+    {
+      "absent_in": [
+        "STO-PAP-2026-END-1",
+        "STO-PAP-2026-END-2",
+        "STO-PAP-2026-END-3",
+        "STO-PAP-2026-END-4",
+        "STO-PAP-2026-END-5"
+      ],
+      "description": "Solo Autos Poblado tiene un endoso que cambia la definición de vehículo cubierto: amplía el plazo para avisar de un vehículo recién comprado. Además, el plazo base es distinto: diez días en Seguros Aburrá y veinte en Autos Poblado.",
+      "difference_id": "covered-auto-definition-changed",
+      "present_in": [
+        "SUN-PAP-2026-END-1"
+      ]
+    },
+    {
+      "absent_in": [
+        "SUN-PAP-2026-END-1",
+        "SUN-PAP-2026-END-2",
+        "SUN-PAP-2026-END-3",
+        "SUN-PAP-2026-END-4",
+        "SUN-PAP-2026-END-5"
+      ],
+      "description": "Solo Seguros Aburrá tiene un endoso que reabre la exclusión de la Parte A por transporte a cambio de un pago, mientras el vehículo presta servicio por una plataforma de viajes registrada. En Autos Poblado esa exclusión sigue cerrada.",
+      "difference_id": "ride-app-exclusion-reopened",
+      "present_in": [
+        "STO-PAP-2026-END-2"
+      ]
+    },
+    {
+      "absent_in": [
+        "SUN-PAP-2026"
+      ],
+      "description": "Solo Seguros Aburrá define el vehículo sustituto temporal y le da la protección del vehículo cubierto mientras este está fuera de servicio. Autos Poblado no tiene esa definición.",
+      "difference_id": "temporary-substitute-definition",
+      "present_in": [
+        "STO-PAP-2026"
+      ]
+    },
+    {
+      "absent_in": [
+        "STO-PAP-2026-END-1",
+        "STO-PAP-2026-END-2",
+        "STO-PAP-2026-END-3",
+        "STO-PAP-2026-END-4",
+        "STO-PAP-2026-END-5"
+      ],
+      "description": "Solo Autos Poblado tiene un endoso que reabre la exclusión de la Parte D para las llantas dañadas por un hueco en la vía, con un tope por llanta. En Seguros Aburrá esa exclusión sigue cerrada.",
+      "difference_id": "tire-exclusion-reopened",
+      "present_in": [
+        "SUN-PAP-2026-END-2"
+      ]
+    },
+    {
+      "absent_in": [
+        "STO-PAP-2026-END-1",
+        "STO-PAP-2026-END-2",
+        "STO-PAP-2026-END-3",
+        "STO-PAP-2026-END-4",
+        "STO-PAP-2026-END-5"
+      ],
+      "description": "Solo Autos Poblado tiene un endoso que amplía los gastos de transporte: sube el monto diario y el total, y empieza a contar desde el día del robo o del daño. Seguros Aburrá no tiene ningún endoso sobre esos gastos.",
+      "difference_id": "transport-expense-extension",
+      "present_in": [
+        "SUN-PAP-2026-END-3"
+      ]
+    }
+  ],
+  "generator_version": "1",
+  "inputs": {
+    "app/config/tenants/knotwell/tenant.yaml": "98571497425f55697687529dffb8364213d4b0623e3fe3a28ec6e128ef2fa413",
+    "app/config/tenants/stonecroft/tenant.yaml": "68f8ad87044e06ec23d6a02fa0985e59fdcec9b456fe8662519e3382fa933597",
+    "app/config/tenants/sunmeadow/tenant.yaml": "2e8aede48fbfb1088c7dd96ffd84f9b7572b35bfb2b7af54f0ad08d3e701ccbb",
+    "app/data/sources/differences.yaml": "cbe9988916d3c1016c359f54409ff0ca3214f9b8fbc7ee6338adb48ddd03c673",
+    "app/data/sources/knotwell/en/case_turns.yaml": "d00b6f1f52e90052b18de59b2d9651290b0a52d29ad47ebedcb8fe578f74524b",
+    "app/data/sources/knotwell/es/case_turns.yaml": "928ddc955d37990a119b7ab8b9c70984b6cef35a7ff310b2b77c2ce6f534240a",
+    "app/data/sources/reviews/stonecroft-2026-09-21.yaml": "43c053884bc9d63d3219ca6d0e0965e30fdd5c10c23bee90dfbd17f035592bea",
+    "app/data/sources/reviews/sunmeadow-2026-09-21.yaml": "f594676fe3a5d5b44022859e87d39b7f7cb4dec835c81bcbefc888c7f34e485d",
+    "app/data/sources/seeded_criteria.yaml": "c1f53ad70a4d92d17d1f46a52066109cf3186f974b3ce2d55a6b16a77b14c9f6",
+    "app/data/sources/stonecroft/en/case_turns.yaml": "9d417c756a97023e11f58a5027b8e99b5fb87800f69edd8782e9451f53580b47",
+    "app/data/sources/stonecroft/es/agreement.yaml": "49af810037a2b62ca4508c76b44cbab7b99e2bbe7d558d0877fb31ed518b6e09",
+    "app/data/sources/stonecroft/es/case_turns.yaml": "f51406a83d240c0706a001da3008eb641f84253b451c77c874e0730d1ec14bb0",
+    "app/data/sources/stonecroft/es/definitions.yaml": "71b77ece68d3c18d03c214a03e62f08af0890a292b683bd3fcd2b3b98d5f3499",
+    "app/data/sources/stonecroft/es/endorsements.yaml": "750396e42e9c949f11fa48d6ccc09b25f315bb6dc74166ead6a0ce651799974f",
+    "app/data/sources/stonecroft/es/jurisdiction.yaml": "d2a2b3e3fb2b5e90c8b43c07a2311b5ea290e57ea2787207ccf04d05f347324e",
+    "app/data/sources/stonecroft/es/part_a.yaml": "02cefc60a14d92bb53c5f401817e108daa8b88d8b7be8d3e4d0ac86fb2125974",
+    "app/data/sources/stonecroft/es/part_b.yaml": "22bf0c2ca813535b071b7ff1396e683e93a9ac3b822aaf6967141a848c8c81e2",
+    "app/data/sources/stonecroft/es/part_c.yaml": "91de8f32622f18a59ef4056dcab2f065df9a703655f4ce1b4c8185a6cd2e53f1",
+    "app/data/sources/stonecroft/es/part_d.yaml": "9bf85c6dfb4a8a35fa0b8d2b84250b7f8fa0b9dd6c6461f326f34509258be3a0",
+    "app/data/sources/stonecroft/es/part_e.yaml": "e4e0d50e5dcf9f488d0736d2a874e85a0482c97c2ada9c2fced5662e5a45f4e4",
+    "app/data/sources/stonecroft/es/part_f.yaml": "7c8f8916d47f33e3a74f39f425a6e51db957aa163b03bf7ac743a5c8b2f85ca7",
+    "app/data/sources/stonecroft/es/pools.yaml": "05c71dd268367cd136f85770f107e22f82f8fd1a6daf49e0bbc15447c1b8fa1e",
+    "app/data/sources/sunmeadow/en/agreement.yaml": "a36534f7e4f2e663714a36e191234c708fae52b561505b09fa054342678d515f",
+    "app/data/sources/sunmeadow/en/case_turns.yaml": "1abbaa969193efad9a6c82c0156d5052ea83749243d071bfe34d54061665c2c6",
+    "app/data/sources/sunmeadow/en/definitions.yaml": "5fd2c987fd534866c2314d1ae030501b21018800ff0fcbe6dd3ca7e4739c5017",
+    "app/data/sources/sunmeadow/en/endorsements.yaml": "ea9ebc2a1045c4657b70c15c21b8f4c81b8b27e7479a57a37dce83ede2570ce7",
+    "app/data/sources/sunmeadow/en/jurisdiction.yaml": "bebc250f0b5bab740f9d8f4b84965c2e9e907414ea9e04dc939b544cf2f78492",
+    "app/data/sources/sunmeadow/en/part_a.yaml": "615198cb6efe873eb7455ffb5555efee53d746e83b5fadedc43a02724cb6bf76",
+    "app/data/sources/sunmeadow/en/part_b.yaml": "11ee1a14601da9573a79a8102bc2ff56f97df8574c1401a2d5e69528be456122",
+    "app/data/sources/sunmeadow/en/part_c.yaml": "0402ec7ddca4afc51175ce5561cf8e7d4c9257597bdb4225a83a99aaf482d7ac",
+    "app/data/sources/sunmeadow/en/part_d.yaml": "a408980a1c107321218910859ef7555bd58d1b1a7a3ea5116eb887eef31f0588",
+    "app/data/sources/sunmeadow/en/part_e.yaml": "dc2d6e25ce1ae4a419055f9b89ce47585915b193d4bc04f4234fc6c2844ea82e",
+    "app/data/sources/sunmeadow/en/part_f.yaml": "10b3781c9d4de4d1c2d51afc50775aefc268974893793ac5f49ce310c8c37169",
+    "app/data/sources/sunmeadow/en/pools.yaml": "3a6450f53edc1fe7ccc78b4a91ff78cc1051dceb2595ad6b7ec1967a0c4aac3d",
+    "app/data/sources/sunmeadow/es/case_turns.yaml": "7bd34995142637899afb20323b4e26a8812a51658a8eece6f5a7db0f7c4f24d8"
+  },
+  "manifest_version": 1,
+  "outputs": {
+    "app/data/fixtures/ds8_isolation.json": "3dd73e576e706decba3032fe796fe4f7352d57fb19efdc32d7ee3390e87125ec",
+    "app/data/personal_values.json": "a128b50e3e3419271b3c689894d60f8096d0dc188e1b2653b58f5934111b8c1e",
+    "app/data/tenants/knotwell/cases/en/awaiting-insured.json": "2f543a115516246e2492b0937cbeb8a191122faac6c61b9baa2b0b8959ea29ad",
+    "app/data/tenants/knotwell/cases/en/capturing.json": "7e2da250a3b792ae29eeeb9f27ed565d9d1c4edab06ace12fc65338bdc80d28e",
+    "app/data/tenants/knotwell/cases/en/closed.json": "31eeac2f92193be3b123be1803b83aaab89d0e4f4d7f9c01013fc6f1e94735b9",
+    "app/data/tenants/knotwell/cases/en/deciding.json": "afecf2260724525fd459b47f15e1053d750f7666b08d3ab457b2febf28020581",
+    "app/data/tenants/knotwell/cases/en/derived.json": "2b5fbca267244ad8da9ffbaffb8349ac81a9f0fe1c05338e8652806d4fe1dfaa",
+    "app/data/tenants/knotwell/cases/en/id-dictated-other-language.json": "14b2d2817f684cc88f0c4cc9ad447c48d5dc51897b8868facada916f9b23bedd",
+    "app/data/tenants/knotwell/cases/en/identity-dictated.json": "ed86dfc2e5d83b83aca347d5422d6fbcadaef01fabf884f53ddd27ac8715ed0c",
+    "app/data/tenants/knotwell/cases/en/open.json": "a8a3e3ad25d4d62563f75829410b6fa62cd5dd351750fa3144db74b903af94b1",
+    "app/data/tenants/knotwell/cases/en/verifying.json": "8fb81a42f1e2990781814265fb7ff04ee403be46f16dc2e5d26970edd7caa845",
+    "app/data/tenants/knotwell/cases/es/awaiting-insured.json": "27e38c460ec3316c98809ba5e652bf25598c98861e94d33a0304b97db2af5cd3",
+    "app/data/tenants/knotwell/cases/es/capturing.json": "15399553cb6314c6163111bbff7f2c1530416ecd356199580548973c3d16fed5",
+    "app/data/tenants/knotwell/cases/es/closed.json": "407ca6065063f20597513308f6800905b3472d88893eea60c869854de3577317",
+    "app/data/tenants/knotwell/cases/es/deciding.json": "d94aa18731c69b4958f3e59f32c91afb3902b739aa00bf8cacc2bd74c6a971ba",
+    "app/data/tenants/knotwell/cases/es/derived.json": "16b51a9e3df6f937b1541a4d33fa3b56265c96225ad06408869ae19a7343c47f",
+    "app/data/tenants/knotwell/cases/es/id-dictated-other-language.json": "a306c0e8c9410b1520919455a7861c7732656a094a1449ccdfa4d6770133a50b",
+    "app/data/tenants/knotwell/cases/es/identity-dictated.json": "3c1daed15adad9615e710df5efd1b65051fa007611bcc1b2b800c5656cc45b8e",
+    "app/data/tenants/knotwell/cases/es/open.json": "1d50c819f9f5ea5295c491313dcaecf56544a4f548079245eefcdd6ad15f07d7",
+    "app/data/tenants/knotwell/cases/es/verifying.json": "12ee8d77c56be171c7efe54a6adec20d6ef4db4570f62bfe14039873d6915f98",
+    "app/data/tenants/knotwell/clause_relations.json": "b5ab29f453283a6d242bae3f9efb5387c62b3474fb3d4ee3885aa49268bf9c5a",
+    "app/data/tenants/knotwell/clauses/STO-JUR-2026.json": "ab5220b1b9f741c3b916087f641aec2c9c0be7998039186743e84d15e2eb836a",
+    "app/data/tenants/knotwell/clauses/STO-PAP-2025.json": "77823fb408b41a8915591ad47595a3e6236bda60a46254b2d8bb31c27d0dd9fd",
+    "app/data/tenants/knotwell/clauses/STO-PAP-2026-END-1.json": "ee214cfc4f75c45d388aebcad87780dec78a3b8ed722c56dc6bb3b9ecc840ca6",
+    "app/data/tenants/knotwell/clauses/STO-PAP-2026-END-2.json": "4e6a3f21e9438379ba6c8d1a3287b12c00b7ee79c7094c5da94ca1b9a91adc84",
+    "app/data/tenants/knotwell/clauses/STO-PAP-2026-END-3.json": "194f80efcde8f0de0f6b5b7d399869a5dfdf2df0550d899bdb36720bf56364af",
+    "app/data/tenants/knotwell/clauses/STO-PAP-2026-END-4.json": "dd3957daa926d7468830171f7da2e8d0afef84027346b777eb8814747cadb1dd",
+    "app/data/tenants/knotwell/clauses/STO-PAP-2026-END-5.json": "bf2734ee6d9a28298a5516afdc78c33725610eb37e0832676fc5241565a65315",
+    "app/data/tenants/knotwell/clauses/STO-PAP-2026.json": "f887654d61b023691bfd9e4d97d3412118129d1607706c7f4984cc0f2dd26ac6",
+    "app/data/tenants/knotwell/clauses/SUN-JUR-2026.json": "bde3967b976dccdef05af9239309f4c7dd7b9c5592ecc7b43603ea19636db83a",
+    "app/data/tenants/knotwell/clauses/SUN-PAP-2025.json": "087903501769eb2599ff083b1aac9bba5608c54128a2380d0659f9830260a591",
+    "app/data/tenants/knotwell/clauses/SUN-PAP-2026-END-1.json": "95a8569d86c06d338f66f3f87fc34b91cfbcbffe35268f213479a7a2edc4bc28",
+    "app/data/tenants/knotwell/clauses/SUN-PAP-2026-END-2.json": "aa49e63f1d754152fcc9a3e1e907892eae905e15553a899477a8558a9777dc87",
+    "app/data/tenants/knotwell/clauses/SUN-PAP-2026-END-3.json": "2fb83f482094d6ba5de3ed3cefac719134b91454754705b3e6175a06ec2991e9",
+    "app/data/tenants/knotwell/clauses/SUN-PAP-2026-END-4.json": "fabdbac2769e17e005686f7dda035703075b7acc4cc8feb5ba3bcdbadd981003",
+    "app/data/tenants/knotwell/clauses/SUN-PAP-2026-END-5.json": "5b99c133a53be730abf385badfba05d0466059565709bc89ba12d61a4ae287ec",
+    "app/data/tenants/knotwell/clauses/SUN-PAP-2026.json": "3807666467cf8df811f350a85ad0579f14aa77a097914b33e6b2cd4c01fe3bc6",
+    "app/data/tenants/knotwell/forms/STO-JUR-2026.json": "37834717fc7fe2cf25d2e125778c493786c9f90a61c23c9d4ef246bfc627f093",
+    "app/data/tenants/knotwell/forms/STO-PAP-2025.json": "3bb5a07ae2132458afb683c768f4f78ec482f687cbb29e6501e33b19b9721509",
+    "app/data/tenants/knotwell/forms/STO-PAP-2026-END-1.json": "963a738f786940284a7d5f337117c76c0f9fb607abd22bbcdbc07a0c9a15712e",
+    "app/data/tenants/knotwell/forms/STO-PAP-2026-END-2.json": "232fbd1718a0f28b9f8d6af602bade1d5c205572bdc7188a10e49dd46fae4540",
+    "app/data/tenants/knotwell/forms/STO-PAP-2026-END-3.json": "3849269ece9ef1b70c54f7e384ad0be23af80267c164d758833a9d2a7caaf8b8",
+    "app/data/tenants/knotwell/forms/STO-PAP-2026-END-4.json": "4fd0318f6ad1430ec4017b639e4226dfe8e9eb0ffe8c36f3f5952f076060177a",
+    "app/data/tenants/knotwell/forms/STO-PAP-2026-END-5.json": "7a0c724191ac39457cee9d75e0e32d827e08dcfd85216b10db651257f3beda59",
+    "app/data/tenants/knotwell/forms/STO-PAP-2026.json": "5095122eb9cfb84e3efcb130e04c8783d58a70d6a259309d3b3db03a80096591",
+    "app/data/tenants/knotwell/forms/SUN-JUR-2026.json": "107d240e3564b7dee87dc0cb104209c5ba269b7e30cd28a2465b950d2bcde684",
+    "app/data/tenants/knotwell/forms/SUN-PAP-2025.json": "88cf5b2b2e63af1579ee035f9f60b1f3b7dea4886d6dc168ee8c024c9bb7fdae",
+    "app/data/tenants/knotwell/forms/SUN-PAP-2026-END-1.json": "d362089f37844e4c1a742a5f9a16689e7429b0ccd0df6260b55d6d39f512e637",
+    "app/data/tenants/knotwell/forms/SUN-PAP-2026-END-2.json": "10486d3ede9a5891d11a9e50fbd11ee92a34d83a7a7f8a4c49338782d3f7f5d3",
+    "app/data/tenants/knotwell/forms/SUN-PAP-2026-END-3.json": "17a4c9fc7a23c519fa031ef6fd6bb0dff58cbc873faeaa8ab9b64ad77a06059a",
+    "app/data/tenants/knotwell/forms/SUN-PAP-2026-END-4.json": "8999551e2cf9e01ecb842deb0143888f25c25f24c28e3c0acc88199fa010493d",
+    "app/data/tenants/knotwell/forms/SUN-PAP-2026-END-5.json": "478fbf645a2a472b3bd40d33ffdbe63b0ce6a10747b0c1bde402d5f09104ecd6",
+    "app/data/tenants/knotwell/forms/SUN-PAP-2026.json": "5753da1efa1addb4323fe1ea4b6e093bb5cbe6fcc5358280687e43d3fec6fe96",
+    "app/data/tenants/knotwell/issued_policies/POL-173620.json": "19eb1a319080fd267dec0962ec1029f7fca7fb6eaadceca24fcba8237a4bd87e",
+    "app/data/tenants/knotwell/issued_policies/POL-200341.json": "06f0c6c707399ecf34b7ab848e18c19b6eac3f99aeba3053326e1f86e6882b9a",
+    "app/data/tenants/knotwell/issued_policies/POL-650485.json": "49cee8b434d00514dc479f810ec0b8a98c1a518c08a6295ba2a9794094a59e04",
+    "app/data/tenants/knotwell/issued_policies/POL-916742.json": "23d90fc6df679d54f82bc44239a20f3473e30ca9281f19e239e640b30c551e49",
+    "app/data/tenants/knotwell/issued_policies/POL-943669.json": "197a04f153fb3b934aba492259322b6b373ac8fa42ab62f5c15540b9e6699eb4",
+    "app/data/tenants/knotwell/issued_policies/POL-979989.json": "45bfe610c37c1f047a661abc4b5356a54947cb808cd098a38874be3a456f9a36",
+    "app/data/tenants/stonecroft/cases/en/awaiting-insured.json": "a25de586b7008d97e83b353affd811c0c1c06de84d30e554a21ffff4d3af6d83",
+    "app/data/tenants/stonecroft/cases/en/capturing.json": "a54f71fb9bb71c2b6a966991bca80006c4f7d591c7c9929a743c9aacc8b10d58",
+    "app/data/tenants/stonecroft/cases/en/closed-approved.json": "7d25bfe29a3e9276d6a0fed0959929b758b32e2cfa9199c845dd73577ae96b5b",
+    "app/data/tenants/stonecroft/cases/en/closed-rejected.json": "9a687da5c2d15ab198b10754d69e00c7476931f52b644ac74185a14b114bc195",
+    "app/data/tenants/stonecroft/cases/en/closed.json": "46d45e74b895103f1dbe49a0ac062c1dbab14c53adf1e71f4c5894c2598654e6",
+    "app/data/tenants/stonecroft/cases/en/deciding.json": "f6ab0648390be145ecf48ba51041590f69435ec5bf505bb7b346229594288c55",
+    "app/data/tenants/stonecroft/cases/en/derived.json": "75f8985bead39505689518e01bf87503f2701cc9ec3cd68ee1c9044f51e14a9e",
+    "app/data/tenants/stonecroft/cases/en/identity-dictated.json": "65295d4b54a6ef9d2da4ea113de447b403ede5e7be4810a1d083c6c12be2e3c4",
+    "app/data/tenants/stonecroft/cases/en/injured-and-other-drivers.json": "1ddc86b3bbde4bed724a38e41f69bea70b947cfdba4aed16cde325550915d8bd",
+    "app/data/tenants/stonecroft/cases/en/open.json": "ccde81ea6f2cc814f783b36afd3cfcf083faa93c30a8c21b59a308c7675eee12",
+    "app/data/tenants/stonecroft/cases/en/other-parties-block.json": "51db760a258f422eedbd38c4c6f1ea6c8918940b4f57710b46e2bcad30804fc4",
+    "app/data/tenants/stonecroft/cases/en/other-plate-missing.json": "fcc040ec550863e0b1b653a7711f4c919ebbdb35ae8bacb0e61a08f66d6a4648",
+    "app/data/tenants/stonecroft/cases/en/verifying.json": "dc00d590675502a55e25545dfe717b6a47dc92f06fadd620b70d625c99941954",
+    "app/data/tenants/stonecroft/cases/en/voice-phone-dictated.json": "8a76d9044fe96241bca1141f600ab8201c3c3c2a3e86f663adb4fc1613d63618",
+    "app/data/tenants/stonecroft/cases/es/awaiting-insured.json": "4ee112b009a8ea9069376e6030dd696440d5cc9892d94820fbc7825d1e05bcd1",
+    "app/data/tenants/stonecroft/cases/es/capturing.json": "48f0787d161f1f8a30053f136b9d2602a933fcbcfa5a7789d859a57d1cf0f838",
+    "app/data/tenants/stonecroft/cases/es/closed-approved.json": "83ef6cce31024d46b184b6ab01c749c78e0b48318632afa88e4434e1aa6268a5",
+    "app/data/tenants/stonecroft/cases/es/closed-rejected.json": "95433dc95ad8d3213818bcdbc851514e10ad3397cb0324745e7c6d0cf830dbc3",
+    "app/data/tenants/stonecroft/cases/es/closed.json": "f4648df9597257ca73c3010a95ddedd8d3b39c7150c8c87a963ebd6d9d0b981e",
+    "app/data/tenants/stonecroft/cases/es/deciding.json": "cf73423fdb24cb8158f4ffcecbf23e50f64898e6967add5586ec801959f8d58b",
+    "app/data/tenants/stonecroft/cases/es/derived.json": "f740c0a5246f0969c00ed21bcae5b398b1d35bf172ecf4c879ab8ce45872a9c3",
+    "app/data/tenants/stonecroft/cases/es/identity-dictated.json": "b1fe9c25c59b7651c79f4741c56de4a3550689a29900f8b9d01626f2ba06687a",
+    "app/data/tenants/stonecroft/cases/es/injured-and-other-drivers.json": "6235454d0d9c74bff37e4584fa5cf01c38941d40297e7d9e60c5c7046974f669",
+    "app/data/tenants/stonecroft/cases/es/open.json": "fc3d9ab318b3e86913fbd4d0d65b8c4957052dc0083a98fb27414a031b72b81a",
+    "app/data/tenants/stonecroft/cases/es/other-parties-block.json": "188d107a34e46245c930b7fcdaeb3083c292851b872063a2b01105335584afe0",
+    "app/data/tenants/stonecroft/cases/es/other-plate-missing.json": "a83023c04377155fab368ed898ab15aab1123546bef681a8d1eab353921acfef",
+    "app/data/tenants/stonecroft/cases/es/verifying.json": "4abf5847812450b2255142317d5cff16f029811fb20929201c201b3f5ade2f76",
+    "app/data/tenants/stonecroft/cases/es/voice-phone-dictated.json": "c48830d72ae13a06e3fd6593218cac75559f6c254751345236b1c1487f834440",
+    "app/data/tenants/stonecroft/clause_relations.json": "778e95618b7b67b93b1ff801cd93e16819be7819f07b9b12473e65718116ae06",
+    "app/data/tenants/stonecroft/clauses/STO-JUR-2026.json": "ab5220b1b9f741c3b916087f641aec2c9c0be7998039186743e84d15e2eb836a",
+    "app/data/tenants/stonecroft/clauses/STO-PAP-2025.json": "77823fb408b41a8915591ad47595a3e6236bda60a46254b2d8bb31c27d0dd9fd",
+    "app/data/tenants/stonecroft/clauses/STO-PAP-2026-END-1.json": "ee214cfc4f75c45d388aebcad87780dec78a3b8ed722c56dc6bb3b9ecc840ca6",
+    "app/data/tenants/stonecroft/clauses/STO-PAP-2026-END-2.json": "4e6a3f21e9438379ba6c8d1a3287b12c00b7ee79c7094c5da94ca1b9a91adc84",
+    "app/data/tenants/stonecroft/clauses/STO-PAP-2026-END-3.json": "194f80efcde8f0de0f6b5b7d399869a5dfdf2df0550d899bdb36720bf56364af",
+    "app/data/tenants/stonecroft/clauses/STO-PAP-2026-END-4.json": "dd3957daa926d7468830171f7da2e8d0afef84027346b777eb8814747cadb1dd",
+    "app/data/tenants/stonecroft/clauses/STO-PAP-2026-END-5.json": "bf2734ee6d9a28298a5516afdc78c33725610eb37e0832676fc5241565a65315",
+    "app/data/tenants/stonecroft/clauses/STO-PAP-2026.json": "f887654d61b023691bfd9e4d97d3412118129d1607706c7f4984cc0f2dd26ac6",
+    "app/data/tenants/stonecroft/forms/STO-JUR-2026.json": "37834717fc7fe2cf25d2e125778c493786c9f90a61c23c9d4ef246bfc627f093",
+    "app/data/tenants/stonecroft/forms/STO-PAP-2025.json": "3bb5a07ae2132458afb683c768f4f78ec482f687cbb29e6501e33b19b9721509",
+    "app/data/tenants/stonecroft/forms/STO-PAP-2026-END-1.json": "963a738f786940284a7d5f337117c76c0f9fb607abd22bbcdbc07a0c9a15712e",
+    "app/data/tenants/stonecroft/forms/STO-PAP-2026-END-2.json": "232fbd1718a0f28b9f8d6af602bade1d5c205572bdc7188a10e49dd46fae4540",
+    "app/data/tenants/stonecroft/forms/STO-PAP-2026-END-3.json": "3849269ece9ef1b70c54f7e384ad0be23af80267c164d758833a9d2a7caaf8b8",
+    "app/data/tenants/stonecroft/forms/STO-PAP-2026-END-4.json": "4fd0318f6ad1430ec4017b639e4226dfe8e9eb0ffe8c36f3f5952f076060177a",
+    "app/data/tenants/stonecroft/forms/STO-PAP-2026-END-5.json": "7a0c724191ac39457cee9d75e0e32d827e08dcfd85216b10db651257f3beda59",
+    "app/data/tenants/stonecroft/forms/STO-PAP-2026.json": "5095122eb9cfb84e3efcb130e04c8783d58a70d6a259309d3b3db03a80096591",
+    "app/data/tenants/stonecroft/issued_policies/POL-100042.json": "058dcf46db0e8234553f646b3c8501bae395f37e3b16b95c6a25972867e34517",
+    "app/data/tenants/stonecroft/issued_policies/POL-245782.json": "76fd3c18a328cad265cdc282d5da746df7497f3dfb2b6e93289b5b91dde5fdad",
+    "app/data/tenants/stonecroft/issued_policies/POL-480915.json": "497c798698a9416a35e244de1b924e7e839f3ffe1cc08da93a4533a917774aa0",
+    "app/data/tenants/stonecroft/issued_policies/POL-784054.json": "9e811d00c15a2e2e608833fe101de0dcd16e90ddaf93e2ab481f8c2412a83c93",
+    "app/data/tenants/stonecroft/issued_policies/POL-814225.json": "299406abcf9e2d41ff791b97bb1cb41ab3f4254cb7493cf311cc2852e9e9ba25",
+    "app/data/tenants/stonecroft/issued_policies/POL-897598.json": "2277852dcbe247692604b7a00d2c59f756f51a72f3c787b77f229cfc70aade99",
+    "app/data/tenants/sunmeadow/cases/en/awaiting-insured.json": "bb742bf3cc64028791c9b2b7ef24bb1422aae82666ddf38478598c79a4de4e62",
+    "app/data/tenants/sunmeadow/cases/en/capturing.json": "557ade19f62000574aeff090d8857acef60e2cab8c466356f9240adc5f463f93",
+    "app/data/tenants/sunmeadow/cases/en/claim-five-of-seven.json": "f7c721dfe9d8284ecb5fa72ced82f0626e85a07d5fed19e4ee6ad219ee05984e",
+    "app/data/tenants/sunmeadow/cases/en/closed-approved.json": "543938b0510f5766034dcb7b81671cc051da4fb269e812deb1e7c0f84e2c5595",
+    "app/data/tenants/sunmeadow/cases/en/closed-rejected.json": "0c06f3838ca9ae7a8afe67e990e86c8c3cd778ec09becc27be07cfb49edb427b",
+    "app/data/tenants/sunmeadow/cases/en/closed.json": "0b44b86f2c3d1814577f013af59a283a728caf9951989b7af42a75dd84d1b9fa",
+    "app/data/tenants/sunmeadow/cases/en/coverage-inquiry.json": "b08f5c135d6486a6e9b1137b0f2c833e5b46ac7040b0b7c2204414370ebebf17",
+    "app/data/tenants/sunmeadow/cases/en/deciding.json": "0eb78f92e4a7751b35fe66b28096bc5c5e54f32e1acd0a2049bda4382c27f106",
+    "app/data/tenants/sunmeadow/cases/en/derived.json": "0a57d9d76bd22825d9fa3ca6cec0d09c1cb8252193858c3fa1241e5c97e66cd2",
+    "app/data/tenants/sunmeadow/cases/en/identity-dictated.json": "0fffea1b1dca5c2bf1c43df84e69aeb218c0c7b36147ba2047a39ed6b92e4107",
+    "app/data/tenants/sunmeadow/cases/en/name-injection.json": "59f699b90c6285ebe8fcc31111801fcdb663b592ce39178239858e9c03f2ad23",
+    "app/data/tenants/sunmeadow/cases/en/open.json": "6deae61876f3d1a14011b0da1ca64f2ebdf94ff7d02156b62d18461025f82738",
+    "app/data/tenants/sunmeadow/cases/en/verifying.json": "4a5841c618cdf4083c19b5c4d1913655b515a08eb76fd4b684a707db5f28e9bc",
+    "app/data/tenants/sunmeadow/cases/es/awaiting-insured.json": "4150bb8cba643ef3e9874297efd683c92f8e52f55517a88be729c240dbeecbc0",
+    "app/data/tenants/sunmeadow/cases/es/capturing.json": "7ff5214dde6c8c94a8b9b393fb8f7dea65e5bab27b1096ae7d529e8f86a93a62",
+    "app/data/tenants/sunmeadow/cases/es/claim-five-of-seven.json": "49afe0b6cfceb89c3cbf0f5e0242054882b59c91dc2660817b2a0eb20a897c95",
+    "app/data/tenants/sunmeadow/cases/es/closed-approved.json": "bfa71187a730a417843e999455a6a62b0cb455fc7c32a0019572d099771d95a9",
+    "app/data/tenants/sunmeadow/cases/es/closed-rejected.json": "d384721278833aa918f36ccad5b50703f5c7bf9a9c4bb14c90d73b9cd72e6e81",
+    "app/data/tenants/sunmeadow/cases/es/closed.json": "d8a67a3aaef00d679e10e3442328b85dcc7c2d5d80a364f2e401e757e11550f9",
+    "app/data/tenants/sunmeadow/cases/es/coverage-inquiry.json": "1a5da8839596f59f2fb2104527fe10fc86031146fd919fdd6885c120bc2edbaa",
+    "app/data/tenants/sunmeadow/cases/es/deciding.json": "2efcef4b377c61b7de1af461c3e593a7799b2783806c2a69a468df4c88e8632d",
+    "app/data/tenants/sunmeadow/cases/es/derived.json": "dc324f898754e681b04d718fef7dc389f7246282a0042e3b2bae4e9c1ce9b641",
+    "app/data/tenants/sunmeadow/cases/es/identity-dictated.json": "c8dc0b7315b2dbf8a96237dcda84a59b97e12d5e98a58ba8ecefc7b0cfffda36",
+    "app/data/tenants/sunmeadow/cases/es/name-injection.json": "0f67d313115009f7372dd92af8e5ae6aa98d9429ebbdc8836e7fc66b81d07f60",
+    "app/data/tenants/sunmeadow/cases/es/open.json": "0593581ef77ad9458093ec71e6138d10c7ff99819e8db9184db5bad4a18d9e6f",
+    "app/data/tenants/sunmeadow/cases/es/verifying.json": "50ce770f9117b3995d9a3b01fe5c7fe8f580142905903f933c32246600ee6efc",
+    "app/data/tenants/sunmeadow/clause_relations.json": "86360cc82beb830ca1ae578f7bf426c7cad119cffdcbdd460d4ea8feeb31856e",
+    "app/data/tenants/sunmeadow/clauses/SUN-JUR-2026.json": "bde3967b976dccdef05af9239309f4c7dd7b9c5592ecc7b43603ea19636db83a",
+    "app/data/tenants/sunmeadow/clauses/SUN-PAP-2025.json": "087903501769eb2599ff083b1aac9bba5608c54128a2380d0659f9830260a591",
+    "app/data/tenants/sunmeadow/clauses/SUN-PAP-2026-END-1.json": "95a8569d86c06d338f66f3f87fc34b91cfbcbffe35268f213479a7a2edc4bc28",
+    "app/data/tenants/sunmeadow/clauses/SUN-PAP-2026-END-2.json": "aa49e63f1d754152fcc9a3e1e907892eae905e15553a899477a8558a9777dc87",
+    "app/data/tenants/sunmeadow/clauses/SUN-PAP-2026-END-3.json": "2fb83f482094d6ba5de3ed3cefac719134b91454754705b3e6175a06ec2991e9",
+    "app/data/tenants/sunmeadow/clauses/SUN-PAP-2026-END-4.json": "fabdbac2769e17e005686f7dda035703075b7acc4cc8feb5ba3bcdbadd981003",
+    "app/data/tenants/sunmeadow/clauses/SUN-PAP-2026-END-5.json": "5b99c133a53be730abf385badfba05d0466059565709bc89ba12d61a4ae287ec",
+    "app/data/tenants/sunmeadow/clauses/SUN-PAP-2026.json": "3807666467cf8df811f350a85ad0579f14aa77a097914b33e6b2cd4c01fe3bc6",
+    "app/data/tenants/sunmeadow/forms/SUN-JUR-2026.json": "107d240e3564b7dee87dc0cb104209c5ba269b7e30cd28a2465b950d2bcde684",
+    "app/data/tenants/sunmeadow/forms/SUN-PAP-2025.json": "88cf5b2b2e63af1579ee035f9f60b1f3b7dea4886d6dc168ee8c024c9bb7fdae",
+    "app/data/tenants/sunmeadow/forms/SUN-PAP-2026-END-1.json": "d362089f37844e4c1a742a5f9a16689e7429b0ccd0df6260b55d6d39f512e637",
+    "app/data/tenants/sunmeadow/forms/SUN-PAP-2026-END-2.json": "10486d3ede9a5891d11a9e50fbd11ee92a34d83a7a7f8a4c49338782d3f7f5d3",
+    "app/data/tenants/sunmeadow/forms/SUN-PAP-2026-END-3.json": "17a4c9fc7a23c519fa031ef6fd6bb0dff58cbc873faeaa8ab9b64ad77a06059a",
+    "app/data/tenants/sunmeadow/forms/SUN-PAP-2026-END-4.json": "8999551e2cf9e01ecb842deb0143888f25c25f24c28e3c0acc88199fa010493d",
+    "app/data/tenants/sunmeadow/forms/SUN-PAP-2026-END-5.json": "478fbf645a2a472b3bd40d33ffdbe63b0ce6a10747b0c1bde402d5f09104ecd6",
+    "app/data/tenants/sunmeadow/forms/SUN-PAP-2026.json": "5753da1efa1addb4323fe1ea4b6e093bb5cbe6fcc5358280687e43d3fec6fe96",
+    "app/data/tenants/sunmeadow/issued_policies/POL-200117.json": "7b1ddc5dc6153499438a227e5ddecd4c5a2c9ed7d5feec225e7d1595f0b6a3d0",
+    "app/data/tenants/sunmeadow/issued_policies/POL-398476.json": "eb510769133fed1a98f4693e9d8a6dbd41dfcf337dbcfff04b0589e3b80041e1",
+    "app/data/tenants/sunmeadow/issued_policies/POL-422088.json": "4269351cd354ed66a4ad2e1d04d21f4d18f0ff99f7e221cbeb5601115db995e8",
+    "app/data/tenants/sunmeadow/issued_policies/POL-480915.json": "83afba89d3004ce43bebe019c88e24416cb66932a2673ae1f55ccc41cdb1dbb8",
+    "app/data/tenants/sunmeadow/issued_policies/POL-679093.json": "e8d648746677185a7844f42cec033cfa836b5bbd83b212ae06e8cded6827e371",
+    "app/data/tenants/sunmeadow/issued_policies/POL-795628.json": "88b0c63cb0c5a4740eae47986fc53391964e10d630e0571889bc050fc812e77f"
+  },
+  "review_samples": [
+    {
+      "clause_ids": [
+        "STO-PAP-2026-A.EXCL.A.8",
+        "STO-PAP-2026-C.EXCL.1",
+        "STO-PAP-2026-C.EXCL.4",
+        "STO-PAP-2026-C.LIMIT",
+        "STO-PAP-2026-C.OTHER",
+        "STO-PAP-2026-D.APPRAISAL",
+        "STO-PAP-2026-D.INS.OTC",
+        "STO-PAP-2026-E.DUTIES.A.3",
+        "STO-PAP-2026-E.DUTIES.D.1",
+        "STO-PAP-2026-END-5-F.PERIOD_TERRITORY"
+      ],
+      "commit": "ae2062da61fcd1e8823a676096212ca9769630fc",
+      "reviewed_on": "2026-09-21",
+      "sample_seed": 20260916,
+      "tenant_id": "stonecroft",
+      "verdict": "own_text_structure_ok"
+    },
+    {
+      "clause_ids": [
+        "SUN-PAP-2026-D.APPRAISAL",
+        "SUN-PAP-2026-D.EXCL.4",
+        "SUN-PAP-2026-D.EXCL.5",
+        "SUN-PAP-2026-DEF.OCCUPYING",
+        "SUN-PAP-2026-DEF.TRAILER",
+        "SUN-PAP-2026-E.DUTIES.C.1",
+        "SUN-PAP-2026-END-4-B.INS",
+        "SUN-PAP-2026-F.CHANGES",
+        "SUN-PAP-2026-F.FRAUD",
+        "SUN-PAP-2026-F.PERIOD_TERRITORY"
+      ],
+      "commit": "ae2062da61fcd1e8823a676096212ca9769630fc",
+      "reviewed_on": "2026-09-21",
+      "sample_seed": 20260916,
+      "tenant_id": "sunmeadow",
+      "verdict": "own_text_structure_ok"
+    }
+  ],
+  "seed": 20260916,
+  "seeded_cases": [
+    {
+      "case_key": "SEED/knotwell/en/awaiting-insured",
+      "path": "app/data/tenants/knotwell/cases/en/awaiting-insured.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/knotwell/en/capturing",
+      "path": "app/data/tenants/knotwell/cases/en/capturing.json",
+      "used_by": [
+        "AC1.10.2",
+        "AC1.6.2",
+        "AC1.9.1",
+        "AC4.7.2"
+      ]
+    },
+    {
+      "case_key": "SEED/knotwell/en/closed",
+      "path": "app/data/tenants/knotwell/cases/en/closed.json",
+      "used_by": [
+        "AC1.14.3",
+        "AC4.10.1"
+      ]
+    },
+    {
+      "case_key": "SEED/knotwell/en/deciding",
+      "path": "app/data/tenants/knotwell/cases/en/deciding.json",
+      "used_by": [
+        "AC1.16.1"
+      ]
+    },
+    {
+      "case_key": "SEED/knotwell/en/derived",
+      "path": "app/data/tenants/knotwell/cases/en/derived.json",
+      "used_by": [
+        "AC1.14.2",
+        "AC1.14.3",
+        "AC1.16.2",
+        "AC1.16.4",
+        "AC1.9.2",
+        "AC1.9.4",
+        "AC4.8.3"
+      ]
+    },
+    {
+      "case_key": "SEED/knotwell/en/id-dictated-other-language",
+      "path": "app/data/tenants/knotwell/cases/en/id-dictated-other-language.json",
+      "used_by": [
+        "AC4.13.4"
+      ]
+    },
+    {
+      "case_key": "SEED/knotwell/en/identity-dictated",
+      "path": "app/data/tenants/knotwell/cases/en/identity-dictated.json",
+      "used_by": [
+        "AC4.12.1",
+        "AC4.13.1"
+      ]
+    },
+    {
+      "case_key": "SEED/knotwell/en/open",
+      "path": "app/data/tenants/knotwell/cases/en/open.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/knotwell/en/verifying",
+      "path": "app/data/tenants/knotwell/cases/en/verifying.json",
+      "used_by": [
+        "AC1.14.1",
+        "AC4.8.1"
+      ]
+    },
+    {
+      "case_key": "SEED/knotwell/es/awaiting-insured",
+      "path": "app/data/tenants/knotwell/cases/es/awaiting-insured.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/knotwell/es/capturing",
+      "path": "app/data/tenants/knotwell/cases/es/capturing.json",
+      "used_by": [
+        "AC1.10.1",
+        "AC1.6.2",
+        "AC1.9.1",
+        "AC4.7.2"
+      ]
+    },
+    {
+      "case_key": "SEED/knotwell/es/closed",
+      "path": "app/data/tenants/knotwell/cases/es/closed.json",
+      "used_by": [
+        "AC1.14.3",
+        "AC4.10.1"
+      ]
+    },
+    {
+      "case_key": "SEED/knotwell/es/deciding",
+      "path": "app/data/tenants/knotwell/cases/es/deciding.json",
+      "used_by": [
+        "AC1.16.1"
+      ]
+    },
+    {
+      "case_key": "SEED/knotwell/es/derived",
+      "path": "app/data/tenants/knotwell/cases/es/derived.json",
+      "used_by": [
+        "AC1.14.2",
+        "AC1.14.3",
+        "AC1.16.2",
+        "AC1.16.4",
+        "AC1.9.2",
+        "AC1.9.4",
+        "AC4.8.3"
+      ]
+    },
+    {
+      "case_key": "SEED/knotwell/es/id-dictated-other-language",
+      "path": "app/data/tenants/knotwell/cases/es/id-dictated-other-language.json",
+      "used_by": [
+        "AC4.13.4"
+      ]
+    },
+    {
+      "case_key": "SEED/knotwell/es/identity-dictated",
+      "path": "app/data/tenants/knotwell/cases/es/identity-dictated.json",
+      "used_by": [
+        "AC4.12.1",
+        "AC4.13.1"
+      ]
+    },
+    {
+      "case_key": "SEED/knotwell/es/open",
+      "path": "app/data/tenants/knotwell/cases/es/open.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/knotwell/es/verifying",
+      "path": "app/data/tenants/knotwell/cases/es/verifying.json",
+      "used_by": [
+        "AC1.14.1",
+        "AC4.8.1"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/en/awaiting-insured",
+      "path": "app/data/tenants/stonecroft/cases/en/awaiting-insured.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/stonecroft/en/capturing",
+      "path": "app/data/tenants/stonecroft/cases/en/capturing.json",
+      "used_by": [
+        "AC1.10.2",
+        "AC1.6.2",
+        "AC1.9.1",
+        "AC4.7.2"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/en/closed",
+      "path": "app/data/tenants/stonecroft/cases/en/closed.json",
+      "used_by": [
+        "AC1.14.3",
+        "AC4.10.1"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/en/closed-approved",
+      "path": "app/data/tenants/stonecroft/cases/en/closed-approved.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/stonecroft/en/closed-rejected",
+      "path": "app/data/tenants/stonecroft/cases/en/closed-rejected.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/stonecroft/en/deciding",
+      "path": "app/data/tenants/stonecroft/cases/en/deciding.json",
+      "used_by": [
+        "AC1.16.1"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/en/derived",
+      "path": "app/data/tenants/stonecroft/cases/en/derived.json",
+      "used_by": [
+        "AC1.14.2",
+        "AC1.14.3",
+        "AC1.16.2",
+        "AC1.16.4",
+        "AC1.9.2",
+        "AC1.9.4",
+        "AC4.8.3"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/en/identity-dictated",
+      "path": "app/data/tenants/stonecroft/cases/en/identity-dictated.json",
+      "used_by": [
+        "AC4.12.1",
+        "AC4.13.1"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/en/injured-and-other-drivers",
+      "path": "app/data/tenants/stonecroft/cases/en/injured-and-other-drivers.json",
+      "used_by": [
+        "AC1.8.1"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/en/open",
+      "path": "app/data/tenants/stonecroft/cases/en/open.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/stonecroft/en/other-parties-block",
+      "path": "app/data/tenants/stonecroft/cases/en/other-parties-block.json",
+      "used_by": [
+        "AC1.8.4"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/en/other-plate-missing",
+      "path": "app/data/tenants/stonecroft/cases/en/other-plate-missing.json",
+      "used_by": [
+        "AC1.8.2"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/en/verifying",
+      "path": "app/data/tenants/stonecroft/cases/en/verifying.json",
+      "used_by": [
+        "AC1.14.1",
+        "AC4.8.1"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/en/voice-phone-dictated",
+      "path": "app/data/tenants/stonecroft/cases/en/voice-phone-dictated.json",
+      "used_by": [
+        "AC4.12.3"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/es/awaiting-insured",
+      "path": "app/data/tenants/stonecroft/cases/es/awaiting-insured.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/stonecroft/es/capturing",
+      "path": "app/data/tenants/stonecroft/cases/es/capturing.json",
+      "used_by": [
+        "AC1.10.1",
+        "AC1.6.2",
+        "AC1.9.1",
+        "AC4.7.2"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/es/closed",
+      "path": "app/data/tenants/stonecroft/cases/es/closed.json",
+      "used_by": [
+        "AC1.14.3",
+        "AC4.10.1"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/es/closed-approved",
+      "path": "app/data/tenants/stonecroft/cases/es/closed-approved.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/stonecroft/es/closed-rejected",
+      "path": "app/data/tenants/stonecroft/cases/es/closed-rejected.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/stonecroft/es/deciding",
+      "path": "app/data/tenants/stonecroft/cases/es/deciding.json",
+      "used_by": [
+        "AC1.16.1"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/es/derived",
+      "path": "app/data/tenants/stonecroft/cases/es/derived.json",
+      "used_by": [
+        "AC1.14.2",
+        "AC1.14.3",
+        "AC1.16.2",
+        "AC1.16.4",
+        "AC1.9.2",
+        "AC1.9.4",
+        "AC4.8.3"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/es/identity-dictated",
+      "path": "app/data/tenants/stonecroft/cases/es/identity-dictated.json",
+      "used_by": [
+        "AC4.12.1",
+        "AC4.13.1"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/es/injured-and-other-drivers",
+      "path": "app/data/tenants/stonecroft/cases/es/injured-and-other-drivers.json",
+      "used_by": [
+        "AC1.8.1"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/es/open",
+      "path": "app/data/tenants/stonecroft/cases/es/open.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/stonecroft/es/other-parties-block",
+      "path": "app/data/tenants/stonecroft/cases/es/other-parties-block.json",
+      "used_by": [
+        "AC1.8.4"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/es/other-plate-missing",
+      "path": "app/data/tenants/stonecroft/cases/es/other-plate-missing.json",
+      "used_by": [
+        "AC1.8.2"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/es/verifying",
+      "path": "app/data/tenants/stonecroft/cases/es/verifying.json",
+      "used_by": [
+        "AC1.14.1",
+        "AC4.8.1"
+      ]
+    },
+    {
+      "case_key": "SEED/stonecroft/es/voice-phone-dictated",
+      "path": "app/data/tenants/stonecroft/cases/es/voice-phone-dictated.json",
+      "used_by": [
+        "AC4.12.3"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/en/awaiting-insured",
+      "path": "app/data/tenants/sunmeadow/cases/en/awaiting-insured.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/sunmeadow/en/capturing",
+      "path": "app/data/tenants/sunmeadow/cases/en/capturing.json",
+      "used_by": [
+        "AC1.10.2",
+        "AC1.6.2",
+        "AC1.9.1",
+        "AC4.7.2"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/en/claim-five-of-seven",
+      "path": "app/data/tenants/sunmeadow/cases/en/claim-five-of-seven.json",
+      "used_by": [
+        "AC4.10.3"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/en/closed",
+      "path": "app/data/tenants/sunmeadow/cases/en/closed.json",
+      "used_by": [
+        "AC1.14.3",
+        "AC4.10.1"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/en/closed-approved",
+      "path": "app/data/tenants/sunmeadow/cases/en/closed-approved.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/sunmeadow/en/closed-rejected",
+      "path": "app/data/tenants/sunmeadow/cases/en/closed-rejected.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/sunmeadow/en/coverage-inquiry",
+      "path": "app/data/tenants/sunmeadow/cases/en/coverage-inquiry.json",
+      "used_by": [
+        "AC4.10.3"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/en/deciding",
+      "path": "app/data/tenants/sunmeadow/cases/en/deciding.json",
+      "used_by": [
+        "AC1.16.1"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/en/derived",
+      "path": "app/data/tenants/sunmeadow/cases/en/derived.json",
+      "used_by": [
+        "AC1.14.2",
+        "AC1.14.3",
+        "AC1.16.2",
+        "AC1.16.4",
+        "AC1.9.2",
+        "AC1.9.4",
+        "AC4.8.3"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/en/identity-dictated",
+      "path": "app/data/tenants/sunmeadow/cases/en/identity-dictated.json",
+      "used_by": [
+        "AC4.12.1",
+        "AC4.13.1"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/en/name-injection",
+      "path": "app/data/tenants/sunmeadow/cases/en/name-injection.json",
+      "used_by": [
+        "AC4.15.2"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/en/open",
+      "path": "app/data/tenants/sunmeadow/cases/en/open.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/sunmeadow/en/verifying",
+      "path": "app/data/tenants/sunmeadow/cases/en/verifying.json",
+      "used_by": [
+        "AC1.14.1",
+        "AC4.8.1"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/es/awaiting-insured",
+      "path": "app/data/tenants/sunmeadow/cases/es/awaiting-insured.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/sunmeadow/es/capturing",
+      "path": "app/data/tenants/sunmeadow/cases/es/capturing.json",
+      "used_by": [
+        "AC1.10.1",
+        "AC1.6.2",
+        "AC1.9.1",
+        "AC4.7.2"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/es/claim-five-of-seven",
+      "path": "app/data/tenants/sunmeadow/cases/es/claim-five-of-seven.json",
+      "used_by": [
+        "AC4.10.3"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/es/closed",
+      "path": "app/data/tenants/sunmeadow/cases/es/closed.json",
+      "used_by": [
+        "AC1.14.3",
+        "AC4.10.1"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/es/closed-approved",
+      "path": "app/data/tenants/sunmeadow/cases/es/closed-approved.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/sunmeadow/es/closed-rejected",
+      "path": "app/data/tenants/sunmeadow/cases/es/closed-rejected.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/sunmeadow/es/coverage-inquiry",
+      "path": "app/data/tenants/sunmeadow/cases/es/coverage-inquiry.json",
+      "used_by": [
+        "AC4.10.3"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/es/deciding",
+      "path": "app/data/tenants/sunmeadow/cases/es/deciding.json",
+      "used_by": [
+        "AC1.16.1"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/es/derived",
+      "path": "app/data/tenants/sunmeadow/cases/es/derived.json",
+      "used_by": [
+        "AC1.14.2",
+        "AC1.14.3",
+        "AC1.16.2",
+        "AC1.16.4",
+        "AC1.9.2",
+        "AC1.9.4",
+        "AC4.8.3"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/es/identity-dictated",
+      "path": "app/data/tenants/sunmeadow/cases/es/identity-dictated.json",
+      "used_by": [
+        "AC4.12.1",
+        "AC4.13.1"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/es/name-injection",
+      "path": "app/data/tenants/sunmeadow/cases/es/name-injection.json",
+      "used_by": [
+        "AC4.15.2"
+      ]
+    },
+    {
+      "case_key": "SEED/sunmeadow/es/open",
+      "path": "app/data/tenants/sunmeadow/cases/es/open.json",
+      "used_by": []
+    },
+    {
+      "case_key": "SEED/sunmeadow/es/verifying",
+      "path": "app/data/tenants/sunmeadow/cases/es/verifying.json",
+      "used_by": [
+        "AC1.14.1",
+        "AC4.8.1"
+      ]
+    }
+  ]
+}

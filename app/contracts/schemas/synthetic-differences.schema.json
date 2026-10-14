@@ -1,0 +1,102 @@
+{
+  "$defs": {
+    "DifferenceSource": {
+      "additionalProperties": false,
+      "description": "Una diferencia declarada, con lo que la hace comprobable contra el corpus.\n\nSe comprueba por la numeracion: cada formulario de `present_in` tiene una\nclausula con `clause_key`, y ninguno de `absent_in` la tiene (BR3.7).",
+      "properties": {
+        "difference_id": {
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
+          "title": "Difference Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "clause_key": {
+          "pattern": "^[A-Za-z0-9]+(?:\\.[A-Za-z0-9_]+)*$",
+          "title": "Clause Key",
+          "type": "string"
+        },
+        "present_in": {
+          "items": {
+            "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Present In",
+          "type": "array"
+        },
+        "absent_in": {
+          "items": {
+            "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Absent In",
+          "type": "array"
+        }
+      },
+      "required": [
+        "difference_id",
+        "description",
+        "clause_key",
+        "present_in",
+        "absent_in"
+      ],
+      "title": "DifferenceSource",
+      "type": "object"
+    },
+    "ReviewedBy": {
+      "description": "Quien reviso: el agente contra la estructura y P8, o Miguel en la muestra.",
+      "enum": [
+        "conductor",
+        "miguel"
+      ],
+      "title": "ReviewedBy",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "`app/data/sources/differences.yaml`: las diferencias puestas a proposito (AC5.4.3).",
+  "properties": {
+    "format_version": {
+      "const": 1,
+      "title": "Format Version",
+      "type": "integer"
+    },
+    "reviewed_at": {
+      "format": "date",
+      "title": "Reviewed At",
+      "type": "string"
+    },
+    "reviewed_by": {
+      "$ref": "#/$defs/ReviewedBy"
+    },
+    "drafted_with": {
+      "pattern": "^[a-z0-9][a-z0-9.\\-]*$",
+      "title": "Drafted With",
+      "type": "string"
+    },
+    "differences": {
+      "items": {
+        "$ref": "#/$defs/DifferenceSource"
+      },
+      "minItems": 1,
+      "title": "Differences",
+      "type": "array"
+    }
+  },
+  "required": [
+    "format_version",
+    "reviewed_at",
+    "reviewed_by",
+    "drafted_with",
+    "differences"
+  ],
+  "title": "DifferenceFile",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/synthetic-differences.schema.json"
+}

@@ -1,0 +1,146 @@
+# Seeded redaction fixtures, English turn (RT-14, RT-15).
+#
+# One file per turn language. Two consumers read it: the DS-6 evaluation probes
+# and the detector unit tests. A single source of seeded data, so the gate and
+# the test never measure different things.
+#
+# **Synthetic, but shaped like the real thing** (plan decision CG-U3-2). An
+# invented phone number that does not look like a phone number proves nothing:
+# what is under test is that the recognizer catches the **shape**. None of these
+# values belongs to a person: 555 is the fiction convention and 123-45-6789 is
+# not a valid issued number.
+#
+# Three forms per type, the ones BR2.2 requires:
+#   compact    -- no separators
+#   separated  -- spaces, hyphens or dots
+#   spoken     -- dictated as words
+language: en
+# The types the format recognizers find, in their three forms: the four domain
+# types (RT-14, AC4.13.1, AC4.13.2) and the VIN, which came in when U7 found it
+# went out with only its trailing digits covered (NFR11.10). `value` is what
+# **cannot** remain in the text that goes out.
+seeds:
+  - id: license_plate/compact
+    entity_type: license_plate
+    form: compact
+    value: ABC1234
+    text: The other car had plate ABC1234 and did not stop.
+
+  - id: license_plate/separated
+    entity_type: license_plate
+    form: separated
+    value: ABC-1234
+    text: The license plate ABC-1234 is in the police report.
+
+  - id: license_plate/spoken
+    entity_type: license_plate
+    form: spoken
+    value: A B C one two three four
+    text: The plate was A B C one two three four, I saw it clearly.
+
+  - id: national_id/compact
+    entity_type: national_id
+    form: compact
+    value: "123456789"
+    text: My social security number is 123456789 if you need it.
+
+  - id: national_id/separated
+    entity_type: national_id
+    form: separated
+    value: 123-45-6789
+    text: The driver ID on the report is 123-45-6789.
+
+  - id: national_id/spoken
+    entity_type: national_id
+    form: spoken
+    value: one two three four five six seven eight nine
+    text: My ID number is one two three four five six seven eight nine.
+
+  - id: phone/compact
+    entity_type: phone
+    form: compact
+    value: "5551234567"
+    text: My cell is 5551234567 in case you need to call me.
+
+  - id: phone/separated
+    entity_type: phone
+    form: separated
+    value: 555-123-4567
+    text: The witness phone number is 555-123-4567.
+
+  - id: phone/spoken
+    entity_type: phone
+    form: spoken
+    value: five five five one two three four five six seven
+    text: My phone is five five five one two three four five six seven.
+
+  - id: policy_number/compact
+    entity_type: policy_number
+    form: compact
+    value: POL-200117
+    text: The policy POL-200117 is the one I hold with the carrier.
+
+  - id: policy_number/separated
+    entity_type: policy_number
+    form: separated
+    value: POL 200117
+    text: My policy is POL 200117, I renewed it in March.
+
+  - id: policy_number/spoken
+    entity_type: policy_number
+    form: spoken
+    value: two zero zero one one seven
+    text: The policy is two zero zero one one seven.
+
+  # A fictitious VIN from the U7 generator: its check digit fails on purpose, so
+  # it is not the serial number of any vehicle.
+  - id: vin/compact
+    entity_type: vin
+    form: compact
+    value: 6VF5WDD973U710683
+    text: The VIN on the registration is 6VF5WDD973U710683.
+
+  - id: vin/separated
+    entity_type: vin
+    form: separated
+    value: 6VF-5WDD97-3U710683
+    text: The VIN is 6VF-5WDD97-3U710683, from the windshield.
+
+  - id: vin/spoken
+    entity_type: vin
+    form: spoken
+    value: six V F five W D D nine seven three U seven one zero six eight three
+    text: The VIN is six V F five W D D nine seven three U seven one zero six eight three.
+
+# RT-15: the datum dictated **in Spanish** inside an English turn. It is the
+# evasion BR2.3 blocks and the only hard gate of group 2: switching language is
+# not a way to get a datum out in the clear.
+#
+# `found_by_language` is what the second BR2.9 test requires: the report must
+# credit the **recognizer that found it**, which here is the Spanish set. If it
+# credited the turn language instead, the measurement would claim English works
+# when the other set is what caught the datum.
+cross_language:
+  - id: national_id/spoken-es
+    entity_type: national_id
+    form: spoken
+    dictated_in: es
+    found_by_language: es
+    value: siete nueve uno dos tres cuatro cinco seis
+    text: My ID number is siete nueve uno dos tres cuatro cinco seis.
+
+  - id: phone/spoken-es
+    entity_type: phone
+    form: spoken
+    dictated_in: es
+    found_by_language: es
+    value: tres cero cero cinco cinco cinco uno dos tres cuatro
+    text: My phone is tres cero cero cinco cinco cinco uno dos tres cuatro.
+
+  - id: policy_number/spoken-es
+    entity_type: policy_number
+    form: spoken
+    dictated_in: es
+    found_by_language: es
+    value: dos cero cero tres cuatro uno
+    text: My policy is dos cero cero tres cuatro uno.

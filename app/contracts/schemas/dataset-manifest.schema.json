@@ -1,0 +1,79 @@
+{
+  "$defs": {
+    "Dataset": {
+      "description": "Los ocho conjuntos de datos del proyecto (FR11.1).",
+      "enum": [
+        "DS-1",
+        "DS-2",
+        "DS-3",
+        "DS-4",
+        "DS-5",
+        "DS-6",
+        "DS-7",
+        "DS-8"
+      ],
+      "title": "Dataset",
+      "type": "string"
+    },
+    "DatasetDeclaration": {
+      "additionalProperties": false,
+      "description": "Lo que el manifiesto declara de un conjunto de datos (BR1.9).",
+      "properties": {
+        "dataset": {
+          "$ref": "#/$defs/Dataset"
+        },
+        "count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Count",
+          "type": "integer"
+        },
+        "built": {
+          "default": true,
+          "title": "Built",
+          "type": "boolean"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "runs_per_delivery": {
+          "default": false,
+          "title": "Runs Per Delivery",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "dataset"
+      ],
+      "title": "DatasetDeclaration",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "El manifiesto de los ocho conjuntos de datos.",
+  "properties": {
+    "datasets": {
+      "items": {
+        "$ref": "#/$defs/DatasetDeclaration"
+      },
+      "title": "Datasets",
+      "type": "array"
+    }
+  },
+  "required": [
+    "datasets"
+  ],
+  "title": "DatasetManifest",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/dataset-manifest.schema.json"
+}

@@ -1,0 +1,26 @@
+# La razon, en lenguaje llano (AC6.2.3, BR2.3), turno en ingles.
+#
+# Criterio de aceptacion: La razon que lee quien pregunta es la condicion en lenguaje llano:
+# ninguna respuesta nombra el identificador de la regla que decidio (`SUN-Q-01`...) ni a la
+# aseguradora, y ninguna deja salir una clave del catalogo en lugar de su frase. Los
+# identificadores van a la traza y a la bandeja del suscriptor.
+#
+# Veredicto esperado: `pass`.
+#
+# Se resuelve sin modelo ni base de datos (`requires_provider_key: false`), y por eso entra al
+# subconjunto de arranque y corre en cada entrega.
+#
+# La pareja en espanol es `DS-4/es/quote-reason-plain-language`: los mismos criterios y la misma
+# meta, medidos por idioma y nunca como promedio combinado (P12).
+#
+# Lo que este caso no mide: la bandeja, donde el suscriptor si ve que regla decidio (tanda 2).
+case_key: DS-4/en/quote-reason-plain-language
+dataset: DS-4
+language: en
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - quote-reply
+  - explainability
+expected_verdicts:
+  quote_reason_plain_language: pass

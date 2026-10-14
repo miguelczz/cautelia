@@ -1,0 +1,410 @@
+{
+  "stage": "code-generation",
+  "unit": "u2-tenancy",
+  "upstream_ids": [
+    "AC4.11.1",
+    "AC4.11.2",
+    "AC4.11.3",
+    "AC4.11.4",
+    "AC4.11.5",
+    "AC5.7.1",
+    "AC5.7.2",
+    "AC5.7.3",
+    "AC5.7.4",
+    "BR1.1",
+    "BR1.2",
+    "BR1.3",
+    "BR1.4",
+    "BR1.5",
+    "BR1.6",
+    "BR1.7",
+    "BR1.8",
+    "BR1.9",
+    "BR1.10",
+    "BR1.11",
+    "BR2.1",
+    "BR2.2",
+    "BR2.3",
+    "BR2.4",
+    "BR2.5",
+    "BR2.6",
+    "BR3.1",
+    "BR3.2",
+    "BR3.3",
+    "BR3.4",
+    "BR3.5",
+    "BR3.6",
+    "BR4.1",
+    "BR4.2",
+    "BR4.3",
+    "BR4.4",
+    "NFR10.1",
+    "NFR10.2",
+    "NFR10.3",
+    "NFR18.1",
+    "NFR18.2",
+    "NFR19.1",
+    "NFR21.1",
+    "SEC-U2.1",
+    "SEC-U2.2",
+    "SEC-U2.3",
+    "SEC-U2.4",
+    "SEC-U2.5",
+    "SEC-U2.6",
+    "SEC-U2.7",
+    "SEC-U2.8",
+    "SEC-U2.9",
+    "SEC-U2.10",
+    "SEC-U2.11",
+    "SEC-U2.12",
+    "SEC-U2.13",
+    "SEC-U2.14",
+    "AC3.8.1",
+    "AC3.8.2",
+    "AC3.8.3",
+    "AC3.8.4",
+    "AC3.8.5",
+    "AC3.8.6",
+    "NFR12.1"
+  ],
+  "coverage": [
+    {
+      "id": "AC4.11.1",
+      "status": "OK",
+      "target": "app/backend/migrations/versions/u2_tenancy_0001_tenancy_tables.py"
+    },
+    {
+      "id": "AC4.11.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/session.py"
+    },
+    {
+      "id": "AC4.11.3",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u2/test_isolation.py"
+    },
+    {
+      "id": "AC4.11.4",
+      "status": "OK",
+      "target": "scripts/verify.sh"
+    },
+    {
+      "id": "AC4.11.5",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/test_live_probes.py"
+    },
+    {
+      "id": "AC5.7.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/staff_identity.py"
+    },
+    {
+      "id": "AC5.7.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/tenancy/test_staff_identity.py"
+    },
+    {
+      "id": "AC5.7.3",
+      "status": "OK",
+      "target": "app/config/role-permissions.yaml"
+    },
+    {
+      "id": "AC5.7.4",
+      "status": "OK",
+      "target": ".env.example"
+    },
+    {
+      "id": "BR1.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/session.py"
+    },
+    {
+      "id": "BR1.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/rls_assertion.py"
+    },
+    {
+      "id": "BR1.3",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u2/test_isolation.py"
+    },
+    {
+      "id": "BR1.4",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u2/test_isolation.py"
+    },
+    {
+      "id": "BR1.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/session.py"
+    },
+    {
+      "id": "BR1.6",
+      "status": "OK",
+      "target": "app/backend/.importlinter"
+    },
+    {
+      "id": "BR1.7",
+      "status": "OK",
+      "target": "scripts/db-init/01-app-role.sh"
+    },
+    {
+      "id": "BR1.8",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u2/test_isolation.py"
+    },
+    {
+      "id": "BR1.9",
+      "status": "Deferred",
+      "target": "app/backend/src/untangle/evals/live_probes.py"
+    },
+    {
+      "id": "BR1.10",
+      "status": "OK",
+      "target": "app/backend/migrations/versions/u2_tenancy_0001_tenancy_tables.py"
+    },
+    {
+      "id": "BR1.11",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/cli.py"
+    },
+    {
+      "id": "BR2.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/staff_identity.py"
+    },
+    {
+      "id": "BR2.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/staff_identity.py"
+    },
+    {
+      "id": "BR2.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/api.py"
+    },
+    {
+      "id": "BR2.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/tenancy/test_staff_identity.py"
+    },
+    {
+      "id": "BR2.5",
+      "status": "OK",
+      "target": "app/config/role-permissions.yaml"
+    },
+    {
+      "id": "BR2.6",
+      "status": "OK",
+      "target": "app/backend/tests/unit/tenancy/test_config.py"
+    },
+    {
+      "id": "BR3.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/visitor_access.py"
+    },
+    {
+      "id": "BR3.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/tenancy/test_visitor_access.py"
+    },
+    {
+      "id": "BR3.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/tenancy/test_visitor_access.py"
+    },
+    {
+      "id": "BR3.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/tenancy/test_visitor_access.py"
+    },
+    {
+      "id": "BR3.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/visitor_access.py"
+    },
+    {
+      "id": "BR3.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/purge.py"
+    },
+    {
+      "id": "BR4.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/config.py"
+    },
+    {
+      "id": "BR4.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/tenancy_literals.py"
+    },
+    {
+      "id": "BR4.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/tenancy/test_config.py"
+    },
+    {
+      "id": "BR4.4",
+      "status": "OK",
+      "target": "app/contracts/schemas/tenant.schema.json"
+    },
+    {
+      "id": "NFR10.1",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u2/test_isolation.py"
+    },
+    {
+      "id": "NFR10.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/rls_assertion.py"
+    },
+    {
+      "id": "NFR10.3",
+      "status": "Deferred",
+      "target": "app/backend/src/untangle/evals/live_probes.py"
+    },
+    {
+      "id": "NFR18.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/coverage_gate.py"
+    },
+    {
+      "id": "NFR18.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/coverage_gate.py"
+    },
+    {
+      "id": "NFR19.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/tenancy/test_purge.py"
+    },
+    {
+      "id": "NFR21.1",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u2/test_import_contracts.py"
+    },
+    {
+      "id": "SEC-U2.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/rls_assertion.py"
+    },
+    {
+      "id": "SEC-U2.2",
+      "status": "OK",
+      "target": "app/backend/.importlinter"
+    },
+    {
+      "id": "SEC-U2.3",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u2/test_isolation.py"
+    },
+    {
+      "id": "SEC-U2.4",
+      "status": "OK",
+      "target": "scripts/db-init/01-app-role.sh"
+    },
+    {
+      "id": "SEC-U2.5",
+      "status": "OK",
+      "target": "app/backend/tests/unit/tenancy/test_staff_identity.py",
+      "note": "SEC-U2.5 se comprueba con dos comandos, como exige ../nfr-design/correcciones-tras-revision.md (R-01): `mise run test:u2` sobre este archivo prueba que una clave no valida lo firmado por la otra, y `mise run env:check` sobre app/backend/src/untangle/workspace/env_check.py y .env.example prueba que las dos variables existen y que el codigo lee exactamente esas."
+    },
+    {
+      "id": "SEC-U2.6",
+      "status": "OK",
+      "target": "app/backend/tests/unit/tenancy/test_staff_identity.py"
+    },
+    {
+      "id": "SEC-U2.7",
+      "status": "OK",
+      "target": "app/config/role-permissions.yaml"
+    },
+    {
+      "id": "SEC-U2.8",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/visitor_access.py"
+    },
+    {
+      "id": "SEC-U2.9",
+      "status": "OK",
+      "target": "app/backend/tests/unit/tenancy/test_config.py"
+    },
+    {
+      "id": "SEC-U2.10",
+      "status": "OK",
+      "target": "app/backend/tests/unit/tenancy/test_staff_identity.py"
+    },
+    {
+      "id": "SEC-U2.11",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/staff_identity.py"
+    },
+    {
+      "id": "SEC-U2.12",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/cli.py"
+    },
+    {
+      "id": "SEC-U2.13",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/purge.py"
+    },
+    {
+      "id": "SEC-U2.14",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/tenancy_literals.py"
+    },
+    {
+      "id": "AC3.8.1",
+      "status": "N/A",
+      "target": "US3.8 esta asignada a U14 `inbox`, no a U2: el mapa de historias dice \"casi todos sus criterios son del recorrido de la vista por enlace; U2 emite y valida el enlace\". U2 entrega la pieza de canje y su credencial (BR3.1 a BR3.4); el recorrido de la pantalla y la ruta HTTP llegan con U14, por el reparto de C-07 que fija la decision CG-U2-1."
+    },
+    {
+      "id": "AC3.8.2",
+      "status": "N/A",
+      "target": "US3.8 esta asignada a U14 `inbox`, no a U2: el mapa de historias dice \"casi todos sus criterios son del recorrido de la vista por enlace; U2 emite y valida el enlace\". U2 entrega la pieza de canje y su credencial (BR3.1 a BR3.4); el recorrido de la pantalla y la ruta HTTP llegan con U14, por el reparto de C-07 que fija la decision CG-U2-1."
+    },
+    {
+      "id": "AC3.8.3",
+      "status": "N/A",
+      "target": "US3.8 esta asignada a U14 `inbox`, no a U2: el mapa de historias dice \"casi todos sus criterios son del recorrido de la vista por enlace; U2 emite y valida el enlace\". U2 entrega la pieza de canje y su credencial (BR3.1 a BR3.4); el recorrido de la pantalla y la ruta HTTP llegan con U14, por el reparto de C-07 que fija la decision CG-U2-1."
+    },
+    {
+      "id": "AC3.8.4",
+      "status": "N/A",
+      "target": "US3.8 esta asignada a U14 `inbox`, no a U2: el mapa de historias dice \"casi todos sus criterios son del recorrido de la vista por enlace; U2 emite y valida el enlace\". U2 entrega la pieza de canje y su credencial (BR3.1 a BR3.4); el recorrido de la pantalla y la ruta HTTP llegan con U14, por el reparto de C-07 que fija la decision CG-U2-1."
+    },
+    {
+      "id": "AC3.8.5",
+      "status": "N/A",
+      "target": "US3.8 esta asignada a U14 `inbox`, no a U2: el mapa de historias dice \"casi todos sus criterios son del recorrido de la vista por enlace; U2 emite y valida el enlace\". U2 entrega la pieza de canje y su credencial (BR3.1 a BR3.4); el recorrido de la pantalla y la ruta HTTP llegan con U14, por el reparto de C-07 que fija la decision CG-U2-1."
+    },
+    {
+      "id": "AC3.8.6",
+      "status": "N/A",
+      "target": "US3.8 esta asignada a U14 `inbox`, no a U2: el mapa de historias dice \"casi todos sus criterios son del recorrido de la vista por enlace; U2 emite y valida el enlace\". U2 entrega la pieza de canje y su credencial (BR3.1 a BR3.4); el recorrido de la pantalla y la ruta HTTP llegan con U14, por el reparto de C-07 que fija la decision CG-U2-1."
+    },
+    {
+      "id": "NFR12.1",
+      "status": "N/A",
+      "target": "NFR12 no es de U2. Lo dice `../nfr-requirements/correcciones-tras-revision.md` (R-02), comprobado contra `inception/user-stories/stories.md`: US4.11 no lo realiza. El identificador sobrevive en el `reverse` de `../nfr-design/traceability.json`, congelado por su revision, y por eso se declara aqui en vez de desaparecer sin rastro. Su dueno es U10."
+    }
+  ],
+  "reverse": [
+    {
+      "id": "CG-U2-1",
+      "status": "N/A",
+      "target": "La ruta HTTP que canjea el enlace queda en U14 por el reparto de C-07; U2 entrega la pieza de canje y su credencial, no el punto final web."
+    },
+    {
+      "id": "CG-U2-4",
+      "status": "N/A",
+      "target": "app/backend/src/untangle/tenancy/ephemeral.py: la base efímera con la imagen anclada a la del entorno local. Andamiaje de prueba, sin criterio de aceptación propio."
+    },
+    {
+      "id": "CG-U2-5",
+      "status": "N/A",
+      "target": "app/backend/src/untangle/tenancy/models.py y app/data/fixtures/ds8_isolation.json: las dos tablas y sus colisiones a propósito realizan BR1.3 y BR1.4 y no tienen identificador propio."
+    }
+  ]
+}

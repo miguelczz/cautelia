@@ -1,0 +1,29 @@
+<!doctype html>
+<!--
+  La pagina de entrada. El proceso la sirve sin cache (BR6.3) y con el conjunto
+  unico de cabeceras de seguridad (BR6.2), asi que aqui no hay ningun script ni
+  estilo en linea: la politica de contenido es `script-src 'self'` sin
+  excepciones (CG-U6-2).
+
+  `/theme-boot.js` es el paso de modo antes de pintar (BR1.2, CG-U6-1): un
+  archivo propio, clasico y bloqueante, y por eso va antes de la hoja de estilos
+  y de la aplicacion. El idioma del documento lo declara la aplicacion al
+  resolverlo (BR2.4); el `en` de abajo es solo el valor antes de arrancar.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Cautelia</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E0873A' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 13a2 2 0 0 0 2-2V7a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0V4a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0v-4a2 2 0 0 1 2-2'/%3E%3C/svg%3E"
+    />
+    <script src="/theme-boot.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

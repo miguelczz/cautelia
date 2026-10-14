@@ -1,0 +1,11 @@
+.env.local
+.vercel
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
+
+# Config que wrangler deja al correr: no es nuestra y no describe el sitio.
+wrangler.jsonc

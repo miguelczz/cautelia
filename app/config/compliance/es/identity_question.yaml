@@ -1,0 +1,29 @@
+# La pregunta de si la agente es una persona, juego en espanol (U10, BR2.4).
+#
+# Una coincidencia levanta la senal `identity_question`: la agente responde con
+# la frase fija del catalogo (AC1.10.1) y la conversacion sigue donde iba. No es
+# una peticion de persona, y por eso ningun patron de aqui coincide con "quiero
+# hablar con una persona": derivar un caso que nadie pidio derivar tambien es un
+# fallo.
+#
+# Lo que la hace pregunta por la agente es el sujeto: "usted es", "eres",
+# "estoy hablando con". "¿La persona que vio el choque tiene que firmar algo?"
+# nombra a una persona sin preguntar por la agente, y no cae.
+language: es
+family: identity_question
+version: "2026-09-21.1"
+
+patterns:
+  # "¿usted es una persona?" (literal de AC1.10.1), "¿usted es a real person?".
+  - id: identity_question.es.signal.001
+    regex: '\b(usted|tu|vos)\s+(es|eres|sos)\s+(una\s+|un\s+)?(persona|humana|humano|ser\s+humano|robot|maquina|bot|ia|inteligencia\s+artificial|real|de\s+verdad|a\s+real\s+person|a\s+person|a\s+human|human|real\s+person)\b'
+  # "¿eres humana o una maquina?".
+  - id: identity_question.es.signal.002
+    regex: '\b(eres|sos|es\s+usted)\s+(una\s+|un\s+)?(persona|humana|humano|ser\s+humano|robot|maquina|bot|ia|real)\b'
+  # "¿estoy hablando con un robot?".
+  - id: identity_question.es.signal.003
+    regex: '\b(estoy|estamos)\s+(hablando|conversando|chateando)\s+con\s+(una\s+|un\s+)?(persona|humana|humano|ser\s+humano|robot|maquina|bot|ia|inteligencia\s+artificial|contestadora|grabacion)\b'
+  # "¿hablo con una persona?": en presente y con signo de pregunta, porque
+  # "hablo con una persona" sin pregunta tambien puede ser un relato.
+  - id: identity_question.es.signal.004
+    regex: '\b(hablo|converso|chateo)\s+con\s+(una\s+|un\s+)?(persona|humana|humano|robot|maquina|bot)(\s+real)?\s*\?'

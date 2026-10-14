@@ -1,0 +1,12 @@
+{
+  "clause_ids": [
+    "SUN-PAP-2026-END-1-DEF.COVERED_AUTO"
+  ],
+  "form_id": "SUN-PAP-2026-END-1",
+  "form_kind": "endorsement",
+  "form_version": "2026.1",
+  "issuer_label": "Autos Poblado",
+  "issuer_tenant": "sunmeadow",
+  "jurisdiction_ref": null,
+  "language": "en"
+}

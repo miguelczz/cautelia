@@ -1,0 +1,69 @@
+# Un siniestro reportado entero por el canal chat (US1.1, US2.1; BR1.1, BR2.1,
+# BR6.4), turno en español.
+#
+# Es el primero de DS-2 que **no simula el recorrido**: lo corre el conductor de
+# texto de U13 por donde de verdad ocurre. Las sondas de U11 miden la captura con
+# el código real de bloques y composición pero sin canal --sin conversación, sin
+# límites, sin detección de idioma y sin transcripción--, y eso sirve para medir
+# la captura y no sirve para lo que ahora hace falta: transcripciones reales con
+# las que calibrar al juez (DS-7, PENDIENTES-MIGUEL 1.6). Una transcripción que
+# nadie tuvo por un canal no es la que una persona habría tenido.
+#
+# Qué comprueba, y cómo:
+#   - BR1.1: la apertura con la divulgación es el primer turno, antes de que la
+#     persona escriba nada. El conductor la emite y la anota antes de admitir
+#     ningún mensaje, igual que la ruta.
+#   - BR2.1: la respuesta va en el idioma del mensaje. El guion está entero en
+#     español y el caso queda registrado en español.
+#   - El recorrido de captura llega a su fin: los siete campos del siniestro
+#     quedan completos y el caso sale de `capturing`.
+#
+# El campo que contesta cada turno **no se adivina del texto de la pregunta**: el
+# conductor lo lee de la completitud que dejó el turno anterior, con el mismo
+# `blocks.next_block` que usa la agente. Por eso el guion se indexa por campo y
+# no por orden, y la conversación sigue funcionando si la agente pregunta en otro
+# orden, que es la conducta normal.
+#
+# `requires_provider_key: true`: la extracción llama al modelo. Queda fuera del
+# subconjunto de arranque, que corre sin clave de ningún proveedor, y entra en la
+# corrida completa de cada hito.
+#
+# Veredicto esperado: `pass`.
+#
+# Su pareja en inglés es `DS-2/en/chat-claim-end-to-end`: los mismos criterios y
+# la misma meta, medidos por idioma y nunca como promedio combinado (P12).
+case_key: DS-2/es/chat-claim-end-to-end
+dataset: DS-2
+language: es
+tenant: stonecroft
+channel: chat
+axes:
+  - chat-channel
+  - intake
+  - language-adherence
+script:
+  - field_key: identity_and_policy
+    text: "Soy Marcela Ríos, mi póliza es POL-000001."
+  - field_key: injuries
+    text: "No, nadie se lastimó."
+  - field_key: description
+    text: "Un camión me chocó por detrás mientras estaba detenida en un semáforo."
+  - field_key: incident_datetime
+    text: "Ayer como a las tres de la tarde."
+  - field_key: location
+    text: "En la carrera cuarenta y tres con la calle diez."
+  - field_key: vehicle_and_driver
+    text: "Mi carro es un Mazda 3 gris modelo 2019, y yo iba manejando."
+  - field_key: other_parties
+    text: "El camión era de una empresa de mudanzas, no alcancé a ver la placa."
+# El registro entero, no solo el tipo y el idioma: el corredor compara el registro
+# completo, y con dos claves este caso no podia pasar nunca (visto en la primera
+# corrida completa, 2026-10-09). Stonecroft deriva todo caso al ajustador.
+expected_record:
+  record_type: claim
+  state: derived
+  complete: 5
+  total: 5
+  language: es
+expected_verdicts: {}
+requires_provider_key: true

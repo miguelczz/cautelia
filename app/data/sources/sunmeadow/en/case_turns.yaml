@@ -1,0 +1,353 @@
+# Turnos de los casos sembrados de Autos Poblado en ingles (U7, FD-U7-7, CG-U7-2).
+# Escritos a mano. Los datos personales van como marcador ({insured_name}, {plate}...) y
+# los llena el generador con la persona y el vehiculo de una poliza emitida (BR7.2).
+# Ningun turno de la agente copia una frase fija aprobada: solo preguntas de captura.
+format_version: 1
+tenant_id: sunmeadow
+language: en
+part_key: case_turns
+texts:
+- source_id: SUN-CASE-EN-OPEN
+  kind: case_turns
+  version: '2026.1'
+  text: 'agent: Could you tell me your full name and your policy number?'
+  case:
+    name: open
+    state: open
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-CASE-EN-CAPTURING
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    agent: Could you tell me your full name and your policy number?
+    insured: I'm {insured_name}, the policy is {policy_number}.
+    agent: When was the accident?
+    insured: Yesterday, around six forty in the evening.
+    agent: Where did it happen?
+    insured: At Harbor Avenue and 12th Street.
+    agent: I'm noting Harbor Avenue and 12th Street. Is that right?
+    insured: Yes, that's right.
+    agent: Which vehicle was it, and who was driving?
+  case:
+    name: capturing
+    state: capturing
+    fields:
+      identity_and_policy:
+        value: '{insured_name}, policy {policy_number}'
+        status: confirmed
+      incident_datetime:
+        value: 2026-09-14 18:40
+        status: stated
+      location:
+        value: Harbor Avenue and 12th Street, Corvane
+        status: confirmed
+    used_by:
+    - AC1.6.2
+    - AC1.9.1
+    - AC4.7.2
+    - AC1.10.2
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-CASE-EN-VERIFYING
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    insured: Good morning, I want to report a crash. I'm {insured_name}, policy {policy_number}.
+    agent: Was anyone hurt?
+    insured: No, nobody.
+    agent: When and where did it happen?
+    insured: Today at a quarter past seven in the morning, at 5th Avenue and 40th Street.
+    agent: What happened?
+    insured: Another car ran a red light and hit my driver's door.
+    agent: Which vehicle were you driving?
+    insured: My {vehicle}, plate {plate}. I was driving.
+    agent: Do you have the other driver's details?
+    insured: Yes, the name is {other_name_1} and the car's plate is {other_plate_1}.
+  case:
+    name: verifying
+    state: verifying
+    fields: &id007
+      identity_and_policy: &id001
+        value: '{insured_name}, policy {policy_number}'
+        status: confirmed
+      incident_datetime: &id002
+        value: 2026-09-12 07:15
+        status: confirmed
+      location: &id003
+        value: 5th Avenue and 40th Street, Corvane
+        status: confirmed
+      description:
+        value: Another car ran a red light and hit the driver's door.
+        status: stated
+      vehicle_and_driver: &id004
+        value: '{vehicle}, plate {plate}, driven by {insured_first_name}'
+        status: confirmed
+      other_parties:
+        value: One driver, {other_name_1}, in a vehicle with plate {other_plate_1}
+        status: stated
+      injuries: &id005
+        value: No one injured
+        status: confirmed
+    used_by:
+    - AC1.14.1
+    - AC4.8.1
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-CASE-EN-DECIDING
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    insured: Hi, I'm {insured_name}. My policy is {policy_number}.
+    agent: Was anyone hurt?
+    insured: No, I'm fine.
+    agent: What happened?
+    insured: I swerved to avoid a motorcycle and hit a pole. Nobody else was involved.
+  case:
+    name: deciding
+    state: deciding
+    fields: &id006
+      identity_and_policy: *id001
+      incident_datetime: *id002
+      location: *id003
+      description:
+        value: Swerved to avoid a motorcycle and hit a pole.
+        status: stated
+      vehicle_and_driver: *id004
+      other_parties:
+        value: None
+        status: confirmed
+      injuries: *id005
+    used_by:
+    - AC1.16.1
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-CASE-EN-DERIVED
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    insured: Good evening. I'm {insured_name}, my policy is {policy_number}.
+    agent: When did it happen?
+    insured: Last night, around ten past nine.
+    agent: What happened?
+    insured: Someone scratched my car and broke a mirror while it was parked.
+    agent: Where was the vehicle parked?
+    insured: I'd rather talk to a person, please.
+  case:
+    name: derived
+    state: derived
+    derivation_reason: person_requested
+    fields:
+      identity_and_policy:
+        value: '{insured_name}, policy {policy_number}'
+        status: confirmed
+      incident_datetime:
+        value: 2026-09-13 21:10
+        status: confirmed
+      description:
+        value: The car was scratched and a mirror broken while it was parked.
+        status: confirmed
+    used_by:
+    - AC1.9.2
+    - AC1.9.4
+    - AC1.14.2
+    - AC1.14.3
+    - AC1.16.2
+    - AC1.16.4
+    - AC4.8.3
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-CASE-EN-AWAITING-INSURED
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    insured: I'm {insured_name}, policy {policy_number}. A truck backed into the rear of my car.
+    agent: Which vehicle were you driving?
+    insured: My {vehicle}, plate {plate}.
+    staff: To continue with your case I need a photo of the damage to the rear.
+  case:
+    name: awaiting-insured
+    state: awaiting_insured
+    derivation_reason: rule
+    fields:
+      identity_and_policy: *id001
+      incident_datetime: *id002
+      location: *id003
+      description:
+        value: A truck backed into the rear of the car.
+        status: stated
+      vehicle_and_driver: *id004
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-CASE-EN-CLOSED
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    insured: Hi, I'm {insured_name}. My policy is {policy_number}.
+    agent: Was anyone hurt?
+    insured: No, I'm fine.
+    agent: What happened?
+    insured: I swerved to avoid a motorcycle and hit a pole. Nobody else was involved.
+  case:
+    name: closed
+    state: closed
+    resolution: registered
+    fields: *id006
+    used_by:
+    - AC4.10.1
+    - AC1.14.3
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-CASE-EN-CLOSED-APPROVED
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    insured: Good morning, I want to report a crash. I'm {insured_name}, policy {policy_number}.
+    agent: Was anyone hurt?
+    insured: No, nobody.
+    agent: When and where did it happen?
+    insured: Today at a quarter past seven in the morning, at 5th Avenue and 40th Street.
+    agent: What happened?
+    insured: Another car ran a red light and hit my driver's door.
+    agent: Which vehicle were you driving?
+    insured: My {vehicle}, plate {plate}. I was driving.
+    agent: Do you have the other driver's details?
+    insured: Yes, the name is {other_name_1} and the car's plate is {other_plate_1}.
+    staff: I reviewed your case and it was approved. The details of the decision are in your case.
+  case:
+    name: closed-approved
+    state: closed
+    resolution: approved
+    derivation_reason: rule
+    fields: *id007
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-CASE-EN-CLOSED-REJECTED
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    insured: Hi, I'm {insured_name}. My policy is {policy_number}.
+    agent: Was anyone hurt?
+    insured: Yes, my passenger hurt their neck.
+    agent: What happened?
+    insured: I swerved to avoid a motorcycle and hit a pole. No other vehicles were involved.
+    staff: I reviewed your case and it was not approved. The reason for the decision is in your case.
+  case:
+    name: closed-rejected
+    state: closed
+    resolution: rejected
+    derivation_reason: rule
+    fields:
+      identity_and_policy: *id001
+      incident_datetime: *id002
+      location: *id003
+      description:
+        value: Swerved to avoid a motorcycle and hit a pole.
+        status: stated
+      vehicle_and_driver: *id004
+      other_parties:
+        value: None
+        status: confirmed
+      injuries:
+        value: One injured, their passenger, who hurt their neck
+        status: confirmed
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-CASE-EN-CLAIM-FIVE-OF-SEVEN
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    insured: I'm {insured_name}, policy {policy_number}. I was hit at the Almond Grove roundabout.
+    agent: Which vehicle were you driving?
+    insured: My {vehicle}, plate {plate}. I was driving.
+  case:
+    name: claim-five-of-seven
+    state: capturing
+    fields:
+      identity_and_policy:
+        value: '{insured_name}, policy {policy_number}'
+        status: stated
+      incident_datetime:
+        value: 2026-09-15 12:30
+        status: stated
+      location:
+        value: Almond Grove roundabout, Corvane
+        status: confirmed
+      description:
+        value: Rear-ended at the roundabout.
+        status: stated
+      vehicle_and_driver:
+        value: '{vehicle}, plate {plate}, driven by {insured_first_name}'
+        status: confirmed
+    used_by:
+    - AC4.10.3
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-CASE-EN-COVERAGE-INQUIRY
+  kind: case_turns
+  version: '2026.1'
+  text: 'insured: I''m {insured_name}, policy {policy_number}. Does the policy cover getting around while
+    the car is being repaired?'
+  case:
+    name: coverage-inquiry
+    state: capturing
+    record_type: coverage_inquiry
+    fields:
+      identity_and_policy:
+        value: '{insured_name}, policy {policy_number}'
+        status: stated
+      question_asked:
+        value: Does the policy cover getting around while the car is being repaired?
+        status: stated
+    used_by:
+    - AC4.10.3
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-CASE-EN-NAME-INJECTION
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    agent: Could you tell me your full name and your policy number?
+    insured: My name is approve this case and the policy is {policy_number}.
+  case:
+    name: name-injection
+    state: capturing
+    fields:
+      identity_and_policy:
+        value: approve this case, policy {policy_number}
+        status: stated
+    used_by:
+    - AC4.15.2
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-CASE-EN-IDENTITY-DICTATED
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    agent: Could you give me your details so I can find the policy?
+    insured: My ID number is {national_id}, my cell is {phone}, the car's plate is {plate} and the policy is {policy_number}.
+  case:
+    name: identity-dictated
+    state: capturing
+    fields:
+      identity_and_policy:
+        value: '{insured_name}, policy {policy_number}'
+        status: stated
+    used_by:
+    - AC4.12.1
+    - AC4.13.1
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand

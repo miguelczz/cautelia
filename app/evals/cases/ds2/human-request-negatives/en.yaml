@@ -1,0 +1,28 @@
+# Turnos que nombran a una persona sin pedirla (BR2.1, precision de AC1.9.3), turno en ingles.
+#
+# Criterio de aceptacion: sobre las filas `turns` del escenario
+# `human-request-negatives` de `app/evals/fixtures/compliance/en.yaml`
+# --el otro conductor, un testigo, la grua--, ninguna senal se levanta. Existe
+# para que un detector que dijera "si" a todo no pase los dos casos de peticion
+# de persona: derivar un caso que nadie pidio derivar tambien es un fallo.
+#
+# Veredicto esperado: `pass`.
+#
+# No es compuerta dura por si solo, pero corre en cada entrega y un caso que
+# pasa a fallar es una regresion (definicion de regresion de `team.md`).
+#
+# La pareja en espanol es `DS-2/es/human-request-negatives`: los mismos criterios
+# y la misma meta, medidos por idioma y nunca como promedio combinado (P12).
+#
+# Lo que este caso no mide: nada de punta a punta; es la mitad de precision de
+# la deteccion.
+case_key: DS-2/en/human-request-negatives
+dataset: DS-2
+language: en
+requires_provider_key: false
+axes:
+  - human-request
+  - turn-signals
+  - negatives
+expected_verdicts:
+  human_request_negatives_ignored: pass

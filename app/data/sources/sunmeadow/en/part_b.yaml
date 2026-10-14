@@ -1,0 +1,78 @@
+# Textos fuente revisados de Autos Poblado, en ingles (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Los borradores del modelo en ingles calcaban giros del formulario de referencia: se
+# reescribieron a mano y por eso casi todos dicen drafted_with: hand.
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: sunmeadow
+language: en
+part_key: part_b
+texts:
+- source_id: SUN-PAP-2026-B.INS
+  kind: clause
+  clause_key: B.INS
+  part: Part B — Medical Payments Coverage
+  version: '2026.1'
+  text: Autos Poblado pays reasonable medical and funeral costs that result from a traffic accident and
+    are incurred within two years of it. We cover you and your family members whether they are riding
+    in a vehicle or struck by one, and anyone else while occupying your covered auto.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-B.EXCL.1
+  kind: clause
+  clause_key: B.EXCL.1
+  part: Part B — Medical Payments Coverage
+  version: '2026.1'
+  text: Part B does not pay for injuries suffered on a motorcycle or any other two- or three-wheeled vehicle.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-B.EXCL.2
+  kind: clause
+  clause_key: B.EXCL.2
+  part: Part B — Medical Payments Coverage
+  version: '2026.1'
+  text: Part B does not pay for injuries suffered while the vehicle is carrying passengers for pay.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-B.EXCL.3
+  kind: clause
+  clause_key: B.EXCL.3
+  part: Part B — Medical Payments Coverage
+  version: '2026.1'
+  text: Part B does not pay for injuries that happen while the vehicle is being used as a home or as a
+    fixed workplace.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-B.EXCL.4
+  kind: clause
+  clause_key: B.EXCL.4
+  part: Part B — Medical Payments Coverage
+  version: '2026.1'
+  text: Part B does not pay for injuries suffered in races, speed contests or performance tests.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-B.LIMIT
+  kind: clause
+  clause_key: B.LIMIT
+  part: Part B — Medical Payments Coverage
+  version: '2026.1'
+  text: The per-person limit on the declarations page is the most we pay toward each injured person's
+    medical costs from one accident, however many people or vehicles are involved.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-B.OTHER
+  kind: clause
+  clause_key: B.OTHER
+  part: Part B — Medical Payments Coverage
+  version: '2026.1'
+  text: If another medical payments policy covers the same costs, we pay only what is left unpaid after
+    that policy, up to our limit.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand

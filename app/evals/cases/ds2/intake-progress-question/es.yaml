@@ -1,0 +1,30 @@
+# La persona pregunta cuánto falta (BR3.2, BR5.1), turno en español.
+#
+# Criterio de aceptación: con tres de los siete campos confirmados, la respuesta
+# dice "3 de 7", nombra los bloques que faltan leídos del caso --no la
+# seguridad, que ya está-- y sigue con la pregunta del bloque que toca.
+#
+# Veredicto esperado: `pass`.
+#
+# No es compuerta dura por sí solo, pero corre en cada entrega y un caso que pasa a
+# fallar es una regresión (definición de regresión de `team.md`). Decisión de
+# Miguel del 2026-10-06: la agente contesta lo que le dijeron antes de seguir con
+# lo pendiente, sin llamar a ningún modelo para ello.
+#
+# La pareja en inglés es `DS-2/en/intake-progress-question`: los mismos criterios y la misma meta,
+# medidos por idioma y nunca como promedio combinado (P12).
+case_key: DS-2/es/intake-progress-question
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - intake
+  - conversation
+script:
+# El turno se indexa por el campo que **estaba pendiente** cuando la persona lo dijo
+# (`incident_datetime`): el guion solo admite campos del esquema, y lo social no es un campo.
+  - field_key: incident_datetime
+    text: "¿Cuánto falta?"
+expected_verdicts:
+  intake_progress_question: pass

@@ -1,0 +1,521 @@
+[project]
+name = "untangle-backend"
+version = "0.1.0"
+description = "Servidor del aplicativo Untangle: raiz de composicion, catalogo de textos y corredor de evaluaciones"
+readme = "README.md"
+requires-python = "==3.13.*"
+license = { text = "Proprietary" }
+dependencies = [
+    # Framework web y esquema OpenAPI (ADR-002).
+    "fastapi>=0.121.2",
+    # Starlette >= 1.0.1 por CVE-2026-48710 (evasion de autorizacion por la
+    # cabecera Host), en el catalogo de vulnerabilidades explotadas de CISA
+    # desde el 2026-09-02 (ADR-002, enmienda del 2026-09-17).
+    "starlette>=1.0.1",
+    # Modelos congelados y validacion de los archivos versionados.
+    "pydantic>=2.12.4",
+    # Lectura del entorno en un solo punto (C-24, C-25). La biblioteca estandar
+    # no valida ni tipa las variables, y la validacion al arrancar es lo que
+    # sostiene BR1.2. Licencia MIT.
+    "pydantic-settings>=2.12.0",
+    # Los archivos que escribe una persona son YAML (CD-4). La biblioteca
+    # estandar no lee YAML. Licencia MIT.
+    "pyyaml>=6.0.3",
+    # Servidor ASGI del proceso unico. Licencia BSD-3-Clause.
+    "uvicorn>=0.38.0",
+    # --- Lo que anade U2 `tenancy` --------------------------------------------
+    # Mapeador y motor asincrono (ADR-002). La biblioteca estandar no habla con
+    # PostgreSQL; escribir el manejo de conexiones, transacciones y tipos a mano
+    # es exactamente donde se cuelan las consultas concatenadas que BR1.6
+    # prohibe. Licencia MIT.
+    "sqlalchemy[asyncio]>=2.0.44",
+    # El unico driver de PostgreSQL del proyecto (ADR-002), con soporte nativo de
+    # asyncio -- la forma que la propia SQLAlchemy documenta para Postgres
+    # asincrono, y una sola dependencia de bajo nivel en vez de mantener dos.
+    # (La razon original citaba el checkpointer oficial de LangGraph, que U12
+    # decidio no usar (FD-U12-3); esta dependencia se queda por su propio merito.)
+    # Licencia LGPL-3.0-or-later para el paquete puro; el binario incluye libpq
+    # (LGPL-2.1+). Ninguna de las dos impide publicar el repositorio: se enlazan,
+    # no se derivan. Licencia LGPL-3.0-or-later.
+    "psycopg[binary]>=3.2.12",
+    # Migraciones: una sola historia lineal con SQL explicito para lo que el
+    # mapeador no modela --habilitar el aislamiento, forzarlo y declarar la
+    # politica-- (C-30, ADR-002). Licencia MIT.
+    "alembic>=1.16.6",
+    # Codifica y verifica la credencial firmada de la bandeja. La biblioteca
+    # estandar no trae JWT, y escribirlo a mano es el tipo de criptografia casera
+    # que no se hace. Es ademas el camino que documenta el tutorial de seguridad
+    # de FastAPI (decision Q4 de NFR-U2-4). Licencia MIT.
+    "pyjwt>=2.10.1",
+    # --- Lo que anade U3 `pii-redaction` --------------------------------------
+    # El motor de reconocedores y la resolucion de solapes. Escribirlo a mano
+    # seria rehacer un componente de seguridad probado, y esta es la unidad cuyo
+    # fallo no se manifiesta (ADR-013). Licencia MIT.
+    "presidio-analyzer>=2.2.361",
+    # La lista publica de dominios con la que el reconocedor de correos valida un
+    # dominio. Ya llegaba por `presidio-analyzer`; se declara porque el detector
+    # la usa directamente para leerla de la copia que trae el paquete y nunca de
+    # internet: la redaccion corre en cada punto de salida y no puede depender de
+    # la red (C-13, enmienda del 2026-09-21). Licencia BSD-3-Clause.
+    "tldextract>=5.3.2",
+    # La sustitucion por etiqueta con los desplazamientos ya resueltos. Sustituir
+    # a mano sobre indices es donde se cuelan los errores de un caracter, y aqui
+    # un caracter de mas deja medio dato a la vista. Licencia MIT.
+    #
+    # **Se resuelve en 2.2.362 y no en la ultima**, y no es un capricho del
+    # lockfile: la 2.2.364 exige `cryptography<49.0.0,>=48.0.1`, es decir, obliga
+    # a instalar una version con tres avisos abiertos. La 2.2.362 pide
+    # `cryptography>=46.0.4` y admite la corregida. Entre la ultima version de un
+    # paquete y una dependencia con avisos conocidos, manda la regla del equipo:
+    # un hallazgo en una dependencia que el aplicativo ejecuta bloquea. El dia
+    # que presidio-anonymizer admita `cryptography>=50`, el resolvedor subira
+    # solo.
+    "presidio-anonymizer>=2.2.361",
+    # `cryptography` entra al proyecto por `presidio-anonymizer`, y la version que
+    # ese paquete resolvia (48.0.1) tiene tres avisos que la auditoria del guion
+    # de verificacion detuvo el 2026-09-20: PYSEC-2026-3552 (oraculo de
+    # Bleichenbacher al descifrar PKCS#7, corregido en 50.0.0), PYSEC-2026-3553
+    # (construccion de cadena exponencial con intermedios autofirmados
+    # duplicados) y PYSEC-2026-3554 (el verificador acepta comodines de DNS y se
+    # escapa de `permittedSubtrees`), los dos ultimos corregidos en 49.0.0. Se
+    # fija >= 50.0.0, que es la primera version que cierra las tres, en vez de
+    # escribir una excepcion: la excepcion se escribe cuando no hay version que
+    # arregle el aviso, y aqui la hay. Mismo precedente que `starlette>=1.0.1`.
+    # Licencia Apache-2.0 OR BSD-3-Clause.
+    "cryptography>=50.0.0",
+    # --- Lo que anade U5 `provider-platform` ----------------------------------
+    # El cliente HTTP con el que el adaptador de Gemini habla por la red, dentro
+    # de su propio paquete, que es el unico sitio donde se puede importar un
+    # cliente de proveedor (BR1.2). La biblioteca estandar no trae un cliente
+    # asincrono con tiempos maximos separados de conexion y de lectura ni
+    # agrupacion de conexiones, y escribirlo a mano seria reimplementar un
+    # componente de red en el unico modulo que toca credenciales.
+    #
+    # **No es un paquete nuevo en el arbol**: ya estaba como dependencia de
+    # desarrollo --el cliente de prueba de FastAPI lo exige-- y aqui pasa a
+    # runtime con su razon. Ocupa el lugar que `tech-stack-decisions.md` dio a
+    # `google-genai`, que **no se instala**: el bloque E construyo la frontera
+    # contra la API REST (ruta y cuerpo, `systemInstruction` separado de
+    # `contents`, lectura de `candidates` y `usageMetadata`) y el SDK no tiene
+    # esa forma, asi que instalarlo exigiria rehacer lo ya revisado o dejarlo sin
+    # ejecutar, y una dependencia de runtime que nadie llama no se justifica.
+    # La razon entera esta en `adapters/gemini/transport.py`.
+    # Licencia BSD-3-Clause.
+    "httpx2>=2.0.0",
+    # --- Lo que anade U12 `graph-runtime` -------------------------------------
+    # El framework del grafo: estado tipado, puntos de control e interrupciones
+    # (ADR-003). **Solo `untangle.orchestration` lo importa**, y un contrato de
+    # `import-linter` lo comprueba: el dia que un nodo o un canal lo importe, el
+    # grafo deja de ser sustituible. Escribir a mano los puntos de control
+    # durables y la reanudacion es el trabajo que esta dependencia existe para no
+    # repetir.
+    #
+    # Las versiones minimas no son un capricho: las fija la enmienda del
+    # 2026-09-17 de ADR-003 por CVE-2026-28277 y CVE-2026-48775. Licencia MIT.
+    "langgraph>=1.0.10",
+    # `langgraph-checkpoint` trae `BaseCheckpointSaver` y `JsonPlusSerializer`,
+    # que si se usan (`orchestration/checkpoint.py`). `langgraph-checkpoint-postgres`
+    # y `psycopg-pool` **no se instalan**: la primera decision (Q1 del paso 2, FD-U12-3)
+    # fue envolver el checkpointer oficial sobre PostgreSQL, pero trae sus propias
+    # tres tablas, ninguna con columna de aseguradora, y guarda el estado en
+    # claro; adaptarlas dejaba el aislamiento y el cifrado apoyados en la forma
+    # interna de tablas ajenas. Se escribio la pieza propia sobre las tablas de
+    # esta unidad, y ninguna de las dos dependencias tiene ya un solo llamador:
+    # una dependencia de runtime que nadie importa no se justifica.
+    "langgraph-checkpoint>=4.1.1",
+    # `RunnableConfig` -- el tipo en el que viaja la aseguradora hacia el
+    # checkpointer -- es de `langchain-core`, no de LangGraph. Llegaba en el arbol
+    # por `langgraph`, y se declara por la misma regla que ya se aplico a
+    # `psycopg-pool`: lo nombra codigo nuestro (`orchestration/checkpoint.py`), y
+    # una dependencia de runtime que se importa directo no se hereda del arbol de
+    # otra. Licencia MIT.
+    "langchain-core>=1.6.5",
+    # --- Lo que anade U13 `chat` ----------------------------------------------
+    # Detecta el idioma de un turno de chat (BR2.1, BR2.2). No lo hace la
+    # biblioteca estandar: requiere un modelo estadistico por idioma. Se eligio
+    # por el requisito que decide --la precision en **texto corto**, porque
+    # BR2.2 exige que un "ok", una placa o un nombre propio no cambien el idioma
+    # de la conversacion-- y su propio resumen declara ese caso. Se descarto
+    # `langdetect`, entre otras razones, porque declara MIT en un campo y Apache
+    # en su clasificador, y esa contradiccion es un problema para un repositorio
+    # candidato a publicarse (D-017). Licencia Apache-2.0.
+    "lingua-language-detector>=2.2.0",
+    # --- Lo que anade U15 `speech-providers` ----------------------------------
+    # Cliente de WebSocket para los adaptadores de voz: la transcripcion en
+    # streaming de Deepgram y la sintesis de Cartesia solo se ofrecen por
+    # WebSocket, `httpx2` no habla ese protocolo y la biblioteca estandar no trae
+    # cliente de WebSocket. Se importa solo dentro de `providers/adapters/`
+    # (BR1.1). Ya estaba en el arbol como dependencia de desarrollo por el
+    # experimento 1 y pasa a runtime con esta razon (FD-U15-5), sin SDK de
+    # proveedor (FD-U15-1). Licencia BSD-3-Clause.
+    "websockets>=17.1",
+    # --- La redaccion natural del chat (decision de Miguel del 2026-10-07) ----
+    # El SDK oficial de Anthropic, para Claude Haiku 5.5 en el uso `chat_reply`,
+    # importado solo dentro de `providers/adapters/anthropic` (contrato
+    # `sdk-solo-en-su-adaptador`). Gemini va por REST sobre `httpx2` porque su
+    # frontera ya estaba escrita con esa forma; para Anthropic no habia nada
+    # construido, y la forma documentada por el proveedor es su SDK, con errores
+    # tipados y sin reescribir el protocolo a mano. La biblioteca estandar no
+    # habla HTTP asincrono con reintentos y tiempos por llamada. Usa `httpx2`, que
+    # ya estaba; trae `jiter` y `docstring-parser`. Licencia MIT.
+    "anthropic>=1.11.0",
+]
+
+# Los dos modelos de spaCy, **fijados por URL con su hash en el lockfile**
+# (INF-U3-1). La forma que documenta spaCy --y que Presidio repite en todos sus
+# ejemplos-- es `python -m spacy download`, y esa forma esta prohibida aqui: es
+# una resolucion libre que descarga lo que haya en ese momento, sin lockfile y
+# sin hash. La practica del equipo exige el modo reproducible del gestor, el que
+# falla si el lockfile no coincide.
+#
+# Van en un **extra** y no en el juego principal ni en un grupo (INF-U3-2):
+# `deps:install` usa `--all-groups`, que no incluye extras, y asi el camino del
+# clon al reporte no se descarga 72 MB. Esa cifra es exactamente la que mide
+# NFR21. Se instalan con `mise run models:install`.
+[project.optional-dependencies]
+models = [
+    "es-core-news-md @ https://github.com/explosion/spacy-models/releases/download/es_core_news_md-3.8.0/es_core_news_md-3.8.0-py3-none-any.whl",
+    "en-core-web-md @ https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.8.0/en_core_web_md-3.8.0-py3-none-any.whl",
+]
+
+[project.scripts]
+untangle-evals = "untangle.evals.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.1",
+    "pytest-asyncio>=1.3.0",
+    "pytest-cov>=7.0.0",
+    "mypy>=1.19.0",
+    "ruff>=0.15.1",
+    "import-linter>=2.6",
+    "pip-audit>=2.9.0",
+    # `httpx2` lo exige tambien el cliente de prueba de FastAPI (Starlette 1.x),
+    # pero ya no se declara aqui: con U5 pasa a ser dependencia de **runtime**,
+    # porque el adaptador de Gemini habla por la red con el. Declararlo en los
+    # dos sitios dejaria dos restricciones de version que un dia pueden
+    # discrepar.
+    "types-pyyaml>=6.0.12",
+    # Tipos de `regex`, que es lo que usa el motor de reconocedores para
+    # compilar los patrones: sin ellos el comprobador no puede seguir el modulo
+    # y la unica salida seria un `ignore` en el import. Licencia Apache-2.0.
+    "types-regex>=2025.9.1",
+    # La base efimera de las pruebas de aislamiento, con la misma imagen anclada
+    # por huella que el entorno local y conectada con el rol del aplicativo
+    # (BR1.7, ADR-002). Es dependencia de desarrollo: el camino del clon al
+    # reporte no la necesita. Licencia Apache-2.0.
+    "testcontainers>=4.14.0",
+    # Evalua los marcadores de entorno del lockfile en `licenses:check`: el mismo
+    # lockfile fija `pywin32` y `colorama`, que en macOS no se instalan y no
+    # faltan, y distinguirlo a mano seria reimplementar PEP 508. Ya estaba en el
+    # arbol como transitiva de media docena de paquetes; se declara porque ahora
+    # hay codigo nuestro que la importa. Licencia Apache-2.0 OR BSD-2-Clause.
+    "packaging>=25.0",
+    # Lee el texto de los specimens en PDF al sacar las huellas de los
+    # formularios de terceros (U7, CG-U7-5): la biblioteca estandar no trae lector
+    # de PDF. Solo la usa un comando a mano, nunca el aplicativo servido, y por
+    # eso vive en este grupo. Licencia BSD-3-Clause.
+    "pypdf>=6.0.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/untangle"]
+
+# Los dos modelos de spaCy entran como referencia directa de PEP 508 --una URL
+# con su hash en el lockfile-- y hatchling las rechaza salvo que se declare aqui.
+# No es un permiso general para instalar desde cualquier sitio: lo que habilita
+# es escribir la URL en el manifiesto, que es justo lo que permite a `uv` anotar
+# su hash y a `uv sync --locked` fallar si la rueda cambia. Sin esta linea, la
+# unica via que queda es `spacy download`, que es la resolucion libre que la
+# practica del equipo prohibe (INF-U3-1).
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.uv]
+# Espera de versiones recien publicadas (SEC-U1.4): tres dias. La excepcion
+# escrita es una version que corrige un aviso de seguridad conocido, que entra
+# sin esperar porque esperarla dejaria abierta la vulnerabilidad que cierra.
+exclude-newer = "3 days ago"
+
+# --- Piso de cobertura --------------------------------------------------------
+# El umbral vive en el manifiesto y hace fallar el comando (NFR18.1). La lista de
+# exclusion esta versionada aqui, no en una bandera de linea de comandos
+# (NFR18.3).
+[tool.untangle.coverage]
+aggregate_floor = 80.0
+# Que queda fuera del calculo y por que. Cada entrada lleva su razon.
+excluded = [
+    { path = "site/", reason = "Landing estatica, fuera del alcance del aplicativo (D-005, D-013)" },
+    { path = "app/evals/cases/", reason = "Casos de golden set: datos, no codigo" },
+    { path = "app/backend/tests/fixtures/", reason = "Andamiaje de prueba: datos, no codigo" },
+    { path = "**/migrations/", reason = "Migraciones generadas; llegan con U2" },
+    { path = "app/contracts/", reason = "Artefactos generados, nunca editados a mano (C-28)" },
+]
+# El piso propio de cada modulo critico (NFR18.2). U1 lo dejo declarado como no
+# aplicable "hasta que llegue el primero de los cuatro"; `tenancy` es ese
+# primero, y a partir de aqui el comando de cobertura compara tambien cada
+# modulo critico contra su propio 80 %, ademas del agregado.
+critical_modules = [
+    { path = "app/backend/src/untangle/tenancy", floor = 80.0, reason = "Aislamiento por aseguradora (NFR18.2)" },
+    # La redaccion entra a la lista de modulos criticos con U3, por decision de
+    # Miguel del 2026-09-20: su compuerta detiene la entrega con un solo
+    # hallazgo y su fallo es **silencioso**. Una redaccion rota no rompe ninguna
+    # pantalla, no levanta ninguna excepcion y no hace fallar ninguna prueba de
+    # funcionamiento: sigue saliendo texto, solo que con el dato dentro.
+    { path = "app/backend/src/untangle/compliance/redaction", floor = 80.0, reason = "Redaccion de datos personales (NFR18.2)" },
+    # El esquema del caso es modulo critico desde `team.md`, y aqui esta lo que
+    # ese nombre cubre: el juego cerrado de estados y transiciones, la evidencia
+    # por campo, la completitud y el cifrado en reposo. Su fallo tambien es
+    # silencioso: un caso que llega a cerrado por un camino que nadie diseno no
+    # rompe ninguna pantalla.
+    { path = "app/backend/src/untangle/case_record", floor = 80.0, reason = "Esquema del caso (NFR18.2)" },
+    # El motor de reglas entra con U9 (`team.md`, `Testing Posture`): carga,
+    # validacion y evaluacion sin modelo. Es donde se decide la categoria de un
+    # caso, y una regla que se comporta distinto de lo que su prueba dice no
+    # rompe ninguna pantalla: sigue produciendo una categoria, solo que la
+    # equivocada.
+    { path = "app/backend/src/untangle/rules", floor = 80.0, reason = "Motor de reglas por aseguradora (NFR18.2)" },
+    # El verificador exacto de citas entra con U8 (`team.md`, "Testing
+    # Posture"): existencia, pertenencia al tenant y a la poliza, y vigencia,
+    # sin modelo. Su fallo tambien es silencioso -- una cita que pasa las
+    # cuatro comprobaciones cuando no deberia no rompe ninguna pantalla, solo
+    # cita algo que no correspondia.
+    { path = "app/backend/src/untangle/policy_rag/citations", floor = 80.0, reason = "Verificador exacto de citas (NFR18.2, team.md)" },
+]
+
+# --- La lista de exclusion de la asercion de aislamiento ----------------------
+# Versionada aqui, junto a la de cobertura, y con **su razon por entrada**. Una
+# exclusion que se pasara al invocar el comando no la veria nadie en una revision
+# de codigo (BR1.2, decision Q1 del diseno funcional).
+[tool.untangle.rls]
+excluded = [
+    { table = "alembic_version", reason = "Tabla de versiones de migraciones: no guarda datos del aplicativo" },
+    # Las tres de U5. El techo de gasto es uno solo para el proyecto y las cifras
+    # por proveedor y por mes cruzan las tres aseguradoras: aislar por
+    # aseguradora obligaria a consultarlas una por una y a sumar fuera de la
+    # base, y el gasto que no tiene aseguradora ninguna --evaluaciones,
+    # generacion, operacion-- no cabria en ninguna de las tres (BR7.1, Q1 del
+    # diseno funcional de U5).
+    { table = "spend_entry", reason = "Dato del proyecto: el libro mayor del gasto, con el techo comun a las tres aseguradoras y el gasto que no tiene ninguna (BR7.1)" },
+    { table = "quota_counter", reason = "Dato del proyecto: el cupo del sitio no es de ninguna aseguradora, y el del visitante se cuenta por navegador y no por aseguradora (BR7.1)" },
+    { table = "budget_window", reason = "Dato del proyecto: una sola fila con el acumulado, el techo y la alerta de la ventana de 90 dias, comun a todo el proyecto (BR7.1)" },
+    # La cuarta, y que sean cuatro y no tres se declara en vez de heredarse:
+    # BR7.1 nombra tres. Esta nace con BR5.5, que sin una marca por llamada no se
+    # puede cumplir --el segundo cierre de la misma llamada devolveria un segundo
+    # cupo del sitio-- y es dato del proyecto por la misma razon que las otras
+    # tres: la llamada que nombra no es de ninguna aseguradora.
+    { table = "voice_call_release", reason = "Dato del proyecto: una fila por llamada cerrada, la marca que impide devolver dos veces el cupo de una misma llamada; la llamada no es de ninguna aseguradora (BR7.1, BR5.5)" },
+    # Las dos de U20. Una corrida del reinicio nocturno barre las tres
+    # aseguradoras, asi que no es de ninguna, y son la unica parte del aplicativo
+    # que tiene que sobrevivir **al propio reinicio**: de ellas sale el contador
+    # de 24 horas de BR3.2. Pagan lo que la exclusion cobra --identificadores
+    # acotados, enteros, marcas de tiempo y un valor de un conjunto cerrado-- y no
+    # guardan nada de ninguna persona.
+    { table = "reset_run", reason = "Dato del proyecto: una fila por corrida del reinicio nocturno, de donde sale el contador de 24 horas (BR3.2, TECH-U20.4)" },
+    { table = "reset_run_purger", reason = "Dato del proyecto: lo que dijo cada purgador en una corrida, una fila por purgador y nunca un total (BR3.1, entities.md de U20)" },
+]
+
+# --- Lo que paga la exclusion de arriba ---------------------------------------
+# Ninguna tabla excluida del aislamiento puede tener una columna de texto sin
+# longitud acotada ni una columna cuyo nombre **contenga** --sin distinguir
+# mayusculas-- una de estas entradas (BR7.2). La asercion lo comprueba contra el
+# catalogo vivo en cada corrida de `rls:check`, y su fallo nombra la tabla, la
+# columna y la entrada que coincidio.
+#
+# Vive aqui, al lado de la lista que paga, para que una revision las lea juntas.
+# Crecer la lista es un cambio a este archivo, visible en el diff.
+#
+# **Su limite, dicho.** No impide guardar un dato personal en una columna de
+# nombre inocente y longitud acotada. Contra eso no hay asercion de esquema; lo
+# que hay es que ninguna de las seis tablas del aplicativo excluidas --las siete
+# de la lista menos `alembic_version`, que no es del aplicativo-- tiene una
+# columna de texto libre en su diseno, y que anadir una se ve en la revision del
+# cambio de esquema. **Una sola excepcion, a la vista** (2026-10-13,
+# `u5_platform_0004_adjustment`): `spend_entry.note`, de donde salio la cifra de un
+# asiento de ajuste conciliado. Acotada a 200, la escribe quien opera el proyecto y
+# nunca un visitante, y una restriccion de la base la ata a ese origen en las dos
+# direcciones: ninguna otra fila puede llevarla.
+personal_data_column_names = [
+    { name = "nombre", reason = "Nombre de una persona (es)" },
+    { name = "name", reason = "Nombre de una persona (en)" },
+    { name = "correo", reason = "Correo electronico (es)" },
+    { name = "email", reason = "Correo electronico (en)" },
+    { name = "telefono", reason = "Telefono (es)" },
+    { name = "phone", reason = "Telefono (en)" },
+    { name = "placa", reason = "Placa de vehiculo (es), uno de los cuatro reconocedores propios de U3" },
+    { name = "plate", reason = "Placa de vehiculo (en), uno de los cuatro reconocedores propios de U3" },
+    { name = "direccion", reason = "Direccion postal (es)" },
+    { name = "address", reason = "Direccion postal (en)" },
+    { name = "cedula", reason = "Documento de identidad (es), uno de los cuatro reconocedores propios de U3" },
+    { name = "document", reason = "Documento de identidad (en)" },
+    { name = "poliza", reason = "Numero de poliza (es), uno de los cuatro reconocedores propios de U3" },
+    { name = "policy", reason = "Numero de poliza (en), uno de los cuatro reconocedores propios de U3" },
+]
+
+# --- Las licencias que se admiten ---------------------------------------------
+# El repositorio es candidato a publicarse (D-017), y la practica del equipo pide
+# rechazar la licencia que lo impida. `licenses:check` recorre el arbol resuelto
+# de los dos gestores --transitivas incluidas-- y falla con cualquier licencia
+# que no este aqui.
+#
+# Es una lista de **admitidas** y no de bloqueadas a proposito: una lista de
+# bloqueadas se queda corta con la primera licencia que nadie previo, y esta se
+# queda, como maximo, pidiendo una decision escrita.
+[tool.untangle.licenses]
+allowed = [
+    { id = "MIT", reason = "Permisiva; solo exige conservar el aviso de copyright" },
+    { id = "MIT-0", reason = "MIT sin la obligacion de conservar el aviso" },
+    { id = "Apache-2.0", reason = "Permisiva con concesion expresa de patentes; exige conservar avisos y marcar cambios" },
+    { id = "BSD-2-Clause", reason = "Permisiva; conservar el aviso" },
+    { id = "BSD-3-Clause", reason = "Permisiva; conservar el aviso y no usar el nombre del autor para promocionar" },
+    { id = "0BSD", reason = "Permisiva sin condiciones" },
+    { id = "ISC", reason = "Permisiva, equivalente a BSD-2-Clause" },
+    { id = "Zlib", reason = "Permisiva; no tergiversar el origen" },
+    { id = "PSF-2.0", reason = "Licencia de la biblioteca estandar de Python; permisiva" },
+    { id = "Python-2.0", reason = "Misma familia que PSF-2.0, tal como la declara el paquete" },
+    { id = "CNRI-Python", reason = "Parte de la historia de licencias de Python; permisiva, aparece junto a Apache-2.0 en 'regex'" },
+    { id = "Unlicense", reason = "Renuncia al copyright" },
+    { id = "BlueOak-1.0.0", reason = "Permisiva moderna redactada en lenguaje llano" },
+    { id = "CC0-1.0", reason = "Renuncia al copyright; aqui cubre datos, no codigo" },
+    { id = "CC-BY-4.0", reason = "Datos con atribucion (tablas de compatibilidad de navegadores); exige citar la fuente" },
+    { id = "OFL-1.1", reason = "Tipografias: permite incrustar y redistribuir; prohibe vender la fuente sola y exige conservar el nombre reservado" },
+    # Copyleft debil, que si esta admitido y por que:
+    { id = "MPL-2.0", reason = "Copyleft por archivo: obliga a publicar los cambios A ESOS ARCHIVOS, no al resto del programa. Ninguno se modifica aqui, y publicar el repositorio no toca esa obligacion" },
+    { id = "LGPL-3.0-only", reason = "Copyleft de biblioteca: obliga a permitir sustituir la biblioteca, no a liberar el programa que la usa. 'psycopg' se enlaza, no se deriva" },
+]
+
+# La licencia leida a mano de la fuente, para el paquete cuyo metadato solo
+# nombra una familia ("BSD" no dice si son dos clausulas o tres). No se adivina:
+# cada entrada dice donde se leyo.
+declared = [
+    { ecosystem = "python", package = "blis", licenses = ["BSD-3-Clause"], source = "blis-1.3.3.dist-info/licenses/LICENSE: \"All parties provide their portions of the code under the 3-clause BSD license\"" },
+    { ecosystem = "python", package = "jinja2", licenses = ["BSD-3-Clause"], source = "jinja2-3.1.6.dist-info/licenses/LICENSE.txt: las tres clausulas, incluida la del nombre del autor" },
+]
+
+# Una licencia fuera de la lista de admitidas, aceptada para un paquete concreto
+# con razon y fecha. Se imprime en cada corrida: una excepcion que nadie vuelve a
+# leer es una decision olvidada.
+exceptions = [
+    # El modelo de espanol de spaCy es GPL-3.0, y no por el modelo: su corpus de
+    # entrenamiento --UD Spanish AnCora v2.8, que su propio `meta.json` nombra--
+    # lo es. El de ingles, `en-core-web-md`, es MIT.
+    #
+    # Por que no bloquea publicar el repositorio: el modelo **no esta en el
+    # repositorio**. Entra como rueda desde su URL, anclada por hash en el
+    # lockfile (INF-U3-1), y lo que publica la semana 12 es el codigo fuente, que
+    # no contiene ni deriva del modelo. La obligacion de la GPL nace al
+    # distribuir el trabajo, y aqui no se distribuye.
+    #
+    # Lo que si toca, dicho para que nadie lo descubra tarde: quien empaquete el
+    # aplicativo con el modelo dentro --una imagen, un binario-- si distribuye
+    # un trabajo combinado y hereda esa obligacion.
+    #
+    # **Decidido por Miguel el 2026-09-27**: se queda, y se dice por escrito. El
+    # registro entero, con la frase que el README de U22 tiene que llevar, esta en
+    # `docs/reference/licencias-de-terceros.md`. Esta excepcion se imprime en cada
+    # corrida para que la consecuencia no se pierda de vista.
+    { ecosystem = "python", package = "es-core-news-md", licenses = ["GPL-3.0-only"], date = "2026-09-27", reason = "El modelo no esta en el repositorio: se descarga de su URL al instalar, y publicar el codigo fuente no lo distribuye. Quien empaquete el aplicativo con el modelo dentro si distribuye un trabajo combinado y hereda la obligacion: docs/reference/licencias-de-terceros.md" },
+]
+
+# --- Formatter y linter -------------------------------------------------------
+[tool.ruff]
+# Alcance declarado al prefijo del aplicativo, no como lista de exclusiones
+# (convencion 1 del equipo).
+src = ["src", "tests"]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "E", "W",      # pycodestyle
+    "F",           # pyflakes
+    "I",           # isort
+    "N",           # pep8-naming
+    "UP",          # pyupgrade
+    "B",           # bugbear
+    "A",           # builtins sombreados
+    "C4",          # comprehensions
+    "S",           # bandit: las reglas de seguridad, activadas (team.md Code Style)
+    "ASYNC",       # errores de asincronia
+    "BLE001",      # except Exception desnudo
+    "C901",        # complejidad ciclomatica
+    "PLR09",       # demasiados argumentos, ramas, sentencias
+    "TID251",      # importaciones prohibidas por nombre
+    "RUF",
+]
+ignore = [
+    # El formatter ya decide el ancho de linea de las cadenas largas.
+    "E501",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Las pruebas usan assert: es su forma de afirmar, no una comprobacion de
+# produccion desactivable con -O.
+"tests/**" = ["S101"]
+# El contrato C-21 deletrea la firma del catalogo con `**vars`, y el contrato
+# manda sobre la preferencia del linter: renombrarlo aqui rompe el acuerdo que
+# todas las unidades consumen. Es el unico archivo con esta excepcion.
+"src/untangle/copy_catalog/api.py" = ["A002"]
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"random".msg = "Ninguna fuente de azar fuera de la semilla: ni el corredor ni el asegurado simulado (BR2.4, REL-U1.2), ni el generador sintetico, que elige con SHA-256 sobre semilla, salida y contador (U7, CG-U7-1)."
+
+[tool.ruff.lint.isort]
+known-first-party = ["untangle"]
+
+# --- Comprobador de tipos -----------------------------------------------------
+[tool.mypy]
+python_version = "3.13"
+# Alcance declarado al prefijo del aplicativo.
+files = ["app/backend/src/untangle", "app/backend/tests"]
+mypy_path = "app/backend/src"
+explicit_package_bases = true
+namespace_packages = true
+strict = true
+plugins = ["pydantic.mypy"]
+warn_unreachable = true
+enable_error_code = ["redundant-expr", "truthy-bool", "ignore-without-code"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+# --- Runner de pruebas --------------------------------------------------------
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "--strict-markers --strict-config"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+filterwarnings = [
+    # Un aviso nuevo es un fallo: descubrirlo cuando ya rompio cuesta mucho mas.
+    "error",
+    # Excepcion acotada y con su razon: Starlette 1.6 usa internamente un alias
+    # que anyio marca como obsoleto. Es codigo de terceros, no nuestro, y se
+    # silencia **ese mensaje exacto** en vez de apagar la regla entera.
+    "ignore:The anyio.abc.BlockingPortal alias is deprecated:DeprecationWarning",
+]
+
+# --- Cobertura ----------------------------------------------------------------
+[tool.coverage.run]
+source = ["app/backend/src/untangle"]
+branch = true
+relative_files = true
+omit = [
+    # Las migraciones llegan con U2; la exclusion esta declarada desde ahora
+    # para que no haya que acordarse despues (NFR18.3).
+    "*/migrations/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+exclude_also = [
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+    "@overload",
+]

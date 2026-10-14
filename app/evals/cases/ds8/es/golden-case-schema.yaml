@@ -1,0 +1,6 @@
+case_key: DS-8/es/golden-case-schema
+dataset: DS-8
+language: es
+requires_provider_key: false
+expected_verdicts:
+  golden_case_schema: pass

@@ -1,0 +1,50 @@
+{
+  "stage": "nfr-design",
+  "unit": "u4-case-record",
+  "upstream_ids": [
+    "PA-8",
+    "NFR7.1",
+    "NFR7.2",
+    "NFR10.4",
+    "NFR18.2",
+    "NFR19.2",
+    "AC4.10.5"
+  ],
+  "coverage": [
+    {
+      "id": "PA-8",
+      "status": "OK",
+      "target": "Cifrado del lado del aplicativo con tipo propio: `crypto.py` es la unica pieza que lo fabrica y que conoce la clave, la persistencia solo acepta ese tipo en las columnas con dato personal, y un analisis estatico falla ante cualquier `cast` o constructor fuera de ese archivo (capas 1 y 2 de `security-design.md`). La clave sale de una variable de entorno declarada en la plantilla y sin ella el proceso no arranca; cada fila guarda el identificador de la clave que la cifro."
+    },
+    {
+      "id": "NFR7.1",
+      "status": "OK",
+      "target": "El calculo de completitud vive en `rules.py`, que es puro: recibe el estado del caso y los campos que el esquema versionado declara para su tipo de registro, y devuelve la cifra. No toca la base, asi que se prueba entero sin contenedor y la cifra 5/7 es comprobable de forma determinista."
+    },
+    {
+      "id": "NFR7.2",
+      "status": "OK",
+      "target": "La meta del hito se sostiene sobre la tabla de transiciones versionada: `awaiting_insured` tiene dos salidas declaradas (T10 hacia `derived` y T11 hacia `closed`), asi que un caso no puede quedarse atrapado alli por falta de arista. La medicion sobre DS-2 la corre el corredor de evaluaciones cuando ese conjunto exista."
+    },
+    {
+      "id": "NFR10.4",
+      "status": "OK",
+      "target": "Un solo camino de lectura del caso en `repository.py`, por el punto unico de sesion de U2, que no distingue la fila inexistente de la fila filtrada por la politica de aislamiento: las dos devuelven lo mismo por construccion, no por una rama que compare (capa 3 de `security-design.md`)."
+    },
+    {
+      "id": "NFR18.2",
+      "status": "OK",
+      "target": "Las siete piezas se separan de modo que seis de ellas se prueban sin levantar la base: `models.py` no importa nada del modulo, `rules.py` es puro y `crypto.py` no importa el repositorio. El piso del 80 % se alcanza probando logica, no orquestando contenedores."
+    },
+    {
+      "id": "NFR19.2",
+      "status": "OK",
+      "target": "`purge.py` implementa el contrato de purgador de U2 y borra el caso completo en cascada desde la raiz --campos, partes, turnos e historial--, y las cinco tablas nacen con la marca de dato de visitante en la misma revision que las crea, de modo que la prueba de U2 que interroga al catalogo nombra la que se olvide (capa 4 de `security-design.md`)."
+    },
+    {
+      "id": "AC4.10.5",
+      "status": "OK",
+      "target": "El estado y la resolucion finales los fija el ejecutor de transiciones de `rules.py` contra la tabla versionada, y el cierre valida la resolucion y la evidencia de los cinco adjuntos en la misma operacion. La comparacion con el registro esperado de DS-2 la corre el corredor de evaluaciones."
+    }
+  ]
+}

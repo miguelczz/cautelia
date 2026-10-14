@@ -1,0 +1,5 @@
+# Catalogo de ingles al que le falta una clave que si esta en espanol.
+system:
+  degraded:
+    text: Something went wrong on our side.
+    surface: system

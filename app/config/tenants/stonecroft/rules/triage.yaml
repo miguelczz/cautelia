@@ -1,0 +1,146 @@
+# Reglas de triage de Seguros Aburrá (C-25, CG-U9-1, BR1.1 a BR1.4).
+#
+# Perfil estricto (US1.15, US1.17): deriva heridos, terceros con datos
+# pendientes, monto, cobertura disputada, sospecha de fraude y conductor no
+# listado. Ninguna regla cierra directo: cuando nada de eso aparece, la regla
+# por defecto deja el caso en revision estandar, nunca cerrado solo.
+#
+# El vocabulario de `when` es el de `rules/fields.py`; las claves de
+# `then.explanation_key` viven en `app/config/copy/{es,en}.yaml` bajo
+# `rules.explain.*`, sin nombrar esta regla ni esta aseguradora (BR2.5).
+ruleset_version: v1
+rules:
+  - id: STO-R-01
+    version: 1
+    when: { operator: equals, field: coverage_disputed, value: true }
+    then:
+      category: referral
+      touches_money: true
+      explanation_key: rules.explain.coverage_review
+    tests:
+      - given: { coverage_disputed: true }
+        expect: true
+      - given: { coverage_disputed: false }
+        expect: false
+
+  - id: STO-R-02
+    version: 1
+    when: { operator: gte, field: claim_amount, value: 1000 }
+    then:
+      category: referral
+      touches_money: true
+      explanation_key: rules.explain.amount_review
+    tests:
+      - given: { claim_amount: 1000 }
+        expect: true
+      - given: { claim_amount: 500 }
+        expect: false
+
+  - id: STO-R-03
+    version: 1
+    when: { operator: gte, field: claim_amount, value: 10000 }
+    then:
+      category: referral
+      touches_money: true
+      explanation_key: rules.explain.high_value_review
+    tests:
+      - given: { claim_amount: 10000 }
+        expect: true
+      - given: { claim_amount: 5000 }
+        expect: false
+
+  - id: STO-R-04
+    version: 1
+    when: { operator: equals, field: injuries_present, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.injuries_reported
+    tests:
+      - given: { injuries_present: true }
+        expect: true
+      - given: { injuries_present: false }
+        expect: false
+
+  - id: STO-R-05
+    version: 1
+    when: { operator: equals, field: other_parties_data_pending, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.third_party_pending
+    tests:
+      - given: { other_parties_data_pending: true }
+        expect: true
+      - given: {}
+        expect: false
+
+  - id: STO-R-06
+    version: 1
+    when: { operator: equals, field: fraud_suspected, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.fraud_review
+    tests:
+      - given: { fraud_suspected: true }
+        expect: true
+      - given: { fraud_suspected: false }
+        expect: false
+
+  - id: STO-R-07
+    version: 1
+    when: { operator: equals, field: unlisted_driver, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.unlisted_driver_review
+    tests:
+      - given: { unlisted_driver: true }
+        expect: true
+      - given: { unlisted_driver: false }
+        expect: false
+
+  - id: STO-R-08
+    version: 1
+    when: { operator: lte, field: claim_amount, value: 999 }
+    then:
+      category: standard_review
+      touches_money: false
+      explanation_key: rules.explain.amount_noted
+    tests:
+      - given: { claim_amount: 999 }
+        expect: true
+      - given: { claim_amount: 1000 }
+        expect: false
+
+  # Dos detalles pendientes a la vez (terceros y conductor no listado): un caso
+  # mas complejo que cualquiera de los dos por separado, aunque la categoria ya
+  # sea `referral` con cualquiera de los dos solos (CG-U9-1).
+  - id: STO-R-09
+    version: 1
+    when:
+      operator: all
+      conditions:
+        - { operator: equals, field: other_parties_data_pending, value: true }
+        - { operator: equals, field: unlisted_driver, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.complex_case
+    tests:
+      - given: { other_parties_data_pending: true, unlisted_driver: true }
+        expect: true
+      - given: { other_parties_data_pending: true, unlisted_driver: false }
+        expect: false
+
+  - id: STO-R-10
+    version: 1
+    when: { always: true }
+    then:
+      category: standard_review
+      touches_money: false
+      explanation_key: rules.explain.default
+    tests:
+      - given: {}
+        expect: true

@@ -1,0 +1,319 @@
+# English recognizer set (BR2.1 to BR2.9).
+#
+# Adding a new format means adding an entry here, **without touching detection
+# code** (BR2.8). That is its only defence against being forgotten: a set that
+# can be read at a glance can be audited; one spread across code branches cannot.
+#
+# Every recognizer declares its five mandatory fields -- id, type, language,
+# mechanism and where the format comes from -- and if any of them is missing it
+# **does not load and startup fails naming it** (BR2.6). The mechanism is
+# declared because U21 reads this file, without importing this module, to check
+# that its second detector does not share a mechanism with this one (AC4.14.1,
+# BR4.6).
+#
+# A recognizer serves **one** language (BR2.7). That governs how it is declared
+# and how it is measured, not which ones run: **both sets run on every call**,
+# whatever the language of the turn (BR2.9). The turn's language decides which
+# language the label is written in, not what is searched for.
+#
+# Ids are `<language>-<type>` and the RT-15 probes compose them to demand that
+# the report credits the set that found the datum. Renaming one makes that probe
+# fail, which is what it is for.
+language: en
+
+# The minimum score for a finding to count. Patterns with structure of their own
+# -- `POL-######`, a US number written in groups -- clear it unaided; the ones
+# that are a bare run of digits score below it and only pass if a context word
+# lifts them. That way "requires context" is a number in a file, not a branch in
+# the code.
+score_threshold: 0.4
+
+recognizers:
+  # --- The format types --------------------------------------------------------
+  # The four domain types of NFR11.1 and the VIN. The language model does not
+  # find these: these patterns do. That is what bounds the risk of having picked
+  # the wrong model size (NFR-U3-1).
+
+  - id: en-license-plate
+    entity_type: license_plate
+    language: en
+    mechanism: pattern
+    source: >
+      US plate formats vary by state; the two covered here are the most common
+      shapes: three letters and four digits (ABC1234) and a digit followed by
+      three letters and three digits (7ABC123, California). Uppercase, which is
+      how a plate is written on a report and in a transcript.
+    context:
+      - plate
+      - license
+      - tag
+      - vehicle
+      - car
+      - truck
+    patterns:
+      - form: compact
+        regex: '\b(?:[A-Z]{3}\d{4}|\d[A-Z]{3}\d{3})\b'
+        score: 0.4
+      - form: separated
+        regex: '\b[A-Z]{3}[ \-]\d{4}\b'
+        score: 0.45
+      - form: spoken
+        regex: '\b[A-Z](?:[ \-]+[A-Z]){2}[ \-]+(?i:(?:(?:zero|oh|one|two|three|four|five|six|seven|eight|nine)[ \-]+){3}(?:zero|oh|one|two|three|four|five|six|seven|eight|nine))\b'
+        score: 0.45
+
+  - id: en-national-id
+    entity_type: national_id
+    language: en
+    mechanism: pattern
+    source: >
+      US Social Security number: nine digits, written compact or in groups of
+      three, two and four. The compact form scores below the threshold on
+      purpose: nine digits in a row are too common to cover without the
+      surrounding text saying they are an identity document.
+    context:
+      - ssn
+      - social
+      - security
+      - identification
+      - identity
+      - driver
+      - license
+      - number
+    patterns:
+      - form: compact
+        regex: '\b\d{9}\b'
+        score: 0.35
+      - form: separated
+        regex: '\b\d{3}-\d{2}-\d{4}\b'
+        score: 0.6
+      # Nine words exactly. The three dictated patterns in this file use
+      # different lengths -- six for the policy, nine for the ID, ten for the
+      # phone -- and when two of them overlap the longest wins, which is the one
+      # covering the whole run.
+      - form: spoken
+        regex: '\b(?i:(?:(?:zero|oh|one|two|three|four|five|six|seven|eight|nine)[ \-]+){8}(?:zero|oh|one|two|three|four|five|six|seven|eight|nine))\b'
+        score: 0.5
+
+  - id: en-phone
+    entity_type: phone
+    language: en
+    mechanism: pattern
+    source: >
+      North American Numbering Plan: ten digits, optionally with the +1 country
+      code and the area code in parentheses.
+    context:
+      - phone
+      - cell
+      - mobile
+      - call
+      - number
+      - contact
+      - reach
+    patterns:
+      - form: compact
+        regex: '(?<!\d)\d{10}(?!\d)'
+        score: 0.45
+      - form: separated
+        regex: '(?<!\d)(?:\+1[ \-]?)?(?:\(\d{3}\)[ ]?|\d{3}[ \-])\d{3}[ \-]\d{4}(?!\d)'
+        score: 0.6
+      - form: spoken
+        regex: '\b(?i:(?:(?:zero|oh|one|two|three|four|five|six|seven|eight|nine)[ \-]+){9}(?:zero|oh|one|two|three|four|five|six|seven|eight|nine))\b'
+        score: 0.55
+
+  - id: en-policy-number
+    entity_type: policy_number
+    language: en
+    mechanism: pattern
+    source: >
+      Policy number of the three demo carriers: the POL prefix and six digits,
+      as `example_policy` declares in `app/config/tenants/*/tenant.yaml`
+      (POL-100042, POL-200117, POL-200341).
+    context:
+      - policy
+      - coverage
+      - insurance
+      - insured
+      - number
+    patterns:
+      - form: compact
+        regex: '\b(?i:POL)-\d{6}\b'
+        score: 0.85
+      - form: separated
+        regex: '\b(?i:POL)[ ]\d{6}\b'
+        score: 0.8
+      - form: spoken
+        regex: '\b(?i:(?:(?:zero|oh|one|two|three|four|five|six|seven|eight|nine)[ \-]+){5}(?:zero|oh|one|two|three|four|five|six|seven|eight|nine))\b'
+        score: 0.45
+
+  # The VIN came in when U7 found it went out with only its trailing digits
+  # covered by the fallback (NFR11.10), which leaves the maker, the model and the
+  # year in view. It has no checksum validation **on purpose**: the synthetic
+  # VINs of U7 fail their check digit so that they are nobody's vehicle, and a
+  # validating recognizer would let exactly those out.
+  - id: en-vin
+    entity_type: vin
+    language: en
+    mechanism: pattern
+    source: >
+      Vehicle identification number, ISO 3779 and 49 CFR 565: seventeen
+      characters from the digits and the letters without I, O and Q. The
+      compact form must hold at least one letter and one digit, so a run of
+      seventeen digits is not taken for a VIN; it accepts lowercase because a
+      person typing a VIN into a chat does not always capitalize it. The
+      separated form is uppercase only: with lowercase, ordinary words split
+      by spaces would add up to seventeen characters.
+    context:
+      - vin
+      - vehicle
+      - chassis
+      - serial
+      - registration
+    patterns:
+      - form: compact
+        regex: '\b(?i:(?=[A-HJ-NPR-Z0-9]{0,16}\d)(?=[A-HJ-NPR-Z0-9]{0,16}[A-HJ-NPR-Z])[A-HJ-NPR-Z0-9]{17})\b'
+        score: 0.5
+      - form: separated
+        regex: '\b(?=[A-HJ-NPR-Z0-9 \-]{0,32}\d)(?=[A-HJ-NPR-Z0-9 \-]{0,32}[A-HJ-NPR-Z])[A-HJ-NPR-Z0-9](?:[ \-]?[A-HJ-NPR-Z0-9]){16}\b'
+        score: 0.45
+      # Seventeen tokens, each a single VIN letter or a digit word, with at
+      # least one letter: seventeen digit words alone are not a VIN.
+      - form: spoken
+        regex: '\b(?=(?:\S+[ \-]+){0,16}[A-HJ-NPR-Z](?![A-Za-z]))(?:(?:[A-HJ-NPR-Z]|(?i:zero|oh|one|two|three|four|five|six|seven|eight|nine))[ \-]+){16}(?:[A-HJ-NPR-Z]|(?i:zero|oh|one|two|three|four|five|six|seven|eight|nine))\b'
+        score: 0.5
+
+  # --- The base detector's own ---------------------------------------------------
+  # We did not write these, but they are declared the same way, with their five
+  # fields: U21 needs to see **every** mechanism this detector uses in order to
+  # check that its own is different, and an undeclared mechanism cannot be
+  # compared.
+
+  - id: en-person
+    entity_type: person
+    language: en
+    mechanism: model
+    source: >
+      spaCy en_core_web_md 3.8.0, PERSON entity (decision NFR-U3-1). The public
+      chat brings names the model has never seen, which is why the medium size
+      was chosen: it is the smallest one that ships word vectors.
+    provided_by:
+      recognizer: SpacyRecognizer
+      entity: PERSON
+
+  - id: en-location
+    entity_type: location
+    language: en
+    mechanism: model
+    source: spaCy en_core_web_md 3.8.0, LOC and GPE entities.
+    provided_by:
+      recognizer: SpacyRecognizer
+      entity: LOCATION
+
+  - id: en-email
+    entity_type: email
+    language: en
+    mechanism: pattern
+    source: Presidio's email recognizer, over the address format.
+    provided_by:
+      recognizer: EmailRecognizer
+      entity: EMAIL_ADDRESS
+
+# --- The fallback rule ---------------------------------------------------------
+# It runs **after** the recognizers and only claims what none of them claimed
+# (BR2.5). It covers the format nobody foresaw, which is how things get out; the
+# accepted cost is some over-covering, which is the safe side of the error.
+#
+# Its context phrases live here, next to the recognizers, and **not in the copy
+# catalog** (NFRD-U3-4): the catalog is for what a person reads, and these are
+# detection patterns. Putting them there would subject them to the parity check,
+# which measures something else.
+#
+# Its findings are counted in a figure of their own and never added to a domain
+# type (BR4.2): a fallback that fires a lot is the signal that a recognizer
+# broke, and adding it in would erase exactly that signal.
+fallback:
+  id: en-fallback-context
+  entity_type: unclassified
+  language: en
+  mechanism: context
+  source: >
+    Decision FD-U3-9 from the functional design stage: a context fallback rule
+    for the format nobody foresaw.
+  min_digits: 6
+  window: 40
+  context_phrases:
+    - my number
+    - my id
+    - my document
+    - my code
+    - my reference
+    - my account
+    - number is
+    - code is
+
+# --- The self-identification rule -------------------------------------------------
+# After a phrase with which someone says who they are, the capitalized sequence
+# that follows is a name, **whatever the language model calls it**. It came in
+# when U7 found that "My name is Megan Hughes." went out whole: en_core_web_md
+# tags that name as an organisation, and the English model does not recognise a
+# Spanish name inside an English sentence (NFR11.10).
+#
+# It runs on **every** call, whatever the turn language, like the format
+# recognizers: it is not a language model, and saying the name with the other
+# language's phrase cannot be the way to get it out.
+#
+# What it does not cover is declared here too: a sequence holding one of the
+# `organization_words` is a company, not a person. That is the negative of "This
+# is Ridgeway Mutual calling about your claim.": this module knows no carrier, so
+# the negative is decided by the structure of the name, never by a list of
+# carriers. Over-covering elsewhere ("This is Part A") is the accepted cost of
+# decision FD-U3-9.
+self_identification:
+  id: en-person-cue
+  entity_type: person
+  language: en
+  mechanism: context
+  source: >
+    Found by U7 (NFR11.10) and fixed forward as a conductor decision on
+    2026-09-21: the name after a self-identification phrase, two to four
+    capitalized words, masked as a person name even when the language model
+    tags it as an organisation or does not tag it at all.
+  min_tokens: 2
+  max_tokens: 4
+  cues:
+    - my name is
+    - this is
+    - i'm
+    - i am
+  organization_words:
+    - auto
+    # The plural of `auto`. The comparison is by **exact token** --accents and case
+    # are normalised, number is not-- so "Autos" never matched "auto" and a carrier
+    # named "Autos Poblado" was masked whole as a person's name. Its absence was an
+    # oversight and not a decision: this same list already carries plurals. It does
+    # not widen what the rule lets through beyond what `auto` already did.
+    - autos
+    - mutual
+    - insurance
+    - assurance
+    - agency
+    - company
+    - group
+    - bank
+    - services
+    - motors
+    - claims
+    - corp
+    - corporation
+    - inc
+    - llc
+    - ltd
+
+# Saludos que el modelo de lenguaje toma por nombre cuando llegan en minuscula,
+# que es como los transcribe el reconocedor de voz (2026-10-07: «hola tuve un
+# choque» salia «[NOMBRE 1] tuve un choque»). Solo se descarta el hallazgo cuyo
+# tramo entero es una de estas palabras; «hola Miguel» se sigue tapando.
+never_personal:
+  - hello
+  - hi
+  - hey
+  - thanks

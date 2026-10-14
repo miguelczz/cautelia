@@ -1,0 +1,31 @@
+{
+  "case_key": "SEED/sunmeadow/es/identity-dictated",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "identity_and_policy": {
+      "status": "stated",
+      "value": "Ana Torres, póliza POL-422088"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-422088",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "capturing",
+  "tenant_id": "sunmeadow",
+  "transcript": [
+    {
+      "speaker": "agent",
+      "text": "¿Me da sus datos para ubicar la póliza?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Mi cédula es 972-27-9135, mi celular 919-555-0116, la placa del carro BHR-9207 y la póliza POL-422088."
+    }
+  ],
+  "used_by": [
+    "AC4.12.1",
+    "AC4.13.1"
+  ]
+}

@@ -1,0 +1,29 @@
+# Muestra de revision humana de 'stonecroft', sacada el 2026-09-21
+# con `mise run synthetic:sample` (U7, BR5.4, AC5.4.5, AC5.5.6).
+#
+# Diez clausulas no distractoras, elegidas con la semilla de abajo y la ruta de
+# este archivo: la misma semilla y la misma fecha dan las mismas diez.
+#
+# Para revisarla: lea cada clausula en su archivo (el comentario de cada una
+# dice cual) y compruebe que es texto propio con estructura inspirada, sin
+# giros reconocibles de un formulario de terceros (P8). Despues anote abajo:
+#   verdict: own_text_structure_ok    o    verdict: changes_requested
+#   reviewed_on: AAAA-MM-DD            el dia en que la reviso
+#   commit: <hash>                     el commit del corpus que leyo
+# y corra `mise run synthetic:generate`, que la copia al manifiesto.
+tenant_id: stonecroft
+sample_seed: 20260916
+clause_ids:
+  - STO-PAP-2026-A.EXCL.A.8  # Parte A — Responsabilidad civil, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
+  - STO-PAP-2026-C.EXCL.1  # Parte C — Conductores sin seguro, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
+  - STO-PAP-2026-C.EXCL.4  # Parte C — Conductores sin seguro, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
+  - STO-PAP-2026-C.LIMIT  # Parte C — Conductores sin seguro, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
+  - STO-PAP-2026-C.OTHER  # Parte C — Conductores sin seguro, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
+  - STO-PAP-2026-D.APPRAISAL  # Parte D — Daños a su vehículo, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
+  - STO-PAP-2026-D.INS.OTC  # Parte D — Daños a su vehículo, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
+  - STO-PAP-2026-E.DUTIES.A.3  # Parte E — Obligaciones después de un accidente o pérdida, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
+  - STO-PAP-2026-E.DUTIES.D.1  # Parte E — Obligaciones después de un accidente o pérdida, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
+  - STO-PAP-2026-END-5-F.PERIOD_TERRITORY  # Endosos, en app/data/tenants/stonecroft/clauses/STO-PAP-2026-END-5.json
+reviewed_on: 2026-09-21
+commit: ae2062da61fcd1e8823a676096212ca9769630fc
+verdict: own_text_structure_ok

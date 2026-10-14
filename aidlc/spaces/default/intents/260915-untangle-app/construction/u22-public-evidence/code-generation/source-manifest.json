@@ -1,0 +1,196 @@
+{
+  "stage": "code-generation",
+  "unit": "u22-public-evidence",
+  "version": 1,
+  "writes": [
+    {
+      "path": "README.md"
+    },
+    {
+      "path": "app/backend/.importlinter"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/evidence/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/evidence/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/evidence/readme.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/evidence/snapshot.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/gates/baseline.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/gates/baseline_cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/gates/loading.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/gates/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/paths.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/composition.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/evidence_routes.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/openapi_export.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/problems.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/spend_routes.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/web.py"
+    },
+    {
+      "path": "app/backend/src/untangle/settings.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/spend/repository.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/readme_check.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/schema_check.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u16/test_import_contracts.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u22/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u22/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u22/test_spend_panel.py"
+    },
+    {
+      "path": "app/backend/tests/unit/evals/evidence/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/evals/evidence/builders.py"
+    },
+    {
+      "path": "app/backend/tests/unit/evals/evidence/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/unit/evals/evidence/test_readme.py"
+    },
+    {
+      "path": "app/backend/tests/unit/evals/evidence/test_snapshot.py"
+    },
+    {
+      "path": "app/backend/tests/unit/evals/gates/test_baseline.py"
+    },
+    {
+      "path": "app/backend/tests/unit/evals/gates/test_baseline_cli.py"
+    },
+    {
+      "path": "app/backend/tests/unit/evals/gates/test_digest.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/test_metrics_route.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/test_spend_routes.py"
+    },
+    {
+      "path": "app/backend/tests/unit/workspace/test_readme_check.py"
+    },
+    {
+      "path": "app/config/copy/en.yaml"
+    },
+    {
+      "path": "app/config/copy/es.yaml"
+    },
+    {
+      "path": "app/contracts/examples/metrics-snapshot.json"
+    },
+    {
+      "path": "app/contracts/examples/site-directory.json"
+    },
+    {
+      "path": "app/contracts/openapi.json"
+    },
+    {
+      "path": "app/frontend/e2e/visitable-routes.ts"
+    },
+    {
+      "path": "app/frontend/src/app/router.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/visitable-routes.test.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/evidence/metrics-labels.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/evidence/metrics-page.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/evidence/metrics-routes.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/evidence/metrics.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/spend/spend-labels.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/spend/spend-page.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/spend/spend-routes.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/spend/spend.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/metrics.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/spend.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/@tanstack/react-query.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/index.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/sdk.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/types.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-keys.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-texts.ts"
+    },
+    {
+      "path": "mise.toml"
+    },
+    {
+      "path": "scripts/verify.sh"
+    }
+  ]
+}

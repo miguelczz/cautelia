@@ -1,0 +1,26 @@
+name: rt14
+reason: >
+  Los casos sembrados de la redaccion de datos personales, en los dos idiomas.
+  Es el comando que produce el valor real de NFR11 y NFR11.1, y corre en cada
+  entrega: a diferencia de RT-4, no depende de ningun despliegue vivo, porque lo
+  que mide --que un dato sembrado no salga en claro-- se comprueba contra el
+  detector local.
+
+  Lleva RT-14 **y RT-15**, y no solo RT-14, porque son el mismo dato sembrado
+  medido dos veces: RT-14 en un turno de un solo idioma y RT-15 en un turno que
+  mezcla los dos. Publicar uno sin el otro publicaria media compuerta, y la
+  mitad que faltaria es justo la que se rompe en un detector real.
+
+  Necesita los dos modelos de spaCy instalados (`mise run models:install`). Sin
+  ellos el cargador falla nombrandolos y nombrando el comando, no con un
+  ImportError a mitad de la corrida.
+
+  Tope escrito: los casos sembrados de la redaccion y ninguno mas. Este
+  subconjunto no es el sitio donde meter un caso porque "tambien conviene
+  correrlo": el suyo es el subconjunto completo.
+requires_provider_key: false
+case_keys:
+  - DS-6/es/rt-14
+  - DS-6/en/rt-14
+  - DS-6/es/rt-15
+  - DS-6/en/rt-15

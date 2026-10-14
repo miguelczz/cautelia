@@ -1,0 +1,157 @@
+# La guardia de salida, juego en espanol (U10, BR1.1 a BR1.8).
+#
+# Cada patron mira una frase que va hacia el asegurado **ya normalizada**:
+# minusculas, sin tildes y con los espacios colapsados (BR1.3). Por eso aqui no
+# hay ni una tilde ni una mayuscula fuera de una secuencia de escape: el cargador
+# rechaza el archivo si la hay, porque ese patron nunca coincidiria.
+#
+# Los dos juegos --este y `en/guard.yaml`-- se aplican a **cada** frase, sea cual
+# sea el idioma del turno. Algunos patrones de aqui nombran a proposito la
+# palabra inglesa en una construccion espanola ("esta covered"): es la mitad del
+# ataque bilingue (RT-15) que le toca a este juego; la otra mitad la tiene el
+# ingles.
+#
+# Lo que los patrones buscan es **afirmar o negar** cobertura, montos o culpa, y
+# no citar: "no encuentro una clausula", "segun la clausula ... un ajustador
+# confirma si aplica" y "la cobertura la confirma un ajustador" salen sin
+# intervencion (BR1.8). Las plantillas aprobadas de respuesta verificada, ademas,
+# se eximen por su clave del catalogo en `exempt_catalog_keys`.
+#
+# Un patron nuevo llega con el caso que lo motivo (BR9.2), y cambiar uno es un
+# cambio a la vista: sube `version`.
+language: es
+family: guard
+version: "2026-09-21.1"
+
+# BR1.8. Vacia hasta que U8 publique las plantillas de respuesta verificada:
+# son de U8 y todavia no existen, y eximir aqui una clave que nadie compone
+# seria abrir una puerta que no lleva a ninguna parte. La misma lista va en
+# `en/guard.yaml`; el cargador falla si las dos no coinciden.
+exempt_catalog_keys: []
+# Sigue vacia, y ahora por una razon medida y no por una pendiente.
+#
+# U13 la iba a usar para el aviso de la decision del ajustador (BR5.2), hasta que
+# se comprobo dos cosas el 2026-09-28. La primera: la plantilla del aviso **no
+# dispara ningun patron** --afirmar que un ajustador aprobo un caso no es afirmar
+# cobertura-- asi que la exencion no hacia falta. La segunda, que es la que
+# importa: el aviso lleva dentro el **comentario libre del ajustador**, y eximir
+# la clave eximia el texto entero. Un comentario que dijera "su poliza cubre el
+# choque" pasaba sin intervencion; sin la exencion, la guardia lo sustituye.
+#
+# La firma de una persona autoriza **su decision**, no cualquier frase que
+# escriba. Por eso el comentario pasa por la guardia por su cuenta y la plantilla
+# se compone despues.
+patterns:
+  # --- Promesa de cobertura: afirmarla o negarla (AC1.11.1, AC4.15.1) --------
+  - id: guard.es.coverage_promise.001
+    category: coverage_promise
+    regex: '\b(esta|estas|estan|queda|quedo|quedaria|quedara|sale|salio)\s+(usted\s+)?(totalmente\s+|completamente\s+|bien\s+)?(cubiert[oa]s?|covered)\b'
+  - id: guard.es.coverage_promise.002
+    category: coverage_promise
+    regex: '\b(poliza|seguro|aseguradora)\s+(si\s+|no\s+)?(le\s+|lo\s+|la\s+|se\s+lo\s+|se\s+la\s+)?(cubre|cubren|cubrira|cubriria|covers)\b'
+  - id: guard.es.coverage_promise.003
+    category: coverage_promise
+    regex: '\b(se\s+lo|se\s+la|se\s+los|se\s+las|se\s+le|le|lo|los|las)\s+(va\s+a\s+|van\s+a\s+)?(cubre|cubren|cubrira|cubriran|cubrir)\b'
+  # Anunciar que el caso quedo aprobado o rechazado es afirmar la cobertura con
+  # otras palabras (RT-2): la decision la firma una persona en la bandeja.
+  - id: guard.es.coverage_promise.004
+    category: coverage_promise
+    regex: '\b(aprobe|aprobamos|he\s+aprobado|hemos\s+aprobado|autorice|rechace|rechazamos|he\s+rechazado|denegue)\b'
+  - id: guard.es.coverage_promise.005
+    category: coverage_promise
+    regex: '\b(quedo|queda|esta|fue|ha\s+sido|quedaria|quedara)\s+(ya\s+)?(aprobad|autorizad|rechazad|denegad|negad)[oa]s?\b'
+
+  # --- Montos (AC1.11.1, AC1.11.5) --------------------------------------------
+  - id: guard.es.amount.001
+    category: amount
+    regex: '(\$|\bus\$|\busd|\bcop|\bmxn|€|\beur)\s?\d'
+  - id: guard.es.amount.002
+    category: amount
+    regex: '\b\d[\d.,]*\s*(mil\s+|millon(es)?\s+(de\s+)?)?(pesos|dolares|dollars|usd|cop|mxn|euros)\b'
+  - id: guard.es.amount.003
+    category: amount
+    regex: '\b(un|una|unos|unas|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|cien|cientos|quinientos|mil|millon|millones|medio)\b[^.?!]{0,25}\b(pesos|dolares|euros)\b'
+  - id: guard.es.amount.004
+    category: amount
+    regex: '\b\d+([.,]\d+)?\s*(%|por\s+ciento)'
+
+  # --- Culpa (AC1.11.2) -------------------------------------------------------
+  - id: guard.es.fault.001
+    category: fault
+    regex: '\b(fue|es|era|seria|sera|tuvo|tiene)\s+(la\s+|toda\s+la\s+)?culpa\b'
+  - id: guard.es.fault.002
+    category: fault
+    regex: '\bla\s+culpa\s+(fue|es|era|la\s+tiene|la\s+tuvo|seria|sera)\b'
+  - id: guard.es.fault.003
+    category: fault
+    regex: '\bculpa\s+(suya|tuya|mia|nuestra|de\s+usted|del\s+otro|de\s+la\s+otra|de\s+el|de\s+ella)\b'
+  - id: guard.es.fault.004
+    category: fault
+    regex: '\b(usted|el\s+otro\s+conductor|la\s+otra\s+conductora|ellos)\s+(es|fue|era)\s+(el\s+|la\s+)?(culpable|responsable)\b'
+
+  # --- Consejo legal (AC1.11.2) -----------------------------------------------
+  - id: guard.es.legal_advice.001
+    category: legal_advice
+    regex: '\bmi\s+(consejo|recomendacion|asesoria)(\s+legal)?\s+es\b'
+  - id: guard.es.legal_advice.002
+    category: legal_advice
+    regex: '\b(le|te|les)\s+(recomiendo|aconsejo|sugiero)\s+(que\s+)?(no\s+)?(firme|firmar|demande|demandar|denuncie|denunciar|declare|declarar|reconozca|reconocer|admita|admitir|acepte|aceptar|contrate|contratar|diga|decir)\b'
+  - id: guard.es.legal_advice.003
+    category: legal_advice
+    regex: '\b(demande|demandar|demandelo|demandarlo|demandela|demandarla|interponga\s+una\s+demanda|ponga\s+una\s+demanda)\b'
+  - id: guard.es.legal_advice.004
+    category: legal_advice
+    regex: '\bno\s+(reconozca|admita|firme|acepte|declare)\s+(nada|ninguna|la\s+culpa|culpa)\b'
+
+  # --- Afirmacion de ser humana (AC1.10.3, BR2.5) -----------------------------
+  # La respuesta fija de identidad empieza por "no, soy una asistente": la coma
+  # la separa de "no soy", y "asistente" no esta en ninguna lista.
+  - id: guard.es.humanity_claim.001
+    category: humanity_claim
+    regex: '(?<!no )\bsoy\s+(una\s+|un\s+)?(persona|humana|humano|ser\s+humano)(\s+(real|de\s+verdad|de\s+carne\s+y\s+hueso))?\b'
+  - id: guard.es.humanity_claim.002
+    category: humanity_claim
+    regex: '\b(le|te)\s+(habla|atiende|esta\s+hablando|esta\s+atendiendo)\s+(una\s+|un\s+)?(persona|humana|humano|ser\s+humano)\b'
+  - id: guard.es.humanity_claim.003
+    category: humanity_claim
+    regex: '\bde\s+carne\s+y\s+hueso\b'
+  - id: guard.es.humanity_claim.004
+    category: humanity_claim
+    regex: '(?<!no )\bsoy\s+(una\s+|un\s+)?(agente|asesora|asesor|operadora|operador)\s+(real|de\s+verdad|humana|humano)\b'
+  - id: guard.es.humanity_claim.005
+    category: humanity_claim
+    regex: '\bno\s+soy\s+(una\s+|un\s+)?(robot|maquina|bot|ia|inteligencia\s+artificial|asistente\s+virtual|programa)\b'
+
+  # --- Transferencia o plazo que no existe (AC1.9.2) ---------------------------
+  # La lista versionada del criterio: "le estoy transfiriendo" y "le llega hoy".
+  # La frase de derivacion ("le paso todo lo que registramos") no es una
+  # transferencia: entrega el caso, no la llamada.
+  - id: guard.es.transfer_or_deadline.001
+    category: transfer_or_deadline
+    regex: '\b(le|lo|la|te)\s+(estoy|estamos|voy\s+a|vamos\s+a)\s+(transfiriendo|transferir|pasando\s+con|pasar\s+con|comunicando\s+con|comunicar\s+con|conectando\s+con|conectar\s+con)\b'
+  - id: guard.es.transfer_or_deadline.002
+    category: transfer_or_deadline
+    regex: '\b(le|lo|la|te)\s+(transfiero|paso|comunico|conecto)\s+(ya\s+|ahora\s+|enseguida\s+)?con\b'
+  - id: guard.es.transfer_or_deadline.003
+    category: transfer_or_deadline
+    regex: '\b(le|te)\s+(llega|llegara|llegan|responden|respondemos|contestan|contestamos|llaman|llamamos|llamara|escriben|pagan|pagaran|depositan)\b[^.?!]{0,30}\b(hoy|manana|esta\s+(tarde|noche|semana)|en\s+(\d+|un|una|dos|tres|cuatro|cinco|pocos|pocas)\s+(minutos?|horas?|dias?|semanas?)|a\s+mas\s+tardar)\b'
+  # Un plazo es un verbo que promete llegada mas un momento: "el pago que hizo
+  # hoy" nombra un dia y no promete nada, y no cae.
+  - id: guard.es.transfer_or_deadline.004
+    category: transfer_or_deadline
+    regex: '\b(respuesta|pago|reembolso|decision|resolucion|deposito)\b[^.?!]{0,20}\b(llega|llegara|estara|sale|saldra|quedara|va\s+a\s+(llegar|estar|salir))\b[^.?!]{0,20}\b(hoy|manana|en\s+(\d+|un|una|dos|tres|pocos|pocas)\s+(minutos?|horas?|dias?|semanas?)|esta\s+semana|a\s+mas\s+tardar)\b'
+
+  # --- Revelacion de configuracion o de otro caso (AC4.15.3, BR1.7) ------------
+  # Por forma, nunca por una lista escrita: algo con forma de clave o secreto.
+  # El identificador y el nombre de las otras aseguradoras, y el numero de otro
+  # caso, los compone la guardia con la configuracion cargada; no estan aqui
+  # porque aqui no puede haber ninguno escrito.
+  - id: guard.es.config_disclosure.001
+    category: config_disclosure
+    regex: '(?<![a-z0-9_-])(?=[a-z0-9_-]*\d)(?=[a-z0-9_-]*[a-z])[a-z0-9_-]{24,}(?![a-z0-9_-])'
+  - id: guard.es.config_disclosure.002
+    category: config_disclosure
+    regex: '\b((sk|pk|rk)-[a-z0-9_-]{16,}|aiza[0-9a-z_-]{20,}|gh[pousr]_[a-z0-9]{20,})'
+  - id: guard.es.config_disclosure.003
+    category: config_disclosure
+    regex: '-----begin [a-z ]*private key-----'

@@ -1,0 +1,30 @@
+# Thanks in the middle of the report (BR3.1, BR5.1), English turn.
+#
+# Acceptance criterion: "Thanks" as the answer to a readback does not reject it:
+# the readback stays pending and is read again, with the thanks phrase in front.
+# Before, anything that was not a yes wiped the block and asked it again.
+#
+# Expected verdict: `pass`.
+#
+# Not a hard gate on its own, but it runs on every delivery and a case that
+# starts failing is a regression (`team.md`'s definition). Miguel's decision of
+# 2026-10-06: the agent answers what it was told before going on with what is
+# pending, without calling any model for it.
+#
+# Its Spanish pair is `DS-2/es/intake-thanks-mid-report`: same criteria and same target, measured per
+# language and never as a combined average (P12).
+case_key: DS-2/en/intake-thanks-mid-report
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - intake
+  - conversation
+script:
+# The turn is indexed by the field that **was pending** when the person said it
+# (`injuries`): a script only admits schema fields, and the social turn is not one.
+  - field_key: injuries
+    text: "Thanks"
+expected_verdicts:
+  intake_thanks_mid_report: pass

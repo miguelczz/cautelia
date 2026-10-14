@@ -1,0 +1,53 @@
+{
+  "notes": "Comprobación del inglés de la voz elegida. Las frases nuevas copian literal frases fijas del catálogo aprobado en User Stories, salvo en-confirm, que repite la frase de la primera escucha que sacó 1 en 'misma persona'. La referencia es una frase en español de la misma voz; el control es un audio en inglés de otra voz, que debe sacar 2 o menos para que los puntajes cuenten. Los audios de la primera escucha dicen la apertura anterior ('This call is recorded'): spoken_in_first_run guarda lo que dicen, para que el texto de la página coincida con el audio.",
+  "voice": "Catalina",
+  "control_voice": "Mariana",
+  "reference_text": "es-honesty",
+  "earlier_texts": [
+    "en-opening",
+    "en-confirm"
+  ],
+  "control_text": "en-opening",
+  "spoken_in_first_run": {
+    "en-opening": "Hi, this is Valentina, Sunmeadow Auto's AI assistant. This call is recorded so I can file your case correctly. I can help you report a claim or answer questions about your policy, and if at any point you'd rather have a person review your case, just say so. First, is everyone okay?",
+    "en-confirm": "Got it: Highway 9, exit fourteen, around five thirty in the afternoon. Is that right?"
+  },
+  "texts": [
+    {
+      "id": "en-confirm",
+      "lang": "en",
+      "text": "Got it: Highway 9, exit fourteen, around five thirty in the afternoon. Is that right?",
+      "source": "Repetición de la frase de la primera escucha (texts.json)"
+    },
+    {
+      "id": "en-hold",
+      "lang": "en",
+      "text": "Let me check your policy, one moment.",
+      "source": "AC1.25.3"
+    },
+    {
+      "id": "en-no-clause",
+      "lang": "en",
+      "text": "I can't find a clause in your policy about that, so I won't guess. I'll flag it for the adjuster.",
+      "source": "AC2.5.1"
+    },
+    {
+      "id": "en-emergency",
+      "lang": "en",
+      "text": "If someone is seriously hurt, call your local emergency number now. This is a demo and can't send help.",
+      "source": "AC1.6.3, superficies públicas"
+    },
+    {
+      "id": "en-closing",
+      "lang": "en",
+      "text": "An adjuster reviews your case; the decision will show up on this screen. Sunmeadow, four, eight, two, nine, one, three.",
+      "source": "AC1.23.4"
+    },
+    {
+      "id": "en-reprompt",
+      "lang": "en",
+      "text": "Sorry, I didn't catch that. Could you say it again?",
+      "source": "AC1.23.3"
+    }
+  ]
+}

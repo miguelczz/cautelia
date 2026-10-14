@@ -1,0 +1,217 @@
+# Chequeos de contenido: alcance, exclusiones y patrones.
+#
+# Los dos chequeos protegen principios y no estilo, y por eso viven en una lista
+# versionada y no en el codigo: cambiar lo que se prohibe es una decision, y una
+# decision se lee en un diff.
+
+# --- Alcance ------------------------------------------------------------------
+# Lo que se publica. Ni mas ni menos: el chequeo no barre el repositorio entero,
+# porque la especificacion y los artefactos del flujo contienen esas frases
+# precisamente porque las prohiben.
+published:
+  - app
+  - deploy
+  - site
+  - README.md
+
+# --- Exclusiones, cada una con su razon ---------------------------------------
+# Una exclusion sin razon escrita es una exclusion que nadie se atreve a quitar a
+# los seis meses.
+exclusions:
+  - path: app/config/content-checks.yaml
+    reason: >
+      Este mismo archivo. Contiene los patrones que busca, asi que se detectaria
+      a si mismo en cada corrida.
+  - path: app/config/copy/forbidden-forms.yaml
+    reason: >
+      La lista de formas prohibidas del catalogo incluye el patron de "cumple
+      con" por la misma razon, y por la misma razon no es una infraccion.
+  - path: app/backend/src/untangle/evals/content_checks.py
+    reason: >
+      El modulo que implementa estos chequeos nombra las normas en su
+      documentacion para explicar que prohibe.
+  - path: app/backend/tests
+    reason: >
+      Las pruebas rompen los chequeos a proposito: es su forma de comprobar que
+      el chequeo detecta lo que dice detectar.
+  - path: site/.vercel
+    reason: >
+      Artefactos del despliegue de la landing, ignorados por git.
+  - path: app/frontend/node_modules
+    reason: >
+      Dependencias de terceros: no son contenido que este proyecto publique.
+  - path: app/backend/.venv
+    reason: >
+      Entorno virtual de Python: dependencias de terceros, no versionadas y no
+      publicadas. Sin esta linea el chequeo recorre 2.300 archivos ajenos y
+      tarda veinte veces mas.
+  - path: app/frontend/coverage
+    reason: >
+      Reportes de cobertura, regenerados en cada corrida y no versionados.
+  - path: app/frontend/dist
+    reason: >
+      Compilado de la interfaz, regenerado y no versionado.
+  - path: app/evals/reports
+    reason: >
+      Salida de cada corrida, no versionada. El reporte puede citar el texto de
+      un hallazgo, incluido el que motivo el hallazgo.
+
+# --- Frases prohibidas (P6, R9) -----------------------------------------------
+forbidden_claims:
+  - id: CLAIM-1
+    reason: >
+      Afirmar cumplimiento normativo. Se dice "inspirado en", nunca "cumple
+      con": una afirmacion de cumplimiento que nadie audito es una promesa que
+      la demostracion no sostiene.
+    patterns:
+      - '(?i)\bcumple\s+con\b.{0,60}\b(NAIC|TCPA|EU\s+AI\s+Act|SOC\s*2|HIPAA)\b'
+      - '(?i)\bcomplies\s+with\b.{0,60}\b(NAIC|TCPA|EU\s+AI\s+Act|SOC\s*2|HIPAA)\b'
+      - '(?i)\b(NAIC|TCPA|EU\s+AI\s+Act|SOC\s*2|HIPAA)[- ]compliant\b'
+      - '(?i)\bcertificad[oa]\s+(en|por)\s+(SOC\s*2|HIPAA|NAIC)\b'
+
+# --- Texto de clausula de ISO o ACORD (P8, W6) --------------------------------
+# La distincion es la que manda: la **estructura** (nombres de seccion y
+# numeracion) esta permitida y documentada en
+# `docs/reference/estructura-poliza-iso-pap.md`; el **texto de clausula** es lo
+# prohibido.
+#
+# Lo que se busca no son numeros de formulario -- eso es estructura -- sino los
+# arranques de prosa de formulario: la senal de que alguien copio texto en vez de
+# escribir el suyo. Son giros de uso general en la industria, no expresion
+# protegida; estan aqui como detector, no como muestra.
+clause_text_markers:
+  - id: CLAUSE-1
+    reason: >
+      Arranque de acuerdo de cobertura copiado de un formulario.
+    patterns:
+      - '(?i)\bwe\s+will\s+pay\s+(those\s+)?sums\b'
+      - '(?i)\bpagaremos\s+las\s+sumas\s+que\b'
+      - '(?i)\bin\s+return\s+for\s+payment\s+of\s+the\s+premium\b'
+      - '(?i)\ba\s+cambio\s+del\s+pago\s+de\s+la\s+prima\b'
+
+  - id: CLAUSE-2
+    reason: >
+      Arranque de exclusion copiado de un formulario.
+    patterns:
+      - '(?i)\bthis\s+insurance\s+does\s+not\s+apply\s+to\b'
+      - '(?i)\beste\s+seguro\s+no\s+se\s+aplica\s+a\b'
+      - '(?i)\bsubject\s+to\s+the\s+limits?\s+of\s+liability\b'
+      - '(?i)\bsujeto\s+a\s+los\s+limites\s+de\s+responsabilidad\b'
+
+# --- El registro de la voz en espanol (U18, BR5.4, AC1.28.3) ------------------
+# La agente habla **de tu**. Desde el 2026-10-09 (decision de Miguel, que reemplaza
+# la decision de hablar de usted de la propuesta de octubre y la mitad de AC1.28.3
+# que la fijaba) la agente y las pantallas tutean. Este chequeo es la mitad de ese
+# criterio que se puede comprobar por codigo -- que ninguna frase de voz trate de
+# usted--; la calidez del tu la juzga el juez, y si se descalibra se reporta "no
+# medida" mientras esta sigue bloqueando (D8).
+#
+# **Se mira solo lo que la agente dice**, que en el catalogo son las entradas con
+# `surface: voice`. Las pantallas tutean tambien, pero ampliar el chequeo a ellas es
+# una decision aparte. La landing (`site/`) no esta en este catalogo.
+#
+# Los patrones buscan solo formas que **nunca** son de tercera persona: "su" y "puede"
+# aparecen en frases correctas ("llego a su cupo", "que puede sonar distinta") y por
+# eso no estan. Tampoco el subjuntivo suelto ("para que lo revise").
+#
+# Lo que este chequeo **no** cubre: lo que el modelo escribe libremente en una
+# corrida. Hoy el reporte de la corrida no guarda los turnos --solo el enlace a su
+# traza-- asi que no hay nada que recorrer, y esa mitad es del juez por D8. Si el
+# reporte gana los turnos, se recorren aqui.
+spanish_register:
+  catalog: app/config/copy/es.yaml
+  surfaces:
+    - voice
+  reason: >
+    La agente habla de tu en espanol, sin ninguna forma de usted, y no abusa
+    de las muletillas: "pues" como mucho una vez por frase (AC1.28.3, BR5.4).
+  usted:
+    - id: REGISTER-1
+      reason: >
+        Pronombre de usted.
+      patterns:
+        - '(?i)\busted(es)?\b'
+    - id: REGISTER-2
+      reason: >
+        Pronombre atono de usted ante un verbo de trato: "le ayudo", "le paso".
+      patterns:
+        - '(?i)\b(le|les)\s+(habla|hablo|ayudo|ayudar|paso|dejo|guardo|escuch[eé]|repito|avisamos|cuento|digo|respondo|voy)\b'
+    - id: REGISTER-5
+      reason: >
+        Subjuntivo de usted, donde el tu termina en -s: "cuando quiera", "que
+        esté muy bien". Es el desliz mas facil de colar: suena natural al lado de
+        un tu y deja la frase mezclando los dos tratamientos.
+      patterns:
+        - '(?i)\b(cuando|si)\s+(quiera|pueda|tenga|prefiera|necesite|desee)\b'
+        - '(?i)\bque\s+est[eé]\s+muy\b'
+    - id: REGISTER-3
+      reason: >
+        Imperativo o enclitico de usted: "déjeme", "dígame", "repórtelo".
+      patterns:
+        - '(?i)\b(d[eé]jeme|d[ií]game|cu[eé]ntenos|cu[eé]nteme|esp[eé]renos|perm[ií]tame|rep[oó]rtelo|rep[oó]rtela|pulse|llame)\b'
+  # Una muletilla no esta prohibida: repetida en la misma frase suena a relleno, y
+  # el limite es por frase porque cada entrada del catalogo es una frase.
+  fillers:
+    - id: REGISTER-4
+      word: pues
+      max_per_phrase: 1
+
+# --- Texto de terceros, por huellas (U7, BR5.1 a BR5.3, SEC-U7.1) -------------
+# Los marcadores de arriba buscan arranques de prosa de formulario; esto busca el
+# calco entero: ninguna clausula del corpus puede compartir **una sola**
+# secuencia de ocho palabras con los formularios de terceros. Las huellas se
+# sacan con `mise run synthetic:fingerprints` desde los specimens publicos de
+# `tmp/specimens/`, que git ignora, y se guardan **solo como hashes**: el texto de
+# un specimen nunca entra al repositorio (SEC-U7.2).
+#
+# Sin el archivo de huellas, o con uno vacio o sacado con otra normalizacion, el
+# chequeo no se omite: se declara "no medido" y falla (BR5.3).
+third_party_text:
+  shingles_file: app/config/content/third-party-shingles.json
+  corpus: app/data/tenants
+  reason: >
+    Las clausulas son originales con estructura inspirada, nunca texto de
+    formulario de ISO o ACORD (P8, W6). La traduccion no se detecta por huellas:
+    ese riesgo lo cubre la muestra de diez clausulas que revisa Miguel (BR5.4).
+  # La estructura permitida, que se quita de los dos lados antes de comparar: los
+  # nombres de seccion y el titulo del formulario de la referencia
+  # (`docs/reference/estructura-poliza-iso-pap.md`). Son nombres, no texto de
+  # clausula, y el corpus los usa a proposito. La numeracion (digitos, letras
+  # sueltas y numerales romanos) se quita siempre y no hace falta listarla.
+  # Cambiar esta lista cambia la normalizacion: la compuerta exige volver a sacar
+  # las huellas antes de comparar.
+  structure_headings:
+    - Personal Auto Policy
+    - Personal Auto
+    - Agreement
+    - Definitions
+    - Part A - Liability Coverage
+    - Part B - Medical Payments Coverage
+    - Part C - Uninsured Motorists Coverage
+    - Part D - Coverage for Damage to Your Auto
+    - Part E - Duties After an Accident or Loss
+    - Part F - General Provisions
+    - Insuring Agreement
+    - Supplementary Payments
+    - Exclusions
+    - Limit of Liability
+    - Out of State Coverage
+    - Financial Responsibility
+    - Other Insurance
+    - Arbitration
+    - Transportation Expenses
+    - Payment of Loss
+    - No Benefit to Bailee
+    - Other Sources of Recovery
+    - Appraisal
+    - Bankruptcy
+    - Changes
+    - Fraud
+    - Legal Action Against Us
+    - Our Right to Recover Payment
+    - Policy Period and Territory
+    - Termination
+    - Transfer of Your Interest in This Policy
+    - Two or More Auto Policies
+    - Collision
+    - Other Than Collision

@@ -1,0 +1,18 @@
+{
+  "stage": "code-generation",
+  "unit": "u1-workspace",
+  "version": 1,
+  "writes": [
+    { "path": "mise.toml" },
+    { "path": "docker-compose.yml" },
+    { "path": ".env.example" },
+    { "path": ".gitignore" },
+    { "path": "scripts/verify.sh" },
+    { "path": ".github/workflows/" },
+    { "path": "app/backend/" },
+    { "path": "app/frontend/" },
+    { "path": "app/config/" },
+    { "path": "app/contracts/" },
+    { "path": "app/evals/" }
+  ]
+}

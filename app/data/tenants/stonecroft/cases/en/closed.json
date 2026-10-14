@@ -1,0 +1,87 @@
+{
+  "case_key": "SEED/stonecroft/en/closed",
+  "channel": "chat",
+  "derivation_reason": "rule",
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Lost control on a wet curve and hit a wall."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Felipe Giraldo Villegas, policy POL-784054"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-14 19:20"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "One injured, a passenger who hurt their wrist"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "12th Avenue and 33rd Street, Corvane"
+    },
+    "other_parties": {
+      "status": "confirmed",
+      "value": "None"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Nissan Versa 2012, plate LKP139, driven by Felipe"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-784054",
+  "record_type": "claim",
+  "resolution": "approved",
+  "state": "closed",
+  "tenant_id": "stonecroft",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Hi, I'm Felipe Giraldo Villegas. My policy is POL-784054."
+    },
+    {
+      "speaker": "agent",
+      "text": "Was anyone hurt?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Yes, a passenger hurt their wrist."
+    },
+    {
+      "speaker": "agent",
+      "text": "When and where did it happen?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Yesterday at twenty past seven in the evening, at 12th Avenue and 33rd Street."
+    },
+    {
+      "speaker": "agent",
+      "text": "What happened?"
+    },
+    {
+      "speaker": "insured",
+      "text": "I lost control on a wet curve and hit a wall. No other vehicles were involved."
+    },
+    {
+      "speaker": "agent",
+      "text": "Which vehicle were you driving?"
+    },
+    {
+      "speaker": "insured",
+      "text": "My Nissan Versa 2012, plate LKP139. I was driving."
+    },
+    {
+      "speaker": "staff",
+      "text": "I reviewed your case and it was approved. The details of the decision are in your case."
+    }
+  ],
+  "used_by": [
+    "AC1.14.3",
+    "AC4.10.1"
+  ]
+}

@@ -1,0 +1,260 @@
+{
+  "stage": "code-generation",
+  "unit": "u9-rules-decision",
+  "upstream_ids": [
+    "AC1.15.1",
+    "AC1.15.2",
+    "AC1.15.3",
+    "AC1.15.4",
+    "AC1.15.5",
+    "AC1.17.1",
+    "AC1.17.2",
+    "AC1.17.3",
+    "AC1.17.4",
+    "AC1.4.1",
+    "AC1.4.2",
+    "AC1.4.3",
+    "AC1.12.1",
+    "AC1.12.2",
+    "AC1.12.3",
+    "BR1.1",
+    "BR1.2",
+    "BR1.3",
+    "BR1.4",
+    "BR2.1",
+    "BR2.2",
+    "BR2.3",
+    "BR2.4",
+    "BR2.5",
+    "BR2.6",
+    "BR3.1",
+    "BR4.1",
+    "FD-U9-1",
+    "FD-U9-2",
+    "FD-U9-3",
+    "FD-U9-4",
+    "SEC-U9.1",
+    "SEC-U9.2",
+    "NFR10.8",
+    "NFR13.1",
+    "NFR18.5",
+    "TECH-U9.1",
+    "CG-U9-1",
+    "CG-U9-2",
+    "CG-U9-3",
+    "CG-U9-4",
+    "CG-U9-5"
+  ],
+  "coverage": [
+    {
+      "id": "AC1.15.1",
+      "status": "OK",
+      "target": "app/config/tenants/stonecroft/rules/triage.yaml"
+    },
+    {
+      "id": "AC1.15.2",
+      "status": "OK",
+      "target": "app/config/copy/es.yaml"
+    },
+    {
+      "id": "AC1.15.3",
+      "status": "OK",
+      "target": "app/backend/.importlinter"
+    },
+    {
+      "id": "AC1.15.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/rules/evaluation.py"
+    },
+    {
+      "id": "AC1.15.5",
+      "status": "Deferred",
+      "target": "U21: la meta de derivaciones se mide sobre DS-2 completo"
+    },
+    {
+      "id": "AC1.17.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/nodes/decision/node.py"
+    },
+    {
+      "id": "AC1.17.2",
+      "status": "Deferred",
+      "target": "U12: el grafo que encadena los nodos"
+    },
+    {
+      "id": "AC1.17.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/rules_probes.py"
+    },
+    {
+      "id": "AC1.17.4",
+      "status": "Deferred",
+      "target": "U14: mostrar la regla y sus insumos en la bandeja"
+    },
+    {
+      "id": "AC1.4.1",
+      "status": "N/A",
+      "target": "Captura: U11"
+    },
+    {
+      "id": "AC1.4.2",
+      "status": "N/A",
+      "target": "Captura: U11"
+    },
+    {
+      "id": "AC1.4.3",
+      "status": "Deferred",
+      "target": "U11: la captura escribe los campos que required_inputs declara"
+    },
+    {
+      "id": "AC1.12.1",
+      "status": "N/A",
+      "target": "Captura: U11"
+    },
+    {
+      "id": "AC1.12.2",
+      "status": "N/A",
+      "target": "Captura: U11"
+    },
+    {
+      "id": "AC1.12.3",
+      "status": "Deferred",
+      "target": "U11"
+    },
+    {
+      "id": "BR1.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/rules/loading.py"
+    },
+    {
+      "id": "BR1.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/rules/conditions.py"
+    },
+    {
+      "id": "BR1.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/rules/loading.py"
+    },
+    {
+      "id": "BR1.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/rules/loading.py"
+    },
+    {
+      "id": "BR2.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/rules/evaluation.py"
+    },
+    {
+      "id": "BR2.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/rules/test_evaluation.py"
+    },
+    {
+      "id": "BR2.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/rules/evaluation.py"
+    },
+    {
+      "id": "BR2.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/rules/models.py"
+    },
+    {
+      "id": "BR2.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/copy_catalog/checks.py"
+    },
+    {
+      "id": "BR2.6",
+      "status": "OK",
+      "target": "app/config/tenants/knotwell/rules/triage.yaml"
+    },
+    {
+      "id": "BR3.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/orchestration/nodes/decision/node.py"
+    },
+    {
+      "id": "BR4.1",
+      "status": "OK",
+      "target": "app/backend/migrations/versions/u9_rules_0001_evaluation_table.py"
+    },
+    {
+      "id": "FD-U9-1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/rules/conditions.py"
+    },
+    {
+      "id": "FD-U9-2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/rules/evaluation.py"
+    },
+    {
+      "id": "FD-U9-3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/rules_probes.py"
+    },
+    {
+      "id": "FD-U9-4",
+      "status": "OK",
+      "target": "app/config/copy/forbidden-forms.yaml"
+    },
+    {
+      "id": "SEC-U9.1",
+      "status": "OK",
+      "target": "app/backend/.importlinter"
+    },
+    {
+      "id": "SEC-U9.2",
+      "status": "OK",
+      "target": "app/evals/fixtures/rules/es.yaml"
+    },
+    {
+      "id": "NFR10.8",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u9/test_rule_evaluation_table.py"
+    },
+    {
+      "id": "NFR13.1",
+      "status": "OK",
+      "target": "app/evals/subsets/smoke.yaml"
+    },
+    {
+      "id": "NFR18.5",
+      "status": "OK",
+      "target": "app/backend/pyproject.toml"
+    },
+    {
+      "id": "TECH-U9.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/schema_check.py"
+    },
+    {
+      "id": "CG-U9-1",
+      "status": "OK",
+      "target": "app/config/tenants/sunmeadow/rules/triage.yaml"
+    },
+    {
+      "id": "CG-U9-2",
+      "status": "OK",
+      "target": "app/evals/fixtures/rules/en.yaml"
+    },
+    {
+      "id": "CG-U9-3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/rules_probes.py"
+    },
+    {
+      "id": "CG-U9-4",
+      "status": "OK",
+      "target": "app/backend/migrations/versions/u9_rules_0001_evaluation_table.py"
+    },
+    {
+      "id": "CG-U9-5",
+      "status": "OK",
+      "target": "app/backend/tests/unit/rules/test_node.py"
+    }
+  ]
+}

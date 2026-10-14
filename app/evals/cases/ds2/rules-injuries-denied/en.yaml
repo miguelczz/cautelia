@@ -1,0 +1,26 @@
+# Injuries clearly denied, from the case field to the category (FR6.1), English turn. Whoever says nobody got hurt leaves the `injuries_present` input false and Sunmeadow closes direct; Stonecroft stays in standard review and Knotwell keeps referring.
+#
+# Criterio de aceptacion: sobre las filas `injuries-denied/*` de
+# `app/evals/fixtures/rules/en.yaml`, el campo `injuries` del caso se deriva a
+# `injuries_present` con la misma funcion del aplicativo y el motor real de la
+# aseguradora de cada fila da la categoria declarada en ella.
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en espanol es `DS-2/es/rules-injuries-denied`:
+# los mismos escenarios y la misma meta, medidos por idioma y nunca como promedio
+# combinado (P12).
+#
+# Lo que este caso no mide: la lectura del campo sellado en la base ni el cableado
+# del nodo `decision` (lo cubre la prueba de integracion de la cadena de fondo),
+# ni la frase que recibe la persona.
+case_key: DS-2/en/rules-injuries-denied
+dataset: DS-2
+language: en
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - rules-engine
+  - injuries-derivation
+expected_verdicts:
+  triage_from_injuries_denied: pass

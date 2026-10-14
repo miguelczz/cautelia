@@ -1,0 +1,160 @@
+{
+  "stage": "functional-design",
+  "unit": "u7-synthetic-data",
+  "upstream_ids": [
+    "AC5.3.1",
+    "AC5.3.2",
+    "AC5.3.3",
+    "AC5.3.4",
+    "AC5.3.5",
+    "AC5.4.1",
+    "AC5.4.2",
+    "AC5.4.3",
+    "AC5.4.4",
+    "AC5.4.5",
+    "AC5.5.1",
+    "AC5.5.2",
+    "AC5.5.3",
+    "AC5.5.4",
+    "AC5.5.5",
+    "AC5.5.6",
+    "AC5.6.1",
+    "AC5.6.2",
+    "AC5.6.3",
+    "AC5.6.4"
+  ],
+  "coverage": [
+    {
+      "id": "AC5.3.1",
+      "status": "OK",
+      "target": "BR1.1, BR1.2, BR1.4"
+    },
+    {
+      "id": "AC5.3.2",
+      "status": "OK",
+      "target": "BR1.3"
+    },
+    {
+      "id": "AC5.3.3",
+      "status": "OK",
+      "target": "BR1.5"
+    },
+    {
+      "id": "AC5.3.4",
+      "status": "OK",
+      "target": "BR2.1, BR2.2"
+    },
+    {
+      "id": "AC5.3.5",
+      "status": "OK",
+      "target": "BR8.1"
+    },
+    {
+      "id": "AC5.4.1",
+      "status": "OK",
+      "target": "BR3.1, BR3.3, BR3.4"
+    },
+    {
+      "id": "AC5.4.2",
+      "status": "OK",
+      "target": "BR3.2, BR3.6"
+    },
+    {
+      "id": "AC5.4.3",
+      "status": "OK",
+      "target": "BR3.7"
+    },
+    {
+      "id": "AC5.4.4",
+      "status": "OK",
+      "target": "BR5.1, BR5.2, BR5.3"
+    },
+    {
+      "id": "AC5.4.5",
+      "status": "OK",
+      "target": "BR5.4"
+    },
+    {
+      "id": "AC5.5.1",
+      "status": "OK",
+      "target": "BR3.1, BR3.3, BR3.4"
+    },
+    {
+      "id": "AC5.5.2",
+      "status": "OK",
+      "target": "BR3.2, BR3.6"
+    },
+    {
+      "id": "AC5.5.3",
+      "status": "OK",
+      "target": "BR4.1, BR4.3"
+    },
+    {
+      "id": "AC5.5.4",
+      "status": "OK",
+      "target": "BR4.2"
+    },
+    {
+      "id": "AC5.5.5",
+      "status": "OK",
+      "target": "BR5.1, BR5.2, BR5.3"
+    },
+    {
+      "id": "AC5.5.6",
+      "status": "OK",
+      "target": "BR5.4"
+    },
+    {
+      "id": "AC5.6.1",
+      "status": "OK",
+      "target": "BR6.1"
+    },
+    {
+      "id": "AC5.6.2",
+      "status": "OK",
+      "target": "BR6.2"
+    },
+    {
+      "id": "AC5.6.3",
+      "status": "OK",
+      "target": "BR6.4"
+    },
+    {
+      "id": "AC5.6.4",
+      "status": "Deferred",
+      "target": "U20 en la pasada de publicacion (DP-14): el reinicio nocturno que borra visitantes y devuelve los sembrados a su estado. U7 aporta BR6.3: los sembrados entran con el origen generator, que el borrado de U4 no toca"
+    }
+  ],
+  "reverse": [
+    {
+      "id": "BR2.3",
+      "status": "N/A",
+      "target": "El prompt de redaccion nunca lleva texto de terceros. FR12.2 y P8"
+    },
+    {
+      "id": "BR3.5",
+      "status": "N/A",
+      "target": "Relaciones entre clausulas con extremos que existen. ADR-010 y C-26"
+    },
+    {
+      "id": "BR6.3",
+      "status": "N/A",
+      "target": "Carga por la API de U4 con origen generator. Q4; es el aporte de U7 al criterio diferido AC5.6.4"
+    },
+    {
+      "id": "BR7.1",
+      "status": "N/A",
+      "target": "Datos personales ficticios y reconocibles. FR12.3, ADR-016 y P8"
+    },
+    {
+      "id": "BR7.2",
+      "status": "N/A",
+      "target": "Valores personales exportados a los canarios y redactables. FR12.3 y ADR-013"
+    },
+    {
+      "id": "BR7.3",
+      "status": "N/A",
+      "target": "DS-8 regenerado con la misma semilla e identificadores. DS-8 y AC4.11.3 (U2)"
+    }
+  ]
+}

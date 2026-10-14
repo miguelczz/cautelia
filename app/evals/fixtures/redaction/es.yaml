@@ -1,0 +1,146 @@
+# Fixtures sembradas de la redaccion, turno en espanol (RT-14, RT-15).
+#
+# Un archivo por idioma del turno. Lo consumen dos cosas: las sondas de
+# evaluacion de DS-6 y las pruebas unitarias del detector. Una sola fuente de
+# datos sembrados, para que la compuerta y la prueba no midan cosas distintas.
+#
+# **Sinteticos, pero con la forma real** (decision CG-U3-2 del plan). Un telefono
+# inventado que no parece un telefono no prueba nada: lo que se prueba es que el
+# reconocedor atrapa la **forma**, y una forma falsa no ejercita nada. Ninguno de
+# estos valores pertenece a una persona: el prefijo 555 es la convencion de
+# ficcion y las cedulas no corresponden a ningun documento emitido.
+#
+# Tres formas por tipo, que son las que exige BR2.2:
+#   compact    -- sin separadores
+#   separated  -- con espacios, guiones o puntos
+#   spoken     -- dictado en palabras
+language: es
+# Los tipos que encuentran los reconocedores por formato, en sus tres formas: los
+# cuatro propios del dominio (RT-14, AC4.13.1, AC4.13.2) y el VIN, que entro
+# cuando U7 encontro que salia con solo la cola de digitos tapada (NFR11.10).
+# `value` es lo que **no** puede quedar en el texto que sale.
+seeds:
+  - id: license_plate/compact
+    entity_type: license_plate
+    form: compact
+    value: ABC123
+    text: El carro de placa ABC123 quedo con el guardabarros hundido.
+
+  - id: license_plate/separated
+    entity_type: license_plate
+    form: separated
+    value: ABC-123
+    text: La placa ABC-123 aparece en la foto del parte.
+
+  - id: license_plate/spoken
+    entity_type: license_plate
+    form: spoken
+    value: A B C uno dos tres
+    text: La placa era A B C uno dos tres, la vi bien.
+
+  - id: national_id/compact
+    entity_type: national_id
+    form: compact
+    value: "79123456"
+    text: Mi cedula es 79123456 y el carro esta a mi nombre.
+
+  - id: national_id/separated
+    entity_type: national_id
+    form: separated
+    value: 79.123.456
+    text: La cedula del conductor es 79.123.456 segun el parte.
+
+  - id: national_id/spoken
+    entity_type: national_id
+    form: spoken
+    value: siete nueve uno dos tres cuatro cinco seis
+    text: Mi cedula es siete nueve uno dos tres cuatro cinco seis.
+
+  - id: phone/compact
+    entity_type: phone
+    form: compact
+    value: "3005551234"
+    text: Mi celular es 3005551234 por si necesitan llamarme.
+
+  - id: phone/separated
+    entity_type: phone
+    form: separated
+    value: 300 555 1234
+    text: El telefono del testigo es 300 555 1234.
+
+  - id: phone/spoken
+    entity_type: phone
+    form: spoken
+    value: tres cero cero cinco cinco cinco uno dos tres cuatro
+    text: Mi telefono es tres cero cero cinco cinco cinco uno dos tres cuatro.
+
+  - id: policy_number/compact
+    entity_type: policy_number
+    form: compact
+    value: POL-200341
+    text: La poliza POL-200341 es la que tengo con la agencia.
+
+  - id: policy_number/separated
+    entity_type: policy_number
+    form: separated
+    value: POL 200341
+    text: Mi poliza es POL 200341, la renove en marzo.
+
+  - id: policy_number/spoken
+    entity_type: policy_number
+    form: spoken
+    value: dos cero cero tres cuatro uno
+    text: La poliza es dos cero cero tres cuatro uno.
+
+  # VIN ficticio del generador de U7: su digito de control falla a proposito, asi
+  # que no es el numero de serie de ningun vehiculo.
+  - id: vin/compact
+    entity_type: vin
+    form: compact
+    value: BZ33H2UP7VS373157
+    text: El VIN de la tarjeta de propiedad es BZ33H2UP7VS373157.
+
+  - id: vin/separated
+    entity_type: vin
+    form: separated
+    value: BZ3 3H2UP7 VS373157
+    text: El VIN es BZ3 3H2UP7 VS373157, lo copie del parabrisas.
+
+  - id: vin/spoken
+    entity_type: vin
+    form: spoken
+    value: B Z tres tres H dos U P siete V S tres siete tres uno cinco siete
+    text: El VIN es B Z tres tres H dos U P siete V S tres siete tres uno cinco siete.
+
+# RT-15: el dato dictado **en ingles** dentro de un turno en espanol. Es la
+# evasion que BR2.3 bloquea y la unica compuerta dura del grupo 2: cambiar de
+# idioma no es una via para sacar un dato en claro.
+#
+# `found_by_language` es lo que exige la segunda prueba de BR2.9: el informe
+# tiene que atribuir el hallazgo **al reconocedor que lo encontro**, que aqui es
+# el juego ingles. Si lo atribuyera al idioma del turno, la medicion diria que el
+# espanol funciona cuando quien atrapo el dato fue el otro juego.
+cross_language:
+  - id: national_id/spoken-en
+    entity_type: national_id
+    form: spoken
+    dictated_in: en
+    found_by_language: en
+    value: one two three four five six seven eight nine
+    text: Mi cedula es one two three four five six seven eight nine.
+
+  - id: phone/spoken-en
+    entity_type: phone
+    form: spoken
+    dictated_in: en
+    found_by_language: en
+    value: five five five one two three four five six seven
+    text: Mi telefono es five five five one two three four five six seven.
+
+  - id: policy_number/spoken-en
+    entity_type: policy_number
+    form: spoken
+    dictated_in: en
+    found_by_language: en
+    value: two zero zero one one seven
+    text: Mi poliza es two zero zero one one seven.

@@ -1,0 +1,33 @@
+# Relato desordenado (AC1.5.2, BR3.2), turno en espanol.
+#
+# La persona salta entre bloques: cuenta primero el vehiculo, luego vuelve a
+# que paso, y despues da la fecha. El bloque que toca sigue saliendo del caso
+# --que campos estan confirmados-- y no del orden en que la persona hablo
+# (BR3.2): el mismo criterio de `intake-ordered-story`, con el guion en otro
+# orden para comprobar que el resultado no depende de el.
+#
+# Escrito en el paso 2 de la tanda 1, antes de BR3.2 (paso 5, tanda 2): falla
+# hoy nombrando esa razon (CG-U11-2).
+#
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/intake-disordered-story
+dataset: DS-2
+language: es
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - intake
+  - turn-order
+script:
+  - field_key: vehicle_and_driver
+    text: "Yo iba en mi camioneta Toyota blanca, placa XYZ987."
+  - field_key: identity_and_policy
+    text: "Ah, se me olvido decir, soy Carlos Ruiz, poliza POL-102938."
+  - field_key: description
+    text: "Un moto se me metio de repente y lo tuve que esquivar, choque contra un poste."
+  - field_key: incident_datetime
+    text: "Eso fue anteayer en la mañana."
+  - field_key: location
+    text: "Cerca del parque central de Medellin."
+expected_verdicts:
+  intake_disordered_story: pass

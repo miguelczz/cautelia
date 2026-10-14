@@ -1,0 +1,1415 @@
+{
+  "experiment": "03-spanish-stt",
+  "finished_utc": "2026-09-16T23:58:27Z",
+  "r4_threshold_wer": 0.15,
+  "summary": [
+    {
+      "variant": "nova-3:en",
+      "lang": "en",
+      "recordings": 9,
+      "conversation_wer": 0.093,
+      "r4_triggered": null,
+      "entities_exact": "2/3",
+      "entities_by_type": {
+        "phone": "1/1",
+        "plate": "0/1",
+        "policy_number": "1/1"
+      },
+      "mean_confidence": 0.991,
+      "errors": 0
+    },
+    {
+      "variant": "nova-3:es",
+      "lang": "es",
+      "recordings": 20,
+      "conversation_wer": 0.086,
+      "r4_triggered": false,
+      "entities_exact": "8/8",
+      "entities_by_type": {
+        "case_number": "1/1",
+        "national_id": "2/2",
+        "partial_plate": "1/1",
+        "phone": "2/2",
+        "plate": "1/1",
+        "policy_number": "1/1"
+      },
+      "mean_confidence": 0.985,
+      "errors": 0
+    },
+    {
+      "variant": "nova-3:es-419",
+      "lang": "es",
+      "recordings": 20,
+      "conversation_wer": 0.086,
+      "r4_triggered": false,
+      "entities_exact": "8/8",
+      "entities_by_type": {
+        "case_number": "1/1",
+        "national_id": "2/2",
+        "partial_plate": "1/1",
+        "phone": "2/2",
+        "plate": "1/1",
+        "policy_number": "1/1"
+      },
+      "mean_confidence": 0.985,
+      "errors": 0
+    },
+    {
+      "variant": "nova-3:multi",
+      "lang": "en",
+      "recordings": 9,
+      "conversation_wer": 0.133,
+      "r4_triggered": null,
+      "entities_exact": "2/3",
+      "entities_by_type": {
+        "phone": "1/1",
+        "plate": "0/1",
+        "policy_number": "1/1"
+      },
+      "mean_confidence": 0.987,
+      "errors": 0
+    },
+    {
+      "variant": "nova-3:multi",
+      "lang": "es",
+      "recordings": 20,
+      "conversation_wer": 0.056,
+      "r4_triggered": false,
+      "entities_exact": "8/8",
+      "entities_by_type": {
+        "case_number": "1/1",
+        "national_id": "2/2",
+        "partial_plate": "1/1",
+        "phone": "2/2",
+        "plate": "1/1",
+        "policy_number": "1/1"
+      },
+      "mean_confidence": 0.985,
+      "errors": 0
+    }
+  ],
+  "rows": [
+    {
+      "file": "recordings/miguel/quiet/en-c01.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-c01",
+      "lang": "en",
+      "kind": "conversation",
+      "variant": "nova-3:en",
+      "smart_format": false,
+      "transcript": "Hi, I am calling because I had a car accident about an hour ago on Highway nine.",
+      "confidence": 0.9941406,
+      "seconds": 1.092,
+      "reference_words": 17,
+      "edits": 1
+    },
+    {
+      "file": "recordings/miguel/quiet/en-c01.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-c01",
+      "lang": "en",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "Hi, I'm calling because I had a car accident about an hour ago on Highway nine.",
+      "confidence": 0.99902344,
+      "seconds": 0.784,
+      "reference_words": 17,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/en-c02.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-c02",
+      "lang": "en",
+      "kind": "conversation",
+      "variant": "nova-3:en",
+      "smart_format": false,
+      "transcript": "Nobody got hurt, it's just a small dent on the rear door.",
+      "confidence": 0.984375,
+      "seconds": 0.581,
+      "reference_words": 13,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/en-c02.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-c02",
+      "lang": "en",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "No vertical heart, it's just a small dent on the rear door.",
+      "confidence": 0.98168945,
+      "seconds": 0.604,
+      "reference_words": 13,
+      "edits": 3
+    },
+    {
+      "file": "recordings/miguel/quiet/en-c03.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-c03",
+      "lang": "en",
+      "kind": "conversation",
+      "variant": "nova-3:en",
+      "smart_format": false,
+      "transcript": "It happened just at around five thirty in the afternoon near exit twelve.",
+      "confidence": 0.9580078,
+      "seconds": 0.673,
+      "reference_words": 12,
+      "edits": 2
+    },
+    {
+      "file": "recordings/miguel/quiet/en-c03.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-c03",
+      "lang": "en",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "It happens just around five thirty in the afternoon near exit twelve.",
+      "confidence": 0.9707031,
+      "seconds": 0.724,
+      "reference_words": 12,
+      "edits": 2
+    },
+    {
+      "file": "recordings/miguel/quiet/en-c04.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-c04",
+      "lang": "en",
+      "kind": "conversation",
+      "variant": "nova-3:en",
+      "smart_format": false,
+      "transcript": "Actually, no. It wasn't exit twelve. It was exit fourteen.",
+      "confidence": 0.9921875,
+      "seconds": 0.611,
+      "reference_words": 11,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/en-c04.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-c04",
+      "lang": "en",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "Actually, no, it wasn't s y twelve, it was x y fourteen.",
+      "confidence": 0.9379883,
+      "seconds": 0.581,
+      "reference_words": 11,
+      "edits": 4
+    },
+    {
+      "file": "recordings/miguel/quiet/en-c05.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-c05",
+      "lang": "en",
+      "kind": "conversation",
+      "variant": "nova-3:en",
+      "smart_format": false,
+      "transcript": "Discovered by my policy or do I have to fight for it",
+      "confidence": 0.99902344,
+      "seconds": 0.582,
+      "reference_words": 14,
+      "edits": 4
+    },
+    {
+      "file": "recordings/miguel/quiet/en-c05.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-c05",
+      "lang": "en",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "This covered by my policy, or do I have to pay for it?",
+      "confidence": 1.0,
+      "seconds": 0.594,
+      "reference_words": 14,
+      "edits": 1
+    },
+    {
+      "file": "recordings/miguel/quiet/en-c06.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-c06",
+      "lang": "en",
+      "kind": "conversation",
+      "variant": "nova-3:en",
+      "smart_format": false,
+      "transcript": "Can I talk to a real person, please?",
+      "confidence": 0.9941406,
+      "seconds": 0.494,
+      "reference_words": 8,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/en-c06.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-c06",
+      "lang": "en",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "Can I talk to a real person, please?",
+      "confidence": 0.9970703,
+      "seconds": 0.493,
+      "reference_words": 8,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/en-e01.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-e01",
+      "lang": "en",
+      "kind": "entity",
+      "variant": "nova-3:en",
+      "smart_format": true,
+      "transcript": "My plate is BQR482",
+      "confidence": 0.9970703,
+      "seconds": 0.735,
+      "entities": [
+        {
+          "type": "plate",
+          "value": "BKR482",
+          "found": false
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/en-e01.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-e01",
+      "lang": "en",
+      "kind": "entity",
+      "variant": "nova-3:multi",
+      "smart_format": true,
+      "transcript": "My plate is BQR482",
+      "confidence": 0.99902344,
+      "seconds": 0.598,
+      "entities": [
+        {
+          "type": "plate",
+          "value": "BKR482",
+          "found": false
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/en-e02.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-e02",
+      "lang": "en",
+      "kind": "entity",
+      "variant": "nova-3:en",
+      "smart_format": true,
+      "transcript": "My policy number is SUNDash610447",
+      "confidence": 0.99902344,
+      "seconds": 0.866,
+      "entities": [
+        {
+          "type": "policy_number",
+          "value": "SUN610447",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/en-e02.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-e02",
+      "lang": "en",
+      "kind": "entity",
+      "variant": "nova-3:multi",
+      "smart_format": true,
+      "transcript": "My policy number is SUNDash610447",
+      "confidence": 1.0,
+      "seconds": 1.143,
+      "entities": [
+        {
+          "type": "policy_number",
+          "value": "SUN610447",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/en-e03.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-e03",
+      "lang": "en",
+      "kind": "entity",
+      "variant": "nova-3:en",
+      "smart_format": true,
+      "transcript": "You can reach me at 555-0189.",
+      "confidence": 1.0,
+      "seconds": 1.053,
+      "entities": [
+        {
+          "type": "phone",
+          "value": "5550189",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/en-e03.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "en-e03",
+      "lang": "en",
+      "kind": "entity",
+      "variant": "nova-3:multi",
+      "smart_format": true,
+      "transcript": "You can reach me at 555-0189.",
+      "confidence": 1.0,
+      "seconds": 0.896,
+      "entities": [
+        {
+          "type": "phone",
+          "value": "5550189",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c01.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c01",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es",
+      "smart_format": false,
+      "transcript": "Hola, buenas. Estoy llamando porque tuve un choque hace un ratico en la autopista Sur.",
+      "confidence": 0.9946289,
+      "seconds": 1.095,
+      "reference_words": 15,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c01.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c01",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es-419",
+      "smart_format": false,
+      "transcript": "Hola, buenas. Estoy llamando porque tuve un choque hace un ratico en la autopista Sur.",
+      "confidence": 0.9946289,
+      "seconds": 0.975,
+      "reference_words": 15,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c01.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c01",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "Hola, buenas. Estoy llamando porque tuve un choque hace un ratico en la autopista Sur.",
+      "confidence": 0.9970703,
+      "seconds": 1.004,
+      "reference_words": 15,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c02.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c02",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es",
+      "smart_format": false,
+      "transcript": "Sí, todos estamos bien gracias a dios, fue más el susto que otra cosa.",
+      "confidence": 0.9980469,
+      "seconds": 0.859,
+      "reference_words": 14,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c02.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c02",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es-419",
+      "smart_format": false,
+      "transcript": "Sí, todos estamos bien gracias a dios, fue más el susto que otra cosa.",
+      "confidence": 0.9980469,
+      "seconds": 0.929,
+      "reference_words": 14,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c02.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c02",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "Sí, todos estamos bien gracias a dios. Fue más el susto que otra cosa.",
+      "confidence": 1.0,
+      "seconds": 0.889,
+      "reference_words": 14,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c03.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c03",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es",
+      "smart_format": false,
+      "transcript": "Fue ayer como a las cinco y media de la tarde, a la altura de la salida doce.",
+      "confidence": 0.99316406,
+      "seconds": 0.876,
+      "reference_words": 18,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c03.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c03",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es-419",
+      "smart_format": false,
+      "transcript": "Fue ayer como a las cinco y media de la tarde, a la altura de la salida doce.",
+      "confidence": 0.99316406,
+      "seconds": 0.702,
+      "reference_words": 18,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c03.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c03",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "Fue ayer como a las cinco y media de la tarde, a la altura de la salida doce.",
+      "confidence": 1.0,
+      "seconds": 1.001,
+      "reference_words": 18,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c04.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c04",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es",
+      "smart_format": false,
+      "transcript": "Yo iba bajando despacio y el de atrás no frenó a tiempo y me pegó en el bómper.",
+      "confidence": 0.99902344,
+      "seconds": 0.947,
+      "reference_words": 18,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c04.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c04",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es-419",
+      "smart_format": false,
+      "transcript": "Yo iba bajando despacio y el de atrás no frenó a tiempo y me pegó en el bómper.",
+      "confidence": 0.99902344,
+      "seconds": 1.402,
+      "reference_words": 18,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c04.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c04",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "Yo iba bajando despacio y el de atrás no frenó a tiempo y me pegó en el bumper.",
+      "confidence": 0.9980469,
+      "seconds": 0.948,
+      "reference_words": 18,
+      "edits": 1
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c05.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c05",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es",
+      "smart_format": false,
+      "transcript": "El otro carro era una camioneta blanca, mi señor se fue sin darme los datos",
+      "confidence": 0.98095703,
+      "seconds": 0.937,
+      "reference_words": 16,
+      "edits": 2
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c05.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c05",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es-419",
+      "smart_format": false,
+      "transcript": "El otro carro era una camioneta blanca, mi señor se fue sin darme los datos",
+      "confidence": 0.98095703,
+      "seconds": 1.308,
+      "reference_words": 16,
+      "edits": 2
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c05.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c05",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "El otro carro era una camioneta blanca. Mi señor se fue sin darme los datos.",
+      "confidence": 0.99902344,
+      "seconds": 1.332,
+      "reference_words": 16,
+      "edits": 2
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c06.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c06",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es",
+      "smart_format": false,
+      "transcript": "No, espere, no era a las las doce, era a las catorce, qué pena con usted.",
+      "confidence": 0.9633789,
+      "seconds": 0.966,
+      "reference_words": 14,
+      "edits": 5
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c06.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c06",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es-419",
+      "smart_format": false,
+      "transcript": "No, espere, no era a las las doce, era a las catorce, qué pena con usted.",
+      "confidence": 0.9633789,
+      "seconds": 6.061,
+      "reference_words": 14,
+      "edits": 5
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c06.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c06",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "No, espere. No era la salida doce, era la catorce. Qué pena con usted.",
+      "confidence": 0.9921875,
+      "seconds": 1.415,
+      "reference_words": 14,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c07.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c07",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es",
+      "smart_format": false,
+      "transcript": "Iba manejando mi esposo y yo iba de copiloto con la niña atrás.",
+      "confidence": 0.9970703,
+      "seconds": 0.701,
+      "reference_words": 13,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c07.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c07",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es-419",
+      "smart_format": false,
+      "transcript": "Iba manejando mi esposo y yo iba de copiloto con la niña atrás.",
+      "confidence": 0.9970703,
+      "seconds": 4.226,
+      "reference_words": 13,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c07.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c07",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "Iba manejando a mi esposo y yo iba de copiloto con la niña atrás.",
+      "confidence": 0.9951172,
+      "seconds": 0.787,
+      "reference_words": 13,
+      "edits": 1
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c08.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c08",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es",
+      "smart_format": false,
+      "transcript": "La niña se golpeó la muñeca, pero está bien, hubo que llevarla a urgencias.",
+      "confidence": 0.9941406,
+      "seconds": 0.684,
+      "reference_words": 15,
+      "edits": 1
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c08.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c08",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es-419",
+      "smart_format": false,
+      "transcript": "La niña se golpeó la muñeca, pero está bien, hubo que llevarla a urgencias.",
+      "confidence": 0.9941406,
+      "seconds": 0.711,
+      "reference_words": 15,
+      "edits": 1
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c08.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c08",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "La niña se golpeó la muñeca, pero está bien. No hubo que llevarla a urgencias.",
+      "confidence": 0.99316406,
+      "seconds": 0.627,
+      "reference_words": 15,
+      "edits": 0
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c09.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c09",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es",
+      "smart_format": false,
+      "transcript": "¿Y eso me lo ocurre el seguro o me me toca pagarlo a mí?",
+      "confidence": 0.97802734,
+      "seconds": 0.876,
+      "reference_words": 13,
+      "edits": 2
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c09.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c09",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es-419",
+      "smart_format": false,
+      "transcript": "¿Y eso me lo ocurre el seguro o me me toca pagarlo a mí?",
+      "confidence": 0.97802734,
+      "seconds": 0.711,
+      "reference_words": 13,
+      "edits": 2
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c09.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c09",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "¿Y eso me lo cubre seguro o me toca pagarlo a mí?",
+      "confidence": 0.99902344,
+      "seconds": 1.005,
+      "reference_words": 13,
+      "edits": 1
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c10.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c10",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es",
+      "smart_format": false,
+      "transcript": "Quiero hablar con una persona por favor, páseme a alguien.",
+      "confidence": 0.96435547,
+      "seconds": 0.787,
+      "reference_words": 10,
+      "edits": 1
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c10.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c10",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es-419",
+      "smart_format": false,
+      "transcript": "Quiero hablar con una persona por favor, páseme a alguien.",
+      "confidence": 0.96435547,
+      "seconds": 0.865,
+      "reference_words": 10,
+      "edits": 1
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c10.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c10",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "Quiero hablar con una persona, por favor. Páseme alguien.",
+      "confidence": 0.9941406,
+      "seconds": 5.532,
+      "reference_words": 10,
+      "edits": 1
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c11.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c11",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es",
+      "smart_format": false,
+      "transcript": "Listo, pues qué mañanita que le diga.",
+      "confidence": 0.9296875,
+      "seconds": 0.837,
+      "reference_words": 8,
+      "edits": 2
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c11.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c11",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es-419",
+      "smart_format": false,
+      "transcript": "Listo, pues qué mañanita que le diga.",
+      "confidence": 0.9296875,
+      "seconds": 0.923,
+      "reference_words": 8,
+      "edits": 2
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c11.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c11",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "Listo, pues, qué manerita que le diga.",
+      "confidence": 0.7331543,
+      "seconds": 5.01,
+      "reference_words": 8,
+      "edits": 2
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c12.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c12",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es",
+      "smart_format": false,
+      "transcript": "¿Usted es una persona o una grabación?",
+      "confidence": 0.9863281,
+      "seconds": 0.782,
+      "reference_words": 8,
+      "edits": 1
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c12.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c12",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:es-419",
+      "smart_format": false,
+      "transcript": "¿Usted es una persona o una grabación?",
+      "confidence": 0.9863281,
+      "seconds": 0.77,
+      "reference_words": 8,
+      "edits": 1
+    },
+    {
+      "file": "recordings/miguel/quiet/es-c12.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-c12",
+      "lang": "es",
+      "kind": "conversation",
+      "variant": "nova-3:multi",
+      "smart_format": false,
+      "transcript": "¿Usted es una persona o una grabación?",
+      "confidence": 0.99902344,
+      "seconds": 0.573,
+      "reference_words": 8,
+      "edits": 1
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e01.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e01",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:es",
+      "smart_format": true,
+      "transcript": "La placa es KLM 4 8 2.",
+      "confidence": 0.9770508,
+      "seconds": 0.706,
+      "entities": [
+        {
+          "type": "plate",
+          "value": "KLM482",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e01.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e01",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:es-419",
+      "smart_format": true,
+      "transcript": "La placa es KLM 4 8 2.",
+      "confidence": 0.9770508,
+      "seconds": 0.594,
+      "entities": [
+        {
+          "type": "plate",
+          "value": "KLM482",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e01.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e01",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:multi",
+      "smart_format": true,
+      "transcript": "La placa es KLM 4 8 2",
+      "confidence": 0.9980469,
+      "seconds": 6.333,
+      "entities": [
+        {
+          "type": "plate",
+          "value": "KLM482",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e02.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e02",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:es",
+      "smart_format": true,
+      "transcript": "La póliza es la STN guion 4 8 2 9 1 3",
+      "confidence": 0.9941406,
+      "seconds": 0.736,
+      "entities": [
+        {
+          "type": "policy_number",
+          "value": "STN482913",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e02.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e02",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:es-419",
+      "smart_format": true,
+      "transcript": "La póliza es la STN guion 4 8 2 9 1 3",
+      "confidence": 0.9941406,
+      "seconds": 0.74,
+      "entities": [
+        {
+          "type": "policy_number",
+          "value": "STN482913",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e02.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e02",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:multi",
+      "smart_format": true,
+      "transcript": "La póliza es la STN guion 4 8 2 9 1 3.",
+      "confidence": 0.9980469,
+      "seconds": 1.175,
+      "entities": [
+        {
+          "type": "policy_number",
+          "value": "STN482913",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e03.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e03",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:es",
+      "smart_format": true,
+      "transcript": "Mi deuda es 1 0 3 6 5 5 5 0 1 2",
+      "confidence": 0.99316406,
+      "seconds": 0.744,
+      "entities": [
+        {
+          "type": "national_id",
+          "value": "1036555012",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e03.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e03",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:es-419",
+      "smart_format": true,
+      "transcript": "Mi deuda es 1 0 3 6 5 5 5 0 1 2",
+      "confidence": 0.99316406,
+      "seconds": 0.7,
+      "entities": [
+        {
+          "type": "national_id",
+          "value": "1036555012",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e03.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e03",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:multi",
+      "smart_format": true,
+      "transcript": "Mi deuda es 1 0 3 6 5 5 5 0 1 2.",
+      "confidence": 0.99902344,
+      "seconds": 6.323,
+      "entities": [
+        {
+          "type": "national_id",
+          "value": "1036555012",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e04.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e04",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:es",
+      "smart_format": true,
+      "transcript": "Mi cédula es de 71482913.",
+      "confidence": 0.9951172,
+      "seconds": 0.738,
+      "entities": [
+        {
+          "type": "national_id",
+          "value": "71482913",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e04.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e04",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:es-419",
+      "smart_format": true,
+      "transcript": "Mi cédula es de 71482913.",
+      "confidence": 0.9951172,
+      "seconds": 0.713,
+      "entities": [
+        {
+          "type": "national_id",
+          "value": "71482913",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e04.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e04",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:multi",
+      "smart_format": true,
+      "transcript": "Mi cédula es la 71482913.",
+      "confidence": 1.0,
+      "seconds": 0.674,
+      "entities": [
+        {
+          "type": "national_id",
+          "value": "71482913",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e05.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e05",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:es",
+      "smart_format": true,
+      "transcript": "Me puedes llamar al (cinco 5 5 0 1 4 dos)",
+      "confidence": 0.9863281,
+      "seconds": 0.611,
+      "entities": [
+        {
+          "type": "phone",
+          "value": "5550142",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e05.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e05",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:es-419",
+      "smart_format": true,
+      "transcript": "Me puedes llamar al (cinco 5 5 0 1 4 dos)",
+      "confidence": 0.9863281,
+      "seconds": 0.942,
+      "entities": [
+        {
+          "type": "phone",
+          "value": "5550142",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e05.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e05",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:multi",
+      "smart_format": true,
+      "transcript": "Me puede llamar al 5 5 5 0 1 4 2.",
+      "confidence": 0.9980469,
+      "seconds": 0.77,
+      "entities": [
+        {
+          "type": "phone",
+          "value": "5550142",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e06.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e06",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:es",
+      "smart_format": true,
+      "transcript": "La placa del otro carro empezaba por BXT, pero no alcancé a ver los números",
+      "confidence": 0.99609375,
+      "seconds": 0.722,
+      "entities": [
+        {
+          "type": "partial_plate",
+          "value": "BXT",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e06.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e06",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:es-419",
+      "smart_format": true,
+      "transcript": "La placa del otro carro empezaba por BXT, pero no alcancé a ver los números",
+      "confidence": 0.99609375,
+      "seconds": 0.763,
+      "entities": [
+        {
+          "type": "partial_plate",
+          "value": "BXT",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e06.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e06",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:multi",
+      "smart_format": true,
+      "transcript": "La placa del otro carro empezaba por BXT, pero no alcancé a ver los números.",
+      "confidence": 1.0,
+      "seconds": 0.677,
+      "entities": [
+        {
+          "type": "partial_plate",
+          "value": "BXT",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e07.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e07",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:es",
+      "smart_format": true,
+      "transcript": "El número de caso que me dieron es STN 4 5 1 0 7 8",
+      "confidence": 0.984375,
+      "seconds": 0.796,
+      "entities": [
+        {
+          "type": "case_number",
+          "value": "STN451078",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e07.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e07",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:es-419",
+      "smart_format": true,
+      "transcript": "El número de caso que me dieron es STN 4 5 1 0 7 8",
+      "confidence": 0.984375,
+      "seconds": 0.805,
+      "entities": [
+        {
+          "type": "case_number",
+          "value": "STN451078",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e07.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e07",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:multi",
+      "smart_format": true,
+      "transcript": "El número del caso que me dieron es STN 4 5 1 0 7 8.",
+      "confidence": 0.9980469,
+      "seconds": 0.7,
+      "entities": [
+        {
+          "type": "case_number",
+          "value": "STN451078",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e08.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e08",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:es",
+      "smart_format": true,
+      "transcript": "Mi teléfono es el 5 5 5 0 1 8 9.",
+      "confidence": 0.9892578,
+      "seconds": 0.786,
+      "entities": [
+        {
+          "type": "phone",
+          "value": "5550189",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e08.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e08",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:es-419",
+      "smart_format": true,
+      "transcript": "Mi teléfono es el 5 5 5 0 1 8 9.",
+      "confidence": 0.9892578,
+      "seconds": 0.679,
+      "entities": [
+        {
+          "type": "phone",
+          "value": "5550189",
+          "found": true
+        }
+      ]
+    },
+    {
+      "file": "recordings/miguel/quiet/es-e08.wav",
+      "speaker": "miguel",
+      "take": "quiet",
+      "id": "es-e08",
+      "lang": "es",
+      "kind": "entity",
+      "variant": "nova-3:multi",
+      "smart_format": true,
+      "transcript": "Mi teléfono es el 5 5 5 0 1 8 9.",
+      "confidence": 0.99902344,
+      "seconds": 1.198,
+      "entities": [
+        {
+          "type": "phone",
+          "value": "5550189",
+          "found": true
+        }
+      ]
+    }
+  ],
+  "rescored_utc": "2026-09-16T23:59:43Z",
+  "rescored_from": "spanish-stt-20260916T235827Z.json"
+}

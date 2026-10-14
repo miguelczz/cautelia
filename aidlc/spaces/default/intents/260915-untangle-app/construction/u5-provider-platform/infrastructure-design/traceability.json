@@ -1,0 +1,80 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u5-provider-platform",
+  "upstream_ids": [
+    "NFR11.5",
+    "NFR11.6",
+    "NFR14.1",
+    "NFR14.2",
+    "NFR14.3",
+    "NFR15.1",
+    "NFR15.2",
+    "NFR15.3",
+    "NFR15.4",
+    "NFR15.5",
+    "NFR15.6",
+    "NFR18.1"
+  ],
+  "coverage": [
+    {
+      "id": "NFR11.5",
+      "status": "OK",
+      "target": "Contrato de importacion `opentelemetry` solo en `untangle.telemetry.traces` (paso 3) mas lista cerrada de atributos en el comprobador de tipos (paso 4); el archivo OTLP de la corrida sale por el mismo punto unico y va redactado, con retencion corta"
+    },
+    {
+      "id": "NFR11.6",
+      "status": "OK",
+      "target": "Las tres claves nuevas NO entran al entorno de la tuberia; `mise run env:check` compara la plantilla con lo que el codigo lee en las dos direcciones; `mise run secrets` es el primer trabajo del flujo; y las respuestas grabadas de `vcrpy` se escriben con las claves filtradas"
+    },
+    {
+      "id": "NFR14.1",
+      "status": "OK",
+      "target": "Tarea nueva `spend:report`, a peticion y al publicar una version, fuera del guion de verificacion por no ser una compuerta"
+    },
+    {
+      "id": "NFR14.2",
+      "status": "Deferred",
+      "target": "Se mide sobre DS-5, que corre por hito y no en la tuberia, y hoy no esta construido. La infraestructura que aporta esta unidad es la tabla de precios versionada, que nace con ella en la carpeta de configuracion de proveedores, validada por `mise run schema:check`"
+    },
+    {
+      "id": "NFR14.3",
+      "status": "OK",
+      "target": "Filas propias por unidad de cobro en el registro de gasto; la carpeta de configuracion de proveedores, que esta unidad crea, declara el precio de lista de cada proveedor y unidad, y `mise run schema:check` la valida"
+    },
+    {
+      "id": "NFR15.1",
+      "status": "OK",
+      "target": "Una revision de migracion con las cuatro tablas y el tipo numerico exacto para el dinero; `mise run migrate:check` sube, baja y vuelve a subir contra una base efimera"
+    },
+    {
+      "id": "NFR15.2",
+      "status": "OK",
+      "target": "La marca de alerta es una columna de la fila de la ventana, creada en la misma revision; la alerta sale por el canal que fija el intent `infra` (PA-10) y la de prueba del checklist del segundo dia usa ese mismo canal"
+    },
+    {
+      "id": "NFR15.3",
+      "status": "OK",
+      "target": "El purgador de U5 se registra en la raiz de composicion y declara que no toca la fila de la ventana ni el registro de gasto; `mise run test:u2` comprueba que ninguna tabla marcada quedo sin purgador"
+    },
+    {
+      "id": "NFR15.4",
+      "status": "OK",
+      "target": "Contrato de importacion que prohibe `untangle.telemetry.traces` desde `untangle.telemetry.spend` (paso 3), y perfil `traces` de `docker compose` que se puede levantar y tumbar para probarlo"
+    },
+    {
+      "id": "NFR15.5",
+      "status": "OK",
+      "target": "Tiempo maximo de sentencia en la lectura del presupuesto, configurado en la sesion; la base efimera de `testcontainers` permite cortarla en la prueba"
+    },
+    {
+      "id": "NFR15.6",
+      "status": "OK",
+      "target": "La reserva de grabacion en minutos vive en la carpeta de configuracion de proveedores que esta unidad crea, validada por `mise run schema:check`; el carril se escribe en cada fila de gasto de la revision de migracion"
+    },
+    {
+      "id": "NFR18.1",
+      "status": "N/A",
+      "target": "El piso agregado es de U1 y U5 lo hereda sin fila propia: no esta en la lista afirmada de modulos criticos, asi que la configuracion de cobertura no gana ninguna entrada por esta unidad. Queda como observacion para Miguel en `../nfr-requirements/security-requirements.md`, no como requisito"
+    }
+  ]
+}

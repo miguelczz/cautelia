@@ -1,0 +1,48 @@
+{
+  "drivers": [
+    {
+      "full_name": "Olivia Russo"
+    },
+    {
+      "full_name": "Adrian Russo"
+    }
+  ],
+  "endorsement_ids": [
+    "SUN-PAP-2026-END-1",
+    "SUN-PAP-2026-END-2",
+    "SUN-PAP-2026-END-3",
+    "SUN-PAP-2026-END-4",
+    "SUN-PAP-2026-END-5"
+  ],
+  "form_id": "SUN-PAP-2026",
+  "form_version": "2026.1",
+  "issuer_tenant": "sunmeadow",
+  "limits_and_deductibles": {
+    "a.bodily_injury_per_accident": 50000,
+    "a.bodily_injury_per_person": 25000,
+    "a.property_damage": 100000,
+    "b.medical_payments_per_person": 2000,
+    "c.uninsured_per_accident": 50000,
+    "c.uninsured_per_person": 25000,
+    "d.collision_deductible": 500,
+    "d.other_than_collision_deductible": 250
+  },
+  "named_insured": {
+    "email": "olivia.russo@example.org",
+    "full_name": "Olivia Russo",
+    "national_id": "966-48-4921",
+    "persona_id": "sun-per-398476",
+    "phone": "602-555-0141"
+  },
+  "period_end": "2027-05-31",
+  "period_start": "2026-05-31",
+  "policy_number": "POL-398476",
+  "tenant_id": "sunmeadow",
+  "vehicles": [
+    {
+      "make_model_year": "Toyota Camry 2023",
+      "plate": "ZNX-9706",
+      "vin": "39MLZH562VG873474"
+    }
+  ]
+}

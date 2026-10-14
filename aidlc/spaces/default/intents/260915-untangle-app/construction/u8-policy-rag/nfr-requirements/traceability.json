@@ -1,0 +1,326 @@
+{
+  "stage": "nfr-requirements",
+  "unit": "u8-policy-rag",
+  "upstream_ids": [
+    "NFR1",
+    "NFR2",
+    "NFR3",
+    "NFR4",
+    "NFR5",
+    "NFR6",
+    "NFR7",
+    "NFR8",
+    "NFR9",
+    "NFR10",
+    "NFR11",
+    "NFR12",
+    "NFR13",
+    "NFR14",
+    "NFR15",
+    "NFR16",
+    "NFR17",
+    "NFR18",
+    "NFR19",
+    "NFR20",
+    "NFR21",
+    "SEC-U8.1",
+    "SEC-U8.2",
+    "SEC-U8.3",
+    "SEC-U8.4",
+    "SEC-U8.5",
+    "SEC-U8.6",
+    "SEC-U8.7",
+    "NFR10.1",
+    "REL-U8.1",
+    "REL-U8.2",
+    "REL-U8.3",
+    "REL-U8.4",
+    "REL-U8.5",
+    "REL-U8.6",
+    "NFR5.1",
+    "NFR20.1",
+    "PERF-U8.1",
+    "PERF-U8.2",
+    "PERF-U8.3",
+    "PERF-U8.4",
+    "NFR17.1",
+    "TECH-U8.1",
+    "TECH-U8.2",
+    "TECH-U8.3",
+    "TECH-U8.4",
+    "TECH-U8.5",
+    "TECH-U8.6",
+    "NFR18.1",
+    "OBS-U8.1",
+    "OBS-U8.2",
+    "OBS-U8.3",
+    "NFR11.7"
+  ],
+  "coverage": [
+    {
+      "id": "NFR1",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U16 segun la tabla de metas de `unit-of-work.md` (Latencia del turno de voz, del fin del habla al primer audio: p50 menor que 500 ms y p95 menor que 800 ms, por idioma). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR2",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U16 segun la tabla de metas de `unit-of-work.md` (Parada ante interrupcion: menor que 300 ms). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR3",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U16 segun la tabla de metas de `unit-of-work.md` (Recuperacion tras interrupcion sin perder estado: mayor que 90 %). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR4",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U13 segun la tabla de metas de `unit-of-work.md` (Latencia del chat, del envio a la primera palabra: p95 menor que 3 s). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR5",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Precision de citacion: 95 % o mas). U8 implementa la conducta y la verifica como NFR5.1 en construction/u8-policy-rag/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "NFR6",
+      "status": "OK",
+      "target": "Objetivo propio de esta unidad, en construction/u8-policy-rag/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "NFR7",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Completitud del primer aviso en los siete campos: 95 % o mas). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR8",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Exactitud de extraccion: 95 % o mas por campo). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR9",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U10 segun la tabla de metas de `unit-of-work.md` (Respuestas fuera de alcance: exactamente 0). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR10",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U2 segun la tabla de metas de `unit-of-work.md` (Fuga entre aseguradoras: 0 clausulas ajenas). U8 la verifica sobre su indice como NFR10.1 en construction/u8-policy-rag/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "NFR11",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U3 segun la tabla de metas de `unit-of-work.md` (Datos personales en trazas, logs y exportaciones: 0 hallazgos). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR12",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U10 segun la tabla de metas de `unit-of-work.md` (Resistencia a los quince escenarios de red-team: 0 respuestas que obedezcan una instruccion inyectada). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR13",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Derivaciones: 100 % correctas y 10 % o menos innecesarias). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR14",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U5 segun la tabla de metas de `unit-of-work.md` (Costo por caso exitoso, publicado por version). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR15",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U5 segun la tabla de metas de `unit-of-work.md` (Gasto acumulado: 5 USD o menos en 90 dias, con alerta en 3 USD). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR16",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U6 segun la tabla de metas de `unit-of-work.md` (Disponibilidad mensual del enlace en vivo: 95 % o mas). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR17",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 (Duracion de la corrida de evaluacion de texto: 10 minutos o menos). El aporte de U8 se declara como NFR17.1 en construction/u8-policy-rag/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "NFR18",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U1 (Cobertura de lineas: 80 % o mas agregado y en los cinco modulos criticos). El piso propio de U8 se declara como NFR18.1 en construction/u8-policy-rag/nfr-requirements/tech-stack-decisions.md"
+    },
+    {
+      "id": "NFR19",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U20 segun la tabla de metas de `unit-of-work.md` (Retencion de la demo publica: el audio no se persiste y la transcripcion redactada se borra cada noche). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR20",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 (Paridad por idioma: mismas metas en espanol e ingles). U8 la verifica como NFR20.1 en construction/u8-policy-rag/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "NFR21",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U1 segun la tabla de metas de `unit-of-work.md` (De clonar el repositorio a ver el reporte de evaluacion: menos de 15 minutos en maquina limpia). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "SEC-U8.1",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "SEC-U8.2",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "SEC-U8.3",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "SEC-U8.4",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "SEC-U8.5",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "SEC-U8.6",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "SEC-U8.7",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "NFR10.1",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "REL-U8.1",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "REL-U8.2",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "REL-U8.3",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "REL-U8.4",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "REL-U8.5",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "REL-U8.6",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "NFR5.1",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "NFR20.1",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "PERF-U8.1",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "PERF-U8.2",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "PERF-U8.3",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "PERF-U8.4",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "NFR17.1",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "TECH-U8.1",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/tech-stack-decisions.md"
+    },
+    {
+      "id": "TECH-U8.2",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/tech-stack-decisions.md"
+    },
+    {
+      "id": "TECH-U8.3",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/tech-stack-decisions.md"
+    },
+    {
+      "id": "TECH-U8.4",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/tech-stack-decisions.md"
+    },
+    {
+      "id": "TECH-U8.5",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/tech-stack-decisions.md"
+    },
+    {
+      "id": "TECH-U8.6",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/tech-stack-decisions.md"
+    },
+    {
+      "id": "NFR18.1",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/tech-stack-decisions.md"
+    },
+    {
+      "id": "OBS-U8.1",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/observability-requirements.md"
+    },
+    {
+      "id": "OBS-U8.2",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/observability-requirements.md"
+    },
+    {
+      "id": "OBS-U8.3",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/observability-requirements.md"
+    },
+    {
+      "id": "NFR11.7",
+      "status": "OK",
+      "target": "Objetivo de esta unidad, en construction/u8-policy-rag/nfr-requirements/observability-requirements.md"
+    }
+  ]
+}

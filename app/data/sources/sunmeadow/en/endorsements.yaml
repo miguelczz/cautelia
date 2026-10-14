@@ -1,0 +1,63 @@
+# Textos fuente revisados de Autos Poblado, en ingles (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Los borradores del modelo en ingles calcaban giros del formulario de referencia: se
+# reescribieron a mano y por eso casi todos dicen drafted_with: hand.
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: sunmeadow
+language: en
+part_key: endorsements
+texts:
+- source_id: SUN-PAP-2026-END-1-DEF.COVERED_AUTO
+  kind: endorsement
+  clause_key: DEF.COVERED_AUTO
+  part: Endorsements
+  version: '2026.1'
+  text: For this policy, a vehicle you buy during the policy period is a covered auto if you tell us about
+    it within 45 days of taking delivery, instead of 20.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-END-2-D.EXCL.5
+  kind: endorsement
+  clause_key: D.EXCL.5
+  part: Endorsements
+  version: '2026.1'
+  text: The tire exclusion does not apply to road hazard damage, such as a puncture or a blowout caused
+    by a pothole. We pay up to $300 per tire, minus the deductible for damage that does not come from
+    a crash.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-END-3-D.TRANSPORT
+  kind: endorsement
+  clause_key: D.TRANSPORT
+  part: Endorsements
+  version: '2026.1'
+  text: Transportation expense reimbursement rises to $40 a day and $1,200 in total, and it starts on
+    the day of the theft or damage.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: SUN-PAP-2026-END-4-B.INS
+  kind: endorsement
+  clause_key: B.INS
+  part: Endorsements
+  version: '2026.1'
+  text: Part B also covers pedestrians struck by your covered auto, for their reasonable medical and funeral
+    costs, up to the Part B limit per person.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-END-5-F.TERMINATION
+  kind: endorsement
+  clause_key: F.TERMINATION
+  part: Endorsements
+  version: '2026.1'
+  text: When we cancel this policy for any reason other than unpaid premium, we give at least 45 days
+    of written notice, more than the Corvane minimum.
+  refers_to:
+  - SUN-JUR-2026-J.2
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand

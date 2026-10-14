@@ -1,0 +1,15 @@
+{
+  "endorsement_ids": [],
+  "form_id": "TST-PAP-2026",
+  "form_version": "2026.1",
+  "issuer_tenant": "testhaven",
+  "limits_and_deductibles": {
+    "a.property_damage": 20000
+  },
+  "named_insured": {
+    "full_name": "Tomas Herrera Nieto"
+  },
+  "policy_number": "POL-777001",
+  "term_end": "2027-01-31",
+  "term_start": "2026-02-01"
+}

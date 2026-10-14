@@ -1,0 +1,29 @@
+# Cierre directo de un reporte sin heridos y sin terceros, del campo del caso al final del recorrido (FR6.1, AC1.17.1, AC1.17.2), turno en espanol. Quien dice que nadie se lastimo y que no hubo otros involucrados deja a Autos Poblado con el caso cerrado como `registered`, sin pasar por la bandeja, y la agente lo anuncia.
+#
+# Criterio de aceptacion: sobre las filas `closure-registers/*` de
+# `app/evals/fixtures/rules/es.yaml`, los campos `injuries` y `other_parties` del caso
+# se derivan con las mismas funciones del aplicativo, el motor real de la aseguradora da
+# `direct_close` y la decision del final del recorrido
+# (`orchestration.closing_plan.plan`) es cerrar el caso con la resolucion
+# `registered` y anunciar la frase de cierre directo del catalogo.
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en ingles es `DS-2/en/rules-closure-registers`:
+# los mismos escenarios y la misma meta, medidos por idioma y nunca como promedio
+# combinado (P12).
+#
+# Lo que este caso no mide: que el estado del caso cambie de verdad en la base, que se
+# guarde la evidencia de cierre ni el aviso en el chat o en la llamada (lo cubre la prueba
+# de integracion de la cadena de fondo), ni la revision de cumplimiento, que se da por
+# aprobada.
+case_key: DS-2/es/rules-closure-registers
+dataset: DS-2
+language: es
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - rules-engine
+  - direct-closure
+expected_verdicts:
+  closure_registers_without_adjuster: pass

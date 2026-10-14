@@ -1,0 +1,118 @@
+{
+  "$defs": {
+    "GuardCategory": {
+      "description": "Las siete categorias cerradas de la guardia (BR1.2).\n\nUna categoria nueva es un cambio de BR1.2, de este enum y de la restriccion\nde la tabla, en el mismo commit.",
+      "enum": [
+        "coverage_promise",
+        "amount",
+        "fault",
+        "legal_advice",
+        "humanity_claim",
+        "transfer_or_deadline",
+        "config_disclosure"
+      ],
+      "title": "GuardCategory",
+      "type": "string"
+    },
+    "Pattern": {
+      "additionalProperties": false,
+      "description": "Una expresion sobre texto normalizado, con su identificador estable.",
+      "properties": {
+        "id": {
+          "maxLength": 64,
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+){2,4}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GuardCategory"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "regex": {
+          "minLength": 1,
+          "title": "Regex",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "regex"
+      ],
+      "title": "Pattern",
+      "type": "object"
+    },
+    "PatternFamily": {
+      "description": "Las cuatro familias de patrones (`entities.md`, PatternSet).",
+      "enum": [
+        "guard",
+        "human_request",
+        "identity_question",
+        "emergency"
+      ],
+      "title": "PatternFamily",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Los patrones versionados de un idioma para una familia (`entities.md`).",
+  "properties": {
+    "language": {
+      "enum": [
+        "es",
+        "en"
+      ],
+      "title": "Language",
+      "type": "string"
+    },
+    "family": {
+      "$ref": "#/$defs/PatternFamily"
+    },
+    "version": {
+      "maxLength": 32,
+      "minLength": 1,
+      "title": "Version",
+      "type": "string"
+    },
+    "patterns": {
+      "items": {
+        "$ref": "#/$defs/Pattern"
+      },
+      "minItems": 1,
+      "title": "Patterns",
+      "type": "array"
+    },
+    "negations": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Pattern"
+      },
+      "title": "Negations",
+      "type": "array"
+    },
+    "exempt_catalog_keys": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Exempt Catalog Keys",
+      "type": "array"
+    }
+  },
+  "required": [
+    "language",
+    "family",
+    "version",
+    "patterns"
+  ],
+  "title": "PatternSet",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/compliance-pattern-set.schema.json"
+}

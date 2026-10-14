@@ -1,0 +1,59 @@
+# Lo que corre en la instancia de Oracle: el aplicativo y el tunel, nada mas.
+#
+# **Por que no hay base de datos aqui.** La base vive en Neon, fuera de la
+# maquina. Una base dentro de la instancia se perderia con ella y obligaria a
+# resolver copias de seguridad a mano; ademas la instancia gratuita no tiene
+# disco de sobra para los dos.
+#
+# **Por que no hay puertos publicados.** Ni 80 ni 443 ni 8080. El tunel abre una
+# conexion **hacia afuera** y Cloudflare entrega el trafico por ella, asi que la
+# maquina no necesita nada escuchando desde internet. Publicar un puerto aqui
+# seria abrir una puerta que no hace falta.
+
+name: cautelia
+
+services:
+  aplicativo:
+    image: ${CAUTELIA_IMAGEN:?falta CAUTELIA_IMAGEN en deploy.env}
+    # Vuelve sola tras un reinicio de la maquina o una caida del proceso, pero
+    # **no** cuando alguien la para a proposito: `unless-stopped` y no `always`,
+    # para que detenerla durante un incidente signifique detenerla.
+    restart: unless-stopped
+    env_file:
+      - /opt/cautelia/env/aplicativo.env
+    environment:
+      # Que commit corre, para `GET /api/health/ready`. Sale del **mismo**
+      # archivo que la etiqueta de la imagen y lo escribe el mismo guion, asi
+      # que no pueden decir cosas distintas: si estuviera a mano en el archivo
+      # de entorno, el dia de un incidente la salud podria mentir.
+      UNTANGLE_COMMIT_SHA: ${CAUTELIA_COMMIT:?falta CAUTELIA_COMMIT en deploy.env}
+    # La salud la decide el aplicativo, no el motor de contenedores: `ready`
+    # responde cuando las migraciones subieron y los detectores cargaron, que es
+    # lo que de verdad significa "puede atender".
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8080/api/health/ready', timeout=4).status == 200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      start_period: 60s
+      retries: 3
+    # Medido el 2026-10-03: en reposo ~155 MB, pico de 173 MB al cargar los dos
+    # detectores de datos personales, y **muere** con un tope de 512 MB. El tope
+    # de 1 GB deja margen de sobra sin dejar que una fuga se coma la maquina.
+    mem_limit: 1g
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  tunel:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    # `--no-autoupdate`: una imagen que se actualiza sola por dentro deja de ser
+    # reproducible, y la version que corre pasa a depender del dia.
+    command: tunnel --no-autoupdate --config /etc/cloudflared/config.yml run
+    volumes:
+      - /opt/cautelia/cloudflared:/etc/cloudflared:ro
+    depends_on:
+      aplicativo:
+        condition: service_healthy

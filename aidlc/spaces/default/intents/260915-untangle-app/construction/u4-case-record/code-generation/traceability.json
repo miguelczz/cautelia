@@ -1,0 +1,531 @@
+{
+  "stage": "code-generation",
+  "unit": "u4-case-record",
+  "upstream_ids": [
+    "AC1.14.1",
+    "AC1.14.2",
+    "AC1.14.3",
+    "AC1.14.4",
+    "AC1.8.1",
+    "AC1.8.2",
+    "AC1.8.3",
+    "AC1.8.4",
+    "AC4.10.1",
+    "AC4.10.2",
+    "AC4.10.3",
+    "AC4.10.4",
+    "AC4.10.5",
+    "BR1.1",
+    "BR1.2",
+    "BR1.3",
+    "BR1.4",
+    "BR1.5",
+    "BR1.6",
+    "BR1.7",
+    "BR1.8",
+    "BR2.1",
+    "BR2.2",
+    "BR2.3",
+    "BR2.4",
+    "BR2.5",
+    "BR2.6",
+    "BR2.7",
+    "BR2.8",
+    "BR3.1",
+    "BR3.2",
+    "BR3.3",
+    "BR3.4",
+    "BR3.5",
+    "BR3.6",
+    "BR3.7",
+    "BR3.8",
+    "BR3.9",
+    "BR4.1",
+    "BR4.2",
+    "BR4.3",
+    "BR4.4",
+    "BR4.5",
+    "BR4.6",
+    "BR5.1",
+    "BR5.2",
+    "BR5.3",
+    "BR5.4",
+    "BR6.1",
+    "BR6.2",
+    "BR6.3",
+    "BR6.4",
+    "BR7.1",
+    "BR7.2",
+    "BR7.3",
+    "NFR10.4",
+    "NFR18.2",
+    "NFR19.2",
+    "NFR7.1",
+    "NFR7.2",
+    "PA-8",
+    "SEC-U4.1",
+    "SEC-U4.10",
+    "SEC-U4.11",
+    "SEC-U4.12",
+    "SEC-U4.13",
+    "SEC-U4.14",
+    "SEC-U4.15",
+    "SEC-U4.2",
+    "SEC-U4.3",
+    "SEC-U4.4",
+    "SEC-U4.5",
+    "SEC-U4.6",
+    "SEC-U4.7",
+    "SEC-U4.8",
+    "SEC-U4.9"
+  ],
+  "coverage": [
+    {
+      "id": "AC1.8.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/parties.py"
+    },
+    {
+      "id": "AC1.8.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/parties.py"
+    },
+    {
+      "id": "AC1.8.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "AC1.8.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/parties.py"
+    },
+    {
+      "id": "AC4.10.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/rules.py"
+    },
+    {
+      "id": "AC4.10.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/labels.py"
+    },
+    {
+      "id": "AC4.10.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/fields.py"
+    },
+    {
+      "id": "AC4.10.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/history.py"
+    },
+    {
+      "id": "AC4.10.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/crypto.py"
+    },
+    {
+      "id": "BR1.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "BR1.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/repository.py"
+    },
+    {
+      "id": "BR1.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/schema/fields.yaml"
+    },
+    {
+      "id": "BR1.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/schema_loading.py"
+    },
+    {
+      "id": "BR1.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/schema/fields.yaml"
+    },
+    {
+      "id": "BR1.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/fields.py"
+    },
+    {
+      "id": "BR1.7",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/parties.py"
+    },
+    {
+      "id": "BR1.8",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/parties.py"
+    },
+    {
+      "id": "BR2.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "BR2.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/fields.py (validate_field: el estado que exige lectura, no solo el umbral de completitud)"
+    },
+    {
+      "id": "BR2.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "BR2.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "BR2.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "BR2.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/fields.py"
+    },
+    {
+      "id": "BR2.7",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/fields.py"
+    },
+    {
+      "id": "BR2.8",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "BR3.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "BR3.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/schema/transitions.yaml"
+    },
+    {
+      "id": "BR3.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/rules.py"
+    },
+    {
+      "id": "BR3.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "BR3.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "BR3.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/labels.py"
+    },
+    {
+      "id": "BR3.7",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "BR3.8",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "BR3.9",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/rules.py"
+    },
+    {
+      "id": "BR4.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/numbering.py"
+    },
+    {
+      "id": "BR4.2",
+      "status": "OK",
+      "target": "app/config/tenants/stonecroft/tenant.yaml"
+    },
+    {
+      "id": "BR4.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/numbering.py"
+    },
+    {
+      "id": "BR4.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "BR4.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "BR4.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/purge.py"
+    },
+    {
+      "id": "BR5.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/api.py (el campo y su entrada en una sola transaccion) y history.py"
+    },
+    {
+      "id": "BR5.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "BR5.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/history.py"
+    },
+    {
+      "id": "BR5.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/rules.py"
+    },
+    {
+      "id": "BR6.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/transcript.py"
+    },
+    {
+      "id": "BR6.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "BR6.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/models.py"
+    },
+    {
+      "id": "BR6.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/repository.py (la evidencia de cierre no se reescribe) y api.py (un caso cerrado no acepta campos)"
+    },
+    {
+      "id": "BR7.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/repository.py"
+    },
+    {
+      "id": "BR7.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/purge.py"
+    },
+    {
+      "id": "BR7.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/api.py (get_case y get_case_by_number: las dos mitades de la regla)"
+    },
+    {
+      "id": "NFR18.2",
+      "status": "OK",
+      "target": "app/backend/pyproject.toml"
+    },
+    {
+      "id": "NFR19.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/purge.py"
+    },
+    {
+      "id": "NFR7.1",
+      "status": "OK",
+      "target": "app/backend/migrations/versions/u4_case_0001_case_tables.py"
+    },
+    {
+      "id": "NFR7.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/repository.py"
+    },
+    {
+      "id": "PA-8",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/crypto.py"
+    },
+    {
+      "id": "SEC-U4.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/repository.py"
+    },
+    {
+      "id": "SEC-U4.10",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/crypto.py"
+    },
+    {
+      "id": "SEC-U4.11",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/history.py"
+    },
+    {
+      "id": "SEC-U4.12",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/rules.py"
+    },
+    {
+      "id": "SEC-U4.13",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/rules.py"
+    },
+    {
+      "id": "SEC-U4.14",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/api.py (get_case_by_number, con su prueba de aislamiento)"
+    },
+    {
+      "id": "SEC-U4.15",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/labels.py"
+    },
+    {
+      "id": "SEC-U4.2",
+      "status": "OK",
+      "target": "app/backend/migrations/versions/u4_case_0001_case_tables.py"
+    },
+    {
+      "id": "SEC-U4.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/api.py"
+    },
+    {
+      "id": "SEC-U4.4",
+      "status": "OK",
+      "target": "app/backend/migrations/versions/u4_case_0001_case_tables.py"
+    },
+    {
+      "id": "SEC-U4.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/purge.py"
+    },
+    {
+      "id": "SEC-U4.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/transcript.py"
+    },
+    {
+      "id": "SEC-U4.7",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/transcript.py"
+    },
+    {
+      "id": "SEC-U4.8",
+      "status": "OK",
+      "target": "app/backend/src/untangle/case_record/crypto.py"
+    },
+    {
+      "id": "SEC-U4.9",
+      "status": "OK",
+      "target": "app/backend/src/untangle/settings.py"
+    },
+    {
+      "id": "AC1.14.1",
+      "status": "Deferred",
+      "target": "U11 `intake` decide cuando un bloque cierra; U4 solo guarda el resultado"
+    },
+    {
+      "id": "AC1.14.2",
+      "status": "Deferred",
+      "target": "U11 `intake`: la lectura de confirmacion la pide el nodo de captura"
+    },
+    {
+      "id": "AC1.14.3",
+      "status": "Deferred",
+      "target": "U11 `intake`: el reintento de un campo que no se confirmo"
+    },
+    {
+      "id": "AC1.14.4",
+      "status": "Deferred",
+      "target": "U14 `inbox`: la correccion desde la bandeja usa la superficie de U4, que ya existe"
+    },
+    {
+      "id": "NFR10.4",
+      "status": "Deferred",
+      "target": "U21 `eval-gates` publica la latencia; U4 aporta las operaciones que se miden"
+    }
+  ],
+  "reverse": [
+    {
+      "id": "CG-U4-1",
+      "status": "N/A",
+      "target": "app/backend/src/untangle/workspace/case_constructor.py: el analisis estatico del tipo sellado. Lo pide la capa 2 del diseno de seguridad en prosa, sin identificador propio"
+    },
+    {
+      "id": "CG-U4-2",
+      "status": "N/A",
+      "target": "app/backend/src/untangle/workspace/case_transitions.py: el diagrama generado desde la tabla. Lo pide la enmienda de ADR-005 en prosa, sin identificador propio"
+    },
+    {
+      "id": "CG-U4-3",
+      "status": "N/A",
+      "target": "app/backend/src/untangle/case_record/crypto.py, funcion `from_storage`: la segunda puerta del tipo sellado, para los bytes que vuelven de la columna. Sin ella, el repositorio necesitaria un `cast` que el analisis estatico prohibe"
+    },
+    {
+      "id": "CG-U4-4",
+      "status": "N/A",
+      "target": "app/backend/migrations/versions/u4_case_0001_case_tables.py, columna `seq`: el historial se lee en orden de insercion y no por reloj. Dos entradas del mismo instante quedaban en orden arbitrario"
+    },
+    {
+      "id": "CG-U4-5",
+      "status": "N/A",
+      "target": "app/backend/migrations/versions/u4_case_0001_case_tables.py, disparador `case_change_sin_edicion`: SEC-U4.11 en la base y no solo en la superficie del modulo"
+    },
+    {
+      "id": "CG-U4-6",
+      "status": "N/A",
+      "target": "app/backend/src/untangle/base.py, metodo `evolve`: una copia que vuelve a validar. `model_copy` no valida, asi que el ejecutor de transiciones construia casos sin pasar por sus invariantes"
+    },
+    {
+      "id": "CG-U4-7",
+      "status": "N/A",
+      "target": "app/backend/src/untangle/workspace/redaction_constructor.py: el chequeo de la firma silenciada de U3 estaba roto --preguntaba el numero de linea a un nodo que no lo lleva-- y no disparaba nunca. Arreglado con la prueba que faltaba"
+    },
+    {
+      "id": "CG-U4-8",
+      "status": "N/A",
+      "target": "app/backend/src/untangle/copy_catalog/checks.py, `check_schema`: el comprobador del catalogo aprobaba catalogos que el aplicativo rechaza al arrancar. Detectado anadiendo las etiquetas del caso"
+    },
+    {
+      "id": "CG-U4-9",
+      "status": "N/A",
+      "target": "app/backend/tests/integration/u4/test_migration.py: las garantias de la revision --la cascada, el historial de solo anexar, el cierre completo-- no viven en Python y se prueban contra la base"
+    },
+    {
+      "id": "CG-U4-10",
+      "status": "N/A",
+      "target": "app/backend/src/untangle/case_record/repository.py, parametro `en`: una transaccion compartida entre el campo y su entrada del historial. Con una sesion por operacion, un fallo de la segunda dejaba un campo escrito sin rastro de quien lo cambio (BR5.1). Lo encontro la revision asesora"
+    },
+    {
+      "id": "CG-U4-11",
+      "status": "N/A",
+      "target": "app/backend/src/untangle/case_record/history.py, `derived_at`: la ventana para retomar sale del propio historial de U4 y no de quien llama. Una condicion cuyo insumo aporta entero el consumidor no es una condicion"
+    },
+    {
+      "id": "CG-U4-12",
+      "status": "N/A",
+      "target": "app/backend/src/untangle/case_record/api.py, `CaseClosedError`: un caso cerrado no acepta cambios en sus campos, porque su evidencia de cierre atestigua lo que habia al cerrarlo"
+    },
+    {
+      "id": "CG-U4-13",
+      "status": "N/A",
+      "target": "app/backend/src/untangle/workspace/case_constructor.py y redaction_constructor.py: los argumentos solo posicionales, solo por palabra clave y de resto variable, mas los alias de importacion. Cuatro vias mas que ninguno de los dos chequeos miraba"
+    }
+  ]
+}

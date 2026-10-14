@@ -1,0 +1,131 @@
+# Elegibilidad de una solicitud de cotizacion de Autos Poblado (U19, FD-U19-3, BR2.1 a BR2.4).
+#
+# Las cinco condiciones son las de la respuesta Q3 de Miguel (2026-09-30): dos
+# dejan fuera de lo que esta aseguradora asegura, tres derivan a un suscriptor, y
+# todo lo demas es elegible. Las dos reglas del final no son condiciones: dicen
+# donde queda el riesgo de quien es elegible (respuesta Q1).
+#
+# **Ninguna regla compara contra un anio del calendario** (BR1.4). `vehicle_age_years`
+# es un campo derivado que la captura calcula desde el anio del modelo y el reloj, en
+# un solo sitio; una regla que dijera "modelo 2001 o anterior" envejece sola y no
+# falla nada.
+#
+# **Ninguna regla habla de dinero, y no hay ningun importe en ninguna parte** (BR3.1):
+# esta demostracion no calcula precios. La banda habla de riesgo, no de prima.
+#
+# El vocabulario de `when` es el de `rules/fields.py` (ELIGIBILITY_FIELDS). Las
+# claves de `then.explanation_key` viven en `app/config/copy/{es,en}.yaml` bajo
+# `rules.explain.*`, sin nombrar la regla ni la aseguradora (BR2.3): quien pregunta lee
+# la condicion, los identificadores van a la traza y a la bandeja.
+#
+# Cada regla trae sus casos `tests`, uno que la dispara y uno que no (BR2.4).
+ruleset_version: v1
+rules:
+  # --- No elegible: queda fuera de lo que esta aseguradora asegura -------------
+  - id: SUN-Q-01
+    version: 1
+    when: { operator: equals, field: use_type, value: commercial }
+    then:
+      outcome: not_eligible
+      band: outside_appetite
+      explanation_key: rules.explain.quote_commercial_use
+    tests:
+      - given: { use_type: commercial }
+        expect: true
+      - given: { use_type: personal }
+        expect: false
+      - given: { use_type: commuting }
+        expect: false
+
+  - id: SUN-Q-02
+    version: 1
+    when: { operator: equals, field: salvage_title, value: true }
+    then:
+      outcome: not_eligible
+      band: outside_appetite
+      explanation_key: rules.explain.quote_salvage_title
+    tests:
+      - given: { salvage_title: true }
+        expect: true
+      - given: { salvage_title: false }
+        expect: false
+
+  # --- Derivacion: lo decide un suscriptor, y la banda todavia no se sabe -------
+  - id: SUN-Q-03
+    version: 1
+    when: { operator: gte, field: at_fault_losses_3y, value: 2 }
+    then:
+      outcome: referred
+      band: pending_review
+      explanation_key: rules.explain.quote_at_fault_losses
+    tests:
+      - given: { at_fault_losses_3y: 2 }
+        expect: true
+      - given: { at_fault_losses_3y: 1 }
+        expect: false
+      - given: { at_fault_losses_3y: 0 }
+        expect: false
+
+  # `lte 0` y no `lt 1`: el vocabulario de operadores no trae `lt`, y los anios de
+  # licencia son enteros.
+  - id: SUN-Q-04
+    version: 1
+    when: { operator: lte, field: license_years, value: 0 }
+    then:
+      outcome: referred
+      band: pending_review
+      explanation_key: rules.explain.quote_new_license
+    tests:
+      - given: { license_years: 0 }
+        expect: true
+      - given: { license_years: 1 }
+        expect: false
+
+  # "Mas de 25 anios" es `gte 26`: la antiguedad es un entero.
+  - id: SUN-Q-05
+    version: 1
+    when: { operator: gte, field: vehicle_age_years, value: 26 }
+    then:
+      outcome: referred
+      band: pending_review
+      explanation_key: rules.explain.quote_old_vehicle
+    tests:
+      - given: { vehicle_age_years: 26 }
+        expect: true
+      - given: { vehicle_age_years: 25 }
+        expect: false
+
+  # --- Elegible: dos bandas ----------------------------------------------------
+  # Riesgo habitual: ningun siniestro con culpa y tres anios o mas de licencia. Un
+  # campo ausente no cumple: sin los dos datos no se afirma un riesgo habitual.
+  - id: SUN-Q-06
+    version: 1
+    when:
+      operator: all
+      conditions:
+        - { operator: equals, field: at_fault_losses_3y, value: 0 }
+        - { operator: gte, field: license_years, value: 3 }
+    then:
+      outcome: eligible
+      band: standard_risk
+      explanation_key: rules.explain.quote_standard_risk
+    tests:
+      - given: { at_fault_losses_3y: 0, license_years: 3 }
+        expect: true
+      - given: { at_fault_losses_3y: 1, license_years: 10 }
+        expect: false
+      - given: { at_fault_losses_3y: 0, license_years: 2 }
+        expect: false
+
+  # La regla por defecto: elegible, con mas riesgo del habitual. Solo entra cuando
+  # ninguna otra disparo (incluida la de riesgo habitual).
+  - id: SUN-Q-07
+    version: 1
+    when: { always: true }
+    then:
+      outcome: eligible
+      band: elevated_risk
+      explanation_key: rules.explain.quote_elevated_risk
+    tests:
+      - given: {}
+        expect: true

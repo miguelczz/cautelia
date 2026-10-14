@@ -1,0 +1,27 @@
+# Excepciones versionadas del chequeo de cadenas en linea (BR3.3).
+#
+# El chequeo es una heuristica: busca cadenas de cuatro palabras o mas que
+# terminan como termina una frase, dentro de los modulos que emiten texto hacia
+# una persona. Una heuristica sin valvula se convierte en una regla que la gente
+# desactiva; esta es la valvula, y cada entrada lleva su razon escrita.
+#
+# Una entrada aqui NO es permiso para escribir copy en linea. Es la constancia de
+# que una cadena concreta no es copy.
+
+allowed:
+  # La primera entrada de esta lista, y conviene que se lea con cuidado porque
+  # sienta el precedente.
+  #
+  # Es el mensaje de un `ValueError` sobre una configuracion mal escrita, en un
+  # modulo que **por construccion no emite texto hacia nadie**: su docstring dice
+  # que devuelve el codigo del carril y nunca la frase, y la frase sale del
+  # catalogo en el punto unico de salida. Lo lee quien escribio mal
+  # `providers.yaml`, no quien llama por telefono.
+  #
+  # Se deja largo a proposito, que es por lo que la heuristica lo caza: nombrar la
+  # condicion es la diferencia entre un error que se arregla en un minuto y uno
+  # que se investiga una hora.
+  - text: "el carril del sitio no puede ser menor que el de una conexion: "
+    reason: >
+      Mensaje de error de configuracion de `voice/admission.py`, no copy: ese modulo
+      devuelve el codigo del carril y nunca una frase (U17, BR1.2).

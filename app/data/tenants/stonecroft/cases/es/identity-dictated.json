@@ -1,0 +1,31 @@
+{
+  "case_key": "SEED/stonecroft/es/identity-dictated",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "identity_and_policy": {
+      "status": "stated",
+      "value": "Natalia Londoño Agudelo, póliza POL-897598"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-897598",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "capturing",
+  "tenant_id": "stonecroft",
+  "transcript": [
+    {
+      "speaker": "agent",
+      "text": "¿Me da sus datos para ubicar la póliza?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Mi cédula es 92.886.179, mi celular 313 555 0104, la placa del carro CEZ496 y la póliza POL-897598."
+    }
+  ],
+  "used_by": [
+    "AC4.12.1",
+    "AC4.13.1"
+  ]
+}

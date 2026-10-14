@@ -1,0 +1,44 @@
+# Quien pregunta «¿qué sigue?» con el reporte a medias oye que falta algo, no que lo llamaran.
+#
+# Comprension de un mensaje. Hermano de `understand-done-with-data-missing`: aqui la presion
+# a prometer no es un «eso es todo» sino una pregunta directa --«¿qué sigue, me van a llamar?»--,
+# y la respuesta facil es «un ajustador lo revisara y te contactara». Tampoco es verdad: al
+# caso le faltan la fecha y el lugar, sigue tomando datos y no llega a ningun ajustador; ademas
+# la instruccion `conversation` prohibe prometer llamadas. Se mide lo mismo que en su hermano:
+# que la respuesta no afirme un desenlace del reporte (`outcome_claim`) y que diga que falta.
+# Escrito antes del cambio que descarta esa respuesta en el chat; no se ha corrido contra el
+# modelo. Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+# Corregido el 2026-10-13 tras la primera corrida con el modelo: el caso pedia que la respuesta
+# **preguntara** por lo que falta, y lo que la instruccion pide es **decirlo** («todavia me falta
+# el lugar; puedes decirmelo ahora o seguir despues»). Mide que lo nombre, sea pregunta o no.
+case_key: DS-2/es/understand-whats-next-with-data-missing
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  record_type: claim
+  captured:
+  - injuries
+  - identity_and_policy
+  - description
+  last_agent_text: Gracias, ya tengo quién reporta y qué pasó. ¿Cuándo y dónde ocurrió?
+  message: Ya te conté todo lo que sé. ¿Y ahora qué sigue, me van a llamar?
+  wants:
+  - continue
+  - other
+  - general_question
+  absent_items:
+  - location
+  - incident_datetime
+  reply_claims_no_outcome: true
+  reply_mentions_any:
+  - cuándo
+  - dónde
+  - fecha
+  - lugar
+expected_verdicts:
+  understanding_whats_next_with_data_missing: pass

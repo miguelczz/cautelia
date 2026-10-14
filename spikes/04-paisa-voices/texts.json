@@ -1,0 +1,35 @@
+{
+  "notes": "Frases de audición, iguales a las de las historias de usuario: apertura y honestidad sin transferencia en vivo (decisión D13) y formas de cortesía neutras (decisión D10). Cada voz sintetiza todas; en total son unos 1.000 caracteres por voz.",
+  "texts": [
+    {
+      "id": "es-opening",
+      "lang": "es",
+      "text": "Hola, buenas. Le habla Valentina, la asistente de inteligencia artificial de Stonecroft Mutual. Esta llamada queda transcrita para registrar bien su caso. Puedo ayudarle a reportar un siniestro o a resolver dudas sobre su póliza, y si en algún momento prefiere que una persona revise su caso, me dice y se lo paso. Para empezar, ¿todos están bien?"
+    },
+    {
+      "id": "es-confirm",
+      "lang": "es",
+      "text": "Anotado: autopista sur, salida catorce, sobre las cinco y media de la tarde. ¿Correcto?"
+    },
+    {
+      "id": "es-calm",
+      "lang": "es",
+      "text": "Con calma, vamos paso a paso. Tómese su tiempo, aquí estoy."
+    },
+    {
+      "id": "es-honesty",
+      "lang": "es",
+      "text": "No, soy una asistente de inteligencia artificial, pero le voy a ayudar con todo esto, y si prefiere que una persona revise su caso, se lo paso a un ajustador."
+    },
+    {
+      "id": "en-opening",
+      "lang": "en",
+      "text": "Hi, this is Valentina, Sunmeadow Auto's AI assistant. This call is transcribed so I can file your case correctly. I can help you report a claim or answer questions about your policy, and if at any point you'd rather have a person review your case, just say so. First, is everyone okay?"
+    },
+    {
+      "id": "en-confirm",
+      "lang": "en",
+      "text": "Got it: Highway 9, exit fourteen, around five thirty in the afternoon. Is that right?"
+    }
+  ]
+}

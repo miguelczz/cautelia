@@ -1,0 +1,40 @@
+# La póliza que el reconocedor entregó incompleta, buscada por el nombre del titular y
+# confirmada (2026-10-13; P3, BR1.2, BR1.6), turno en español.
+#
+# Criterio de aceptación: dado que en una llamada la persona dijo su nombre completo y su
+# póliza, y el reconocedor entregó el número incompleto («Paul 201 17» por «POL-200117»),
+# cuando ese titular tiene una sola póliza en la aseguradora y las cifras oídas se parecen a
+# las suyas —faltan como mucho dos, en orden, o con las seis una sola es distinta—, entonces
+# la agente propone esa póliza con la misma frase del chat y no ata nada; «Sí, soy yo» la ata
+# y «No, yo no soy» no ata nada.
+#
+# Veredicto esperado: `pass`.
+#
+# Origen: la llamada real del 2026-10-13 con la tarjeta de la demostración («Soy Marco Parker,
+# mi póliza es POL-200117»). El caso quedó sin póliza identificada, y en el chat la agente la
+# habría encontrado. La póliza y el titular son los del corpus versionado de la aseguradora.
+# Lo que escribe el nodo lo prueba `tests/unit/intake/test_policy_unresolved.py`; aquí se mide
+# lo que la persona lee y que nunca se ata lo que no confirmó.
+#
+# La pareja en inglés es `DS-2/en/intake-policy-heard-incomplete`: los mismos criterios y la
+# misma meta, medidos por idioma (P12).
+case_key: DS-2/es/intake-policy-heard-incomplete
+dataset: DS-2
+language: es
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - intake
+  - conversation
+script:
+  - field_key: identity_and_policy
+    sequence: 1
+    text: "Claro, mi nombre completo es Marco Parker y mi póliza es Paul 201 17."
+  - field_key: identity_and_policy
+    sequence: 2
+    text: "Sí, soy yo"
+  - field_key: identity_and_policy
+    sequence: 3
+    text: "No, yo no soy"
+expected_verdicts:
+  intake_policy_heard_incomplete: pass

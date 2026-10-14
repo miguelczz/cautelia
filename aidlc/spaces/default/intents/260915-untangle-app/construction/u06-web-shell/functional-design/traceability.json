@@ -1,0 +1,192 @@
+{
+  "stage": "functional-design",
+  "unit": "u06-web-shell",
+  "upstream_ids": [
+    "AC1.33.1",
+    "AC1.33.2",
+    "AC1.33.3",
+    "AC1.33.4",
+    "AC1.33.5",
+    "AC1.33.6",
+    "AC5.16.1",
+    "AC5.16.2",
+    "AC5.16.3",
+    "AC5.16.4",
+    "AC5.16.5",
+    "AC5.16.6"
+  ],
+  "coverage": [
+    {
+      "id": "AC1.33.1",
+      "status": "OK",
+      "target": "BR7.1, BR7.2"
+    },
+    {
+      "id": "AC1.33.2",
+      "status": "OK",
+      "target": "BR7.3"
+    },
+    {
+      "id": "AC1.33.3",
+      "status": "OK",
+      "target": "BR7.4"
+    },
+    {
+      "id": "AC1.33.4",
+      "status": "OK",
+      "target": "BR7.5, BR2.5"
+    },
+    {
+      "id": "AC1.33.5",
+      "status": "OK",
+      "target": "BR2.4"
+    },
+    {
+      "id": "AC1.33.6",
+      "status": "OK",
+      "target": "BR7.6, BR5.7, BR1.5, BR7.7"
+    },
+    {
+      "id": "AC5.16.1",
+      "status": "OK",
+      "target": "BR5.1, BR5.2, BR5.3, BR8.4"
+    },
+    {
+      "id": "AC5.16.2",
+      "status": "Deferred",
+      "target": "Intent infra (PA-10): el chequeo cada cinco minutos y el calculo de la disponibilidad mensual viven alla. U6 deja la salud de listo (BR5.1, BR5.3) que ese chequeo consulta"
+    },
+    {
+      "id": "AC5.16.3",
+      "status": "Deferred",
+      "target": "Intent infra (PA-10): el canal de la alerta y la regla de dos fallos seguidos son del chequeo periodico, que es de ese intent. U6 deja la salud que falla de forma distinguible (BR5.3)"
+    },
+    {
+      "id": "AC5.16.4",
+      "status": "OK",
+      "target": "BR5.4, BR5.5, BR5.7, BR6.3"
+    },
+    {
+      "id": "AC5.16.5",
+      "status": "Deferred",
+      "target": "Intent infra: el checklist del segundo dia se corre en el primer despliegue, que es de ese intent (D-014). Es un criterio humano y U6 no despliega"
+    },
+    {
+      "id": "AC5.16.6",
+      "status": "OK",
+      "target": "BR8.1, BR8.2, BR8.3, BR8.5"
+    }
+  ],
+  "reverse": [
+    {
+      "id": "BR1.1",
+      "status": "N/A",
+      "target": "Modo inicial del dispositivo o de la eleccion guardada. Sale del sistema de diseno aprobado (Modos de tema) y de la correccion de project.md sobre claro y oscuro, no de un criterio de US1.33 ni de US5.16"
+    },
+    {
+      "id": "BR1.2",
+      "status": "N/A",
+      "target": "Sin salto de modo al cargar. Sistema de diseno (Sin salto al cargar); su evidencia es la prueba del primer cuadro"
+    },
+    {
+      "id": "BR1.3",
+      "status": "N/A",
+      "target": "Cambio inmediato y ninguna pantalla impone modo. Correccion de project.md (claro y oscuro son modos completos) y U-20 de las maquetas"
+    },
+    {
+      "id": "BR1.4",
+      "status": "N/A",
+      "target": "Preferencia ilegible tratada como ausente. Manejo de errores en fronteras de phases/construction.md"
+    },
+    {
+      "id": "BR1.6",
+      "status": "N/A",
+      "target": "Acento de aseguradora desde su configuracion. Convencion 9 de team.md y prohibicion de tenant_id literal de project.md"
+    },
+    {
+      "id": "BR2.1",
+      "status": "N/A",
+      "target": "Idioma de las paginas sin aseguradora. Respuesta Q2 de esta etapa y P12"
+    },
+    {
+      "id": "BR2.2",
+      "status": "N/A",
+      "target": "Idioma por defecto de la aseguradora. C-25 (default_language) y FR4.1; los criterios de ese idioma son de U13"
+    },
+    {
+      "id": "BR2.3",
+      "status": "N/A",
+      "target": "Todo texto por clave tipada. C-21, ADR-017 y convencion 4 de team.md; su evidencia son los chequeos de paridad y de claves sin consumidor de U1"
+    },
+    {
+      "id": "BR3.1",
+      "status": "N/A",
+      "target": "Solo el cliente generado. C-28 y ADR-002; su evidencia es la comprobacion de deriva"
+    },
+    {
+      "id": "BR3.2",
+      "status": "N/A",
+      "target": "Error por clave de catalogo. C-01 (la interfaz nunca muestra title ni detail)"
+    },
+    {
+      "id": "BR3.3",
+      "status": "N/A",
+      "target": "Rama por defecto para un code desconocido. C-01 la declara obligatoria en el cliente"
+    },
+    {
+      "id": "BR3.4",
+      "status": "N/A",
+      "target": "Red caida o cuerpo ilegible como servicio no disponible. Pagina de estado M11 y manejo de errores en fronteras"
+    },
+    {
+      "id": "BR3.5",
+      "status": "N/A",
+      "target": "Datos de caso solo en memoria. Nota de unit-of-work.md U6 y comportamiento de WebClient en components.md"
+    },
+    {
+      "id": "BR4.1",
+      "status": "N/A",
+      "target": "Solo acciones de superficies montadas. Respuesta Q1 y prohibicion de project.md de prometer lo no construido"
+    },
+    {
+      "id": "BR4.2",
+      "status": "N/A",
+      "target": "Nada inventado en las filas del inicio. Regla global de no inventar valores de relleno y maqueta M1"
+    },
+    {
+      "id": "BR4.3",
+      "status": "N/A",
+      "target": "Una linea honesta sin canales. Respuesta Q1 de esta etapa"
+    },
+    {
+      "id": "BR4.4",
+      "status": "N/A",
+      "target": "Enlaces externos solo configurados. Prohibicion de prometer lo no construido y D-017 (repositorio privado)"
+    },
+    {
+      "id": "BR4.5",
+      "status": "N/A",
+      "target": "Poliza de ejemplo completa y con su para que. Maqueta M1 y U-02; el criterio de identificacion con la poliza es AC1.3.1 de U11"
+    },
+    {
+      "id": "BR5.6",
+      "status": "N/A",
+      "target": "Enlace manipulado igual a caso inexistente. C-01 (CD-10); el criterio que lo exige en la vista por enlace es de U14"
+    },
+    {
+      "id": "BR6.1",
+      "status": "N/A",
+      "target": "Mismo origen y /api nunca devuelve la aplicacion. C-01 (Base) y ADR-002 (Entrega)"
+    },
+    {
+      "id": "BR6.2",
+      "status": "N/A",
+      "target": "Cabeceras de seguridad en toda respuesta. Contenido de U6 en unit-of-work.md; el valor de la politica de contenido lo fija NFR Design"
+    },
+    {
+      "id": "BR6.4",
+      "status": "N/A",
+      "target": "Traza en toda respuesta y errores con la forma de C-01. C-01 (Correlacion y Errores)"
+    }
+  ]
+}

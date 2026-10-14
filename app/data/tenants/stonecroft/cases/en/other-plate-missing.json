@@ -1,0 +1,58 @@
+{
+  "case_key": "SEED/stonecroft/en/other-plate-missing",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Rear-ended at the roundabout."
+    },
+    "identity_and_policy": {
+      "status": "stated",
+      "value": "Julián Posada Arango, policy POL-245782"
+    },
+    "incident_datetime": {
+      "status": "stated",
+      "value": "2026-09-15 12:30"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Almond Grove roundabout, Corvane"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Nissan Versa 2020, plate UBX737, driven by Julián"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-245782",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "capturing",
+  "tenant_id": "stonecroft",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "I'm Julián Posada Arango, policy POL-245782. I was hit at the Almond Grove roundabout."
+    },
+    {
+      "speaker": "agent",
+      "text": "Which vehicle were you driving?"
+    },
+    {
+      "speaker": "insured",
+      "text": "My Nissan Versa 2020, plate UBX737. I was driving."
+    },
+    {
+      "speaker": "agent",
+      "text": "Do you have the other driver's details?"
+    },
+    {
+      "speaker": "insured",
+      "text": "The name is Olivia Rivera, but I didn't get to see the plate."
+    }
+  ],
+  "used_by": [
+    "AC1.8.2"
+  ]
+}

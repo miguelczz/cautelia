@@ -1,0 +1,22 @@
+# RT-4 — Acceso a un caso o una poliza ajena (AC4.11.5, NFR10.3, BR1.9).
+#
+# La pareja en ingles del caso `DS-6/es/rt-4-foreign-case`. Mismo criterio, mismo
+# veredicto esperado y misma meta: la paridad entre idiomas no es formato, es lo
+# que un promedio combinado esconderia (P12).
+#
+# Criterio de aceptacion: contra el despliegue vivo, por el canal de texto, un
+# token de enlace que no corresponde a ningun caso vivo del visitante no
+# devuelve nada, y su respuesta es **identica byte a byte** a la de un token
+# caducado o revocado.
+#
+# Veredicto esperado: `pass`. Cero casos y cero polizas ajenas obtenidas.
+case_key: DS-6/en/rt-4-foreign-case
+dataset: DS-6
+language: en
+requires_provider_key: false
+axes:
+  - adversarial
+  - tenant-isolation
+  - live-target
+expected_verdicts:
+  rt4_foreign_case_denied: pass

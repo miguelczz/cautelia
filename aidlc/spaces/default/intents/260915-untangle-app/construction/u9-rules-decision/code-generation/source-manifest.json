@@ -1,0 +1,172 @@
+{
+  "stage": "code-generation",
+  "unit": "u9-rules-decision",
+  "version": 1,
+  "writes": [
+    {
+      "path": "app/backend/.importlinter"
+    },
+    {
+      "path": "app/backend/migrations/versions/u9_rules_0001_evaluation_table.py"
+    },
+    {
+      "path": "app/backend/pyproject.toml"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/purge.py"
+    },
+    {
+      "path": "app/backend/src/untangle/copy_catalog/checks.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/rules_fixtures.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/rules_probes.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/decision/node.py"
+    },
+    {
+      "path": "app/backend/src/untangle/rules/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/rules/conditions.py"
+    },
+    {
+      "path": "app/backend/src/untangle/rules/evaluation.py"
+    },
+    {
+      "path": "app/backend/src/untangle/rules/fields.py"
+    },
+    {
+      "path": "app/backend/src/untangle/rules/loading.py"
+    },
+    {
+      "path": "app/backend/src/untangle/rules/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/rules/repository.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/schema_check.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/tenancy_literals.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u9/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u9/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u9/test_rule_evaluation_repository.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u9/test_rule_evaluation_table.py"
+    },
+    {
+      "path": "app/backend/tests/unit/rules/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/rules/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/unit/rules/test_conditions.py"
+    },
+    {
+      "path": "app/backend/tests/unit/rules/test_evaluation.py"
+    },
+    {
+      "path": "app/backend/tests/unit/rules/test_loading.py"
+    },
+    {
+      "path": "app/backend/tests/unit/rules/test_node.py"
+    },
+    {
+      "path": "app/backend/tests/unit/workspace/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/workspace/test_schema_check.py"
+    },
+    {
+      "path": "app/config/copy/en.yaml"
+    },
+    {
+      "path": "app/config/copy/es.yaml"
+    },
+    {
+      "path": "app/config/copy/forbidden-forms.yaml"
+    },
+    {
+      "path": "app/config/tenants/knotwell/rules/triage.yaml"
+    },
+    {
+      "path": "app/config/tenants/stonecroft/rules/triage.yaml"
+    },
+    {
+      "path": "app/config/tenants/sunmeadow/rules/triage.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/rules-agency-always-referral/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/rules-agency-always-referral/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/rules-default-rule/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/rules-default-rule/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/rules-knotwell-typical/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/rules-knotwell-typical/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/rules-money-forces-referral/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/rules-money-forces-referral/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/rules-stonecroft-severe/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/rules-stonecroft-severe/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/rules-sunmeadow-direct-close/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/rules-sunmeadow-direct-close/es.yaml"
+    },
+    {
+      "path": "app/evals/fixtures/rules/en.yaml"
+    },
+    {
+      "path": "app/evals/fixtures/rules/es.yaml"
+    },
+    {
+      "path": "app/evals/manifest.yaml"
+    },
+    {
+      "path": "app/evals/subsets/smoke.yaml"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-keys.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-texts.ts"
+    },
+    {
+      "path": "mise.toml"
+    }
+  ]
+}

@@ -1,0 +1,374 @@
+{
+  "stage": "code-generation",
+  "unit": "u21-eval-gates",
+  "upstream_ids": [
+    "AC4.4.1",
+    "AC4.4.2",
+    "AC4.4.3",
+    "AC4.4.5",
+    "NFR5.1",
+    "NFR7.1",
+    "NFR8.1",
+    "NFR13.2",
+    "AC4.4.4",
+    "AC4.4.6",
+    "AC4.5.1",
+    "AC4.5.2",
+    "AC4.5.3",
+    "AC4.5.4",
+    "AC4.5.5",
+    "AC4.5.6",
+    "AC4.6.1",
+    "AC4.6.2",
+    "AC4.6.3",
+    "AC4.6.4",
+    "AC4.14.1",
+    "AC4.14.2",
+    "AC4.14.3",
+    "AC4.14.4",
+    "AC5.9.1",
+    "AC5.9.2",
+    "AC5.9.3",
+    "AC5.9.4",
+    "AC5.9.5",
+    "BR1.1",
+    "BR1.2",
+    "BR1.3",
+    "BR2.1",
+    "BR2.2",
+    "BR2.3",
+    "BR2.4",
+    "BR3.1",
+    "BR3.2",
+    "BR3.3",
+    "BR3.4",
+    "BR4.1",
+    "BR4.2",
+    "BR5.1",
+    "SEC-U21.1",
+    "SEC-U21.2",
+    "SEC-U21.3",
+    "SEC-U21.4",
+    "SEC-U21.5",
+    "NFR11.6",
+    "NFR17.1",
+    "NFR20.1",
+    "TECH-U21.1",
+    "TECH-U21.2",
+    "TECH-U21.3",
+    "TECH-U21.4",
+    "CG-U21-1",
+    "CG-U21-2",
+    "CG-U21-3",
+    "CG-U21-4",
+    "CG-U21-5",
+    "CG-U21-6"
+  ],
+  "coverage": [
+    {
+      "id": "AC4.4.1",
+      "status": "N/A",
+      "target": "US4.4 la construyo U1: el camino de clonar al reporte"
+    },
+    {
+      "id": "AC4.4.2",
+      "status": "OK",
+      "target": "mise.toml"
+    },
+    {
+      "id": "AC4.4.3",
+      "status": "N/A",
+      "target": "US4.4 la construyo U1: el manifiesto de los ocho conjuntos"
+    },
+    {
+      "id": "AC4.4.5",
+      "status": "Deferred",
+      "target": "Pasada de publicacion: la duracion de la corrida se mide por hito"
+    },
+    {
+      "id": "NFR5.1",
+      "status": "Deferred",
+      "target": "Se mide cuando exista la conducta que evalua (U8 y U13)"
+    },
+    {
+      "id": "NFR7.1",
+      "status": "Deferred",
+      "target": "Se mide cuando exista la captura completa (U11 y U13)"
+    },
+    {
+      "id": "NFR8.1",
+      "status": "Deferred",
+      "target": "Se mide cuando exista la extraccion por campo (U11)"
+    },
+    {
+      "id": "NFR13.2",
+      "status": "Deferred",
+      "target": "Se mide sobre DS-2 completo, con el chat de U13"
+    },
+    {
+      "id": "AC4.4.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/gate_cli.py"
+    },
+    {
+      "id": "AC4.4.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/compare.py"
+    },
+    {
+      "id": "AC4.5.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/report.py"
+    },
+    {
+      "id": "AC4.5.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/metrics.py"
+    },
+    {
+      "id": "AC4.5.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/gate_cli.py"
+    },
+    {
+      "id": "AC4.5.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/compare.py"
+    },
+    {
+      "id": "AC4.5.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/judgment.py"
+    },
+    {
+      "id": "AC4.5.6",
+      "status": "Deferred",
+      "target": "U22: la meta del hito se publica con las cinco cifras"
+    },
+    {
+      "id": "AC4.6.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/calibration.py"
+    },
+    {
+      "id": "AC4.6.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/gates/test_compare.py"
+    },
+    {
+      "id": "AC4.6.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/calibration.py"
+    },
+    {
+      "id": "AC4.6.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/sampling.py"
+    },
+    {
+      "id": "AC4.14.1",
+      "status": "OK",
+      "target": "app/backend/.importlinter"
+    },
+    {
+      "id": "AC4.14.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/audit.py"
+    },
+    {
+      "id": "AC4.14.3",
+      "status": "Deferred",
+      "target": "Pasada de publicacion: se mide contra el despliegue vivo por hito"
+    },
+    {
+      "id": "AC4.14.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/gates/test_audit.py"
+    },
+    {
+      "id": "AC5.9.1",
+      "status": "OK",
+      "target": "scripts/verify.sh"
+    },
+    {
+      "id": "AC5.9.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/gates/test_compare.py"
+    },
+    {
+      "id": "AC5.9.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/compare.py"
+    },
+    {
+      "id": "AC5.9.4",
+      "status": "OK",
+      "target": "scripts/verify.sh"
+    },
+    {
+      "id": "AC5.9.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/gate.py"
+    },
+    {
+      "id": "BR1.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/report.py"
+    },
+    {
+      "id": "BR1.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/metrics.py"
+    },
+    {
+      "id": "BR1.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/compare.py"
+    },
+    {
+      "id": "BR2.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/baseline.py"
+    },
+    {
+      "id": "BR2.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/gates/test_compare.py"
+    },
+    {
+      "id": "BR2.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/compare.py"
+    },
+    {
+      "id": "BR2.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/gates/test_compare.py"
+    },
+    {
+      "id": "BR3.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/judgment.py"
+    },
+    {
+      "id": "BR3.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/calibration.py"
+    },
+    {
+      "id": "BR3.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/gates/test_compare.py"
+    },
+    {
+      "id": "BR3.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/sampling.py"
+    },
+    {
+      "id": "BR4.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/audit.py"
+    },
+    {
+      "id": "BR4.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/gate.py"
+    },
+    {
+      "id": "BR5.1",
+      "status": "OK",
+      "target": "scripts/verify.sh"
+    },
+    {
+      "id": "SEC-U21.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/audit.py"
+    },
+    {
+      "id": "SEC-U21.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/gates/test_audit.py"
+    },
+    {
+      "id": "SEC-U21.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/gate_cli.py"
+    },
+    {
+      "id": "SEC-U21.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/calibration.py"
+    },
+    {
+      "id": "SEC-U21.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/loading.py"
+    },
+    {
+      "id": "NFR11.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/audit.py"
+    },
+    {
+      "id": "NFR17.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/gate_cli.py"
+    },
+    {
+      "id": "NFR20.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/metrics.py"
+    },
+    {
+      "id": "TECH-U21.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/wilson.py"
+    },
+    {
+      "id": "TECH-U21.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/audit.py"
+    },
+    {
+      "id": "TECH-U21.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/calibration.py"
+    },
+    {
+      "id": "TECH-U21.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/loading.py"
+    },
+    {
+      "id": "CG-U21-1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/schema_check.py"
+    },
+    {
+      "id": "CG-U21-2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/wilson.py"
+    },
+    {
+      "id": "CG-U21-3",
+      "status": "OK",
+      "target": "app/backend/.importlinter"
+    },
+    {
+      "id": "CG-U21-4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/gates/calibrate_cli.py"
+    },
+    {
+      "id": "CG-U21-5",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/gates/test_compare.py"
+    },
+    {
+      "id": "CG-U21-6",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/gates/test_compare.py"
+    }
+  ]
+}

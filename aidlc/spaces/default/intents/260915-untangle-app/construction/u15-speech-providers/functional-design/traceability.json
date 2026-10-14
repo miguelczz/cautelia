@@ -1,0 +1,94 @@
+{
+  "stage": "functional-design",
+  "unit": "u15-speech-providers",
+  "upstream_ids": [
+    "AC5.10.1",
+    "AC5.10.2",
+    "AC5.10.3",
+    "AC5.10.4",
+    "AC5.11.1",
+    "AC5.11.2",
+    "AC5.11.3",
+    "AC5.11.4",
+    "AC5.11.5"
+  ],
+  "coverage": [
+    {
+      "id": "AC5.10.1",
+      "status": "OK",
+      "target": "BR2.1"
+    },
+    {
+      "id": "AC5.10.2",
+      "status": "OK",
+      "target": "BR1.1, BR1.2"
+    },
+    {
+      "id": "AC5.10.3",
+      "status": "OK",
+      "target": "BR2.3, BR4.1, BR6.1, BR6.2"
+    },
+    {
+      "id": "AC5.10.4",
+      "status": "OK",
+      "target": "BR2.2"
+    },
+    {
+      "id": "AC5.11.1",
+      "status": "N/A",
+      "target": "Historia de U17: decidir antes de cada llamada entre la voz principal y la de respaldo es del enlace publico de la voz. U15 aporta el adaptador de respaldo (BR4.2)"
+    },
+    {
+      "id": "AC5.11.2",
+      "status": "N/A",
+      "target": "Historia de U17: no cambiar de voz por presupuesto a mitad de llamada es conducta de la llamada y del enlace publico"
+    },
+    {
+      "id": "AC5.11.3",
+      "status": "N/A",
+      "target": "Historia de U17: el aviso lo muestra la consola de U16 y lo decide U17"
+    },
+    {
+      "id": "AC5.11.4",
+      "status": "OK",
+      "target": "BR4.2"
+    },
+    {
+      "id": "AC5.11.5",
+      "status": "N/A",
+      "target": "Historia de U17: la excepcion de D17 y el cambio automatico al respaldo son del enlace publico de la voz; U15 solo aporta el adaptador de respaldo (BR4.2)"
+    }
+  ],
+  "reverse": [
+    {
+      "id": "BR1.3",
+      "status": "N/A",
+      "target": "Clientes por uso con la clave de voz. ADR-018 y project.md (claves separadas por uso)"
+    },
+    {
+      "id": "BR1.4",
+      "status": "N/A",
+      "target": "Taxonomia cerrada de errores. C-16 y team.md convencion 8a"
+    },
+    {
+      "id": "BR3.1",
+      "status": "N/A",
+      "target": "Confianza por palabra. PA-2 y ADR-007; la usa U11 y U16"
+    },
+    {
+      "id": "BR3.2",
+      "status": "N/A",
+      "target": "El audio no se guarda ni se loguea. NFR19 (duena U20) y project.md"
+    },
+    {
+      "id": "BR5.1",
+      "status": "N/A",
+      "target": "Gasto y techo antes de cada llamada. C-17 (duena U5)"
+    },
+    {
+      "id": "BR6.3",
+      "status": "N/A",
+      "target": "Comando para oir a Catalina. Demostracion de B18 aprobada en DP-14"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+# The agency always refers, with no code branch (FR6.4, BR2.6), English turn. A completely clean Knotwell case -- the same profile that would close direct on Sunmeadow -- refers solely because of the agency rule.
+#
+# Criterio de aceptacion: sobre la fila `agency-always-referral/01` de
+# `app/evals/fixtures/rules/en.yaml`, el motor real de `knotwell` da la
+# categoria declarada en esa fila.
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en espanol es `DS-2/es/rules-agency-always-referral`:
+# los mismos insumos y la misma meta, medidos por idioma y nunca como promedio
+# combinado (P12).
+#
+# Lo que este caso no mide: la explicacion que ve el asegurado (BR2.5, en
+# `copy:check`) ni el nodo `decision`, que llega en el paso 7 de esta unidad.
+case_key: DS-2/en/rules-agency-always-referral
+dataset: DS-2
+language: en
+tenant: knotwell
+requires_provider_key: false
+axes:
+  - rules-engine
+  - category-precedence
+expected_verdicts:
+  agency_always_referral: pass

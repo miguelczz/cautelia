@@ -1,0 +1,30 @@
+{
+  "case_key": "SEED/knotwell/en/id-dictated-other-language",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "identity_and_policy": {
+      "status": "stated",
+      "value": "Rosa Iturbe, policy POL-173620"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-173620",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "capturing",
+  "tenant_id": "knotwell",
+  "transcript": [
+    {
+      "speaker": "agent",
+      "text": "Could you tell me your ID number?"
+    },
+    {
+      "speaker": "insured",
+      "text": "My ID number is dos siete nueve seis uno seis uno seis."
+    }
+  ],
+  "used_by": [
+    "AC4.13.4"
+  ]
+}

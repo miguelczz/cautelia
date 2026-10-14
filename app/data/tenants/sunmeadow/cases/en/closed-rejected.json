@@ -1,0 +1,68 @@
+{
+  "case_key": "SEED/sunmeadow/en/closed-rejected",
+  "channel": "chat",
+  "derivation_reason": "rule",
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Swerved to avoid a motorcycle and hit a pole."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Ana Torres, policy POL-422088"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "One injured, their passenger, who hurt their neck"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "5th Avenue and 40th Street, Corvane"
+    },
+    "other_parties": {
+      "status": "confirmed",
+      "value": "None"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Subaru Outback 2014, plate BHR-9207, driven by Ana"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-422088",
+  "record_type": "claim",
+  "resolution": "rejected",
+  "state": "closed",
+  "tenant_id": "sunmeadow",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Hi, I'm Ana Torres. My policy is POL-422088."
+    },
+    {
+      "speaker": "agent",
+      "text": "Was anyone hurt?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Yes, my passenger hurt their neck."
+    },
+    {
+      "speaker": "agent",
+      "text": "What happened?"
+    },
+    {
+      "speaker": "insured",
+      "text": "I swerved to avoid a motorcycle and hit a pole. No other vehicles were involved."
+    },
+    {
+      "speaker": "staff",
+      "text": "I reviewed your case and it was not approved. The reason for the decision is in your case."
+    }
+  ],
+  "used_by": []
+}

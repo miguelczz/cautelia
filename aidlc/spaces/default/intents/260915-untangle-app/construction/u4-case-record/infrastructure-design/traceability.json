@@ -1,0 +1,50 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u4-case-record",
+  "upstream_ids": [
+    "PA-8",
+    "NFR7.1",
+    "NFR7.2",
+    "NFR10.4",
+    "NFR18.2",
+    "NFR19.2",
+    "AC4.10.5"
+  ],
+  "coverage": [
+    {
+      "id": "PA-8",
+      "status": "OK",
+      "target": "La variable de la clave se declara en `.env.example` y `mise run env:check` comprueba las dos direcciones; `case:constructor`, encadenada en el paso 6 del guion, falla si alguien fabrica un valor sellado fuera de `crypto.py`; y la tuberia no recibe la clave real, porque las pruebas generan la suya."
+    },
+    {
+      "id": "NFR7.1",
+      "status": "OK",
+      "target": "Los archivos versionados que declaran los campos por tipo de registro se validan con `mise run schema:check`, y el esquema del caso se publica como contrato generado con `mise run contracts:gen`, con `mise run contracts:check` fallando ante la deriva (C-28)."
+    },
+    {
+      "id": "NFR7.2",
+      "status": "OK",
+      "target": "`case:transitions` regenera el diagrama del ciclo de vida desde la tabla versionada y falla si no coincide con el escrito, de modo que las dos salidas declaradas de `awaiting_insured` no pueden desaparecer del documento sin que la compuerta se entere."
+    },
+    {
+      "id": "NFR10.4",
+      "status": "OK",
+      "target": "`mise run rls:check` interroga al catalogo vivo y exige por tabla aislamiento habilitado, forzado y politica de aseguradora, mas un rol de conexion que no pueda saltarselas; `mise run migrate:check` falla si una revision creo una tabla sin su aislamiento en la misma revision."
+    },
+    {
+      "id": "NFR18.2",
+      "status": "OK",
+      "target": "La fila `{ path = \"app/backend/src/untangle/case_record\", floor = 80.0 }` entra en `critical_modules` del manifiesto en la generacion de codigo, y `mise run cov` la compara contra su piso propio ademas del agregado."
+    },
+    {
+      "id": "NFR19.2",
+      "status": "OK",
+      "target": "La marca de dato de visitante va como comentario de tabla en la misma revision que la crea, y el purgador de U4 se anade a la tupla explicita de la raiz de composicion; la prueba de U2 compara ese registro contra lo que dice el catalogo de la base y nombra la tabla que se olvide."
+    },
+    {
+      "id": "AC4.10.5",
+      "status": "OK",
+      "target": "La tabla de transiciones versionada y su validacion por `mise run schema:check`, mas `case:transitions` contra la deriva del diagrama. La comparacion con el registro esperado de DS-2 la corre el corredor de evaluaciones cuando ese conjunto exista."
+    }
+  ]
+}

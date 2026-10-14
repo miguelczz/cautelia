@@ -1,0 +1,58 @@
+{
+  "case_key": "SEED/stonecroft/es/other-plate-missing",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Le pegaron por detrás en la glorieta."
+    },
+    "identity_and_policy": {
+      "status": "stated",
+      "value": "Santiago Quintero Echeverri, póliza POL-814225"
+    },
+    "incident_datetime": {
+      "status": "stated",
+      "value": "2026-09-15 12:30"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Glorieta de Los Almendros, Corvane"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Renault Duster 2020, placa PMJ528, lo conducía Santiago"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-814225",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "capturing",
+  "tenant_id": "stonecroft",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Soy Santiago Quintero Echeverri, póliza POL-814225. Me chocaron en la glorieta de Los Almendros."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué vehículo manejaba?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Mi Renault Duster 2020, placa PMJ528. Lo manejaba yo."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Tienes los datos del otro conductor?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Se llama Natalia Salazar Marín, pero no alcancé a ver la placa."
+    }
+  ],
+  "used_by": [
+    "AC1.8.2"
+  ]
+}

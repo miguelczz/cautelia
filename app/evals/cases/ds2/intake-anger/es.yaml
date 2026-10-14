@@ -1,0 +1,37 @@
+# Enojo (AC1.13.3, BR5.4), turno en espanol.
+#
+# La persona insulta tres veces seguidas, que es el guion entero de AC1.13.3:
+# "dado que insulto a la agente dos veces seguidas ... entonces usa la frase de
+# calma ... y si vuelvo a insultar, usa la frase de cierre por abuso". Al
+# segundo insulto va la frase de calma del catalogo con la oferta de que una
+# persona revise el caso, sin reproches; al tercero, la frase de cierre por
+# abuso, con la sesion terminada y el caso en "esperando al asegurado" con ese
+# motivo. El numero de insultos que dispara cada paso lo fija la configuracion
+# de la aseguradora, no el codigo (TECH-U11.5).
+#
+# **El tercer turno se anadio en la revision de la tanda 2** (2026-09-27). La
+# version de la tanda 1 tenia dos turnos y decia "al primer insulto la calma, al
+# segundo el cierre", una lectura de AC1.13.3 que adelanta los dos pasos un
+# insulto; la configuracion de la tanda 2 se escribio para que ese caso pasara,
+# y asi el caso medía el codigo en vez del criterio. El criterio manda.
+#
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/intake-anger
+dataset: DS-2
+language: es
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - intake
+  - emotion
+script:
+  - field_key: description
+    text: "Esto es una porqueria, ustedes son unos inutiles, llevo media hora aqui."
+  - field_key: description
+    sequence: 2
+    text: "Ya les dije que son unos incompetentes, arreglen esto ya."
+  - field_key: description
+    sequence: 3
+    text: "Son unos idiotas, resuelvan esto de una vez."
+expected_verdicts:
+  intake_anger: pass

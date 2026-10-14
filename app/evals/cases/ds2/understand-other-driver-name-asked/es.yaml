@@ -1,0 +1,39 @@
+# Si otra persona conducia y no se dice su nombre completo, la agente lo pregunta; no lo inventa.
+#
+# Comprension de un mensaje. La regla «conductor que no figura en la poliza» solo puede disparar
+# cuando el caso trae nombre y apellido de quien conducia (`triage_inputs.unlisted_driver`), y
+# «soy yo, pero manejaba mi hijo» a secas dejaba el dato sin poder leerse. Este caso mide la
+# primera mitad: el dato queda anotado como lo dijo la persona (lo de C3 no cambia), **ningun
+# nombre que nadie dijo** (lectura `unknown` del campo) y la respuesta es una pregunta por el
+# nombre. La segunda mitad, el nombre ya dicho, es `understand-other-driver-name-given`.
+# Escrito antes del cambio de la instruccion `conversation`; no se ha corrido contra el modelo.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/understand-other-driver-name-asked
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  record_type: claim
+  captured:
+  - injuries
+  last_agent_text: Encontré la póliza POL-100042 a nombre de Natalia Henao Rendón, con un Renault Logan.
+    ¿Eres tú y conducías ese carro?
+  message: Soy yo, pero manejaba mi hijo
+  wants:
+  - continue
+  answer: 'yes'
+  items:
+    vehicle_and_driver: hij
+  declared_drivers:
+  - Natalia Henao Rendón
+  - Mateo Henao Gómez
+  driver_reading: unknown
+  reply_asks_for_any:
+  - nombre
+  - llama
+expected_verdicts:
+  understanding_other_driver_name_asked: pass

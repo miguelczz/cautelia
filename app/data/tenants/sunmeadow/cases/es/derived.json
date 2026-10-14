@@ -1,0 +1,64 @@
+{
+  "case_key": "SEED/sunmeadow/es/derived",
+  "channel": "chat",
+  "derivation_reason": "person_requested",
+  "fields": {
+    "description": {
+      "status": "confirmed",
+      "value": "Le rayaron el carro y le rompieron el espejo mientras estaba parqueado."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Lina Herrera, póliza POL-795628"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-13 21:10"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-795628",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "derived",
+  "tenant_id": "sunmeadow",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Buenas noches. Soy Lina Herrera, mi póliza es POL-795628."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Cuándo pasó?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Anoche, como a las nueve y diez."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué pasó?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Me rayaron el carro y me rompieron el espejo mientras estaba parqueado."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Dónde estaba parqueado el vehículo?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Prefiero hablar con una persona, por favor."
+    }
+  ],
+  "used_by": [
+    "AC1.14.2",
+    "AC1.14.3",
+    "AC1.16.2",
+    "AC1.16.4",
+    "AC1.9.2",
+    "AC1.9.4",
+    "AC4.8.3"
+  ]
+}

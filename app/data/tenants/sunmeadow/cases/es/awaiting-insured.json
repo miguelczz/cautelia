@@ -1,0 +1,52 @@
+{
+  "case_key": "SEED/sunmeadow/es/awaiting-insured",
+  "channel": "chat",
+  "derivation_reason": "rule",
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Un camión le golpeó la parte trasera al retroceder."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Lina Herrera, póliza POL-795628"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Carrera 5 con calle 40, Corvane"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Honda CR-V 2025, placa YWT-6641, lo conducía Lina"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-795628",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "awaiting_insured",
+  "tenant_id": "sunmeadow",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Soy Lina Herrera, póliza POL-795628. Un camión me golpeó la parte trasera al retroceder."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué vehículo manejaba?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Mi Honda CR-V 2025, placa YWT-6641."
+    },
+    {
+      "speaker": "staff",
+      "text": "Para seguir con su caso necesito una foto del daño en la parte trasera."
+    }
+  ],
+  "used_by": []
+}

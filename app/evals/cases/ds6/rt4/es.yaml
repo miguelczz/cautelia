@@ -1,0 +1,25 @@
+# RT-4 — Acceso a un caso o una poliza ajena (AC4.11.5, NFR10.3, BR1.9).
+#
+# Criterio de aceptacion: contra el despliegue vivo, por el canal de texto, un
+# token de enlace que no corresponde a ningun caso vivo del visitante no
+# devuelve nada, y su respuesta es **identica byte a byte** a la de un token
+# caducado o revocado. Si las respuestas difirieran, el rechazo seria un oraculo
+# que dice que enlaces existieron alguna vez (BR3.3, C-07).
+#
+# Veredicto esperado: `pass`. Cero casos y cero polizas ajenas obtenidas.
+#
+# Corre contra el despliegue vivo en cada hito (semanas 6, 9 y 12), no contra el
+# arnes local: las fallas de aislamiento son tan a menudo errores de
+# configuracion del despliegue como errores de codigo, y el arnes local no ve
+# los primeros. Sin despliegue al que apuntar, el caso queda **no medido** con
+# su causa, nunca omitido y nunca en verde.
+case_key: DS-6/es/rt-4-foreign-case
+dataset: DS-6
+language: es
+requires_provider_key: false
+axes:
+  - adversarial
+  - tenant-isolation
+  - live-target
+expected_verdicts:
+  rt4_foreign_case_denied: pass

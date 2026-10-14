@@ -1,0 +1,193 @@
+{
+  "stage": "nfr-requirements",
+  "unit": "u3-pii-redaction",
+  "upstream_ids": [
+    "NFR11",
+    "FR7.3",
+    "FR12.3",
+    "NFR21",
+    "NFR1",
+    "NFR2",
+    "NFR3",
+    "NFR4",
+    "NFR5",
+    "NFR6",
+    "NFR7",
+    "NFR8",
+    "NFR9",
+    "NFR10",
+    "NFR12",
+    "NFR13",
+    "NFR14",
+    "NFR15",
+    "NFR16",
+    "NFR17",
+    "NFR18",
+    "NFR19",
+    "NFR20"
+  ],
+  "coverage": [
+    {
+      "id": "NFR11",
+      "status": "OK",
+      "target": "NFR11.1, NFR11.2, SEC-U3.1 a SEC-U3.15. El valor de la compuerta lo produce el segundo detector, que es de U21; esta unidad aporta el primero y los objetivos que lo miden."
+    },
+    {
+      "id": "FR7.3",
+      "status": "OK",
+      "target": "SEC-U3.1, SEC-U3.2, SEC-U3.3: punto unico de salida, constructor acotado a su modulo y redaccion antes de persistir."
+    },
+    {
+      "id": "FR12.3",
+      "status": "OK",
+      "target": "SEC-U3.13: los datos ficticios se tapan igual que los reales, comprobado sobre las trazas exportadas de una corrida de DS-2."
+    },
+    {
+      "id": "NFR21",
+      "status": "OK",
+      "target": "NFR21.1: el contrato de importacion mantiene el camino del clon al reporte sin necesitar esta unidad cargada."
+    },
+    {
+      "id": "NFR1",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U16 segun la tabla de metas de `unit-of-work.md` (Latencia del turno de voz, del fin del habla al primer audio: p50 menor que 500 ). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR2",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U16 segun la tabla de metas de `unit-of-work.md` (Parada ante interrupción: menor que 300 ms). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR3",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U16 segun la tabla de metas de `unit-of-work.md` (Recuperación tras interrupción sin perder estado: mayor que 90 %). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR4",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U13 segun la tabla de metas de `unit-of-work.md` (Latencia del chat, del envío a la primera palabra: p95 menor que 3 s). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR5",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Precisión de citación: 95 % o más). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR6",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U8 segun la tabla de metas de `unit-of-work.md` (Citas inexistentes: exactamente 0 (compuerta dura)). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR7",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Completitud del primer aviso en los siete campos: 95 % o más). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR8",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Exactitud de extracción: 95 % o más por campo). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR9",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U10 segun la tabla de metas de `unit-of-work.md` (Respuestas fuera de alcance: exactamente 0 (compuerta dura)). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR10",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U2 segun la tabla de metas de `unit-of-work.md` (Fuga entre aseguradoras: 0 cláusulas ajenas y 100 % de pruebas de aislamiento en). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR12",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U10 segun la tabla de metas de `unit-of-work.md` (Resistencia a los quince escenarios de red-team: 0 respuestas que obedezcan una ). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR13",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Derivaciones: 100 % correctas y 10 % o menos innecesarias). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR14",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U5 segun la tabla de metas de `unit-of-work.md` (Costo por caso exitoso, publicado por versión; voz de 0,02 USD o menos por llama). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR15",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U5 segun la tabla de metas de `unit-of-work.md` (Gasto acumulado: 5 USD o menos en 90 días, con alerta en 3 USD). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR16",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U6 segun la tabla de metas de `unit-of-work.md` (Disponibilidad mensual del enlace en vivo: 95 % o más). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR17",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Duración de la corrida de evaluación de texto: 10 minutos o menos). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR18",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U1 segun la tabla de metas de `unit-of-work.md` (Cobertura de líneas: 80 % o más agregado y en los cuatro módulos críticos). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR19",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U20 segun la tabla de metas de `unit-of-work.md` (Retención de la demo pública: el audio no se persiste y la transcripción redacta). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR20",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Paridad por idioma: mismas metas en español e inglés, sin meta reducida). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    }
+  ],
+  "reverse": [
+    {
+      "id": "NFR11.1",
+      "status": "N/A",
+      "target": "Objetivo propio de la unidad: deteccion al 100 % sobre casos sembrados, por idioma y por tipo. NFR11 mide lo que se escapa; hacia falta ademas medir lo que se atrapa, o un reconocedor roto solo se veria cuando algo se filtrara."
+    },
+    {
+      "id": "NFR11.2",
+      "status": "N/A",
+      "target": "Techo de la regla de respaldo, 1 de cada 10. Nace de la decision Q3 del diseno funcional y no de ningun requisito aguas arriba; no bloquea la entrega porque tapar de mas es el lado seguro."
+    },
+    {
+      "id": "NFR11.3",
+      "status": "N/A",
+      "target": "Coste de la pasada de redaccion sobre un fragmento parcial, 100 ms. Umbral de lo instantaneo de Nielsen. Ningun requisito aprobado fijaba presupuesto para este camino."
+    },
+    {
+      "id": "NFR11.4",
+      "status": "N/A",
+      "target": "Un fragmento no puede quedar oculto mas de 1 s sin que la consola avise. Umbral del hilo de pensamiento de Nielsen. Lo que dura el ocultamiento no se acota: pertenece a quien dicta."
+    },
+    {
+      "id": "NFR-U3-1",
+      "status": "N/A",
+      "target": "Modelos `md` de spaCy en los dos idiomas. ADR-013 dejo el tamano abierto y anoto su peso como consecuencia negativa; se resuelve con cifras de la fuente oficial en `tech-stack-decisions.md`."
+    },
+    {
+      "id": "SEC-U3.2",
+      "status": "N/A",
+      "target": "El constructor del tipo redactado solo dentro de su modulo. Nace del hallazgo R-02 de la revision del diseno funcional, no de un requisito: `NewType` no existe en tiempo de ejecucion."
+    },
+    {
+      "id": "SEC-U3.9",
+      "status": "N/A",
+      "target": "El informe cuenta por reconocedor y no solo por tipo. Sin esa columna, un reconocedor roto se esconde detras del respaldo, que tapa el mismo dato y suma al mismo tipo."
+    },
+    {
+      "id": "SEC-U3.15",
+      "status": "N/A",
+      "target": "No compartir mecanismo ni biblioteca con el segundo detector. Lo exige AC4.14.1, que pertenece a U21; esta unidad aporta la mitad que le toca declarando el mecanismo de cada reconocedor."
+    },
+    {
+      "id": "Piso de cobertura del modulo critico",
+      "status": "N/A",
+      "target": "La redaccion es compuerta dura y no esta en la lista de modulos criticos de `team.md`, que nombra motor de reglas, verificador de citas, aislamiento por tenant y esquema del caso. Cambiar esa lista es cambiar una practica afirmada del equipo y pasa por Miguel; queda declarado en `security-requirements.md` para que la decision se tome a la vista y no por omision."
+    }
+  ]
+}

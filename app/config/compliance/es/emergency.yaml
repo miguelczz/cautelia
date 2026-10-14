@@ -1,0 +1,54 @@
+# La emergencia, juego en espanol (U10, BR3.1 y BR3.2).
+#
+# Una coincidencia de `patterns` levanta la senal `emergency`: la primera frase
+# del turno es la indicacion de emergencia, antes de pedir cualquier dato
+# (BR3.1).
+#
+# ## Como apaga una negacion (BR3.2, enmienda del 2026-09-21)
+#
+# Una negacion apaga **solo la coincidencia que toca**: "nadie esta sangrando"
+# contiene "sangrando" dentro de la negacion y no levanta nada. Una negacion que
+# no toca ninguna coincidencia no apaga nada: en "todos estamos bien menos mi
+# hija, que no reacciona" la negacion es "todos estamos bien", el herido grave
+# es "no reacciona", no se tocan, y la emergencia gana. Una falsa alarma cuesta
+# una frase de mas; una emergencia apagada puede costar una vida.
+#
+# Los patrones buscan heridos **graves** y peligro, no cualquier golpe: "el
+# carro quedo muy golpeado" no es una emergencia (AC1.6.5).
+language: es
+family: emergency
+version: "2026-09-21.1"
+
+patterns:
+  # Estados que no admiten espera, dichos de paso o a mitad del reporte.
+  - id: emergency.es.signal.001
+    regex: '\b(inconsciente|inconscientes|desmayad[oa]s?|no\s+respira|no\s+reacciona|convulsionando|convulsiona|infarto|paro\s+cardiaco|desangrando|sangrando|sangra\s+mucho|hemorragia|en\s+llamas|se\s+esta\s+quemando)\b'
+  - id: emergency.es.signal.002
+    regex: '\b(herid[oa]s?\s+(grave|graves|de\s+gravedad|de\s+cuidado)|gravemente\s+herid[oa]s?|muy\s+herid[oa]s?|mal\s+herid[oa]s?|malherid[oa]s?)\b'
+  # Alguien que no se mueve o no responde. Con sujeto de persona delante,
+  # porque "el carro no se mueve" no es una emergencia.
+  - id: emergency.es.signal.003
+    regex: '\b(conductor|conductora|persona|acompanante|pasajer[oa]|hij[oa]|nin[oa]|bebe|senor|senora|espos[oa]|amig[oa]|papa|mama|padre|madre|herman[oa]|abuel[oa]|alguien|motociclista|peaton)\b[^.?!]{0,30}\bno\s+(se\s+mueve|responde|despierta|abre\s+los\s+ojos|puede\s+respirar)\b'
+  - id: emergency.es.signal.004
+    regex: '\b((cabeza|cuello|columna)\s+(herida|rota|sangrando|abierta)|herida\s+en\s+la\s+cabeza|golpe\s+(fuerte\s+)?en\s+la\s+cabeza)\b'
+  - id: emergency.es.signal.005
+    regex: '\b(necesit\w*|llam\w*|mand\w*|pid\w*|venga)\s+(una\s+)?ambulancia\b'
+  - id: emergency.es.signal.006
+    regex: '\batrapad[oa]s?\s+(en|dentro\s+de)\s+(el|la)\s+(carro|vehiculo|auto|camioneta|moto)\b'
+
+negations:
+  # "nadie salio herido", "nadie esta sangrando".
+  - id: emergency.es.negation.001
+    regex: '\b(nadie|ninguno|ninguna)\s+((salio|resulto|quedo|esta|estuvo|fue)\s+)?(herid[oa]s?|lesionad[oa]s?|golpead[oa]s?|inconsciente|sangrando)\b'
+  # "no hay heridos graves".
+  - id: emergency.es.negation.002
+    regex: '\bno\s+hay\s+(ningun\s+|ninguna\s+|nadie\s+)?(herid[oa]s?|lesionad[oa]s?)(\s+(grave|graves|de\s+gravedad))?\b'
+  # "todos estamos bien" (literal de AC1.6.5).
+  - id: emergency.es.negation.003
+    regex: '\btodos\s+(estamos|estan|quedamos|salimos)\s+(bien|ilesos|a\s+salvo)\b'
+  # "fue un golpecito" (literal de AC1.6.5).
+  - id: emergency.es.negation.004
+    regex: '\b(fue|solo\s+fue)\s+(un\s+)?(golpecito|raspon|rayon|toque|susto)\b'
+  # "no esta sangrando", "ya no sangra".
+  - id: emergency.es.negation.005
+    regex: '\b(no\s+(esta|estaba)\s+(inconsciente|sangrando|herid[oa])|ya\s+no\s+sangra)\b'

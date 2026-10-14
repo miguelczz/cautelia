@@ -1,0 +1,10 @@
+{
+  "form_id": "INJ-TEST-2026-EN",
+  "form_kind": "base",
+  "form_version": "2026.1",
+  "issuer_label": "Test Insurer (fixture, never real)",
+  "issuer_tenant": "injection-test",
+  "jurisdiction_ref": null,
+  "language": "en",
+  "clause_ids": ["INJ-TEST-2026-EN-A.INSTRUCTION"]
+}

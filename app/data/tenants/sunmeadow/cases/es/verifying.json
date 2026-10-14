@@ -1,0 +1,91 @@
+{
+  "case_key": "SEED/sunmeadow/es/verifying",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Otro carro se pasó el semáforo en rojo y le pegó en la puerta del conductor."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Alex Moreno, póliza POL-480915"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "Sin lesionados"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Carrera 5 con calle 40, Corvane"
+    },
+    "other_parties": {
+      "status": "stated",
+      "value": "Un conductor, Tomás Jaramillo Agudelo, en un vehículo de placa PMB235"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Hyundai Elantra 2024, placa NKV-9219, lo conducía Alex"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-480915",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "verifying",
+  "tenant_id": "sunmeadow",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Buenos días, quiero reportar un choque. Soy Alex Moreno, póliza POL-480915."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Alguien resultó herido?"
+    },
+    {
+      "speaker": "insured",
+      "text": "No, nadie."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Cuándo y dónde fue?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Hoy a las siete y cuarto de la mañana, en la carrera 5 con calle 40."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué pasó?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Otro carro se pasó el semáforo en rojo y me pegó en la puerta del conductor."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué vehículo manejaba?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Mi Hyundai Elantra 2024, placa NKV-9219. Lo manejaba yo."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Tienes los datos del otro conductor?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Sí, se llama Tomás Jaramillo Agudelo y la placa de su carro es PMB235."
+    }
+  ],
+  "used_by": [
+    "AC1.14.1",
+    "AC4.8.1"
+  ]
+}

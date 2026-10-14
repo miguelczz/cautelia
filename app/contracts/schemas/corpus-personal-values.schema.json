@@ -1,0 +1,66 @@
+{
+  "$defs": {
+    "PersonalValue": {
+      "additionalProperties": false,
+      "description": "Un valor personal ficticio sembrado, con su tipo y el idioma de quien lo tiene.",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/PersonalValueKind"
+        },
+        "language": {
+          "enum": [
+            "es",
+            "en"
+          ],
+          "title": "Language",
+          "type": "string"
+        },
+        "value": {
+          "minLength": 1,
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "language",
+        "value"
+      ],
+      "title": "PersonalValue",
+      "type": "object"
+    },
+    "PersonalValueKind": {
+      "description": "Que clase de dato personal es un valor sembrado (`entities.md`).",
+      "enum": [
+        "name",
+        "phone",
+        "national_id",
+        "email",
+        "plate",
+        "vin",
+        "policy_number"
+      ],
+      "title": "PersonalValueKind",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "`app/data/personal_values.json`: lo leen la prueba de redaccion y los canarios de U21.",
+  "properties": {
+    "values": {
+      "items": {
+        "$ref": "#/$defs/PersonalValue"
+      },
+      "minItems": 1,
+      "title": "Values",
+      "type": "array"
+    }
+  },
+  "required": [
+    "values"
+  ],
+  "title": "PersonalValueList",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/corpus-personal-values.schema.json"
+}

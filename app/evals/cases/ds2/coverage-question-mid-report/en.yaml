@@ -1,0 +1,54 @@
+# Coverage question mid-report (US2.4, AC2.4.1, AC2.4.2, BR4.2, BR4.3),
+# English turn.
+#
+# U12's evaluated-branch axis (unit-test-instructions.md, "El caso previo,
+# antes del codigo"): the person confirms identity and policy, the background
+# rhythm precomputes a coverage answer (BR2.1), and mid-way through the claim
+# capture asks twice in a row about coverage before continuing the report.
+#
+# What this case checks, and how (`tests/integration/u12/test_turn.py`, the
+# generic conversation probe):
+#   - AC2.4.1: the coverage question is answered with the citation the
+#     background rhythm already left in the state, writing no field of the
+#     capture.
+#   - AC2.4.2: a second coverage question right after the first returns once
+#     to the same pending block -- never repeated twice, never skipped.
+#   - After the two questions, the capture continues exactly where it was:
+#     the next turn (answering the block that was pending) advances
+#     completeness as if the coverage questions had never happened.
+#
+# `script` covers the capture fields, in the order the probe asks for them;
+# where the two coverage questions get inserted -- after
+# `identity_and_policy`, before `description` -- is a decision of the probe
+# (`coverage_question_after`), not of `GoldenCase`'s schema, because C-14/
+# BR4.2 are a channel interruption, not a field-indexed script answer.
+#
+# The `SAFETY` block (injuries) does not appear in `script`: the probe seeds
+# it already confirmed before the first turn, same pattern as
+# `evals/intake_probes.py` ("BR1.1, fuera de este guion") -- the safety
+# question is opened by the channel's first turn, which neither that probe
+# nor this one models.
+#
+# Expected verdict: `pass`.
+#
+# Its Spanish pair is `DS-2/es/coverage-question-mid-report`: same criteria
+# and same target, measured per language and never as a combined average
+# (P12).
+case_key: DS-2/en/coverage-question-mid-report
+dataset: DS-2
+language: en
+tenant: knotwell
+requires_provider_key: false
+axes:
+  - orchestration
+  - coverage-detour
+script:
+  - field_key: identity_and_policy
+    text: "I'm Marcus Reed, my policy is POL-000001."
+  - field_key: description
+    text: "A truck hit me from behind while I was stopped at a light."
+  - field_key: incident_datetime
+    text: "This morning, around eight."
+expected_verdicts:
+  coverage_question_mid_report_does_not_derail_capture: pass
+  two_consecutive_coverage_questions_return_once: pass

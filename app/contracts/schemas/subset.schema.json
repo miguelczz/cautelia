@@ -1,0 +1,37 @@
+{
+  "additionalProperties": false,
+  "description": "La lista nombrada de casos que corre una corrida parcial.\n\nVive como archivo versionado y no como tabla: su reproducibilidad depende de\nestar en el mismo commit que los casos (BR1.7).",
+  "properties": {
+    "name": {
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "reason": {
+      "minLength": 1,
+      "title": "Reason",
+      "type": "string"
+    },
+    "case_keys": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Case Keys",
+      "type": "array"
+    },
+    "requires_provider_key": {
+      "default": false,
+      "title": "Requires Provider Key",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "name",
+    "reason"
+  ],
+  "title": "SubsetDefinition",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/subset.schema.json"
+}

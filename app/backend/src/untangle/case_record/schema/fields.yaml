@@ -1,0 +1,135 @@
+# Los campos del caso, por tipo de registro (BR1.3, BR1.4, BR1.5).
+#
+# Este archivo es la fuente de verdad. Anadir un campo es anadir una entrada
+# aqui, **sin tocar el codigo**: es lo unico que hace que el juego se pueda
+# auditar de un vistazo en vez de reconstruirlo leyendo ramas.
+#
+# `requires_readback` no es una preferencia de conversacion: es lo que decide si
+# el campo cuenta como completo estando solo dicho. **Desde el 2026-10-06 ningun
+# campo del siniestro la exige** (decision de Miguel, P4, que enmienda BR2.2 y
+# ADR-005): lo que la persona dice se guarda, y si lo corrige, se corrige; la
+# lectura de confirmacion queda para los bloques de la solicitud de cotizacion y
+# para los codigos deletreados de la voz. Los campos cuentan dichos (BR2.6).
+#
+# `optional` (misma decision): el campo se ofrece al final y no cuenta para la
+# completitud. Un siniestro queda listo para el ajustador con sus cuatro datos
+# centrales --heridos, identidad y poliza, que paso, cuando y donde--; el
+# vehiculo y las otras partes se anotan si la persona quiere.
+#
+# La completitud se calcula **sobre los campos obligatorios del tipo del caso** y
+# nunca sobre una lista fija: un siniestro con tres de sus cinco obligatorios da
+# 3/5, y una consulta de cobertura cuenta sobre sus dos (BR2.7, AC4.10.3).
+schema_version: 1
+
+record_types:
+  # --- Siniestro: los siete campos centrales de FR1.1 --------------------------
+  claim:
+    fields:
+      - key: identity_and_policy
+        requires_readback: false
+        source_block: identity
+      - key: incident_datetime
+        requires_readback: false
+        source_block: when
+      - key: location
+        requires_readback: false
+        source_block: where
+      - key: description
+        requires_readback: false
+        source_block: what_happened
+      - key: vehicle_and_driver
+        requires_readback: false
+        source_block: vehicle
+        optional: true
+      - key: other_parties
+        requires_readback: false
+        source_block: other_parties
+        optional: true
+      - key: injuries
+        requires_readback: false
+        source_block: safety
+
+  # --- Consulta de cobertura: dos campos ---------------------------------------
+  # Se abre pidiendo identidad y poliza **sin la pregunta de seguridad**
+  # (AC1.3.6), y la pregunta que se hizo es la sustancia del registro: sin ella
+  # su completitud seria 1/1 desde que la persona se identifica, y AC2.4.3 exige
+  # que se calcule segun su tipo (decision FD-U4-7).
+  coverage_inquiry:
+    fields:
+      - key: identity_and_policy
+        requires_readback: false
+        source_block: identity
+      - key: question_asked
+        requires_readback: false
+        source_block: coverage_question
+
+  # --- Solicitud de cotizacion: cuatro bloques (U19, BR1.2) --------------------
+  # La estructura es la de `docs/reference/estructura-solicitud-cotizacion.md`:
+  # conductor, vehiculo, uso e historial. Los nombres de campo son propios.
+  #
+  # **Todos exigen lectura** (`requires_readback: true`), y no por el mismo motivo
+  # que lesiones o lugar en un siniestro: la confirmacion de la solicitud es **por
+  # bloque** (AC6.1.2), y el mecanismo que confirma un bloque es el de la lectura
+  # de sus campos. Un bloque sin ningun campo que la exija no se podria confirmar
+  # nunca y la captura pasaria de largo sin leerlo.
+  #
+  # `vehicle_age_years` es el unico que no se pregunta: lo deriva la captura desde
+  # `vehicle_year` y el reloj, en un solo sitio (BR1.4). Va en el esquema porque es
+  # un dato del caso que las reglas de elegibilidad leen, y porque la bandeja lo
+  # muestra con su evidencia como cualquier otro.
+  #
+  # `lapse_months` se pregunta solo a quien no tiene cobertura vigente: a quien la
+  # tiene, la captura lo deriva en 0 (`orchestration/nodes/intake/normalization.py`).
+  quote_request:
+    fields:
+      - key: driver_name
+        requires_readback: true
+        source_block: quote_driver
+      - key: driver_birth_date
+        requires_readback: true
+        source_block: quote_driver
+      - key: license_years
+        requires_readback: true
+        source_block: quote_driver
+      - key: license_jurisdiction
+        requires_readback: true
+        source_block: quote_driver
+      - key: vehicle_year
+        requires_readback: true
+        source_block: quote_vehicle
+      - key: vehicle_make
+        requires_readback: true
+        source_block: quote_vehicle
+      - key: vehicle_model
+        requires_readback: true
+        source_block: quote_vehicle
+      - key: vin
+        requires_readback: true
+        source_block: quote_vehicle
+      - key: salvage_title
+        requires_readback: true
+        source_block: quote_vehicle
+      - key: vehicle_age_years
+        requires_readback: true
+        source_block: quote_vehicle
+      - key: use_type
+        requires_readback: true
+        source_block: quote_usage
+      - key: annual_mileage_band
+        requires_readback: true
+        source_block: quote_usage
+      - key: garaging_jurisdiction
+        requires_readback: true
+        source_block: quote_usage
+      - key: at_fault_losses_3y
+        requires_readback: true
+        source_block: quote_history
+      - key: claims_3y
+        requires_readback: true
+        source_block: quote_history
+      - key: prior_coverage_active
+        requires_readback: true
+        source_block: quote_history
+      - key: lapse_months
+        requires_readback: true
+        source_block: quote_history

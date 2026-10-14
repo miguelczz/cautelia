@@ -1,0 +1,5246 @@
+{
+  "experiment": "02-flash-lite",
+  "started_utc": "2026-09-16T20:43:42Z",
+  "prices_usd_per_million_tokens": {
+    "gemini-2.5-flash-lite": {
+      "input": 0.1,
+      "output": 0.4
+    },
+    "gemini-3.1-flash-lite": {
+      "input": 0.25,
+      "output": 1.5
+    },
+    "gemini-3.5-flash-lite": {
+      "input": 0.3,
+      "output": 2.5
+    }
+  },
+  "prices_source": "https://ai.google.dev/gemini-api/docs/pricing (consultado 2026-09-16)",
+  "turns_per_3min_call": 15,
+  "sleep_seconds": 4.0,
+  "models": {
+    "gemini-2.5-flash-lite": {
+      "unavailable": "HTTP 404: {\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.5-flash-lite is no longer available to new users. Please update your code to use models/gemini-3.5-flash-lite for the latest features and improvements. We recommend you to use the Interactions API.\",\n    \"status\": \""
+    },
+    "gemini-3.1-flash-lite": {
+      "extraction": [
+        {
+          "id": "es-01",
+          "lang": "es",
+          "seconds": 1.666,
+          "extracted": {
+            "when_date": "2026-09-14",
+            "when_time": "17:30",
+            "place": "autopista sur, salida 12",
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "2026-09-14",
+              "got": "2026-09-14"
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "17:30",
+              "got": "17:30"
+            },
+            "place": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "autopista",
+                  "12"
+                ]
+              },
+              "got": "autopista sur, salida 12"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-02",
+          "lang": "es",
+          "seconds": 0.965,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": "Mazda 3 gris",
+            "plate": "KLM482",
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "mazda"
+                ]
+              },
+              "got": "Mazda 3 gris"
+            },
+            "plate": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "KLM482",
+              "got": "KLM482"
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-03",
+          "lang": "es",
+          "seconds": 1.632,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": "STN482913",
+            "national_id": "1036555012",
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "STN482913",
+              "got": "STN482913"
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "1036555012",
+              "got": "1036555012"
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-04",
+          "lang": "es",
+          "seconds": 1.379,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": "golpecito en el bómper de atrás",
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": "none",
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "description": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "bomper"
+                ]
+              },
+              "got": "golpecito en el bómper de atrás"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "none",
+              "got": "none"
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-05",
+          "lang": "es",
+          "seconds": 1.177,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": 1,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "exact",
+              "expected": 1,
+              "got": 1
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-06",
+          "lang": "es",
+          "seconds": 1.012,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": "minor",
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "minor",
+              "got": "minor"
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-07",
+          "lang": "es",
+          "seconds": 1.213,
+          "extracted": {
+            "when_date": "2026-09-08",
+            "when_time": "08:00",
+            "place": "parqueadero del centro comercial",
+            "description": "saliendo del parqueadero",
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "2026-09-08",
+              "got": "2026-09-08"
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "08:00",
+              "got": "08:00"
+            },
+            "place": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "parqueadero"
+                ]
+              },
+              "got": "parqueadero del centro comercial"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-08",
+          "lang": "es",
+          "seconds": 1.524,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": "5550142"
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "5550142",
+              "got": "5550142"
+            }
+          }
+        },
+        {
+          "id": "es-09",
+          "lang": "es",
+          "seconds": 1.722,
+          "extracted": {
+            "when_date": "2026-09-14",
+            "when_time": "17:30",
+            "place": "autopista sur, salida 14",
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "place": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "14"
+                ],
+                "forbidden": [
+                  "12"
+                ]
+              },
+              "got": "autopista sur, salida 14"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-10",
+          "lang": "es",
+          "seconds": 21.219,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": "frente a la casa",
+            "description": "se cayó una rama grande encima del carro",
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": 0,
+            "injuries": "none",
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": false,
+              "kind": "exact",
+              "expected": "2026-09-14",
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "casa"
+                ]
+              },
+              "got": "frente a la casa"
+            },
+            "description": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "rama"
+                ]
+              },
+              "got": "se cayó una rama grande encima del carro"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": false,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": 0
+            },
+            "injuries": {
+              "ok": false,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": "none"
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-11",
+          "lang": "es",
+          "seconds": 1.22,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": false,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "exact",
+              "expected": false,
+              "got": false
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-01",
+          "lang": "en",
+          "seconds": 1.356,
+          "extracted": {
+            "when_date": "2026-09-14",
+            "when_time": "17:30",
+            "place": "Highway 9, near exit 12",
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "2026-09-14",
+              "got": "2026-09-14"
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "17:30",
+              "got": "17:30"
+            },
+            "place": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "highway",
+                  "12"
+                ]
+              },
+              "got": "Highway 9, near exit 12"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-02",
+          "lang": "en",
+          "seconds": 1.05,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": "gray Honda Civic",
+            "plate": "BKR482",
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "honda",
+                  "civic"
+                ]
+              },
+              "got": "gray Honda Civic"
+            },
+            "plate": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "BKR482",
+              "got": "BKR482"
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-03",
+          "lang": "en",
+          "seconds": 1.528,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": "SUN610447",
+            "national_id": "412555098",
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "SUN610447",
+              "got": "SUN610447"
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "412555098",
+              "got": "412555098"
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-04",
+          "lang": "en",
+          "seconds": 2.532,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": "small dent on the rear door",
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": "none",
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "description": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "dent"
+                ]
+              },
+              "got": "small dent on the rear door"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "none",
+              "got": "none"
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-05",
+          "lang": "en",
+          "seconds": 2.152,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": "black pickup driver fled",
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": 1,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "exact",
+              "expected": 1,
+              "got": 1
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-06",
+          "lang": "en",
+          "seconds": 1.447,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": "serious",
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "serious",
+              "got": "serious"
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-07",
+          "lang": "en",
+          "seconds": 2.319,
+          "extracted": {
+            "when_date": "2026-09-08",
+            "when_time": "08:00",
+            "place": "mall parking lot",
+            "description": "pulling out of the mall parking lot",
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "2026-09-08",
+              "got": "2026-09-08"
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "08:00",
+              "got": "08:00"
+            },
+            "place": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "parking"
+                ]
+              },
+              "got": "mall parking lot"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-08",
+          "lang": "en",
+          "seconds": 1.564,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": "5550189"
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "5550189",
+              "got": "5550189"
+            }
+          }
+        },
+        {
+          "id": "en-09",
+          "lang": "en",
+          "seconds": 5.074,
+          "extracted": {
+            "when_date": "2026-09-14",
+            "when_time": "17:30",
+            "place": "Highway 9, exit 14",
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "place": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "14"
+                ],
+                "forbidden": [
+                  "12"
+                ]
+              },
+              "got": "Highway 9, exit 14"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-10",
+          "lang": "en",
+          "seconds": 2.025,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": "in front of my house",
+            "description": "A big branch fell on my car",
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": 0,
+            "injuries": "none",
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": false,
+              "kind": "exact",
+              "expected": "2026-09-14",
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "house"
+                ]
+              },
+              "got": "in front of my house"
+            },
+            "description": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "branch"
+                ]
+              },
+              "got": "A big branch fell on my car"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": false,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": 0
+            },
+            "injuries": {
+              "ok": false,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": "none"
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-11",
+          "lang": "en",
+          "seconds": 0.963,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": false,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "exact",
+              "expected": false,
+              "got": false
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        }
+      ],
+      "turns": [
+        {
+          "id": "es-01",
+          "lang": "es",
+          "ttft_ms": 960,
+          "total_ms": 1058,
+          "reply": "Entendido. ¿Podría describirme brevemente qué ocurrió durante el incidente?",
+          "usage": {
+            "promptTokenCount": 112,
+            "candidatesTokenCount": 16,
+            "totalTokenCount": 128,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 112
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-02",
+          "lang": "es",
+          "ttft_ms": 4851,
+          "total_ms": 7206,
+          "reply": "Entendido. ¿Podría describirme brevemente qué ocurrió y en qué lugar se encuentra el vehículo en este momento?",
+          "usage": {
+            "promptTokenCount": 104,
+            "candidatesTokenCount": 24,
+            "totalTokenCount": 128,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 104
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-03",
+          "lang": "es",
+          "ttft_ms": 3380,
+          "total_ms": 4597,
+          "reply": "Entendido. ¿Podría describirme brevemente qué ocurrió y en qué lugar se encuentra el vehículo en este momento?",
+          "usage": {
+            "promptTokenCount": 116,
+            "candidatesTokenCount": 24,
+            "totalTokenCount": 140,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 116
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-04",
+          "lang": "es",
+          "ttft_ms": 755,
+          "total_ms": 847,
+          "reply": "Me alegra saber que están bien. ¿Podría indicarme la fecha y la hora exacta en que ocurrió el incidente?",
+          "usage": {
+            "promptTokenCount": 104,
+            "candidatesTokenCount": 25,
+            "totalTokenCount": 129,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 104
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-05",
+          "lang": "es",
+          "ttft_ms": 1027,
+          "total_ms": 1143,
+          "reply": "Entiendo. ¿Podría describirme brevemente cómo ocurrió el incidente y en qué lugar se encuentra ahora?",
+          "usage": {
+            "promptTokenCount": 100,
+            "candidatesTokenCount": 22,
+            "totalTokenCount": 122,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 100
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-06",
+          "lang": "es",
+          "ttft_ms": 933,
+          "total_ms": 1004,
+          "reply": "Entiendo, me alegra que esté bien. ¿Podría decirme la fecha y la hora exacta en que ocurrió el incidente?",
+          "usage": {
+            "promptTokenCount": 105,
+            "candidatesTokenCount": 27,
+            "totalTokenCount": 132,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 105
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-07",
+          "lang": "es",
+          "ttft_ms": 1050,
+          "total_ms": 1050,
+          "reply": "Entiendo. ¿Podría describirme brevemente qué ocurrió durante el incidente?",
+          "usage": {
+            "promptTokenCount": 100,
+            "candidatesTokenCount": 16,
+            "totalTokenCount": 116,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 100
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-08",
+          "lang": "es",
+          "ttft_ms": 717,
+          "total_ms": 818,
+          "reply": "Gracias. ¿Podría decirme brevemente qué ocurrió y en qué lugar se encuentra el vehículo?",
+          "usage": {
+            "promptTokenCount": 92,
+            "candidatesTokenCount": 20,
+            "totalTokenCount": 112,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 92
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-09",
+          "lang": "es",
+          "ttft_ms": 1213,
+          "total_ms": 1284,
+          "reply": "Entendido, corregido a la salida 14. ¿Podría describirme brevemente qué daños sufrió su vehículo en el incidente?",
+          "usage": {
+            "promptTokenCount": 118,
+            "candidatesTokenCount": 28,
+            "totalTokenCount": 146,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 118
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-10",
+          "lang": "es",
+          "ttft_ms": 1767,
+          "total_ms": 1874,
+          "reply": "Lamento escuchar eso. ¿Podría decirme en qué dirección exacta estaba estacionado el vehículo cuando ocurrió el incidente?",
+          "usage": {
+            "promptTokenCount": 104,
+            "candidatesTokenCount": 24,
+            "totalTokenCount": 128,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 104
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-11",
+          "lang": "es",
+          "ttft_ms": 1115,
+          "total_ms": 1201,
+          "reply": "Entendido. ¿Podría decirme la fecha y la hora exacta en que ocurrió el incidente?",
+          "usage": {
+            "promptTokenCount": 96,
+            "candidatesTokenCount": 20,
+            "totalTokenCount": 116,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 96
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-01",
+          "lang": "en",
+          "ttft_ms": 973,
+          "total_ms": 1047,
+          "reply": "I understand. Could you please describe how the accident occurred?",
+          "usage": {
+            "promptTokenCount": 102,
+            "candidatesTokenCount": 12,
+            "totalTokenCount": 114,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 102
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-02",
+          "lang": "en",
+          "ttft_ms": 1656,
+          "total_ms": 1709,
+          "reply": "Thank you. Could you please tell me the date and time the incident occurred?",
+          "usage": {
+            "promptTokenCount": 101,
+            "candidatesTokenCount": 16,
+            "totalTokenCount": 117,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 101
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-03",
+          "lang": "en",
+          "ttft_ms": 753,
+          "total_ms": 840,
+          "reply": "Thank you. Could you please tell me the date and time the incident occurred?",
+          "usage": {
+            "promptTokenCount": 114,
+            "candidatesTokenCount": 16,
+            "totalTokenCount": 130,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 114
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-04",
+          "lang": "en",
+          "ttft_ms": 1100,
+          "total_ms": 1175,
+          "reply": "I am glad to hear everyone is safe. Could you please provide the date and time the incident occurred?",
+          "usage": {
+            "promptTokenCount": 98,
+            "candidatesTokenCount": 21,
+            "totalTokenCount": 119,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 98
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-05",
+          "lang": "en",
+          "ttft_ms": 1984,
+          "total_ms": 2074,
+          "reply": "I understand. Were there any witnesses present who might have seen the pickup truck?",
+          "usage": {
+            "promptTokenCount": 98,
+            "candidatesTokenCount": 16,
+            "totalTokenCount": 114,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 98
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-06",
+          "lang": "en",
+          "ttft_ms": 1168,
+          "total_ms": 1263,
+          "reply": "I am sorry to hear that. Could you please provide the name of the hospital where he was taken?",
+          "usage": {
+            "promptTokenCount": 98,
+            "candidatesTokenCount": 21,
+            "totalTokenCount": 119,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 98
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-07",
+          "lang": "en",
+          "ttft_ms": 993,
+          "total_ms": 1029,
+          "reply": "I understand. Could you please describe what happened during the incident?",
+          "usage": {
+            "promptTokenCount": 98,
+            "candidatesTokenCount": 13,
+            "totalTokenCount": 111,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 98
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-08",
+          "lang": "en",
+          "ttft_ms": 3366,
+          "total_ms": 3602,
+          "reply": "Thank you. Could you please tell me the date and time the incident occurred?",
+          "usage": {
+            "promptTokenCount": 94,
+            "candidatesTokenCount": 16,
+            "totalTokenCount": 110,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 94
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-09",
+          "lang": "en",
+          "ttft_ms": 2558,
+          "total_ms": 2587,
+          "reply": "Understood, I have corrected that to exit 14. Could you please describe how the accident occurred?",
+          "usage": {
+            "promptTokenCount": 114,
+            "candidatesTokenCount": 22,
+            "totalTokenCount": 136,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 114
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-10",
+          "lang": "en",
+          "ttft_ms": 2392,
+          "total_ms": 2486,
+          "reply": "I am sorry to hear about your car. Could you please provide the date and approximate time the damage occurred?",
+          "usage": {
+            "promptTokenCount": 99,
+            "candidatesTokenCount": 22,
+            "totalTokenCount": 121,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 99
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-11",
+          "lang": "en",
+          "ttft_ms": 5505,
+          "total_ms": 5577,
+          "reply": "I understand. Could you please tell me the date and time the accident occurred?",
+          "usage": {
+            "promptTokenCount": 90,
+            "candidatesTokenCount": 16,
+            "totalTokenCount": 106,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 90
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        }
+      ],
+      "errors": [],
+      "thinking_level": "minimal",
+      "summary": {
+        "es": {
+          "cases": 11,
+          "fields_scored": 131,
+          "field_accuracy": 0.977,
+          "invented_values": 2,
+          "cases_with_every_field_right": 10,
+          "per_field": {
+            "description": "2/2",
+            "driver_is_policyholder": "11/11",
+            "injuries": "10/11",
+            "national_id": "11/11",
+            "other_parties": "9/10",
+            "other_vehicle_plate": "11/11",
+            "phone": "11/11",
+            "place": "11/11",
+            "plate": "11/11",
+            "policy_number": "11/11",
+            "vehicle": "11/11",
+            "when_date": "9/10",
+            "when_time": "10/10"
+          },
+          "turns": 11,
+          "ttft_ms_p50": 1050,
+          "ttft_ms_p95": 4851,
+          "total_ms_p50": 1143,
+          "total_ms_p95": 7206,
+          "longest_reply_words": 19,
+          "usd_per_turn_estimate": 5.97e-05,
+          "usd_per_3min_call_estimate": 0.0009
+        },
+        "en": {
+          "cases": 11,
+          "fields_scored": 131,
+          "field_accuracy": 0.977,
+          "invented_values": 2,
+          "cases_with_every_field_right": 10,
+          "per_field": {
+            "description": "2/2",
+            "driver_is_policyholder": "11/11",
+            "injuries": "10/11",
+            "national_id": "11/11",
+            "other_parties": "9/10",
+            "other_vehicle_plate": "11/11",
+            "phone": "11/11",
+            "place": "11/11",
+            "plate": "11/11",
+            "policy_number": "11/11",
+            "vehicle": "11/11",
+            "when_date": "9/10",
+            "when_time": "10/10"
+          },
+          "turns": 11,
+          "ttft_ms_p50": 1656,
+          "ttft_ms_p95": 5505,
+          "total_ms_p50": 1709,
+          "total_ms_p95": 5577,
+          "longest_reply_words": 20,
+          "usd_per_turn_estimate": 5.12e-05,
+          "usd_per_3min_call_estimate": 0.00077
+        },
+        "errors": 0
+      }
+    },
+    "gemini-3.5-flash-lite": {
+      "extraction": [
+        {
+          "id": "es-01",
+          "lang": "es",
+          "seconds": 1.523,
+          "extracted": {
+            "when_date": "2026-09-14",
+            "when_time": "17:30",
+            "place": "autopista sur, a la altura de la salida 12",
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "2026-09-14",
+              "got": "2026-09-14"
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "17:30",
+              "got": "17:30"
+            },
+            "place": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "autopista",
+                  "12"
+                ]
+              },
+              "got": "autopista sur, a la altura de la salida 12"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-02",
+          "lang": "es",
+          "seconds": 1.724,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": "Mazda 3 gris",
+            "plate": "KLM482",
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "mazda"
+                ]
+              },
+              "got": "Mazda 3 gris"
+            },
+            "plate": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "KLM482",
+              "got": "KLM482"
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-03",
+          "lang": "es",
+          "seconds": 1.499,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": "STN482913",
+            "national_id": "1036555012",
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "STN482913",
+              "got": "STN482913"
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "1036555012",
+              "got": "1036555012"
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-04",
+          "lang": "es",
+          "seconds": 1.792,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": "golpecito en el bómper de atrás",
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": "none",
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "description": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "bomper"
+                ]
+              },
+              "got": "golpecito en el bómper de atrás"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "none",
+              "got": "none"
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-05",
+          "lang": "es",
+          "seconds": 1.086,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": "Una camioneta blanca se fue sin dar la placa",
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": 1,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "exact",
+              "expected": 1,
+              "got": 1
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-06",
+          "lang": "es",
+          "seconds": 1.468,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": "minor",
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "minor",
+              "got": "minor"
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-07",
+          "lang": "es",
+          "seconds": 1.72,
+          "extracted": {
+            "when_date": "2026-09-08",
+            "when_time": "08:00",
+            "place": "parqueadero del centro comercial",
+            "description": "saliendo del parqueadero",
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "2026-09-08",
+              "got": "2026-09-08"
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "08:00",
+              "got": "08:00"
+            },
+            "place": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "parqueadero"
+                ]
+              },
+              "got": "parqueadero del centro comercial"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-08",
+          "lang": "es",
+          "seconds": 1.474,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": "5550142"
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "5550142",
+              "got": "5550142"
+            }
+          }
+        },
+        {
+          "id": "es-09",
+          "lang": "es",
+          "seconds": 16.298,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": "salida 14",
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "place": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "14"
+                ],
+                "forbidden": [
+                  "12"
+                ]
+              },
+              "got": "salida 14"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-10",
+          "lang": "es",
+          "seconds": 2.89,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": "frente a la casa",
+            "description": "se cayó una rama grande encima del carro",
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": 0,
+            "injuries": "none",
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": false,
+              "kind": "exact",
+              "expected": "2026-09-14",
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "casa"
+                ]
+              },
+              "got": "frente a la casa"
+            },
+            "description": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "rama"
+                ]
+              },
+              "got": "se cayó una rama grande encima del carro"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": false,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": 0
+            },
+            "injuries": {
+              "ok": false,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": "none"
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "es-11",
+          "lang": "es",
+          "seconds": 1.186,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": false,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "exact",
+              "expected": false,
+              "got": false
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-01",
+          "lang": "en",
+          "seconds": 1.377,
+          "extracted": {
+            "when_date": "2026-09-14",
+            "when_time": "17:30",
+            "place": "Highway 9, near exit 12",
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "2026-09-14",
+              "got": "2026-09-14"
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "17:30",
+              "got": "17:30"
+            },
+            "place": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "highway",
+                  "12"
+                ]
+              },
+              "got": "Highway 9, near exit 12"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-02",
+          "lang": "en",
+          "seconds": 1.817,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": "gray Honda Civic",
+            "plate": "BKR482",
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "honda",
+                  "civic"
+                ]
+              },
+              "got": "gray Honda Civic"
+            },
+            "plate": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "BKR482",
+              "got": "BKR482"
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-03",
+          "lang": "en",
+          "seconds": 1.486,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": "SUN610447",
+            "national_id": "412555098",
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "SUN610447",
+              "got": "SUN610447"
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "412555098",
+              "got": "412555098"
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-04",
+          "lang": "en",
+          "seconds": 1.038,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": "small dent on the rear door",
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": "none",
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "description": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "dent"
+                ]
+              },
+              "got": "small dent on the rear door"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "none",
+              "got": "none"
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-05",
+          "lang": "en",
+          "seconds": 1.423,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": "Black pickup involved, driver left the scene without getting the plate",
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": 1,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "exact",
+              "expected": 1,
+              "got": 1
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-06",
+          "lang": "en",
+          "seconds": 1.074,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": "serious",
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "serious",
+              "got": "serious"
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-07",
+          "lang": "en",
+          "seconds": 1.115,
+          "extracted": {
+            "when_date": "2026-09-08",
+            "when_time": "08:00",
+            "place": "mall parking lot",
+            "description": "pulling out of the mall parking lot",
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "2026-09-08",
+              "got": "2026-09-08"
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "08:00",
+              "got": "08:00"
+            },
+            "place": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "parking"
+                ]
+              },
+              "got": "mall parking lot"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-08",
+          "lang": "en",
+          "seconds": 1.402,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": "5550189"
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "exact",
+              "expected": "5550189",
+              "got": "5550189"
+            }
+          }
+        },
+        {
+          "id": "en-09",
+          "lang": "en",
+          "seconds": 0.886,
+          "extracted": {
+            "when_date": "2026-09-14",
+            "when_time": "17:30",
+            "place": "Highway 9, exit 14",
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "place": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "14"
+                ],
+                "forbidden": [
+                  "12"
+                ]
+              },
+              "got": "Highway 9, exit 14"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-10",
+          "lang": "en",
+          "seconds": 1.386,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": "in front of my house",
+            "description": "A big branch fell on my car during the storm",
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": 0,
+            "injuries": "none",
+            "driver_is_policyholder": null,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": false,
+              "kind": "exact",
+              "expected": "2026-09-14",
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "house"
+                ]
+              },
+              "got": "in front of my house"
+            },
+            "description": {
+              "ok": true,
+              "kind": "keywords",
+              "expected": {
+                "keywords": [
+                  "branch"
+                ]
+              },
+              "got": "A big branch fell on my car during the storm"
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": false,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": 0
+            },
+            "injuries": {
+              "ok": false,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": "none"
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        },
+        {
+          "id": "en-11",
+          "lang": "en",
+          "seconds": 1.496,
+          "extracted": {
+            "when_date": null,
+            "when_time": null,
+            "place": null,
+            "description": null,
+            "vehicle": null,
+            "plate": null,
+            "other_vehicle_plate": null,
+            "other_parties": null,
+            "injuries": null,
+            "driver_is_policyholder": false,
+            "policy_number": null,
+            "national_id": null,
+            "phone": null
+          },
+          "scores": {
+            "when_date": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "when_time": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "place": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "vehicle": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_vehicle_plate": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "other_parties": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "injuries": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "driver_is_policyholder": {
+              "ok": true,
+              "kind": "exact",
+              "expected": false,
+              "got": false
+            },
+            "policy_number": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "national_id": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            },
+            "phone": {
+              "ok": true,
+              "kind": "must_be_null",
+              "expected": null,
+              "got": null
+            }
+          }
+        }
+      ],
+      "turns": [
+        {
+          "id": "es-01",
+          "lang": "es",
+          "ttft_ms": 511,
+          "total_ms": 611,
+          "reply": "Entendido. ¿Podría decirme la placa de su vehículo y qué pasó exactamente?",
+          "usage": {
+            "promptTokenCount": 112,
+            "candidatesTokenCount": 18,
+            "totalTokenCount": 130,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 112
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-02",
+          "lang": "es",
+          "ttft_ms": 1243,
+          "total_ms": 1244,
+          "reply": "¿En qué fecha y hora ocurrió el accidente?",
+          "usage": {
+            "promptTokenCount": 104,
+            "candidatesTokenCount": 10,
+            "totalTokenCount": 114,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 104
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-03",
+          "lang": "es",
+          "ttft_ms": 1706,
+          "total_ms": 1798,
+          "reply": "Entendido. ¿Cuándo y dónde ocurrió el incidente?",
+          "usage": {
+            "promptTokenCount": 116,
+            "candidatesTokenCount": 12,
+            "totalTokenCount": 128,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 116
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-04",
+          "lang": "es",
+          "ttft_ms": 1064,
+          "total_ms": 1174,
+          "reply": "Me alegro de que estén bien. ¿Podría darme la fecha y hora del incidente, por favor?",
+          "usage": {
+            "promptTokenCount": 104,
+            "candidatesTokenCount": 23,
+            "totalTokenCount": 127,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 104
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-05",
+          "lang": "es",
+          "ttft_ms": 575,
+          "total_ms": 625,
+          "reply": "¿Se encuentra bien y sufrió alguna lesión?",
+          "usage": {
+            "promptTokenCount": 100,
+            "candidatesTokenCount": 9,
+            "totalTokenCount": 109,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 100
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-06",
+          "lang": "es",
+          "ttft_ms": 2146,
+          "total_ms": 2156,
+          "reply": "Me alegro de que esté bien. ¿Cuándo y Dónde ocurrió el accidente?",
+          "usage": {
+            "promptTokenCount": 105,
+            "candidatesTokenCount": 18,
+            "totalTokenCount": 123,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 105
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-07",
+          "lang": "es",
+          "ttft_ms": 1270,
+          "total_ms": 1377,
+          "reply": "Entendido. ¿Qué daños sufrió su vehículo y contra qué o quién chocó?",
+          "usage": {
+            "promptTokenCount": 100,
+            "candidatesTokenCount": 17,
+            "totalTokenCount": 117,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 100
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-08",
+          "lang": "es",
+          "ttft_ms": 30513,
+          "total_ms": 30615,
+          "reply": "Anotado. ¿Podría decirme su nombre completo, por favor?",
+          "usage": {
+            "promptTokenCount": 92,
+            "candidatesTokenCount": 16,
+            "totalTokenCount": 108,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 92
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-09",
+          "lang": "es",
+          "ttft_ms": 978,
+          "total_ms": 1060,
+          "reply": "Entendido, la salida 14. ¿Hubo algún lesionado en el accidente?",
+          "usage": {
+            "promptTokenCount": 118,
+            "candidatesTokenCount": 19,
+            "totalTokenCount": 137,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 118
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-10",
+          "lang": "es",
+          "ttft_ms": 565,
+          "total_ms": 750,
+          "reply": "Entendido, lamento lo ocurrido. ¿En qué parte del carro cayó la rama y qué daños visibles tiene?",
+          "usage": {
+            "promptTokenCount": 104,
+            "candidatesTokenCount": 23,
+            "totalTokenCount": 127,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 104
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "es-11",
+          "lang": "es",
+          "ttft_ms": 610,
+          "total_ms": 653,
+          "reply": "Entendido. ¿Me puede decir cómo sucedió el accidente?",
+          "usage": {
+            "promptTokenCount": 96,
+            "candidatesTokenCount": 12,
+            "totalTokenCount": 108,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 96
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-01",
+          "lang": "en",
+          "ttft_ms": 1036,
+          "total_ms": 1135,
+          "reply": "Got it. Were there any injuries?",
+          "usage": {
+            "promptTokenCount": 102,
+            "candidatesTokenCount": 8,
+            "totalTokenCount": 110,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 102
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-02",
+          "lang": "en",
+          "ttft_ms": 926,
+          "total_ms": 1014,
+          "reply": "Got it, a gray Honda Civic. When and where did the accident happen?",
+          "usage": {
+            "promptTokenCount": 101,
+            "candidatesTokenCount": 16,
+            "totalTokenCount": 117,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 101
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-03",
+          "lang": "en",
+          "ttft_ms": 556,
+          "total_ms": 641,
+          "reply": "Got it. Could you tell me the date and time the incident happened?",
+          "usage": {
+            "promptTokenCount": 114,
+            "candidatesTokenCount": 15,
+            "totalTokenCount": 129,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 114
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-04",
+          "lang": "en",
+          "ttft_ms": 1087,
+          "total_ms": 1192,
+          "reply": "I'm glad to hear everyone is okay. Could you please tell me your policy number or the name on the account?",
+          "usage": {
+            "promptTokenCount": 98,
+            "candidatesTokenCount": 25,
+            "totalTokenCount": 123,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 98
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-05",
+          "lang": "en",
+          "ttft_ms": 975,
+          "total_ms": 1004,
+          "reply": "I'm sorry to hear that. Did you sustain any injuries in the accident?",
+          "usage": {
+            "promptTokenCount": 98,
+            "candidatesTokenCount": 17,
+            "totalTokenCount": 115,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 98
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-06",
+          "lang": "en",
+          "ttft_ms": 2428,
+          "total_ms": 2516,
+          "reply": "I hope he recovers quickly. What is the hospital's name?",
+          "usage": {
+            "promptTokenCount": 98,
+            "candidatesTokenCount": 14,
+            "totalTokenCount": 112,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 98
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-07",
+          "lang": "en",
+          "ttft_ms": 16019,
+          "total_ms": 17970,
+          "reply": "Got it. Was anyone injured in the accident?",
+          "usage": {
+            "promptTokenCount": 98,
+            "candidatesTokenCount": 10,
+            "totalTokenCount": 108,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 98
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-08",
+          "lang": "en",
+          "ttft_ms": 579,
+          "total_ms": 681,
+          "reply": "Got it. Could you tell me your policy number, please?",
+          "usage": {
+            "promptTokenCount": 94,
+            "candidatesTokenCount": 13,
+            "totalTokenCount": 107,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 94
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-09",
+          "lang": "en",
+          "ttft_ms": 1971,
+          "total_ms": 2042,
+          "reply": "Got it, exit 14. What is your policy number, please?",
+          "usage": {
+            "promptTokenCount": 114,
+            "candidatesTokenCount": 16,
+            "totalTokenCount": 130,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 114
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-10",
+          "lang": "en",
+          "ttft_ms": 1055,
+          "total_ms": 1129,
+          "reply": "That sounds frustrating. Is anyone injured, and where is the vehicle now?",
+          "usage": {
+            "promptTokenCount": 99,
+            "candidatesTokenCount": 15,
+            "totalTokenCount": 114,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 99
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        },
+        {
+          "id": "en-11",
+          "lang": "en",
+          "ttft_ms": 791,
+          "total_ms": 845,
+          "reply": "Was anyone injured in the accident?",
+          "usage": {
+            "promptTokenCount": 90,
+            "candidatesTokenCount": 7,
+            "totalTokenCount": 97,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 90
+              }
+            ],
+            "serviceTier": "standard"
+          }
+        }
+      ],
+      "errors": [],
+      "thinking_level": "minimal",
+      "summary": {
+        "es": {
+          "cases": 11,
+          "fields_scored": 131,
+          "field_accuracy": 0.977,
+          "invented_values": 2,
+          "cases_with_every_field_right": 10,
+          "per_field": {
+            "description": "2/2",
+            "driver_is_policyholder": "11/11",
+            "injuries": "10/11",
+            "national_id": "11/11",
+            "other_parties": "9/10",
+            "other_vehicle_plate": "11/11",
+            "phone": "11/11",
+            "place": "11/11",
+            "plate": "11/11",
+            "policy_number": "11/11",
+            "vehicle": "11/11",
+            "when_date": "9/10",
+            "when_time": "10/10"
+          },
+          "turns": 11,
+          "ttft_ms_p50": 1064,
+          "ttft_ms_p95": 30513,
+          "total_ms_p50": 1174,
+          "total_ms_p95": 30615,
+          "longest_reply_words": 17,
+          "usd_per_turn_estimate": 7.16e-05,
+          "usd_per_3min_call_estimate": 0.00107
+        },
+        "en": {
+          "cases": 11,
+          "fields_scored": 131,
+          "field_accuracy": 0.977,
+          "invented_values": 2,
+          "cases_with_every_field_right": 10,
+          "per_field": {
+            "description": "2/2",
+            "driver_is_policyholder": "11/11",
+            "injuries": "10/11",
+            "national_id": "11/11",
+            "other_parties": "9/10",
+            "other_vehicle_plate": "11/11",
+            "phone": "11/11",
+            "place": "11/11",
+            "plate": "11/11",
+            "policy_number": "11/11",
+            "vehicle": "11/11",
+            "when_date": "9/10",
+            "when_time": "10/10"
+          },
+          "turns": 11,
+          "ttft_ms_p50": 1036,
+          "ttft_ms_p95": 16019,
+          "total_ms_p50": 1129,
+          "total_ms_p95": 17970,
+          "longest_reply_words": 21,
+          "usd_per_turn_estimate": 6.56e-05,
+          "usd_per_3min_call_estimate": 0.00098
+        },
+        "errors": 0
+      }
+    }
+  }
+}

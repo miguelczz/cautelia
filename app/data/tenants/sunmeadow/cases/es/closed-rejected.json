@@ -1,0 +1,68 @@
+{
+  "case_key": "SEED/sunmeadow/es/closed-rejected",
+  "channel": "chat",
+  "derivation_reason": "rule",
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Esquivó una moto y se golpeó contra un poste."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Lina Herrera, póliza POL-795628"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "Un lesionado, su acompañante, que se golpeó el cuello"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Carrera 5 con calle 40, Corvane"
+    },
+    "other_parties": {
+      "status": "confirmed",
+      "value": "Ninguno"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Honda CR-V 2025, placa YWT-6641, lo conducía Lina"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-795628",
+  "record_type": "claim",
+  "resolution": "rejected",
+  "state": "closed",
+  "tenant_id": "sunmeadow",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Hola, soy Lina Herrera. Mi póliza es POL-795628."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Alguien resultó herido?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Sí, mi acompañante se golpeó el cuello."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué pasó?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Esquivé una moto y me golpeé contra un poste. No hubo otros vehículos."
+    },
+    {
+      "speaker": "staff",
+      "text": "Revisé su caso y no quedó aprobado. En su caso está el motivo de la decisión."
+    }
+  ],
+  "used_by": []
+}

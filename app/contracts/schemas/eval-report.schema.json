@@ -1,0 +1,478 @@
+{
+  "$defs": {
+    "ByLanguage": {
+      "additionalProperties": false,
+      "description": "Los dos idiomas, lado a lado.\n\nNo hay un tercer campo. Si lo hubiera, alguien escribiria el promedio ahi.",
+      "properties": {
+        "es": {
+          "$ref": "#/$defs/LanguageTally",
+          "default": {
+            "passed": 0,
+            "failed": 0,
+            "not_measured": 0
+          }
+        },
+        "en": {
+          "$ref": "#/$defs/LanguageTally",
+          "default": {
+            "passed": 0,
+            "failed": 0,
+            "not_measured": 0
+          }
+        }
+      },
+      "title": "ByLanguage",
+      "type": "object"
+    },
+    "CaseRow": {
+      "additionalProperties": false,
+      "description": "Una fila del reporte: un caso dentro de esta corrida.",
+      "properties": {
+        "case_key": {
+          "title": "Case Key",
+          "type": "string"
+        },
+        "language": {
+          "enum": [
+            "es",
+            "en"
+          ],
+          "title": "Language",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/CaseStatus"
+        },
+        "not_measured_cause": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NotMeasuredCause"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "criteria_results": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Criteria Results",
+          "type": "object"
+        },
+        "criteria_judgment": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JudgmentKind"
+          },
+          "title": "Criteria Judgment",
+          "type": "object"
+        },
+        "off_script_turns": {
+          "default": 0,
+          "title": "Off Script Turns",
+          "type": "integer"
+        },
+        "duration_seconds": {
+          "default": 0.0,
+          "title": "Duration Seconds",
+          "type": "number"
+        },
+        "trace_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Trace Ref"
+        },
+        "trace_status": {
+          "default": "unavailable",
+          "title": "Trace Status",
+          "type": "string"
+        },
+        "root_cause": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RootCause"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "case_key",
+        "language",
+        "status"
+      ],
+      "title": "CaseRow",
+      "type": "object"
+    },
+    "CaseStatus": {
+      "description": "El veredicto de un caso dentro de una corrida.\n\n`not_measured` nunca se suma con `failed`: uno dice \"esto esta mal\" y el otro\n\"no lo se\", y colapsarlos contamina una metrica publicada con fallos de\ninfraestructura.",
+      "enum": [
+        "passed",
+        "failed",
+        "not_measured"
+      ],
+      "title": "CaseStatus",
+      "type": "string"
+    },
+    "Channel": {
+      "description": "Que conductor ejecuta el caso.",
+      "enum": [
+        "chat",
+        "voice"
+      ],
+      "title": "Channel",
+      "type": "string"
+    },
+    "ChannelLatency": {
+      "additionalProperties": false,
+      "description": "La latencia de un canal en una corrida, por idioma, con los conjuntos que la dieron.\n\nSin tercer campo: no hay donde escribir un promedio de los dos idiomas.",
+      "properties": {
+        "datasets": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Datasets",
+          "type": "array"
+        },
+        "es": {
+          "$ref": "#/$defs/LatencySummary",
+          "default": {
+            "turns": 0,
+            "p50_ms": null,
+            "p95_ms": null
+          }
+        },
+        "en": {
+          "$ref": "#/$defs/LatencySummary",
+          "default": {
+            "turns": 0,
+            "p50_ms": null,
+            "p95_ms": null
+          }
+        }
+      },
+      "title": "ChannelLatency",
+      "type": "object"
+    },
+    "CriterionReport": {
+      "additionalProperties": false,
+      "description": "Un criterio, con su recuento en cada idioma.",
+      "properties": {
+        "criterion": {
+          "title": "Criterion",
+          "type": "string"
+        },
+        "by_language": {
+          "$ref": "#/$defs/ByLanguage",
+          "default": {
+            "es": {
+              "failed": 0,
+              "not_measured": 0,
+              "passed": 0
+            },
+            "en": {
+              "failed": 0,
+              "not_measured": 0,
+              "passed": 0
+            }
+          }
+        }
+      },
+      "required": [
+        "criterion"
+      ],
+      "title": "CriterionReport",
+      "type": "object"
+    },
+    "JudgmentKind": {
+      "description": "Quien juzgo un criterio de un caso: codigo, el juez o una persona (U21, BR1.1).\n\nHoy todo criterio lo juzga codigo -- el juez y la revision humana llegan con\nel paso 6 de esta unidad -- pero el campo existe desde ahora para que el\nreporte nunca tenga que inventarlo despues.",
+      "enum": [
+        "code",
+        "judge",
+        "human"
+      ],
+      "title": "JudgmentKind",
+      "type": "string"
+    },
+    "LanguageTally": {
+      "additionalProperties": false,
+      "description": "El recuento de un idioma. Nunca se suma con el del otro.",
+      "properties": {
+        "passed": {
+          "default": 0,
+          "title": "Passed",
+          "type": "integer"
+        },
+        "failed": {
+          "default": 0,
+          "title": "Failed",
+          "type": "integer"
+        },
+        "not_measured": {
+          "default": 0,
+          "title": "Not Measured",
+          "type": "integer"
+        }
+      },
+      "title": "LanguageTally",
+      "type": "object"
+    },
+    "LatencySummary": {
+      "additionalProperties": false,
+      "description": "La latencia de un canal en un idioma: cuantos turnos y que percentiles.",
+      "properties": {
+        "turns": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Turns",
+          "type": "integer"
+        },
+        "p50_ms": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "P50 Ms"
+        },
+        "p95_ms": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "P95 Ms"
+        }
+      },
+      "title": "LatencySummary",
+      "type": "object"
+    },
+    "NonComparableCause": {
+      "description": "Por que una corrida no se puede comparar contra la linea base (BR1.5).",
+      "enum": [
+        "provider_unavailable",
+        "provider_timeout",
+        "quota_exhausted",
+        "model_changed",
+        "not_measured_cases"
+      ],
+      "title": "NonComparableCause",
+      "type": "string"
+    },
+    "NotMeasuredCause": {
+      "description": "Por que un caso no se pudo medir. Lista cerrada (OBS-U1.3).",
+      "enum": [
+        "provider_unavailable",
+        "provider_timeout",
+        "quota_exhausted",
+        "budget_exhausted",
+        "runner_timeout",
+        "provider_key_missing",
+        "target_unavailable"
+      ],
+      "title": "NotMeasuredCause",
+      "type": "string"
+    },
+    "RootCause": {
+      "description": "La taxonomia cerrada de causa raiz del PRD 11.3, mas una novena.\n\nCerrada y no una lista abierta: es lo que permite que la seccion \"Como\nfalla\" del README se genere agrupando, en vez de con una redaccion distinta\npor caso (U21, BR1.1).\n\n**`NOT_BUILT` no viene del PRD** (decision de Miguel del 2026-09-27, opcion\nA, durante la revision de U8 tanda 2). Los ocho valores del PRD describen\nlas formas en que falla un sistema **construido**; un caso previo de la rama\nevaluada falla por algo distinto --la conducta que mide todavia no existe--\ny ninguno de los ocho lo dice. Marcarlo `INFRASTRUCTURE` seria justo la\nmezcla que U8 prohibe en su BR3.4: contar como fallo del producto algo que\nno lo es. Y dejarlo vacio rompe BR1.1 y deja sin agrupar, hoy, 42 de 100\ncasos del reporte.",
+      "enum": [
+        "extraction",
+        "retrieval",
+        "verification",
+        "rules",
+        "style",
+        "latency",
+        "provider_error",
+        "infrastructure",
+        "not_built"
+      ],
+      "title": "RootCause",
+      "type": "string"
+    },
+    "RunHeader": {
+      "additionalProperties": false,
+      "description": "Las condiciones bajo las que valen las cifras de esta corrida.",
+      "properties": {
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "commit_sha": {
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "model_ids": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Model Ids",
+          "type": "object"
+        },
+        "prompt_hashes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Prompt Hashes",
+          "type": "object"
+        },
+        "subset": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subset"
+        },
+        "subset_declared": {
+          "default": false,
+          "title": "Subset Declared",
+          "type": "boolean"
+        },
+        "duration_seconds": {
+          "default": 0.0,
+          "title": "Duration Seconds",
+          "type": "number"
+        },
+        "comparable": {
+          "default": true,
+          "title": "Comparable",
+          "type": "boolean"
+        },
+        "non_comparable_cause": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonComparableCause"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "started_at": {
+          "format": "date-time",
+          "title": "Started At",
+          "type": "string"
+        },
+        "finished_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Finished At"
+        },
+        "traces_available": {
+          "default": false,
+          "title": "Traces Available",
+          "type": "boolean"
+        },
+        "baseline_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Baseline Id"
+        }
+      },
+      "required": [
+        "run_id",
+        "commit_sha",
+        "started_at"
+      ],
+      "title": "RunHeader",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "El reporte completo de una corrida.",
+  "properties": {
+    "header": {
+      "$ref": "#/$defs/RunHeader"
+    },
+    "totals": {
+      "$ref": "#/$defs/ByLanguage",
+      "default": {
+        "es": {
+          "failed": 0,
+          "not_measured": 0,
+          "passed": 0
+        },
+        "en": {
+          "failed": 0,
+          "not_measured": 0,
+          "passed": 0
+        }
+      }
+    },
+    "criteria": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/CriterionReport"
+      },
+      "title": "Criteria",
+      "type": "array"
+    },
+    "cases": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/CaseRow"
+      },
+      "title": "Cases",
+      "type": "array"
+    },
+    "latencies": {
+      "additionalProperties": {
+        "$ref": "#/$defs/ChannelLatency"
+      },
+      "propertyNames": {
+        "$ref": "#/$defs/Channel"
+      },
+      "title": "Latencies",
+      "type": "object"
+    }
+  },
+  "required": [
+    "header"
+  ],
+  "title": "EvalReport",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/eval-report.schema.json"
+}

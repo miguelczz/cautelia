@@ -1,0 +1,509 @@
+{
+  "$defs": {
+    "CallConfig": {
+      "additionalProperties": false,
+      "description": "Los tiempos de una llamada de voz de una aseguradora (U16, C-08).\n\nAditivo a C-25, con la misma forma que `ChatConfig`: llega con sus valores por\nomision y sin subir `config_version`, para que una aseguradora que todavia no\nlo declara siga cargando igual.\n\n**Son tres y no cinco.** C-08 declara ademas los carriles por visitante y por\nsitio, y esos **no son de una aseguradora**: \"quince llamadas del sitio\" escrito\nen tres carpetas son cuarenta y cinco, o las que toque leer. Viven en\n`VoiceLimits` (`providers.yaml`), que los declara sin valor por omision a\nproposito, y U17 los aplica desde ahi con `voice.admission.decide`. Los tres de\naqui si son de cada aseguradora: cuanto dura una llamada, cuando se avisa y\ncuanto queda retomable son decisiones de como conversa cada una.",
+      "properties": {
+        "max_call_seconds": {
+          "default": 240,
+          "minimum": 30,
+          "title": "Max Call Seconds",
+          "type": "integer"
+        },
+        "warn_at_seconds": {
+          "default": 45,
+          "minimum": 5,
+          "title": "Warn At Seconds",
+          "type": "integer"
+        },
+        "resume_window_seconds": {
+          "default": 900,
+          "minimum": 60,
+          "title": "Resume Window Seconds",
+          "type": "integer"
+        }
+      },
+      "title": "CallConfig",
+      "type": "object"
+    },
+    "ChatConfig": {
+      "additionalProperties": false,
+      "description": "Los limites del chat publico de una aseguradora (BR3.1, BR3.2 de U13).\n\nEs un agregado **aditivo** a C-25, con la misma forma que `IntakeConfig`:\nllega con sus valores por omision y sin subir `config_version`, para que una\naseguradora que todavia no lo declara siga cargando igual.\n\nLos cinco numeros viven aqui y no en el codigo por la convencion 9 del\nequipo: una diferencia entre aseguradoras metida en una rama del codigo es\nexactamente lo que el proyecto prohibe. Y viven en configuracion versionada\n--no en la base-- porque cambiarlos es una decision que se revisa en un\ndiff, no un valor que alguien ajusta en caliente.\n\n**Ninguno de estos limites sustituye al tope del proveedor** (BR3.3): un\nlimite que vive solo en la aplicacion falla abierto cuando lo que falla es\nla aplicacion.",
+      "properties": {
+        "messages_per_session": {
+          "default": 20,
+          "minimum": 1,
+          "title": "Messages Per Session",
+          "type": "integer"
+        },
+        "messages_per_origin_per_day": {
+          "default": 120,
+          "minimum": 1,
+          "title": "Messages Per Origin Per Day",
+          "type": "integer"
+        },
+        "messages_per_site_per_day": {
+          "default": 600,
+          "minimum": 1,
+          "title": "Messages Per Site Per Day",
+          "type": "integer"
+        },
+        "min_seconds_between_messages": {
+          "default": 1.0,
+          "minimum": 0,
+          "title": "Min Seconds Between Messages",
+          "type": "number"
+        },
+        "max_message_characters": {
+          "default": 2000,
+          "minimum": 1,
+          "title": "Max Message Characters",
+          "type": "integer"
+        }
+      },
+      "title": "ChatConfig",
+      "type": "object"
+    },
+    "IntakeConfig": {
+      "additionalProperties": false,
+      "description": "Cuantos insultos disparan cada paso de la captura, por aseguradora (BR5.4, TECH-U11.5).\n\nEs un agregado **aditivo** a C-25 (U11, misma forma que `TenantBrand`):\nllega con su valor por omision y sin subir `config_version`, para que una\naseguradora que todavia no lo declara en su archivo siga cargando igual.\n\"El numero lo fija la configuracion de cada aseguradora, no el codigo\"\n(AC1.13.3) es justo lo que este bloque hace posible: un numero en el\ncodigo seria la diferencia entre aseguradoras metida en una rama que la\nconvencion 9 del equipo prohibe.",
+      "properties": {
+        "calm_after_insults": {
+          "default": 2,
+          "minimum": 1,
+          "title": "Calm After Insults",
+          "type": "integer"
+        },
+        "close_after_insults": {
+          "default": 3,
+          "minimum": 1,
+          "title": "Close After Insults",
+          "type": "integer"
+        }
+      },
+      "title": "IntakeConfig",
+      "type": "object"
+    },
+    "Monogram": {
+      "description": "La forma geometrica que dibuja la interfaz como marca de una aseguradora.\n\nLa configuracion elige la forma; el codigo no sabe que aseguradora la usa\n(BR1.6, convencion 9 del equipo).",
+      "enum": [
+        "arch",
+        "horizon",
+        "rings"
+      ],
+      "title": "Monogram",
+      "type": "string"
+    },
+    "Role": {
+      "description": "Los roles de la bandeja. Lo que puede hacer cada uno lo decide la tabla\nde permisos, no este valor por si solo (BR2.5).",
+      "enum": [
+        "adjuster",
+        "account_agent",
+        "underwriter"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "SpeechModelChoice": {
+      "additionalProperties": false,
+      "description": "El modelo de transcripcion de una aseguradora (entidad `SpeechModelRef`).\n\n`provider` y `model` son **texto y no un conjunto cerrado**, a proposito: un\nproveedor o un modelo que no existen tienen que apagar la voz de esa\naseguradora con su motivo, y no la aseguradora entera (BR2.2). Si fueran un\nenum, la carpeta no validaria su esquema y el cargador apagaria tambien el\nchat. Quien decide si el valor sirve es la disponibilidad de la voz, en\n`providers/voice_availability.py`.\n\n**Lo que se le pide al reconocedor ademas del audio** (2026-10-13) son dos claves\nopcionales, por idioma de la llamada. Viven aqui y no en `providers.yaml` porque se\nparecen a `mode`: son parametros de transcripcion que escoge cada aseguradora, y porque\ncada una lleva el nombre de la suya y el de su agente en la lista. Son opcionales por\nC-25: una aseguradora que no las declara transcribe como antes.",
+      "properties": {
+        "provider": {
+          "title": "Provider",
+          "type": "string"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "mode": {
+          "$ref": "#/$defs/TranscriptionMode"
+        },
+        "language_codes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "propertyNames": {
+            "enum": [
+              "es",
+              "en"
+            ]
+          },
+          "title": "Language Codes",
+          "type": "object"
+        },
+        "keyterms": {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "propertyNames": {
+            "enum": [
+              "es",
+              "en"
+            ]
+          },
+          "title": "Keyterms",
+          "type": "object"
+        }
+      },
+      "required": [
+        "provider",
+        "model",
+        "mode"
+      ],
+      "title": "SpeechModelChoice",
+      "type": "object"
+    },
+    "StaffPrincipal": {
+      "additionalProperties": false,
+      "description": "Una persona de la bandeja. Las credenciales NO viven aqui (D23).",
+      "properties": {
+        "principal_id": {
+          "pattern": "^[a-z][a-z0-9-]{1,30}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "role": {
+          "$ref": "#/$defs/Role"
+        },
+        "display_name": {
+          "minLength": 1,
+          "title": "Display Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "principal_id",
+        "role",
+        "display_name"
+      ],
+      "title": "StaffPrincipal",
+      "type": "object"
+    },
+    "TenantBrand": {
+      "additionalProperties": false,
+      "description": "La marca minima de una aseguradora: su acento en cada modo y su monograma.\n\nEs un agregado **aditivo** a C-25 (FD-U6-5, CG-U6-4): llega opcional y sin\nsubir `config_version`. El contraste de cada acento contra su texto lo fijo\n`design-system-mapping.md` y lo mide el arnes de accesibilidad; aqui solo se\nimpone la forma.",
+      "properties": {
+        "accent": {
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "title": "Accent",
+          "type": "string"
+        },
+        "accent_on_dark": {
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "title": "Accent On Dark",
+          "type": "string"
+        },
+        "monogram": {
+          "$ref": "#/$defs/Monogram"
+        }
+      },
+      "required": [
+        "accent",
+        "accent_on_dark",
+        "monogram"
+      ],
+      "title": "TenantBrand",
+      "type": "object"
+    },
+    "TenantKind": {
+      "description": "Una agencia deriva siempre a quien emitio la poliza; una aseguradora decide.",
+      "enum": [
+        "carrier",
+        "agency"
+      ],
+      "title": "TenantKind",
+      "type": "string"
+    },
+    "TranscriptionMode": {
+      "description": "Como transcribe el modelo: detectando el idioma o en uno solo (ADR-007).",
+      "enum": [
+        "multi",
+        "monolingual"
+      ],
+      "title": "TranscriptionMode",
+      "type": "string"
+    },
+    "VoiceChoice": {
+      "additionalProperties": false,
+      "description": "Una voz de sintesis, tal como la escribe la configuracion (entidad `VoiceRef`).\n\nTexto y no conjuntos cerrados, por la misma razon que el modelo de\ntranscripcion: un valor desconocido apaga la voz, no la aseguradora (BR2.2).",
+      "properties": {
+        "provider": {
+          "title": "Provider",
+          "type": "string"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "voice_id": {
+          "title": "Voice Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "provider",
+        "model",
+        "voice_id"
+      ],
+      "title": "VoiceChoice",
+      "type": "object"
+    },
+    "VoiceConfig": {
+      "additionalProperties": false,
+      "description": "El bloque de voz. Su significado lo fijan U15 y U16; U2 solo su forma.\n\nDos generaciones de campos conviven aqui, y conviene leerlas asi:\n\n- `primary_voice`, `fallback_voice` y `language_default` son los de C-25.\n  `primary_voice` es **el nombre con el que el proyecto habla de la voz**\n  --Catalina-- y no un identificador que ningun proveedor entienda.\n- `stt`, `primary` y `fallback` los anade U15 (CG-U15-4) y son los que usa la\n  llamada: proveedor, modelo y voz por idioma, principal y de respaldo\n  (BR2.1). Llegan **opcionales**, como pide C-25 para una clave nueva, y sin\n  subir `config_version`. Si falta alguno, la voz de esa aseguradora queda\n  apagada con su motivo del catalogo y el chat sigue (BR2.2).\n\nLo que apaga la voz sin apagar la aseguradora son los **valores**: un\nproveedor, un modelo o una voz que no existen, o un idioma sin voz. Una clave\nmal escrita dentro del bloque sigue la regla de toda la carpeta --no valida\nsu esquema y el cargador la nombra--, igual que cualquier otra clave de este\narchivo.",
+      "properties": {
+        "primary_voice": {
+          "minLength": 1,
+          "title": "Primary Voice",
+          "type": "string"
+        },
+        "fallback_voice": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fallback Voice"
+        },
+        "language_default": {
+          "enum": [
+            "es",
+            "en"
+          ],
+          "title": "Language Default",
+          "type": "string"
+        },
+        "auto_language_detection": {
+          "default": false,
+          "title": "Auto Language Detection",
+          "type": "boolean"
+        },
+        "stt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SpeechModelChoice"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "primary": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/VoicesByLanguage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "fallback": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/VoicesByLanguage"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "primary_voice",
+        "language_default"
+      ],
+      "title": "VoiceConfig",
+      "type": "object"
+    },
+    "VoicesByLanguage": {
+      "additionalProperties": false,
+      "description": "Una voz por idioma. Los dos son opcionales **en la forma** y obligatorios\nen la disponibilidad: si falta uno, la voz de esa aseguradora queda apagada\ncon su motivo (NFR20.3), y el chat sigue.",
+      "properties": {
+        "es": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/VoiceChoice"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "en": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/VoiceChoice"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "VoicesByLanguage",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Una aseguradora, tal como la declara su carpeta versionada (C-25).\n\nAnadir una cuarta es anadir una carpeta: no hay tabla que migrar ni codigo\nque tocar (FR9.3, BR4.3).",
+  "properties": {
+    "config_version": {
+      "default": 1,
+      "minimum": 1,
+      "title": "Config Version",
+      "type": "integer"
+    },
+    "tenant_id": {
+      "pattern": "^[a-z][a-z0-9-]{1,30}$",
+      "title": "Tenant Id",
+      "type": "string"
+    },
+    "display_name": {
+      "minLength": 1,
+      "title": "Display Name",
+      "type": "string"
+    },
+    "kind": {
+      "$ref": "#/$defs/TenantKind"
+    },
+    "default_language": {
+      "enum": [
+        "es",
+        "en"
+      ],
+      "title": "Default Language",
+      "type": "string"
+    },
+    "jurisdiction": {
+      "minLength": 1,
+      "title": "Jurisdiction",
+      "type": "string"
+    },
+    "quote_enabled": {
+      "default": false,
+      "title": "Quote Enabled",
+      "type": "boolean"
+    },
+    "voice_to_chat_continuity": {
+      "default": false,
+      "title": "Voice To Chat Continuity",
+      "type": "boolean"
+    },
+    "example_policy": {
+      "minLength": 1,
+      "title": "Example Policy",
+      "type": "string"
+    },
+    "example_policy_issuer": {
+      "anyOf": [
+        {
+          "pattern": "^[a-z][a-z0-9-]{1,30}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Example Policy Issuer"
+    },
+    "case_number_prefix": {
+      "pattern": "^[A-Z]{3}$",
+      "title": "Case Number Prefix",
+      "type": "string"
+    },
+    "copy_overrides": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Copy Overrides",
+      "type": "array"
+    },
+    "voice": {
+      "$ref": "#/$defs/VoiceConfig"
+    },
+    "staff": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/StaffPrincipal"
+      },
+      "title": "Staff",
+      "type": "array"
+    },
+    "brand": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TenantBrand"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "character_key": {
+      "anyOf": [
+        {
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)+$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Character Key"
+    },
+    "agent_name": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-zÁÉÍÓÚÑáéíóúñ]{2,24}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Agent Name"
+    },
+    "intake": {
+      "$ref": "#/$defs/IntakeConfig"
+    },
+    "chat": {
+      "$ref": "#/$defs/ChatConfig"
+    },
+    "call": {
+      "$ref": "#/$defs/CallConfig"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "display_name",
+    "kind",
+    "default_language",
+    "jurisdiction",
+    "example_policy",
+    "case_number_prefix",
+    "voice"
+  ],
+  "title": "TenantConfig",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/tenant.schema.json"
+}

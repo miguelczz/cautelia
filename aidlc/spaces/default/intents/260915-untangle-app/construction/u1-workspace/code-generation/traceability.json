@@ -1,0 +1,360 @@
+{
+  "stage": "code-generation",
+  "unit": "u1-workspace",
+  "upstream_ids": [
+    "AC4.4.1",
+    "AC4.4.2",
+    "AC4.4.3",
+    "AC4.4.4",
+    "AC4.4.5",
+    "AC4.4.6",
+    "AC4.7.1",
+    "AC4.7.2",
+    "AC4.7.3",
+    "AC4.7.4",
+    "AC4.7.5",
+    "AC5.8.1",
+    "AC5.8.2",
+    "AC5.8.3",
+    "AC5.8.4",
+    "BR1.1",
+    "BR1.2",
+    "BR1.3",
+    "BR1.4",
+    "BR1.5",
+    "BR1.6",
+    "BR1.7",
+    "BR1.8",
+    "BR1.9",
+    "BR1.10",
+    "BR1.11",
+    "BR2.1",
+    "BR2.2",
+    "BR2.3",
+    "BR2.4",
+    "BR3.1",
+    "BR3.2",
+    "BR3.3",
+    "BR3.4",
+    "BR3.5",
+    "BR3.6",
+    "NFR18.1",
+    "NFR18.3",
+    "NFR21.1",
+    "SEC-U1.1",
+    "SEC-U1.2",
+    "SEC-U1.3",
+    "SEC-U1.4",
+    "SEC-U1.5",
+    "REL-U1.1",
+    "REL-U1.2",
+    "REL-U1.3",
+    "REL-U1.4",
+    "REL-U1.5",
+    "OBS-U1.1",
+    "OBS-U1.2",
+    "OBS-U1.3",
+    "OBS-U1.4",
+    "NFR17.1",
+    "NFR21.2"
+  ],
+  "coverage": [
+    {
+      "id": "AC4.4.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/cli.py"
+    },
+    {
+      "id": "AC4.4.2",
+      "status": "OK",
+      "target": "mise.toml"
+    },
+    {
+      "id": "AC4.4.3",
+      "status": "OK",
+      "target": "app/evals/manifest.yaml"
+    },
+    {
+      "id": "AC4.4.4",
+      "status": "OK",
+      "target": "app/evals/subsets/smoke.yaml"
+    },
+    {
+      "id": "AC4.4.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/report.py"
+    },
+    {
+      "id": "AC4.4.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/runner/failures.py"
+    },
+    {
+      "id": "AC4.7.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/scripted_insured.py"
+    },
+    {
+      "id": "AC4.7.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/scripted_insured.py"
+    },
+    {
+      "id": "AC4.7.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/scripted_insured.py"
+    },
+    {
+      "id": "AC4.7.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/test_scripted_insured.py"
+    },
+    {
+      "id": "AC4.7.5",
+      "status": "OK",
+      "target": "app/backend/.importlinter"
+    },
+    {
+      "id": "AC5.8.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/copy_catalog/checks.py"
+    },
+    {
+      "id": "AC5.8.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/copy_catalog/checks.py"
+    },
+    {
+      "id": "AC5.8.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/copy_catalog/checks.py"
+    },
+    {
+      "id": "AC5.8.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/copy_catalog/checks.py"
+    },
+    {
+      "id": "BR1.1",
+      "status": "OK",
+      "target": "mise.toml"
+    },
+    {
+      "id": "BR1.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/env_check.py"
+    },
+    {
+      "id": "BR1.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/report.py"
+    },
+    {
+      "id": "BR1.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/runner/failures.py"
+    },
+    {
+      "id": "BR1.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/runner/runner.py"
+    },
+    {
+      "id": "BR1.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/loading.py"
+    },
+    {
+      "id": "BR1.7",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/loading.py"
+    },
+    {
+      "id": "BR1.8",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/report.py"
+    },
+    {
+      "id": "BR1.9",
+      "status": "OK",
+      "target": "app/evals/manifest.yaml"
+    },
+    {
+      "id": "BR1.10",
+      "status": "N/A",
+      "target": "Del audio se versiona el guion, nunca el audio. U1 no construye ningun camino de audio: DS-5 y su consentimiento llegan con U16. Lo que U1 si deja es el manifiesto que declara DS-5 como no construido con su razon."
+    },
+    {
+      "id": "BR1.11",
+      "status": "OK",
+      "target": "app/backend/.importlinter"
+    },
+    {
+      "id": "BR2.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/scripted_insured.py"
+    },
+    {
+      "id": "BR2.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/scripted_insured.py"
+    },
+    {
+      "id": "BR2.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/scripted_insured.py"
+    },
+    {
+      "id": "BR2.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/test_scripted_insured.py"
+    },
+    {
+      "id": "BR3.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/copy_catalog/checks.py"
+    },
+    {
+      "id": "BR3.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/copy_catalog/checks.py"
+    },
+    {
+      "id": "BR3.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/copy_catalog/checks.py"
+    },
+    {
+      "id": "BR3.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/copy_catalog/models.py"
+    },
+    {
+      "id": "BR3.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/copy_catalog/checks.py"
+    },
+    {
+      "id": "BR3.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/copy_catalog/checks.py"
+    },
+    {
+      "id": "NFR18.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/coverage_gate.py"
+    },
+    {
+      "id": "NFR18.3",
+      "status": "OK",
+      "target": "app/backend/pyproject.toml"
+    },
+    {
+      "id": "NFR21.1",
+      "status": "OK",
+      "target": "mise.toml"
+    },
+    {
+      "id": "SEC-U1.1",
+      "status": "OK",
+      "target": ".github/workflows/verify.yml"
+    },
+    {
+      "id": "SEC-U1.2",
+      "status": "OK",
+      "target": ".env.example"
+    },
+    {
+      "id": "SEC-U1.3",
+      "status": "OK",
+      "target": "app/backend/uv.lock"
+    },
+    {
+      "id": "SEC-U1.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/supply_chain_check.py"
+    },
+    {
+      "id": "SEC-U1.5",
+      "status": "OK",
+      "target": ".github/workflows/verify.yml"
+    },
+    {
+      "id": "REL-U1.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/test_loading.py"
+    },
+    {
+      "id": "REL-U1.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/test_scripted_insured.py"
+    },
+    {
+      "id": "REL-U1.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/test_runner.py"
+    },
+    {
+      "id": "REL-U1.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/test_runner.py"
+    },
+    {
+      "id": "REL-U1.5",
+      "status": "OK",
+      "target": "app/backend/tests/unit/evals/test_runner.py"
+    },
+    {
+      "id": "OBS-U1.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/models.py"
+    },
+    {
+      "id": "OBS-U1.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/models.py"
+    },
+    {
+      "id": "OBS-U1.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/models.py"
+    },
+    {
+      "id": "OBS-U1.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/evals/report.py"
+    },
+    {
+      "id": "NFR17.1",
+      "status": "N/A",
+      "target": "Sub-objetivo de NFR17 definido en `../nfr-requirements/`: U1 **mide** la duracion de la corrida y la publica siempre; la **meta** de 10 minutos la registra U21. Esta etapa construye el corredor que produce el numero, no la meta que lo juzga."
+    },
+    {
+      "id": "NFR21.2",
+      "status": "N/A",
+      "target": "Sub-objetivo de NFR21 definido en `../nfr-requirements/`: la misma secuencia automatizada en la tuberia sobre Linux, que es la fila que alimenta la matriz de `build-and-test` porque produce un numero sin intervencion humana. La mide el trabajo semanal de clon en frio, no esta etapa."
+    }
+  ],
+  "reverse": [
+    {
+      "id": "smoke-subset",
+      "status": "N/A",
+      "target": "app/evals/subsets/smoke.yaml con sus 12 casos de DS-8. Decision CG-2 del plan: la lista nacia vacia y un reporte de cero casos no demuestra nada."
+    },
+    {
+      "id": "no-database-tables",
+      "status": "N/A",
+      "target": "Decision CG-1 del plan: U1 no crea tablas. El registro de la corrida se escribe como archivo en tmp/evals/reports/ --cuelga de tmp/ y no de app/evals/ porque la huella del arbol que el motor del flujo ata a cada recibo de revision no consulta .gitignore pero si salta los directorios llamados tmp, y un reporte regenerado en cada corrida movia esa huella y tumbaba el recibo; la ruta cambio y este registro se quedo atras hasta el 2026-09-29--. Las tablas llegan con U2, que es quien posee el punto unico de sesion y el aislamiento a nivel de fila."
+    },
+    {
+      "id": "module-tree",
+      "status": "N/A",
+      "target": "app/backend/src/untangle/ con los directorios de los quince modulos vacios y sus contratos de importacion. No realiza un criterio propio: es la estructura que hace comprobables las reglas de dependencia de ADR-001."
+    },
+    {
+      "id": "supply-chain-liveness",
+      "status": "N/A",
+      "target": "Chequeo que le pregunta a cada gestor que valor tiene de verdad, en vez de leer el archivo donde se escribio. Nace de un fallo real del 2026-09-20: los dos ajustes de pnpm estaban en .npmrc, pnpm 12 no los leia y no avisaba."
+    }
+  ]
+}

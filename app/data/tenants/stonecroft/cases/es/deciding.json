@@ -1,0 +1,66 @@
+{
+  "case_key": "SEED/stonecroft/es/deciding",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Esquivó una moto y se golpeó contra un poste."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Natalia Londoño Agudelo, póliza POL-897598"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "Sin lesionados"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Carrera 5 con calle 40, Corvane"
+    },
+    "other_parties": {
+      "status": "confirmed",
+      "value": "Ninguno"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Mazda CX-30 2019, placa CEZ496, lo conducía Natalia"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-897598",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "deciding",
+  "tenant_id": "stonecroft",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Hola, soy Natalia Londoño Agudelo. Mi póliza es POL-897598."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Alguien resultó herido?"
+    },
+    {
+      "speaker": "insured",
+      "text": "No, estoy bien."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué pasó?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Esquivé una moto y me golpeé contra un poste. No hubo nadie más."
+    }
+  ],
+  "used_by": [
+    "AC1.16.1"
+  ]
+}

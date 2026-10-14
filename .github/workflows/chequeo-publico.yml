@@ -1,0 +1,54 @@
+# El chequeo diario del sitio publicado.
+#
+# Lee tres datos publicos de https://cautelia.app y **falla** cuando algo esta mal:
+# que el sitio responda, que el reinicio nocturno de la demo este al dia (a las 24
+# horas del ultimo exitoso la demo deja de aceptar casos nuevos) y que el gasto de
+# los proveedores no haya cruzado su alerta ni se haya agotado. Antes esas dos
+# cosas pasaban en silencio: el reinicio fallido no avisaba a nadie y la alerta de
+# gasto solo dejaba un evento en la salida del servidor.
+#
+# **El aviso es el propio fallo del flujo.** GitHub manda un correo cuando un flujo
+# programado falla: le llega a quien edito por ultima vez la linea del `cron` (aqui,
+# Miguel), siempre que tenga activadas las notificaciones de Actions por correo. No
+# hay servicio nuevo, ni costo fijo, ni un correo que configurar.
+#
+# **No bloquea la entrega** y no toca el sitio: solo hace `GET`. Es una medicion de
+# lo que esta publicado, no una compuerta de lo que se sube; la compuerta es
+# `verify.yml`.
+#
+# Corre en un servidor de GitHub y no en la Mac de Miguel porque tiene que
+# funcionar justo cuando la Mac esta apagada o dormida, que es cuando un reinicio
+# nocturno fallido pasaria inadvertido. Gasta cerca de un minuto al dia, casi todo
+# esperando a que despierte la instancia.
+#
+# 12:30 UTC son las 7:30 de Bogota, despues del reinicio de las 3:00.
+
+name: chequeo-publico
+
+on:
+  schedule:
+    - cron: "30 12 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  chequeo:
+    name: salud, reinicio y gasto del sitio publicado
+    runs-on: ubuntu-latest
+    # Cerca de un minuto en la practica; el techo es lo bastante bajo para que un
+    # sitio que no despierta no se coma los minutos del plan.
+    timeout-minutes: 3
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # **Sin instalar el toolchain**, a proposito. El guion usa solo la biblioteca
+      # estandar y corre con el `python3` que ya trae el servidor; instalar `mise`,
+      # Python, uv y pnpm para ejecutarlo gastaria mas minutos que el propio chequeo.
+      # La tarea `mise run ops:check` y este paso corren el mismo archivo.
+      - name: leer el sitio publicado
+        run: python3 scripts/chequeo_publico.py

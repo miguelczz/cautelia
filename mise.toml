@@ -1,0 +1,1156 @@
+# Herramientas y tareas del proyecto.
+#
+# Este archivo es el contrato entre lo que corre una persona en su maquina y lo
+# que corre el flujo de GitHub Actions (convencion 10 del equipo): toda accion
+# tiene un nombre aqui, y la tuberia invoca estos comandos en lugar de mantener
+# su propia lista de pasos.
+#
+# Las versiones estan ancladas exactas a proposito: una version que se mueve
+# sola cambia el tiempo de arranque entre maquinas sin que nadie tocara el
+# proyecto (NFR21).
+
+[tools]
+python = "3.13.15"
+uv = "0.12.16"
+node = "24.21.0"
+pnpm = "12.4.2"
+# El escaneo de secretos se ancla como cualquier otra herramienta: es el primer
+# trabajo del flujo y hoy el unico escaneo del proyecto, asi que su version no
+# puede depender de lo que cada maquina tenga instalado.
+gitleaks = "8.30.1"
+
+[env]
+# El prefijo unico del aplicativo. Toda herramienta declara su alcance como este
+# prefijo, nunca como una lista de exclusiones (convencion 1 del equipo).
+UNTANGLE_APP_PREFIX = "app"
+
+[settings]
+# Espera de versiones recien publicadas: una version publicada hace menos de tres
+# dias no se instala (SEC-U1.4). La ventana cubre las primeras horas, que es
+# cuando vive el ataque tipico de cadena de suministro, sin convertir cada
+# actualizacion en una espera que empuje a saltarse la regla.
+minimum_release_age = "3 days"
+
+# --- Arranque -----------------------------------------------------------------
+
+[tasks.bootstrap]
+description = "Del clon al reporte: herramientas, dependencias y subconjunto de arranque"
+# Tres pasos, no cinco: U1 no crea tablas (decision CG-1), asi que el camino de
+# arranque no necesita la base de datos. `services:up` sigue existiendo como
+# tarea propia para las unidades que si la necesitan.
+run = [
+  "mise install",
+  "mise run deps:install",
+  "mise run evals:run -- --subset smoke",
+]
+
+[tasks."deps:install"]
+description = "Instala las dependencias de los dos proyectos en modo reproducible"
+# Modo reproducible en los dos: falla si el lockfile no coincide, nunca una
+# resolucion libre (SEC-U1.3).
+#
+# **No instala los modelos de lenguaje de U3**, y eso es deliberado: viven en un
+# extra, y `--all-groups` no incluye extras. Este es el segundo paso de
+# `bootstrap`, o sea el camino del clon al reporte que mide NFR21, y ahi es justo
+# donde no queremos 72 MB de descarga (INF-U3-2).
+#
+# **Lo que sorprende no es que no los instale: es que los quita.** El modo
+# reproducible reconcilia el entorno con el lockfile, y los modelos no estan en el
+# lockfile --se instalan por URL--, asi que una corrida de esta tarea sobre un
+# entorno que ya los tenia los desinstala. Lo que se ve despues son decenas de
+# pruebas rojas con `ModelsMissingError`, que parecen codigo roto y no lo son.
+# Se arregla con `mise run models:install`. Medido el 2026-09-30, al subir `pyjwt`.
+run = [
+  "uv sync --locked --project app/backend --all-groups",
+  "pnpm --dir app/frontend install --frozen-lockfile",
+]
+
+[tasks."models:install"]
+description = "Instala los dos modelos de spaCy que necesita la redaccion (U3)"
+# Fijados por URL con su hash en el lockfile, como cualquier otra dependencia, y
+# **nunca** con `spacy download`, que es la resolucion libre que la practica del
+# equipo prohibe (INF-U3-1). `--locked` falla si la rueda cambia.
+run = "uv sync --locked --project app/backend --extra models"
+
+# --- Calidad ------------------------------------------------------------------
+
+[tasks.fmt]
+description = "Formatea los dos proyectos"
+run = [
+  "uv run --project app/backend ruff format app/backend",
+  "pnpm --dir app/frontend exec prettier --write .",
+]
+
+[tasks."fmt:check"]
+description = "Comprueba el formato sin escribir"
+run = [
+  "uv run --project app/backend ruff format --check app/backend",
+  "pnpm --dir app/frontend exec prettier --check .",
+]
+
+[tasks.lint]
+description = "Linters con sus reglas de seguridad activadas, y los contratos de importacion"
+run = [
+  "uv run --project app/backend ruff check app/backend",
+  "uv run --project app/backend lint-imports --config app/backend/.importlinter --cache-dir tmp/import-linter",
+  "pnpm --dir app/frontend exec eslint .",
+]
+
+[tasks.types]
+description = "Comprobador de tipos de los dos proyectos"
+run = [
+  "uv run --project app/backend mypy --config-file app/backend/pyproject.toml",
+  "pnpm --dir app/frontend exec tsc --noEmit",
+]
+
+# --- Pruebas ------------------------------------------------------------------
+
+[tasks.test]
+description = "Todas las pruebas de los dos proyectos"
+# `-c` dice donde esta la configuracion **explicitamente**. Sin ella, pytest
+# busca el archivo hacia arriba desde el directorio donde se invoca, no lo
+# encuentra en la raiz del repositorio y corre con sus valores por defecto: el
+# modo asincrono se apaga y toda prueba `async` falla con "no soportada". Es un
+# fallo que solo aparece cuando la primera prueba asincrona existe, que fue U2.
+run = [
+  "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests",
+  "pnpm --dir app/frontend exec vitest run",
+]
+
+[tasks."test:u1"]
+description = "Solo las pruebas de la unidad U1 (encadena los dos comandos acotados)"
+run = [
+  "uv run --project app/backend pytest app/backend/tests/unit/server app/backend/tests/unit/copy_catalog app/backend/tests/unit/evals app/backend/tests/integration/u1 -q",
+  "pnpm --dir app/frontend exec vitest run src/shared/copy",
+]
+
+[tasks."test:u2"]
+description = "Solo las pruebas de la unidad U2 (aislamiento, identidad y enlaces)"
+# Levanta **una sola** base efimera para toda la corrida, con la imagen anclada
+# por huella del entorno local y el rol del aplicativo. Con el superusuario, esta
+# suite pasaria sin que exista aislamiento (BR1.7).
+run = "uv run --project app/backend pytest app/backend/tests/unit/tenancy app/backend/tests/integration/u2 -q"
+
+[tasks."test:u3"]
+description = "Solo las pruebas de la unidad U3 (redaccion de datos personales)"
+# Necesita los dos modelos instalados: lo que se prueba es que detecta el
+# detector, y un doble no detecta nada. Si faltan, el cargador falla
+# nombrandolos y nombrando `mise run models:install`, no con un ImportError de
+# spaCy a mitad de la corrida.
+#
+# **No entra en el guion de verificacion**, igual que `test:u1` y `test:u2`: la
+# compuerta ya corre estas mismas pruebas en su paso 5, con `mise run cov`.
+# Meterlo tambien en el paso 6 las correria dos veces.
+run = "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit/redaction app/backend/tests/integration/u3 -q"
+
+[tasks."test:u6"]
+description = "Solo las pruebas de la unidad U6 (servidor y componentes de la interfaz)"
+# Dos comandos acotados, uno por proyecto, en las rutas que fija
+# `unit-test-instructions.md`: la parte servida y la activacion en el servidor,
+# y los componentes en la interfaz. Las de integracion levantan la base efimera
+# de la suite, igual que U2, U4 y U5.
+#
+# No entra en el guion de verificacion, igual que `test:u1` a `test:u5`: el paso
+# 5 ya corre la suite entera con `mise run cov`.
+run = [
+  "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit/web app/backend/tests/unit/activation app/backend/tests/integration/u6",
+  "pnpm --dir app/frontend exec vitest run src/app src/pages src/shared/theme src/shared/i18n src/shared/api-client src/shared/ui",
+]
+
+[tasks."test:u17"]
+description = "Solo las pruebas de la unidad U17 (los dos carriles, la retoma, los topes del proveedor y la consola publica; incluye PERF-U17.1)"
+# La tanda 1 es toda sin base: la decision es pura y la consola se prueba con la
+# disponibilidad declarada. La tanda 2 (los contadores y el cableado) suma aqui su
+# carpeta de integracion, que si exige el motor de contenedores.
+#
+# No entra en el guion de verificacion: el paso 5 ya corre la suite entera.
+run = [
+  "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit/voice/test_admission.py app/backend/tests/unit/providers/test_config.py app/backend/tests/unit/telemetry/test_quota.py app/backend/tests/integration/u17 -q",
+  "pnpm --dir app/frontend exec vitest run src/pages/voice",
+]
+
+[tasks."test:u22"]
+description = "Solo las pruebas de la unidad U22 (las cinco cifras, el panel de gasto, el README generado y el resumen de la ultima corrida; incluye PERF-U22.1 y PERF-U22.2)"
+# Las cinco cifras se prueban sin base (la linea base se siembra escribiendo su
+# archivo); **el panel de gasto si la necesita**: `tests/integration/u22` levanta la
+# base efimera, asi que este comando exige el motor de contenedores. El README
+# generado (tanda 3) tampoco la necesita.
+#
+# No entra en el guion de verificacion, igual que `test:u1` a `test:u6`: el paso 5
+# ya corre la suite entera con `mise run cov`.
+run = [
+  "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit/evals/evidence app/backend/tests/unit/workspace/test_readme_check.py app/backend/tests/unit/evals/gates/test_digest.py app/backend/tests/unit/evals/gates/test_baseline_cli.py app/backend/tests/unit/web/test_metrics_route.py app/backend/tests/unit/web/test_spend_routes.py app/backend/tests/integration/u22 -q",
+  "pnpm --dir app/frontend exec vitest run src/pages/evidence src/pages/spend src/app/visitable-routes.test.ts",
+]
+
+[tasks."web:build"]
+description = "Compila la interfaz a estaticos en app/frontend/dist (los sirve el proceso, CG-U6-5)"
+run = "pnpm --dir app/frontend exec vite build"
+
+[tasks."browsers:install"]
+description = "Instala los tres navegadores del arnes de accesibilidad (una vez por maquina)"
+# Tarea propia y **fuera** de `bootstrap` a proposito (NFR21.3): son cientos de
+# megas, y el camino del clon al reporte no los necesita, igual que no necesita
+# los modelos de lenguaje de U3. En la tuberia de Linux se le pasa `--with-deps`
+# para que traiga tambien las bibliotecas del sistema.
+run = "pnpm --dir app/frontend exec playwright install chromium firefox webkit"
+
+[tasks.smoke]
+description = "Prueba de humo de la bandeja contra el aplicativo que ya esta corriendo"
+# Apunta a `UNTANGLE_SMOKE_URL` --por omision el `mise run dev` local-- y recorre la
+# bandeja con los datos sembrados. Responde una pregunta que ninguna otra prueba
+# responde: *lo que esta corriendo en esta maquina, ahora, con esta base, sirve?* Es la
+# que encuentra la clave que falta, el puerto equivocado y la migracion sin subir.
+#
+# **De solo lectura por omision.** Decidir un caso lo cierra y no vuelve a derivado:
+# con `UNTANGLE_SMOKE_DECIDE=1` tambien decide uno y comprueba que sale de la cola.
+#
+# No entra en el guion de verificacion: la compuerta no puede depender de que alguien
+# tenga un servidor arriba.
+run = "pnpm --dir app/frontend exec playwright test --config e2e/smoke.config.ts"
+
+[tasks.a11y]
+description = "Arnes de accesibilidad y escenarios de tiempo contra el proceso real (F9)"
+# Tres pasos y en este orden. Primero la completitud del registro de pantallas
+# (BR7.1): una ruta del enrutador sin registrar falla aqui, nombrandola, antes de
+# gastar un minuto en navegadores. Despues compila: el arnes mide la interfaz que
+# se sirve, no la de desarrollo. Y por ultimo el arnes, contra el proceso real
+# sobre una base efimera propia (`scripts/servidor-del-arnes.py`), como la suite.
+#
+# Necesita los navegadores (`mise run browsers:install`) y el motor de
+# contenedores, igual que `mise run test`.
+#
+# **Un motor en local, tres en la tuberia** (decision de Miguel, 2026-09-29). En
+# local corre Chromium, que ejecuta **todas** las pruebas: 79 en 39 s. En la tuberia
+# se suman Firefox y WebKit con las de dibujo, que es lo que comprueba que cada
+# pantalla se ve igual fuera de Chromium: 109. Lo que se pierde en local se sigue
+# comprobando en cada entrega, que es donde bloquea; lo que se gana es que el arnes
+# deje de ser varios minutos de tres navegadores reales en un portatil.
+run = [
+  "pnpm --dir app/frontend exec vitest run src/app/visitable-routes.test.ts",
+  "mise run web:build",
+  "pnpm --dir app/frontend exec playwright test --config e2e/playwright.config.ts",
+]
+
+[tasks.cov]
+description = "Cobertura agregada de los dos proyectos contra el piso del 80 %"
+# Un solo numero ponderado por lineas, no un promedio de porcentajes: un proyecto
+# de 200 lineas no puede pesar lo mismo que uno de 20.000 (NFR18.1).
+#
+# `--cov-config` dice donde esta la configuracion de cobertura **explicitamente**.
+# Sin ella, la herramienta la busca en el directorio desde el que se invoca, no
+# la encuentra en la raiz del repositorio y mide con sus valores por defecto: el
+# alcance declarado y la lista de exclusion se ignoran, los archivos de prueba
+# entran en el calculo --y estan cubiertos al 100 % por definicion-- y el
+# porcentaje sale inflado. Un piso medido asi no es un piso.
+run = [
+  "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests --cov --cov-config=app/backend/pyproject.toml --cov-report=xml:app/backend/coverage/coverage.xml --cov-report=term-missing",
+  "pnpm --dir app/frontend exec vitest run --coverage",
+  "uv run --project app/backend python -m untangle.workspace.coverage_gate",
+]
+
+# --- Evaluaciones -------------------------------------------------------------
+
+[tasks."evals:run"]
+description = "Corre las evaluaciones y escribe el reporte (el comando unico de BR1.1)"
+run = "uv run --project app/backend python -m untangle.evals.cli"
+
+[tasks."evals:entender"]
+description = "Evalua la comprension de un mensaje contra Claude Haiku (a mano y por hito, ~0,02 USD)"
+# Fase 0 de docs/propuesta-2026-10/03-propuesta-y-diseno.md (2026-10-07). Usa la
+# clave UNTANGLE_ANTHROPIC_API_KEY_EVALS, separada de la del chat, y pasa por el
+# techo y el registro de gasto. **No corre en GitHub Actions**: llama a un modelo
+# de pago. **Sobre el libro de gasto de la base del proyecto** (2026-10-13), como
+# todo lo que llama a un proveedor: hasta entonces corria sobre una base desechable
+# y sus 33 corridas del 7 al 13 de octubre gastaron unos 0,24 USD que no quedaron en
+# ningun libro ni contaron contra el techo. Necesita la base levantada
+# (`mise run services:up`); sin ella no llama a nadie y dice que falta. La parada
+# real, ademas del techo, es el saldo prepagado de Anthropic, sin recarga.
+run = "uv run --env-file .env --project app/backend python -m untangle.server.understanding_cli --subset entender"
+
+[tasks."evals:citas"]
+description = "Evalua las citas de DS-3 contra Claude Haiku y el corpus (a mano y por hito, centavos)"
+# Fase 1 de docs/propuesta-2026-10/03-propuesta-y-diseno.md (2026-10-08): recupera,
+# propone las citas con Claude y las verifica, igual que el chat. **Sobre la base del
+# proyecto**, que es la que tiene el corpus cargado (`mise run corpus:ingest`); una
+# efimera esta vacia. Necesita las claves de embeddings (`corpus`) y de Claude para
+# evaluaciones. No corre en GitHub Actions.
+run = "uv run --env-file .env --project app/backend python -m untangle.server.understanding_cli --subset citas"
+
+[tasks."evals:conversaciones"]
+description = "Solo las conversaciones del chat contra Claude, leyendo lo que la agente dijo (a mano, centavos)"
+# Arma la aplicacion igual que `evals:completa` y corre los casos con `channel: chat`
+# de `app/evals/subsets/conversaciones.yaml`. Para ver una conversacion real tras
+# cambiar un prompt o una regla del chat sin pagar la corrida completa. No escribe
+# `app/evals/last-run.json`. No corre en GitHub Actions: llama a un modelo de pago.
+run = "uv run --env-file .env --project app/backend python -m untangle.server.understanding_cli --subset conversaciones"
+
+[tasks."evals:completa"]
+description = "La corrida completa contra Claude y el corpus; deja su resumen versionado (centavos, a mano y por hito)"
+# La unica corrida que arma la aplicacion con el modelo: comprension, citas y las
+# conversaciones del chat de punta a punta. Escribe el reporte en `tmp/` y **el
+# resumen en `app/evals/last-run.json`**, en verde o en rojo, que es lo que lee el
+# tablero "Que tan bien funciona" (2026-10-11). Sobre la base del proyecto, que es
+# la que tiene el corpus. No corre en GitHub Actions: llama a un modelo de pago, y
+# el gasto lo decide Miguel.
+run = "uv run --env-file .env --project app/backend python -m untangle.server.understanding_cli --subset completa"
+
+[tasks."evals:gate"]
+description = "Corre, compara contra la linea base y decide si la entrega pasa (U21, BR5.1)"
+# El comando que cierra la compuerta: corre las evaluaciones, compara contra
+# `app/evals/baselines/current.json`, aplica los inestables y las
+# explicaciones de regresion, y devuelve codigo distinto de cero en rojo. Sin
+# linea base vigente, corre y publica sin comparar (FD-U21-5).
+run = "uv run --project app/backend python -m untangle.evals.gates.gate_cli"
+
+[tasks."evals:baseline"]
+description = "Publica la corrida completa como linea base vigente (U21, BR2.1)"
+# Se niega a publicar si la corrida no esta en verde o no es comparable,
+# nombrando el caso (BR2.1). Siempre corre la corrida completa: no acepta
+# `--subset`.
+#
+# **Sin el modelo no mide las conversaciones del chat, y con ellas su latencia**: esta tarea no
+# arma la aplicacion. Para que la linea base las traiga, se corre `mise run evals:completa` (que
+# gasta centavos y deja su reporte en `tmp/evals/reports/`) y despues se publica ese reporte sin
+# volver a gastar: `mise run evals:baseline -- --report tmp/evals/reports/<corrida>.json`.
+run = "uv run --project app/backend python -m untangle.evals.gates.baseline_cli"
+
+[tasks."evals:label"]
+description = "Etiquetado humano de DS-7: muestra un turno con su criterio (U21, FD-U21-3)"
+# Se puede dejar a medias: guarda cada etiqueta apenas se confirma. Necesita
+# que Miguel haya llenado la cola en `app/evals/labels/queue.yaml`; con la
+# cola vacia, no hace nada.
+run = "uv run --project app/backend python -m untangle.evals.gates.label_cli"
+
+[tasks."evals:label:queue"]
+description = "Arma la cola de etiquetado de DS-7 con las transcripciones de una corrida ya hecha (sin gasto)"
+# Lee `tmp/evals/transcripts/` --lo deja `mise run evals:conversaciones` o `evals:completa`,
+# ya redactado-- y escribe `app/evals/labels/queue.yaml`, que lee `evals:label`. No llama
+# a ningun modelo. Se puede correr otra vez: nunca toca lo etiquetado, solo agrega lo que
+# falta para llegar a 20 por idioma. Opciones: --run <id>, --per-language <n>, --dry-run.
+run = "uv run --project app/backend python -m untangle.evals.gates.label_queue_cli"
+
+[tasks."evals:calibrate"]
+description = "TPR y TNR del juez contra DS-7, con el limite de Wilson (U21, BR3.1)"
+# Nunca llama al juez de verdad: lee las etiquetas humanas y los veredictos ya
+# grabados para el modelo y la rubrica exactos que se le pasan. La corrida
+# real que produce esos veredictos necesita la clave del proveedor y vive en
+# la sesion local (CG-U21-4): mise run evals:calibrate --
+# --judge-model <id> --rubric-version <version>
+run = "uv run --project app/backend python -m untangle.evals.gates.calibrate_cli"
+
+# --- Contratos generados ------------------------------------------------------
+
+[tasks."contracts:gen"]
+description = "Genera los JSON Schema, el esquema OpenAPI, el cliente de TypeScript y el modulo tipado de claves"
+# Tres comandos y en este orden (C-28): los JSON Schema y el modulo de claves;
+# el esquema OpenAPI, que sale de construir la aplicacion y por eso vive en
+# `server/` y no junto a los demas (el contrato de capas no deja a `workspace`
+# importar la raiz de composicion); y el cliente de TypeScript, que se genera
+# **desde** ese esquema con el generador en version exacta.
+run = [
+  "uv run --project app/backend python -m untangle.workspace.generate_contracts",
+  "uv run --project app/backend python -m untangle.server.openapi_export",
+  "pnpm --dir app/frontend exec openapi-ts",
+]
+
+[tasks."contracts:check"]
+description = "Falla si un contrato generado quedo sin regenerar (deriva, C-28)"
+# Dos preguntas y no una. `git diff` ve un archivo generado que cambio, pero no
+# uno **nuevo**: si una regeneracion produce un archivo que el commit no trae,
+# queda sin seguimiento y el diff sigue vacio. La segunda linea pregunta por
+# eso, en las mismas rutas.
+run = [
+  "mise run contracts:gen",
+  "git diff --exit-code -- app/contracts app/frontend/src/shared/copy app/frontend/src/shared/api",
+  "test -z \"$(git status --porcelain --untracked-files=all -- app/contracts app/frontend/src/shared/copy app/frontend/src/shared/api)\"",
+]
+
+# --- Chequeos de contenido ----------------------------------------------------
+
+[tasks."copy:check"]
+description = "Los seis chequeos del catalogo de textos (BR3.1 a BR3.6)"
+run = "uv run --project app/backend python -m untangle.copy_catalog.checks"
+
+[tasks."content:check"]
+description = "Frases prohibidas y texto de clausula ajena sobre lo que se publica"
+run = "uv run --project app/backend python -m untangle.evals.content_checks"
+
+[tasks."schema:check"]
+description = "Valida los archivos versionados contra sus JSON Schema"
+run = "uv run --project app/backend python -m untangle.workspace.schema_check"
+
+[tasks."env:check"]
+description = "Compara .env.example contra las variables que el codigo lee, en las dos direcciones"
+run = "uv run --project app/backend python -m untangle.workspace.env_check"
+
+[tasks."rls:check"]
+description = "Pregunta al catalogo vivo que tablas hay y al rol vivo que puede hacer"
+# Le pregunta al motor, no a un archivo. Una lista de tablas escrita a mano solo
+# cubre las que alguien se acordo de anadir, y la que nadie anadio pasa la
+# compuerta en verde sin estar aislada (SEC-U2.1, SEC-U2.4).
+run = "uv run --project app/backend python -m untangle.tenancy.cli rls-check"
+
+[tasks."migrate:check"]
+description = "Sube, baja y vuelve a subir las migraciones contra una base efimera propia"
+# La suya propia y no la de la suite: necesita una base virgen para que el
+# `downgrade` tenga algo que demostrar. Falla ante dos cabezas y ante una
+# revision que cree una tabla sin su aislamiento (SEC-U2.12, BR1.11).
+run = "uv run --project app/backend python -m untangle.tenancy.cli migrate-check"
+
+[tasks."tenancy:credential"]
+description = "Emite una credencial de bandeja a la salida estandar: mise run tenancy:credential -- --tenant <id> --principal <id>"
+# A la salida estandar y **nunca** a un archivo del repositorio: una credencial
+# en un archivo es una credencial publicada, y de ahi no se vuelve borrandola
+# (BR2.6, D23). Es para Miguel, el despliegue local y las pruebas; los visitantes
+# entran con el enlace firmado de su propio caso.
+#
+# **Con `--env-file .env`**, como sus tareas hermanas. Sin el, la clave de firma que
+# vive en `.env` no llega al proceso y el comando falla pidiendo una variable que ya
+# estaba puesta --el fallo mas confuso que hay, porque manda a mirar donde no es--. Lo
+# encontro Miguel el 2026-09-29 al emitir su primera credencial.
+run = "uv run --env-file .env --project app/backend python -m untangle.tenancy.cli issue-credential"
+
+[tasks."tenancy:case-link"]
+description = "Emite el enlace de un caso a la salida estandar: mise run tenancy:case-link -- --tenant <id> --case <id>"
+# A la salida estandar y **nunca** a un archivo, por la misma razon que la
+# credencial: el token se emite una sola vez y de la fila queda solo su resumen.
+# Imprime la direccion entera con el token en el **fragmento**, que el navegador
+# nunca manda al servidor (C-07, BR5.6).
+#
+# Existe porque nada lo emite todavia en produccion --el enlace que el chat
+# entrega al cerrar es de U13 y U17--, y sin el la pantalla del visitante no se
+# puede abrir con las manos. Es para Miguel, el despliegue local y las pruebas.
+run = "uv run --env-file .env --project app/backend python -m untangle.tenancy.cli issue-case-link"
+
+[tasks."demo:ajustador"]
+description = "Un siniestro listo para hacer de ajustador en la demo local, con su enlace de una hora: mise run demo:ajustador [-- --tenant <id>]"
+# Busca uno que admita anotaciones (derivado o esperando al asegurado), prefiere los del
+# visitante a los del generador, y escribe la direccion entera a la salida estandar, nunca a
+# un archivo, igual que `tenancy:case-link`. Lo que se anote o decida sobre un caso del
+# generador lo deshace el siguiente reinicio.
+run = "uv run --env-file .env --project app/backend python -m untangle.server.demo_adjuster_link"
+
+[tasks."tenancy:literals"]
+description = "Busca identificadores de aseguradora literales fuera del cargador y las fixtures"
+# Es una busqueda sobre el codigo: no necesita base de datos. Una rama por
+# aseguradora dentro del codigo de decision es la forma en que una diferencia de
+# configuracion se convierte en una diferencia de comportamiento que nadie puede
+# auditar (SEC-U2.14, BR4.2).
+run = "uv run --project app/backend python -m untangle.workspace.tenancy_literals"
+
+[tasks."redaction:constructor"]
+description = "Quien produce el tipo redactado, y quien guarda un valor junto a su etiqueta"
+# Analisis del arbol sintactico, sin base de datos y sin modelos. Falla ante las
+# **tres** formas de producir el tipo fuera de su archivo --el constructor,
+# `cast` y una anotacion con `type: ignore`-- y ante cualquier estructura que
+# relacione un hallazgo con su valor original (BR1.6, BR1.8).
+run = "uv run --project app/backend python -m untangle.workspace.redaction_constructor"
+
+[tasks."test:u4"]
+description = "Las pruebas del registro del caso"
+# La rama determinista de U4 entera: esquema, numeracion, cifrado, reglas,
+# campos, partes, transcripcion, persistencia y borrado.
+run = "uv run --project app/backend python -m pytest app/backend/tests/unit/case_record app/backend/tests/integration/u4"
+
+[tasks."test:u5"]
+description = "Las pruebas de la plataforma de proveedores, el gasto y las trazas"
+# Acotado a las rutas de esta unidad, **nunca** un comando de proyecto entero:
+# `build-and-test` corre el de cada unidad, y uno sin acotar volveria a correr la
+# suite completa una vez por unidad.
+#
+# No entra en el guion de verificacion, igual que `test:u1` a `test:u4`: el paso
+# 5 ya corre la suite entera con `mise run cov`, y meterlo tambien en el paso 6
+# la correria dos veces.
+run = "uv run --project app/backend python -m pytest app/backend/tests/unit/providers app/backend/tests/unit/telemetry app/backend/tests/integration/u5"
+
+[tasks."test:u10"]
+description = "Solo las pruebas de la unidad U10 (controles de cumplimiento)"
+# El comando exacto de `unit-test-instructions.md`, acotado a las dos rutas de la
+# unidad. Las de integracion levantan la base efimera de la suite, igual que U2,
+# U4, U5 y U6, y crean sus casos con la API de U4; las que anexan un turno lo
+# redactan antes, asi que necesitan los modelos (`mise run models:install`).
+#
+# No entra en el guion de verificacion, igual que `test:u1` a `test:u6`: el paso
+# 5 ya corre la suite entera con `mise run cov`, y meterlo tambien en el paso 6
+# la correria dos veces.
+run = "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit/compliance app/backend/tests/integration/u10"
+
+[tasks."test:u9"]
+description = "Solo las pruebas de la unidad U9 (motor de reglas y decision)"
+# Las de integracion levantan la base efimera de la suite, igual que U2, U4,
+# U5, U6 y U10: la tabla `rule_evaluation` y su llave compuesta hacia el caso
+# se prueban contra PostgreSQL de verdad, no contra un simulador.
+#
+# No entra en el guion de verificacion, igual que las demas `test:uN`: el paso
+# 5 ya corre la suite entera con `mise run cov`, y meterlo tambien en el paso 6
+# la correria dos veces.
+run = "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit/rules app/backend/tests/integration/u9"
+
+[tasks."test:u19"]
+description = "Solo las pruebas de la unidad U19 (cotizacion: solicitud, elegibilidad, bandeja del suscriptor y DS-4)"
+# Incluye el presupuesto cronometrado de PERF-U19.1 (p95 de 20 ms para evaluar la
+# elegibilidad) y las pruebas de forma de DS-4. Los dos casos de canal de DS-4 piden la
+# clave del proveedor y aqui solo se validan de forma.
+#
+# **La tanda 2 necesita motor de contenedores.** La 1 era dato y logica pura y corria sin
+# base; la bandeja del suscriptor se prueba contra la base efimera, porque lo que comprueba
+# --el filtro del servidor y el aislamiento entre aseguradoras-- no existe fuera de la
+# consulta. Sin motor, esas pruebas dan error de `docker` y las de la tanda 1 siguen pasando.
+#
+# No entra en el guion de verificacion, igual que las demas `test:uN`: el paso 5 ya corre la
+# suite entera con `mise run cov`, y meterlo tambien en el paso 6 las correria dos veces.
+run = "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit/rules/test_eligibility.py app/backend/tests/unit/intake/test_quote_capture.py app/backend/tests/unit/orchestration/test_quote_reply.py app/backend/tests/unit/orchestration/test_case_context_readback.py app/backend/tests/unit/chat/test_case_opening.py app/backend/tests/unit/evals/test_ds4_quote.py app/backend/tests/unit/inbox app/backend/tests/unit/case_record app/backend/tests/integration/u19"
+
+[tasks."test:u23"]
+description = "Solo las pruebas de la unidad U23 (la vista de comparacion y su costura)"
+# La pantalla y su estado son del frontend (`vitest`); la costura --la superficie, la
+# divulgacion registrada, el corte de fuera de proposito y el idioma-- necesita la base
+# efimera, asi que esta tarea pide motor de contenedores.
+#
+# No entra en el guion de verificacion, igual que las demas `test:uN`: el paso 5 ya corre
+# la suite entera con `mise run cov`.
+run = "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/integration/u23"
+
+[tasks."test:u21"]
+description = "Solo las pruebas de la unidad U21 (memoria entre corridas y compuerta)"
+# Acotado a `evals/gates/`: la rama evaluada de esta unidad no inventa un caso
+# de golden set (`project.md`, decision de Units Generation); su caso previo es
+# `mise run evals:run -- --subset smoke`, que ya corre en `test:u1`.
+#
+# No entra en el guion de verificacion, igual que las demas `test:uN`: el paso
+# 5 ya corre la suite entera con `mise run cov`.
+run = "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit/evals/gates -q"
+
+[tasks."test:u15"]
+description = "Solo las pruebas de la unidad U15 (proveedores de voz), sin red"
+# Corre contra las respuestas grabadas y **no abre ninguna conexion**: una
+# guardia en el `conftest.py` de la carpeta hace fallar la prueba que lo intente
+# (BR6.1). Por eso puede correr en cada entrega sin gastar saldo.
+#
+# No entra en el guion de verificacion, igual que las demas `test:uN`: el paso 5
+# ya corre la suite entera con `mise run cov`.
+run = "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit/voice_providers"
+
+# --- Datos sinteticos (U7) ----------------------------------------------------
+
+[tasks."test:u7"]
+description = "Solo las pruebas de la unidad U7 (generador de datos sinteticos), sin red"
+# **No llama a ningun proveedor**: la redaccion se prueba con el doble de la
+# fabrica de U5, y una guardia en el `conftest.py` de la carpeta hace fallar la
+# prueba que intente abrir una conexion. Las de integracion de la siembra levantan
+# la base efimera de la suite, igual que U2 y U4, y cada una siembra dentro de su
+# propia transaccion y la revierte al terminar (BR6.4).
+#
+# Necesita los modelos de U3 (`mise run models:install`): la prueba de NFR11.10
+# pasa cada valor personal sembrado por la redaccion de verdad, y un doble no
+# detecta nada.
+#
+# No entra en el guion de verificacion, igual que las demas `test:uN`: el paso 5
+# ya corre la suite entera con `mise run cov`.
+run = "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit/synthetic_data app/backend/tests/integration/u7"
+
+# --- Corpus de polizas (U8) -----------------------------------------------------
+
+[tasks.deploy]
+description = "Publica una version en produccion: revision en verde, imagen desde git archive, despliegue, prueba de humo y reinicio"
+# El procedimiento entero, con lo que el guion no cubre, esta en
+# `docs/reference/operacion-de-produccion.md`. `mise run deploy -- --simular` hace las
+# comprobaciones y solo imprime lo que cambiaria.
+run = "scripts/desplegar.sh"
+
+[tasks."deploy:rollback"]
+description = "Devuelve produccion a una revision anterior (los dos datos los imprime deploy antes de cambiar nada)"
+run = "scripts/volver-atras.sh"
+
+[tasks."ops:check"]
+description = "Lee la salud y el gasto del sitio publicado y falla si el reinicio nocturno esta vencido o el gasto cruzo su alerta (a mano: mise run ops:check [-- --base-url <url>] [--tolerar-agotado])"
+# Es el mismo archivo que corre cada dia `.github/workflows/chequeo-publico.yml`
+# (convencion 10 del equipo): el flujo lo invoca con `python3` directo porque instalar
+# el toolchain para correr un guion de biblioteca estandar gastaria mas minutos que el
+# chequeo. Solo hace `GET` y no necesita .env, claves ni base de datos.
+run = "python3 scripts/chequeo_publico.py"
+
+[tasks."demo:reset"]
+description = "El reinicio nocturno de los datos de demostracion: los nueve purgadores y su registro (US5.15)"
+# **Ultimo paso del despliegue**, no solo tarea del disparador nocturno: sin
+# ningun reinicio exitoso conocido las superficies publicas cierran, y sobre una
+# base recien creada esta corrida no tiene nada que borrar y deja el reloj de las
+# 24 horas en marcha (BR3.2).
+#
+# Llama a los nueve purgadores del registro escrito a mano de la raiz de
+# composicion y no borra ninguna tabla por su cuenta (BR2.3). Con `-- --dry-run`
+# cuenta lo que borraria y **no deja registro**: una corrida de ensayo guardada
+# como exitosa reiniciaria el contador sin haber borrado nada.
+#
+# **Y despues de barrer devuelve los casos sembrados a su estado** (AC5.6.4): el
+# que alguien movio decidiendolo en la bandeja vuelve a su sitio, y el que ya esta
+# donde dice su archivo no se toca (solo se le completa la evaluacion de reglas
+# si no tiene ninguna).
+#
+# Necesita la base del proyecto y la clave de cifrado de los campos del caso
+# (`UNTANGLE_DATABASE_URL`, `UNTANGLE_CASE_FIELD_ENCRYPTION_KEY`), que carga `uv`
+# del `.env` local; el codigo no lo lee. Sin la clave **barre igual** --lo que no
+# puede faltar es que los datos del visitante se vayan-- y sale distinto de cero
+# diciendo que la vitrina se quedo como estaba. Su codigo de salida es lo unico
+# que mira el disparador: distinto de cero cuando la corrida no termino limpia.
+run = "uv run --env-file .env --project app/backend python -m untangle.server.demo_reset"
+
+[tasks."tenant:provision"]
+description = "Da de alta una aseguradora desde su carpeta: valida, ingiere y siembra (US5.1): mise run tenant:provision -- <id>"
+# Valida la carpeta **entera antes de crear nada** y nombra el archivo y el campo
+# de cada falta (BR1.1): una aseguradora a medias no la borra nada y no la
+# completa nada. Invoca `corpus:ingest` en vez de escribir su propia ingesta
+# (BR1.3), y es idempotente de verdad: la ingesta pide al proveedor solo lo que
+# falta y la siembra deja como esta el caso que ya existe (BR1.2).
+#
+# Necesita la base, la clave de cifrado de los campos del caso y la clave del uso
+# `corpus` (`UNTANGLE_DATABASE_URL`, `UNTANGLE_CASE_FIELD_ENCRYPTION_KEY`,
+# `UNTANGLE_CORPUS_MODEL_API_KEY`), que carga `uv` del `.env` local; el codigo no
+# lo lee. **No publica ninguna credencial**: dice con que comando se emite cada
+# una (D23).
+run = "uv run --env-file .env --project app/backend python -m untangle.server.tenant_provision"
+
+[tasks."test:u20"]
+description = "Solo las pruebas de la unidad U20 (validacion de carpeta, aprovisionamiento, reinicio y su registro)"
+# La tanda 1 es toda pura: purgadores dobles y reloj inyectado, sin base. La
+# tanda 2 suma su carpeta de integracion, que corre contra los nueve purgadores
+# de verdad y exige el motor de contenedores.
+#
+# No entra en el guion de verificacion: el paso 5 ya corre la suite entera.
+run = "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit/demo_operations app/backend/tests/integration/u20 -q"
+
+[tasks."test:u8"]
+description = "Solo las pruebas de la unidad U8 (corpus de polizas y citas verificadas)"
+# **Ninguna prueba llama al proveedor**: el `Embedder` se sustituye por un
+# doble determinista con vectores sembrados (CG-U8-4). Las de integracion --RLS,
+# aislamiento vectorial, borrado, migracion-- levantan la base efimera de la
+# suite, igual que U2, U4, U5, U6, U7, U9 y U10.
+#
+# No entra en el guion de verificacion, igual que las demas `test:uN`: el paso
+# 5 ya corre la suite entera con `mise run cov`.
+run = "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit/policy_rag app/backend/tests/integration/u8"
+
+# --- Captura del turno (U11) ---------------------------------------------------
+
+[tasks."test:u11"]
+description = "Solo las pruebas de la unidad U11 (nodo intake: identidad, extraccion y normalizacion)"
+# **Ninguna prueba llama al proveedor**: el extractor se sustituye por un doble
+# determinista con respuestas sembradas por turno (CG-U11-4). Las de
+# integracion -- identidad y poliza, evidencia, confirmacion, dos versiones --
+# escriben en el caso por la API de U4 y levantan la base efimera de la suite,
+# igual que U2, U4, U5, U6, U7, U8, U9 y U10 (CG-U11-5).
+#
+# No entra en el guion de verificacion, igual que las demas `test:uN`: el paso
+# 5 (tanda 2) ya corre la suite entera con `mise run cov`.
+run = "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit/intake app/backend/tests/integration/u11"
+
+[tasks."test:u12"]
+description = "Solo las pruebas de la unidad U12 (runtime del grafo: tablas, ejecutor, ritmos y puntos de control)"
+# **Ninguna prueba llama al proveedor**: los fallos --tiempo agotado, cuota,
+# caida, respuesta mal formada-- se inyectan con dobles deterministas (CG-U12-3).
+# Un ejecutor que solo se pudiera probar con el proveedor real no se podria
+# probar en rojo.
+#
+# La mitad de esta unidad es de integracion y no por gusto: los puntos de
+# control, su aislamiento, los arrendamientos y la reanudacion tras el reinicio
+# **no se pueden comprobar sin base de datos**, y es la razon por la que esta
+# unidad se construye con Docker delante y no en una sesion de la nube
+# (CG-U12-1). La otra mitad -- el estado tipado, la transicion y el ejecutor
+# comun de paso 4 -- es unitaria, con dobles en vez de base: `tests/unit/orchestration`.
+#
+# No entra en el guion de verificacion, igual que las demas `test:uN`: el paso 5
+# ya corre la suite entera con `mise run cov`.
+run = "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit/orchestration app/backend/tests/integration/u12"
+
+[tasks."corpus:ingest"]
+description = "Ingiere app/data/ en la base: manifiesto, validacion e indexacion (FD-U8-5)"
+# Tarea nueva y no un paso del arranque: un arranque que indexa es un arranque
+# que llama al proveedor de embeddings sin que nadie lo haya pedido (FD-U8-5,
+# PERF-U8.4). Necesita la clave del uso `corpus` --el suyo propio, no la de
+# `operations`, que apunta al modelo de generacion (PASO 0 de la tanda 3)-- y
+# una base con las migraciones de U8 aplicadas; U20 `demo-operations` la
+# invocara igual al aprovisionar, en vez de escribir la suya.
+run = "uv run --env-file .env --project app/backend python -m untangle.server.corpus_ingest"
+
+[tasks."synthetic:generate"]
+description = "Regenera app/data/ desde los textos fuente revisados, con la semilla fija (BR1.3)"
+# El **unico** camino que escribe en `app/data/`: importar el paquete, arrancar
+# el servidor o correr las pruebas no escribe ahi. No llama a ningun modelo ni
+# lee ninguna clave (BR1.5). Su salida se commitea.
+run = "uv run --project app/backend python -m untangle.synthetic_data.cli generate"
+
+[tasks."synthetic:check"]
+description = "Regenera en un directorio temporal y compara byte a byte con app/data/ (TECH-U7.1)"
+# Lo versionado tiene que ser exactamente lo que produce el generador: un JSON
+# corregido a mano en `app/data/` hace fallar esta tarea nombrando el archivo.
+# Publica su duracion (TECH-U7.4).
+run = "uv run --project app/backend python -m untangle.synthetic_data.cli check"
+
+[tasks."synthetic:draft"]
+description = "Pide al modelo un borrador de texto fuente: mise run synthetic:draft -- --tenant <id> --part <parte> [--part ...] [--language es|en] [--variant <v>]"
+# **A mano y nunca en GitHub Actions** (BR2.1): llama a Gemini con la clave del
+# uso `operations`, por la fabrica, el techo y el registro de gasto de U5. El
+# borrador queda en `tmp/synthetic-drafts/`, que git ignora, y ningun comando de
+# la composicion lo lee: pasa a `app/data/sources/` solo despues de revisarlo.
+#
+# Lee la clave del `.env` local, que carga `uv` al invocar el comando; el codigo
+# no lo lee.
+#
+# **Sobre el libro de gasto de la base del proyecto** (2026-10-13): el gasto se
+# anota donde cuenta, y si la base no esta levantada el comando no llama. El uso
+# `operations` va en plan gratuito, y la parada real es la cuota de su proyecto
+# en el proveedor: si se agota, el comando se detiene y se retoma otro dia
+# (CG-U7-7).
+run = "uv run --env-file .env --project app/backend python -m untangle.server.synthetic_draft"
+
+[tasks."synthetic:fingerprints"]
+description = "Saca las huellas de los specimens de tmp/specimens/ y guarda solo sus hashes (BR5.1): mise run synthetic:fingerprints -- --specimen <ruta> <formulario> <edicion> <publicador> <AAAA-MM-DD> [--specimen ...]"
+# A mano, cuando Miguel deja los specimens en `tmp/specimens/`, que git ignora.
+# Sin `--specimen`, vuelve a sacarlas de los specimens que ya declara el archivo
+# de huellas, buscandolos por el hash de cada archivo. Imprime recuentos, nunca
+# texto de un specimen (SEC-U7.2). Vive en `untangle.workspace` y no en el
+# generador: es el unico comando que sabe llegar a `tmp/specimens/`, y ningun
+# modulo de la composicion puede conocer `tmp/` (BR2.3).
+run = "uv run --project app/backend python -m untangle.workspace.synthetic_fingerprints"
+
+[tasks."synthetic:sample"]
+description = "Elige con semilla registrada las diez clausulas por emisora que revisa Miguel (BR5.4): mise run synthetic:sample -- --date AAAA-MM-DD"
+# Escribe `app/data/sources/reviews/<aseguradora>-<fecha>.yaml` **sin veredicto**;
+# Miguel anota el suyo, la fecha y el commit, y `synthetic:generate` lo copia al
+# manifiesto. La fecha entra por argumento porque el generador no lee el reloj
+# (BR1.1). Nunca sobrescribe una muestra que ya existe: puede llevar su veredicto.
+run = "uv run --project app/backend python -m untangle.synthetic_data.cli sample"
+
+[tasks."synthetic:seed"]
+description = "Carga los casos sembrados por la API de U4 con origen generator (BR6.3)"
+# Vive en la raiz de composicion y no en el generador (FD-U7-9): el generador esta
+# debajo del registro del caso en el contrato de capas, y la raiz es la que puede
+# usar la API de U4 y construir el cifrador. Cada turno se redacta antes de
+# anexarlo, y nada se escribe con SQL directo. Es idempotente: un caso que ya
+# esta en su estado se deja como esta, salvo que pase por la decision y no tenga
+# evaluacion de reglas: esa se le completa (no borra nada ni cambia su numero).
+# El que pasa por la decision queda con la evaluacion de las reglas reales de su
+# aseguradora, hecha con los insumos del caso; lo que den las reglas es lo que
+# se guarda, aunque no cuadre con como esta sembrado el caso.
+#
+# Necesita la base del proyecto y la clave de cifrado de los campos del caso
+# (`UNTANGLE_DATABASE_URL` y `UNTANGLE_CASE_FIELD_ENCRYPTION_KEY`), que carga `uv`
+# del `.env` local; el codigo no lo lee. Sin alguna de las dos falla nombrandola.
+run = "uv run --env-file .env --project app/backend python -m untangle.server.synthetic_seed"
+
+[tasks."voice:contract-live"]
+description = "Prueba de contrato de la voz contra Deepgram y Cartesia de verdad (a mano, por hito)"
+# **No es una compuerta y nunca corre en GitHub Actions** (BR6.2): gasta unos
+# caracteres y segundos del saldo gratuito y depende de la red. Pasa por el techo
+# y el registro de gasto como cualquier llamada de voz.
+#
+# `--record` vuelve a capturar las respuestas grabadas de `test:u15`: se corre una
+# vez, cuando cambia el contrato de un proveedor, y el resultado se commitea
+# (CG-U15-3).
+#
+# Lee las dos claves del uso `voice` del `.env` local, que carga `uv` al invocar
+# el comando; el codigo no lo lee.
+#
+# **Sobre el libro de gasto de la base del proyecto** (2026-10-13), igual que el
+# aplicativo servido: el techo lee el acumulado real y lo gastado queda anotado.
+# Hasta entonces corria con `--ledger ephemeral`, un libro desechable que
+# empezaba en cero y se borraba al terminar. Sin la base levantada el comando no
+# llama: la voz falla cerrada. Imprime lo que gasto la corrida y el acumulado.
+run = "uv run --env-file .env --project app/backend python -m untangle.server.voice_cli contract-live"
+
+[tasks."voice:say"]
+description = "Sintetiza una frase con la voz de una aseguradora: mise run voice:say -- --tenant <id> [--language es|en] [--mode primary|fallback] [--text '...'] [--no-play]"
+# La demostracion de B18 (BR6.3): el camino real del aplicativo --configuracion,
+# fabrica, techo, adaptador y gasto--. El audio queda en `tmp/voice/`, que git
+# ignora, como WAV, y se reproduce si la maquina tiene reproductor; `--no-play`
+# solo lo guarda. Gasta los caracteres de la frase, y los imprime con su precio.
+#
+# Sobre el libro de gasto de la base del proyecto, igual que `voice:contract-live`.
+run = "uv run --env-file .env --project app/backend python -m untangle.server.voice_cli say"
+
+[tasks."voice:call-live"]
+description = "Corre un caso de DS-5 por el transporte de voz: mise run voice:call-live -- --case DS-5/en/003 --tenant <id> --recordings <carpeta>"
+# **No es una compuerta y nunca corre en GitHub Actions.** DS-5 corre por hito y
+# no por entrega (`team.md`): las grabaciones son de personas reales, viven fuera
+# del repositorio y medirlas gasta saldo de voz. Pasa por el techo y el registro
+# de gasto como cualquier llamada.
+#
+# Lo unico que sustituye del camino real es el socket: el reconocedor, la
+# sintesis, el ritmo del turno y la transcripcion son los de produccion.
+#
+# Sobre el libro de gasto de la base del proyecto. Hasta el 2026-10-13 levantaba
+# un libro desechable y nunca lo abria: el techo no se podia leer y la llamada se
+# cerraba antes de empezar.
+run = "uv run --env-file .env --project app/backend python -m untangle.server.voice_cli call-live"
+
+[tasks."voice:simular"]
+description = "Una llamada simulada por el camino real (cuesta unos centavos; no corre en GitHub): mise run voice:simular -- --tenant <id> --guion <archivo.json> [--language es|en] [--detalle]"
+# **Gasta dinero y nunca corre en GitHub Actions ni en `verify`**: la voz de quien llama,
+# la transcripcion, el modelo y la voz de la agente se pagan de verdad --unos centavos
+# por un guion corto--, a nombre de la llamada simulada en el registro de gasto. No es una
+# compuerta: es la forma de ver una llamada sin que Miguel tenga que llamar.
+#
+# Una persona que es un guion JSON (`app/evals/fixtures/voice-sim/`) habla con el reloj
+# y el audio en tiempo real por el camino de la llamada de verdad --reconocedor, ciclo,
+# grafo y voz--, con la muletilla encendida; lo unico que sustituye es el socket. Imprime
+# cada cuadro con su tiempo y, si la llamada se cae, la traza completa; con `--detalle`,
+# tambien cada parcial y cada senal de voz del reconocedor. Deja un caso y una
+# llamada en la base local. Corre sobre la base y las claves del `.env`, como `dev`.
+run = "uv run --env-file .env --project app/backend python -m untangle.server.voice_cli simular"
+
+[tasks."spend:report"]
+description = "Las cuatro agregaciones del gasto, cada una con su conteo de no medidas"
+# **No es una compuerta y no entra en el guion** (INF-U5-4): es el productor del
+# valor real de NFR14.1. Una compuerta que fallara porque el costo por caso subio
+# seria una compuerta sobre una cifra que todavia no tiene linea base, y
+# compararla contra la linea base versionada es trabajo de U21.
+#
+# Lee la base, asi que necesita `UNTANGLE_DATABASE_URL`; sin ella falla
+# nombrandola en vez de reportar ceros, que se leerian como "no se ha gastado
+# nada".
+run = "uv run --project app/backend python -m untangle.workspace.spend_report"
+
+[tasks."spend:reconcile"]
+description = "Anota un ajuste conciliado: lo que el proveedor cobro y el libro no tiene. mise run spend:reconcile -- --provider anthropic --use evals_chat --amount 0.24 --note 'consola de Anthropic, 2026-10-13' [--date AAAA-MM-DD] [--dry-run]"
+# **A mano, una vez por cifra que no cuadra, y nunca en GitHub Actions ni en el guion.**
+# `--amount` es lo que FALTA en el libro, no el total de la consola. Escribe una fila
+# de origen `reconciled_adjustment` en el libro de la base del proyecto, que cuenta
+# contra el techo igual que el gasto que no quedo anotado. No se borra: `--dry-run`
+# ensena el asiento sin escribir. Reintentar el mismo comando no duplica. Necesita
+# `UNTANGLE_DATABASE_URL` y la base levantada; sin ellas se detiene sin escribir.
+run = "uv run --env-file .env --project app/backend python -m untangle.server.spend_reconcile"
+
+[tasks."activation:report"]
+description = "El conteo de activacion por dia, aseguradora e hito (OBS-U6.3)"
+# **No es una compuerta y no entra en el guion**, igual que `spend:report`: es el
+# productor de una cifra. Solo lee el conteo diario, nunca el avance por sesion
+# (BR8.5). Lee la base, asi que necesita `UNTANGLE_DATABASE_URL`; sin ella falla
+# nombrandola en vez de reportar ceros, que se leerian como "nadie entro".
+run = "uv run --project app/backend python -m untangle.workspace.activation_report"
+
+[tasks."verify:rapido"]
+description = "La parte barata del guion: lo que caza casi todo sin calentar la maquina"
+# **Por que existe.** `scripts/verify.sh` es la compuerta y no baja: corre la suite
+# entera con cobertura contra una base de verdad (2.377 pruebas, ~3 min de CPU
+# sostenida) y el arnes de accesibilidad con **tres motores de navegador** en
+# paralelo, cada uno con su propio proceso servido y su propia base efimera. Eso en
+# un portatil es un ventilador a tope durante varios minutos, y la practica del
+# equipo ya dice que correrlo en local es opcional: "la compuerta autoritativa, y la
+# unica, es GitHub Actions".
+#
+# Esto es lo otro: los pasos que no necesitan base ni navegador y que cazan casi
+# todo lo que se rompe al escribir codigo --formato, lint, contratos de importacion,
+# tipos, las 1.874 pruebas unitarias y los chequeos del arbol--.
+#
+# **Medido en esta maquina: 2 min 10 s de reloj y 136 s de CPU** (81 s y 79 s antes de
+# las once aserciones de arbol del 2026-10-03; casi todo lo que anaden es arranque de
+# proceso, no trabajo). Sigue siendo **un nucleo de media**, sin un contenedor ni un
+# navegador. La cifra que importa es la segunda: lo que calienta
+# un portatil no es que algo tarde, es que gaste ocho nucleos mientras tarda. De ahi
+# el techo de trabajadores de `vitest.config.ts`, que bajo su pico del 737 % al 247 %
+# a cambio de cinco segundos.
+#
+# El reparto, por si alguna vez hay que recortar mas: 54 s las pruebas de Python (un
+# solo proceso, 78 % de un nucleo), 12 s formato-lint-tipos, 12 s las de pantalla y
+# los chequeos del arbol.
+#
+# **No sustituye al guion**: lo que este no mira --aislamiento por fila, migraciones,
+# integracion con base, accesibilidad, cobertura, auditoria de dependencias-- lo
+# sigue mirando GitHub Actions en cada entrega, y `scripts/verify.sh` cuando haga
+# falta correrlo entero a mano.
+#
+# **Las once aserciones de arbol se anadieron el 2026-10-03, y las anadio un `main`
+# en rojo.** Una prueba nueva fabricaba un valor sellado a mano --lo que PA-8
+# prohibe, porque `NewType` se borra en tiempo de ejecucion y esos bytes acaban en
+# la columna cifrada sin estarlo-- y `case:constructor` lo caza. No estaba aqui, y
+# la lista que se corrio en local era una lista **de memoria**: el fallo no fue
+# saltarse una compuerta, fue mantener dos listas de cuales son. Ahora hay una.
+# Cuestan 13 s de reloj y 6 s de CPU entre las once, medio nucleo: no mueven el
+# costo de este comando. Las que **no** entran siguen fuera por la misma razon que
+# antes --`rls:check` y `migrate:check` necesitan base, `audit` necesita red-- y
+# esas las sigue mirando GitHub Actions.
+run = [
+  "mise run fmt:check",
+  "mise run lint",
+  "mise run types",
+  "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit -q",
+  "pnpm --dir app/frontend exec vitest run",
+  "mise run copy:check",
+  "mise run chat:frases",
+  "mise run voice:frases",
+  "mise run content:check",
+  "mise run tenancy:literals",
+  "mise run case:constructor",
+  "mise run case:transitions",
+  "mise run schema:check",
+  "mise run redaction:constructor",
+  "mise run redaction:report",
+  "mise run contracts:check",
+  "mise run env:check",
+  "mise run readme:check",
+  "mise run synthetic:check",
+  "mise run licenses:check",
+  "mise run supply:check",
+]
+
+[tasks."chat:frases"]
+description = "Cada frase que el servidor puede mandar al chat (degradacion, espera, derivacion, error), el chat sabe decirla"
+# El chequeo que faltaba: la tabla del chat convierte una clave que no conoce en la
+# frase de error, asi que un nodo cuya frase no este ahi le dice a la persona "tuve
+# un problema" en vez de lo que el servidor queria decir. Lo vio Miguel usando el
+# chat; ninguna prueba lo miraba. Desde el 2026-10-12 mira tambien las claves que
+# declara `orchestration/turn.py` (una derivacion nueva se veia como error) y el
+# mismo chequeo corre en la suite (`tests/unit/workspace/test_chat_phrases.py`).
+run = "uv run --project app/backend python -m untangle.workspace.chat_phrases"
+
+[tasks."voice:frases"]
+description = "Cada aviso que el servidor manda por el socket, la consola sabe decirlo"
+# El hermano del de arriba, en la misma direccion y con otra fuente: lo que puede
+# llegar por el socket es el cuadro `notice`, cuyo vocabulario son los motivos de
+# cuota de U5 y los de voz apagada de U15. Una clave que la consola no conozca se
+# pierde **en silencio**, a proposito --una clave desconocida es un contrato roto,
+# no un caso de ejecucion-- y esto es lo que convierte ese contrato roto en una
+# compuerta en vez de un hueco en pantalla.
+run = "uv run --project app/backend python -m untangle.workspace.voice_phrases"
+
+[tasks."readme:gen"]
+description = "Regenera las dos secciones del README (Como falla y el reporte de evaluacion) desde la linea base vigente"
+# Un solo comando con dos modos, como `contracts:gen` y `contracts:check`: el
+# arreglo de un README desactualizado es este comando y commitear, nunca editar
+# lo que hay entre las marcas (U22, BR4.2).
+run = "uv run --project app/backend python -m untangle.workspace.readme_check gen"
+
+[tasks."readme:check"]
+description = "Falla, nombrando la seccion, si el README difiere de lo que produce la linea base vigente"
+# Sin linea base publicada las dos secciones dicen "no medida" con su causa y el
+# chequeo compara contra eso: no se pone rojo por no haber medido todavia. Solo
+# compara lo que hay entre las marcas; las seis secciones narrativas son de
+# Miguel (FD-U22-9).
+run = "uv run --project app/backend python -m untangle.workspace.readme_check check"
+
+[tasks."case:transitions"]
+description = "Regenera el diagrama del ciclo de vida y falla si no coincide con el escrito"
+# La enmienda de ADR-005 hecha herramienta: un diagrama editado a mano describe
+# un ciclo de vida que el codigo no aplica, y ese desacuerdo no lo nota nadie
+# porque el dibujo se ve bien y las pruebas pasan.
+run = "uv run --project app/backend python -m untangle.workspace.case_transitions"
+
+[tasks."case:constructor"]
+description = "Quien fabrica un valor sellado del caso"
+# Analisis del arbol sintactico, sin base de datos y sin modelos. Hermano del de
+# la redaccion: falla ante las **tres** formas de producir el tipo fuera del
+# punto unico de cifrado --el constructor, `cast` y una anotacion con
+# `type: ignore`--, porque `NewType` se borra en tiempo de ejecucion y sin esto
+# "todo lo personal se cifra antes de persistir" habria que revisarlo a mano en
+# cada cambio (PA-8, capa 2 del diseno de seguridad de U4).
+run = "uv run --project app/backend python -m untangle.workspace.case_constructor"
+
+[tasks."redaction:report"]
+description = "Hallazgos de la redaccion por idioma, por tipo y por reconocedor"
+# Por reconocedor, y no solo por tipo: sin esa columna un reconocedor roto se
+# esconde detras del respaldo, que tapa el mismo dato y suma al mismo tipo
+# (NFR-U3-5). La cifra del respaldo va aparte (NFR11.2) y nunca hay un promedio
+# combinado de los dos idiomas (P12). Necesita los modelos.
+run = "uv run --project app/backend python -m untangle.workspace.redaction_report"
+
+[tasks."supply:check"]
+description = "Comprueba que la espera de tres dias esta viva en los dos gestores (SEC-U1.4)"
+# Le pregunta a cada herramienta que valor tiene de verdad, en vez de leer el
+# archivo donde se escribio: un ajuste de pnpm en `.npmrc` se ignora en silencio
+# desde pnpm 10, y asi el archivo se ve bien sin que el control exista.
+run = "uv run --project app/backend python -m untangle.workspace.supply_chain_check"
+
+# --- Cadena de suministro -----------------------------------------------------
+
+[tasks.audit]
+description = "Auditoria de dependencias contra vulnerabilidades conocidas"
+# Se audita lo que fija el lockfile, no lo que quedo instalado: son la misma
+# cosa mientras la instalacion sea reproducible, y auditar el lockfile lo sigue
+# siendo el dia que alguien instale a mano.
+#
+# Excepcion escrita el 2026-10-06: CVE-2026-104873 (GHSA-fvww-7h3r-vfhp) en
+# `langgraph-sdk` 0.3.15, que llega de forma transitiva por `langgraph`. La falla
+# esta en los decoradores de autorizacion personalizada de un servidor de la API
+# de LangGraph (`@auth.on.threads` y compania); el aplicativo no importa
+# `langgraph_sdk` en ninguna parte ni levanta ese servidor, asi que el codigo
+# vulnerable no se ejecuta. La version corregida (0.4.4) exige `websockets<17` y
+# el adaptador de voz necesita `websockets>=17.1` (FD-U15-5), de modo que hoy no
+# hay resolucion que la incluya. Se revisa cuando `langgraph-sdk` admita
+# websockets 17 o cuando `langgraph` deje de arrastrarla. Un hallazgo nuevo sigue
+# bloqueando.
+#
+# **Su razon y su fecha de revision (2026-11-13) viven en la fila de
+# `app/frontend/DEPENDENCIES.md`, seccion "Avisos de seguridad aceptados"**, y
+# `mise run supply:check` lee de aqui los `--ignore-vuln`: falla si uno no tiene su
+# fila, si la fila ya no tiene aviso, o si su fecha paso. Quitar o anadir un
+# `--ignore-vuln` sin tocar esa fila pone la compuerta en rojo.
+run = [
+  "uv export --project app/backend --format requirements-txt --all-groups --no-emit-project | uv run --project app/backend pip-audit --strict --disable-pip --ignore-vuln CVE-2026-104873 -r /dev/stdin",
+  "pnpm --dir app/frontend audit --audit-level high",
+]
+
+[tasks."licenses:check"]
+description = "La licencia de cada dependencia del arbol resuelto, contra la lista admitida (D-017)"
+# Necesita los dos arboles instalados --incluidos los modelos de spaCy, que
+# entran por un extra-- porque la licencia se lee del paquete y no de una lista
+# escrita a mano. Si falta alguno, el chequeo falla diciendo cual: revisar medio
+# arbol es lo que dejo pasar que el modelo de espanol sea GPL.
+run = "uv run --project app/backend python -m untangle.workspace.license_check"
+
+[tasks.secrets]
+description = "Escaneo de secretos sobre el cambio"
+run = "scripts/verify.sh --only secrets"
+
+# --- Servicios locales --------------------------------------------------------
+
+[tasks.dev]
+description = "Levanta el aplicativo contra la base local, para usarlo a mano"
+# **El proceso real**, no un servidor de desarrollo: la misma raiz de composicion que
+# sirve la demo, con los estaticos compilados, la politica de contenido y las
+# cabeceras de verdad. Sube las migraciones antes de servir, porque una base sin
+# migrar deja la interfaz en "la demo esta despertando".
+#
+# **Imprime en que direccion escucha.** Sirve en el 8050 y no en el 8000, que es el
+# que todo el mundo espera: en esta maquina el 8000 --y el 8001, 8002, 8003 y 8080--
+# los tiene otro proyecto, y la demo aterrizaba en un puerto distinto en cada
+# arranque, asi que habia que leer la salida para saber a donde ir y decirle a la
+# prueba de humo cual era el de hoy. Con uno fijo, las dos apuntan al mismo sitio.
+# Lo que **no** arregla: la conversacion del visitante sobrevive al cambio de puerto
+# igualmente, porque las galletas no se aislan por puerto. Si el 8050 tambien se
+# ocupa, toma el siguiente libre y lo dice; con `-- --port <n>` explicito, ocupado es
+# un error
+#
+# El recorrido completo para usar la bandeja con las manos, en orden:
+#
+#   mise run services:up                               la base local
+#   mise run web:build                                 la interfaz compilada
+#   mise run synthetic:seed                            casos con los que trabajar
+#   mise run tenancy:credential -- --tenant stonecroft --principal diana
+#   mise run dev                                       y abrir la direccion que imprime
+#
+# La credencial del cuarto paso sale por la salida estandar y se pega como cookie
+# `untangle_staff` en el navegador: no se publica y no se guarda en ningun archivo
+# (D23). La bandeja vive en `/t/<aseguradora>/inbox` y **no se anuncia en el inicio**,
+# porque una bandeja anunciada invitaria a probar credenciales.
+#
+# Para la pantalla del visitante --la del enlace, sin credencial-- hace falta un
+# enlace, y nada lo emite todavia en produccion (es de U13 y U17):
+#
+#   mise run tenancy:case-link -- --tenant stonecroft --case <id del caso>
+#
+# Imprime la direccion con el token en el fragmento; se abre tal cual y vale una hora.
+# Antes de servir, el reinicio de los datos si el ultimo esta por cumplir 24 horas: en
+# local no hay disparador nocturno, y sin el la demo dejaba de aceptar casos nuevos
+# al dia siguiente ("el ultimo reinicio de datos no se completo", visto el 2026-10-09).
+run = [
+  "uv run --env-file .env --project app/backend python -m untangle.server.demo_reset --if-stale",
+  "uv run --env-file .env --project app/backend python scripts/servidor-local.py",
+]
+
+[tasks.migrate]
+description = "Sube las migraciones contra la base local"
+# El mismo camino que corre `dev` al arrancar, aparte para cuando solo hace falta
+# migrar. `migrate:check` es otra cosa: sube, baja y vuelve a subir contra una base
+# efimera, y es la que corre en la compuerta.
+run = "uv run --env-file .env --project app/backend python scripts/servidor-local.py --migrate-only"
+
+[tasks."test:u14"]
+description = "Solo las pruebas de la unidad U14 (bandeja: cola, vista, correccion, decision y enlace)"
+# Casi todas son de integracion y no por gusto: las tres compuertas duras de esta
+# unidad --una credencial no ve casos de otra aseguradora, un enlace abre su caso y
+# nunca la lista, una firma alterada se responde igual que un caso que no existe-- se
+# comprueban **por el punto de entrada** y con la politica de fila delante, asi que no
+# se pueden comprobar sin base de datos.
+#
+# Las pantallas van aparte, con el runner de la interfaz: son el otro extremo de la
+# misma unidad y no comparten proceso.
+#
+# No entra en el guion de verificacion, igual que las demas `test:uN`: el paso 5 ya
+# corre la suite entera con `mise run cov`.
+run = [
+  "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/integration/u14",
+  "pnpm --dir app/frontend exec vitest run src/pages/inbox",
+]
+
+[tasks."services:up"]
+description = "Levanta la base de datos local"
+run = "docker compose up -d"
+
+[tasks."services:down"]
+description = "Detiene los servicios locales"
+run = "docker compose down"
+
+[tasks."images:digest"]
+description = "Resuelve la huella digital de una etiqueta de imagen: mise run images:digest -- <etiqueta>"
+# Anclamos por huella y no por etiqueta porque una etiqueta se puede reescribir
+# en el registro. Este comando existe para que subir de version sea correrlo y
+# commitear, no buscar la huella a mano.
+run = 'docker buildx imagetools inspect "$1" --format "{{.Manifest.Digest}}"'
+
+# --- La compuerta -------------------------------------------------------------
+
+[tasks.verify]
+description = "El guion unico de verificacion: los nueve pasos en orden"
+run = "scripts/verify.sh"
+
+[tasks."experimento:1"]
+description = "Mide el turno de voz completo, tramo por tramo, y decide ADR-008 y ADR-009"
+# **No es una compuerta y no entra en el guion de verificacion**: es una medicion
+# de una sola vez contra proveedores en vivo, que cuesta saldo y depende de la
+# red. Una compuerta que llamara a tres proveedores externos en cada corrida
+# seria una compuerta sobre la conectividad y no sobre el codigo.
+#
+# Necesita `UNTANGLE_VOICE_DEEPGRAM_API_KEY`, `UNTANGLE_VOICE_CARTESIA_API_KEY` y
+# `UNTANGLE_VOICE_MODEL_API_KEY` en el entorno; sin alguna falla nombrandola en
+# vez de medir a medias. La voz de Catalina la lee de los `tenant.yaml`.
+run = "uv run --project app/backend python scripts/experimento-1.py"
+
+[tasks."claves:cifrado"]
+description = "Genera la clave de cifrado de los campos del caso y la pone en tu .env sin imprimirla"
+# Existe por lo mismo que `claves:voz` y con un motivo propio: la linea que
+# documentaba `.env.example` **imprimia la clave**, asi que quedaba en la pantalla,
+# en el historial de la terminal y en el registro de cualquier sesion que la viera
+# pasar. Una clave impresa se considera comprometida, y aqui no hay proveedor donde
+# rotarla: rotarla es generar otra, que es lo que hace este comando.
+run = "uv run --project app/backend python scripts/poner-clave-de-cifrado.py"
+
+[tasks."claves:voz"]
+description = "Pide las claves de la voz y las pone en tu .env sin imprimirlas; --renombrar pasa las del experimento 1 a sus nombres del aplicativo"
+# Existe en vez de un `echo >>` por tres razones que estan escritas en la cabecera
+# del guion: comprueba que `.env` esta ignorado antes de escribir, actualiza la
+# linea en su sitio en vez de duplicarla, y no imprime nunca el valor.
+run = "uv run --project app/backend python scripts/poner-claves-de-voz.py"
+
+[tasks."test:u18"]
+description = "Solo las pruebas de la unidad U18 (el espanol y el cambio de idioma)"
+# Es la unidad con **menos codigo y mas pruebas** del proyecto, y eso no es un
+# accidente del reparto: la mitad de lo que U18 aporta es que lo ya construido se
+# comporte igual en el segundo idioma, y eso son pruebas y no codigo nuevo.
+#
+# Aqui se cronometra PERF-U18.1, que es lo que reconocer el idioma anade al camino
+# del turno. `-s` no hace falta: el numero se imprime y pytest lo muestra cuando
+# la prueba falla, que es cuando importa leerlo.
+#
+# Las de la peticion de cambio son unitarias y viven con las de U16 porque son de
+# la misma carpeta de codigo; se nombran una por una para que esta tarea no
+# arrastre la unidad entera de al lado.
+run = [
+  "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit/test_language.py app/backend/tests/unit/voice/test_language_request.py app/backend/tests/unit/voice/test_retry.py app/backend/tests/integration/u18",
+]
+
+[tasks."test:u16"]
+description = "Solo las pruebas de la unidad U16 (llamada de voz: transporte, sesion, turno y consola)"
+# Toda esta unidad son temporizadores --fin del habla, silencios, parada,
+# vencimiento del token, ventana de retoma-- y **ninguna prueba espera tiempo
+# real**: el reloj entra por argumento. Una prueba que duerme es una que un dia
+# falla en la tuberia por estar la maquina ocupada.
+#
+# Ninguna abre una conexion de red: los proveedores entran por los dobles que
+# heredan de los `Protocol` de C-16, no por la red.
+#
+# No entra en el guion de verificacion, igual que las demas `test:uN`: el paso 5
+# ya corre la suite entera con `mise run cov`.
+run = [
+  "uv run --project app/backend pytest -c app/backend/pyproject.toml app/backend/tests/unit/voice app/backend/tests/integration/u16",
+]

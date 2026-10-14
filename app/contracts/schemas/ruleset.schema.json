@@ -1,0 +1,71 @@
+{
+  "$defs": {
+    "RuleDefinition": {
+      "additionalProperties": false,
+      "description": "Una regla del motor por aseguradora. U2 fija su **forma**; su significado\nes de U9, que la ejecuta, y por eso `when` y `then` quedan abiertos aqui.",
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "version": {
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        },
+        "when": {
+          "additionalProperties": true,
+          "title": "When",
+          "type": "object"
+        },
+        "then": {
+          "additionalProperties": true,
+          "title": "Then",
+          "type": "object"
+        },
+        "tests": {
+          "default": [],
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Tests",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "when",
+        "then"
+      ],
+      "title": "RuleDefinition",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "El archivo de reglas de una aseguradora (C-25).",
+  "properties": {
+    "ruleset_version": {
+      "minLength": 1,
+      "title": "Ruleset Version",
+      "type": "string"
+    },
+    "rules": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/RuleDefinition"
+      },
+      "title": "Rules",
+      "type": "array"
+    }
+  },
+  "required": [
+    "ruleset_version"
+  ],
+  "title": "RuleSet",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/ruleset.schema.json"
+}

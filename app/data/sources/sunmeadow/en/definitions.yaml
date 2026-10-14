@@ -1,0 +1,129 @@
+# Textos fuente revisados de Autos Poblado, en ingles (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Los borradores del modelo en ingles calcaban giros del formulario de referencia: se
+# reescribieron a mano y por eso casi todos dicen drafted_with: hand.
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: sunmeadow
+language: en
+part_key: definitions
+texts:
+- source_id: SUN-PAP-2026-DEF.YOU
+  kind: clause
+  clause_key: DEF.YOU
+  part: Definitions
+  version: '2026.1'
+  text: '"You" means the policyholder listed on the declarations page. It also includes that person''s
+    spouse or partner while the two share a home.'
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-DEF.WE
+  kind: clause
+  clause_key: DEF.WE
+  part: Definitions
+  version: '2026.1'
+  text: '"We" means Autos Poblado, the company that issues this policy and stands behind it.'
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-DEF.BODILY_INJURY
+  kind: clause
+  clause_key: DEF.BODILY_INJURY
+  part: Definitions
+  version: '2026.1'
+  text: '"Bodily injury" means any harm to a person''s health caused by an accident, including wounds,
+    illness that follows from them and, when it happens, death.'
+  defines_terms:
+  - bodily injury
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-DEF.PROPERTY_DAMAGE
+  kind: clause
+  clause_key: DEF.PROPERTY_DAMAGE
+  part: Definitions
+  version: '2026.1'
+  text: '"Property damage" means breaking, destroying or making unusable a physical object that belongs
+    to someone else, such as another car, a fence or a storefront.'
+  defines_terms:
+  - property damage
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-DEF.COVERED_AUTO
+  kind: clause
+  clause_key: DEF.COVERED_AUTO
+  part: Definitions
+  version: '2026.1'
+  text: '"Covered auto" means the vehicle listed on the declarations page and any trailer listed there.
+    A vehicle you buy during the policy period is also a covered auto if you tell us about it within 20
+    days of taking delivery.'
+  defines_terms:
+  - covered auto
+  - covered autos
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-DEF.TRAILER
+  kind: clause
+  clause_key: DEF.TRAILER
+  part: Definitions
+  version: '2026.1'
+  text: '"Trailer" means an unpowered vehicle built to be towed by a private passenger car, such as a
+    small cargo trailer or a compact camper.'
+  defines_terms:
+  - trailer
+  - trailers
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-DEF.FAMILY_MEMBER
+  kind: clause
+  clause_key: DEF.FAMILY_MEMBER
+  part: Definitions
+  version: '2026.1'
+  text: '"Family member" means someone who lives in your home and is related to you by birth, marriage,
+    civil union or adoption, including children in your legal care.'
+  defines_terms:
+  - family member
+  - family members
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-DEF.OCCUPYING
+  kind: clause
+  clause_key: DEF.OCCUPYING
+  part: Definitions
+  version: '2026.1'
+  text: '"Occupying" means being inside a vehicle, climbing in or out of it, or standing next to it while
+    loading it or pushing it by hand.'
+  defines_terms:
+  - occupying
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2025-DEF.YOU.ALT
+  kind: distractor
+  clause_key: DEF.YOU.ALT
+  part: Definitions
+  version: '2025.1'
+  text: '"You" means only the policyholder listed on the declarations page; a spouse or partner is not
+    included even when living in the same home.'
+  distractor_of: SUN-PAP-2026-DEF.YOU
+  distractor_reason: near_duplicate
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: SUN-PAP-2025-DEF.BODILY_INJURY
+  kind: distractor
+  clause_key: DEF.BODILY_INJURY
+  part: Definitions
+  version: '2025.1'
+  text: '"Bodily injury" means harm to a person''s health caused by an accident, such as wounds or illness;
+    it does not include death.'
+  distractor_of: SUN-PAP-2026-DEF.BODILY_INJURY
+  distractor_reason: superseded_version
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite

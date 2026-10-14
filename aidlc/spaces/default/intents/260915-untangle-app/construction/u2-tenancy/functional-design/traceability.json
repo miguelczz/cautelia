@@ -1,0 +1,155 @@
+{
+  "stage": "functional-design",
+  "unit": "u2-tenancy",
+  "upstream_ids": [
+    "AC4.11.1",
+    "AC4.11.2",
+    "AC4.11.3",
+    "AC4.11.4",
+    "AC4.11.5",
+    "AC5.7.1",
+    "AC5.7.2",
+    "AC5.7.3",
+    "AC5.7.4",
+    "AC3.8.1",
+    "AC3.8.2",
+    "AC3.8.3",
+    "AC3.8.4",
+    "AC3.8.5",
+    "AC3.8.6"
+  ],
+  "coverage": [
+    {
+      "id": "AC4.11.1",
+      "status": "OK",
+      "target": "BR1.2, BR1.10"
+    },
+    {
+      "id": "AC4.11.2",
+      "status": "OK",
+      "target": "BR1.1, BR1.6"
+    },
+    {
+      "id": "AC4.11.3",
+      "status": "OK",
+      "target": "BR1.3, BR1.4, BR1.7"
+    },
+    {
+      "id": "AC4.11.4",
+      "status": "OK",
+      "target": "BR1.8"
+    },
+    {
+      "id": "AC4.11.5",
+      "status": "OK",
+      "target": "BR1.9"
+    },
+    {
+      "id": "AC5.7.1",
+      "status": "OK",
+      "target": "BR2.1, BR2.2, BR2.3"
+    },
+    {
+      "id": "AC5.7.2",
+      "status": "OK",
+      "target": "BR2.4"
+    },
+    {
+      "id": "AC5.7.3",
+      "status": "OK",
+      "target": "BR2.5"
+    },
+    {
+      "id": "AC5.7.4",
+      "status": "OK",
+      "target": "BR2.6, BR3.1"
+    },
+    {
+      "id": "AC3.8.1",
+      "status": "N/A",
+      "target": "US3.8 esta asignada a U14 `inbox`: el mapa de historias dice que casi todos sus criterios son del recorrido de la vista por enlace. U2 emite y valida el enlace; la pantalla y la ruta HTTP llegan con U14."
+    },
+    {
+      "id": "AC3.8.2",
+      "status": "N/A",
+      "target": "US3.8 esta asignada a U14 `inbox`: el mapa de historias dice que casi todos sus criterios son del recorrido de la vista por enlace. U2 emite y valida el enlace; la pantalla y la ruta HTTP llegan con U14."
+    },
+    {
+      "id": "AC3.8.3",
+      "status": "N/A",
+      "target": "US3.8 esta asignada a U14 `inbox`: el mapa de historias dice que casi todos sus criterios son del recorrido de la vista por enlace. U2 emite y valida el enlace; la pantalla y la ruta HTTP llegan con U14."
+    },
+    {
+      "id": "AC3.8.4",
+      "status": "N/A",
+      "target": "US3.8 esta asignada a U14 `inbox`: el mapa de historias dice que casi todos sus criterios son del recorrido de la vista por enlace. U2 emite y valida el enlace; la pantalla y la ruta HTTP llegan con U14."
+    },
+    {
+      "id": "AC3.8.5",
+      "status": "N/A",
+      "target": "US3.8 esta asignada a U14 `inbox`: el mapa de historias dice que casi todos sus criterios son del recorrido de la vista por enlace. U2 emite y valida el enlace; la pantalla y la ruta HTTP llegan con U14."
+    },
+    {
+      "id": "AC3.8.6",
+      "status": "N/A",
+      "target": "US3.8 esta asignada a U14 `inbox`: el mapa de historias dice que casi todos sus criterios son del recorrido de la vista por enlace. U2 emite y valida el enlace; la pantalla y la ruta HTTP llegan con U14."
+    }
+  ],
+  "reverse": [
+    {
+      "id": "BR1.5",
+      "status": "N/A",
+      "target": "Decision Q5 del diseno funcional de U2: pedir sesion para una aseguradora inexistente falla en el acto. No nace de un criterio de aceptacion; lo exige la convencion 8c de team.md, que prohibe colapsar un fallo con un resultado vacio."
+    },
+    {
+      "id": "BR1.11",
+      "status": "N/A",
+      "target": "Contrato C-30: una sola cabeza de migraciones y cada revision reversible. Es la convencion que U2 posee para las otras veinte unidades; ningun criterio de US4.11 ni de US5.7 la nombra."
+    },
+    {
+      "id": "BR3.2",
+      "status": "N/A",
+      "target": "Decision Q3 del diseno funcional de U2: el enlace es reutilizable mientras no caduque ni este revocado. El contrato C-07 no fijaba si el token se quema con el primer canje."
+    },
+    {
+      "id": "BR3.3",
+      "status": "N/A",
+      "target": "Contrato C-07 y convencion de aislamiento de la API: las cuatro causas de rechazo responden igual. Su criterio de aceptacion vive en las historias de la bandeja (U14), no en las de U2."
+    },
+    {
+      "id": "BR3.4",
+      "status": "N/A",
+      "target": "Contrato C-07: la credencial del canje nunca vive mas que el enlace. Mismo reparto que BR3.3: U2 es la duena del token, U14 de la ruta."
+    },
+    {
+      "id": "BR3.5",
+      "status": "N/A",
+      "target": "Precision de este diseno sobre components.md: la clave de navegador lleva aseguradora. La obliga FR9.1, porque sin ese campo seria la unica tabla del aplicativo fuera de la asercion de aislamiento."
+    },
+    {
+      "id": "BR3.6",
+      "status": "N/A",
+      "target": "Contrato C-11 y decision UG-3: todo dato de visitante tiene purgador declarado. U2 declara el contrato y sus dos purgadores; U20 lo ejecuta y es quien tiene los criterios."
+    },
+    {
+      "id": "BR4.1",
+      "status": "N/A",
+      "target": "Contrato C-25: una carpeta de aseguradora rota apaga solo su aseguradora. Realiza FR9.3, cuyo criterio de aceptacion no esta asignado a las historias de U2."
+    },
+    {
+      "id": "BR4.2",
+      "status": "N/A",
+      "target": "Prohibicion afirmada en project.md: ningun identificador de aseguradora literal fuera del cargador y de las fixtures. Es un chequeo del guion de verificacion, no un criterio de historia."
+    },
+    {
+      "id": "BR4.3",
+      "status": "N/A",
+      "target": "FR9.3: anadir una cuarta aseguradora es anadir una carpeta. El requisito tiene criterio propio en requirements.md, no en US4.11 ni en US5.7."
+    },
+    {
+      "id": "BR4.4",
+      "status": "N/A",
+      "target": "Contrato C-25: como evoluciona el esquema de configuracion y cuando sube la version. Convencion de compatibilidad que U2 posee para sus consumidores."
+    }
+  ]
+}

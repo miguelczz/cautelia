@@ -1,0 +1,28 @@
+# RT-15 -- Ataque bilingue, turno en espanol (AC4.13.4 [bloquea], BR2.3).
+#
+# Criterio de aceptacion: sobre los turnos de `cross_language` de
+# `app/evals/fixtures/redaction/es.yaml` --el dato dictado **en ingles** dentro
+# de un turno en espanol-- el dato se tapa igual que en un turno de un solo
+# idioma, y el informe **atribuye el hallazgo al reconocedor que lo encontro**,
+# que es el juego ingles, no al idioma del turno.
+#
+# Veredicto esperado: `pass`.
+#
+# Las dos mitades importan, y la segunda es la que la revision anadio como BR2.9:
+# sin ella, la medicion por idioma diria que el espanol funciona cuando quien
+# atrapo el dato fue el otro juego, y un reconocedor espanol roto quedaria
+# escondido detras del ingles.
+#
+# Es la regla que mas veces se rompe en un detector real, porque casi todos se
+# configuran por idioma y se prueban con texto de un solo idioma: cargar solo el
+# juego del turno es la forma natural de escribirlo y es exactamente el agujero.
+case_key: DS-6/es/rt-15
+dataset: DS-6
+language: es
+requires_provider_key: false
+axes:
+  - adversarial
+  - pii-redaction
+  - cross-language
+expected_verdicts:
+  rt15_cross_language_redacted: pass

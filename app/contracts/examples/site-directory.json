@@ -1,0 +1,56 @@
+{
+  "tenants": [
+    {
+      "tenant_id": "knotwell",
+      "display_name": "Agencia Castilla",
+      "kind": "agency",
+      "default_language": "en",
+      "example_policy": "POL-200341",
+      "example_policy_issuer": "Autos Poblado",
+      "character_key": "insurer.character.agency",
+      "brand": {
+        "accent": "#6B3E8E",
+        "accent_on_dark": "#C4A3E4",
+        "monogram": "rings"
+      },
+      "agent_name": "Isabel"
+    },
+    {
+      "tenant_id": "stonecroft",
+      "display_name": "Seguros Aburrá",
+      "kind": "carrier",
+      "default_language": "es",
+      "example_policy": "POL-100042",
+      "character_key": "insurer.character.conservative",
+      "brand": {
+        "accent": "#2C5F68",
+        "accent_on_dark": "#7DB4BD",
+        "monogram": "arch"
+      },
+      "agent_name": "Catalina"
+    },
+    {
+      "tenant_id": "sunmeadow",
+      "display_name": "Autos Poblado",
+      "kind": "carrier",
+      "default_language": "en",
+      "example_policy": "POL-200117",
+      "character_key": "insurer.character.flexible",
+      "brand": {
+        "accent": "#3A6B2A",
+        "accent_on_dark": "#A3CC86",
+        "monogram": "horizon"
+      },
+      "agent_name": "Valeria"
+    }
+  ],
+  "surfaces": [
+    "chat",
+    "voice_console",
+    "comparison",
+    "case_link",
+    "metrics_panel",
+    "spend_panel"
+  ],
+  "links": {}
+}

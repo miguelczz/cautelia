@@ -1,0 +1,26 @@
+# Heridos negados con claridad, del campo del caso a la categoria (FR6.1), turno en espanol. Quien dice que nadie se lastimo deja el insumo `injuries_present` en falso y Autos Poblado cierra directo; Stonecroft sigue en revision estandar y Knotwell sigue derivando.
+#
+# Criterio de aceptacion: sobre las filas `injuries-denied/*` de
+# `app/evals/fixtures/rules/es.yaml`, el campo `injuries` del caso se deriva a
+# `injuries_present` con la misma funcion del aplicativo y el motor real de la
+# aseguradora de cada fila da la categoria declarada en ella.
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en ingles es `DS-2/en/rules-injuries-denied`:
+# los mismos escenarios y la misma meta, medidos por idioma y nunca como promedio
+# combinado (P12).
+#
+# Lo que este caso no mide: la lectura del campo sellado en la base ni el cableado
+# del nodo `decision` (lo cubre la prueba de integracion de la cadena de fondo),
+# ni la frase que recibe la persona.
+case_key: DS-2/es/rules-injuries-denied
+dataset: DS-2
+language: es
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - rules-engine
+  - injuries-derivation
+expected_verdicts:
+  triage_from_injuries_denied: pass

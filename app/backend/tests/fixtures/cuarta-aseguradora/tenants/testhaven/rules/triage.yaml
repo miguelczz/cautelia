@@ -1,0 +1,147 @@
+# Reglas de triage de la cuarta aseguradora, la que **no se publica**.
+#
+# Son las de Stonecroft con otros identificadores, y eso es deliberado: lo que la
+# bateria de humo de U20 comprueba es que dar de alta una aseguradora sea anadir
+# una carpeta (AC5.1.1, BR1.4), no que sus reglas sean distintas. Un segundo
+# conjunto escrito a mano no probaria nada mas y seria otro archivo que
+# mantener.
+#
+# Esta carpeta vive en las fixtures y **nunca** en `app/config/tenants/`: ninguna
+# corrida del aplicativo la carga, y por eso esta aseguradora no existe para
+# nadie fuera de esta prueba.
+ruleset_version: v1
+rules:
+  - id: TST-R-01
+    version: 1
+    when: { operator: equals, field: coverage_disputed, value: true }
+    then:
+      category: referral
+      touches_money: true
+      explanation_key: rules.explain.coverage_review
+    tests:
+      - given: { coverage_disputed: true }
+        expect: true
+      - given: { coverage_disputed: false }
+        expect: false
+
+  - id: TST-R-02
+    version: 1
+    when: { operator: gte, field: claim_amount, value: 1000 }
+    then:
+      category: referral
+      touches_money: true
+      explanation_key: rules.explain.amount_review
+    tests:
+      - given: { claim_amount: 1000 }
+        expect: true
+      - given: { claim_amount: 500 }
+        expect: false
+
+  - id: TST-R-03
+    version: 1
+    when: { operator: gte, field: claim_amount, value: 10000 }
+    then:
+      category: referral
+      touches_money: true
+      explanation_key: rules.explain.high_value_review
+    tests:
+      - given: { claim_amount: 10000 }
+        expect: true
+      - given: { claim_amount: 5000 }
+        expect: false
+
+  - id: TST-R-04
+    version: 1
+    when: { operator: equals, field: injuries_present, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.injuries_reported
+    tests:
+      - given: { injuries_present: true }
+        expect: true
+      - given: { injuries_present: false }
+        expect: false
+
+  - id: TST-R-05
+    version: 1
+    when: { operator: equals, field: other_parties_data_pending, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.third_party_pending
+    tests:
+      - given: { other_parties_data_pending: true }
+        expect: true
+      - given: {}
+        expect: false
+
+  - id: TST-R-06
+    version: 1
+    when: { operator: equals, field: fraud_suspected, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.fraud_review
+    tests:
+      - given: { fraud_suspected: true }
+        expect: true
+      - given: { fraud_suspected: false }
+        expect: false
+
+  - id: TST-R-07
+    version: 1
+    when: { operator: equals, field: unlisted_driver, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.unlisted_driver_review
+    tests:
+      - given: { unlisted_driver: true }
+        expect: true
+      - given: { unlisted_driver: false }
+        expect: false
+
+  - id: TST-R-08
+    version: 1
+    when: { operator: lte, field: claim_amount, value: 999 }
+    then:
+      category: standard_review
+      touches_money: false
+      explanation_key: rules.explain.amount_noted
+    tests:
+      - given: { claim_amount: 999 }
+        expect: true
+      - given: { claim_amount: 1000 }
+        expect: false
+
+  # Dos detalles pendientes a la vez (terceros y conductor no listado): un caso
+  # mas complejo que cualquiera de los dos por separado, aunque la categoria ya
+  # sea `referral` con cualquiera de los dos solos (CG-U9-1).
+  - id: TST-R-09
+    version: 1
+    when:
+      operator: all
+      conditions:
+        - { operator: equals, field: other_parties_data_pending, value: true }
+        - { operator: equals, field: unlisted_driver, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.complex_case
+    tests:
+      - given: { other_parties_data_pending: true, unlisted_driver: true }
+        expect: true
+      - given: { other_parties_data_pending: true, unlisted_driver: false }
+        expect: false
+
+  - id: TST-R-10
+    version: 1
+    when: { always: true }
+    then:
+      category: standard_review
+      touches_money: false
+      explanation_key: rules.explain.default
+    tests:
+      - given: {}
+        expect: true

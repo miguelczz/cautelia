@@ -1,0 +1,7 @@
+# Las explicaciones que desbloquean una regresion (U21, BR2.2).
+#
+# Una explicacion sin identificadores no cuenta: `case_keys` nombra los casos
+# exactos que cambiaron y por que, con su causa raiz de la taxonomia del PRD
+# 11.3 y el commit desde el que vale. Vacio hasta la primera regresion real.
+
+explanations: []

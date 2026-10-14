@@ -1,0 +1,91 @@
+# Senales sociales del lado de la persona: saludo, agradecimiento, despedida y
+# pregunta por el avance (decision de Miguel, 2026-10-06: la agente no puede
+# sonar a contestadora; lo que la persona dice de paso se reconoce y se contesta
+# antes de seguir con lo pendiente).
+#
+# Lista versionada, plegada (minusculas, sin tildes) por el mismo `fold` que usa
+# `tone_signals.yaml`, y comparada con limite de palabra: "hola" no reconoce
+# "holanda". Se amplia **con su caso de golden set delante**, nunca adivinando:
+# una entrada demasiado ancha convierte un relato en un saludo.
+#
+# El orden de prioridad cuando un turno trae mas de una senal lo fija el codigo
+# (`social.py`): despedida, avance, agradecimiento, saludo.
+
+greeting:
+  es:
+    - hola
+    - buenos dias
+    - buen dia
+    - buenas tardes
+    - buenas noches
+    - buenas
+    - que tal
+    - saludos
+  en:
+    - hello
+    - hi
+    - hey
+    - good morning
+    - good afternoon
+    - good evening
+    - greetings
+
+thanks:
+  es:
+    - gracias
+    - muchas gracias
+    - mil gracias
+    - se lo agradezco
+    - te lo agradezco
+    - muy amable
+  en:
+    - thanks
+    - thank you
+    - thanks a lot
+    - appreciate it
+    - much appreciated
+
+goodbye:
+  es:
+    - adios
+    - hasta luego
+    - hasta pronto
+    - hasta manana
+    - chao
+    - chau
+    - nos vemos
+    - me tengo que ir
+    - sigo despues
+    - luego sigo
+    - lo retomo despues
+  en:
+    - bye
+    - goodbye
+    - see you
+    - talk later
+    - gotta go
+    - i have to go
+    - i'll continue later
+    - i will continue later
+
+progress:
+  es:
+    - cuanto falta
+    - que mas necesita
+    - que mas falta
+    - que mas le falta
+    - que le falta
+    - cuantos datos faltan
+    - falta mucho
+    - ya casi terminamos
+    - ya casi acabamos
+  en:
+    - how much is left
+    - how much longer
+    - what else do you need
+    - what else is missing
+    - what's left
+    - whats left
+    - how many more
+    - are we almost done
+    - almost done

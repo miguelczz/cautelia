@@ -1,0 +1,68 @@
+{
+  "case_key": "SEED/stonecroft/en/closed-rejected",
+  "channel": "chat",
+  "derivation_reason": "rule",
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Swerved to avoid a motorcycle and hit a pole."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Felipe Giraldo Villegas, policy POL-784054"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "No one injured"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "5th Avenue and 40th Street, Corvane"
+    },
+    "other_parties": {
+      "status": "confirmed",
+      "value": "None"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Nissan Versa 2012, plate LKP139, driven by Felipe"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-784054",
+  "record_type": "claim",
+  "resolution": "rejected",
+  "state": "closed",
+  "tenant_id": "stonecroft",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Hi, I'm Felipe Giraldo Villegas. My policy is POL-784054."
+    },
+    {
+      "speaker": "agent",
+      "text": "Was anyone hurt?"
+    },
+    {
+      "speaker": "insured",
+      "text": "No, I'm fine."
+    },
+    {
+      "speaker": "agent",
+      "text": "What happened?"
+    },
+    {
+      "speaker": "insured",
+      "text": "I swerved to avoid a motorcycle and hit a pole. Nobody else was involved."
+    },
+    {
+      "speaker": "staff",
+      "text": "I reviewed your case and it was not approved. The reason for the decision is in your case."
+    }
+  ],
+  "used_by": []
+}

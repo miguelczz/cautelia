@@ -1,0 +1,31 @@
+{
+  "case_key": "SEED/knotwell/en/identity-dictated",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "identity_and_policy": {
+      "status": "stated",
+      "value": "Camilo Muñoz Correa, policy POL-916742"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-916742",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "capturing",
+  "tenant_id": "knotwell",
+  "transcript": [
+    {
+      "speaker": "agent",
+      "text": "Could you give me your details so I can find the policy?"
+    },
+    {
+      "speaker": "insured",
+      "text": "My ID number is 70.000.003, my cell is 311 555 0175, the car's plate is VDY720 and the policy is POL-916742."
+    }
+  ],
+  "used_by": [
+    "AC4.12.1",
+    "AC4.13.1"
+  ]
+}

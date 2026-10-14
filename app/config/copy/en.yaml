@@ -1,0 +1,3868 @@
+# Copy catalog, English.
+#
+# Every phrase a person reads comes from here. None is written inline in a node,
+# an adapter or a screen (BR3.3).
+#
+# U1 ships the catalog with its checks, not with its content: each unit adds its
+# phrases when it builds the behaviour that uses them. Today there is a single
+# key, the one U1 actually consumes.
+
+evals:
+  scripted_insured:
+    unknown_field:
+      text: I don't know, I don't have that.
+      surface: system
+
+# The redaction labels (U3, BR3.2, BR3.4). The type's label appears in place of
+# the datum, **never its digits or any part of them**: no prefix, no suffix and
+# no length is left behind.
+#
+# They are written in the language of the conversation and stored **already
+# written**, so that a log line or an exported trace can be read outside the
+# application, with no catalog to resolve.
+#
+# The number tells apart two different data of the same type within the same
+# text -- the insured's phone and the witness's -- and starts over on every call:
+# keeping it across turns would require storing the correspondence between the
+# real value and its number, which is exactly the vault this unit forbids.
+redaction:
+  label:
+    license_plate:
+      text: "[PLATE {n}]"
+      surface: system
+    national_id:
+      text: "[ID {n}]"
+      surface: system
+    phone:
+      text: "[PHONE {n}]"
+      surface: system
+    policy_number:
+      text: "[POLICY {n}]"
+      surface: system
+    person:
+      text: "[NAME {n}]"
+      surface: system
+    email:
+      text: "[EMAIL {n}]"
+      surface: system
+    location:
+      text: "[LOCATION {n}]"
+      surface: system
+    unclassified:
+      text: "[DATA {n}]"
+      surface: system
+    vin:
+      text: "[VIN {n}]"
+      surface: system
+  # What is said aloud in place of a label (2026-10-13). A label is read on a screen;
+  # on a speaker it would sound like whatever the synthesizer decides. Only used when a
+  # phrase about to be spoken still carries one -- a comment an adjuster wrote and was
+  # stored masked, an explanation with a place the detector mistook for personal data.
+  # It unmasks nothing: "that name" does not say which.
+  spoken:
+    license_plate:
+      text: that plate
+      surface: system
+    national_id:
+      text: that ID
+      surface: system
+    phone:
+      text: that phone number
+      surface: system
+    policy_number:
+      text: that policy
+      surface: system
+    person:
+      text: that name
+      surface: system
+    email:
+      text: that email address
+      surface: system
+    location:
+      text: that place
+      surface: system
+    unclassified:
+      text: that detail
+      surface: system
+    vin:
+      text: that serial number
+      surface: system
+  # What an output point answers with when redaction could not run. The
+  # unredacted text does not come out: this does. Failing closed is the only
+  # option allowed here.
+  degraded:
+    text: I can't show this text right now.
+    surface: system
+
+# Case labels (U4, SEC-U4.15, BR3.6, AC4.10.2). No output ever prints the
+# internal value of a state, a resolution, a record type or a derivation
+# reason: `awaiting_insured` is not text for a person to read.
+#
+# The mapping from each enum value to its key lives in a single file of the
+# code, next to the enum definition, so there are never two lists that can say
+# different things.
+case:
+  # `waiting` **no esta aqui, y su ausencia es la decision**: el diseno listaba
+  # "un momento" como un cuarto estado, y el protocolo no tiene tal estado. Lo que
+  # ese cuarto estado queria --que la frase de espera se lea y no solo se oiga--
+  # ya se cumple, porque cada cosa que la agente dice viaja tambien como
+  # transcripcion. Una etiqueta generica en su lugar diria menos que la frase.
+  state:
+    open:
+      text: Open
+      surface: inbox
+    capturing:
+      text: Taking details
+      surface: inbox
+    verifying:
+      text: Checking the policy
+      surface: inbox
+    deciding:
+      text: Under review
+      surface: inbox
+    derived:
+      text: With an adjuster
+      surface: inbox
+    awaiting_insured:
+      text: Waiting on the insured
+      surface: inbox
+    closed:
+      text: Closed
+      surface: inbox
+  resolution:
+    registered:
+      text: Registered
+      surface: inbox
+    approved:
+      text: Approved
+      surface: inbox
+    rejected:
+      text: Rejected
+      surface: inbox
+    sent_to_insurer:
+      text: Sent to the insurer
+      surface: inbox
+  record_type:
+    claim:
+      text: Claim
+      surface: inbox
+    coverage_inquiry:
+      text: Coverage question
+      surface: inbox
+    quote_request:
+      text: Quote request
+      surface: inbox
+  derivation_reason:
+    demo_limit:
+      text: The demo reached its limit
+      surface: inbox
+    person_requested:
+      text: The person asked to speak with someone
+      surface: inbox
+    rule:
+      text: A rule sent this for review
+      surface: inbox
+  # Shown in place of a field that could not be decrypted. The case still
+  # opens and the field is marked: a case that will not open only says that
+  # something happened; one with a flagged gap can still be worked on.
+  field_unavailable:
+    text: Unavailable — encrypted with a key this server does not have
+    surface: inbox
+  # The labels of the eight case fields, shown by the inbox in its completeness
+  # block (U14, BR2.1). The map from each field key to its copy key lives in
+  # `case_record/labels.py`, beside the ones for the enums, and its test compares
+  # both sets in both directions.
+  field:
+    identity_and_policy:
+      text: Name and policy
+      surface: inbox
+    incident_datetime:
+      text: When it happened
+      surface: inbox
+    location:
+      text: Where it happened
+      surface: inbox
+    description:
+      text: What happened
+      surface: inbox
+    vehicle_and_driver:
+      text: Vehicle and driver
+      surface: inbox
+    other_parties:
+      text: Other parties
+      surface: inbox
+    injuries:
+      text: Injuries
+      surface: inbox
+    question_asked:
+      text: The question that was asked
+      surface: inbox
+    driver_name:
+      text: Driver's name
+      surface: inbox
+    driver_birth_date:
+      text: Driver's date of birth
+      surface: inbox
+    license_years:
+      text: Years licensed
+      surface: inbox
+    license_jurisdiction:
+      text: City where the license was issued
+      surface: inbox
+    vehicle_year:
+      text: Vehicle year
+      surface: inbox
+    vehicle_make:
+      text: Vehicle make
+      surface: inbox
+    vehicle_model:
+      text: Vehicle model
+      surface: inbox
+    vin:
+      text: VIN
+      surface: inbox
+    salvage_title:
+      text: Declared a total loss
+      surface: inbox
+    vehicle_age_years:
+      text: Vehicle age in years
+      surface: inbox
+    use_type:
+      text: Vehicle use
+      surface: inbox
+    annual_mileage_band:
+      text: Annual mileage
+      surface: inbox
+    garaging_jurisdiction:
+      text: City where the vehicle is kept
+      surface: inbox
+    at_fault_losses_3y:
+      text: At-fault accidents in three years
+      surface: inbox
+    claims_3y:
+      text: Claims reported in three years
+      surface: inbox
+    prior_coverage_active:
+      text: Active insurance today
+      surface: inbox
+    lapse_months:
+      text: Months without coverage
+      surface: inbox
+  # The channel the case came in through. It is the same token that names the node
+  # and the trace label; what is read here comes from the catalogue, never the enum.
+  channel:
+    voice:
+      text: Call
+      surface: inbox
+    chat:
+      text: Chat
+      surface: inbox
+
+# Quota and budget rejection reasons (U5, BR5.3, BR4.4, AC5.14.3). No surface
+# ever prints the enum value: `rate_limited_site` is not text for a person to
+# read. The mapping from each reason to its key lives in a single file of the
+# code, next to the enum definition.
+#
+# `budget_exhausted` carries the English side of the sentence AC5.14.3 fixes,
+# which is at once the quota reason and the message the voice cuts with before
+# asking for the microphone. One key for both: two entries with the same text is
+# how they stop saying the same thing.
+spend:
+  quota:
+    rate_limited_session:
+      text: This conversation reached its message limit. Start a new one to keep going.
+      surface: chat
+    rate_limited_daily:
+      text: You reached today's limit. Come back tomorrow and we'll pick it up.
+      surface: chat
+    rate_limited_site:
+      text: The demo reached today's call quota. Come back tomorrow and we'll pick it up.
+      surface: voice
+    budget_exhausted:
+      text: The voice demo reached its budget and is not taking calls. Chat is still available.
+      surface: voice
+
+# The three states of the trace summary the chat shows next to each answer (U5,
+# BR6.7). `lost` is a value, not a failure: its sentence says the trace never
+# arrived, not that something broke.
+trace:
+  summary:
+    recording:
+      text: Recording…
+      surface: chat
+    ready:
+      text: Ready
+      surface: chat
+    lost:
+      text: The trace for this answer never arrived
+      surface: chat
+  page:
+    title:
+      text: How this was answered
+      surface: chat
+    nodes:
+      text: Steps taken
+      surface: chat
+    clauses:
+      text: Clauses retrieved and verified
+      surface: chat
+    latency:
+      text: Response time
+      surface: chat
+    cost:
+      text: Cost
+      surface: chat
+    not_measured:
+      text: Not measured
+      surface: chat
+    recording_hint:
+      text: This is still being recorded. The page refreshes on its own.
+      surface: chat
+    nothing_here:
+      text: There is nothing to show here.
+      surface: chat
+    milliseconds:
+      text: "{value} ms"
+      surface: chat
+    back:
+      text: Back to the conversation
+      surface: chat
+  # Cada paso con lo que hizo, sin su nombre interno (fase 3, 2026-10-08).
+  node:
+    intake:
+      text: Understand what you said and record it
+      surface: chat
+    policy_verification:
+      text: Search and check your policy
+      surface: chat
+    decision:
+      text: Prepare the case for the adjuster
+      surface: chat
+    compliance:
+      text: Check compliance
+      surface: chat
+
+# --- The interface shell (U6) --------------------------------------------------
+#
+# Same keys as `es.yaml` (BR3.1). The home page copy only describes what is
+# built (BR4.1, BR4.3).
+
+shell:
+  skip_to_content:
+    text: Skip to content
+    surface: system
+  brand_name:
+    text: Cautelia
+    surface: system
+  nav_label:
+    text: Main navigation
+    surface: system
+  nav:
+    landing:
+      text: Back to site
+      surface: system
+  # El boton que, en telefono, abre la navegacion y los dos selectores (2026-10-08).
+  menu:
+    button:
+      text: Menu
+      surface: system
+  loading:
+    text: Loading
+    surface: system
+  language:
+    group:
+      text: Language
+      surface: system
+    es:
+      text: Español
+      surface: system
+    en:
+      text: English
+      surface: system
+    changed:
+      text: "Language: English"
+      surface: system
+  theme:
+    group:
+      text: Color mode
+      surface: system
+    light:
+      text: Light
+      surface: system
+    dark:
+      text: Dark
+      surface: system
+  footer:
+    demo:
+      text: Portfolio demonstration with synthetic data.
+      surface: system
+    made_by:
+      text: Created by {name}
+      surface: system
+    linkedin:
+      text: LinkedIn
+      surface: system
+    linkedin_label:
+      text: "{name} on LinkedIn (opens in a new tab)"
+      surface: system
+    github:
+      text: GitHub
+      surface: system
+    github_label:
+      text: "{name} on GitHub (opens in a new tab)"
+      surface: system
+
+# Telemetry (2026-10-09): one link with two tabs, spend and results. The spend
+# dashboard is public and describes cases without their number. An unpriced
+# amount never carries a zero (BR1.2) and every total says how many requests
+# could not be measured (BR3.5).
+telemetry:
+  title:
+    text: "Telemetry"
+    surface: system
+  lead:
+    text: "What it costs to serve each person and how well the agent does it, with the real figures from this demo."
+    surface: system
+  tab_cost:
+    text: "What it costs"
+    surface: system
+  tab_quality:
+    text: "How well it works"
+    surface: system
+
+# El tablero "Que tan bien funciona" (2026-10-11): la ultima corrida completa de
+# evaluacion, como salio. Palabras llanas: quien llega no sabe que es un golden set.
+quality:
+  loading:
+    text: "Loading the latest evaluation"
+    surface: system
+  empty:
+    text: "No full evaluation has been saved yet, so nothing here is measured."
+    surface: system
+  intro:
+    text: "We test the agent with {total} situations written in advance, the same ones in Spanish and in English: crash reports, policy questions and attempts to trick it. This is how it did in the last evaluation."
+    surface: system
+  run:
+    when:
+      text: "Last evaluation: {when}"
+      surface: system
+    commit:
+      text: "Code {commit}"
+      surface: system
+    duration:
+      text: "Took {minutes} min"
+      surface: system
+    models:
+      text: "Models:"
+      surface: system
+    dirty:
+      text: "It ran with unsaved changes: the named code does not fully describe what was measured."
+      surface: system
+    not_comparable:
+      text: "Some situations could not be measured, so this run is not compared with others."
+      surface: system
+    details:
+      text: "Technical details of the evaluation"
+      surface: system
+  lang:
+    es:
+      text: "In Spanish"
+      surface: system
+    en:
+      text: "In English"
+      surface: system
+  totals:
+    passed:
+      text: "{passed} of {total}"
+      surface: system
+    hint:
+      text: "situations handled well"
+      surface: system
+  legend:
+    passed:
+      text: "Passed"
+      surface: system
+    failed:
+      text: "Failed"
+      surface: system
+    not_measured:
+      text: "Not measured"
+      surface: system
+  count:
+    failed:
+      text: "{count} failed"
+      surface: system
+    not_measured:
+      text: "{count} not measured"
+      surface: system
+  datasets:
+    title:
+      text: "Result by type of test"
+      surface: system
+  dataset:
+    ds2:
+      name:
+        text: "Report conversations"
+        surface: system
+      help:
+        text: "It understands what it is told, asks for what is missing and notes it correctly."
+        surface: system
+    ds3:
+      name:
+        text: "Policy questions"
+        surface: system
+      help:
+        text: "It answers with the clause that belongs to that policy."
+        surface: system
+    ds4:
+      name:
+        text: "Quotes"
+        surface: system
+      help:
+        text: "It asks for the quote details and does not promise a price."
+        surface: system
+    ds6:
+      name:
+        text: "Attempts to trick it"
+        surface: system
+      help:
+        text: "Pressure, hidden instructions and insults to make it say what it must not."
+        surface: system
+    ds8:
+      name:
+        text: "Isolation and wording"
+        surface: system
+      help:
+        text: "What gets published and what keeps one insurer apart from another."
+        surface: system
+    other:
+      name:
+        text: "Other tests"
+        surface: system
+      help:
+        text: "Tests from another set."
+        surface: system
+  gates:
+    title:
+      text: "Rules that cannot be broken"
+      surface: system
+    lead:
+      text: "A single failure in any of them and the version is not published."
+      surface: system
+  gate:
+    citations:
+      text: "It does not make up clauses"
+      surface: system
+    no_promises:
+      text: "It does not promise coverage, payments or fault"
+      surface: system
+    personal_data:
+      text: "It stores personal data masked"
+      surface: system
+    isolation:
+      text: "One insurer cannot see another one's cases"
+      surface: system
+    conduct:
+      text: "It handles emergencies and insults properly"
+      surface: system
+    content:
+      text: "It does not claim to meet standards or copy other texts"
+      surface: system
+    all_passed:
+      text: "{total} of {total}"
+      surface: system
+    some_failed:
+      text: "{failed} of {total} failed"
+      surface: system
+    not_measured:
+      text: "Not measured"
+      surface: system
+  failures:
+    title:
+      text: "What failed"
+      surface: system
+    none:
+      text: "No situation failed in this run."
+      surface: system
+    blocking:
+      text: "Breaks a hard rule"
+      surface: system
+    reference:
+      text: "Reference"
+      surface: system
+    cause:
+      text: "Cause"
+      surface: system
+  cause:
+    extraction:
+      text: "it noted a detail wrong"
+      surface: system
+    retrieval:
+      text: "it did not find the clause"
+      surface: system
+    verification:
+      text: "the citation check"
+      surface: system
+    rules:
+      text: "the insurer's rules"
+      surface: system
+    style:
+      text: "the way it was said"
+      surface: system
+    latency:
+      text: "it took too long"
+      surface: system
+    provider_error:
+      text: "the provider returned something unusable"
+      surface: system
+    infrastructure:
+      text: "an infrastructure failure"
+      surface: system
+    not_built:
+      text: "a behaviour that is not built yet"
+      surface: system
+    unknown:
+      text: "no cause recorded yet"
+      surface: system
+  pending:
+    title:
+      text: "What was not measured"
+      surface: system
+    lead:
+      text: "Not measured is not the same as fine. That is why it is listed apart, with its reason."
+      surface: system
+    none:
+      text: "Everything this run tried to measure was measured."
+      surface: system
+    count:
+      text: "{count} situations:"
+      surface: system
+    provider_unavailable:
+      text: "the model provider did not respond"
+      surface: system
+    provider_timeout:
+      text: "the model took longer than the deadline"
+      surface: system
+    quota_exhausted:
+      text: "the provider quota ran out"
+      surface: system
+    budget_exhausted:
+      text: "the spending cap was reached"
+      surface: system
+    runner_timeout:
+      text: "the test ran longer than allowed"
+      surface: system
+    provider_key_missing:
+      text: "the provider key is missing"
+      surface: system
+    target_unavailable:
+      text: "what is tested was not available, for example the published site"
+      surface: system
+    other:
+      text: "another reason"
+      surface: system
+    always:
+      voice:
+        text: "Voice speed is measured separately, with recorded calls, and no measurement is published yet."
+        surface: system
+      chat:
+        text: "Chat speed has no way of being measured yet."
+        surface: system
+
+spend_panel:
+  loading:
+    text: "Loading the spend"
+    surface: system
+  not_measured:
+    text: "No price"
+    surface: system
+  tokens:
+    count:
+      text: "{amount} tokens"
+      surface: system
+    also:
+      text: "+ {amount} tokens"
+      surface: system
+    free_plan:
+      text: "free plan"
+      surface: system
+    lookup_one:
+      text: "1 lookup"
+      surface: system
+    lookups:
+      text: "{count} lookups"
+      surface: system
+    also_lookups:
+      text: "+ {lookups}"
+      surface: system
+  kpi:
+    total:
+      text: "Spent in total"
+      surface: system
+    total_hint:
+      text: "Since {date}: what this demo has recorded, at list price, plus the adjustments entered when comparing against what each provider charges."
+      surface: system
+    budget:
+      text: "Budget used"
+      surface: system
+    budget_hint:
+      text: "{spent} of {cap}. The alert goes off at {alert}."
+      surface: system
+    per_call:
+      text: "One call costs"
+      surface: system
+    per_call_hint:
+      text: "On average. Calls measured: {count}."
+      surface: system
+    per_chat:
+      text: "One chat costs"
+      surface: system
+    per_chat_hint:
+      text: "On average. Conversations with a case: {count}."
+      surface: system
+    none_yet:
+      text: "No data yet"
+      surface: system
+    none_hint:
+      text: "It shows up as soon as someone uses it."
+      surface: system
+  status_value:
+    ok:
+      text: "Below the alert"
+      surface: system
+    alerted:
+      text: "Past the alert; the demo is still open"
+      surface: system
+    exhausted:
+      text: "Reached the cap; whatever costs money is paused"
+      surface: system
+    unmeasured:
+      text: "How much is left can't be calculated"
+      surface: system
+  daily:
+    title:
+      text: "Spend per day"
+      surface: system
+    lead:
+      text: "The last 30 days, split by activity."
+      surface: system
+    bar:
+      text: "{date}: {amount}"
+      surface: system
+    quiet:
+      text: "No spend in these 30 days."
+      surface: system
+  activity:
+    title:
+      text: "Where it goes"
+      surface: system
+    lead:
+      text: "Everything spent since the project started, by activity."
+      surface: system
+    calls:
+      text: "Calls"
+      surface: system
+    calls_help:
+      text: "Transcribing what you say, understanding it and answering with a voice."
+      surface: system
+    chat:
+      text: "Chat"
+      surface: system
+    chat_help:
+      text: "Understanding each message and writing the reply."
+      surface: system
+    quality_tests:
+      text: "Quality tests"
+      surface: system
+    quality_tests_help:
+      text: "The test conversations that measure how well the agent works."
+      surface: system
+    policy_reading:
+      text: "Policy reading"
+      surface: system
+    policy_reading_help:
+      text: "Searching the policies for the clause that answers a question."
+      surface: system
+    operations:
+      text: "Operations"
+      surface: system
+    operations_help:
+      text: "Upkeep tasks for the demo."
+      surface: system
+    share:
+      text: "{percent} of the total"
+      surface: system
+  provider:
+    models:
+      text: "Models:"
+      surface: system
+    title:
+      text: "Who charges"
+      surface: system
+    lead:
+      text: "Each provider does one part of the job."
+      surface: system
+    anthropic:
+      text: "Anthropic"
+      surface: system
+    anthropic_role:
+      text: "Claude understands what you say and writes the reply."
+      surface: system
+    deepgram:
+      text: "Deepgram"
+      surface: system
+    deepgram_role:
+      text: "Turns your voice into text during the call."
+      surface: system
+    cartesia:
+      text: "Cartesia"
+      surface: system
+    cartesia_role:
+      text: "Gives the agent its voice."
+      surface: system
+    gemini:
+      text: "Gemini"
+      surface: system
+    gemini_role:
+      text: "Reads the policies to find the clause, on its free plan."
+      surface: system
+  window:
+    title:
+      text: "Demo budget"
+      surface: system
+    lead:
+      text: "The demo has a spending cap for a 90-day window. It warns before reaching it, and at the cap it pauses whatever costs money."
+      surface: system
+    range:
+      text: "From {start} to {end}"
+      surface: system
+    remaining:
+      text: "{amount} left"
+      surface: system
+    none:
+      text: "There is no current budget window, so there is no running total to show."
+      surface: system
+    cap_label:
+      text: "Cap {amount}"
+      surface: system
+    alert_label:
+      text: "Alert {amount}"
+      surface: system
+  cases:
+    title:
+      text: "What each case cost"
+      surface: system
+    lead:
+      text: "Pick a case to see what it cost and who charged. They're described without their number, because they belong to people who used the demo."
+      surface: system
+    label:
+      text: "Case"
+      surface: system
+    describe:
+      text: "{type} with {insurer}, by {channel} · {when}"
+      surface: system
+    describe_comparison:
+      text: "Comparison of {count} insurers · {when}"
+      surface: system
+    describe_comparison_one:
+      text: "Comparison with {insurer} · {when}"
+      surface: system
+    comparison_hint:
+      text: "One question sent to {count} insurers at once."
+      surface: system
+    mine:
+      text: "Yours"
+      surface: system
+    yours:
+      text: "Your case"
+      surface: system
+    type_claim:
+      text: "Claim"
+      surface: system
+    type_coverage_inquiry:
+      text: "Coverage question"
+      surface: system
+    type_quote_request:
+      text: "Quote"
+      surface: system
+    channel_chat:
+      text: "chat"
+      surface: system
+    channel_voice:
+      text: "call"
+      surface: system
+    empty:
+      text: "No cases with spend yet. Talk to the agent by chat or by call and your case will show up here."
+      surface: system
+
+surface:
+  telemetry:
+    text: "Telemetry"
+    surface: system
+  comparison:
+    text: Compare insurers
+    surface: system
+
+# La vista de comparacion (U23): todo lo que se lee en ella. Ninguna frase
+# afirma cobertura ni explica por que dos columnas difieren (BR3.2).
+comparison:
+  page:
+    title:
+      text: "Compare insurers"
+      surface: system
+    lead:
+      text: "The same question, three insurers. Each one answers from its own policy and shows the clause it relies on."
+      surface: system
+    loading:
+      text: "Loading the insurers…"
+      surface: system
+  # What the screen says about itself before anything is typed: who answers in
+  # each column and that this is a demo. It is the block the server records as this
+  # surface's disclosure (`comparison.disclosure`).
+  disclosure:
+    assistant:
+      text: "Answered by {agent}"
+      surface: system
+    demo:
+      text: "Demo with sample policies; AI assistants answer. Please do not type real personal data. Each question counts as three messages."
+      surface: system
+    incomplete:
+      text: "We could not load each insurer's sample policy, so you cannot ask a question yet."
+      surface: system
+  # The question already asked. It is remembered in this browser for 24 hours,
+  # because the demo's data resets every night.
+  asked:
+    label:
+      text: "Your question"
+      surface: system
+    meta:
+      text: "Asked: {when}. Saved in this browser for 24 hours."
+      surface: system
+    new:
+      text: "New question"
+      surface: system
+  examples:
+    title:
+      text: "Example questions"
+      surface: system
+    rental_car:
+      text: "Will you pay for a rental car while mine is being repaired?"
+      surface: system
+    hail:
+      text: "Does my policy cover hail damage?"
+      surface: system
+    uninsured_driver:
+      text: "What happens if I am hit by someone with no insurance?"
+      surface: system
+    stolen_keys:
+      text: "Am I covered if my car is stolen with the keys inside?"
+      surface: system
+    ride_app:
+      text: "Am I covered if I use my car for a ride-hailing app?"
+      surface: system
+    blown_tire:
+      text: "Am I covered if a tire blows out?"
+      surface: system
+    passenger_medical:
+      text: "Does my policy pay my passengers' medical bills?"
+      surface: system
+    lend_car:
+      text: "Am I covered if I lend my car to a friend?"
+      surface: system
+  composer:
+    label:
+      text: "Your coverage question"
+      surface: system
+    send:
+      text: "Ask all three"
+      surface: system
+  out_of_scope:
+    explanation:
+      text: "This view compares coverage answers. To report a claim, open the insurer's chat:"
+      surface: system
+    chat_link:
+      text: "{insurer} chat"
+      surface: system
+  state:
+    loading:
+      text: "Checking"
+      surface: system
+    answered:
+      text: "Answered"
+      surface: system
+    failed:
+      text: "Could not check"
+      surface: system
+    interrupted:
+      text: "No answer"
+      surface: system
+    rejected:
+      text: "Limit reached"
+      surface: system
+  column:
+    # The line sits at the foot of the card, right above the clauses, and not in the
+    # header (2026-10-12): that is where it says which policy they belong to.
+    policy:
+      text: "Clauses of policy {policy}"
+      surface: system
+    policy_issued_by:
+      text: "Clauses of policy {policy}, issued by {issuer}"
+      surface: system
+    idle:
+      text: "Its answer and the clause it relies on will appear here."
+      surface: system
+    loading:
+      text: "Checking {insurer}'s policy…"
+      surface: system
+    failed:
+      text: "We could not check {insurer}'s policy."
+      surface: system
+    interrupted:
+      text: "The answer did not arrive before you left the page."
+      surface: system
+    retry:
+      text: "Ask again"
+      surface: system
+    rejected_title:
+      text: "A limit was reached"
+      surface: system
+
+site:
+  link:
+    readme:
+      text: How it's built
+      surface: system
+    video:
+      text: Watch the video
+      surface: system
+
+home:
+  title_neutral:
+    text: Cautelia demo
+    surface: system
+  title:
+    text: Report an accident and ask about your policy.
+    surface: system
+  demo_line:
+    # "Companies" and not "insurers": right below, the section title says "Choose an
+    # insurer", and repeating the word on two consecutive lines reads badly.
+    text: "A demo with fictional companies."
+    surface: system
+  no_channels:
+    text: The demo has no open channels yet. For now you can meet the insurers and their sample policies.
+    surface: system
+  loading:
+    text: Loading the insurers
+    surface: system
+  how:
+    # The label of the button that leads to the guide; the three sentences below are
+    # the title of the insurers section, depending on the mounted channels.
+    title:
+      text: How it works
+      surface: system
+    report_chat:
+      text: Choose an insurer and tell us what happened by chat.
+      surface: system
+    report_voice:
+      text: Choose an insurer and tell us what happened by voice.
+      surface: system
+    report_both:
+      text: Choose an insurer and tell us what happened, by chat or by voice.
+      surface: system
+  insurers:
+    title:
+      text: The insurers in this demo
+      surface: system
+  action:
+    chat:
+      text: Open chat
+      surface: system
+    chat_with:
+      text: Open chat with {insurer}
+      surface: system
+    voice:
+      text: Call
+      surface: system
+    voice_with:
+      text: Call {insurer}
+      surface: system
+    policies:
+      text: View policies
+      surface: system
+    policies_of:
+      text: View {insurer} policies
+      surface: system
+# The "How it works" guide (/how-it-works): the journey step by step and the
+# instructions for whoever wants to try the demo. Each step is drawn only if what it
+# describes is mounted (BR4.1).
+guide:
+  title:
+    text: How it works
+    surface: system
+  about:
+    what:
+      text: "Cautelia is a demo of an AI agent for auto insurance. It helps someone who has just had a crash: it gathers what happened, builds the case and answers policy questions, showing the clause it relies on."
+      surface: system
+    limit:
+      text: "The agent does not decide coverage or payments: an adjuster signs that. In this demo, the adjuster is you."
+      surface: system
+    sample:
+      text: "Everything is sample data: the insurers are fictional, and the policies and details are made up."
+      surface: system
+  steps:
+    title:
+      text: The path
+      surface: system
+    choose:
+      title:
+        text: Pick an insurer
+        surface: system
+      body:
+        text: Each one comes with its sample policy. You can try several.
+        surface: system
+    report:
+      title:
+        text: Tell what happened
+        surface: system
+      both:
+        text: By chat or by voice, in your own words.
+        surface: system
+      chat:
+        text: By chat, in your own words.
+        surface: system
+      voice:
+        text: By voice, in your own words.
+        surface: system
+      policy:
+        text: When it asks for your policy, use the sample one.
+        surface: system
+    link:
+      title:
+        text: Get your case
+        surface: system
+      body:
+        text: The agent asks for what is missing and gives you the link to your case.
+        surface: system
+    decide:
+      title:
+        text: Decide as the adjuster
+        surface: system
+      body:
+        text: With that link you decide your own case, as an adjuster would.
+        surface: system
+  try:
+    title:
+      text: What else you can try
+      surface: system
+    ask_coverage:
+      text: Ask whether your policy covers something and open the clause it cites.
+      surface: system
+    interrupt:
+      text: On the call, interrupt the agent while it is speaking.
+      surface: system
+    compare:
+      text: Ask all the insurers the same question at once.
+      surface: system
+    cases:
+      text: See sample cases the way an adjuster sees them.
+      surface: system
+    telemetry:
+      text: See what each conversation costs and how well the agent answers.
+      surface: system
+  differences:
+    title:
+      text: What changes between insurers
+      surface: system
+    same:
+      text: They all ask the same questions. What changes is who helps you and what happens to your report.
+      surface: system
+    agent:
+      text: "{agent} helps you."
+      surface: system
+    tip:
+      text: To notice it, report the same crash to two of them.
+      surface: system
+  start:
+    text: Choose an insurer
+    surface: system
+
+insurer:
+  # The name the assistant introduces herself with. One name for all three, by
+  # Miguel's decision of 2026-09-28, consistent with the already-taken decision of
+  # a single bilingual voice (D-016). It is a recorded deviation from AC1.1.1's
+  # example, which named "Valentina" for Stonecroft: the criterion is met in
+  # substance —the first message says who is speaking and that it is an
+  # artificial intelligence— and not in the name its example used.
+  #
+  # It lives in the catalogue and not in configuration because it is visible text.
+  agent:
+    name:
+      text: Catalina
+      surface: chat
+  character:
+    conservative:
+      text: "Cautious: an adjuster reviews every case before it is closed."
+      surface: system
+    flexible:
+      text: "Agile: closes simple reports on its own, like a crash with no injuries, and also offers quotes."
+      surface: system
+    agency:
+      text: "Agency: it does not decide cases, it passes them to the insurer that issued the policy."
+      surface: system
+
+status:
+  unavailable:
+    title:
+      text: The demo isn't available right now
+      surface: system
+    body:
+      text: We waited a minute and it didn't respond. You can try again.
+      surface: system
+  link_invalid:
+    title:
+      text: This link isn't valid
+      surface: system
+    body:
+      text: Check that you copied all of it, or ask for a new one in the conversation where you created the case.
+      surface: system
+  link_expired:
+    title:
+      text: This link has expired
+      surface: system
+    body:
+      text: Your case stays saved until tonight's reset. Ask for a new link in the same conversation, from the browser where you created it.
+      surface: system
+  data_reset:
+    title:
+      text: This data no longer exists
+      surface: system
+    body:
+      text: The demo data is deleted every night.
+      surface: system
+  not_found:
+    title:
+      text: We couldn't find this page
+      surface: system
+    body:
+      text: Check the address or go back to the demo home.
+      surface: system
+  service_unavailable:
+    title:
+      text: The service isn't available right now
+      surface: system
+    body:
+      text: Try again in a few minutes.
+      surface: system
+
+action:
+  go_home:
+    text: Go to the home page
+    surface: system
+  retry:
+    text: Try again
+    surface: system
+  back_to_conversation:
+    text: Back to the conversation
+    surface: system
+  start_over:
+    text: Start over
+    surface: system
+
+problem:
+  validation_failed:
+    text: Check the details you sent and try again.
+    surface: system
+  not_found:
+    text: We couldn't find what you were looking for.
+    surface: system
+  forbidden_origin:
+    text: We couldn't complete the action from this page. Reload it and try again.
+    surface: system
+  link_invalid:
+    text: This link isn't valid. Ask for a new one in the conversation where you created the case.
+    surface: system
+  conflict:
+    text: This action had already been recorded.
+    surface: system
+  # El estado de lo que se pidio no admite la accion: un caso ya decidido,
+  # uno cerrado, una accion que esa aseguradora no ofrece. Distinto de
+  # `conflict`, que es una clave de idempotencia reusada: aquella dice "ya lo
+  # hiciste" y esta dice "esto ya no se puede".
+  conflict_state:
+    text: This case no longer accepts that action. Reload to see how it ended up.
+    surface: system
+  unverifiable:
+    text: We couldn't check this right now. Try again in a few minutes.
+    surface: system
+  service_unavailable:
+    text: The service isn't available right now. Try again in a few minutes.
+    surface: system
+
+demo:
+  notice:
+    label:
+      text: Demo notice
+      surface: system
+    more:
+      text: More information
+      surface: system
+    less:
+      text: Less information
+      surface: system
+  # The nightly reset of the demo data (U20, US5.15).
+  reset:
+    # What a live conversation reads when the reset deletes its case (AC5.15.3):
+    # its next message opens a new case, with no error.
+    conversation_notice:
+      text: The demo was reset and your previous case no longer exists. Your next message opens a new case.
+      surface: chat
+    # What someone arriving reads after 24 hours without a successful reset
+    # (AC5.15.5). It promises no return time: it doesn't know one.
+    surfaces_closed:
+      text: The demo isn't accepting new cases for now, because the last data reset didn't complete. Please come back in a few hours.
+      surface: system
+
+# --- Los controles de cumplimiento (U10) ---------------------------------------
+#
+# La pareja de `es.yaml`; por que las fijas van literales y por que ninguna puede
+# disparar la guardia esta explicado alla. La de derivacion en ingles es el texto
+# aprobado del PRD (recorrido 7.x), la contraparte de AC1.9.1.
+compliance:
+  guard:
+    coverage_promise:
+      text: I can't confirm coverage myself; an adjuster confirms it with the exact clause.
+      surface: chat
+    amount:
+      text: I can't give you amounts or figures; an adjuster sets them when reviewing your case.
+      surface: chat
+    fault:
+      text: I'm recording the facts as you told me; the adjuster reviews who is responsible.
+      surface: chat
+    legal_advice:
+      text: That's best discussed with the adjuster; I'll record what happened.
+      surface: chat
+    transfer_or_deadline:
+      text: An adjuster reviews your case with everything we've recorded. I can't give you an exact timeframe.
+      surface: chat
+    config_disclosure:
+      text: I can't share that information. Shall we continue with your claim or your policy?
+      surface: chat
+    degraded:
+      text: I couldn't prepare that answer. Could you say it again, please?
+      surface: chat
+  # AC1.10.2.
+  identity:
+    answer:
+      text: No, I'm an AI assistant. I'll help you with all of this, and if you'd rather, I'll pass your case to an adjuster.
+      surface: chat
+  # AC1.6.3.
+  emergency:
+    public:
+      text: If someone is seriously hurt, call your local emergency number now. This is a demo and can't send help.
+      surface: chat
+    local:
+      text: If someone is seriously hurt, call 911 now. Once everyone is safe, we can continue with the report.
+      surface: chat
+  handoff:
+    adjuster_review:
+      text: Of course. I'm passing this to an adjuster with everything we've captured so you won't have to repeat it.
+      surface: chat
+    # En una consulta nadie conto nada: la frase de toda derivacion decia "con lo que
+    # me conto" (2026-10-08).
+    adjuster_review_inquiry:
+      text: "Done: an adjuster reviews your question with the clause we found. I am passing everything along so you do not have to repeat it."
+      surface: chat
+  # AC1.17.2.
+  closure:
+    direct:
+      text: Your claim is registered and doesn't need an adjuster's review. Here's the link to see your case.
+      surface: chat
+  finding:
+    disclosure_missing:
+      text: The record that the agent said it is an AI is missing.
+      surface: inbox
+    human_route_missed:
+      text: The person asked to speak with someone and the case wasn't handed off on the next turn.
+      surface: inbox
+    pii_found:
+      text: The transcript has personal data that wasn't masked.
+      surface: inbox
+    attachment_missing:
+      text: Case attachments are missing, among the transcript, the citations, the fired rules and the trace ID.
+      surface: inbox
+
+# An insurer's voice turned off (U15, BR2.2, AC5.10.4).
+voice:
+  # Probar el microfono sin llamar (2026-10-09): mismo camino que la llamada, gratis.
+  mic_check:
+    start:
+      text: "Test microphone"
+      surface: voice
+    listening:
+      text: "Listening… say something"
+      surface: voice
+    failed:
+      text: "Couldn't open the microphone. Check the browser permission."
+      surface: voice
+    device:
+      text: "Microphone the browser is using: {device}"
+      surface: voice
+    ok:
+      text: "Sound is coming through: the call will hear you."
+      surface: voice
+    silent:
+      text: "No sound is coming through. Pick another microphone below and test again, or check the browser's permission in your system settings."
+      surface: voice
+    detail:
+      text: "Peak level {peak} · {rate} Hz · muted by the system: {muted}"
+      surface: voice
+    answer_yes:
+      text: "yes"
+      surface: voice
+    answer_no:
+      text: "no"
+      surface: voice
+    choose:
+      text: "Microphone for the call"
+      surface: voice
+    browser_default:
+      text: "Whatever the browser picks"
+      surface: voice
+  availability:
+    not_configured:
+      text: Voice isn't set up for this insurer yet. Chat is still available.
+      surface: voice
+    misconfigured:
+      text: Voice is off for this insurer because of a configuration error. Chat is still available.
+      surface: voice
+    rate_limited_daily:
+      text: You've used your calls for today from this connection; you can call again tomorrow. Chat is still available.
+      surface: voice
+    rate_limited_site:
+      text: All of today's demo calls have been used; come back tomorrow or use the chat.
+      surface: voice
+
+
+  # La consola de llamada (U16, tanda 6). Todo lo que se **oye** tambien se
+  # **lee**: la transcripcion en vivo es el equivalente textual de la llamada, y
+  # es lo que hace que esta pantalla se pueda usar sin oir nada.
+  #
+  # `mic_denied` y `mic_help` son el camino de BR1.2: el permiso se pide **antes**
+  # de abrir la sesion, asi que negarlo no deja ni llamada ni caso, y la pantalla
+  # lo dice en vez de dejar a la persona mirando un boton que no hace nada.
+  console:
+    title:
+      text: Talk to {insurer}
+      surface: voice
+    intro:
+      text: One call, no forms. Tell us what happened.
+      surface: voice
+    call:
+      text: Call
+      surface: voice
+    hangup:
+      text: Hang up
+      surface: voice
+    connecting:
+      text: Connecting
+      surface: voice
+    transcript_label:
+      text: Live transcript of the call
+      surface: voice
+    speaker_insured:
+      text: You
+      surface: voice
+    interrupted:
+      text: interrupted
+      surface: voice
+    mic_denied:
+      text: This browser didn't give access to the microphone, so there's no call and nothing was saved.
+      surface: voice
+    mic_help:
+      text: Allow the microphone for this site in your browser's address bar, then press call again.
+      surface: voice
+    # Seis segundos escuchando sin que entre nivel por el microfono (2026-10-07):
+    # la llamada del 7 de octubre se cayo por silencio sin que nadie supiera que el
+    # audio no salia del navegador.
+    no_audio:
+      text: "No sound is coming from your microphone. Check that your browser is allowed to use the microphone in your system settings, that it isn't muted and that it's the right microphone."
+      surface: voice
+    use_chat:
+      text: Or report it by chat
+      surface: voice
+    unavailable:
+      text: Voice is off right now
+      surface: voice
+    checking:
+      text: Checking whether voice is available
+      surface: voice
+    outcome_title:
+      text: "Where your case stands"
+      surface: voice
+    outcome_number:
+      text: "Your case number: {number}. Use it to pick the case back up or look it up."
+      surface: voice
+    outcome_chat:
+      text: "You can also continue in chat: type that number there, from this same browser."
+      surface: voice
+    outcome_derived:
+      text: "It is with an adjuster for review."
+      surface: voice
+    outcome_closed:
+      text: "It is closed."
+      surface: voice
+    outcome_awaiting:
+      text: "It is waiting for details from you."
+      surface: voice
+    outcome_in_progress:
+      text: "It is still in progress: some details are missing."
+      surface: voice
+    outcome_open_case:
+      text: "Open my case"
+      surface: voice
+    outcome_hand_off:
+      text: "Have an adjuster review it"
+      surface: voice
+    last_latency:
+      text: "Last reply: {ms} ms"
+      surface: voice
+    time_left:
+      text: "{clock} left"
+      surface: voice
+    time_left_label:
+      text: "Time left in the call"
+      surface: voice
+    limit_minutes:
+      text: "Maximum length of each call: {minutes} min."
+      surface: voice
+    limit_seconds:
+      text: "Maximum length of each call: {seconds} s."
+      surface: voice
+    limit_daily:
+      text: "Calls per day from this connection: {count}."
+      surface: voice
+    call_language:
+      text: "Call in English."
+      surface: voice
+    audio_blocked:
+      text: "Your browser has the sound blocked, and you won't hear the agent until you turn it on."
+      surface: voice
+    audio_enable:
+      text: "Turn on the sound"
+      surface: voice
+    fallback_voice:
+      text: Today the call is handled with a backup voice, which may sound different in Spanish and in English.
+      surface: voice
+    sample_button:
+      text: Which policy do I say?
+      surface: voice
+    sample_intro:
+      text: "When the agent asks for it, say:"
+      surface: voice
+    sample_say:
+      text: "I'm {name}, my policy is {policy}"
+      surface: voice
+    sample_say_number:
+      text: "My policy is {policy}"
+      surface: voice
+
+  # Los cuatro estados que se ven (functional-design, "Los cuatro estados"). Cada
+  # uno tiene su forma en pantalla porque ninguno se ve solo: el microfono puede
+  # estar tomado y la agente sin oir.
+  state:
+    listening:
+      text: Listening
+      surface: voice
+    speaking:
+      text: Speaking
+      surface: voice
+    ended:
+      text: Call ended
+      surface: voice
+
+  # Por que termino la llamada, uno por cada motivo del conjunto cerrado (BR1.6).
+  # Una llamada que se corta sin decir por que es la peor pantalla posible, y un
+  # motivo sin frase aqui dejaria ese hueco sin que nada avisara.
+  ended:
+    silence:
+      text: The call ended after a long silence. Your case is saved.
+      surface: voice
+    max_duration:
+      text: The call reached its time limit. Your case is saved.
+      surface: voice
+    dropped:
+      text: The call dropped. Your case is saved.
+      surface: voice
+    error:
+      text: Something went wrong on the call. Your case is saved.
+      surface: voice
+    saved:
+      text: You left your case saved.
+      surface: voice
+    resume_until:
+      text: "You have until {time} to pick it up."
+      surface: voice
+    completed:
+      text: Your report is complete.
+      surface: voice
+    # El caso paso a un ajustador y la agente se despidio (2026-10-11).
+    handed_off:
+      text: Your case went to an adjuster.
+      surface: voice
+
+  # La apertura de la llamada (U16, BR2.1, BR2.2, AC1.22.1). Va **antes de
+  # cualquier pregunta** y es de voz, no la del chat: dice ademas que la llamada
+  # queda transcrita, y termina preguntando si hay heridos.
+  #
+  # Cuatro claves y no un texto con un `if` dentro, por la misma razon que el
+  # chat: una rama por aseguradora en el texto es lo que prohibe la convencion 9.
+  # `capability_quote` solo sale si esa aseguradora tiene la cotizacion activa.
+  opening:
+    disclosure:
+      text: Hi, this is {agent}, {insurer}'s AI assistant. This call is transcribed to record your case.
+      surface: voice
+    # Cierra la apertura, copiada literal del criterio. Es la primera pregunta y
+    # va dentro de la apertura porque el criterio la pone ahi.
+    first_question:
+      text: How can I help you?
+      surface: voice
+
+  # La escalera de silencios (U16, BR5.1, BR5.2, AC1.26.1 a AC1.26.3). Tres
+  # tiempos iguales, contados desde que la agente termina de hablar.
+  silence:
+    still_there:
+      text: Are you still there?
+      surface: voice
+    # El tercer silencio no cuelga en seco: se despide y deja el caso guardado.
+    # La despedida es la variante que **no invita a volver a llamar**, porque el
+    # enlace publico admite una llamada al dia y prometer otra seria prometer lo
+    # que no se puede cumplir (AC1.23.4, guia de voz punto 9).
+    farewell:
+      text: I'll keep your case saved. Take care.
+      surface: voice
+
+  # Cuando no se entendio lo que se dijo (U16, BR3.4, AC1.23.3).
+  retry:
+    not_understood:
+      text: Sorry, I didn't catch that. Could you say it again?
+      surface: voice
+
+  # El aviso de que la llamada se acerca a su duracion maxima (U16, C-29). Es una
+  # clave y no un texto: viaja por el socket como cuadro `notice` y la consola la
+  # resuelve con su catalogo, igual que hace el chat con las de limite.
+  #
+  # **Cortar sin avisar es la peor pantalla posible.** No promete otra llamada
+  # --el enlace publico admite una al dia-- y no da un plazo: dice que se guarda
+  # el caso, que es lo que de verdad pasa.
+  notice:
+    time_running_out:
+      text: We're coming up on the time limit for this call. I'll save your case before it ends.
+      surface: voice
+
+  # Cuando no se entiende dos veces seguidas (U18, BR4.2, BR4.4, AC1.31.4).
+  #
+  # **Lleva las dos lenguas dentro, y es una sola clave.** Quien la oye la oye una
+  # vez: componerla de dos claves que alguien concatena deja que un dia salga
+  # media. Dice que idiomas se atienden, que la llamada sigue en el idioma en que
+  # empezo --el cambio a mitad de llamada se quito el 2026-10-11, ver `stays`-- y
+  # ofrece que un ajustador revise el caso.
+  #
+  # **En la voz, un tercer idioma no se distingue de no haber entendido**: el
+  # reconocedor devuelve el idioma de cada transcrito, pero el puerto de C-16
+  # colapsa a nulo todo lo que no sea espanol o ingles, y lo que llega transcrito
+  # de alguien hablando portugues son palabras que se le parecieron. Por eso el
+  # disparador es el mismo que el de "no le escuche bien", que es literalmente lo
+  # que AC1.31.4 escribe en su Dado.
+  languages:
+    # Carries both languages because whoever cannot follow one of them has to be able to
+    # follow the other, and it says how to switch (2026-10-13): "in English" or "en
+    # español" change the call for real, voice and hearing both (AC1.31.4).
+    only_two:
+      text: I'm having trouble understanding you. I only handle Spanish and English, and you can say “in English” or “en español” whenever you like to switch. If you prefer, I can pass your case to an adjuster. No te estoy entendiendo bien. Solo atiendo en español y en inglés, y puedes decir «in English» o «en español» cuando quieras para cambiar de idioma. Si prefieres, paso tu caso a un ajustador.
+      surface: voice
+    # Someone asked for the other language and the call is already in it (2026-10-13). Said
+    # in the **new** language -- which is why each language has its own -- and the question
+    # that was left hanging is put right after by whoever says it. Replaces `stays`, which
+    # since 2026-10-11 said the call stayed in its language because the recognizer was
+    # single-language per call.
+    switched:
+      text: Sure, we'll continue in English.
+      surface: voice
+
+  hold:
+    acknowledge:
+      text: Sure, take your time.
+      surface: voice
+
+  filler:
+    one:
+      text: "Okay…"
+      surface: voice
+    two:
+      text: "Got it…"
+      surface: voice
+    three:
+      text: "Right…"
+      surface: voice
+
+  spoken:
+    policy:
+      text: policy
+      surface: voice
+
+  # La oferta de la decision D8, copiada literal. La usan **los dos** caminos: el
+  # segundo silencio y la tercera vez que no se entiende. Nunca ofrece devolver
+  # la llamada: la devolucion es C3, no existe, y P7 prohibe ofrecer lo que no
+  # esta construido.
+  offer:
+    save_or_adjuster:
+      text: If you'd like, I'll keep your case saved so you can continue later, or I can pass it to an adjuster.
+      surface: voice
+    choose:
+      text: Should I keep it saved, or pass it to an adjuster?
+      surface: voice
+    handed_off:
+      text: Done, I'm passing it to an adjuster with everything we noted.
+      surface: voice
+
+  # La lectura de confirmacion de un codigo dictado (U16, BR3.5, AC1.23.2). Se
+  # lee el codigo **entero**, deletreado con la tabla de U11: leer solo la letra
+  # dudosa de una placa no ayuda a nadie a comprobarla.
+  readback:
+    confirm:
+      text: "Let me read that back: {spelled}. Is that right?"
+      surface: voice
+
+  # Lo que la agente dice al ceder el turno cuando la interrumpen (U16, BR4.1,
+  # AC1.24.1), cuando no toma la correccion directamente.
+  barge_in:
+    acknowledge:
+      text: Yes, go ahead.
+      surface: voice
+
+  # El cierre de un reporte completo por voz (U16, BR3.7, AC1.23.4). Tres
+  # frases: lo que quedo registrado, que sigue, y el numero de caso.
+  #
+  # El resumen es el de U11 **sin su pregunta final**: aquel cierra el bloque
+  # pidiendo confirmacion y este cierra la llamada, y una llamada que termina
+  # preguntando no termina.
+  closing:
+    # Copiada literal de AC1.23.4. Sin plazo y sin llamada saliente: la demo no
+    # garantiza el primero y no hace la segunda (decision D9).
+    next_step:
+      text: An adjuster reviews your case; the decision will show up on this screen.
+      surface: voice
+    registered:
+      text: Your claim is registered and doesn't need an adjuster's review. The link to see your case will show up on this screen.
+      surface: voice
+    pending:
+      text: Your report is saved. The result will show up on this screen.
+      surface: voice
+    # `spoken` trae el nombre de la aseguradora y los seis digitos uno a uno,
+    # con "zero" y nunca "oh" (decision D2).
+    case_number:
+      text: "Your case number with {insurer} is {spoken}."
+      surface: voice
+    # La despedida que **no invita a volver a llamar**: el enlace publico admite
+    # una llamada al dia (AC1.23.4).
+    farewell:
+      text: Take care.
+      surface: voice
+    # Se acabo el tiempo y el reporte no quedo completo (2026-10-11): la llamada no
+    # corta en seco. El caso pasa a la cola del ajustador con lo que haya.
+    time_is_up:
+      text: "We're out of time on this call. Your case is saved with what we noted, and an adjuster will review it."
+      surface: voice
+    saved:
+      text: "Done, your case is saved. If you call again from this browser within the next {window}, we'll pick it back up."
+      surface: voice
+
+  duration:
+    minute:
+      text: "one minute"
+      surface: voice
+    minutes:
+      text: "{minutes} minutes"
+      surface: voice
+
+  # Lo que la agente dice fuera de un turno (2026-10-11): al traer la respuesta de
+  # cobertura que el fondo calculo, retoma la pregunta que quedo en el aire.
+  answer:
+    back_to_report:
+      text: "Back to your report:"
+      surface: voice
+    delayed:
+      text: "I'm still checking your policy; I'll tell you as soon as I have it."
+      surface: voice
+
+  # La voz no toma cotizaciones (son diecisiete datos): quien llama a cotizar donde
+  # la aseguradora cotiza oye por donde se hace y que si puede hacer aqui (2026-10-11).
+  quote:
+    by_chat:
+      text: "I handle quotes by chat, not on a call. Here I can take an accident report or answer a question about your policy. Which would you like?"
+      surface: voice
+
+  # La primera frase de la llamada solo anuncia que quiere consultar algo, sin decir que
+  # («quería consultar sobre…», «tengo una pregunta»): se le pregunta a que viene, con
+  # otras palabras que las de la apertura, y no se abre ni se sigue ningun reporte (2026-10-13).
+  first_turn:
+    clarify:
+      text: "Sure. I can take an accident report or answer a question about your policy. Which one do you need?"
+      surface: voice
+
+  # El aviso de que queda poco, dicho: antes solo salia en la pantalla.
+  time:
+    running_out:
+      text: "We have less than a minute left on this call."
+      surface: voice
+
+  # La retoma de una llamada que se corto (U16, BR6.2 a BR6.5, AC1.27.2 a
+  # AC1.27.5). Va **despues** de la apertura completa, nunca en su lugar: la
+  # divulgacion no se salta porque la persona ya la oyo la vez pasada.
+  resume:
+    offer:
+      text: I see you have an open case. Shall we continue with it?
+      surface: voice
+    accepted:
+      text: Great, let's continue with that one.
+      surface: voice
+    continue_open:
+      text: What else would you like to tell me?
+      surface: voice
+    new_case:
+      text: Okay, let's start a new one.
+      surface: voice
+  # Lo que se decidio sobre un caso, dicho al volver a llamar (AC1.27.5). Son
+  # claves propias y no las del chat: aquella pantalla puede enlazar y esta no,
+  # y lo que se lee no se dice igual que lo que se oye.
+  decision:
+    approved:
+      text: An adjuster reviewed your case {case_number} and approved it.
+      surface: voice
+    rejected:
+      text: An adjuster reviewed your case {case_number} and did not approve it. If you'd like, an adjuster can look at it again.
+      surface: voice
+    sent_to_insurer:
+      text: Your case {case_number} was sent to the insurer that issued your policy.
+      surface: voice
+    # El comentario va en su propia clave y se dice **solo si lo hay**. Con el
+    # dentro de las tres de arriba, una decision sin nota diria "su comentario
+    # fue." y sonaria a frase cortada.
+    note:
+      text: Their note was {comment}.
+      surface: voice
+    pending:
+      text: An adjuster is still reviewing your case. There is no answer yet.
+      surface: voice
+
+# The graph runtime (U12, step 5), not a node. The waiting phrase from AC1.25.3,
+# copied literal from the criterion: when the turn rhythm needs a background
+# result that hasn't come back yet (BR2.4), this is what it says before two
+# seconds of silence.
+#
+# Step 7 review: this key was marked `surface: voice` because its criterion
+# (AC1.25.3) is measured on voice, but the turn path that emits it
+# (`handle_turn`, C-14) serves both channels alike. Resolved by giving each
+# channel its own key with the same approved wording -- never paraphrased
+# (the project's rule on fixed phrases) -- instead of forcing a surface that
+# fits neither channel: `orchestration.turn.waiting` stays voice's, and
+# `chat.turn.waiting`, below, is text's. `orchestration.turn.error` is its
+# pair for the turn's error path (BR2.5): also through the single exit point,
+# also per channel.
+orchestration:
+  turn:
+    waiting:
+      text: Let me check your policy, one moment.
+      surface: voice
+    error:
+      text: I had trouble answering that. Can we try again?
+      surface: voice
+
+# The same turn runtime (U12, step 7), its text half: the same approved
+# phrases as `orchestration.turn.*`, with `surface: chat` because chat does
+# not share a surface with voice (see the note above).
+# The chat opening (U13, BR1.1, AC1.1.1). It goes **before** any visitor text and
+# says the five things the criterion requires: who is speaking and that it is an
+# artificial intelligence, that this is a demonstration with example policies, that
+# the conversation is stored to record the case, that it is deleted every night, and
+# that they should not write real personal data.
+#
+# The capabilities live in their own keys because which ones are offered depends on
+# each insurer's configuration (BR1.3): composing them is what avoids a per-insurer
+# branch inside the text, which convention 9 forbids.
+chat:
+  # El pensamiento de la agente sobre el caso, en su ventana (2026-10-09).
+  reasoning:
+    title:
+      text: "{agent}'s reasoning"
+      surface: chat
+    # The whole window is worded impersonally (2026-10-12): no "I" from the agent and no
+    # "you" to whoever reads.
+    empty:
+      text: "How the agent reasons about each message will appear here."
+      surface: chat
+    step_understood:
+      text: "What was understood"
+      surface: chat
+    wants_claim:
+      text: "Report an accident."
+      surface: chat
+    wants_question:
+      text: "Resolve a question about the policy."
+      surface: chat
+    wants_quote:
+      text: "Request a quote."
+      surface: chat
+    step_policy:
+      text: "The policy"
+      surface: chat
+    policy_confirmed:
+      text: "Policy {policy} confirmed: clauses are searched only in it."
+      surface: chat
+    policy_missing:
+      text: "No policy is confirmed yet: without one, no clauses are searched."
+      surface: chat
+    step_checked:
+      text: "What was searched in the policy"
+      surface: chat
+    you_asked:
+      text: "Question: “{question}”"
+      surface: chat
+    outcome_verified:
+      text: "Clauses on the topic were found, and {count} were checked against the policy's text before answering:"
+      surface: chat
+    outcome_no_clause:
+      text: "The policy was searched and has no clause on the topic, so nothing was guessed."
+      surface: chat
+    outcome_rejected:
+      text: "The clauses found didn't pass verification, so they weren't used to answer."
+      surface: chat
+    outcome_unverifiable:
+      text: "The answer couldn't be verified, so nothing was claimed about the coverage."
+      surface: chat
+    clause_verified:
+      text: "(verified)"
+      surface: chat
+    clause_not_verified:
+      text: "(not verified)"
+      surface: chat
+    step_noted:
+      text: "What was noted"
+      surface: chat
+    noted:
+      text: "Noted"
+      surface: chat
+    missing:
+      text: "Missing"
+      surface: chat
+    # Los datos que no cuentan para "5 de 5": se ofrecen al final (2026-10-11).
+    optional:
+      text: "Optional"
+      surface: chat
+    step_next:
+      text: "Where it stands"
+      surface: chat
+    state_derived:
+      text: "The case was passed to an adjuster."
+      surface: chat
+    # "Closed" and not "has a decision": a direct close is applied by the rules and nobody
+    # decides (US1.17), and this window does not know which of the two it was.
+    state_closed:
+      text: "The case is closed."
+      surface: chat
+    state_open:
+      text: "The case is still open."
+      surface: chat
+    adjuster_decides:
+      text: "Whether something applies to the case, and for how much, is decided by an adjuster, not the agent."
+      surface: chat
+  opening:
+    disclosure:
+      text: "Hi, I'm {agent}, the artificial intelligence assistant for {insurer}. This is a demonstration with example policies, so please don't write real personal data."
+      surface: chat
+    capabilities:
+      text: I can help you report a claim or answer questions about your policy.
+      surface: chat
+    capabilities_with_quote:
+      text: I can help you report a claim, answer questions about your policy or give you a quote.
+      surface: chat
+  greeting:
+    hello:
+      text: Hi!
+      surface: chat
+  closed_case:
+    already_decided:
+      text: "Your case {case_number} already has a decision: you can see it with “See my case”. To report or ask something new, restart the conversation with the button at the top."
+      surface: chat
+  # Typing a case number in the chat (US1.19, US1.20). The first two are for someone picking their
+  # case back up; the next two are the only answer to a number that is not picked up, and they do
+  # not say why (AC1.20.2, AC1.20.3); the last one is only for the owner of a case that is no longer
+  # being captured.
+  resume:
+    continued:
+      text: "Done, I picked your case {case_number} back up. {question}"
+      surface: chat
+    continued_open:
+      text: "Done, I picked your case {case_number} back up. What would you like to add?"
+      surface: chat
+    not_found:
+      text: "I can't find a case with that number in this browser. A case can only be picked back up from the browser where it was started. If you like, tell me what you need and we'll begin."
+      surface: chat
+    original_channel:
+      text: "A case is picked back up through the same channel it started in, and from the same browser: if it was a call, call again; if it was chat, write to me here. If you prefer, tell me what you need and we'll begin."
+      surface: chat
+    with_adjuster:
+      text: "Your case {case_number} is already with an adjuster, so I can't take more details here. You can see it with “See my case”."
+      surface: chat
+    in_review:
+      text: "Your case {case_number} is under review, so I can't take more details here. You can see it with “See my case”."
+      surface: chat
+  offer:
+    options:
+      text: Would you like to report an accident or ask about your policy?
+      surface: chat
+    options_with_quote:
+      text: Would you like to report an accident, ask about your policy or get a quote?
+      surface: chat
+  chip:
+    answer_yes:
+      text: "Yes"
+      surface: chat
+    answer_no:
+      text: "No"
+      surface: chat
+    adjuster_review:
+      text: "Have an adjuster review it"
+      surface: chat
+    another_question:
+      text: "I have another question"
+      surface: chat
+    add_more:
+      text: "Yes, add more details"
+      surface: chat
+    leave_it:
+      text: "No, leave it as is"
+      surface: chat
+    nobody_hurt:
+      text: "No, nobody was hurt"
+      surface: chat
+    someone_hurt:
+      text: "Yes, someone was hurt"
+      surface: chat
+    example_policy:
+      text: "My policy is {policy}"
+      surface: chat
+    example_holder:
+      text: "I'm {holder}, my policy is {policy}"
+      surface: chat
+    today:
+      text: "Today"
+      surface: chat
+    yesterday:
+      text: "Yesterday"
+      surface: chat
+    use_personal:
+      text: "Personal"
+      surface: chat
+    use_commuting:
+      text: "Commuting"
+      surface: chat
+    use_commercial:
+      text: "Commercial"
+      surface: chat
+    mileage_low:
+      text: "Low"
+      surface: chat
+    mileage_medium:
+      text: "Medium"
+      surface: chat
+    mileage_high:
+      text: "High"
+      surface: chat
+    report:
+      text: "Report an accident"
+      surface: chat
+    policy_question:
+      text: "Ask about my policy"
+      surface: chat
+    quote:
+      text: "Get a quote"
+      surface: chat
+  decision:
+    approved:
+      text: An adjuster reviewed your case {case_number} and approved it. Their note was “{comment}”.
+      surface: chat
+    rejected:
+      text: An adjuster reviewed your case {case_number} and did not approve it. Their note was “{comment}”. If you would like, you can reply here and an adjuster will look at it again.
+      surface: chat
+    sent_to_insurer:
+      text: Your case {case_number} was sent to the insurer that issued your policy, with the note “{comment}”.
+      surface: chat
+    pending:
+      text: An adjuster is reviewing your case. We'll let you know here as soon as there's an answer.
+      surface: chat
+  turn:
+    waiting:
+      text: Let me check your policy, one moment.
+      surface: chat
+    error:
+      text: I had trouble answering that. Can we try again?
+      surface: chat
+  # Los limites del chat (BR3.1). Ver la nota del catalogo en espanol.
+  limit:
+    site_day:
+      text: The demo has reached today's message allowance. Come back tomorrow and we'll pick this up.
+      surface: chat
+    rate:
+      text: That's a bit fast for me. Give it a moment and send it again.
+      surface: chat
+    size:
+      text: That message is longer than I can read in one go. Could you tell me about it in parts?
+      surface: chat
+  # La pantalla del chat (U13, tanda 4). Ver la nota del catalogo en espanol.
+  page:
+    title:
+      text: Conversation with {insurer}
+      surface: chat
+    transcript_label:
+      text: Conversation
+      surface: chat
+    composer_label:
+      text: Your message
+      surface: chat
+    composer_hint:
+      text: This is a demo with example policies, so please don't write real personal data.
+      surface: chat
+    send:
+      text: Send
+      surface: chat
+    speaker_visitor:
+      text: You
+      surface: chat
+    # What is read while the agent is answering and nothing has arrived yet. She
+    # signs with her name (`insurer.agent.name`), not as "the agent".
+    typing:
+      text: "{agent} is typing…"
+      surface: chat
+    # The same while the background checks the policy and the answer has not arrived
+    # yet (2026-10-12): the typing dots, with another accessible name.
+    reviewing:
+      text: "{agent} is checking your policy…"
+      surface: chat
+    answering_in:
+      text: Answering in {language}
+      surface: chat
+    connecting:
+      text: Connecting…
+      surface: chat
+    # The screen decides the language (P2, Miguel's decision, 2026-10-06): it is
+    # said under the title, so nobody has to guess why the agent answers that way.
+    speaking_in:
+      text: The agent answers in the language you pick above
+      surface: chat
+    # Opening the screen restores what was stored (Miguel's decision,
+    # 2026-10-06). The transcript is stored redacted, so the note says why the
+    # person sees labels where they wrote their name or policy number.
+    history_restored:
+      text: We picked your conversation back up. What you wrote before is stored with personal data masked, which is why you see labels in its place.
+      surface: chat
+    # The case line (Miguel's decision, 2026-10-11): first what it is, in the words of
+    # whoever reported it; then how much is missing; and the number last, labelled,
+    # as a reference. The link to open it sits among the header actions.
+    case_number:
+      text: "Your case number: {case_number}"
+      surface: chat
+    case_kind_claim:
+      text: Accident report
+      surface: chat
+    case_kind_inquiry:
+      text: Policy question
+      surface: chat
+    case_kind_quote:
+      text: Quote
+      surface: chat
+    case_kind_other:
+      text: Your case
+      surface: chat
+    case_complete:
+      text: Details complete
+      surface: chat
+    case_missing_one:
+      text: 1 detail missing
+      surface: chat
+    case_missing_many:
+      text: "{count} details missing"
+      surface: chat
+    case_link:
+      text: See my case
+      surface: chat
+    # Chat header (2026-10-09): opens the trace of the agent's latest answer that has one.
+    # Under the last answer only deciding the case remains, when it awaits that decision.
+    see_reasoning:
+      text: "{agent}'s reasoning"
+      surface: chat
+    decide_as_adjuster:
+      text: "Decide this case as the adjuster"
+      surface: chat
+    # Starting over (Miguel's decision, 2026-10-06): an icon-only button among the
+    # header actions, which opens a window (2026-10-11). The previous case stays
+    # saved under its number, but the screen no longer shows it.
+    reset:
+      text: Restart conversation
+      surface: chat
+    reset_title:
+      text: "Restart the conversation?"
+      surface: chat
+    reset_body:
+      text: "This conversation closes and you start a new one from scratch."
+      surface: chat
+    reset_body_with_case:
+      text: "This conversation closes and you start a new one from scratch; your case {case_number} stays saved, but you won't see it here anymore."
+      surface: chat
+    reset_confirm:
+      text: Restart
+      surface: chat
+    reset_cancel:
+      text: Cancel
+      surface: chat
+  citation:
+    expand:
+      text: See the exact clause
+      surface: chat
+    other_language:
+      text: This clause is written in {language}. It is shown in its own language, untranslated, because that is what your policy says.
+      surface: chat
+    # La traduccion de referencia y el original a un clic (decision de Miguel del
+    # 2026-10-08); el codigo y la version, solo con la tarjeta abierta.
+    translation_note:
+      text: "Reference translation. The governing text is the original, in {language}."
+      surface: chat
+    show_original:
+      text: "See the original text"
+      surface: chat
+    hide_original:
+      text: "Hide the original text"
+      surface: chat
+    reference:
+      text: "Reference: {clause_id} · version {version}"
+      surface: chat
+    # El corpus no trae un titulo por clausula (2026-10-11), asi que el rotulo de la
+    # tarjeta se distingue por lo que si es verdad: una condicion especial se llama como
+    # en el panel de documentos, y dos clausulas de una misma parte se numeran.
+    special_condition:
+      text: "Special condition {number}"
+      surface: chat
+    position:
+      text: "clause {index} of {total}"
+      surface: chat
+    # El nombre del idioma de la clausula en el de la conversacion: el selector de
+    # idioma usa el nombre propio de cada uno ("English"), que aqui sobraba.
+    language_es:
+      text: Spanish
+      surface: chat
+    language_en:
+      text: English
+      surface: chat
+    amount_deferred:
+      text: A later change to your policy affects this clause, so an adjuster confirms the amount.
+      surface: chat
+    trace_link:
+      text: See how this was answered
+      surface: chat
+
+# Why the rules engine decided what it decided, for whoever opens the case
+# (U9, BR2.4, BR2.5). No phrase names a rule identifier, an insurer or
+# technical jargon: the FF-6 forbidden-forms check verifies that. Each key is
+# used by one or more rules from
+# `app/config/tenants/<insurer>/rules/triage.yaml`.
+rules:
+  explain:
+    default:
+      text: Nothing in particular stood out; an adjuster still reviews the case before moving on.
+      surface: inbox
+    injuries_reported:
+      text: There are injuries in what was reported, so an adjuster reviews the case.
+      surface: inbox
+    third_party_pending:
+      text: Details from the other parties are still missing, so an adjuster reviews the case.
+      surface: inbox
+    coverage_review:
+      text: There's a question about what the policy covers, and an adjuster confirms that.
+      surface: inbox
+    amount_review:
+      text: The amount reported needs an adjuster's review before moving on.
+      surface: inbox
+    high_value_review:
+      text: The amount reported is high, and an adjuster looks at it more closely.
+      surface: inbox
+    fraud_review:
+      text: Something in what was reported needs a closer look before continuing.
+      surface: inbox
+    unlisted_driver_review:
+      text: The driver mentioned isn't listed on the policy, and an adjuster reviews that.
+      surface: inbox
+    amount_noted:
+      text: An amount was recorded; an adjuster still reviews it before moving on.
+      surface: inbox
+    # Stonecroft (CG-U9-1): several open details at once.
+    complex_case:
+      text: This case has several open details together, so an adjuster reviews it.
+      surface: inbox
+    # Sunmeadow (CG-U9-1): the flexible profile's direct close.
+    simple_claim:
+      text: Based on what was recorded, the report is closed without needing further review.
+      surface: inbox
+    # Knotwell (BR2.6, FR6.4): the agency always defers to whoever issued the policy.
+    agency_case:
+      text: This report goes to the insurer that issued the policy for an adjuster to review.
+      surface: inbox
+    # U19: las razones de la elegibilidad de una cotizacion (BR2.3). Sin identificador de regla.
+    quote_commercial_use:
+      text: Commercial use of the vehicle falls outside what this insurer writes.
+      surface: inbox
+    quote_salvage_title:
+      text: The vehicle was declared a total loss.
+      surface: inbox
+    quote_at_fault_losses:
+      text: There were two or more at-fault accidents in the last three years, and an underwriter reviews that.
+      surface: inbox
+    quote_new_license:
+      text: The license is less than a year old, and an underwriter reviews that.
+      surface: inbox
+    quote_old_vehicle:
+      text: The vehicle is more than twenty-five years old, and an underwriter reviews that.
+      surface: inbox
+    quote_standard_risk:
+      text: You have no at-fault accidents and three or more years licensed.
+      surface: inbox
+    quote_elevated_risk:
+      text: Your request meets the basics, though one detail raises the risk above the usual.
+      surface: inbox
+
+# The `policy_verification` node (U8, batch 3): the fixed phrases of a coverage
+# answer, for when there's nothing to cite (BR5.6, AC2.5.1), when retrieval
+# fails after its retry (BR5.2, AC2.6.1), and when the cited clause is in a
+# different language than the conversation (BR5.8). They pass through the
+# output guard like any other text (BR5.7).
+policy_rag:
+  coverage:
+    # AC2.5.1: literal from the criterion.
+    no_clause_found:
+      text: I can't find a clause in your policy about that, so I won't guess. I'll flag it for the adjuster.
+      surface: chat
+    # AC2.6.1, AC2.7.4: the criterion states this literally in Spanish; this is
+    # its English equivalent, same meaning.
+    unverifiable:
+      text: I can't review your policy right now; I'm passing your case to an adjuster.
+      surface: chat
+    # BR5.8, FD-U8-1: the clause itself is never translated; this only flags
+    # the mismatch. {language} is the clause's language, named in the
+    # conversation's own language.
+    cross_language_notice:
+      text: The clause behind this is written in {language}; I'm showing it exactly as written, and it stays complete in your case.
+      surface: chat
+    # AC2.7.1: the voice form of a citation, one sentence naming the part and
+    # saying it stays in the case. Never repeats the clause's text: {part} is
+    # its name from the corpus (e.g. "Part D — Coverage for Damage to Your
+    # Auto"), never its content.
+    voice_summary:
+      text: I found the clause under {part}; it's summarized here and stays complete in your case.
+      surface: voice
+    # AC2.7.2: when an in-force endorsement modifies the cited clause (both
+    # stay attached to the case, BR3.5), the answer never states the amount
+    # that clause or its endorsement carries; an adjuster confirms it.
+    # Replaces `voice_summary` in that case, in both channels.
+    amount_deferred:
+      text: That clause carries a limit or a deductible, and an adjuster confirms it. I'm attaching both related clauses to your case.
+      surface: chat
+    found_chat:
+      text: "In your policy, {part} addresses this. The exact clause is below. Whether it applies to your case, and for how much, an adjuster confirms."
+      surface: chat
+    # Con la explicacion de la IA sobre lo que dice la clausula, verificada contra ella
+    # (decision de Miguel del 2026-10-08: que se vea el RAG). Si la guardia la
+    # rechaza, sale `found_chat`.
+    found_chat_claim:
+      text: "In your policy, {part} addresses this: {claim} The exact text is below. Whether it applies to your case, and for how much, an adjuster confirms."
+      surface: chat
+    # Las mismas dos, dichas en una llamada (2026-10-11): no hay "abajo".
+    found_voice:
+      text: "In your policy, {part} addresses this. The clause is noted in your case. Whether it applies, and for how much, an adjuster confirms."
+      surface: voice
+    found_voice_claim:
+      text: "In your policy, {part} addresses this: {claim} Whether it applies to your case, and for how much, an adjuster confirms."
+      surface: voice
+    # La parte de la poliza en el idioma de la conversacion, aunque la clausula este
+    # en otro (2026-10-08): antes salia «Endorsements» en una respuesta en espanol.
+    part:
+      a:
+        text: "Part A, liability"
+        surface: chat
+      b:
+        text: "Part B, medical payments"
+        surface: chat
+      c:
+        text: "Part C, uninsured motorists"
+        surface: chat
+      d:
+        text: "Part D, damage to your auto"
+        surface: chat
+      e:
+        text: "Part E, duties after an accident"
+        surface: chat
+      f:
+        text: "Part F, general provisions"
+        surface: chat
+      definitions:
+        text: "the definitions section"
+        surface: chat
+      special:
+        text: "a special condition"
+        surface: chat
+      territory:
+        text: "the territory rules"
+        surface: chat
+      other:
+        text: "one of its clauses"
+        surface: chat
+    checking:
+      text: "Let me check your policy; I'll answer you in a moment."
+      surface: chat
+    ask_question:
+      text: "What would you like to know about your policy? I can check, for example, whether it covers a theft, a crash with an uninsured driver or a rental car while yours is repaired."
+      surface: chat
+    need_policy:
+      text: "To check that, I first need your policy."
+      surface: chat
+    back_to_report:
+      text: "Back to your report:"
+      surface: chat
+
+
+# U19's quote: the reply to the request, the risk band, the refusal to give a price and
+# the reply where quoting is switched off. **No phrase in this section carries a money
+# figure, a currency symbol or code, or a percentage** (BR3.1, hard gate): a test runs
+# each one through the real output guard, in both languages. None of them names a rule
+# or an insurer either (BR2.3).
+quote:
+  reply:
+    eligible:
+      text: Your request can move forward.
+      surface: chat
+    not_eligible:
+      text: I can't move forward with your request right now.
+      surface: chat
+    referred:
+      text: An underwriter will review your request before it moves forward.
+      surface: chat
+    price_refusal:
+      text: This demo doesn't calculate prices, so I can't give you a figure. When I finish reviewing your request I'll tell you where your risk falls.
+      surface: chat
+    price_refusal_with_band:
+      text: "This demo doesn't calculate prices, so I can't give you a figure. What I can tell you is where your risk falls. {band}"
+      surface: chat
+    unavailable:
+      text: This demo doesn't offer quotes with this insurer. I can help you report an accident or answer a question about your policy.
+      surface: chat
+  band:
+    standard_risk:
+      text: Your risk falls in the usual range.
+      surface: chat
+    elevated_risk:
+      text: Your risk fits what we insure, at a level above the usual.
+      surface: chat
+    pending_review:
+      text: I don't know yet where your risk falls, because an underwriter decides that.
+      surface: chat
+    outside_appetite:
+      text: Your risk falls outside what this insurer writes.
+      surface: chat
+  value:
+    use_type:
+      personal:
+        text: personal
+        surface: chat
+      commuting:
+        text: commuting
+        surface: chat
+      commercial:
+        text: commercial
+        surface: chat
+    mileage:
+      low:
+        text: low
+        surface: chat
+      medium:
+        text: medium
+        surface: chat
+      high:
+        text: high
+        surface: chat
+    salvage_title:
+      "true":
+        text: declared a total loss
+        surface: chat
+      "false":
+        text: never declared a total loss
+        surface: chat
+    prior_coverage:
+      "true":
+        text: with active insurance
+        surface: chat
+      "false":
+        text: without active insurance
+        surface: chat
+
+# The `intake` node (U11, batch 2): the per-block questions (BR3.2, BR3.3),
+# confirmation readbacks (BR3.1, FD-U11-8), emotion acknowledgement (BR5.2) and
+# how insults are handled (BR5.4). All short on purpose: the acknowledgement
+# and the question join into one turn that does count toward BR3.4's
+# twenty-five-word limit.
+intake:
+  question:
+    # Fase 3 (2026-10-08): la solicitud se abre pidiendo todo de una vez, y lo que
+    # falta se pregunta despues, agrupado.
+    quote_all:
+      text: "To quote, tell me in one message whatever you know: who would drive (name and date of birth), how many years they have been licensed and where; the car (year, make and model) and what it is used for; and whether there were accidents in the last three years and whether you are insured today. I will ask about anything missing afterwards."
+      surface: chat
+    # BR1.1: the safety question, first field of the `safety` block.
+    safety:
+      text: Was anyone injured?
+      surface: chat
+    identity_and_policy:
+      text: What is your full name and policy number?
+      surface: chat
+    what_happened:
+      text: What happened?
+      surface: chat
+    # BR3.2, BR3.3: the "when and where" block when both fields are missing,
+    # and the two forms below when one already arrived early and is not asked
+    # again.
+    when_and_where:
+      text: When and where did the accident happen?
+      surface: chat
+    when_only:
+      text: When did the accident happen?
+      surface: chat
+    where_only:
+      text: Where did the accident happen?
+      surface: chat
+    vehicle_and_driver:
+      text: What vehicle were you driving?
+      surface: chat
+    other_parties:
+      text: Was anyone else involved?
+      surface: chat
+    # U19: una pregunta por campo de la solicitud, en el orden del esquema (BR1.2).
+    quote_driver_name:
+      text: What is the main driver's full name?
+      surface: chat
+    quote_driver_birth_date:
+      text: What is the driver's date of birth?
+      surface: chat
+    quote_license_years:
+      text: How many years have you held a valid driver's license?
+      surface: chat
+    quote_license_jurisdiction:
+      text: In which city did you get your driver's license?
+      surface: chat
+    quote_vehicle_year:
+      text: What year is the vehicle?
+      surface: chat
+    quote_vehicle_make:
+      text: What is its make?
+      surface: chat
+    quote_vehicle_model:
+      text: And its model?
+      surface: chat
+    quote_vin:
+      text: What is the VIN or chassis number? It is on the vehicle registration.
+      surface: chat
+    quote_salvage_title:
+      text: Has the vehicle ever been declared a total loss?
+      surface: chat
+    quote_use_type:
+      text: "How do you use the vehicle: personal, commuting to work, or commercial?"
+      surface: chat
+    quote_annual_mileage_band:
+      text: "How much do you use the vehicle per year: low, medium, or high?"
+      surface: chat
+    quote_garaging_jurisdiction:
+      text: In which city is the vehicle kept at night?
+      surface: chat
+    quote_at_fault_losses_3y:
+      text: How many at-fault accidents did you have in the last three years?
+      surface: chat
+    quote_claims_3y:
+      text: How many claims did you report in those three years, at fault or not?
+      surface: chat
+    quote_prior_coverage_active:
+      text: Do you have active auto insurance today?
+      surface: chat
+    quote_lapse_months:
+      text: For how many months were you without coverage?
+      surface: chat
+  readback:
+    # Una sola confirmacion de toda la solicitud al final (2026-10-08).
+    quote_all:
+      text: "Noted: {summary} Is all of that correct?"
+      surface: chat
+    quote_driver_part:
+      text: "{name}, born {birth_date}, licensed {license_years} years, issued in {license_jurisdiction}."
+      surface: chat
+    quote_vehicle_part:
+      text: "Vehicle: {vehicle_year} {vehicle_make} {vehicle_model}, VIN {vin}, {salvage_title}."
+      surface: chat
+    quote_usage_part:
+      text: "Use: {use_type}, {annual_mileage_band} annual mileage, kept in {garaging_jurisdiction}."
+      surface: chat
+    quote_history_part:
+      text: "At-fault losses in three years: {at_fault_losses_3y}; claims: {claims_3y}; {prior_coverage_active}; months without coverage: {lapse_months}."
+      surface: chat
+    # FD-U11-8: injuries, driver and location are named, never summarized.
+    # {value} is what the person said, normalized when it applies.
+    safety:
+      text: "Noted: {value}. Is that correct?"
+      surface: chat
+    identity_and_policy:
+      text: "Confirming: {value}. Is that correct?"
+      surface: chat
+    what_happened:
+      text: Noted what happened. Is that correct?
+      surface: chat
+    when_and_where:
+      text: "Noted: {when}, at {where}. Is that correct?"
+      surface: chat
+    vehicle_and_driver:
+      text: "Noted: {value}. Is that correct?"
+      surface: chat
+    other_parties:
+      text: Noted about the other parties. Is that correct?
+      surface: chat
+    # U19: la lectura de cada bloque de la solicitud, nombrando lo dicho (BR1.2).
+    quote_driver:
+      text: "Noted: {name}, born {birth_date}, {license_years} years licensed, license issued in {license_jurisdiction}. Is that correct?"
+      surface: chat
+    quote_vehicle:
+      text: "Noted: {vehicle_year} {vehicle_make} {vehicle_model}, VIN {vin}, {salvage_title}. Is that correct?"
+      surface: chat
+    quote_usage:
+      text: "Noted: {use_type} use, {annual_mileage_band} annual mileage, kept overnight in {garaging_jurisdiction}. Is that correct?"
+      surface: chat
+    quote_history:
+      text: "Noted: {at_fault_losses_3y} at-fault accidents and {claims_3y} claims in three years; {prior_coverage_active}; {lapse_months} months without coverage. Is that correct?"
+      surface: chat
+  ack:
+    # BR5.2: a single sentence, before the question. `FEAR_OR_CRYING` outranks
+    # `ANGER` when the turn carries both signals (`tone.detect_emotion`).
+    fear_or_crying:
+      text: I'm so sorry this is happening to you.
+      surface: chat
+    anger:
+      text: I understand your frustration.
+      surface: chat
+  # What the person says in passing, answered before going on with what is
+  # pending (Miguel's decision, 2026-10-06: the agent must not sound like an
+  # answering machine). `social.py` recognises the signals with no model; the text
+  # goes **before** the question or readback that was due, except the goodbye,
+  # which goes alone.
+  social:
+    greeting:
+      text: Hello, happy to help.
+      surface: chat
+    thanks:
+      text: You're welcome.
+      surface: chat
+    goodbye:
+      text: Goodbye. What we have so far is saved; when you come back, we pick up where we left off.
+      surface: chat
+    # {done} and {total} come from the case; {missing} are the names of the
+    # blocks still missing, from `intake.block.*`, joined by commas.
+    progress:
+      text: "We have {done} of {total} details; still missing {missing}."
+      surface: chat
+  # The case is not complete yet and the model's reply gave it as done (2026-10-13: "your
+  # report is saved" with the place still unsaid). It goes out in its place, through
+  # `turn._frase_base`: the truth in one short sentence, what is missing, that what we have
+  # is saved and can be picked up later, and a single question. {missing} is the name of the
+  # block that is due, from `intake.block.*`. No case number: it is also said aloud.
+  unfinished:
+    text: "It isn't complete yet: I still need to know {missing}. What we have so far is saved, so you can pick it up later. Shall we continue now?"
+    surface: chat
+  # What is said when moving from a confirmed or corrected readback to the next
+  # thing, before the question that is due. Without it the "yes" was followed by
+  # the bare question, as if nobody had answered.
+  transition:
+    confirmed:
+      text: Thank you.
+      surface: chat
+    corrected:
+      text: Understood, let me fix that.
+      surface: chat
+  # The policy the person gave, looked up in the corpus and confirmed in one
+  # sentence (P3, Miguel's decision, 2026-10-06). {policy}, {name} and {vehicle}
+  # come from the issued policy; nothing is made up.
+  policy:
+    found:
+      text: "I found policy {policy} under {name}, with a {vehicle}. Is that you, and were you driving that car?"
+      surface: chat
+    found_no_vehicle:
+      text: "I found policy {policy} under {name}. Is that you?"
+      surface: chat
+    declined:
+      text: Understood. What is your full name and policy number?
+      surface: chat
+    # The number that was heard leads to no policy (2026-10-13): it does not exist, it came
+    # through incomplete, or the holder has more than one. The person is asked once to repeat
+    # it digit by digit, which is how the recognizer hears it best. No numbers inside: there is
+    # none to read back to someone whose policy was not found.
+    not_found_repeat:
+      text: I couldn't find that policy. Could you repeat it digit by digit, slowly?
+      surface: chat
+    # What is stored in the case on confirmation: the identity and the vehicle.
+    confirmed_identity:
+      text: "{name}, policy {policy}"
+      surface: system
+    confirmed_vehicle:
+      text: "{vehicle}, driven by the policyholder"
+      surface: system
+  # How each block is named when the agent says what is missing (`intake.social.progress`).
+  block:
+    safety:
+      text: whether anyone was hurt
+      surface: chat
+    identity_and_policy:
+      text: your name and policy
+      surface: chat
+    what_happened:
+      text: what happened
+      surface: chat
+    when_and_where:
+      text: when and where
+      surface: chat
+    vehicle_and_driver:
+      text: the vehicle and who was driving
+      surface: chat
+    other_parties:
+      text: the other people involved
+      surface: chat
+    quote_driver:
+      text: the driver's details
+      surface: chat
+    quote_vehicle:
+      text: the vehicle's details
+      surface: chat
+    quote_usage:
+      text: how the vehicle is used
+      surface: chat
+    quote_history:
+      text: the claims history
+      surface: chat
+  # What the agent says when the intake node fails or runs out of time (the
+  # degradation phrase of `INTAKE_SPEC`). Until 2026-10-06 it was the BR5.4 calm
+  # phrase, which is about insults: against a slow model the agent sounded like
+  # it was reproaching something and gave no next step. This one says what
+  # happened and asks to repeat, the only thing it can ask without having understood.
+  degraded:
+    text: Sorry, I couldn't process what you said. Could you say it again, please?
+    surface: chat
+  # Correcting something already said (P4): it is replaced and said, with no "is that correct?".
+  correction:
+    applied:
+      text: "Corrected: {value}."
+      surface: chat
+  tone:
+    # BR5.4: at the insurer's first configured insult threshold, the calm
+    # phrase, without any reproach.
+    calm:
+      text: I want to help you calmly. If you'd prefer, an adjuster can review your case.
+      surface: chat
+    # BR5.4: at the second threshold, the session ends and the case waits for
+    # the insured with that reason.
+    closing_abuse:
+      text: I can't continue this way. Your case will wait for an adjuster to review it.
+      surface: chat
+  emergency:
+    # BR4.1: offers to continue the report after U10's emergency indication.
+    continuation:
+      text: We can continue your report afterward.
+      surface: chat
+  closing:
+    # AC1.5.2, last block of the fixed order: the closing summary. See `es.yaml`.
+    # The fast-path closing (P4, Miguel's decision, 2026-10-06): with the required
+    # details the case goes to an adjuster and the optional ones are offered in a
+    # single question. {case_number} is the case's; {missing} are the optional
+    # blocks still missing, from `intake.block.*`. The claim no longer has a
+    # summary asking "is that correct?".
+    fast_claim_offer:
+      text: "Done: I have what I need for your case {case_number}. Would you like to add {missing}, or shall we leave it as is?"
+      surface: chat
+    fast_claim_done:
+      text: "Done: I have what I need for your case {case_number}. I'm reviewing your report and I'll confirm in a moment."
+      surface: chat
+    fast_claim_review_after_extra:
+      text: "Noted, thank you. I'm reviewing your report and I'll confirm in a moment."
+      surface: chat
+    fast_claim_review_declined:
+      text: "All right. I'm reviewing your report and I'll confirm in a moment."
+      surface: chat
+    fast_claim_review_already:
+      text: "Your case {case_number} is under review; I'll confirm in a moment."
+      surface: chat
+    fast_claim_registered:
+      text: "Your case {case_number} is already registered; you can see it with the link above."
+      surface: chat
+    fast_claim_after_extra:
+      text: "Noted, thank you. Your case {case_number} goes to an adjuster; you can see it with the link above."
+      surface: chat
+    fast_claim_declined:
+      text: "All right. Your case {case_number} goes to an adjuster; you can see it with the link above."
+      surface: chat
+    fast_claim_already:
+      text: "Your case {case_number} is already with an adjuster; you can see and follow it with the link above."
+      surface: chat
+    # El cierre del siniestro por voz (2026-10-09): sin el enlace ni el numero, que la
+    # despedida de la llamada ya dice.
+    voice_fast_offer:
+      text: "All set, I have what I need. Do you want to add {missing}, or shall we leave it as is?"
+      surface: voice
+    voice_fast_done:
+      text: "All set, I have what I need."
+      surface: voice
+    voice_fast_after_extra:
+      text: "Noted, thanks."
+      surface: voice
+    voice_fast_declined:
+      text: "Sure."
+      surface: voice
+    voice_fast_already:
+      text: "I already have everything for your case."
+      surface: voice
+    voice_fast_registered:
+      text: "Your case is already registered."
+      surface: voice
+    summary_coverage:
+      text: "Before I close: {identity_and_policy}; your question is {question_asked}. Is that correct?"
+      surface: chat
+    # U19: la solicitud no tiene un resumen que confirmar; este cierre es tambien la frase de
+    # espera mientras el ritmo de fondo evalua la elegibilidad (BR2.5).
+    summary_quote:
+      text: That's everything I need. I'll check whether your request can move forward and let you know shortly.
+      surface: chat
+  identity:
+    # BR3.6: before using the person's first name.
+    name_permission:
+      text: "May I call you {name}?"
+      surface: chat
+
+# --- The adjuster's inbox and the visitor's own screen (U14) -------------------
+#
+# Three screens: the queue, the case view with a credential, and the visitor's own
+# screen for the person who opens their case with a link. The first two speak to
+# whoever decides; the third speaks to whoever reported, and **without a word of
+# system jargon** (rule U-07: "inbox" means nothing to the person who reported).
+# That is why the visitor's phrases live in their own section instead of being
+# reused from above: holding two registers over one set of phrases is the sure way
+# for one of them to cross over one day.
+#
+# The labels for state, resolution, record type, referral reason, field and channel
+# are **not here**: they are in `case:`, which is where the case vocabulary lives,
+# and the same server-side map resolves them.
+inbox:
+  # Las paginas de personal dicen que lo son (fase 3, 2026-10-08): quien llega desde
+  # la demo sabe que esta viendo la herramienta del ajustador.
+  staff_note:
+    text: "A page for the insurer's staff: adjusters review and decide cases here."
+    surface: inbox
+  queue:
+    title:
+      text: "{insurer} cases"
+      surface: inbox
+    table_label:
+      text: Cases waiting for a decision
+      surface: inbox
+    filters_label:
+      text: Filters
+      surface: inbox
+    # The "no filter" option of each selector. One key for all four: they say the
+    # same thing, and keeping them apart is how they stop saying it one day.
+    filter_any:
+      text: All
+      surface: inbox
+    filter_state:
+      text: Status
+      surface: inbox
+    filter_channel:
+      text: Channel
+      surface: inbox
+    filter_language:
+      text: Case language
+      surface: inbox
+    filter_priority:
+      text: Priority
+      surface: inbox
+    filter_clear:
+      text: Clear the filters
+      surface: inbox
+    # Announced when filtering, for whoever cannot see the list change (BR7.5).
+    results:
+      text: "{count} cases"
+      surface: inbox
+    empty:
+      text: No case is waiting for a decision.
+      surface: inbox
+    # BR1.3: an empty list with no explanation reads as an empty inbox, which is
+    # the opposite of what happened.
+    empty_filtered:
+      text: No case matches the filters.
+      surface: inbox
+    column_case:
+      text: Case
+      surface: inbox
+    column_completeness:
+      text: Completeness
+      surface: inbox
+    column_category:
+      text: Category
+      surface: inbox
+    column_channel:
+      text: Channel
+      surface: inbox
+    column_language:
+      text: Language
+      surface: inbox
+    column_priority:
+      text: Priority
+      surface: inbox
+    column_waiting:
+      text: Waiting
+      surface: inbox
+    more:
+      text: Show more cases
+      surface: inbox
+    open:
+      text: Open case {case_number}
+      surface: inbox
+  priority:
+    high:
+      text: High
+      surface: inbox
+    normal:
+      text: Normal
+      surface: inbox
+  completeness:
+    text: "{complete} of {total} fields"
+    surface: inbox
+  # How long a case has been waiting, in the unit that reads at a glance.
+  waited:
+    just_now:
+      text: A moment ago
+      surface: inbox
+    minutes:
+      text: "{value} min ago"
+      surface: inbox
+    hours:
+      text: "{value} h ago"
+      surface: inbox
+    days:
+      text: "{value} d ago"
+      surface: inbox
+  case:
+    title:
+      text: Case {case_number}
+      surface: inbox
+    back:
+      text: Back to the queue
+      surface: inbox
+    # The three things in the sticky header (BR2.1).
+    reason:
+      text: Why it came here
+      surface: inbox
+    category:
+      text: Category
+      surface: inbox
+    completeness:
+      text: Completeness
+      surface: inbox
+    no_reason:
+      text: No referral reason recorded
+      surface: inbox
+    not_handed_off:
+      text: It did not go through an adjuster
+      surface: inbox
+    no_category:
+      text: It has not been through the rules engine yet
+      surface: inbox
+    resolution:
+      text: Resolution
+      surface: inbox
+    not_found:
+      text: There is nothing to show here.
+      surface: inbox
+  # The six evidence blocks (BR2.2). Three open and three collapsed, and a
+  # collapsed one carries its result in the headline: collapsing hides the detail,
+  # not the datum.
+  block:
+    fields:
+      text: Completeness by field
+      surface: inbox
+    transcript:
+      text: Conversation
+      surface: inbox
+    citations:
+      text: Cited clauses
+      surface: inbox
+    rule:
+      text: Why it went to an adjuster
+      surface: inbox
+    # The same block when the rules closed the case without passing it to anyone.
+    rule_closed:
+      text: Why it was closed without an adjuster
+      surface: inbox
+    controls:
+      text: Compliance controls
+      surface: inbox
+    trace:
+      text: How it was answered
+      surface: inbox
+  fields:
+    complete:
+      text: Complete
+      surface: inbox
+    incomplete:
+      text: Missing
+      surface: inbox
+    # Un dato que se ofrece al final y no cuenta para la completitud (2026-10-11).
+    optional:
+      text: Optional
+      surface: inbox
+    # BR4.3: a case waiting on the insured says why and what is missing.
+    awaiting:
+      text: This case is waiting on the insured. It comes back to the queue when they pick the conversation up again and complete what is missing.
+      surface: inbox
+  transcript:
+    speaker_insured:
+      text: The person
+      surface: inbox
+    speaker_agent:
+      text: The agent
+      surface: inbox
+    # BR2.3: the transcript arrives redacted and the inbox does not uncover it.
+    # Each piece of personal data appears as a label naming its type, and the full
+    # value lives in the case field, which is visible above.
+    redacted_hint:
+      text: Personal data appears as a label naming its type. The full value lives in the case field, above.
+      surface: inbox
+    empty:
+      text: No conversation has been recorded yet.
+      surface: inbox
+  # BR2.5: the four outcomes of a coverage answer, each with its own label. These
+  # are labels for whoever decides, short and in their register; the sentences the
+  # agent says to the insured are different ones and live in `policy_rag.coverage`.
+  # Collapsing "no clause" into "could not verify" would contaminate an answer that
+  # was verified with infrastructure failures.
+  coverage:
+    verified:
+      text: Covered under the policy
+      surface: inbox
+    rejected:
+      text: Not covered under the policy
+      surface: inbox
+    no_clause_found:
+      text: No clause covers it
+      surface: inbox
+    unverifiable:
+      text: Could not be verified
+      surface: inbox
+    question:
+      text: What was asked
+      surface: inbox
+    empty:
+      text: Nothing was asked about coverage.
+      surface: inbox
+    # BR2.6: in an agency, whoever issued the policy is not whoever handles the
+    # case. Without this in view, the cited clauses look like the agency's own.
+    issuer:
+      text: Issued by {insurer}
+      surface: inbox
+  # Why the case went to an adjuster, in one sentence (2026-10-12): the server sends the
+  # category and the rule identifiers, not their explanation, so the sentence comes from
+  # the category and the identifier stays at the end, small, as a reference.
+  rule:
+    reason:
+      referral:
+        text: The insurer's rules send this case to an adjuster, who decides what happens next.
+        surface: inbox
+      standard_review:
+        text: The rules ask an adjuster to review this case through the usual process before it moves on.
+        surface: inbox
+      direct_close:
+        text: With what was recorded, the rules allow closing the case without an adjuster's review.
+        surface: inbox
+      other:
+        text: The insurer's rules decided what happens next with this case.
+        surface: inbox
+    # The category in a word or two, for the header tag (2026-10-13): the sentences above
+    # are long for a tag and the enum value is never printed.
+    category:
+      referral:
+        text: Referral
+        surface: inbox
+      standard_review:
+        text: Standard review
+        surface: inbox
+      direct_close:
+        text: Direct close
+        surface: inbox
+      other:
+        text: Other category
+        surface: inbox
+    reference:
+      text: "Reference: {rules}"
+      surface: inbox
+  # What was reviewed and what was found, in sentences (2026-10-12). One sentence per
+  # finding code from the server (`FindingCode`); one this screen does not know is
+  # said without printing the code.
+  controls:
+    reviewed:
+      text: Checked that the conversation said the answers come from an artificial intelligence assistant, that the case went to an adjuster when one was requested, that no personal data was left uncovered, and that the case can be explained.
+      surface: inbox
+    all_clear:
+      text: Nothing needed fixing.
+      surface: inbox
+    some_findings:
+      text: "The following was found:"
+      surface: inbox
+    finding:
+      disclosure_missing:
+        text: The notice that the answers come from an artificial intelligence assistant was not recorded.
+        surface: inbox
+      human_route_missed:
+        text: Someone asked to talk to somebody, and the next reply did not pass the case to an adjuster.
+        surface: inbox
+      pii_found:
+        text: Personal data was left uncovered in the saved conversation.
+        surface: inbox
+      attachment_missing:
+        text: The case lacks information to explain how the answer was reached.
+        surface: inbox
+      other:
+        text: There is a finding the adjuster will review.
+        surface: inbox
+  trace:
+    cost:
+      text: "{value} USD"
+      surface: inbox
+    # The link to the case's trace in Langfuse (2026-10-14). Whoever opens their case sees it,
+    # with the demo link or with a credential; the public example case does not have it. The
+    # note says what is actually sent: step names, model, timings and cost, and no conversation
+    # text (a span's attribute list is closed).
+    langfuse_link:
+      text: See in Langfuse how the agent worked
+      surface: inbox
+    langfuse_note:
+      text: "Langfuse is an external tool for reviewing, step by step, what the agent did: which model it used, how long it took and what it cost. It does not show what was written in the conversation."
+      surface: inbox
+  # BR2.4: the explanation answers five questions and none is left blank. A blank
+  # reads as a datum that got lost.
+  explanation:
+    title:
+      text: Who decided and when
+      surface: inbox
+    pending:
+      text: Pending a decision
+      surface: inbox
+    nobody:
+      text: No decision recorded
+      surface: inbox
+    by_staff:
+      text: Decided by {who}
+      surface: inbox
+    # BR5.5: a decision taken with the demo link is attributed to a visitor, never
+    # to a person at the insurer.
+    by_visitor:
+      text: Decided by a visitor with a demo link
+      surface: inbox
+    # An example case is read without a credential: nobody is named, but it does say that an
+    # adjuster decided it (approved or rejected) or that the agency sent it to the insurer that
+    # issued the policy (the agency does not decide cases). The person's identifier does not travel.
+    by_adjuster:
+      text: Decided by an adjuster at the insurer
+      surface: inbox
+    by_agency:
+      text: Sent to the insurer by the agency
+      surface: inbox
+    # US1.17: a direct close is applied by the rules and nobody decides. A "system"
+    # actor is never printed: it says there was no adjuster.
+    by_rules:
+      text: "No adjuster: the insurer's rules closed it"
+      surface: inbox
+  # Correcting a field (BR3.1 to BR3.4).
+  correction:
+    edit:
+      text: Correct {field}
+      surface: inbox
+    value_label:
+      text: Corrected value
+      surface: inbox
+    save:
+      text: Save
+      surface: inbox
+    cancel:
+      text: Cancel
+      surface: inbox
+    saved:
+      text: The field was corrected.
+      surface: inbox
+    closed:
+      text: "A closed case takes no corrections: its evidence is what was checked when it closed."
+      surface: inbox
+  # What the adjuster notes for the rules (2026-10-13): the estimated amount, whether the
+  # coverage is in question and whether fraud is suspected. The insurer's rules and whoever
+  # decides read it; it is not shown to the person who reported the case and it does not
+  # change what the agent tells them. "Not noted" and "No" are two different answers: a
+  # rule does not fire on a detail that was not noted, and a "No" says it was checked. The
+  # amount is typed in thousands of pesos, which is how the project stores amounts, and
+  # read back in pesos underneath so an extra zero is noticed.
+  triage:
+    title:
+      text: Notes for the rules
+      surface: inbox
+    intro:
+      text: What is noted here is used by the insurer's rules to decide how the case continues. The person who reported the case does not see it, and it does not change what the agent tells them.
+      surface: inbox
+    amount_label:
+      text: Estimated amount (in thousands of pesos)
+      surface: inbox
+    amount_preview:
+      text: "Equals {amount}."
+      surface: inbox
+    amount_invalid:
+      text: The amount must be a whole number, with no dots, commas or letters.
+      surface: inbox
+    coverage_label:
+      text: Is the coverage in question?
+      surface: inbox
+    fraud_label:
+      text: Is fraud suspected?
+      surface: inbox
+    unset:
+      text: Not noted
+      surface: inbox
+    answer_yes:
+      text: "Yes"
+      surface: inbox
+    answer_no:
+      text: "No"
+      surface: inbox
+    save:
+      text: Save and re-evaluate
+      surface: inbox
+    saved:
+      text: Notes saved. The rules evaluated the case again.
+      surface: inbox
+    read_only:
+      text: Read only. These notes cannot be changed right now.
+      surface: inbox
+  # The decision (BR4.1 to BR4.6).
+  decision:
+    title:
+      text: Decide the case
+      surface: inbox
+    approve:
+      text: Approve
+      surface: inbox
+    reject:
+      text: Reject
+      surface: inbox
+    # BR4.6: nothing promises that the issuer will call.
+    mark_sent:
+      text: Mark as sent to the insurer that issued the policy
+      surface: inbox
+    comment_label:
+      text: Your note
+      surface: inbox
+    comment_hint:
+      text: It stays in the case record and it is what makes the decision auditable.
+      surface: inbox
+    recorded:
+      text: The decision was recorded.
+      surface: inbox
+    none_awaiting:
+      text: "This case is not decided yet: it is waiting on the insured."
+      surface: inbox
+    none_closed:
+      text: This case is already decided.
+      surface: inbox
+    none_in_conversation:
+      text: "This case is still in the conversation: it is not ready to decide yet."
+      surface: inbox
+    # US1.17: a case the rules closed is not decided, and "already decided" would say
+    # somebody decided it.
+    none_closed_by_rules:
+      text: "The insurer's rules closed this case without an adjuster: there is nothing to decide."
+      surface: inbox
+    # A case the agent is still evaluating can be taken by staff; it says what is lost.
+    takeover_note:
+      text: "The agent is still evaluating this case. If you decide it now, it is yours and the rules no longer close it on their own."
+      surface: inbox
+  # What whoever opens their case sees when the rules closed it without an adjuster
+  # (US1.17, AC1.17.4). It does not state coverage or amounts: it says it was registered.
+  closed_by_rules:
+    intro:
+      text: "Your case is registered and did not need an adjuster's review. Here you can see what you told us and the rule that allowed it."
+      surface: inbox
+    note:
+      text: Registering the case does not confirm coverage or amounts.
+      surface: inbox
+
+# The visitor's own screen for whoever opens their case with a link (U14, F8.7).
+# **No system jargon** (rule U-07): nothing here says inbox, referred case or
+# queue. Whoever reads this is the person who reported.
+visitor:
+  # The title says what the case is, in words, by its type; the code is a small line
+  # that says what it is for (2026-10-12, C10).
+  title_claim:
+    text: Your accident report
+    surface: inbox
+  title_inquiry:
+    text: Your policy question
+    surface: inbox
+  title_quote:
+    text: Your quote request
+    surface: inbox
+  number:
+    text: "Your case number: {case_number}. Use it to pick the case back up or look it up."
+    surface: inbox
+  # What you are looking at and how long the link lasts (Flow 3, step 4).
+  intro:
+    text: "This is what came of your case: what you told us, what we found in your policy, and what an adjuster would decide."
+    surface: inbox
+  valid_until:
+    text: This link works until {time} today.
+    surface: inbox
+  decide_intro:
+    text: "In this demo you can play the adjuster: take the decision and see how the conversation goes on."
+    surface: inbox
+  opening:
+    text: Opening your case…
+    surface: inbox
+  # What shows on confirming: the case has a decision, the notice the person
+  # receives, and the way back to the conversation (Flow 3, step 6).
+  done_title:
+    text: Done, your case has a decision
+    surface: inbox
+  done_body:
+    text: The notice with the decision reaches you in your conversation.
+    surface: inbox
+  # BR5.4: if the link expires while you are writing, the text is kept so you can
+  # copy it. Losing it turns an expiry into lost work, and it falls on exactly the
+  # person who was finishing.
+  expired_with_comment:
+    text: The link expired while you were writing. Your note is still below so you can copy it before you leave.
+    surface: inbox
+  # The decision rejected while the link is still valid (2026-10-12): it did not
+  # expire, it could not be saved. Saying "expired" there misleads someone who can retry.
+  decision_not_saved:
+    text: We could not save your decision. Try again; your note is still below.
+    surface: inbox
+  # What the visitor notes while playing adjuster (2026-10-13): the amount, whether there are
+  # doubts about the coverage and whether they suspect fraud. It is optional, the amount is
+  # written in pesos and it comes with help (from which amounts the rules change, what each
+  # question means), because whoever does this does not know what an adjuster looks at. No
+  # system jargon (U-07): nothing here says inbox, queue or triage.
+  triage:
+    title:
+      text: "Before deciding: what an adjuster would review"
+      surface: inbox
+    intro:
+      text: It is optional. The agent collects what happened; only an adjuster can assess these three things. If you note them, the insurer's rules classify the case again and you see right here what changed.
+      surface: inbox
+    amount_label:
+      text: How much would it cost to repair the damage? (in pesos)
+      surface: inbox
+    # The amounts come from the insurer's rules file, never from the screen: three phrases
+    # depending on how many thresholds it has (two or more, one, none).
+    amount_help:
+      text: A rough estimate. From {first} the rules ask an adjuster to review the amount; from {last}, a more detailed review.
+      surface: inbox
+    amount_help_one:
+      text: A rough estimate. From {first} the rules ask an adjuster to review the amount.
+      surface: inbox
+    amount_help_none:
+      text: A rough estimate.
+      surface: inbox
+    amount_examples:
+      text: "Try:"
+      surface: inbox
+    amount_preview:
+      text: It will be noted as {amount}.
+      surface: inbox
+    amount_invalid:
+      text: Type numbers only, with no dots, commas or letters.
+      surface: inbox
+    coverage_label:
+      text: Is there any doubt about whether the policy covers this damage?
+      surface: inbox
+    coverage_help:
+      text: For example, whether what happened might fall under a policy exclusion.
+      surface: inbox
+    fraud_label:
+      text: Does anything make you suspect fraud?
+      surface: inbox
+    fraud_help:
+      text: For example, versions that do not match, or a report made long after the event.
+      surface: inbox
+    unset:
+      text: I have not checked
+      surface: inbox
+    save:
+      text: Save and see what the rules say
+      surface: inbox
+    result:
+      text: The rules evaluated the case again.
+      surface: inbox
+    limit:
+      text: These notes cannot be changed any more on this case.
+      surface: inbox
+    expired:
+      text: The link expired before these notes were saved. What you wrote is still here, but it was not saved.
+      surface: inbox
+
+# The figures panel (U22, AC4.16). Every figure says where it comes from or why it
+# was not measured: "not measured" always carries its cause and never a zero (BR1.2).
+metrics:
+  # Que mide cada cifra, en palabras llanas (D5, fase 3, 2026-10-08).
+  figure_help:
+    completeness:
+      text: "Of the details a report needs, how many the agent recorded in the test conversations."
+      surface: system
+    citation_precision:
+      text: "Of the clauses the agent cited in the test questions, how many were the ones that answer that question under that policy."
+      surface: system
+    latency:
+      text: "How long the answer takes to start, from when you finish speaking or typing."
+      surface: system
+    cost_per_case:
+      text: "What handling one case costs in models, voice and transcription, at list price."
+      surface: system
+    cases_by_tenant:
+      text: "How many cases the demo opened at each insurer."
+      surface: system
+  title:
+    text: "How well the agent works"
+    surface: system
+  lead:
+    text: "Each figure comes from a test run, with its date and version. The ones not measured yet say so, with the reason."
+    surface: system
+  no_baseline:
+    text: No baseline has been published yet, so no run-based figure is measured.
+    surface: system
+  loading:
+    text: Loading the figures
+    surface: system
+  figure:
+    completeness:
+      text: Case completeness
+      surface: system
+    citation_precision:
+      text: Citation precision
+      surface: system
+    latency:
+      text: Latencies
+      surface: system
+    cost_per_case:
+      text: Cost per case
+      surface: system
+    cases_by_tenant:
+      text: Cases per insurer
+      surface: system
+  language:
+    es:
+      text: Spanish
+      surface: system
+    en:
+      text: English
+      surface: system
+  not_measured:
+    text: Not measured
+    surface: system
+  cause:
+    no_baseline:
+      text: No baseline has been published yet.
+      surface: system
+    criterion_absent:
+      text: The current baseline does not carry the criterion that produces this figure.
+      surface: system
+    criterion_not_built:
+      text: "No criterion measures this yet: its measurement is not wired."
+      surface: system
+    measured_per_milestone:
+      text: It is measured per milestone, against real providers, and no measurement has been published yet.
+      surface: system
+    not_connected:
+      text: This figure is not connected to the panel yet.
+      surface: system
+    latency_not_in_baseline:
+      text: The published baseline carries no latencies.
+      surface: system
+    too_few_turns:
+      text: Too few turns were measured to give a reliable figure.
+      surface: system
+  source:
+    date:
+      text: Date
+      surface: system
+    commit:
+      text: Commit
+      surface: system
+    run:
+      text: Run
+      surface: system
+  latency:
+    voice:
+      text: Voice
+      surface: system
+    chat:
+      text: Chat
+      surface: system
+    between:
+      text: Between {start} and {end}
+      surface: system
+    dataset:
+      text: Over {dataset}
+      surface: system
+    percentiles:
+      text: Half and 95 out of 100 (p50 and p95)
+      surface: system
+    half:
+      text: "Half of the turns, within {time}"
+      surface: system
+    most:
+      text: "95 out of 100 turns, within {time}"
+      surface: system
+    turns:
+      text: "Turns measured: {count}"
+      surface: system
+    environment_chat:
+      text: "Measured in the test run, from the moment the server receives the message; the writer's network is not counted."
+      surface: system
+    event:
+      speech_end:
+        text: end of speech
+        surface: system
+      first_audio:
+        text: first audio
+        surface: system
+      message_sent:
+        text: message sent
+        surface: system
+      first_word:
+        text: first word
+        surface: system
+
+# The policies tab (phase 2, 2026-10-08): the sample policies and what to ask.
+policies:
+  # En la barra: vuelve al inicio para elegir otra aseguradora desde el chat o la
+  # llamada (D7, fase 3, 2026-10-08). "Pólizas" salió de la barra el 2026-10-11 y la
+  # reemplazó "Casos"; la página sigue en /policies, enlazada desde cada aseguradora.
+  nav_insurers:
+    text: Insurers
+    surface: system
+  title:
+    text: "Sample policies"
+    surface: system
+  intro:
+    text: "Each insurer's sample policies. Pick one and ask about it in the chat."
+    surface: system
+  loading:
+    text: "Loading the policies…"
+    surface: system
+  example:
+    text: "Sample policy"
+    surface: system
+  holder:
+    text: "Policyholder: {name}"
+    surface: system
+  issued_by:
+    text: "Issued by {issuer}"
+    surface: system
+  period:
+    text: "In force from {start} to {end}"
+    surface: system
+  vehicles:
+    text: "Vehicles"
+    surface: system
+  coverage_title:
+    text: "What it covers"
+    surface: system
+  money_note:
+    text: "Amounts in Colombian pesos."
+    surface: system
+  endorsements_title:
+    text: "Special conditions of this policy"
+    surface: system
+  no_endorsements:
+    text: "This policy has no special conditions."
+    surface: system
+  questions_title:
+    text: "Questions to try"
+    surface: system
+  questions_hint:
+    text: "Each button opens the chat with this policy and the question already sent."
+    surface: system
+  ask_chat:
+    text: "Ask about this policy in the chat"
+    surface: system
+  ask_identity:
+    text: "I'm {name}, my policy is {policy}"
+    surface: system
+  ask_question:
+    text: "I'm {name}, my policy is {policy}. {question}"
+    surface: system
+  limit:
+    a_bodily_injury_per_person:
+      text: "Liability: bodily injury, per person"
+      surface: system
+    a_bodily_injury_per_accident:
+      text: "Liability: bodily injury, per accident"
+      surface: system
+    a_property_damage:
+      text: "Liability: property damage"
+      surface: system
+    b_medical_payments_per_person:
+      text: "Medical payments, per person"
+      surface: system
+    c_uninsured_per_person:
+      text: "Uninsured motorists, per person"
+      surface: system
+    c_uninsured_per_accident:
+      text: "Uninsured motorists, per accident"
+      surface: system
+    d_collision_deductible:
+      text: "Your vehicle's deductible in a collision"
+      surface: system
+    d_other_than_collision_deductible:
+      text: "Your vehicle's deductible for other damage"
+      surface: system
+  endorsement:
+    def_family_member:
+      text: "Children under 25 studying in another city count as family members"
+      surface: system
+    a_excl_a_5:
+      text: "Covers liability while driving for a ride-hailing platform"
+      surface: system
+    d_excl_3:
+      text: "Covers electronic equipment declared with its invoice"
+      surface: system
+    c_arbitration:
+      text: "Part C arbitration is decided by a three-arbitrator panel"
+      surface: system
+    f_period_territory:
+      text: "Extends the territory to trips of up to 30 days in neighboring jurisdictions"
+      surface: system
+    def_covered_auto:
+      text: "45 days, instead of 20, to report a newly bought vehicle"
+      surface: system
+    d_excl_5:
+      text: "Covers tires damaged by a pothole, with a per-tire cap"
+      surface: system
+    d_transport:
+      text: "More daily and total money for transportation after a theft or damage"
+      surface: system
+    b_ins:
+      text: "Medical payments also cover pedestrians struck by your car"
+      surface: system
+    f_termination:
+      text: "At least 45 days of notice before the policy is cancelled"
+      surface: system
+  question:
+    hail:
+      text: "Does my policy cover hail?"
+      surface: system
+    rental_car:
+      text: "Do you pay for a rental car while mine is repaired?"
+      surface: system
+    transport_expense_extension:
+      text: "Do you pay for transportation if my car is stolen?"
+      surface: system
+    ride_app_exclusion_reopened:
+      text: "Am I covered if I drive for a ride-hailing app?"
+      surface: system
+    temporary_substitute_definition:
+      text: "Am I covered driving a borrowed car while mine is repaired?"
+      surface: system
+    tire_exclusion_reopened:
+      text: "Do you cover a tire damaged by a pothole?"
+      surface: system
+    covered_auto_definition_changed:
+      text: "I just bought a car. How many days do I have to report it?"
+      surface: system
+    uninsured_driver:
+      text: "Am I covered if I'm hit by someone with no insurance?"
+      surface: system
+    lend_car:
+      text: "Am I covered if I lend my car to a friend?"
+      surface: system
+    passengers_medical:
+      text: "Do you pay my passengers' medical bills?"
+      surface: system
+    theft:
+      text: "What do you cover if my car is stolen?"
+      surface: system
+    report_deadline:
+      text: "How long do I have to report an accident?"
+      surface: system
+    abroad:
+      text: "Am I covered if I drive outside the country?"
+      surface: system
+    towing:
+      text: "Do you pay for a tow truck if my car breaks down?"
+      surface: system
+
+# The public "Cases" page (2026-10-11): the visitor's own case and each insurer's sample
+# cases. Only those two: no other visitor's case is ever shown.
+cases:
+  nav:
+    text: Cases
+    surface: system
+  title:
+    text: Cases
+    surface: system
+  intro:
+    text: "A case is what the agent builds from what you tell it: your details, the conversation and what it found in your policy, so an adjuster can review and decide it. Here you see yours and sample cases from each insurer."
+    surface: system
+  start:
+    text: Start a case
+    surface: system
+  mine:
+    title:
+      text: Your cases
+      surface: system
+    hint:
+      text: The ones you opened from this browser, one per insurer.
+      surface: system
+    empty:
+      text: You don't have any case yet. Tell an insurer's agent what happened and it shows up here.
+      surface: system
+    chat:
+      text: Continue in the chat
+      surface: system
+    chat_with:
+      text: "Continue in {insurer}'s chat"
+      surface: system
+    view:
+      text: View the case
+      surface: system
+    view_of:
+      text: "View the case {case_number} from {insurer}"
+      surface: system
+    number:
+      text: "Your case number: {case_number}. Use it to pick the case back up or look it up."
+      surface: system
+  examples:
+    title:
+      text: Sample cases
+      surface: system
+    hint:
+      text: Made-up cases each insurer comes with, as an adjuster sees them. Open one to see how a case ends up.
+      surface: system
+    insurer_label:
+      text: Choose an insurer
+      surface: system
+    empty:
+      text: This insurer has no sample cases right now.
+      surface: system
+  # What each state means, in one line under its title. Only the ones the list offers: a
+  # freshly opened case, with nothing in it, is not shown.
+  group:
+    capturing:
+      text: The agent is still asking for the details.
+      surface: system
+    verifying:
+      text: The agent is checking the policy.
+      surface: system
+    deciding:
+      text: The agent is working out what comes next.
+      surface: system
+    derived:
+      text: It has gone to an adjuster, who decides what comes next.
+      surface: system
+    awaiting_insured:
+      text: The case is waiting for an answer from the insured.
+      surface: system
+    closed:
+      text: The case already has a resolution.
+      surface: system
+  example:
+    title:
+      text: Sample case {case_number}
+      surface: system
+    note:
+      text: "This is a sample case: you can read it but not decide it. To decide a case as an adjuster, create your own in the chat."
+      surface: system
+    back:
+      text: Back to Cases
+      surface: system
+
+# The panel of documents the agent consults (phase 2, 2026-10-08).
+documents:
+  translation_note:
+    text: "Reference translation into English. The governing text is the original."
+    surface: system
+  show_original:
+    text: "See in the original language"
+    surface: system
+  show_translation:
+    text: "See the translation"
+    surface: system
+  open:
+    text: "See the documents {agent} consults"
+    surface: system
+  title:
+    text: "Documents {agent} consults"
+    surface: system
+  how:
+    text: "When you ask about your policy, {agent} searches these documents for the clauses closest to your question, only from your policy, and a checker reviews every citation. If no clause covers the topic, she does not guess."
+    surface: system
+  static:
+    text: "The documents do not change with conversations. The only thing that changes is how many times each clause was cited."
+    surface: system
+  close:
+    text: "Close"
+    surface: system
+  list_label:
+    text: "Documents"
+    surface: system
+  kind_base:
+    text: "Auto policy {year}"
+    surface: system
+  kind_endorsement:
+    text: "Special condition {number}"
+    surface: system
+  kind_jurisdiction:
+    text: "Territory rules"
+    surface: system
+  clause_count:
+    text: "{count} clauses"
+    surface: system
+  not_in_force:
+    text: "Not in force"
+    surface: system
+  not_in_force_why:
+    text: "No policy uses it. It is here to check that {agent} does not cite old documents."
+    surface: system
+  search_label:
+    text: "Search this document"
+    surface: system
+  no_match:
+    text: "No clause matches the search."
+    surface: system
+  amended_by:
+    text: "Modified by: {names}"
+    surface: system
+  cited:
+    text: "Cited {count} times in the last 7 days"
+    surface: system
+  loading:
+    text: "Loading the document…"
+    surface: system

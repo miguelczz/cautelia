@@ -1,0 +1,14 @@
+# Crying / distress (AC1.13.1, BR5.2), English turn. See `es.yaml`.
+case_key: DS-2/en/intake-distress-crying
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - intake
+  - emotion
+script:
+  - field_key: description
+    text: "(crying) I'm really scared, the car was going so fast and I couldn't do anything."
+expected_verdicts:
+  intake_distress_crying: pass

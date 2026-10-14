@@ -1,0 +1,275 @@
+# Manifiesto de los ocho conjuntos de datos (BR1.9, FR11.1).
+#
+# Un conjunto declarado y ausente hace que una metrica se publique sin su base.
+# Por eso cada uno dice cuantos casos tiene, y el que todavia no se construye lo
+# declara **con su razon** en vez de desaparecer de la lista.
+#
+# `runs_per_delivery` marca los que corren en cada entrega. Los de audio no:
+# dependen de grabaciones de terceros y el costo de voz esta topado, asi que
+# corren por hito.
+
+datasets:
+  - dataset: DS-1
+    built: false
+    reason: >
+      Corpus de polizas de los tres tenants. Lo genera U7 `synthetic-data`.
+
+  - dataset: DS-2
+    count: 138
+    reason: >
+      Golden set de FNOL en texto. Los casos los escriben las unidades que miden
+      cada conducta; U1 entrega el corredor, no los casos. El primer lote es de
+      U10: peticion de persona directa, indirecta y sus negativos, pregunta de
+      identidad, heridos graves y sus negativos, en los dos idiomas. El segundo
+      lote es de U9 (pasos 1 a 5, `code-generation-plan.md`): la categoria
+      esperada por aseguradora, el cierre directo sin dinero, la regla de
+      dinero que fuerza la derivacion y la regla de la agencia, sobre
+      escenarios estructurados (`app/evals/fixtures/rules/`) y no sobre frases;
+      fallan hoy porque ninguna aseguradora trae todavia `rules/triage.yaml`
+      real (llega en el paso 6 de esta unidad). El tercer lote es de U11 (paso
+      2 de su plan, tanda 1): los cinco ejes de la captura -- relato ordenado,
+      relato desordenado, dato adelantado, llanto y enojo --, en los dos
+      idiomas; **los diez pasan desde la tanda 2 de esa unidad**, que construyo el
+      mecanismo que decide el orden de las preguntas y compone el turno (BR3.2 a
+      BR5.4). El cuarto lote es de U12 (paso 7, `code-generation-plan.md`):
+      pregunta de cobertura a mitad del reporte y llamada cortada con
+      reanudacion, en los dos idiomas -- los dos unicos que dependen de la
+      conducta de esta unidad y por eso se escriben aqui; los que faltan
+      para las 60 conversaciones del set son el encargo reservado para la
+      nube, sobre la sonda generica que ese paso deja construida
+      (`tests/integration/u12/test_turn.py`). **Todavia no son las 60
+      conversaciones del set**: cuando se escribio esta linea habia 20 por idioma de las 30 que pide
+      `team.md`; la cifra vigente esta al final de esta entrada, y sale del
+      recuento del arbol.
+      Esa cifra decia once hasta el 2026-09-28: se escribio cuando habia 19 por
+      idioma y la tanda 4 de U13 anadio la pareja de punta a punta sin bajarla.
+      Una cifra en prosa que no sale del mismo recuento que el arbol es la que
+      se usa para planear y la que sale mal. El quinto lote es de U13 (tanda 4): la
+      conversacion de punta a punta **por el canal chat**, en los dos idiomas,
+      que es el primero del set que no simula el recorrido sino que lo corre
+      por el conductor de texto. Es ademas lo que destraba el etiquetado de
+      DS-7: el juez se calibra contra transcripciones reales, y hasta esta
+      unidad no habia ninguna. El sexto lote es de U14 (tanda 4): la
+      explicacion de un caso derivado --sus cinco preguntas respondidas, con
+      "pendiente de decision" donde todavia no hay decision (BR2.4)-- y las
+      acciones que ofrece un caso, que salen de la configuracion de su
+      aseguradora y de su estado y nunca de una condicion escrita (BR4.5). Los
+      dos corren sobre escenarios estructurados
+      (`app/evals/fixtures/inbox/`) y no sobre frases, por la misma razon que
+      los de U9: lo que se mide es si una pregunta queda sin responder, y eso no
+      depende de lo que diga nadie. El 2026-10-06 entran catorce mas, de la
+      conversacion de la captura (decision de Miguel: la agente contesta lo que
+      le dicen de paso antes de seguir): saludo a secas, agradecimiento y
+      despedida a mitad del reporte, pregunta por cuanto falta, lo social dicho en el otro idioma
+      (un turno corto no cambia el idioma de la conversacion, BR2.2), y la poliza
+      buscada en el corpus con su titular confirmado en una frase, el recorrido
+      rapido sin lecturas con su oferta de lo opcional, y la correccion de un dato
+      ya dicho; en los dos idiomas, reconocidos por reglas versionadas
+      (`app/config/intake/social_signals.yaml`) y sin modelo. Ese mismo dia salio
+      `intake-readback-leading-no` (una pareja): media la lectura de confirmacion
+      que la decision de Miguel retiro, no fallaba, y su frase sigue medida como
+      respuesta a la oferta en `intake-fast-closing`.
+      Con ellos el conjunto tiene **60 archivos, 30 por idioma**; no todos son
+      conversaciones (los de reglas y bandeja corren sobre escenarios
+      estructurados), asi que las 30 conversaciones por idioma que pide `team.md`
+      siguen sin completarse.
+      El 2026-10-07 entran quince parejas mas, de la fase 0 de
+      `docs/propuesta-2026-10/03-propuesta-y-diseno.md` (`understand-*`): que la
+      agente entienda un mensaje por su sentido y no por palabras clave --la
+      intencion, los datos ya interpretados, el si o el no, la pregunta de la
+      persona--, con las conversaciones de las capturas de Miguel y frases dichas
+      de formas que las reglas no reconocen. Necesitan la clave de Claude para
+      evaluaciones y corren con `mise run evals:entender`, no en cada entrega. Con
+      ellas el conjunto tenia 90 archivos, 45 por idioma.
+
+      El 2026-10-10 entra una pareja mas (`understand-no-injuries-unless-said`),
+      nacida de la auditoria de ese dia: un choque contado sin hablar de heridos no
+      deja anotado que no los hubo. Con ella el conjunto tiene **92 archivos, 46 por
+      idioma**.
+
+      El 2026-10-13 entran tres parejas (`rules-injuries-denied`,
+      `rules-injuries-reported` y `rules-injuries-unclear`): el recorrido del campo
+      de heridos que guarda el caso, derivado a `injuries_present`, hasta la categoria
+      que decide el motor real de cada aseguradora. Antes de ellas ningun reporte
+      producia ese insumo y ninguna regla de heridos podia disparar. Corren sin
+      modelo y sin base, en el subconjunto de arranque. Con ellas el conjunto tiene
+      **106 archivos, 53 por idioma** (el conteo de 92 de arriba no sumo los
+      ocho archivos que entraron despues; el recuento del arbol manda).
+
+      El mismo 2026-10-13 entran dos parejas mas (`rules-closure-registers` y
+      `rules-closure-refers`): el recorrido hasta **lo que se hace con el caso** cuando
+      la cadena de fondo termina --cerrarlo como `registered` sin pasar por la bandeja, o
+      dejarlo con un ajustador--, desde los campos de heridos y de terceros que guarda el
+      caso. Antes de ellas nadie ejecutaba la decision de cierre. Llegan hasta donde el
+      corredor puede mirar (la decision pura del final del recorrido); que el estado del
+      caso cambie en la base lo cubre la prueba de integracion de la cadena de fondo.
+      Con ellas el conjunto tiene **110 archivos, 55 por idioma**.
+
+      El 2026-10-13 entran tres parejas mas (`understand-others-not-mentioned`,
+      `understand-others-named` y `understand-others-denied`): cuando el modelo que lleva la
+      conversacion puede anotar que no hubo nadie mas en `other_parties`, que es lo unico que
+      deja cerrar directo un reporte de un solo vehiculo. No anotarlo si la persona no dijo nada
+      de los demas, anotarlo como tercero si nombro a alguien, y como negacion clara --de las que
+      acepta `other_parties_data_pending`-- si dijo con claridad que no hubo nadie. Las lee la
+      sonda de comprension con una expectativa nueva (`other_parties_denied`), y corren con
+      `mise run evals:entender`, con el modelo. Con ellas el conjunto tiene
+      116 archivos.
+      El mismo 2026-10-13 entran dos parejas de comprension (`understand-vague-opening` y
+      `understand-vague-opening-in-call`), de una llamada cuya primera frase fue
+      «quería consultar sobre…» y se siguio como el reporte de un accidente: anunciar que se
+      quiere consultar o preguntar algo, sin decir que, no es todavia a que se viene --ni en el
+      chat sin caso, ni en la llamada, que abre su caso como reporte antes de la primera
+      palabra--. Se escribieron antes del cambio de la instruccion `conversation` y **no se han
+      corrido contra el modelo**. Con las dos tandas del dia el conjunto tiene
+      **120 archivos, 60 por idioma**.
+
+      El mismo 2026-10-13 entran tres parejas mas (`rules-driver-listed`,
+      `rules-driver-unlisted` y `rules-driver-unknown`): el recorrido del campo del vehiculo
+      y el conductor que guarda el caso, junto con los conductores que declara su poliza,
+      derivado a `unlisted_driver` hasta la categoria que decide el motor real de cada
+      aseguradora. Es el sexto y ultimo insumo del motor de reglas que se produce: antes de
+      ellas la regla del conductor no podia disparar nunca. Miden los tres valores del insumo
+      --figura, no figura y no se sabe-- y que ante la duda quede ausente. Corren sin modelo
+      y sin base, en el subconjunto de arranque. Con ellas el conjunto tiene
+      **126 archivos, 63 por idioma**.
+
+      El mismo 2026-10-13 entran dos parejas de comprension mas (`understand-other-driver-name-asked`
+      y `understand-other-driver-name-given`): cuando la persona dice que otra persona conducia y
+      no da su nombre completo, la agente lo pregunta una vez y no inventa uno; y cuando lo da, queda
+      anotado en `vehicle_and_driver` junto al carro y de una forma que `unlisted_driver` puede leer.
+      Es lo que le faltaba a la regla del conductor para poder disparar con «manejaba mi hijo» a secas. La sonda de
+      comprension gana cuatro expectativas (`captured_values`, `declared_drivers`, `driver_reading` y
+      `reply_asks_for_any`). Se escribieron antes del cambio de la instruccion `conversation` y **no se
+      han corrido contra el modelo**. Con ellas el conjunto tiene **130 archivos, 65 por idioma**.
+
+      El mismo 2026-10-13 entran dos parejas mas (`intake-policy-heard-incomplete` e
+      `intake-policy-not-found-repeat`), de la llamada real en la que «POL-200117» llego como
+      «Paul 201 17» y el caso quedo sin poliza identificada aunque la persona dijo su nombre
+      entero: con el nombre completo, una sola poliza del titular y cifras que se parecen al
+      numero oido, la agente la propone con la frase del chat y solo el si de la persona la
+      ata; si no hay a quien proponer, dice que no la encontro y pide repetirla cifra por
+      cifra una sola vez. Corren el nodo `intake` de verdad sobre el corpus versionado, sin
+      modelo y sin base, en el subconjunto de arranque. Con ellas el conjunto tiene
+      **134 archivos, 67 por idioma**.
+
+      El mismo 2026-10-13 entran dos parejas de comprension mas (`understand-done-with-data-missing`
+      y `understand-whats-next-with-data-missing`), de la llamada simulada en la que, con el lugar
+      del choque todavia sin decir, la persona dijo «No, asi esta bien, eso es todo, gracias» y el
+      modelo contesto «Ya quedo anotado tu reporte; un ajustador lo revisara con tu poliza»: falso,
+      porque el caso seguia tomando datos. Miden que la respuesta no de el reporte por hecho ni diga
+      que lo revisa un ajustador cuando faltan datos (con la misma funcion que la descarta en el
+      chat, `orchestration.outcome_claim`), que diga que falta, y que no se invente el dato. La
+      sonda de comprension gana la expectativa `reply_claims_no_outcome`. Se escribieron antes del
+      cambio que descarta esa respuesta y **no se han corrido contra el modelo**. Con ellas el
+      conjunto tiene **138 archivos, 69 por idioma**.
+    runs_per_delivery: true
+
+  - dataset: DS-3
+    count: 46
+    reason: >
+      Golden set de citacion: veinte parejas en su origen (23 desde el
+      2026-10-11, ver abajo) pregunta-equivalente (espanol
+      contra Stonecroft, ingles contra Sunmeadow), mas los ejes de idioma
+      cruzado, distractor, sin clausula, endoso vigente y cliente de Knotwell
+      (FD-U8-2, U8 `policy-rag`, paso 2 de `code-generation-plan.md`). La
+      referencia anterior a "U9" era un desliz: el verificador exacto de
+      citas (C-18) es de U8, no de U9 (motor de reglas, sin relacion con
+      citas). Los 40 casos existen y CG-U8-2 comprueba que cada
+      `expected_record.clause_id` es real, pero ninguno trae todavia
+      `expected_verdicts`: llegan con `CitationVerifier` (tanda 2, paso 5) y
+      el conductor de evaluaciones que los conecta al corredor.
+      El 2026-10-11 el conjunto crece a **46 archivos, 23 por idioma**, por la
+      auditoria del 2026-10-10 (E10): tres casos llamados `no-clause-*`
+      (`scuba`, `rental-abroad`, `war-zone`) esperan `verified` porque la
+      poliza si los responde con una exclusion o con su territorio, asi que su
+      eje paso de `sin_clausula` a `corriente` (el identificador se conserva).
+      Con eso solo quedaban 2 casos por idioma donde la respuesta correcta es
+      "no encuentro una clausula que lo cubra"; entran tres mas
+      (`no-clause-vehicle-tax`, `no-clause-loan-payments`,
+      `no-clause-roadside-fuel`), con lo que son 5 por idioma. Estos tres se
+      escribieron y pasan las comprobaciones de forma; **todavia no se han
+      corrido contra un modelo**.
+    runs_per_delivery: true
+
+  - dataset: DS-4
+    count: 16
+    reason: >
+      Golden set de cotizacion (S1, U19). Ocho casos por idioma: seis se resuelven
+      sin modelo ni base de datos --la elegibilidad, la derivacion con sus umbrales
+      por los dos lados, que ninguna respuesta lleve un importe (compuerta dura), la
+      razon en lenguaje llano, la presion por un precio (compuerta dura) y la
+      cotizacion apagada donde no esta activa-- sobre escenarios estructurados
+      (`app/evals/fixtures/quote/`) y el motor real, y entran al subconjunto de
+      arranque. Dos van por el canal chat y piden la clave del proveedor: la
+      solicitud de punta a punta y la presion por un precio en plena conversacion.
+      El 2026-10-12 corrieron por primera vez contra el modelo y fallaron las cuatro
+      conversaciones (dos por idioma). Dos causas: la evaluacion estaba desactualizada
+      --desde el 2026-10-08 la solicitud no se lee de vuelta por bloques sino entera,
+      una vez, al final, y el conductor seguia contestando la confirmacion de cada
+      bloque (`blocks.next_ask` y los guiones)-- y un defecto del producto que la
+      corrida mostro: tras una respuesta corta que no lograba anotar, la agente repetia
+      la misma pregunta de tres datos hasta el tope de mensajes. Arreglados los dos,
+      pasan 8 de 8 en dos corridas seguidas y el conjunto entra a la corrida completa.
+      Las metas por hito sobre el conjunto entero --95 % de exactitud por campo,
+      100 % de derivaciones correctas, 10 % o menos de derivaciones innecesarias--
+      las fijan AC6.1.4, AC6.2.5 y NFR13, y se miden con mas casos de los que hay aqui.
+    runs_per_delivery: true
+
+  - dataset: DS-5
+    built: false
+    reason: >
+      Golden set de audio. Corre por hito y no por entrega: depende de
+      grabaciones de terceros y el costo de voz esta topado.
+
+  - dataset: DS-6
+    count: 44
+    reason: >
+      Set adversarial. Su primer lote es RT-4 (acceso a un caso o poliza ajena),
+      que trae U2 con el aislamiento por aseguradora; U3 anade RT-14 (fuga de
+      datos personales) y RT-15 (ataque bilingue) en los dos idiomas; U10 anade
+      los escenarios contra sus controles, en los dos idiomas: RT-1 (inyeccion
+      directa, y su variante de identidad), RT-2 (inyeccion por datos), RT-3
+      (presion), RT-5 (revelacion), RT-6 (culpa y consejo legal), RT-8
+      (emergencia) y RT-15 contra la guardia. U8 anade la variante concreta de
+      RT-2 contra el corpus de polizas (rt2-policy-clause-injection, FD-U8-3,
+      CG-U8-6, paso 7 de code-generation-plan.md), en los dos idiomas, contra
+      el fixture efimero de app/evals/fixtures/injection-corpus/. U11 anade
+      RT-7 (dos versiones contradictorias), RT-9 (tercero que reporta por un
+      familiar hospitalizado) y RT-11 (insultos sostenidos), en los dos
+      idiomas (paso 2 de su plan, tanda 1); **los seis pasan desde la tanda 2 de
+      esa unidad**. U13 anade RT-10 (cambio de idioma a mitad para esquivar un
+      control) en los dos idiomas, por el canal chat: el escenario **solo existe
+      por el canal**, porque la deteccion de idioma por turno vive alli y las
+      sondas sin canal no la recorren. Crece con cada sesion de red-team y
+      ningun caso se retira nunca.
+      El 2026-10-12 entran cinco parejas mas, de la auditoria del 2026-10-10 (E7):
+      la version **conversada** de RT-1 (`rt1-direct-injection-chat`,
+      `rt1-humanity-claim-chat`), RT-3 (`rt3-pressure-chat`), RT-5
+      (`rt5-config-disclosure-chat`) y RT-6 (`rt6-fault-legal-advice-chat`). Los
+      originales prueban que la guardia detiene frases escritas a mano; estos
+      corren la conversacion por el canal chat con el modelo de verdad y miden
+      que la agente atacada no las produzca. Necesitan la clave de Claude y
+      corren con `mise run evals:conversaciones`, no en cada entrega. Con ellas
+      el conjunto tiene **44 archivos, 22 por idioma**.
+      El mismo dia `rt2-policy-clause-injection` deja de ser una conversacion de chat
+      (auditoria E8): se mide sin base, entregandole a mano la clausula del fixture al
+      proponedor de citas de verdad (`injection_probes.py`), con `mise run evals:citas`.
+    runs_per_delivery: true
+
+  - dataset: DS-7
+    built: false
+    reason: >
+      Etiquetas humanas para calibrar al juez. El juez, su calibracion y el
+      comando de etiquetado (`mise run evals:label`) son de U21 y ya existen;
+      lo que falta es la cola que ese comando lee. Cada entrada lleva el turno
+      que la agente dijo de verdad, porque el juez se calibra contra lo que va a
+      juzgar y no contra texto de ejemplo, asi que la cola solo se puede llenar
+      a partir de una corrida de evaluaciones con transcripciones. Eso necesita
+      un conductor de canal, y el de texto lo construye U13 `chat`. Revisado el
+      2026-09-27: hasta que U13 exista, los criterios que dependen del juez se
+      publican como "no medida" con esa causa, que es lo que la practica exige.
+      El etiquetado en si es de Miguel (PRD, semanas 4 y 5).
+
+  - dataset: DS-8
+    count: 14
+    runs_per_delivery: true

@@ -1,0 +1,25 @@
+# Conductor dudoso, del campo del caso a la categoria, turno en espanol. Un familiar sin nombre, un solo nombre de pila, un nombre incompleto, una negacion, un «no se» o una poliza que no declara conductores no dicen con claridad si el conductor figura: el insumo `unlisted_driver` queda ausente y la regla del conductor no dispara. Es el caso que atrapa el error caro: decir que el conductor figura (o que no) sin saberlo.
+#
+# Criterio de aceptacion: sobre las filas `driver-unknown/*` de
+# `app/evals/fixtures/rules/es.yaml`, el campo `vehicle_and_driver` del caso y los
+# conductores que declara la poliza se derivan a `unlisted_driver` con la misma funcion del
+# aplicativo, el insumo sale como `unknown` (ausente, ni falso ni verdadero) y el motor real de
+# la aseguradora de cada fila da la categoria declarada en ella.
+#
+# Veredicto esperado: `pass`. Pasa tambien antes de que exista la derivacion (sin el insumo la
+# regla no dispara), y por eso su trabajo no es fallar primero sino romperse si alguien amplia la
+# derivacion hasta decir «figura» o «no figura» ante una duda.
+#
+# La pareja en ingles es `DS-2/en/rules-driver-unknown`:
+# los mismos escenarios y la misma meta, medidos por idioma y nunca como promedio
+# combinado (P12).
+case_key: DS-2/es/rules-driver-unknown
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - rules-engine
+  - driver-derivation
+expected_verdicts:
+  triage_from_driver_unknown: pass

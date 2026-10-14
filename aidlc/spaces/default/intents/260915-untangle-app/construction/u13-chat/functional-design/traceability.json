@@ -1,0 +1,656 @@
+{
+  "stage": "functional-design",
+  "unit": "u13-chat",
+  "upstream_ids": [
+    "AC1.1.1",
+    "AC1.1.2",
+    "AC1.1.3",
+    "AC1.1.4",
+    "AC1.1.5",
+    "AC1.1.6",
+    "AC1.2.1",
+    "AC1.2.2",
+    "AC1.2.3",
+    "AC1.2.4",
+    "AC1.2.5",
+    "AC1.18.1",
+    "AC1.18.2",
+    "AC1.18.3",
+    "AC1.18.4",
+    "AC1.18.5",
+    "AC1.18.6",
+    "AC1.19.5",
+    "AC1.20.1",
+    "AC1.20.2",
+    "AC1.20.3",
+    "AC1.20.4",
+    "AC2.3.1",
+    "AC2.3.2",
+    "AC2.3.3",
+    "AC2.3.4",
+    "AC2.3.5",
+    "AC2.9.1",
+    "AC2.9.2",
+    "AC2.9.3",
+    "AC2.9.4",
+    "AC2.9.5",
+    "AC2.9.6",
+    "AC5.13.1",
+    "AC5.13.2",
+    "AC5.13.3",
+    "AC5.13.4",
+    "FD-U13-1",
+    "FD-U13-2",
+    "FD-U13-3",
+    "FD-U13-4",
+    "FD-U13-5",
+    "FD-U13-6",
+    "AC1.14.1",
+    "AC1.14.2",
+    "AC1.14.3",
+    "AC1.14.4",
+    "AC1.19.1",
+    "AC1.19.2",
+    "AC1.19.3",
+    "AC1.19.4",
+    "AC1.33.1",
+    "AC1.33.2",
+    "AC1.33.3",
+    "AC1.33.4",
+    "AC1.33.5",
+    "AC1.33.6",
+    "AC3.7.1",
+    "AC3.7.2",
+    "AC3.7.3",
+    "AC3.7.4",
+    "AC3.7.5",
+    "AC3.7.6",
+    "AC3.8.1",
+    "AC3.8.2",
+    "AC3.8.3",
+    "AC3.8.4",
+    "AC3.8.5",
+    "AC3.8.6",
+    "AC4.3.1",
+    "AC4.3.2",
+    "AC4.3.3",
+    "AC4.3.4",
+    "AC4.4.1",
+    "AC4.4.2",
+    "AC4.4.3",
+    "AC4.4.4",
+    "AC4.4.5",
+    "AC4.4.6",
+    "AC4.6.1",
+    "AC4.6.2",
+    "AC4.6.3",
+    "AC4.6.4",
+    "AC4.7.1",
+    "AC4.7.2",
+    "AC4.7.3",
+    "AC4.7.4",
+    "AC4.7.5",
+    "AC4.8.1",
+    "AC4.8.2",
+    "AC4.8.3",
+    "AC4.8.4",
+    "AC4.8.5",
+    "AC4.14.1",
+    "AC4.14.2",
+    "AC4.14.3",
+    "AC4.14.4",
+    "AC4.15.1",
+    "AC4.15.2",
+    "AC4.15.3",
+    "AC4.15.4",
+    "AC4.15.5",
+    "AC5.16.1",
+    "AC5.16.2",
+    "AC5.16.3",
+    "AC5.16.4",
+    "AC5.16.5",
+    "AC5.16.6"
+  ],
+  "coverage": [
+    {
+      "id": "AC1.1.1",
+      "status": "OK",
+      "target": "BR1.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.1.2",
+      "status": "OK",
+      "target": "BR1.2 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.1.3",
+      "status": "OK",
+      "target": "BR1.3 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.1.4",
+      "status": "OK",
+      "target": "BR1.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.1.5",
+      "status": "OK",
+      "target": "BR1.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.1.6",
+      "status": "OK",
+      "target": "BR1.2 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.2.1",
+      "status": "OK",
+      "target": "BR2.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.2.2",
+      "status": "OK",
+      "target": "BR2.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.2.3",
+      "status": "OK",
+      "target": "BR2.2 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.2.4",
+      "status": "OK",
+      "target": "BR2.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.2.5",
+      "status": "OK",
+      "target": "BR2.3 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.18.1",
+      "status": "OK",
+      "target": "BR5.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.18.2",
+      "status": "OK",
+      "target": "BR5.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.18.3",
+      "status": "OK",
+      "target": "BR5.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.18.4",
+      "status": "OK",
+      "target": "BR5.2 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.18.5",
+      "status": "OK",
+      "target": "BR5.3 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.18.6",
+      "status": "OK",
+      "target": "BR5.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.19.5",
+      "status": "OK",
+      "target": "BR6.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.20.1",
+      "status": "OK",
+      "target": "BR6.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.20.2",
+      "status": "OK",
+      "target": "BR6.2 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.20.3",
+      "status": "OK",
+      "target": "BR6.3 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.20.4",
+      "status": "OK",
+      "target": "BR6.4 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.3.1",
+      "status": "OK",
+      "target": "BR4.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.3.2",
+      "status": "OK",
+      "target": "BR4.3 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.3.3",
+      "status": "OK",
+      "target": "BR4.4 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.3.4",
+      "status": "OK",
+      "target": "BR4.2 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.3.5",
+      "status": "OK",
+      "target": "BR4.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.9.1",
+      "status": "N/A",
+      "target": "US2.9 sale del alcance de U13 el 2026-09-28 (decision de Miguel, Q1 de esta etapa) y la construye U23 `comparison-view` despues de U14 --la vista convence cuando hay casos reales detras, y hoy solo hay tres polizas de ejemplo--. U13 aporta la respuesta de cobertura con su cita que esa vista reune (BR4.1)"
+    },
+    {
+      "id": "AC2.9.2",
+      "status": "N/A",
+      "target": "US2.9 sale del alcance de U13 el 2026-09-28 (decision de Miguel, Q1 de esta etapa) y la construye U23 `comparison-view` despues de U14 --la vista convence cuando hay casos reales detras, y hoy solo hay tres polizas de ejemplo--. U13 aporta la respuesta de cobertura con su cita que esa vista reune (BR4.1)"
+    },
+    {
+      "id": "AC2.9.3",
+      "status": "N/A",
+      "target": "US2.9 sale del alcance de U13 el 2026-09-28 (decision de Miguel, Q1 de esta etapa) y la construye U23 `comparison-view` despues de U14 --la vista convence cuando hay casos reales detras, y hoy solo hay tres polizas de ejemplo--. U13 aporta la respuesta de cobertura con su cita que esa vista reune (BR4.1)"
+    },
+    {
+      "id": "AC2.9.4",
+      "status": "N/A",
+      "target": "US2.9 sale del alcance de U13 el 2026-09-28 (decision de Miguel, Q1 de esta etapa) y la construye U23 `comparison-view` despues de U14 --la vista convence cuando hay casos reales detras, y hoy solo hay tres polizas de ejemplo--. U13 aporta la respuesta de cobertura con su cita que esa vista reune (BR4.1)"
+    },
+    {
+      "id": "AC2.9.5",
+      "status": "N/A",
+      "target": "US2.9 sale del alcance de U13 el 2026-09-28 (decision de Miguel, Q1 de esta etapa) y la construye U23 `comparison-view` despues de U14 --la vista convence cuando hay casos reales detras, y hoy solo hay tres polizas de ejemplo--. U13 aporta la respuesta de cobertura con su cita que esa vista reune (BR4.1)"
+    },
+    {
+      "id": "AC2.9.6",
+      "status": "N/A",
+      "target": "US2.9 sale del alcance de U13 el 2026-09-28 (decision de Miguel, Q1 de esta etapa) y la construye U23 `comparison-view` despues de U14 --la vista convence cuando hay casos reales detras, y hoy solo hay tres polizas de ejemplo--. U13 aporta la respuesta de cobertura con su cita que esa vista reune (BR4.1)"
+    },
+    {
+      "id": "AC5.13.1",
+      "status": "OK",
+      "target": "BR3.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC5.13.2",
+      "status": "OK",
+      "target": "BR3.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC5.13.3",
+      "status": "OK",
+      "target": "BR3.2 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC5.13.4",
+      "status": "OK",
+      "target": "BR3.3 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "FD-U13-1",
+      "status": "OK",
+      "target": "BR3.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "FD-U13-2",
+      "status": "OK",
+      "target": "BR6.2 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "FD-U13-3",
+      "status": "OK",
+      "target": "BR2.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "FD-U13-4",
+      "status": "OK",
+      "target": "BR3.2 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "FD-U13-5",
+      "status": "OK",
+      "target": "BR4.1 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "FD-U13-6",
+      "status": "OK",
+      "target": "BR5.2 en construction/u13-chat/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.14.1",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U4 `case-record` --la transcripcion del caso y sus turnos; U13 aporta que cada turno del chat quede marcado con su canal (BR6.4)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.14.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U4 `case-record` --la transcripcion del caso y sus turnos; U13 aporta que cada turno del chat quede marcado con su canal (BR6.4)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.14.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U4 `case-record` --la transcripcion del caso y sus turnos; U13 aporta que cada turno del chat quede marcado con su canal (BR6.4)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.14.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U4 `case-record` --la transcripcion del caso y sus turnos; U13 aporta que cada turno del chat quede marcado con su canal (BR6.4)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.19.1",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U12 `graph-runtime` --la reanudacion desde el punto de control; U13 aporta el canal por el que se retoma y pide solo lo que falta (BR6.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.19.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U12 `graph-runtime` --la reanudacion desde el punto de control; U13 aporta el canal por el que se retoma y pide solo lo que falta (BR6.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.19.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U12 `graph-runtime` --la reanudacion desde el punto de control; U13 aporta el canal por el que se retoma y pide solo lo que falta (BR6.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.19.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U12 `graph-runtime` --la reanudacion desde el punto de control; U13 aporta el canal por el que se retoma y pide solo lo que falta (BR6.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.33.1",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U6 `web-shell` --el armazon visual y su accesibilidad; U13 aporta la pagina de chat que vive dentro de el (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.33.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U6 `web-shell` --el armazon visual y su accesibilidad; U13 aporta la pagina de chat que vive dentro de el (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.33.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U6 `web-shell` --el armazon visual y su accesibilidad; U13 aporta la pagina de chat que vive dentro de el (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.33.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U6 `web-shell` --el armazon visual y su accesibilidad; U13 aporta la pagina de chat que vive dentro de el (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.33.5",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U6 `web-shell` --el armazon visual y su accesibilidad; U13 aporta la pagina de chat que vive dentro de el (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.33.6",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U6 `web-shell` --el armazon visual y su accesibilidad; U13 aporta la pagina de chat que vive dentro de el (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC3.7.1",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U14 `inbox` --la bandeja y la decision del ajustador; U13 aporta que esa decision aparezca en la conversacion donde se reporto (BR5.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC3.7.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U14 `inbox` --la bandeja y la decision del ajustador; U13 aporta que esa decision aparezca en la conversacion donde se reporto (BR5.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC3.7.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U14 `inbox` --la bandeja y la decision del ajustador; U13 aporta que esa decision aparezca en la conversacion donde se reporto (BR5.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC3.7.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U14 `inbox` --la bandeja y la decision del ajustador; U13 aporta que esa decision aparezca en la conversacion donde se reporto (BR5.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC3.7.5",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U14 `inbox` --la bandeja y la decision del ajustador; U13 aporta que esa decision aparezca en la conversacion donde se reporto (BR5.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC3.7.6",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U14 `inbox` --la bandeja y la decision del ajustador; U13 aporta que esa decision aparezca en la conversacion donde se reporto (BR5.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC3.8.1",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U14 `inbox` --la vista del caso y su decision; U13 aporta el aviso al asegurado, ligado al identificador de esa decision humana (BR5.2)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC3.8.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U14 `inbox` --la vista del caso y su decision; U13 aporta el aviso al asegurado, ligado al identificador de esa decision humana (BR5.2)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC3.8.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U14 `inbox` --la vista del caso y su decision; U13 aporta el aviso al asegurado, ligado al identificador de esa decision humana (BR5.2)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC3.8.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U14 `inbox` --la vista del caso y su decision; U13 aporta el aviso al asegurado, ligado al identificador de esa decision humana (BR5.2)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC3.8.5",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U14 `inbox` --la vista del caso y su decision; U13 aporta el aviso al asegurado, ligado al identificador de esa decision humana (BR5.2)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC3.8.6",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U14 `inbox` --la vista del caso y su decision; U13 aporta el aviso al asegurado, ligado al identificador de esa decision humana (BR5.2)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.3.1",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye nadie: es la landing --entregable de MOD-15 que no es conducta del sistema y no se convierte en unidad; U13 aporta la pagina real a la que la landing enlazara en la semana 11 (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.3.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye nadie: es la landing --entregable de MOD-15 que no es conducta del sistema y no se convierte en unidad; U13 aporta la pagina real a la que la landing enlazara en la semana 11 (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.3.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye nadie: es la landing --entregable de MOD-15 que no es conducta del sistema y no se convierte en unidad; U13 aporta la pagina real a la que la landing enlazara en la semana 11 (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.3.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye nadie: es la landing --entregable de MOD-15 que no es conducta del sistema y no se convierte en unidad; U13 aporta la pagina real a la que la landing enlazara en la semana 11 (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.4.1",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U1 `workspace` --el catalogo de textos por idioma; U13 aporta el consumidor de sus claves de divulgacion, limite y error (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.4.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U1 `workspace` --el catalogo de textos por idioma; U13 aporta el consumidor de sus claves de divulgacion, limite y error (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.4.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U1 `workspace` --el catalogo de textos por idioma; U13 aporta el consumidor de sus claves de divulgacion, limite y error (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.4.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U1 `workspace` --el catalogo de textos por idioma; U13 aporta el consumidor de sus claves de divulgacion, limite y error (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.4.5",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U1 `workspace` --el catalogo de textos por idioma; U13 aporta el consumidor de sus claves de divulgacion, limite y error (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.4.6",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U1 `workspace` --el catalogo de textos por idioma; U13 aporta el consumidor de sus claves de divulgacion, limite y error (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.6.1",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U21 `eval-gates` --el corredor de evaluaciones y su compuerta; U13 aporta las conversaciones de chat que corre (BR7.2)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.6.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U21 `eval-gates` --el corredor de evaluaciones y su compuerta; U13 aporta las conversaciones de chat que corre (BR7.2)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.6.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U21 `eval-gates` --el corredor de evaluaciones y su compuerta; U13 aporta las conversaciones de chat que corre (BR7.2)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.6.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U21 `eval-gates` --el corredor de evaluaciones y su compuerta; U13 aporta las conversaciones de chat que corre (BR7.2)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.7.1",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U1 `workspace` --la paridad entre idiomas del catalogo; U13 aporta las claves nuevas que esta unidad introduce, en los dos idiomas (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.7.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U1 `workspace` --la paridad entre idiomas del catalogo; U13 aporta las claves nuevas que esta unidad introduce, en los dos idiomas (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.7.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U1 `workspace` --la paridad entre idiomas del catalogo; U13 aporta las claves nuevas que esta unidad introduce, en los dos idiomas (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.7.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U1 `workspace` --la paridad entre idiomas del catalogo; U13 aporta las claves nuevas que esta unidad introduce, en los dos idiomas (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.7.5",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U1 `workspace` --la paridad entre idiomas del catalogo; U13 aporta las claves nuevas que esta unidad introduce, en los dos idiomas (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.8.1",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U5 `provider-platform` --la traza y su resumen; U13 aporta la pagina publica que lo muestra redactado y solo al propio navegador (BR4.3)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.8.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U5 `provider-platform` --la traza y su resumen; U13 aporta la pagina publica que lo muestra redactado y solo al propio navegador (BR4.3)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.8.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U5 `provider-platform` --la traza y su resumen; U13 aporta la pagina publica que lo muestra redactado y solo al propio navegador (BR4.3)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.8.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U5 `provider-platform` --la traza y su resumen; U13 aporta la pagina publica que lo muestra redactado y solo al propio navegador (BR4.3)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.8.5",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U5 `provider-platform` --la traza y su resumen; U13 aporta la pagina publica que lo muestra redactado y solo al propio navegador (BR4.3)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.14.1",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U21 `eval-gates` --el reporte por caso y por idioma; U13 aporta el conductor de texto que registra los turnos del chat (BR2.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.14.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U21 `eval-gates` --el reporte por caso y por idioma; U13 aporta el conductor de texto que registra los turnos del chat (BR2.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.14.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U21 `eval-gates` --el reporte por caso y por idioma; U13 aporta el conductor de texto que registra los turnos del chat (BR2.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.14.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U21 `eval-gates` --el reporte por caso y por idioma; U13 aporta el conductor de texto que registra los turnos del chat (BR2.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.15.1",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U10 `compliance` --los controles y la guardia de salida; U13 aporta que todo texto del chat pase por ella, incluido el parcial y el de error (BR5.2)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.15.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U10 `compliance` --los controles y la guardia de salida; U13 aporta que todo texto del chat pase por ella, incluido el parcial y el de error (BR5.2)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.15.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U10 `compliance` --los controles y la guardia de salida; U13 aporta que todo texto del chat pase por ella, incluido el parcial y el de error (BR5.2)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.15.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U10 `compliance` --los controles y la guardia de salida; U13 aporta que todo texto del chat pase por ella, incluido el parcial y el de error (BR5.2)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.15.5",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U10 `compliance` --los controles y la guardia de salida; U13 aporta que todo texto del chat pase por ella, incluido el parcial y el de error (BR5.2)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC5.16.1",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U6 `web-shell` --el tema claro y oscuro y el selector; U13 aporta que la pagina de chat los respete en los dos modos (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC5.16.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U6 `web-shell` --el tema claro y oscuro y el selector; U13 aporta que la pagina de chat los respete en los dos modos (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC5.16.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U6 `web-shell` --el tema claro y oscuro y el selector; U13 aporta que la pagina de chat los respete en los dos modos (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC5.16.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U6 `web-shell` --el tema claro y oscuro y el selector; U13 aporta que la pagina de chat los respete en los dos modos (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC5.16.5",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U6 `web-shell` --el tema claro y oscuro y el selector; U13 aporta que la pagina de chat los respete en los dos modos (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC5.16.6",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U6 `web-shell` --el tema claro y oscuro y el selector; U13 aporta que la pagina de chat los respete en los dos modos (BR1.1)--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    }
+  ]
+}

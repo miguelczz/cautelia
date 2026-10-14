@@ -1,0 +1,306 @@
+{
+  "stage": "functional-design",
+  "unit": "u5-provider-platform",
+  "upstream_ids": [
+    "AC4.8.1",
+    "AC4.8.2",
+    "AC4.8.3",
+    "AC4.8.4",
+    "AC4.8.5",
+    "AC4.12.1",
+    "AC4.12.2",
+    "AC4.12.3",
+    "AC4.12.4",
+    "AC4.12.5",
+    "AC5.14.1",
+    "AC5.14.2",
+    "AC5.14.3",
+    "AC5.14.4",
+    "AC5.14.5",
+    "AC5.14.6"
+  ],
+  "coverage": [
+    {
+      "id": "AC4.8.1",
+      "status": "OK",
+      "target": "BR6.1, BR6.3"
+    },
+    {
+      "id": "AC4.8.2",
+      "status": "OK",
+      "target": "BR6.2"
+    },
+    {
+      "id": "AC4.8.3",
+      "status": "OK",
+      "target": "BR6.4"
+    },
+    {
+      "id": "AC4.8.4",
+      "status": "OK",
+      "target": "BR3.2, BR3.3"
+    },
+    {
+      "id": "AC4.8.5",
+      "status": "OK",
+      "target": "BR2.5"
+    },
+    {
+      "id": "AC4.12.1",
+      "status": "OK",
+      "target": "BR6.5"
+    },
+    {
+      "id": "AC4.12.2",
+      "status": "OK",
+      "target": "BR6.5"
+    },
+    {
+      "id": "AC4.12.3",
+      "status": "N/A",
+      "target": "La transcripcion en vivo de la consola de voz es de U16 `voice-call`; esta unidad no dibuja ninguna pantalla"
+    },
+    {
+      "id": "AC4.12.4",
+      "status": "OK",
+      "target": "BR6.5"
+    },
+    {
+      "id": "AC4.12.5",
+      "status": "N/A",
+      "target": "El reporte de la corrida de evaluaciones es de U21 `eval-gates`; esta unidad exporta la traza, no el reporte"
+    },
+    {
+      "id": "AC5.14.1",
+      "status": "OK",
+      "target": "BR3.8"
+    },
+    {
+      "id": "AC5.14.2",
+      "status": "OK",
+      "target": "BR4.3"
+    },
+    {
+      "id": "AC5.14.3",
+      "status": "OK",
+      "target": "BR4.4"
+    },
+    {
+      "id": "AC5.14.4",
+      "status": "OK",
+      "target": "BR4.7, BR7.5"
+    },
+    {
+      "id": "AC5.14.5",
+      "status": "Deferred",
+      "target": "U5 produce el costo por llamada a precio de lista y su marca de facturable (BR3.2, BR3.6); la meta se mide sobre las veinte grabaciones de DS-5, que corren por hito y pertenecen a U16 `voice-call` y U21 `eval-gates`. Esta unidad no puede ejecutarla"
+    },
+    {
+      "id": "AC5.14.6",
+      "status": "OK",
+      "target": "BR3.7"
+    }
+  ],
+  "reverse": [
+    {
+      "id": "BR1.1",
+      "status": "N/A",
+      "target": "El nucleo habla por puertos. Se comprueba con la regla de importacion y con el chequeo de tipos, no con un criterio de aceptacion: es una restriccion de estructura del contrato C-16"
+    },
+    {
+      "id": "BR1.2",
+      "status": "N/A",
+      "target": "El SDK solo dentro de su adaptador. Es un contrato `forbidden` de import-linter (ADR-018); su evidencia es el paso de reglas de importacion, no una historia"
+    },
+    {
+      "id": "BR1.3",
+      "status": "N/A",
+      "target": "Fabrica de clientes por uso con proyecto y clave propios. La ejercitan las historias de las unidades que llaman al modelo (U8, U10, U11, U21); aqui es la regla de construccion"
+    },
+    {
+      "id": "BR1.4",
+      "status": "N/A",
+      "target": "Identificador de modelo exacto y no un alias movil. Su evidencia es el determinismo de la corrida de evaluaciones (U21), no un criterio de US4.8 ni de US5.14"
+    },
+    {
+      "id": "BR1.5",
+      "status": "N/A",
+      "target": "Validacion de la salida estructurada dentro del adaptador. Sus criterios viven en las historias de extraccion de U11 `intake`, que es quien pide esquema"
+    },
+    {
+      "id": "BR1.6",
+      "status": "N/A",
+      "target": "Prueba de contrato por adaptador. Es una practica afirmada de `team.md` y una obligacion de ADR-018; su evidencia es el paso de pruebas"
+    },
+    {
+      "id": "BR1.7",
+      "status": "N/A",
+      "target": "Prompt versionado con identificador y hash. Lo ejercita la compuerta de evaluaciones de U21, que trata un cambio de hash como cambio de codigo"
+    },
+    {
+      "id": "BR2.1",
+      "status": "N/A",
+      "target": "Taxonomia cerrada de cuatro errores. AC4.8.5 ejercita que los cuatro aparezcan en la traza; que sean exactamente cuatro y no mas lo comprueba la prueba de contrato del adaptador"
+    },
+    {
+      "id": "BR2.2",
+      "status": "N/A",
+      "target": "Ningun tipo del proveedor cruza al nucleo. Lo comprueba el chequeo de tipos y la regla de importacion; no hay conducta observable que un criterio pueda describir"
+    },
+    {
+      "id": "BR2.3",
+      "status": "N/A",
+      "target": "Parada sin reintento ante saldo o cuota agotados. Nace de la regla de cero renovaciones de `project.md`, que es una decision de Miguel y no una historia"
+    },
+    {
+      "id": "BR2.4",
+      "status": "N/A",
+      "target": "El adaptador no reintenta por su cuenta. La politica de fallo por nodo es de U12 `graph-runtime`; aqui es la mitad que le corresponde al adaptador"
+    },
+    {
+      "id": "BR3.1",
+      "status": "N/A",
+      "target": "Una fila por llamada, sin excepcion. Es la precondicion de AC4.8.1 y de todas las cifras de AC5.14.1, pero ningun criterio la nombra por si sola"
+    },
+    {
+      "id": "BR3.4",
+      "status": "N/A",
+      "target": "Costo y estado viajan juntos. Es la forma que hace cumplible a AC4.8.4; el criterio describe el resultado y esta regla la invariante que lo garantiza"
+    },
+    {
+      "id": "BR3.5",
+      "status": "N/A",
+      "target": "Toda agregacion devuelve el par medido / no medidas. Sale de la decision FD-U5-2; los criterios que la ejercitan son los de la pantalla de gasto, que pertenece a U22 `public-evidence`"
+    },
+    {
+      "id": "BR3.6",
+      "status": "N/A",
+      "target": "Precio de lista siempre, mas la marca de facturable segun el plan del uso. Sale de la decision FD-U5-3 y de ADR-006. Aporta la mitad de AC5.14.5, que esta diferida porque su medicion corre sobre DS-5 en U16 y U21; sin criterio propio en esta unidad"
+    },
+    {
+      "id": "BR3.9",
+      "status": "N/A",
+      "target": "El par cantidad-estado en las tres formas que el costo toma aqui. Es la invariante comun que hace cumplible a AC4.8.4 y a AC5.14.6; los criterios describen el resultado y esta regla la forma que lo garantiza"
+    },
+    {
+      "id": "BR4.1",
+      "status": "N/A",
+      "target": "Ventana acumulada de noventa dias y no mensual. Viene de la decision D11 y de la correccion de `project.md` del 2026-09-17; AC5.14.4 la ejercita de refilon al exigir que el cambio de mes no la ponga en cero"
+    },
+    {
+      "id": "BR4.2",
+      "status": "N/A",
+      "target": "Solo las facturables suman contra el techo. Sale de la decision FD-U5-3 y de ADR-006; su evidencia directa seria una historia del chat publico, que pertenece a U13"
+    },
+    {
+      "id": "BR4.5",
+      "status": "N/A",
+      "target": "Techo antes, costo despues, con exceso declarado de a lo sumo una llamada. Es una consecuencia declarada del diseno, no una conducta que un criterio describa"
+    },
+    {
+      "id": "BR4.6",
+      "status": "N/A",
+      "target": "Acumulado y fila en la misma transaccion. Es lo que impide que dos llamadas simultaneas pasen el techo; su prueba es de concurrencia, no de aceptacion"
+    },
+    {
+      "id": "BR4.8",
+      "status": "N/A",
+      "target": "El corte no depende de la observacion. Lo exige el contrato C-17 y lo comprueba la regla de importacion entre los dos modulos"
+    },
+    {
+      "id": "BR4.9",
+      "status": "N/A",
+      "target": "La reserva intocable de grabacion. Su requisito es FR3.11, que no tiene historia ni criterio de aceptacion propios: su verificacion escrita es 'con el cupo publico agotado, una llamada marcada como grabacion sigue atendiendose', y se ejercita en U16 `voice-call`"
+    },
+    {
+      "id": "BR4.10",
+      "status": "N/A",
+      "target": "Quien puede pedir el carril de grabacion. Misma FR3.11; la comprobacion de la credencial vive donde se abre la llamada, en U16 `voice-call` y U17 `voice-public-link`"
+    },
+    {
+      "id": "BR5.1",
+      "status": "N/A",
+      "target": "Cuatro alcances de cuota y solo cuatro. Los criterios que los ejercitan viven en FR3.9 (U17 `voice-public-link`) y FR4.6 (U13 `chat`)"
+    },
+    {
+      "id": "BR5.2",
+      "status": "N/A",
+      "target": "El dia se cierra en la zona horaria configurada. Es una obligacion de determinismo de `team.md`; su prueba usa reloj inyectado"
+    },
+    {
+      "id": "BR5.3",
+      "status": "N/A",
+      "target": "Una negacion es un valor, nunca una excepcion. Lo exige el contrato C-17; su efecto visible es el mensaje claro de FR4.6, que ejercita U13"
+    },
+    {
+      "id": "BR5.4",
+      "status": "N/A",
+      "target": "La llamada del dia se consume al abrir. Sale de la decision FD-U5-5; el escenario que la justifica es RT-13 del conjunto adversarial, que corre en U21"
+    },
+    {
+      "id": "BR5.5",
+      "status": "N/A",
+      "target": "El cupo se devuelve solo si no hubo audio facturable. Misma decision FD-U5-5; su criterio de punta a punta pertenece a U16 `voice-call`"
+    },
+    {
+      "id": "BR5.6",
+      "status": "N/A",
+      "target": "Formula del cupo diario del sitio. Su criterio es el de FR3.9, cuya historia pertenece a U17 `voice-public-link`"
+    },
+    {
+      "id": "BR5.7",
+      "status": "N/A",
+      "target": "El modo de voz se decide antes y no cambia a mitad. Su criterio es AC de US5.11, asignada a U16 `voice-call`; aqui vive la mitad que decide, que es la del presupuesto"
+    },
+    {
+      "id": "BR5.8",
+      "status": "N/A",
+      "target": "Topes configurados tambien en el proveedor, con su ultima comprobacion. Su criterio es el de FR3.10, que se verifica con la aplicacion detenida y pertenece al checklist del segundo dia"
+    },
+    {
+      "id": "BR5.9",
+      "status": "N/A",
+      "target": "Las pruebas de limites no consumen el presupuesto que protegen. Es una regla aprendida de `project.md` sobre como se prueba, no sobre lo que el sistema hace"
+    },
+    {
+      "id": "BR6.5",
+      "status": "N/A",
+      "target": "Toda exportacion pasa por la redaccion. Su criterio es el de RT-14, que corre en el conjunto adversarial de U21 con un segundo detector"
+    },
+    {
+      "id": "BR6.6",
+      "status": "N/A",
+      "target": "El resumen solo se muestra a su navegador. Su criterio pertenece a las historias del chat (U13), que es quien lo ensena"
+    },
+    {
+      "id": "BR6.7",
+      "status": "N/A",
+      "target": "Un resumen perdido es un valor y no detiene nada. Lo exige el contrato C-23; su efecto visible lo ensena U13"
+    },
+    {
+      "id": "BR7.1",
+      "status": "N/A",
+      "target": "Las tres tablas de dinero y cuotas entran en la lista de exclusion del aislamiento. Sale de la decision FD-U5-1; su evidencia es la asercion de U2 en verde con esas entradas escritas"
+    },
+    {
+      "id": "BR7.2",
+      "status": "N/A",
+      "target": "Ninguna tabla excluida lleva texto libre ni dato personal. Es la asercion nueva que paga la exclusion anterior; su evidencia es un paso del guion de verificacion, no un criterio"
+    },
+    {
+      "id": "BR7.3",
+      "status": "N/A",
+      "target": "El sujeto es el resumen de la clave del navegador, nunca la clave. Viene del modelo de `VisitorKey` de U2 y de M9"
+    },
+    {
+      "id": "BR7.4",
+      "status": "N/A",
+      "target": "El resumen de traza se borra con su caso en el reinicio nocturno. Su criterio pertenece a US5.15, asignada a U20 `demo-operations`"
+    },
+    {
+      "id": "BR7.6",
+      "status": "N/A",
+      "target": "Los contadores de visitante se borran y el del sitio no. Misma historia US5.15 de U20; aqui vive la decision de que sobrevive y por que"
+    }
+  ]
+}

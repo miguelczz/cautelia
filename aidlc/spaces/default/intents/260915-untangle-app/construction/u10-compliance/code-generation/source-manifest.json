@@ -1,0 +1,304 @@
+{
+  "stage": "code-generation",
+  "unit": "u10-compliance",
+  "version": 1,
+  "writes": [
+    {
+      "path": ".env.example"
+    },
+    {
+      "path": "app/backend/.importlinter"
+    },
+    {
+      "path": "app/backend/migrations/versions/u10_compliance_0001_tables.py"
+    },
+    {
+      "path": "app/backend/migrations/versions/u10_compliance_0002_tenant_fks.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/purge.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/controls/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/controls/closure.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/controls/delimitation.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/controls/disclosure.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/controls/guard.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/controls/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/controls/normalization.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/controls/patterns.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/controls/phrases.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/controls/repository.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/controls/review.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/controls/signals.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/compliance_fixtures.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/compliance_probes.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/loading.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/compliance/node.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/state.py"
+    },
+    {
+      "path": "app/backend/src/untangle/paths.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/composition.py"
+    },
+    {
+      "path": "app/backend/src/untangle/settings.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/rls_assertion.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/generate_contracts.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/schema_check.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u10/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u10/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u10/test_compliance_repository.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u10/test_compliance_tables.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u10/test_compliance_wiring.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u10/test_cross_tenant_references.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u4/test_api.py"
+    },
+    {
+      "path": "app/backend/tests/unit/compliance/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/compliance/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/unit/compliance/test_api.py"
+    },
+    {
+      "path": "app/backend/tests/unit/compliance/test_delimitation.py"
+    },
+    {
+      "path": "app/backend/tests/unit/compliance/test_eval_probes.py"
+    },
+    {
+      "path": "app/backend/tests/unit/compliance/test_guard.py"
+    },
+    {
+      "path": "app/backend/tests/unit/compliance/test_models.py"
+    },
+    {
+      "path": "app/backend/tests/unit/compliance/test_node.py"
+    },
+    {
+      "path": "app/backend/tests/unit/compliance/test_patterns.py"
+    },
+    {
+      "path": "app/backend/tests/unit/compliance/test_review.py"
+    },
+    {
+      "path": "app/backend/tests/unit/compliance/test_signals.py"
+    },
+    {
+      "path": "app/backend/tests/unit/evals/test_loading.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_rls_assertion.py"
+    },
+    {
+      "path": "app/config/compliance/en/emergency.yaml"
+    },
+    {
+      "path": "app/config/compliance/en/guard.yaml"
+    },
+    {
+      "path": "app/config/compliance/en/human_request.yaml"
+    },
+    {
+      "path": "app/config/compliance/en/identity_question.yaml"
+    },
+    {
+      "path": "app/config/compliance/es/emergency.yaml"
+    },
+    {
+      "path": "app/config/compliance/es/guard.yaml"
+    },
+    {
+      "path": "app/config/compliance/es/human_request.yaml"
+    },
+    {
+      "path": "app/config/compliance/es/identity_question.yaml"
+    },
+    {
+      "path": "app/config/copy/en.yaml"
+    },
+    {
+      "path": "app/config/copy/es.yaml"
+    },
+    {
+      "path": "app/contracts/schemas/compliance-pattern-set.schema.json"
+    },
+    {
+      "path": "app/evals/cases/ds2/emergency-negatives/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/emergency-negatives/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/human-request-direct/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/human-request-direct/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/human-request-indirect/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/human-request-indirect/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/human-request-negatives/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/human-request-negatives/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/identity-question/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/identity-question/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/serious-injury/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/serious-injury/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt1-direct-injection/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt1-direct-injection/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt1-humanity-claim/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt1-humanity-claim/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt15-guard-bilingual/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt15-guard-bilingual/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt2-data-injection/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt2-data-injection/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt3-pressure/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt3-pressure/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt5-config-disclosure/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt5-config-disclosure/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt6-fault-legal-advice/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt6-fault-legal-advice/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt8-emergency/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt8-emergency/es.yaml"
+    },
+    {
+      "path": "app/evals/fixtures/compliance/en.yaml"
+    },
+    {
+      "path": "app/evals/fixtures/compliance/es.yaml"
+    },
+    {
+      "path": "app/evals/manifest.yaml"
+    },
+    {
+      "path": "app/evals/subsets/smoke.yaml"
+    },
+    {
+      "path": "app/frontend/e2e/playwright.config.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-keys.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-texts.ts"
+    },
+    {
+      "path": "mise.toml"
+    }
+  ]
+}

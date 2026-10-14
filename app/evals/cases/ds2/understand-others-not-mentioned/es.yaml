@@ -1,0 +1,23 @@
+# Un siniestro contado sin decir nada de otros vehiculos o personas no deja anotado que no los hubo.
+#
+# El cierre directo (US1.17) solo ocurre con `injuries` y `other_parties` anotados como una
+# negacion clara (`orchestration/triage_inputs.py::other_parties_data_pending`). El modelo escribe
+# «ninguno» en `other_parties` cuando la persona dice que no hubo nadie mas; si lo escribe cuando
+# nadie dijo nada, el caso se cierra sin ajustador afirmando algo que nunca se pregunto.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/understand-others-not-mentioned
+dataset: DS-2
+language: es
+tenant: sunmeadow
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  message: "hola, ayer se me dañó el carro en el parqueadero del trabajo y quiero reportarlo"
+  wants:
+  - report_accident
+  absent_items:
+  - other_parties
+expected_verdicts:
+  understanding_others_not_mentioned: pass

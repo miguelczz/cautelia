@@ -1,0 +1,16 @@
+{
+  "clauses": [
+    {
+      "clause_id": "STO-PAP-2026-END-4-C.ARBITRATION",
+      "clause_key": "C.ARBITRATION",
+      "form_id": "STO-PAP-2026-END-4",
+      "form_version": "2026.1",
+      "is_distractor": false,
+      "issuer_label": "Seguros Aburrá",
+      "language": "es",
+      "part": "Endosos",
+      "text": "El arbitraje de la Parte C lo decide un tribunal de tres árbitros: uno nombrado por cada parte y el tercero elegido por los dos primeros. Cada parte paga su árbitro y la mitad del tercero."
+    }
+  ],
+  "form_id": "STO-PAP-2026-END-4"
+}

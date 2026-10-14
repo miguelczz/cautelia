@@ -1,0 +1,40 @@
+{
+  "_about": [
+    "Respuesta grabada de un proveedor de voz, para la prueba de contrato de U15 (BR6.1).",
+    "La estructura de cada mensaje es la exacta del proveedor: claves, tipos y orden.",
+    "Todo audio es un marcador: 20 ms de silencio PCM de 16 bits, mono, a 24 kHz, en la",
+    "misma codificacion que usa el proveedor (binario o base64). Ninguna voz vive aqui.",
+    "No lleva clave, ni cabecera de autorizacion, ni identificador de cuenta.",
+    "DOCUMENTADA, NO CAPTURADA: armada a mano con la forma de error que documenta el proveedor, porque provocarla de verdad cuesta saldo o no se puede a voluntad."
+  ],
+  "provenance": "documented-not-captured",
+  "why_not_captured": "Agotar el saldo de verdad para grabarlo gastaria el saldo que el techo protege (regla de project.md). La forma del cuerpo es la capturada en deepgram-speak-unknown-voice.json; cambia el codigo.",
+  "probe": "deepgram-listen-402-no-credit",
+  "provider": "deepgram",
+  "model": "nova-3",
+  "kind": "duplex",
+  "request": {
+    "path": "v1/listen",
+    "query": {
+      "model": "nova-3",
+      "language": "multi",
+      "encoding": "linear16",
+      "sample_rate": "24000",
+      "channels": "1",
+      "interim_results": "true"
+    }
+  },
+  "sent": [],
+  "rejected": {
+    "status_code": 402,
+    "body": {
+      "err_code": "INSUFFICIENT_CREDITS",
+      "err_msg": "Project does not have enough credits for an API request.",
+      "request_id": "retirado-al-grabar"
+    }
+  },
+  "response": null,
+  "received": [],
+  "closed": null,
+  "audio_frames_omitted": 0
+}

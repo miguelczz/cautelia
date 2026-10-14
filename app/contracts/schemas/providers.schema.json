@@ -1,0 +1,449 @@
+{
+  "$defs": {
+    "CallReserveSpec": {
+      "additionalProperties": false,
+      "description": "Lo que **se supone** que consume una llamada publica de duracion maxima.\n\nNo es un precio: es el consumo. Los precios salen de `prices.yaml` y esto dice\ncuantas unidades de cada uno se gastan, que es una suposicion del proyecto y\npor eso vive en configuracion versionada con su razon escrita al lado.\n\nLos segundos de audio no estan aqui: son `voice_limits.max_call_seconds`.\nDeclararlos otra vez seria la misma duracion en dos sitios, y el dia que\ncambiara uno el otro seguiria diciendo lo de antes.",
+      "properties": {
+        "transcription": {
+          "$ref": "#/$defs/ProviderModelRef"
+        },
+        "synthesis": {
+          "$ref": "#/$defs/SynthesisReserve"
+        },
+        "model": {
+          "$ref": "#/$defs/ModelReserve"
+        }
+      },
+      "required": [
+        "transcription",
+        "synthesis",
+        "model"
+      ],
+      "title": "CallReserveSpec",
+      "type": "object"
+    },
+    "ChatLimits": {
+      "additionalProperties": false,
+      "description": "Los limites del chat publico (FR4.6, RT-13).\n\nNo protegen el presupuesto --el chat corre en plan gratuito y no suma contra\nel techo (BR3.6, BR4.2)-- sino contra el **abuso** y contra la cuota del\npropio plan gratuito, que es compartida y se agota para todos los visitantes\na la vez.\n\nSon un **valor de arranque**: U13 `chat` los confirma con sus propios\ncriterios cuando construya la superficie que los aplica. Dejarlos sin\ndeclarar hasta entonces significaria publicar el chat sin limite, que es lo\nque la regla del proyecto prohibe.",
+      "properties": {
+        "messages_per_session": {
+          "minimum": 1,
+          "title": "Messages Per Session",
+          "type": "integer"
+        },
+        "messages_per_day": {
+          "minimum": 1,
+          "title": "Messages Per Day",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "messages_per_session",
+        "messages_per_day"
+      ],
+      "title": "ChatLimits",
+      "type": "object"
+    },
+    "CircuitBreakerConfig": {
+      "additionalProperties": false,
+      "description": "Los numeros del cortacircuitos, uno por pareja (proveedor, uso).\n\nViven en configuracion y no en el codigo para poder cambiarlos sin un\ndespliegue de logica. Lo que **no** vive aqui es que tipos de error cuentan:\n`invalid_response` no abre el circuito porque es un problema del contenido y\nno de la salud del proveedor, y contarlo abriria el circuito por un prompt\nmal hecho. Eso es una decision de diseno, no un ajuste.",
+      "properties": {
+        "failure_threshold": {
+          "minimum": 1,
+          "title": "Failure Threshold",
+          "type": "integer"
+        },
+        "open_seconds": {
+          "minimum": 1,
+          "title": "Open Seconds",
+          "type": "integer"
+        },
+        "half_open_probes": {
+          "minimum": 1,
+          "title": "Half Open Probes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "failure_threshold",
+        "open_seconds",
+        "half_open_probes"
+      ],
+      "title": "CircuitBreakerConfig",
+      "type": "object"
+    },
+    "ModelKind": {
+      "description": "Que sabe hacer un modelo declarado.\n\nLos dos ultimos los llena U15 `speech-providers`. Estan aqui porque el\nesquema del archivo es de esta unidad y U15 lo hereda sin cambiarlo.",
+      "enum": [
+        "generation",
+        "embedding",
+        "transcription",
+        "synthesis"
+      ],
+      "title": "ModelKind",
+      "type": "string"
+    },
+    "ModelRef": {
+      "additionalProperties": false,
+      "description": "Un modelo o una voz, anclado por identificador exacto (BR1.4).",
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/ModelKind"
+        },
+        "dimensions": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dimensions"
+        }
+      },
+      "required": [
+        "id",
+        "kind"
+      ],
+      "title": "ModelRef",
+      "type": "object"
+    },
+    "ModelReserve": {
+      "additionalProperties": false,
+      "description": "Los tokens que una llamada le pide al modelo, de ida y de vuelta.",
+      "properties": {
+        "provider": {
+          "minLength": 1,
+          "title": "Provider",
+          "type": "string"
+        },
+        "model": {
+          "minLength": 1,
+          "title": "Model",
+          "type": "string"
+        },
+        "input_tokens": {
+          "minimum": 0,
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "output_tokens": {
+          "minimum": 0,
+          "title": "Output Tokens",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "provider",
+        "model",
+        "input_tokens",
+        "output_tokens"
+      ],
+      "title": "ModelReserve",
+      "type": "object"
+    },
+    "Plan": {
+      "description": "El plan contratado para un uso.\n\nDecide si la llamada se factura de verdad, y con eso si suma contra el techo\n(BR3.6, BR4.2). El precio de lista se registra en los dos casos.",
+      "enum": [
+        "free",
+        "paid"
+      ],
+      "title": "Plan",
+      "type": "string"
+    },
+    "ProviderEntry": {
+      "additionalProperties": false,
+      "description": "Un proveedor, los modelos suyos que el proyecto ancla y las voces que usa.",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/ProviderName"
+        },
+        "models": {
+          "items": {
+            "$ref": "#/$defs/ModelRef"
+          },
+          "minItems": 1,
+          "title": "Models",
+          "type": "array"
+        },
+        "voices": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/VoiceEntry"
+          },
+          "title": "Voices",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "models"
+      ],
+      "title": "ProviderEntry",
+      "type": "object"
+    },
+    "ProviderModelRef": {
+      "additionalProperties": false,
+      "description": "Un proveedor y un modelo, nombrados para pedirle su precio a la tabla.",
+      "properties": {
+        "provider": {
+          "minLength": 1,
+          "title": "Provider",
+          "type": "string"
+        },
+        "model": {
+          "minLength": 1,
+          "title": "Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "provider",
+        "model"
+      ],
+      "title": "ProviderModelRef",
+      "type": "object"
+    },
+    "ProviderName": {
+      "description": "Los proveedores del proyecto (BR3.1).\n\nUno nuevo es una entrada nueva en esta lista, no una cadena libre, y llega con\nsu revision de migracion: la restriccion `spend_entry_proveedor_valido` del\nlibro mayor enumera los mismos valores, y una prueba de integracion falla si\nla base y esta lista dicen cosas distintas.\n\nLos dos ultimos son la voz, construida por U15 `speech-providers`: Deepgram\ntranscribe y da la voz de respaldo (Aura-2), y Cartesia da la principal\n(Catalina). Hubo un cuarto, `fallback_tts`, que U5 reservo para una voz de\nrespaldo sin proveedor decidido; la enmienda del 2026-09-21 de ADR-008 la dio\na Deepgram, el nombre dejo de describir nada construido y se retiro con la\nrevision `u15_speech_0001_provider_check`.",
+      "enum": [
+        "gemini",
+        "deepgram",
+        "cartesia",
+        "anthropic"
+      ],
+      "title": "ProviderName",
+      "type": "string"
+    },
+    "RecordingReserve": {
+      "additionalProperties": false,
+      "description": "La reserva de grabacion, declarada en **minutos** y no en dolares.\n\nEn dolares envejeceria mal: el precio por minuto de la voz lo fija el\nexperimento 1, y el dia que se mida la reserva cubriria otra cantidad de\nminutos sin que nadie lo hubiera decidido. En minutos, la pregunta que\nimporta --\"alcanza para grabar el video?\"-- se responde sin calculadora, y la\nconversion a dolares sale de la misma tabla de precios que todo lo demas.",
+      "properties": {
+        "minutes": {
+          "minimum": 0,
+          "title": "Minutes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "minutes"
+      ],
+      "title": "RecordingReserve",
+      "type": "object"
+    },
+    "SynthesisReserve": {
+      "additionalProperties": false,
+      "description": "La sintesis de una llamada, en los dos modos, y cuanto habla la agente.\n\nLos dos modos se declaran juntos porque **la diferencia entre ellos es la\nrazon por la que el modo existe**: la voz de respaldo cuesta menos por\ncaracter, asi que con el presupuesto justo el enlace publico sigue vivo con\nella en vez de cerrarse.",
+      "properties": {
+        "primary": {
+          "$ref": "#/$defs/ProviderModelRef"
+        },
+        "fallback": {
+          "$ref": "#/$defs/ProviderModelRef"
+        },
+        "characters": {
+          "minimum": 0,
+          "title": "Characters",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "primary",
+        "fallback",
+        "characters"
+      ],
+      "title": "SynthesisReserve",
+      "type": "object"
+    },
+    "Use": {
+      "description": "Para que se llama al proveedor (BR1.3).\n\nNo es una etiqueta: decide el proyecto del proveedor, la clave, el plan y si\nla llamada se factura. Las claves estan separadas por uso justamente para que\nuna cuota agotada en el chat no apague la voz.",
+      "enum": [
+        "voice",
+        "chat",
+        "evals",
+        "operations",
+        "corpus",
+        "chat_reply",
+        "evals_chat"
+      ],
+      "title": "Use",
+      "type": "string"
+    },
+    "UseConfig": {
+      "additionalProperties": false,
+      "description": "Para que se llama, a quien, con que modelo y bajo que plan (BR1.3, BR3.6).",
+      "properties": {
+        "use": {
+          "$ref": "#/$defs/Use"
+        },
+        "provider": {
+          "$ref": "#/$defs/ProviderName"
+        },
+        "model": {
+          "minLength": 1,
+          "title": "Model",
+          "type": "string"
+        },
+        "plan": {
+          "$ref": "#/$defs/Plan"
+        },
+        "billable": {
+          "title": "Billable",
+          "type": "boolean"
+        },
+        "connect_timeout_ms": {
+          "minimum": 1,
+          "title": "Connect Timeout Ms",
+          "type": "integer"
+        },
+        "read_timeout_ms": {
+          "minimum": 1,
+          "title": "Read Timeout Ms",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "use",
+        "provider",
+        "model",
+        "plan",
+        "billable",
+        "connect_timeout_ms",
+        "read_timeout_ms"
+      ],
+      "title": "UseConfig",
+      "type": "object"
+    },
+    "VoiceEntry": {
+      "additionalProperties": false,
+      "description": "Una voz del proveedor que el proyecto **comprobo que existe** (U15, BR2.2).\n\nEs la lista contra la que se valida la configuracion de voz de cada\naseguradora al arrancar: una voz que no esta aqui apaga la voz de esa\naseguradora con su motivo. Se comprueba contra el proveedor de verdad con\n`mise run voice:contract-live`, que pregunta a su lista de voces --una\nllamada que no cuesta--; arrancar no pregunta a nadie, porque el proceso y\nel chat no pueden depender de que un proveedor de voz conteste.",
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "model": {
+          "minLength": 1,
+          "title": "Model",
+          "type": "string"
+        },
+        "languages": {
+          "items": {
+            "enum": [
+              "es",
+              "en"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Languages",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "model",
+        "languages"
+      ],
+      "title": "VoiceEntry",
+      "type": "object"
+    },
+    "VoiceLimits": {
+      "additionalProperties": false,
+      "description": "Los limites del enlace publico de voz (FR3.9).\n\nNinguno lleva valor por defecto a proposito: un limite que el archivo no\nescribe es un limite que nadie decidio, y este es el archivo que se revisa\ncuando hay que explicar por que se rechazo una llamada.",
+      "properties": {
+        "max_call_seconds": {
+          "minimum": 1,
+          "title": "Max Call Seconds",
+          "type": "integer"
+        },
+        "calls_per_visitor_per_day": {
+          "minimum": 0,
+          "title": "Calls Per Visitor Per Day",
+          "type": "integer"
+        },
+        "site_daily_cap": {
+          "minimum": 0,
+          "title": "Site Daily Cap",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "max_call_seconds",
+        "calls_per_visitor_per_day",
+        "site_daily_cap"
+      ],
+      "title": "VoiceLimits",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "El archivo `providers.yaml` entero, ya validado.",
+  "properties": {
+    "config_version": {
+      "minimum": 1,
+      "title": "Config Version",
+      "type": "integer"
+    },
+    "providers": {
+      "items": {
+        "$ref": "#/$defs/ProviderEntry"
+      },
+      "minItems": 1,
+      "title": "Providers",
+      "type": "array"
+    },
+    "uses": {
+      "items": {
+        "$ref": "#/$defs/UseConfig"
+      },
+      "minItems": 1,
+      "title": "Uses",
+      "type": "array"
+    },
+    "circuit_breaker": {
+      "$ref": "#/$defs/CircuitBreakerConfig"
+    },
+    "voice_limits": {
+      "$ref": "#/$defs/VoiceLimits"
+    },
+    "chat_limits": {
+      "$ref": "#/$defs/ChatLimits"
+    },
+    "recording_reserve": {
+      "$ref": "#/$defs/RecordingReserve"
+    },
+    "call_reserve": {
+      "$ref": "#/$defs/CallReserveSpec"
+    },
+    "quota_timezone": {
+      "minLength": 1,
+      "title": "Quota Timezone",
+      "type": "string"
+    }
+  },
+  "required": [
+    "config_version",
+    "providers",
+    "uses",
+    "circuit_breaker",
+    "voice_limits",
+    "chat_limits",
+    "recording_reserve",
+    "call_reserve",
+    "quota_timezone"
+  ],
+  "title": "ProvidersConfig",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/providers.schema.json"
+}

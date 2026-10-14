@@ -1,0 +1,29 @@
+# Saying you want to ask about something, without saying what, is not yet what you came for.
+#
+# Comprension de un mensaje. Nace de una llamada del 2026-10-13: la primera frase fue
+# «quería consultar sobre…» y la agente siguio por el reporte de un accidente. Este caso es
+# la mitad del chat (no hay caso abierto): la intencion no es ni reportar, ni consultar la
+# poliza, ni cotizar, y no se anota ningun dato.
+# Escrito antes del cambio de la instruccion `conversation`; no se ha corrido contra el modelo.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/en/understand-vague-opening
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  last_agent_text: "Hi, I'm Catalina, the artificial intelligence assistant of Seguros Aburrá. This is a demo with sample policies, so please don't type real personal data. I can help you report a claim or answer questions about your policy."
+  message: Hi, I wanted to ask about something
+  wants:
+  - greeting
+  - other
+  asks_about_coverage: false
+  asks_question: false
+  absent_items:
+  - description
+  - question_asked
+expected_verdicts:
+  understanding_vague_opening: pass

@@ -1,0 +1,35 @@
+# En una llamada el reporte ya existe antes de que la persona hable, y eso no es a que llama.
+#
+# Comprension de un mensaje. Nace de la misma llamada del 2026-10-13: la llamada abre su caso
+# como reporte antes de la primera palabra (BR2.3), asi que el modelo ve `claim` sin que la
+# persona haya dicho nada. «Tengo una pregunta» no es un relato del accidente: no se anota
+# nada y no se toma por una pregunta que ya hizo.
+# `continue` no vale: dentro de un reporte abierto la lectura canonica convierte «reportar un
+# accidente» en `continue`, asi que aceptarlo dejaria pasar justo el defecto.
+# Escrito antes del cambio de la instruccion `conversation`; no se ha corrido contra el modelo.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/understand-vague-opening-in-call
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  record_type: claim
+  last_agent_text: ¿En qué te puedo ayudar?
+  message: Tengo una pregunta
+  wants:
+  - greeting
+  - other
+  asks_about_coverage: false
+  asks_question: false
+  absent_items:
+  - description
+  - injuries
+  - incident_datetime
+  - location
+  - question_asked
+expected_verdicts:
+  understanding_vague_opening_in_call: pass

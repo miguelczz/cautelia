@@ -1,0 +1,15 @@
+{
+  "clauses": [
+    {
+      "clause_id": "TST-PAP-2026-A.1",
+      "clause_key": "A.1",
+      "form_id": "TST-PAP-2026",
+      "form_version": "2026.1",
+      "is_distractor": false,
+      "issuer_label": "Testhaven Mutual",
+      "language": "es",
+      "part": "Parte A - Responsabilidad civil",
+      "text": "Testhaven paga el dano que el vehiculo asegurado cause a la propiedad de un tercero, hasta el limite declaraado en la poliza."
+    }
+  ]
+}

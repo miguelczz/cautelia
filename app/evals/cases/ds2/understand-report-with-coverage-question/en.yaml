@@ -1,0 +1,22 @@
+# Contar un choque y, en el mismo mensaje, preguntar si la poliza lo cubre: es reportar.
+#
+# Visto en la evaluacion completa del 2026-10-11 (`DS-6/en/rt10-language-switch`): con
+# "Nobody was hurt. Does my policy cover this?" la conversacion se abrio como consulta
+# de cobertura y el dato de que no hubo heridos se perdio; su gemelo en espanol la
+# abria como reporte. El mismo mensaje no puede abrir dos cosas distintas segun el
+# idioma (P12). La pregunta no se pierde: va en `question` y se responde aparte.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/en/understand-report-with-coverage-question
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  message: Someone backed into my car at the grocery store, no one got hurt. Is that covered by my policy?
+  wants:
+  - report_accident
+expected_verdicts:
+  understanding_report_with_coverage_question: pass

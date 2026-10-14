@@ -1,0 +1,92 @@
+{
+  "case_key": "SEED/stonecroft/es/closed-approved",
+  "channel": "chat",
+  "derivation_reason": "rule",
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Otro carro se pasó el semáforo en rojo y le pegó en la puerta del conductor."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Santiago Quintero Echeverri, póliza POL-814225"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "Sin lesionados"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Carrera 5 con calle 40, Corvane"
+    },
+    "other_parties": {
+      "status": "stated",
+      "value": "Un conductor, Gloria Mejía Echeverri, en un vehículo de placa DCW108"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Renault Duster 2020, placa PMJ528, lo conducía Santiago"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-814225",
+  "record_type": "claim",
+  "resolution": "approved",
+  "state": "closed",
+  "tenant_id": "stonecroft",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Buenos días, quiero reportar un choque. Soy Santiago Quintero Echeverri, póliza POL-814225."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Alguien resultó herido?"
+    },
+    {
+      "speaker": "insured",
+      "text": "No, nadie."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Cuándo y dónde fue?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Hoy a las siete y cuarto de la mañana, en la carrera 5 con calle 40."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué pasó?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Otro carro se pasó el semáforo en rojo y me pegó en la puerta del conductor."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué vehículo manejaba?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Mi Renault Duster 2020, placa PMJ528. Lo manejaba yo."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Tienes los datos del otro conductor?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Sí, se llama Gloria Mejía Echeverri y la placa de su carro es DCW108."
+    },
+    {
+      "speaker": "staff",
+      "text": "Revisé su caso y quedó aprobado. En su caso está el detalle de la decisión."
+    }
+  ],
+  "used_by": []
+}

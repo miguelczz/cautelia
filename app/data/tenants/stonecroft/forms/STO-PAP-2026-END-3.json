@@ -1,0 +1,12 @@
+{
+  "clause_ids": [
+    "STO-PAP-2026-END-3-D.EXCL.3"
+  ],
+  "form_id": "STO-PAP-2026-END-3",
+  "form_kind": "endorsement",
+  "form_version": "2026.1",
+  "issuer_label": "Seguros Aburrá",
+  "issuer_tenant": "stonecroft",
+  "jurisdiction_ref": null,
+  "language": "es"
+}

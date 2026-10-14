@@ -1,0 +1,223 @@
+# Textos fuente revisados de Autos Poblado, en ingles (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Los borradores del modelo en ingles calcaban giros del formulario de referencia: se
+# reescribieron a mano y por eso casi todos dicen drafted_with: hand.
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: sunmeadow
+language: en
+part_key: part_a
+texts:
+- source_id: SUN-PAP-2026-A.INS
+  kind: clause
+  clause_key: A.INS
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: When an accident involving a covered auto makes an insured legally responsible to someone else
+    for bodily injury or property damage, Autos Poblado pays those damages up to the Part A limit. We
+    also handle the insured's defense against those claims with lawyers we choose, and we may settle a
+    claim whenever we think it wise. Our defense duty stops once our Part A payments reach the limit.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.SUPP
+  kind: clause
+  clause_key: A.SUPP
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: Besides the Part A limit, we cover the insured's reasonable out-of-pocket costs when we ask for
+    help with a claim, including travel to court and up to $150 for each day of work missed, plus the
+    cost of any court bond needed in a case we defend.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.EXCL.A.1
+  kind: clause
+  clause_key: A.EXCL.A.1
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: Part A does not cover harm that an insured causes on purpose, or harm someone else causes following
+    the insured's instructions.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.EXCL.A.2
+  kind: clause
+  clause_key: A.EXCL.A.2
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: Part A does not cover damage to things the insured owns or is carrying in the vehicle.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.EXCL.A.3
+  kind: clause
+  clause_key: A.EXCL.A.3
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: Part A does not cover damage to things the insured has rented, borrowed or is looking after for
+    someone else.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.EXCL.A.4
+  kind: clause
+  clause_key: A.EXCL.A.4
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: Part A does not cover injuries to the insured's own employees that happen while they are working;
+    those are handled by the applicable workplace injury system.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.EXCL.A.5
+  kind: clause
+  clause_key: A.EXCL.A.5
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: Part A does not cover accidents that happen while a vehicle is carrying people or goods for pay,
+    including trips booked through a ride app. Friends splitting the cost of a trip is not considered
+    pay.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.EXCL.A.6
+  kind: clause
+  clause_key: A.EXCL.A.6
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: Part A does not cover an insured who is using a vehicle as part of a business that sells, repairs,
+    washes, parks or stores vehicles.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.EXCL.A.7
+  kind: clause
+  clause_key: A.EXCL.A.7
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: Part A does not cover anyone driving a vehicle without the owner's permission or without a sound
+    reason to believe they had it.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.EXCL.A.8
+  kind: clause
+  clause_key: A.EXCL.A.8
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: Part A does not cover accidents during races, speed contests or performance tests, or while practicing
+    for them.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.EXCL.A.9
+  kind: clause
+  clause_key: A.EXCL.A.9
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: Part A does not pay fines, penalties or damages that a court imposes to punish rather than to
+    repair harm.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.EXCL.B.1
+  kind: clause
+  clause_key: A.EXCL.B.1
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: Part A does not cover driving a motorcycle, a motorized three-wheeler or any other two- or three-wheeled
+    vehicle.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.EXCL.B.2
+  kind: clause
+  clause_key: A.EXCL.B.2
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: Part A does not cover using a vehicle you own that is not listed on the declarations page, except
+    a newly bought vehicle that the covered auto definition includes.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.EXCL.B.3
+  kind: clause
+  clause_key: A.EXCL.B.3
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: Part A does not cover using a vehicle that a family member owns, or that a family member has on
+    hand for regular use, unless that vehicle is listed on the declarations page.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.LIMIT
+  kind: clause
+  clause_key: A.LIMIT
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: The per-person limit on the declarations page is the most we pay for all bodily injury to one
+    person in one accident. The per-accident limit is the most for all bodily injury in that accident,
+    and the property damage limit is the most for all property damaged. Adding insureds, vehicles or claims
+    does not raise these limits.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.OUT_OF_STATE
+  kind: clause
+  clause_key: A.OUT_OF_STATE
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: If an accident happens outside Corvane and the local law there requires higher minimum limits
+    than this policy has, we apply those higher minimums to that accident. We never pay twice for the
+    same loss.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.FIN_RESP
+  kind: clause
+  clause_key: A.FIN_RESP
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: When a Corvane authority asks for proof that a driver carries liability insurance, this policy
+    serves as that proof, with at least the minimum limits set in the jurisdiction document.
+  refers_to:
+  - SUN-JUR-2026-J.1
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-A.OTHER
+  kind: clause
+  clause_key: A.OTHER
+  part: Part A — Liability Coverage
+  version: '2026.1'
+  text: If another liability policy also responds to the accident, we split the payment in proportion
+    to each policy's limits. For a vehicle you do not own, that vehicle's own insurance pays first and
+    we pay what remains.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2025-A.EXCL.A.3.ALT
+  kind: distractor
+  clause_key: A.EXCL.A.3.ALT
+  part: Part A — Liability Coverage
+  version: '2025.1'
+  text: Part A does not cover damage to things the insured has rented or is looking after for someone
+    else; things the insured borrowed are covered.
+  distractor_of: SUN-PAP-2026-A.EXCL.A.3
+  distractor_reason: near_duplicate
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: SUN-PAP-2025-A.EXCL.B.3
+  kind: distractor
+  clause_key: A.EXCL.B.3
+  part: Part A — Liability Coverage
+  version: '2025.1'
+  text: Part A does not cover using any vehicle that a family member owns, whether or not it is listed
+    on the declarations page.
+  distractor_of: SUN-PAP-2026-A.EXCL.B.3
+  distractor_reason: superseded_version
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite

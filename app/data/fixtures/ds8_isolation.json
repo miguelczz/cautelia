@@ -1,0 +1,150 @@
+{
+  "collisions": [
+    {
+      "field": "policy_number",
+      "reason": "Dos aseguradoras emiten una poliza con el mismo numero. Es posible precisamente porque el numero no lleva iniciales de la aseguradora: si las llevara, esta colision seria imposible por construccion y la prueba de aislamiento no demostraria nada. Consumida por la unidad dueña de las polizas (U8); U2 no crea esa tabla.",
+      "tenants": [
+        "stonecroft",
+        "sunmeadow"
+      ],
+      "value": "POL-480915"
+    },
+    {
+      "field": "insured_name",
+      "reason": "El mismo nombre de asegurado en dos aseguradoras. Consumida por la unidad dueña del caso (U4).",
+      "tenants": [
+        "stonecroft",
+        "sunmeadow"
+      ],
+      "value": "Alex Moreno"
+    },
+    {
+      "field": "case_id",
+      "reason": "El mismo identificador de caso en dos aseguradoras, **sobre los enlaces de caso y no sobre la tabla del caso**. U2 la ejercita ahi: un enlace de una emisora y otro de la otra apuntan al mismo identificador y ninguno ve al otro; esa tabla no tiene llave foranea hacia el caso, asi que la colision cabe. En `case_record` no cabe: su llave primaria es `case_id` a secas, y sembrar el segundo choca. Hasta U14 nadie habia intentado sembrar las filas `cases` de esta fixture, asi que la contradiccion entre este archivo y el esquema vivio sin que nada la dijera. Decision de Miguel del 2026-09-28: manda el esquema, el identificador de caso es unico en toda la base, y esta colision se declara con su alcance en vez de describir algo imposible.",
+      "scope": "case_access_link",
+      "tenants": [
+        "stonecroft",
+        "sunmeadow"
+      ],
+      "value": "CASE-7F3A21"
+    },
+    {
+      "field": "visitor_key_hash",
+      "reason": "El mismo navegador visita las dos demostraciones. Tiene una fila por aseguradora y ninguna ve la de la otra (BR3.5).",
+      "tenants": [
+        "stonecroft",
+        "sunmeadow"
+      ],
+      "value": "6f4b2c1d9a8e7350c2b1a0f9e8d7c6b5a4938271605f4e3d2c1b0a9f8e7d6c5b"
+    }
+  ],
+  "fixture_id": "DS-8/isolation",
+  "generated": true,
+  "generated_reason": "Regenerada por el generador sintetico de U7 (`mise run synthetic:generate`) con la misma semilla y los mismos identificadores estables que la version escrita a mano en U2: su contenido es el contrato, no el metodo que lo produjo (BR7.3, CG-U7-6).",
+  "purpose": "Colisiones a proposito entre aseguradoras: mismo numero de poliza, mismo nombre de asegurado, mismo identificador de caso y misma clave de navegador en dos aseguradoras distintas. Una prueba de aislamiento con datos distintos pasaria aunque el aislamiento no existiera; estas filas son lo unico que la hace significar algo (AC4.11.3, DS-8).",
+  "rows": {
+    "case_access_links": [
+      {
+        "access": "view_and_decide",
+        "case_id": "CASE-7F3A21",
+        "created_at": "2026-09-16T10:00:00Z",
+        "expires_at": "2026-09-16T11:00:00Z",
+        "link_id": "LNK-DS8-0001",
+        "redeemed_count": 0,
+        "revoked_at": null,
+        "tenant_id": "stonecroft",
+        "token_digest": "a1b2c3d4e5f60718293a4b5c6d7e8f900112233445566778899aabbccddeeff0"
+      },
+      {
+        "access": "view_and_decide",
+        "case_id": "CASE-7F3A21",
+        "created_at": "2026-09-16T10:00:00Z",
+        "expires_at": "2026-09-16T11:00:00Z",
+        "link_id": "LNK-DS8-0002",
+        "redeemed_count": 0,
+        "revoked_at": null,
+        "tenant_id": "sunmeadow",
+        "token_digest": "b2c3d4e5f60718293a4b5c6d7e8f900112233445566778899aabbccddeeff0a1"
+      },
+      {
+        "access": "view_and_decide",
+        "case_id": "CASE-91BD04",
+        "created_at": "2026-09-16T10:00:00Z",
+        "expires_at": "2026-09-16T11:00:00Z",
+        "link_id": "LNK-DS8-0003",
+        "redeemed_count": 0,
+        "revoked_at": null,
+        "tenant_id": "knotwell",
+        "token_digest": "c3d4e5f60718293a4b5c6d7e8f900112233445566778899aabbccddeeff0a1b2"
+      }
+    ],
+    "cases": [
+      {
+        "case_id": "CASE-7F3A21",
+        "insured_name": "Alex Moreno",
+        "policy_number": "POL-480915",
+        "tenant_id": "stonecroft"
+      },
+      {
+        "case_id": "CASE-7F3A22",
+        "insured_name": "Alex Moreno",
+        "policy_number": "POL-480915",
+        "tenant_id": "sunmeadow"
+      },
+      {
+        "case_id": "CASE-91BD04",
+        "insured_name": "Rosa Iturbe",
+        "policy_number": "POL-173620",
+        "tenant_id": "knotwell"
+      }
+    ],
+    "policies": [
+      {
+        "effective_from": "2026-01-01",
+        "effective_to": "2027-01-01",
+        "insured_name": "Alex Moreno",
+        "policy_number": "POL-480915",
+        "tenant_id": "stonecroft"
+      },
+      {
+        "effective_from": "2026-03-15",
+        "effective_to": "2027-03-15",
+        "insured_name": "Alex Moreno",
+        "policy_number": "POL-480915",
+        "tenant_id": "sunmeadow"
+      },
+      {
+        "effective_from": "2026-02-01",
+        "effective_to": "2027-02-01",
+        "insured_name": "Rosa Iturbe",
+        "policy_number": "POL-173620",
+        "tenant_id": "knotwell"
+      }
+    ],
+    "visitor_keys": [
+      {
+        "created_at": "2026-09-16T09:00:00Z",
+        "last_seen_at": "2026-09-16T09:30:00Z",
+        "origin": "https://demo.untangle.local",
+        "tenant_id": "stonecroft",
+        "visitor_key_hash": "6f4b2c1d9a8e7350c2b1a0f9e8d7c6b5a4938271605f4e3d2c1b0a9f8e7d6c5b"
+      },
+      {
+        "created_at": "2026-09-16T09:05:00Z",
+        "last_seen_at": "2026-09-16T09:35:00Z",
+        "origin": "https://demo.untangle.local",
+        "tenant_id": "sunmeadow",
+        "visitor_key_hash": "6f4b2c1d9a8e7350c2b1a0f9e8d7c6b5a4938271605f4e3d2c1b0a9f8e7d6c5b"
+      },
+      {
+        "created_at": "2026-09-16T09:10:00Z",
+        "last_seen_at": "2026-09-16T09:40:00Z",
+        "origin": "https://demo.untangle.local",
+        "tenant_id": "knotwell",
+        "visitor_key_hash": "7a5c3d2e0b9f8461d3c2b1a0f9e8d7c6b5a4938271605f4e3d2c1b0a9f8e7d6c"
+      }
+    ]
+  },
+  "seed": 20260916,
+  "synthetic_data_notice": "Cien por ciento sintetica. Ninguna persona, poliza ni matricula real (P8, W6, R9)."
+}

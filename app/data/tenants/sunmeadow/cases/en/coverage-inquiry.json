@@ -1,0 +1,30 @@
+{
+  "case_key": "SEED/sunmeadow/en/coverage-inquiry",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "identity_and_policy": {
+      "status": "stated",
+      "value": "Mario Ruiz, policy POL-679093"
+    },
+    "question_asked": {
+      "status": "stated",
+      "value": "Does the policy cover getting around while the car is being repaired?"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-679093",
+  "record_type": "coverage_inquiry",
+  "resolution": null,
+  "state": "capturing",
+  "tenant_id": "sunmeadow",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "I'm Mario Ruiz, policy POL-679093. Does the policy cover getting around while the car is being repaired?"
+    }
+  ],
+  "used_by": [
+    "AC4.10.3"
+  ]
+}

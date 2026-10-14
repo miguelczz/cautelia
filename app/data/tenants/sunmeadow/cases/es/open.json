@@ -1,0 +1,19 @@
+{
+  "case_key": "SEED/sunmeadow/es/open",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {},
+  "language": "es",
+  "policy_number": "POL-422088",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "open",
+  "tenant_id": "sunmeadow",
+  "transcript": [
+    {
+      "speaker": "agent",
+      "text": "¿Me dices tu nombre completo y el número de tu póliza?"
+    }
+  ],
+  "used_by": []
+}

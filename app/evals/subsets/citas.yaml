@@ -1,0 +1,64 @@
+name: citas
+reason: >
+  Las citas de DS-3 (fase 1 de `docs/propuesta-2026-10/03-propuesta-y-diseno.md`):
+  ante una pregunta sobre una poliza, recuperar sus clausulas, proponer con Claude
+  Haiku cuales la responden y verificarlas con el verificador exacto, igual que en
+  el chat. Necesita la base con el corpus cargado, la clave de embeddings del uso
+  `corpus` y la de Claude para evaluaciones (`UNTANGLE_ANTHROPIC_API_KEY_EVALS`).
+  Se corre a mano con `mise run evals:citas` y en cada hito.
+
+  Incluye RT-2 por clausula envenenada (2026-10-12, auditoria E8): la clausula del
+  fixture de inyeccion, entregada a mano al mismo proponedor de citas, sin base ni
+  corpus; mide que el modelo no obedezca la orden que trae la clausula.
+
+  Tope escrito: los cuarenta y seis casos de DS-3 y los dos de RT-2, y ninguno mas.
+requires_provider_key: true
+case_keys:
+  - DS-3/es/coverage-agreement-period
+  - DS-3/en/coverage-agreement-period
+  - DS-3/es/coverage-agreement-scope
+  - DS-3/en/coverage-agreement-scope
+  - DS-3/es/coverage-collision-limit
+  - DS-3/en/coverage-collision-limit
+  - DS-3/es/coverage-liability-limit
+  - DS-3/en/coverage-liability-limit
+  - DS-3/es/coverage-medical-limit
+  - DS-3/en/coverage-medical-limit
+  - DS-3/es/coverage-uninsured-limit
+  - DS-3/en/coverage-uninsured-limit
+  - DS-3/es/cross-language-other-insurance-liability
+  - DS-3/en/cross-language-other-insurance-liability
+  - DS-3/es/cross-language-other-insurance-medical
+  - DS-3/en/cross-language-other-insurance-medical
+  - DS-3/es/distractor-def-you
+  - DS-3/en/distractor-def-you
+  - DS-3/es/distractor-duties-after-loss
+  - DS-3/en/distractor-duties-after-loss
+  - DS-3/es/distractor-uninsured-coverage
+  - DS-3/en/distractor-uninsured-coverage
+  - DS-3/es/endorsement-electronics-exclusion
+  - DS-3/en/endorsement-electronics-exclusion
+  - DS-3/es/endorsement-excludes-carrying-for-hire
+  - DS-3/en/endorsement-excludes-carrying-for-hire
+  - DS-3/es/knotwell-collision-coverage
+  - DS-3/en/knotwell-collision-coverage
+  - DS-3/es/knotwell-medical-limit
+  - DS-3/en/knotwell-medical-limit
+  - DS-3/es/no-clause-earthquake
+  - DS-3/en/no-clause-earthquake
+  - DS-3/es/no-clause-loan-payments
+  - DS-3/en/no-clause-loan-payments
+  - DS-3/es/no-clause-pet-injury
+  - DS-3/en/no-clause-pet-injury
+  - DS-3/es/no-clause-rental-abroad
+  - DS-3/en/no-clause-rental-abroad
+  - DS-3/es/no-clause-roadside-fuel
+  - DS-3/en/no-clause-roadside-fuel
+  - DS-3/es/no-clause-scuba
+  - DS-3/en/no-clause-scuba
+  - DS-3/es/no-clause-vehicle-tax
+  - DS-3/en/no-clause-vehicle-tax
+  - DS-3/es/no-clause-war-zone
+  - DS-3/en/no-clause-war-zone
+  - DS-6/es/rt2-policy-clause-injection
+  - DS-6/en/rt2-policy-clause-injection

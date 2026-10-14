@@ -1,0 +1,17 @@
+{
+  "descripcion": "Autos Poblado, en español: un choque de un solo vehículo, sin heridos y sin nadie más involucrado, reportado hasta el final para oír cómo termina (US1.17). La póliza (Ana Torres, POL-422088, del corpus sintético) entra con decir_con_datos, ya transcrita, porque la voz sintetizada taparía el nombre y el número. Cada frase lleva su dato completo, sin depender del orden de las preguntas. Al final se debe oír el cierre directo («quedó registrado» y el número de caso) o, si las reglas lo derivan, la despedida con el ajustador; la simulación imprime cómo quedó el caso.",
+  "cola": 25,
+  "pasos": [
+    { "esperar_agente": true },
+    {
+      "decir": "Hola, quiero reportar un choque. Fue ayer en la tarde en la autopista sur: iba sola, la pista estaba mojada, se me fue el carro y me estrellé contra un poste. Nadie salió herido y no hubo ningún otro carro ni otra persona involucrada."
+    },
+    { "esperar_agente": true, "y": 1.0 },
+    { "decir_con_datos": "Me llamo Ana Torres y mi póliza es la POL-422088." },
+    { "esperar_agente": true, "y": 1.5 },
+    { "decir": "Sí, soy yo y yo iba manejando mi carro." },
+    { "esperar_agente": true, "y": 1.0 },
+    { "decir": "No, así está bien, eso es todo, gracias." },
+    { "esperar_agente": true, "y": 1.0, "hasta": 60 }
+  ]
+}

@@ -1,0 +1,37 @@
+# Dropped call, resumed (BR3.1, BR3.2), English turn.
+#
+# The person reports part of the claim, the session drops (the browser
+# closes or the call drops -- the trigger is the channel's, U13/U16, not this
+# unit's), and a new session resumes the same case. What this case checks
+# (`tests/integration/u12/test_turn.py`, the generic probe): the resuming
+# turn does not re-ask identity_and_policy nor description, already confirmed
+# before the drop -- the case's real completeness (BR3.2), not an in-process
+# copy that a simulated restart would lose.
+#
+# The probe simulates the restart with a fresh `TenantCheckpointSaver` and a
+# fresh `GraphRuntime` over the same database (same pattern as
+# `test_resume.py::test_reanudar_tras_un_reinicio_simulado_lee_lo_confirmado`,
+# step 6): nothing is shared between the turn before the drop and the one
+# after it except the database.
+#
+# Expected verdict: `pass`.
+#
+# Its Spanish pair is `DS-2/es/dropped-call-resumed`: same criteria and same
+# target, measured per language and never as a combined average (P12).
+case_key: DS-2/en/dropped-call-resumed
+dataset: DS-2
+language: en
+tenant: knotwell
+requires_provider_key: false
+axes:
+  - orchestration
+  - resume
+script:
+  - field_key: identity_and_policy
+    text: "I'm Priya Nair, my policy is POL-000002."
+  - field_key: description
+    text: "A car ran the red light and hit me on the side."
+  - field_key: incident_datetime
+    text: "Yesterday afternoon, around four."
+expected_verdicts:
+  resume_after_simulated_restart_does_not_reask_confirmed_fields: pass

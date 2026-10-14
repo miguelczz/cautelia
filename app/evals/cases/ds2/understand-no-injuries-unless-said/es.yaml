@@ -1,0 +1,24 @@
+# Un choque contado sin decir nada de heridos no deja anotado que no los hubo.
+#
+# Visto en el chat el 2026-10-10: con este mismo mensaje la agente marco los cinco
+# datos completos sin haber preguntado por heridos. "Nadie salio herido" es un dato
+# de seguridad: solo se anota si la persona lo dice, nunca porque el choque suene leve.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/understand-no-injuries-unless-said
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  message: "hola, ayer un taxi me chocó por detrás en la avenida 80 con la 33, estaba parado en el semáforo"
+  wants:
+  - report_accident
+  items:
+    incident_datetime: '2026-10-06'
+  absent_items:
+  - injuries
+expected_verdicts:
+  understanding_no_injuries_unless_said: pass

@@ -1,0 +1,268 @@
+{
+  "stage": "code-generation",
+  "unit": "u13-chat",
+  "version": 1,
+  "writes": [
+    {
+      "path": "app/backend/.importlinter"
+    },
+    {
+      "path": "app/backend/migrations/versions/u13_chat_0001_session_limits.py"
+    },
+    {
+      "path": "app/backend/migrations/versions/u13_chat_0002_disclosed_at.py"
+    },
+    {
+      "path": "app/backend/pyproject.toml"
+    },
+    {
+      "path": "app/backend/src/untangle/chat/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/chat/case_opening.py"
+    },
+    {
+      "path": "app/backend/src/untangle/chat/citation.py"
+    },
+    {
+      "path": "app/backend/src/untangle/chat/delivery.py"
+    },
+    {
+      "path": "app/backend/src/untangle/chat/language.py"
+    },
+    {
+      "path": "app/backend/src/untangle/chat/limits.py"
+    },
+    {
+      "path": "app/backend/src/untangle/chat/notice.py"
+    },
+    {
+      "path": "app/backend/src/untangle/chat/opening.py"
+    },
+    {
+      "path": "app/backend/src/untangle/chat/purge.py"
+    },
+    {
+      "path": "app/backend/src/untangle/chat/resume.py"
+    },
+    {
+      "path": "app/backend/src/untangle/chat/session.py"
+    },
+    {
+      "path": "app/backend/src/untangle/chat/stream.py"
+    },
+    {
+      "path": "app/backend/src/untangle/chat/trace.py"
+    },
+    {
+      "path": "app/backend/src/untangle/chat/wire.py"
+    },
+    {
+      "path": "app/backend/src/untangle/copy_catalog/checks.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/drivers/chat.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/contracts.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/turn.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/composition.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/tenancy_literals.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u13/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u13/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u13/test_api.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u13/test_citation.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u13/test_delivery.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u13/test_eval_driver.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u13/test_resume.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u13/test_session_admission.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u13/test_session_tables.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u13/test_trace.py"
+    },
+    {
+      "path": "app/backend/tests/unit/chat/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/chat/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/unit/chat/test_language.py"
+    },
+    {
+      "path": "app/backend/tests/unit/chat/test_limits.py"
+    },
+    {
+      "path": "app/backend/tests/unit/chat/test_notice.py"
+    },
+    {
+      "path": "app/backend/tests/unit/chat/test_opening.py"
+    },
+    {
+      "path": "app/backend/tests/unit/chat/test_stream.py"
+    },
+    {
+      "path": "app/backend/tests/unit/chat/test_stream_wire.py"
+    },
+    {
+      "path": "app/backend/tests/unit/chat/test_wire.py"
+    },
+    {
+      "path": "app/backend/tests/unit/evals/test_case_fields.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_purge.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/test_site_example.py"
+    },
+    {
+      "path": "app/backend/uv.lock"
+    },
+    {
+      "path": "app/config/compliance/en/guard.yaml"
+    },
+    {
+      "path": "app/config/compliance/es/guard.yaml"
+    },
+    {
+      "path": "app/config/copy/en.yaml"
+    },
+    {
+      "path": "app/config/copy/es.yaml"
+    },
+    {
+      "path": "app/contracts/examples/site-directory.json"
+    },
+    {
+      "path": "app/contracts/openapi.json"
+    },
+    {
+      "path": "app/contracts/schemas/tenant.schema.json"
+    },
+    {
+      "path": "app/evals/cases/ds2/chat-claim-end-to-end/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/chat-claim-end-to-end/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt10-language-switch/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt10-language-switch/es.yaml"
+    },
+    {
+      "path": "app/evals/manifest.yaml"
+    },
+    {
+      "path": "app/frontend/e2e/visitable-routes.ts"
+    },
+    {
+      "path": "app/frontend/eslint.config.ts"
+    },
+    {
+      "path": "app/frontend/src/app/router.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/visitable-routes.test.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/chat/chat-copy.test.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/chat/chat-copy.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/chat/chat-events.test.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/chat/chat-events.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/chat/chat-page.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/chat/chat-page.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/chat/chat-routes.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/chat/citation.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/chat/citation.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/home/home.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/trace/trace-page.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/trace/trace-page.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/trace/trace-routes.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/chat.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/@tanstack/react-query.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/index.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/sdk.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/types.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-keys.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-texts.ts"
+    },
+    {
+      "path": "app/frontend/vitest.setup.ts"
+    }
+  ]
+}

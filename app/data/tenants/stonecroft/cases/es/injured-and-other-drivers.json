@@ -1,0 +1,62 @@
+{
+  "case_key": "SEED/stonecroft/es/injured-and-other-drivers",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Le pegaron por detrás en la glorieta."
+    },
+    "identity_and_policy": {
+      "status": "stated",
+      "value": "Alex Moreno, póliza POL-480915"
+    },
+    "incident_datetime": {
+      "status": "stated",
+      "value": "2026-09-15 12:30"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Glorieta de Los Almendros, Corvane"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Nissan Versa 2013, placa PCN678, lo conducía Alex"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-480915",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "capturing",
+  "tenant_id": "stonecroft",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Soy Alex Moreno, póliza POL-480915. Me chocaron en la glorieta de Los Almendros."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué vehículo manejaba?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Mi Nissan Versa 2013, placa PCN678. Lo manejaba yo."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Hubo otros vehículos o personas lesionadas?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Sí. Quedaron heridas Isabela Muñoz Londoño y Sebastián Mejía Londoño, que iban en uno de los otros carros."
+    },
+    {
+      "speaker": "insured",
+      "text": "Y había dos conductores más: Laura Duque Betancur, con placa XZR099, y Esteban Toro Gómez, con placa EYE409."
+    }
+  ],
+  "used_by": [
+    "AC1.8.1"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "clause_ids": [
+    "STO-PAP-2025-DEF.YOU.ALT",
+    "STO-PAP-2025-DEF.COVERED_AUTO",
+    "STO-PAP-2025-A.INS",
+    "STO-PAP-2025-A.EXCL.A.5.ALT",
+    "STO-PAP-2025-C.INS.ALT",
+    "STO-PAP-2025-D.INS.COLLISION.ALT",
+    "STO-PAP-2025-D.TRANSPORT",
+    "STO-PAP-2025-E.DUTIES.A.1.ALT"
+  ],
+  "form_id": "STO-PAP-2025",
+  "form_kind": "base",
+  "form_version": "2025.1",
+  "issuer_label": "Seguros Aburrá",
+  "issuer_tenant": "stonecroft",
+  "jurisdiction_ref": "STO-JUR-2026",
+  "language": "es"
+}

@@ -1,0 +1,92 @@
+{
+  "case_key": "SEED/sunmeadow/en/closed-approved",
+  "channel": "chat",
+  "derivation_reason": "rule",
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Another car ran a red light and hit the driver's door."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Alex Moreno, policy POL-480915"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "No one injured"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "5th Avenue and 40th Street, Corvane"
+    },
+    "other_parties": {
+      "status": "stated",
+      "value": "One driver, Clara Lewis, in a vehicle with plate HEK-1099"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Hyundai Elantra 2024, plate NKV-9219, driven by Alex"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-480915",
+  "record_type": "claim",
+  "resolution": "approved",
+  "state": "closed",
+  "tenant_id": "sunmeadow",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Good morning, I want to report a crash. I'm Alex Moreno, policy POL-480915."
+    },
+    {
+      "speaker": "agent",
+      "text": "Was anyone hurt?"
+    },
+    {
+      "speaker": "insured",
+      "text": "No, nobody."
+    },
+    {
+      "speaker": "agent",
+      "text": "When and where did it happen?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Today at a quarter past seven in the morning, at 5th Avenue and 40th Street."
+    },
+    {
+      "speaker": "agent",
+      "text": "What happened?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Another car ran a red light and hit my driver's door."
+    },
+    {
+      "speaker": "agent",
+      "text": "Which vehicle were you driving?"
+    },
+    {
+      "speaker": "insured",
+      "text": "My Hyundai Elantra 2024, plate NKV-9219. I was driving."
+    },
+    {
+      "speaker": "agent",
+      "text": "Do you have the other driver's details?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Yes, the name is Clara Lewis and the car's plate is HEK-1099."
+    },
+    {
+      "speaker": "staff",
+      "text": "I reviewed your case and it was approved. The details of the decision are in your case."
+    }
+  ],
+  "used_by": []
+}

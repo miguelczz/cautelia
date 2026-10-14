@@ -1,0 +1,6 @@
+case_key: DS-8/es/content-forbidden-claims
+dataset: DS-8
+language: es
+requires_provider_key: false
+expected_verdicts:
+  content_forbidden_claims: pass

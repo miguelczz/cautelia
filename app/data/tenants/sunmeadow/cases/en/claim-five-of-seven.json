@@ -1,0 +1,50 @@
+{
+  "case_key": "SEED/sunmeadow/en/claim-five-of-seven",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Rear-ended at the roundabout."
+    },
+    "identity_and_policy": {
+      "status": "stated",
+      "value": "Mario Ruiz, policy POL-679093"
+    },
+    "incident_datetime": {
+      "status": "stated",
+      "value": "2026-09-15 12:30"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Almond Grove roundabout, Corvane"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Hyundai Elantra 2018, plate XVN-3892, driven by Mario"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-679093",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "capturing",
+  "tenant_id": "sunmeadow",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "I'm Mario Ruiz, policy POL-679093. I was hit at the Almond Grove roundabout."
+    },
+    {
+      "speaker": "agent",
+      "text": "Which vehicle were you driving?"
+    },
+    {
+      "speaker": "insured",
+      "text": "My Hyundai Elantra 2018, plate XVN-3892. I was driving."
+    }
+  ],
+  "used_by": [
+    "AC4.10.3"
+  ]
+}

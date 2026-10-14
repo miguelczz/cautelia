@@ -1,0 +1,43 @@
+# La emergencia, juego en ingles (U10, BR3.1 y BR3.2).
+#
+# La pareja de `es/emergency.yaml`, con la misma regla de negacion: una negacion
+# apaga solo la coincidencia que toca. En "we're all fine except my daughter,
+# she's not responding" la negacion es "we're all fine", el herido grave es
+# "she's not responding", no se tocan, y la emergencia gana (BR3.2, enmienda del
+# 2026-09-21).
+language: en
+family: emergency
+version: "2026-09-21.1"
+
+patterns:
+  - id: emergency.en.signal.001
+    regex: '\b(unconscious|passed\s+out|not\s+breathing|isn''t\s+breathing|can''t\s+breathe|cannot\s+breathe|stopped\s+breathing|unresponsive|bleeding|seizure|heart\s+attack|cardiac\s+arrest|on\s+fire|in\s+flames)\b'
+  - id: emergency.en.signal.002
+    regex: '\b((badly|seriously|severely|critically|gravely)\s+(injured|hurt|wounded|burned)|(serious|severe|critical)\s+(injury|injuries))\b'
+  # Alguien que no se mueve o no responde, con sujeto de persona delante:
+  # "the car isn't moving" no es una emergencia.
+  - id: emergency.en.signal.003
+    regex: '\b(driver|passenger|person|child|kid|baby|son|daughter|wife|husband|friend|dad|mom|father|mother|brother|sister|he|she|someone|somebody|cyclist|pedestrian|motorcyclist)\b[^.?!]{0,30}\b(isn''t|is\s+not|not|won''t|will\s+not|can''t|cannot|doesn''t|does\s+not)\s+(moving|move|responding|respond|waking\s+up|wake\s+up|breathing|breathe)\b'
+  - id: emergency.en.signal.004
+    regex: '\b(head|neck|spine)\s+(is\s+)?(hurt|injured|bleeding|injury)\b'
+  - id: emergency.en.signal.005
+    regex: '\b(need|call|send|get)\s+(an\s+)?ambulance\b'
+  - id: emergency.en.signal.006
+    regex: '\btrapped\s+(in|inside)\s+(the|a|his|her|my|our)\s+(car|vehicle|truck)\b'
+
+negations:
+  # "nobody got hurt".
+  - id: emergency.en.negation.001
+    regex: '\b(nobody|no\s+one|noone|none\s+of\s+us)\s+((got|was|is|were|are)\s+)?(hurt|injured|bleeding|unconscious)\b'
+  # "we're all fine" (literal de AC1.6.5 en ingles).
+  - id: emergency.en.negation.002
+    regex: '\b(we''re|we\s+are|everyone''s|everyone\s+is|everybody''s|everybody\s+is)\s+(all\s+)?(fine|ok|okay|alright|all\s+right|safe|unhurt)\b'
+  # "it was just a little bump".
+  - id: emergency.en.negation.003
+    regex: '\b(just|only)\s+(a\s+)?(little\s+|small\s+|minor\s+)?(bump|scratch|fender\s+bender|scare|tap)\b'
+  # "no serious injuries", "he's not badly hurt".
+  - id: emergency.en.negation.004
+    regex: '\b(no\s+(serious\s+|severe\s+)?(injuries|injured)|not\s+(badly|seriously|severely)\s+(hurt|injured))\b'
+  # "he's not bleeding".
+  - id: emergency.en.negation.005
+    regex: '\b(isn''t|is\s+not|not|wasn''t|was\s+not|aren''t|are\s+not)\s+(bleeding|unconscious)\b'

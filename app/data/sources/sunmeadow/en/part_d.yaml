@@ -1,0 +1,246 @@
+# Textos fuente revisados de Autos Poblado, en ingles (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Los borradores del modelo en ingles calcaban giros del formulario de referencia: se
+# reescribieron a mano y por eso casi todos dicen drafted_with: hand.
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: sunmeadow
+language: en
+part_key: part_d
+texts:
+- source_id: SUN-PAP-2026-D.INS.COLLISION
+  kind: clause
+  clause_key: D.INS.COLLISION
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: Autos Poblado pays for sudden, accidental damage to your covered auto from hitting another vehicle
+    or object or from rolling over, minus the collision deductible on the declarations page. We pay even
+    if you caused the crash.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.INS.OTC
+  kind: clause
+  clause_key: D.INS.OTC
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: 'We also pay, minus the matching deductible, for damage to your covered auto that does not come
+    from a crash: theft of the car or its parts, fire, flood, hail, falling objects, vandalism, broken
+    glass and hitting an animal.'
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.TRANSPORT
+  kind: clause
+  clause_key: D.TRANSPORT
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: If your covered auto is out of use because it was stolen or damaged in a covered loss, we reimburse
+    what you spend getting around in the meantime, up to $25 a day and $750 in total. Reimbursement starts
+    on the third day after the theft or damage.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.EXCL.1
+  kind: clause
+  clause_key: D.EXCL.1
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: Part D does not cover damage that happens while the vehicle is carrying people or goods for pay.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.EXCL.2
+  kind: clause
+  clause_key: D.EXCL.2
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: Part D does not cover wear from use, rust, mechanical or electrical failure, or freezing, unless
+    it results from a theft or another covered loss.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.EXCL.3
+  kind: clause
+  clause_key: D.EXCL.3
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: Part D does not cover sound systems, screens, navigation units or other electronics that were
+    not installed at the factory.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.EXCL.4
+  kind: clause
+  clause_key: D.EXCL.4
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: Part D does not cover personal belongings inside the vehicle, such as clothing, tools, cash or
+    phones.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.EXCL.5
+  kind: clause
+  clause_key: D.EXCL.5
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: Part D does not cover damage limited to the tires, such as flats or blowouts, unless it comes
+    from fire, theft or vandalism.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.EXCL.6
+  kind: clause
+  clause_key: D.EXCL.6
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: Part D does not cover losing the vehicle to seizure, impoundment or destruction ordered by an
+    authority.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.EXCL.7
+  kind: clause
+  clause_key: D.EXCL.7
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: Part D does not cover damage caused by war, rebellion, organized terrorism or nuclear energy.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.EXCL.8
+  kind: clause
+  clause_key: D.EXCL.8
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: Part D does not cover damage suffered in races, speed contests or performance tests, or while
+    practicing for them.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.EXCL.9
+  kind: clause
+  clause_key: D.EXCL.9
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: Part D does not cover parts, accessories or modifications added to the vehicle without telling
+    us, such as custom wheels, altered suspension or engine upgrades.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.EXCL.10
+  kind: clause
+  clause_key: D.EXCL.10
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: Part D does not cover damage that you or a family member cause to the vehicle on purpose.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.EXCL.11
+  kind: clause
+  clause_key: D.EXCL.11
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: Part D does not cover damage caused by loading the vehicle beyond the weight its manufacturer
+    allows.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.EXCL.12
+  kind: clause
+  clause_key: D.EXCL.12
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: Part D does not cover theft when the vehicle was left unlocked with the keys inside or with the
+    engine running in a public place.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.EXCL.13
+  kind: clause
+  clause_key: D.EXCL.13
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: Part D does not cover flood damage when the driver entered a road that authorities had closed
+    or marked as flooded.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.LIMIT
+  kind: clause
+  clause_key: D.LIMIT
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: The most we pay for a loss is the lower of the vehicle's market value at the time of the loss
+    and the cost of repairing it, or of replacing stolen parts with equivalent ones.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.PAYMENT
+  kind: clause
+  clause_key: D.PAYMENT
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: We choose whether to pay the loss in cash or to arrange the repair or replacement ourselves. If
+    we pay for a total loss, the vehicle or what remains of it becomes ours. If we recover a stolen vehicle,
+    we give it back to you and pay for any damage it suffered.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.NO_BAILEE
+  kind: clause
+  clause_key: D.NO_BAILEE
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: This coverage does not benefit anyone who has the vehicle in their care as a business, such as
+    a repair shop, a parking garage or a car transport company; if they caused the damage, we may recover
+    it from them.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.OTHER_SOURCES
+  kind: clause
+  clause_key: D.OTHER_SOURCES
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: If another policy or source covers the same loss, we pay only our share, in proportion to our
+    limit against the total.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-D.APPRAISAL
+  kind: clause
+  clause_key: D.APPRAISAL
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2026.1'
+  text: If we and you disagree on the amount of a loss, each side names an appraiser and the two appraisers
+    choose a third. What any two of the three agree on binds both sides. Each side pays its own appraiser
+    and half of the third.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2025-D.EXCL.1.ALT
+  kind: distractor
+  clause_key: D.EXCL.1.ALT
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2025.1'
+  text: Part D does not cover damage that happens while the vehicle is carrying people or goods, whether
+    for pay or among friends splitting the cost of a trip.
+  distractor_of: SUN-PAP-2026-D.EXCL.1
+  distractor_reason: near_duplicate
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: SUN-PAP-2025-D.EXCL.2
+  kind: distractor
+  clause_key: D.EXCL.2
+  part: Part D — Coverage for Damage to Your Auto
+  version: '2025.1'
+  text: Part D does not cover wear from use, rust or mechanical failure; damage from freezing is covered.
+  distractor_of: SUN-PAP-2026-D.EXCL.2
+  distractor_reason: superseded_version
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite

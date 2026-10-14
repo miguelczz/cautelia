@@ -1,0 +1,142 @@
+# Artefactos de trabajo del loop creativo (D-006): no se versionan
+review/
+*.zip
+.claude/skills/10k-websites/
+
+# Skills de diseño de terceros, instaladas en local con su licencia (no se redistribuyen)
+.claude/skills/frontend-design/
+.claude/skills/emil-design-eng/
+.claude/skills/taste-skill/
+.claude/skills/impeccable/
+
+# Vercel y secretos
+site/.vercel/
+.env
+.env.*
+!.env.example
+
+# Experimentos de la semana 1: voz de personas, audio sintetizado y planillas de
+# audición nunca se versionan; los resultados JSON sí
+spikes/**/recordings/
+spikes/**/samples/
+spikes/**/scores/
+spikes/**/blind-key.csv
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+
+# Python / Node (para la construcción)
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+dist/
+.next/
+
+
+# BEGIN AI-DLC:gitignore
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# AI-DLC — the committed-vs-ignored split (workspace layout, re-rooted under aidlc/).
+# Rule of thumb (vision §5.1): per-user session CURSORS and machine-local
+# runtime/derived state are ignored; everything that is the shared work —
+# method, registry, state, AUDIT (per-clone shards), artifacts — is committed.
+#
+# Per-user session cursors — ignored (two teammates legitimately point at
+# different spaces/intents at once; committing them would turn per-user
+# navigation into shared state and cause conflicts on intent creation and cursor switches).
+aidlc/active-space
+aidlc/spaces/*/intents/active-intent
+#
+# Machine-local runtime / derived — ignored (regenerated per machine).
+# The clone-id token names this clone's audit shard; it MUST stay machine-local
+# (gitignored) or every clone from a commit would share a shard and git-conflict.
+aidlc/.aidlc-clone-id
+aidlc/.aidlc-unit-scope.json
+aidlc/.aidlc-unit-parked
+aidlc/.aidlc-claim-generations.json
+aidlc/.aidlc-unit-participant
+aidlc/.aidlc-claim-registry.json
+aidlc/.aidlc-unit-releases/
+aidlc/.aidlc-unit-merges/
+# Atomic active-space create staging (normally unlinked immediately).
+aidlc/.aidlc-active-space-*.tmp
+# Per-conversation session→intent map (resume rebind, P8): per-user runtime
+# state keyed by Claude Code session_id, never shared truth.
+aidlc/.aidlc-sessions/
+aidlc/spaces/*/intents/.aidlc-*
+# Framework state at any depth, including the bare space intents root and
+# package-local record trees; keep unrelated application dot folders visible.
+**/aidlc/spaces/*/intents/**/.aidlc-engine/
+**/aidlc/spaces/*/intents/**/.aidlc-sensors/
+# DocumentKB staged-transaction scratch: `onboard` stages a document into
+# `.journal/<txn-id>/` and renames it into place under the audit lock. Per-clone
+# and transient -- a committed journal would be a merge conflict on every
+# concurrent sync, and a crashed run's leftovers would be committed as if they
+# were work. Collected on the next sync; named by txn id, referenced by no index
+# row, so removal is always safe.
+aidlc/spaces/*/knowledge/documentkb/.journal/
+# DocumentKB `linked`-source alias map: alias -> a machine-specific ABSOLUTE
+# root. Committing it would give every clone one developer's directory layout,
+# which is the exact failure the "never an absolute path in committed metadata"
+# rule exists to prevent. The committed side holds only the alias.
+aidlc/spaces/*/knowledge/.sources.local.json
+aidlc/spaces/*/intents/*/runtime-graph.json
+aidlc/spaces/*/intents/*/.aidlc-*
+# Redacted diagnostic reports (/aidlc --doctor --export): regenerated, meant to
+# be shared then deleted — machine-local derived output, never shared truth.
+aidlc/diagnostics/
+#
+# COMMITTED (NOT ignored, listed here for the record — do NOT add ignore rules
+# for these): aidlc/spaces/*/memory/** · aidlc/spaces/*/codekb/** ·
+# aidlc/spaces/*/intents/intents.json · aidlc/spaces/*/intents/*/aidlc-state.md ·
+# aidlc/spaces/*/intents/*/audit/*.md (the audit trail, committed as PER-CLONE
+# SHARDS: each machine appends to audit/<host>-<clone>.md so git never merges
+# concurrent appends — there is intentionally NO .gitattributes merge=union,
+# which was proven to corrupt the multi-line audit blocks) ·
+# aidlc/spaces/*/intents/*/<phase>/<stage>/*.md (artifacts + diary).
+.claude/settings.local.json
+# END AI-DLC:gitignore
+
+# Salida de cada corrida de evaluaciones y de cobertura: resultados, no fuente.
+# Salidas que se regeneran en cada corrida. Viven bajo un nombre de directorio
+# que el motor del flujo salta al calcular la huella del codigo fuente
+# (`coverage/` y `tmp/`), porque esa huella no consulta este archivo: incluye
+# todo `.json`, `.xml` o `.yaml` que encuentre, y un artefacto reescrito por
+# cada corrida movia la huella y rompia el recibo de la revision.
+tmp/
+app/backend/coverage/
+app/frontend/coverage/
+
+# Base de datos local de cobertura de pytest: resultado, no fuente.
+.coverage
+
+# Generado por deploy/publicar-imagen.sh: la imagen y el commit que corren.
+deploy/deploy.env
+
+# Cache local de wrangler (Cloudflare Pages); se regenera en cada corrida.
+.wrangler/

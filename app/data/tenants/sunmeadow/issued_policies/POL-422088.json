@@ -1,0 +1,53 @@
+{
+  "drivers": [
+    {
+      "full_name": "Ana Torres"
+    },
+    {
+      "full_name": "Paula Torres"
+    }
+  ],
+  "endorsement_ids": [
+    "SUN-PAP-2026-END-1",
+    "SUN-PAP-2026-END-2",
+    "SUN-PAP-2026-END-3",
+    "SUN-PAP-2026-END-4",
+    "SUN-PAP-2026-END-5"
+  ],
+  "form_id": "SUN-PAP-2026",
+  "form_version": "2026.1",
+  "issuer_tenant": "sunmeadow",
+  "limits_and_deductibles": {
+    "a.bodily_injury_per_accident": 200000,
+    "a.bodily_injury_per_person": 100000,
+    "a.property_damage": 50000,
+    "b.medical_payments_per_person": 10000,
+    "c.uninsured_per_accident": 200000,
+    "c.uninsured_per_person": 100000,
+    "d.collision_deductible": 1000,
+    "d.other_than_collision_deductible": 500
+  },
+  "named_insured": {
+    "email": "ana.torres@example.org",
+    "full_name": "Ana Torres",
+    "national_id": "972-27-9135",
+    "persona_id": "sun-per-422088",
+    "phone": "919-555-0116"
+  },
+  "period_end": "2027-02-26",
+  "period_start": "2026-02-26",
+  "policy_number": "POL-422088",
+  "tenant_id": "sunmeadow",
+  "vehicles": [
+    {
+      "make_model_year": "Subaru Outback 2014",
+      "plate": "BHR-9207",
+      "vin": "X06M7M7RX4W243786"
+    },
+    {
+      "make_model_year": "Ford F-150 2018",
+      "plate": "XWL-1542",
+      "vin": "279719304HM517540"
+    }
+  ]
+}

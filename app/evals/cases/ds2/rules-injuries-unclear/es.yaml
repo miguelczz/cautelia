@@ -1,0 +1,24 @@
+# Heridos dudosos, del campo del caso a la categoria, turno en espanol. "No se", "creo que no", "nada grave" y "estamos bien" no dicen con claridad que nadie se lastimo: el insumo queda ausente y el caso, en revision estandar. Es el caso que atrapa el error caro: cerrar sin ajustador un reporte con lesionados.
+#
+# Criterio de aceptacion: sobre las filas `injuries-unclear/*` de
+# `app/evals/fixtures/rules/es.yaml`, el campo `injuries` del caso se deriva a
+# `injuries_present` con la misma funcion del aplicativo y el motor real de
+# Autos Poblado da `standard_review` en todas: ninguna cierra directo.
+#
+# Veredicto esperado: `pass`. Pasa tambien antes de que exista la derivacion (sin
+# el insumo nada cierra), y por eso su trabajo no es fallar primero sino romperse
+# si alguien amplia la derivacion hasta decir "falso" ante una duda.
+#
+# La pareja en ingles es `DS-2/en/rules-injuries-unclear`:
+# los mismos escenarios y la misma meta, medidos por idioma y nunca como promedio
+# combinado (P12).
+case_key: DS-2/es/rules-injuries-unclear
+dataset: DS-2
+language: es
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - rules-engine
+  - injuries-derivation
+expected_verdicts:
+  triage_from_injuries_unclear: pass

@@ -1,0 +1,59 @@
+# Criterios de aceptacion que parten de un caso sembrado (U7, BR6.2, AC5.6.2).
+# Hoy: los de las unidades ya construidas (U1 a U6, U10 y U15) que describen un caso.
+# Cada unidad que construya un criterio asi lo anade aqui con su caso en case_turns.yaml,
+# y la siguiente generacion comprueba que tenga al menos uno.
+format_version: 1
+reviewed_at: '2026-09-21'
+reviewed_by: conductor
+drafted_with: hand
+criteria:
+- ac_id: AC1.6.2
+  unit: U10
+- ac_id: AC1.8.1
+  unit: U4
+- ac_id: AC1.8.2
+  unit: U4
+- ac_id: AC1.8.4
+  unit: U4
+- ac_id: AC1.9.1
+  unit: U10
+- ac_id: AC1.9.2
+  unit: U10
+- ac_id: AC1.9.4
+  unit: U10
+- ac_id: AC1.10.1
+  unit: U10
+- ac_id: AC1.10.2
+  unit: U10
+- ac_id: AC1.14.1
+  unit: U4
+- ac_id: AC1.14.2
+  unit: U4
+- ac_id: AC1.14.3
+  unit: U4
+- ac_id: AC1.16.1
+  unit: U10
+- ac_id: AC1.16.2
+  unit: U10
+- ac_id: AC1.16.4
+  unit: U10
+- ac_id: AC4.7.2
+  unit: U1
+- ac_id: AC4.8.1
+  unit: U5
+- ac_id: AC4.8.3
+  unit: U5
+- ac_id: AC4.10.1
+  unit: U4
+- ac_id: AC4.10.3
+  unit: U4
+- ac_id: AC4.12.1
+  unit: U3
+- ac_id: AC4.12.3
+  unit: U3
+- ac_id: AC4.13.1
+  unit: U3
+- ac_id: AC4.13.4
+  unit: U3
+- ac_id: AC4.15.2
+  unit: U10

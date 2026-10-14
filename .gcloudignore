@@ -1,0 +1,36 @@
+# Lo que NO se sube a Cloud Build.
+#
+# **Existe porque `gcloud` no lee `.dockerignore`.** Sin este archivo subia el
+# contexto entero --1,5 GB con la venv, los modulos de node, el historial de git
+# y el registro del flujo-- cuando la imagen solo necesita unos pocos megas. La
+# lista es la misma que la de `.dockerignore`, y por la misma razon: lo que la
+# imagen construye dentro no tiene que viajar desde fuera.
+
+# Entornos y dependencias resueltas en la maquina
+**/.venv
+**/node_modules
+**/__pycache__
+**/*.pyc
+
+# Lo que se compila dentro de la imagen, no fuera
+app/frontend/dist
+
+# Historial y herramientas
+.git
+.github
+.claude
+aidlc
+docs
+spikes
+review
+tmp
+# Solo la landing de la raiz. Sin la barra inicial el patron excluye tambien
+# cualquier carpeta llamada `site` dentro del aplicativo: el 2026-10-06 se trago
+# `app/frontend/src/shared/site/` y la imagen no compilaba (modulo ausente).
+/site
+
+# Secretos: nunca viajan. La configuracion va por variables de entorno del
+# servicio, no dentro de la imagen.
+.env
+.env.*
+!.env.example

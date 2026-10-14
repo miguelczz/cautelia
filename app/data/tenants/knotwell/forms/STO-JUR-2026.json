@@ -1,0 +1,16 @@
+{
+  "clause_ids": [
+    "STO-JUR-2026-J.1",
+    "STO-JUR-2026-J.2",
+    "STO-JUR-2026-J.3",
+    "STO-JUR-2026-J.4",
+    "STO-JUR-2026-J.5"
+  ],
+  "form_id": "STO-JUR-2026",
+  "form_kind": "jurisdiction",
+  "form_version": "2026.1",
+  "issuer_label": "Seguros Aburrá",
+  "issuer_tenant": "stonecroft",
+  "jurisdiction_ref": null,
+  "language": "es"
+}

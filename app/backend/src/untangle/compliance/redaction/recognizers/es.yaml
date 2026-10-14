@@ -1,0 +1,320 @@
+# Juego de reconocedores en espanol (BR2.1 a BR2.9).
+#
+# Anadir un formato nuevo es anadir una entrada aqui, **sin tocar el codigo de
+# deteccion** (BR2.8). Es su unica defensa contra el olvido: un juego que se
+# revisa de un vistazo se puede auditar; uno repartido en ramas de codigo, no.
+#
+# Cada reconocedor declara sus cinco campos obligatorios --identificador, tipo,
+# idioma, mecanismo y procedencia del formato-- y si le falta cualquiera de ellos
+# **no carga y el arranque falla nombrandolo** (BR2.6). El mecanismo se declara
+# porque U21 lee este archivo, sin importar este modulo, para comprobar que su
+# segundo detector no comparte mecanismo con este (AC4.14.1, BR4.6).
+#
+# Un reconocedor sirve a **un** idioma (BR2.7). Eso gobierna como se declara y
+# como se mide, no cuales corren: **los dos juegos corren en cada llamada**, sea
+# cual sea el idioma del turno (BR2.9). El idioma del turno decide en que idioma
+# se escribe la etiqueta, no que se busca.
+#
+# Los identificadores son `<idioma>-<tipo>` y las sondas de RT-15 los componen
+# para exigir que el informe atribuya el hallazgo al juego que lo encontro.
+# Renombrar uno hace fallar esa sonda, que es lo que se quiere.
+language: es
+
+# El puntaje minimo para que un hallazgo cuente. Los patrones con estructura
+# propia --`POL-######`, un movil de diez digitos que empieza por 3-- lo superan
+# solos; los que son una tira de digitos a secas puntuan por debajo y solo pasan
+# si una palabra de contexto los sube. Asi "pedir contexto" es un numero en un
+# archivo y no una rama de codigo.
+score_threshold: 0.4
+
+recognizers:
+  # --- Los tipos por formato ---------------------------------------------------
+  # Los cuatro tipos propios del dominio de NFR11.1 y el VIN. El modelo de
+  # lenguaje no los encuentra: los encuentran estos patrones. Es lo que acota el
+  # riesgo de haber elegido mal el tamano del modelo (NFR-U3-1).
+
+  - id: es-license-plate
+    entity_type: license_plate
+    language: es
+    mechanism: pattern
+    source: >
+      Placa unica nacional de Colombia: tres letras y tres digitos para
+      automovil (ABC123) y tres letras, dos digitos y una letra para motocicleta
+      (ABC12D). Las letras van en mayusculas porque asi se escriben en un parte
+      y en una transcripcion.
+    context:
+      - placa
+      - placas
+      - matricula
+      - vehiculo
+      - carro
+      - moto
+      - automovil
+    patterns:
+      - form: compact
+        regex: '\b[A-Z]{3}(?:\d{3}|\d{2}[A-Z])\b'
+        score: 0.4
+      - form: separated
+        regex: '\b[A-Z]{3}[ \-](?:\d{3}|\d{2}[A-Z])\b'
+        score: 0.45
+      - form: spoken
+        regex: '\b[A-Z](?:[ \-]+[A-Z]){2}[ \-]+(?i:(?:(?:cero|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve)[ \-]+){2}(?:cero|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve))\b'
+        score: 0.45
+
+  - id: es-national-id
+    entity_type: national_id
+    language: es
+    mechanism: pattern
+    source: >
+      Cedula de ciudadania de Colombia: entre ocho y diez digitos, escrita
+      compacta o con puntos de millar (79.123.456). La forma compacta puntua por
+      debajo del umbral a proposito: ocho digitos seguidos son demasiado comunes
+      para taparlos sin que el texto de alrededor diga que son un documento.
+    context:
+      - cedula
+      - documento
+      - identificacion
+      - identidad
+      - cc
+      - nit
+    patterns:
+      - form: compact
+        regex: '\b\d{8,10}\b'
+        score: 0.35
+      - form: separated
+        regex: '\b\d{1,3}(?:\.\d{3}){2,3}\b'
+        score: 0.5
+      # Ocho palabras exactas. Los tres patrones dictados de este archivo usan
+      # longitudes distintas --seis la poliza, ocho la cedula, diez el
+      # telefono-- y cuando dos se solapan gana el mas largo, que es el que
+      # abarca la tirada entera.
+      - form: spoken
+        regex: '\b(?i:(?:(?:cero|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve)[ \-]+){7}(?:cero|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve))\b'
+        score: 0.5
+
+  - id: es-phone
+    entity_type: phone
+    language: es
+    mechanism: pattern
+    source: >
+      Numeracion movil de Colombia: diez digitos que empiezan por 3, con o sin
+      el indicativo +57, escritos seguidos o en grupos de tres, tres y cuatro.
+    context:
+      - telefono
+      - celular
+      - movil
+      - numero
+      - llamar
+      - llame
+      - llamarme
+      - contacto
+      - whatsapp
+    patterns:
+      - form: compact
+        regex: '(?<!\d)(?:\+57[ \-]?)?3\d{9}(?!\d)'
+        score: 0.55
+      - form: separated
+        regex: '(?<!\d)(?:\+57[ \-]?)?3\d{2}[ \-]\d{3}[ \-]\d{4}(?!\d)'
+        score: 0.55
+      - form: spoken
+        regex: '\b(?i:(?:(?:cero|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve)[ \-]+){9}(?:cero|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve))\b'
+        score: 0.55
+
+  - id: es-policy-number
+    entity_type: policy_number
+    language: es
+    mechanism: pattern
+    source: >
+      Numero de poliza de las tres aseguradoras de la demostracion: el prefijo
+      POL y seis digitos, como declaran `example_policy` en
+      `app/config/tenants/*/tenant.yaml` (POL-100042, POL-200117, POL-200341).
+    context:
+      - poliza
+      - polizas
+      - asegurado
+      - aseguradora
+      - cobertura
+      - numero
+    patterns:
+      - form: compact
+        regex: '\b(?i:POL)-\d{6}\b'
+        score: 0.85
+      - form: separated
+        regex: '\b(?i:POL)[ ]\d{6}\b'
+        score: 0.8
+      - form: spoken
+        regex: '\b(?i:(?:(?:cero|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve)[ \-]+){5}(?:cero|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve))\b'
+        score: 0.45
+
+  # El VIN entro cuando U7 encontro que salia con solo la cola de digitos tapada
+  # por el respaldo (NFR11.10), que deja a la vista fabricante, modelo y ano. No
+  # valida el digito de control **a proposito**: los VIN sinteticos de U7 lo
+  # fallan para no ser el vehiculo de nadie, y un reconocedor que lo validara
+  # dejaria salir justo esos.
+  - id: es-vin
+    entity_type: vin
+    language: es
+    mechanism: pattern
+    source: >
+      Numero de identificacion vehicular, ISO 3779, el que trae la tarjeta de
+      propiedad: diecisiete caracteres entre digitos y letras sin I, O ni Q. La
+      forma compacta exige al menos una letra y un digito, para no tomar por VIN
+      una tirada de diecisiete digitos, y acepta minusculas porque quien lo
+      teclea en un chat no siempre las pone. La separada va solo en mayusculas:
+      con minusculas, palabras corrientes separadas por espacios sumarian
+      diecisiete caracteres.
+    context:
+      - vin
+      - chasis
+      - serie
+      - vehiculo
+      - tarjeta
+    patterns:
+      - form: compact
+        regex: '\b(?i:(?=[A-HJ-NPR-Z0-9]{0,16}\d)(?=[A-HJ-NPR-Z0-9]{0,16}[A-HJ-NPR-Z])[A-HJ-NPR-Z0-9]{17})\b'
+        score: 0.5
+      - form: separated
+        regex: '\b(?=[A-HJ-NPR-Z0-9 \-]{0,32}\d)(?=[A-HJ-NPR-Z0-9 \-]{0,32}[A-HJ-NPR-Z])[A-HJ-NPR-Z0-9](?:[ \-]?[A-HJ-NPR-Z0-9]){16}\b'
+        score: 0.45
+      # Diecisiete fichas, cada una una letra de VIN o una cifra dicha en
+      # palabra, con al menos una letra: diecisiete cifras solas no son un VIN.
+      - form: spoken
+        regex: '\b(?=(?:\S+[ \-]+){0,16}[A-HJ-NPR-Z](?![A-Za-z]))(?:(?:[A-HJ-NPR-Z]|(?i:cero|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve))[ \-]+){16}(?:[A-HJ-NPR-Z]|(?i:cero|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve))\b'
+        score: 0.5
+
+  # --- Los del detector de base ------------------------------------------------
+  # No los escribimos nosotros, pero se declaran igual, con sus cinco campos:
+  # U21 necesita ver **todos** los mecanismos que este detector usa para poder
+  # comprobar que el suyo es distinto, y un mecanismo sin declarar no se puede
+  # comparar.
+
+  - id: es-person
+    entity_type: person
+    language: es
+    mechanism: model
+    source: >
+      Modelo es_core_news_md 3.8.0 de spaCy, entidad PER (decision NFR-U3-1). El
+      chat publico trae nombres que el modelo no vio nunca, y por eso se eligio
+      el tamano medio, que si trae vectores de palabra.
+    provided_by:
+      recognizer: SpacyRecognizer
+      entity: PERSON
+
+  - id: es-location
+    entity_type: location
+    language: es
+    mechanism: model
+    source: Modelo es_core_news_md 3.8.0 de spaCy, entidades LOC y GPE.
+    provided_by:
+      recognizer: SpacyRecognizer
+      entity: LOCATION
+
+  - id: es-email
+    entity_type: email
+    language: es
+    mechanism: pattern
+    source: Reconocedor de correo de Presidio, sobre el formato de direccion.
+    provided_by:
+      recognizer: EmailRecognizer
+      entity: EMAIL_ADDRESS
+
+# --- La regla de respaldo -----------------------------------------------------
+# Corre **despues** de los reconocedores y solo reclama lo que ninguno reclamo
+# (BR2.5). Cubre el formato que nadie previo, que es por donde se escapan las
+# cosas; el costo aceptado es alguna redaccion de mas, que es el lado seguro del
+# error.
+#
+# Sus frases de contexto viven aqui, junto a los reconocedores, y **no en el
+# catalogo de textos** (NFRD-U3-4): el catalogo es para lo que lee una persona, y
+# estas son patrones de deteccion. Meterlas alli las someteria al chequeo de
+# paridad, que mide otra cosa.
+#
+# Sus hallazgos se cuentan en su propia cifra y nunca se suman a un tipo del
+# dominio (BR4.2): un respaldo que dispara mucho es la senal de que un
+# reconocedor se rompio, y sumarlo la borraria.
+fallback:
+  id: es-fallback-context
+  entity_type: unclassified
+  language: es
+  mechanism: context
+  source: >
+    Decision FD-U3-9 de la etapa de diseno funcional: una regla de respaldo por
+    contexto para el formato que nadie previo.
+  min_digits: 6
+  window: 40
+  context_phrases:
+    - mi numero
+    - mi documento
+    - mi codigo
+    - mi referencia
+    - mi identificacion
+    - numero de
+    - codigo de
+
+# --- La regla de autoidentificacion -------------------------------------------
+# Despues de una frase con la que alguien dice quien es, la secuencia con
+# mayuscula que sigue es un nombre, **la llame como la llame el modelo de
+# lenguaje**. Entro cuando U7 encontro que "My name is Megan Hughes." salia
+# entero: en_core_web_md etiqueta ese nombre como organizacion, y el modelo
+# ingles no reconoce un nombre espanol dentro de una frase inglesa; en los casos
+# sembrados salio igual "Soy Rosa Iturbe" (NFR11.10).
+#
+# Corre en **cada** llamada, sea cual sea el idioma del turno, como los
+# reconocedores por formato: no es un modelo de lenguaje, y decir el nombre con
+# la frase del otro idioma no puede ser la via para sacarlo.
+#
+# Lo que no tapa tambien se declara aqui: una secuencia con una de las
+# `organization_words` es una empresa y no una persona. Es la negativa de "Le
+# habla Seguros Aburrá sobre su reclamacion": este modulo no conoce ninguna
+# aseguradora, asi que la negativa se decide por la estructura del nombre y nunca
+# por una lista de aseguradoras. Tapar de mas en lo demas es el costo aceptado de
+# la decision FD-U3-9.
+self_identification:
+  id: es-person-cue
+  entity_type: person
+  language: es
+  mechanism: context
+  source: >
+    Encontrada por U7 (NFR11.10) y corregida hacia adelante por decision del
+    conductor el 2026-09-21: el nombre tras una frase de autoidentificacion, de
+    dos a cuatro palabras con mayuscula, se tapa como nombre aunque el modelo de
+    lenguaje lo etiquete como organizacion o no lo etiquete.
+  min_tokens: 2
+  max_tokens: 4
+  cues:
+    - me llamo
+    - mi nombre es
+    - soy
+    - habla
+    - le habla
+  organization_words:
+    - seguros
+    - aseguradora
+    - agencia
+    - compania
+    - grupo
+    - banco
+    - servicios
+    - mutual
+    - auto
+    # El plural de `auto`. La comparacion es por **token exacto** --se normalizan
+    # tildes y mayusculas, no el numero-- asi que "Autos" no cruzaba "auto" y una
+    # aseguradora llamada "Autos Poblado" se tapaba entera como nombre de persona.
+    # Que faltara es un olvido y no una decision: esta misma lista ya trae
+    # `seguros` y `servicios` en plural. No amplia lo que la regla deja pasar mas
+    # alla de lo que `auto` ya dejaba: ningun nombre de persona lleva "Autos".
+    - autos
+    - sas
+    - ltda
+
+# Saludos que el modelo de lenguaje toma por nombre cuando llegan en minuscula,
+# que es como los transcribe el reconocedor de voz (2026-10-07: «hola tuve un
+# choque» salia «[NOMBRE 1] tuve un choque»). Solo se descarta el hallazgo cuyo
+# tramo entero es una de estas palabras; «hola Miguel» se sigue tapando.
+never_personal:
+  - hola
+  - aló
+  - buenas
+  - buenos
+  - oiga
+  - gracias

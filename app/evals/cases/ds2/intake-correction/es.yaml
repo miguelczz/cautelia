@@ -1,0 +1,34 @@
+# La corrección de un dato ya dicho (P4; BR2.1, BR5.1), turno en español.
+#
+# Criterio de aceptación: «perdón, no eran dos sino tres» reemplaza el dato y la
+# agente lo dice —«Corregido: tres heridos.»— sin volver a preguntar lo corregido
+# ni pedir confirmación; la frase nombra el valor nuevo, no pregunta nada, no
+# lleva registro prohibido y va delante de lo que tocaba preguntar.
+#
+# Veredicto esperado: `pass`.
+#
+# Decisión de Miguel del 2026-10-06: «si la persona dice perdón, no eran dos sino
+# tres, entonces que el chat tenga la capacidad de corregir ese dato». Que el nodo
+# reemplace el valor y no vuelva a preguntar lo prueba
+# `tests/unit/intake/test_node.py`; aquí se mide lo que la persona lee.
+#
+# La pareja en inglés es `DS-2/en/intake-correction`: los mismos criterios y la
+# misma meta, medidos por idioma y nunca como promedio combinado (P12). Los dos
+# turnos se indexan por el campo corregido (`injuries`).
+case_key: DS-2/es/intake-correction
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - intake
+  - conversation
+script:
+  - field_key: injuries
+    sequence: 1
+    text: "Hubo dos heridos leves."
+  - field_key: injuries
+    sequence: 2
+    text: "Perdón, no eran dos sino tres heridos."
+expected_verdicts:
+  intake_correction: pass

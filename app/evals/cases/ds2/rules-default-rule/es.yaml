@@ -1,0 +1,24 @@
+# Solo dispara la regla por defecto (BR1.3, BR2.2), turno en espanol. Un caso limpio de Stonecroft, sin ninguna de sus cinco senales, cae en la regla por defecto y su categoria es revision estandar.
+#
+# Criterio de aceptacion: sobre la fila `category-expected/03` de
+# `app/evals/fixtures/rules/es.yaml`, el motor real de `stonecroft` da la
+# categoria declarada en esa fila.
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en ingles es `DS-2/en/rules-default-rule`:
+# los mismos insumos y la misma meta, medidos por idioma y nunca como promedio
+# combinado (P12).
+#
+# Lo que este caso no mide: la explicacion que ve el asegurado (BR2.5, en
+# `copy:check`) ni el nodo `decision`, que llega en el paso 7 de esta unidad.
+case_key: DS-2/es/rules-default-rule
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - rules-engine
+  - category-precedence
+expected_verdicts:
+  rules_category_expected: pass

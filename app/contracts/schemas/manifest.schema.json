@@ -1,0 +1,225 @@
+{
+  "$defs": {
+    "DeclaredDifference": {
+      "additionalProperties": false,
+      "description": "Una diferencia puesta a proposito entre emisoras (AC5.4.3, BR3.7).",
+      "properties": {
+        "difference_id": {
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
+          "title": "Difference Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "present_in": {
+          "items": {
+            "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Present In",
+          "type": "array"
+        },
+        "absent_in": {
+          "items": {
+            "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Absent In",
+          "type": "array"
+        }
+      },
+      "required": [
+        "difference_id",
+        "description",
+        "present_in",
+        "absent_in"
+      ],
+      "title": "DeclaredDifference",
+      "type": "object"
+    },
+    "ReviewSample": {
+      "additionalProperties": false,
+      "description": "La muestra de diez clausulas que revisa Miguel (BR5.4).\n\nEl veredicto llega despues de la muestra, y con el su fecha y su commit: un\nveredicto sin fecha ni commit no dice que se reviso, ni cuando.",
+      "properties": {
+        "tenant_id": {
+          "pattern": "^[a-z][a-z0-9-]{1,30}$",
+          "title": "Tenant Id",
+          "type": "string"
+        },
+        "sample_seed": {
+          "minimum": 0,
+          "title": "Sample Seed",
+          "type": "integer"
+        },
+        "clause_ids": {
+          "items": {
+            "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?-[A-Za-z0-9]+(?:\\.[A-Za-z0-9_]+)*$",
+            "type": "string"
+          },
+          "maxItems": 10,
+          "minItems": 10,
+          "title": "Clause Ids",
+          "type": "array"
+        },
+        "reviewed_on": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewed On"
+        },
+        "commit": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{7,40}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Commit"
+        },
+        "verdict": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReviewVerdict"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "tenant_id",
+        "sample_seed",
+        "clause_ids"
+      ],
+      "title": "ReviewSample",
+      "type": "object"
+    },
+    "ReviewVerdict": {
+      "description": "El veredicto de Miguel sobre la muestra (AC5.4.5, AC5.5.6).",
+      "enum": [
+        "own_text_structure_ok",
+        "changes_requested"
+      ],
+      "title": "ReviewVerdict",
+      "type": "string"
+    },
+    "SeededCaseRef": {
+      "additionalProperties": false,
+      "description": "Un caso sembrado, visto desde el manifiesto: donde esta y quien lo usa.",
+      "properties": {
+        "case_key": {
+          "pattern": "^SEED/[a-z][a-z0-9-]{1,30}/(?:es|en)/[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Case Key",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "used_by": {
+          "items": {
+            "pattern": "^AC\\d+\\.\\d+\\.\\d+$",
+            "type": "string"
+          },
+          "title": "Used By",
+          "type": "array"
+        }
+      },
+      "required": [
+        "case_key",
+        "path",
+        "used_by"
+      ],
+      "title": "SeededCaseRef",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "El manifiesto de una generacion (C-26).\n\n**No lleva fecha ni nada que dependa del reloj**: con la misma semilla y las\nmismas entradas, sus bytes son los mismos (BR1.1). Las rutas son logicas\n--desde la raiz del repositorio-- aunque la generacion se escriba en un\ndirectorio temporal, por la misma razon.",
+  "properties": {
+    "manifest_version": {
+      "const": 1,
+      "title": "Manifest Version",
+      "type": "integer"
+    },
+    "seed": {
+      "minimum": 0,
+      "title": "Seed",
+      "type": "integer"
+    },
+    "generator_version": {
+      "minLength": 1,
+      "title": "Generator Version",
+      "type": "string"
+    },
+    "inputs": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Inputs",
+      "type": "object"
+    },
+    "outputs": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Outputs",
+      "type": "object"
+    },
+    "declared_differences": {
+      "items": {
+        "$ref": "#/$defs/DeclaredDifference"
+      },
+      "title": "Declared Differences",
+      "type": "array"
+    },
+    "seeded_cases": {
+      "items": {
+        "$ref": "#/$defs/SeededCaseRef"
+      },
+      "title": "Seeded Cases",
+      "type": "array"
+    },
+    "review_samples": {
+      "items": {
+        "$ref": "#/$defs/ReviewSample"
+      },
+      "title": "Review Samples",
+      "type": "array"
+    }
+  },
+  "required": [
+    "manifest_version",
+    "seed",
+    "generator_version",
+    "inputs",
+    "outputs",
+    "declared_differences",
+    "seeded_cases",
+    "review_samples"
+  ],
+  "title": "GenerationManifest",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/manifest.schema.json"
+}

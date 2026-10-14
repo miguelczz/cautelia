@@ -1,0 +1,103 @@
+# Textos fuente revisados de Autos Poblado, en ingles (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Los borradores del modelo en ingles calcaban giros del formulario de referencia: se
+# reescribieron a mano y por eso casi todos dicen drafted_with: hand.
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: sunmeadow
+language: en
+part_key: part_f
+texts:
+- source_id: SUN-PAP-2026-F.BANKRUPTCY
+  kind: clause
+  clause_key: F.BANKRUPTCY
+  part: Part F — General Provisions
+  version: '2026.1'
+  text: If an insured goes bankrupt or becomes insolvent, Autos Poblado still owes what this policy covers.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-F.CHANGES
+  kind: clause
+  clause_key: F.CHANGES
+  part: Part F — General Provisions
+  version: '2026.1'
+  text: This contract changes only in writing, through an endorsement we issue. If a change you request
+    alters the risk, we adjust the premium from the date of the change.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-F.FRAUD
+  kind: clause
+  clause_key: F.FRAUD
+  part: Part F — General Provisions
+  version: '2026.1'
+  text: We give no coverage to anyone who knowingly lied about or hid an important fact about the accident,
+    the loss or the information given to us when buying the policy.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-F.LEGAL_ACTION
+  kind: clause
+  clause_key: F.LEGAL_ACTION
+  part: Part F — General Provisions
+  version: '2026.1'
+  text: No one may sue us over this policy without first meeting the duties it sets, and the suit must
+    be filed within the deadline set in the Corvane jurisdiction document.
+  refers_to:
+  - SUN-JUR-2026-J.5
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-F.RECOVERY
+  kind: clause
+  clause_key: F.RECOVERY
+  part: Part F — General Provisions
+  version: '2026.1'
+  text: When we pay for harm that someone else caused, we may collect what we paid from that person in
+    place of the insured. The insured helps us do so and does nothing to undermine it.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-F.PERIOD_TERRITORY
+  kind: clause
+  clause_key: F.PERIOD_TERRITORY
+  part: Part F — General Provisions
+  version: '2026.1'
+  text: The policy covers accidents and losses that happen during the policy period shown on the declarations
+    page and within the territory of Corvane.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-F.TERMINATION
+  kind: clause
+  clause_key: F.TERMINATION
+  part: Part F — General Provisions
+  version: '2026.1'
+  text: You may cancel the policy at any time by telling us in writing. We may cancel it only with the
+    advance notice the Corvane jurisdiction document requires, and we refund the premium for the time
+    that had not yet run.
+  refers_to:
+  - SUN-JUR-2026-J.2
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-F.TRANSFER
+  kind: clause
+  clause_key: F.TRANSFER
+  part: Part F — General Provisions
+  version: '2026.1'
+  text: Your rights under this policy do not pass to anyone else without our written consent.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-F.TWO_POLICIES
+  kind: clause
+  clause_key: F.TWO_POLICIES
+  part: Part F — General Provisions
+  version: '2026.1'
+  text: If two or more Autos Poblado policies cover the same accident, the most we pay is the highest
+    limit of any single one of them.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand

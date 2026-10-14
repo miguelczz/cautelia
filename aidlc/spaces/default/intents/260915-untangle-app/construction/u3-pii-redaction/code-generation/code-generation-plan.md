@@ -1,0 +1,229 @@
+# Plan de generación de código — U3 `pii-redaction`
+
+Cuarenta y dos pasos en ocho bloques. El orden no es arbitrario: el bloque A
+existe porque esta unidad está en la rama evaluada y sus casos previos se
+escriben, se corren y **se comprueba que fallan** antes de implementar nada.
+
+## Qué rama de pruebas le toca a esta unidad
+
+**Rama evaluada.** Realiza M6, y sus casos previos son **RT-14 y RT-15** de
+DS-6, medidos por idioma y por tipo de entidad. Las capas que la sostienen
+—configuración, detector, etiquetas, superficie— siguen la rama determinista:
+se implementa la capa y a continuación se escriben y corren sus pruebas.
+
+## Decisiones de esta etapa
+
+| # | Decisión | Por qué |
+| --- | --- | --- |
+| CG-U3-1 | La sonda de RT-14 contra el despliegue vivo **no** se construye aquí | No hay despliegue vivo hasta U14, igual que pasó con RT-4 en U2. Se construye la comprobación local y el caso vivo queda no medido con su causa |
+| CG-U3-2 | Los casos de DS-6 se escriben con datos sintéticos con **forma** de dato real | Un caso con un teléfono inventado que no parece teléfono no prueba nada. Sintético pero con la forma que el reconocedor tiene que atrapar |
+| CG-U3-3 | El comprobador de artefactos corre antes de entregar | Trece de los diecisiete defectos de las etapas de diseño de esta unidad los detecta una máquina |
+
+---
+
+## Bloque A — Los casos previos, antes de implementar nada
+
+- [ ] **Paso 1.** Crear el subconjunto `rt14` en `app/evals/subsets/` y los casos
+      `DS-6/es/rt-14` y `DS-6/en/rt-14`, con identificador estable, criterio de
+      aceptación y veredicto esperado.
+- [ ] **Paso 2.** Crear `DS-6/es/rt-15` y `DS-6/en/rt-15`: el dato dictado en un
+      idioma dentro de un turno del otro, que es la evasión que BR2.3 bloquea.
+- [ ] **Paso 3.** Escribir las fixtures sembradas de los cuatro tipos —placa,
+      cédula, teléfono y número de póliza— en los dos idiomas y en sus **tres
+      formas**: compacta, con espacios o guiones, y dictada en palabras.
+- [ ] **Paso 4.** Correr los cuatro casos y **comprobar que fallan**, guardando
+      el error textual. Es la evidencia de rojo a verde que exige el contrato.
+- [ ] **Paso 5.** Escribir la prueba de los contratos de importación con una
+      violación plantada, y comprobar que **falla** antes de que el contrato
+      exista.
+
+## Bloque B — Dependencias y modelos
+
+- [ ] **Paso 6.** `presidio-analyzer` y `presidio-anonymizer` como dependencias
+      normales del proyecto, con su licencia registrada.
+- [ ] **Paso 7.** El extra `models` con las dos ruedas fijadas por URL —la forma
+      exacta está en `../infrastructure-design/cicd-pipeline.md`—, y `uv.lock`
+      anotando sus hashes. **Nunca `spacy download`.**
+- [ ] **Paso 8.** La tarea `models:install` en el archivo de tareas:
+      `uv sync --locked --extra models`.
+- [ ] **Paso 9.** El cargador comprueba que los dos modelos estén presentes y,
+      si no, falla **nombrándolos y nombrando el comando**, no con un
+      `ImportError` de spaCy.
+- [ ] **Paso 10.** La línea `mise run models:install` en `scripts/verify.sh`,
+      inmediatamente antes del paso 5. El guion sigue teniendo nueve pasos.
+
+## Bloque C — Los reconocedores
+
+- [ ] **Paso 11.** El esquema de la configuración de reconocedores, con sus
+      cinco campos obligatorios: identificador, tipo, idioma, mecanismo y
+      procedencia del formato.
+- [ ] **Paso 12.** `compliance/redaction/recognizers/es.yaml` con los cuatro
+      tipos del dominio y los **formatos reales de Colombia** para cédula y
+      teléfono.
+- [ ] **Paso 13.** `compliance/redaction/recognizers/en.yaml`, con los formatos
+      reales de Estados Unidos.
+- [ ] **Paso 14.** Las tres formas de escritura por tipo, declaradas como datos
+      de configuración y no como ramas de código.
+- [ ] **Paso 15.** Las frases de contexto de la regla de respaldo, por idioma,
+      junto a los reconocedores y **no** en el catálogo de textos.
+- [ ] **Paso 16.** Pruebas de la carga: un reconocedor al que le falte cualquiera
+      de los cinco campos no carga, y uno que declare dos idiomas tampoco.
+
+## Bloque D — El detector
+
+- [ ] **Paso 17.** El motor con **los dos modelos residentes**, no uno que se
+      reconfigure por llamada.
+- [ ] **Paso 18.** Los dos juegos de reconocedores corren en cada llamada, sea
+      cual sea el idioma del turno (BR2.9).
+- [ ] **Paso 19.** La regla de respaldo, que corre **después** y solo reclama lo
+      que ningún reconocedor reclamó.
+- [ ] **Paso 20.** Resolución de solapes: gana el hallazgo más específico y el
+      respaldo **nunca** gana.
+- [ ] **Paso 21.** `DetectedEntity` lleva dónde estaba y qué reconocedor lo
+      encontró, **nunca su valor**.
+- [ ] **Paso 22.** Pruebas del detector: los cuatro tipos en los dos idiomas, las
+      tres formas, el turno mixto y el solape.
+
+## Bloque E — Las etiquetas
+
+- [ ] **Paso 23.** Una clave del catálogo de textos por tipo de entidad, en los
+      dos idiomas, sometida al chequeo de paridad que ya existe.
+- [ ] **Paso 24.** La etiqueta se escribe en el **idioma de la conversación** y
+      se guarda ya escrita.
+- [ ] **Paso 25.** Numeración por tipo **dentro de la llamada**; el mismo valor
+      repetido en ese texto conserva su número y entre turnos empieza de nuevo.
+- [ ] **Paso 26.** Pruebas: dos teléfonos distintos se distinguen, el mismo
+      repetido no, y nunca queda un dígito a la vista.
+
+## Bloque F — La superficie y las fronteras
+
+- [ ] **Paso 27.** `compliance/redaction/api.py` con `Redacted`, `redact()` y
+      `redaction_report()`, tal como los fija C-13.
+- [ ] **Paso 28.** El registro de los seis puntos de salida, con su superficie y
+      su unidad dueña, en `sinks`.
+- [ ] **Paso 29.** El chequeo `redaction:constructor`, que falla ante **las tres
+      formas de producir el tipo**: el constructor, `cast(Redacted, ...)` y una
+      anotación con `# type: ignore`.
+- [ ] **Paso 30.** El mismo chequeo falla ante cualquier estructura que relacione
+      un hallazgo con su valor original.
+- [ ] **Paso 31.** Pruebas del chequeo con las tres formas plantadas una a una, y
+      una línea base sin violación para que un fallo del andamiaje no se
+      confunda con un chequeo que funciona.
+- [ ] **Paso 32.** Los contratos de importación: las cuatro capas internas,
+      `sinks` sin importar ninguna otra pieza, y ningún SDK de proveedor dentro
+      del módulo.
+- [ ] **Paso 33.** Fallar cerrado: si los modelos no cargan al arrancar, el
+      proceso no arranca; si una llamada falla, `redact` levanta el fallo y el
+      punto de salida responde con la clave de degradación.
+
+## Bloque G — La transcripción en vivo
+
+- [ ] **Paso 34.** `streaming`: acumular el fragmento y mostrar solo hasta el
+      último punto donde ningún hallazgo quedaría cortado.
+- [ ] **Paso 35.** La llamada a `redact()` va a un **hilo del pool con semáforo
+      por uso**, no al bucle de eventos (ADR-004).
+- [ ] **Paso 36.** El aviso de la consola cuando un fragmento lleva oculto más de
+      un segundo.
+- [ ] **Paso 37.** Pruebas con **dos relojes**: el del sistema para cronometrar
+      el coste de la pasada, el controlado para el aviso.
+
+## Bloque H — Medición y cierre
+
+- [ ] **Paso 38.** `redaction:report`: por idioma, por tipo y **por
+      reconocedor**, con la cifra del respaldo aparte.
+- [ ] **Paso 39.** `redaction:constructor` y `redaction:report` entran en el paso
+      6 del guion, junto a los siete que ya están. **`test:u3` no entra.**
+- [ ] **Paso 40.** La entrada del módulo de redacción en `critical_modules`, con
+      su piso del 80 %: entra ahora porque ahora existe la ruta.
+- [ ] **Paso 41.** Correr los casos del bloque A y comprobar que **ahora pasan**.
+      Es lo que cierra la rama evaluada.
+- [ ] **Paso 42.** Corrida completa de `scripts/verify.sh` y de
+      `scripts/check-artifacts.py`, y **medir las tres cifras** que el diseño
+      dejó pendientes: carga de los modelos, coste de la pasada y efecto sobre
+      el arranque en frío.
+
+## Trazabilidad de pasos a historias
+
+| Historia | Criterios | Pasos que los realizan |
+| --- | --- | --- |
+| US4.12 | AC4.12.1 | 27, 28, 33 |
+| US4.12 | AC4.12.2 | 29, 30, 31, 32 |
+| US4.12 | AC4.12.3 | 24, 25, 26, 34, 36 |
+| US4.12 | AC4.12.4 | 3, 22, 41 |
+| US4.12 | AC4.12.5 | 38 |
+| US4.13 | AC4.13.1 | 12, 13, 22 |
+| US4.13 | AC4.13.2 | 14, 22 |
+| US4.13 | AC4.13.3 | 38 |
+| US4.13 | AC4.13.4 | 2, 18, 41 |
+
+## Lo que este plan no construye
+
+- **El segundo detector** (U21), de mecanismo distinto y que no importa este
+  módulo.
+- **Las pantallas** que muestran el texto tapado y su aviso (U6, U14, U16).
+- **La sonda de RT-14 contra el despliegue vivo**: no hay despliegue hasta U14
+  (CG-U3-1).
+- **Los puntos de salida en sí**: cada unidad dueña implementa el suyo. Aquí
+  vive el registro que los declara.
+## Testing Contract
+
+```json
+{
+  "version": 1,
+  "methodology": "custom",
+  "source": "team",
+  "ordering": "Clasifica cada unidad en una de dos ramas y no dejes ninguna sin rama. Rama evaluada: toda unidad cuyo comportamiento observable aparece en la tabla de criterios de PRD 11.2 o que realiza uno de M1, M4, M5, M6, M8, M9, M13 o M15; para ella se escribe o se extiende primero su caso de golden set (DS-2, DS-3, DS-5, DS-6) con su identificador estable, su criterio de aceptación y su veredicto esperado, se corre y se comprueba que falla, se implementa, y se vuelve a correr hasta que pase. Rama determinista: toda unidad restante sin excepción, recorrida capa por capa en el orden Data model / database behavior, Repository / data access, Business logic, API / endpoint, Frontend behavior; se implementa la capa y a continuación se escriben y corren las pruebas de esa capa antes de pasar a la siguiente. Una unidad de la rama evaluada usa además la rama determinista para las capas que la sostienen. El runner de pruebas, la configuración de cobertura y el corredor de evals se dejan instalados y ejecutables antes del primer caso de cualquiera de las dos ramas, porque no existe ninguno que verificar.",
+  "scope": "classic",
+  "test_strategy": "standard",
+  "project_type": "brownfield",
+  "applicable_notes": [
+    {
+      "layer": "org",
+      "text": "We treat tests as a first-class deliverable in every Bolt. The specific\nmethodology (TDD, BDD, ATDD, or classic test-after) is affirmed at\npractices-discovery and recorded in `team.md` under this heading with explicit\n`Methodology` and `Ordering` fields; Code Generation resolves those fields\nindependently from coverage, tooling, and scope notes.\n\nWhen no posture has been affirmed, our default per scope is:\n- **Methodology**: test-after\n- **Ordering**: implement each applicable testable layer, then write and run\n  that layer's tests.\n- `mvp`, `enterprise`, `feature`, `infra`, `classic` add an 80% line-coverage\n  floor and CI execution before merge.\n- `bugfix`, `security-patch` add a targeted regression for the specific\n  bug/vulnerability and require the existing suite to remain green.\n- `express` uses the Minimal strategy: requirement-driven unit tests (one per\n  requirement, with a happy-path floor per component); existing tests remain\n  green.\n- `poc`, `refactor`, `workshop` add no extra new-test floor and require the\n  existing suite to remain green.\n\nThe active `Test Strategy` still applies in every scope and determines test\nvolume/types. Scope floors are additive; they never reduce or replace the\nselected strategy.\n\nBuild and Test verifies defined coverage floors and affirmed quality targets;\nthey may not be weakened to make a step pass.\n\nAffirm a stricter posture in `team.md` if the team commits to one."
+    },
+    {
+      "layer": "team",
+      "text": "- **Methodology**: custom\n- **Ordering**: Clasifica cada unidad en una de dos ramas y no dejes ninguna sin rama. Rama evaluada: toda unidad cuyo comportamiento observable aparece en la tabla de criterios de PRD 11.2 o que realiza uno de M1, M4, M5, M6, M8, M9, M13 o M15; para ella se escribe o se extiende primero su caso de golden set (DS-2, DS-3, DS-5, DS-6) con su identificador estable, su criterio de aceptación y su veredicto esperado, se corre y se comprueba que falla, se implementa, y se vuelve a correr hasta que pase. Rama determinista: toda unidad restante sin excepción, recorrida capa por capa en el orden Data model / database behavior, Repository / data access, Business logic, API / endpoint, Frontend behavior; se implementa la capa y a continuación se escriben y corren las pruebas de esa capa antes de pasar a la siguiente. Una unidad de la rama evaluada usa además la rama determinista para las capas que la sostienen. El runner de pruebas, la configuración de cobertura y el corredor de evals se dejan instalados y ejecutables antes del primer caso de cualquiera de las dos ramas, porque no existe ninguno que verificar.\n\nLa metodología es `custom` porque la cadencia es mixta a propósito, y decir\n`tdd` o `test-after` a secas sería falso. Lo que el PRD evalúa (extracción,\ncitación, adherencia a la guía de voz, conducta adversarial) se define **antes**\nde implementarlo, porque está prohibido publicar una métrica sin su golden set\n(P5) y porque un ataque de red-team exitoso se convierte en caso de DS-6 que\ndebe pasar. El código determinista que sostiene esos comportamientos se prueba\npor capa, con la prueba escrita junto a la capa y no semanas después.\n\n**Punto de partida.** No existe ningún runner de pruebas, ninguna configuración\nde cobertura y ningún corredor de evals: la línea base es cero. El flujo declara\n`Project Type: Brownfield` porque la landing existe, pero **el aplicativo es\ngreenfield y su andamiaje se crea, no se verifica**. El primer Bolt que toque\ncódigo de aplicación deja instalados y ejecutables, antes de su primera prueba,\nel runner del lenguaje, la configuración de cobertura y el corredor de evals de\nun solo comando (M17), y registra ese comando exacto en el README.\n\n**Piso de cobertura.** 80 % de líneas **agregado** sobre el código del\naplicativo, con piso del 80 % también en los módulos críticos: motor de reglas,\nverificador de citas, aislamiento por tenant, esquema del caso y **redacción de\ndatos personales** (esta última añadida por decisión de Miguel el 2026-09-20:\nsu compuerta detiene la entrega con un solo hallazgo y su fallo es silencioso,\nporque una redacción rota no rompe ninguna pantalla ni levanta ningún error). La interfaz y\nlos adaptadores de proveedor pueden quedar por debajo mientras el agregado se\ncumpla. La medición se hace con la herramienta de cobertura del lenguaje\nelegido, con un umbral configurado en el manifiesto que **haga fallar el\ncomando** cuando no se alcanza, y ese comando es el mismo que corren\n`build-and-test` y el flujo de GitHub Actions. Se excluyen del cálculo, mediante\nuna **lista de exclusión versionada** en la configuración: la landing (`site/`,\nfuera del alcance por D-005 y D-013), el corpus y los datasets generados, y las\nmigraciones. El piso es obligación propia del equipo, con su comando y su lista;\nno se apoya en que el scope lo active, y no se baja para que un paso pase.\n\n**Datos de prueba.** Los casos de los golden sets viven versionados en el\nrepositorio como archivos de datos, **un archivo por caso**, con identificador\nestable (`DS-2/es/017`), nunca generados en tiempo de corrida. El generador\nsintético (MOD-12) es determinista y sembrado: su salida (corpus DS-1, fixtures\nDS-8) se regenera solo con un comando explícito y el resultado se commitea, de\nmodo que dos corridas del mismo commit vean el mismo corpus. Los identificadores\nson la moneda de todo el sistema: el reporte por caso, el diff contra la línea\nbase, la sección \"Cómo falla\" del README y los casos nacidos de un red-team o\ndel muestreo del chat en vivo los usan sin traducción.\n\n**Forma de las pruebas.** Cada prueba es independiente del orden de ejecución y\nde estado compartido, y se puede correr sola. Cada prueba afirma un\ncomportamiento, no una implementación: se prueba lo que el requisito exige, no\ncómo se codificó. Ninguna prueba pasa con independencia de la implementación.\nCada caso de red-team exitoso entra a DS-6 con el identificador `RT-<n>` en su\nnombre, y el hallazgo no se cierra hasta que ese caso pase (PRD 11.4).\n\n**Pruebas deterministas no negociables**, cada una atada a un Must:\n\n- Motor de reglas por tenant: reglas versionadas, cada una con su test unitario (M5).\n- Verificador exacto de citas: existencia, pertenencia al tenant y a la póliza, vigencia (M4, P2).\n- Aislamiento entre tenants: RLS en la base de datos **y** punto único de adquisición de sesión que fija el `tenant_id` antes de devolverla, con fixtures que provocan colisiones detectables y una aserción sobre el esquema que falla si alguna tabla del aplicativo carece de RLS o de política (M9, F9.1, F9.4, DS-8).\n- Redacción de PII en cada punto de salida, con un segundo detector de **mecanismo distinto** al primero y reconocedores propios para placa, cédula, teléfono y número de póliza en los dos idiomas; se mide por idioma y por tipo de entidad, nunca como promedio (M6, RT-14, RT-15, P12).\n- Esquema del caso: JSON válido, y solo se citan identificadores recuperados (M1).\n- Chequeos de contenido con identificador estable (frases prohibidas, ausencia de texto de cláusula de ISO o ACORD, paridad de claves EN↔ES), para que aparezcan en el reporte por caso y en el diff contra la línea base como cualquier otra prueba.\n\n**Golden sets en cada corrida del flujo**: DS-2 (60 conversaciones de texto, 30\npor idioma), DS-3 (40 preguntas de citación con distractores) y DS-6\n(adversarial). Corren en el tier gratuito del LLM, con duración objetivo de 10\nminutos o menos, y producen un reporte por caso, por criterio y por idioma, con\nenlace a su traza.\n\n**Compuertas duras** (`[bloquea]` en PRD 11.2): cero citas inexistentes; cero\nturnos que afirmen cobertura, montos o culpa, o den consejo legal; cero\nhallazgos de seguridad (PII en trazas, fuga entre tenants, adversarial). Son\npasa o falla por caso y un solo fallo detiene la entrega. Cada criterio\n`[bloquea]` y cada umbral cuantificado del Segmento 10 se registra además como\nobjetivo medible en `nfr-requirements`, con identificador estable, valor\nesperado y el comando que produce su valor real, para que aparezca como fila\npropia en la `## Target Verification Matrix` de `build-and-test`; ningún\ncriterio `[bloquea]` se cierra con `N/A`.\n\n**Tipos de prueba obligatorios pese a la estrategia.** La estrategia activa es\n`Standard` (cinco a ocho pruebas por componente; unitarias más integración en\nlas fronteras). Además, y con independencia de la estrategia, `build-and-test`\ngenera instrucciones de prueba de **seguridad** (aislamiento entre tenants,\nredacción de PII en cada punto de salida, casos adversariales de DS-6) y de\n**rendimiento** (latencias de turno y de parada sobre DS-5, duración de la\ncorrida de evals), porque el PRD las marca como compuertas duras y como umbrales\npublicables, no como aspiraciones.\n\n**Definición de regresión.** Bloquea la entrega: (a) cualquier compuerta dura en\nrojo, sin excepción ni promedio; (b) en métricas de **denominador grande**\n—extracción por campo, fidelidad de la lectura de confirmación, latencias— una\ncaída mayor de 2 puntos porcentuales frente a la línea base versionada sin\nexplicación escrita; (c) en métricas de **nivel de caso** sobre DS-2, DS-3 y\nDS-6, donde el denominador por idioma es pequeño, **cualquier caso que pase a\nfallar** sin explicación escrita. La explicación nombra los identificadores de\nlos casos que cambiaron y su causa raíz según la taxonomía del PRD 11.3; una\nexplicación que no nombre casos no cuenta como explicación.\n\nEl umbral porcentual se reserva para el denominador grande porque en los\nconjuntos pequeños no distingue señal de ruido:\n\n| Dataset | Casos por idioma | Cuánto mueve un caso |\n| --- | --- | --- |\n| DS-2 (golden set de texto) | 30 | 3,3 pp |\n| DS-3 (citación) | 20 | 5,0 pp |\n| DS-6 (adversarial, v0) | 10 | 10,0 pp |\n\n**Determinismo de la corrida.** La corrida de evals fija todo lo que se pueda\nfijar: temperatura en 0 y semilla fija donde el proveedor lo permita, versión\ndel modelo anclada por identificador exacto (nunca un alias móvil), prompts y\nrúbricas versionados en el repositorio, y el respondedor del asegurado por\nreglas indexado por campo del PRD 11.1. Cuando un caso siga siendo inestable\nentre corridas idénticas, se marca como inestable con su identificador en un\narchivo versionado, deja de contar para la compuerta, se reporta aparte con esa\netiqueta y su estabilización se abre como trabajo; nunca se borra del set (P5).\n\n**Compuerta en rojo por causa ajena al cambio.** Cuando la compuerta se pone\nroja por una caída del proveedor, un cambio de versión del modelo o una cuota\nagotada, se registra la causa y el identificador de la corrida, la corrida se\nmarca como **no comparable** y se repite; si sigue roja, bloquea. **El umbral no\nse toca nunca** y la marca queda en el registro. Una compuerta que no se pudo\nejecutar se declara \"no medida\" en el reporte, nunca se omite.\n\n**Juez descalibrado.** Los veredictos del juez (LLM) solo cuentan mientras sus\ndos tasas contra las etiquetas humanas de DS-7, la de fallos que detecta (TNR) y\nla de aciertos que confirma (TPR), medidas por criterio y por idioma sobre la\npartición de prueba y con intervalo de confianza, estén en el umbral que fija\n`nfr-requirements` (decisión de Miguel del 2026-09-17, que reemplaza el 85 % de\nacuerdo; ADR-014). Si caen por debajo, o si cambia el modelo del juez o la\nrúbrica sin recalibrar, sus\nveredictos dejan de contar: los criterios que dependen de él se reportan como\n\"no medida\" con esa causa, no bloquean, y la recalibración se abre como trabajo\ncon fecha. Las compuertas duras juzgadas por código —citas inexistentes,\naislamiento, PII en trazas, esquema— no dependen del juez y siguen bloqueando.\n\n**Presupuesto de la corrida.** La corrida de evals de texto tiene un objetivo de\n10 minutos y su duración se mide y se publica como métrica desde la línea base\nv0 (Segmento 10.5). El corredor admite ejecutar un subconjunto declarado y\nreproducible; si la corrida completa deja de caber en el presupuesto o en los\nlímites del tier gratuito, la compuerta corre ese subconjunto declarado —nunca\nse apaga— y la corrida completa pasa a ser obligatoria por hito y antes de\npublicar cualquier línea base.\n\n**Dónde corre la compuerta.** El ejecutor autoritativo es el flujo de GitHub\nActions sobre `main`, invocando el guion único de verificación. Dentro de este\nintent, la etapa `build-and-test` ejecuta ese mismo comando. Las prácticas no\ncambian cuando cambia el ejecutor: solo cambia quién lo dispara.\n\n**Lo que no corre en cada corrida**: los golden sets de audio (DS-5, 20\ngrabaciones) corren por hito, no por cambio, porque el costo de voz está topado\ny las grabaciones dependen de terceros.\n\n**Paridad por idioma**: los mismos casos, las mismas métricas y las mismas metas\nen español e inglés; el reporte muestra los dos lados a lado y nunca un promedio\ncombinado (P12).\n\n**Herramientas**: el runner de pruebas del lenguaje elegido, más un corredor de\nevals propio con un juez propio calibrado para la compuerta (decisión de Miguel\ndel 2026-09-17, ADR-014; reemplaza \"`promptfoo` o `DeepEval`\"), `promptfoo` solo\npara red-teaming por hito y Langfuse para la anotación humana. El corredor de evals se\ninvoca con un solo comando y ese comando está en el archivo de tareas y en el\nREADME (M17)."
+    },
+    {
+      "layer": "project",
+      "text": "- Los criterios de aceptación se escriben en Gherkin con las palabras clave en español (Dado / Cuando / Entonces / Y), cada paso empieza con la palabra clave sin coma y ningún \"Dado\" depende de lo que dejó otro criterio: es el formato Given/When/Then de la regla de fase, Gherkin lo reconoce y las pruebas se automatizan sin traducirlo. (learned 2026-09-16) \n\n- Las unidades que realizan M8 sin conducta propia que evaluar (corredor de evaluaciones, reporte, respondedor simulado y compuerta) siguen en la rama evaluada, pero su caso previo es una corrida de casos ya existentes de DS-2, DS-3 o DS-6 que se comprueba que falla antes de implementarlas: no se inventa un caso de golden set artificial, y lo declaran en su campo Rama. (learned 2026-09-16) \n\n- Todo escenario de red-team (RT-1 a RT-15) necesita al menos un criterio verificable en el canal de texto, porque DS-6 corre por el adaptador de texto en cada entrega; un escenario cubierto solo en la voz queda fuera de esa compuerta y se comprueba solo por hito. (learned 2026-09-16) \n\n- Las pruebas de límites de gasto y de cuota no consumen el presupuesto que protegen: el tope en el proveedor se comprueba con una clave de prueba de tope mínimo y la aplicación detenida, y el techo de gasto con un acumulado forzado en pruebas, nunca llevando una clave real hasta su tope. (learned 2026-09-16) \n\n- La primera unidad de la rama evaluada que realiza M8 sin conducta propia (el corredor de evaluaciones) no tiene casos existentes que correr: se construye con la rama determinista y su caso previo es la primera corrida de los casos que escriban las unidades siguientes; nunca se inventa un caso de golden set para ella. Decisión de Units Generation (U1), 2026-09-17. (learned 2026-09-17)"
+    }
+  ],
+  "obligations": {
+    "strategy": "standard",
+    "strategy_volume": [
+      "Five to eight tests per component.",
+      "Unit tests plus integration tests for key boundaries.",
+      "Add E2E, performance, or security tests when requirements demand them."
+    ],
+    "scope_floor": [
+      "Keep the existing test suite green.",
+      "This scope adds no extra new-test floor beyond the selected test strategy."
+    ],
+    "combination_rule": "Apply every selected-strategy obligation and every scope-floor obligation; neither replaces the other, and a targeted scope regression may add the narrowest necessary test type beyond the strategy default."
+  },
+  "plan_profile": {
+    "methodology": "custom",
+    "runner_step": "Verify the existing test runner/configuration and record the exact unit-scoped command.",
+    "runner_ready_before_first_test": true,
+    "testable_layers": [
+      "Data model / database behavior",
+      "Repository / data access",
+      "Business logic",
+      "API / endpoint",
+      "Frontend behavior"
+    ],
+    "steps": [
+      "Project structure and production configuration skeleton.",
+      "Verify the existing test runner/configuration and record the exact unit-scoped command.",
+      "Custom ordering - Clasifica cada unidad en una de dos ramas y no dejes ninguna sin rama. Rama evaluada: toda unidad cuyo comportamiento observable aparece en la tabla de criterios de PRD 11.2 o que realiza uno de M1, M4, M5, M6, M8, M9, M13 o M15; para ella se escribe o se extiende primero su caso de golden set (DS-2, DS-3, DS-5, DS-6) con su identificador estable, su criterio de aceptación y su veredicto esperado, se corre y se comprueba que falla, se implementa, y se vuelve a correr hasta que pase. Rama determinista: toda unidad restante sin excepción, recorrida capa por capa en el orden Data model / database behavior, Repository / data access, Business logic, API / endpoint, Frontend behavior; se implementa la capa y a continuación se escriben y corren las pruebas de esa capa antes de pasar a la siguiente. Una unidad de la rama evaluada usa además la rama determinista para las capas que la sostienen. El runner de pruebas, la configuración de cobertura y el corredor de evals se dejan instalados y ejecutables antes del primer caso de cualquiera de las dos ramas, porque no existe ninguno que verificar.",
+      "Implementation and tests - preserve that exact ordering; do not convert it to layer-local TDD.",
+      "Environment/build configuration.",
+      "Documentation and traceability."
+    ]
+  },
+  "input_sha256": "sha256:0226cf570c9568fe6fa1de61b29a94e7b0709fc04b42d102e273b1d2645d69a9",
+  "contract_sha256": "sha256:6373b3c2e4592ca33a8ad34e18f87d9ef32d8f0a12fc3ba68ba53a709c613250"
+}
+```

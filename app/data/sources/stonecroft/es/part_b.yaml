@@ -1,0 +1,79 @@
+# Textos fuente revisados de Seguros Aburrá, en espanol (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: stonecroft
+language: es
+part_key: part_b
+texts:
+- source_id: STO-PAP-2026-B.INS
+  kind: clause
+  clause_key: B.INS
+  part: Parte B — Gastos médicos
+  version: '2026.1'
+  text: Seguros Aburrá paga los gastos médicos y funerarios razonables que resulten de un accidente
+    de tránsito y que se causen dentro de los dos años siguientes. Cubrimos a usted y a sus familiares
+    cuando van en un vehículo o son atropellados, y a cualquier otra persona mientras sea ocupante de
+    su vehículo cubierto.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-B.EXCL.1
+  kind: clause
+  clause_key: B.EXCL.1
+  part: Parte B — Gastos médicos
+  version: '2026.1'
+  text: No pagamos gastos médicos por lesiones sufridas en una moto u otro vehículo de dos o tres ruedas.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-B.EXCL.2
+  kind: clause
+  clause_key: B.EXCL.2
+  part: Parte B — Gastos médicos
+  version: '2026.1'
+  text: No pagamos gastos médicos por lesiones sufridas mientras el vehículo transporta pasajeros a cambio
+    de un pago.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-B.EXCL.3
+  kind: clause
+  clause_key: B.EXCL.3
+  part: Parte B — Gastos médicos
+  version: '2026.1'
+  text: No pagamos gastos médicos de lesiones ocurridas mientras el vehículo se usaba como vivienda o
+    como lugar de trabajo fijo.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-B.EXCL.4
+  kind: clause
+  clause_key: B.EXCL.4
+  part: Parte B — Gastos médicos
+  version: '2026.1'
+  text: No pagamos gastos médicos de lesiones sufridas en carreras, competencias de velocidad o pruebas
+    de rendimiento.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-B.LIMIT
+  kind: clause
+  clause_key: B.LIMIT
+  part: Parte B — Gastos médicos
+  version: '2026.1'
+  text: El límite por persona que muestra la carátula es lo máximo que pagamos por los gastos médicos
+    de cada lesionado en un mismo accidente, sin importar cuántas personas o vehículos intervengan.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-B.OTHER
+  kind: clause
+  clause_key: B.OTHER
+  part: Parte B — Gastos médicos
+  version: '2026.1'
+  text: Si otro seguro de gastos médicos cubre los mismos gastos, pagamos solo lo que quede sin pagar
+    después de ese seguro, hasta nuestro límite.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite

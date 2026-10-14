@@ -1,0 +1,104 @@
+# Textos fuente revisados de Seguros Aburrá, en espanol (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: stonecroft
+language: es
+part_key: part_c
+texts:
+- source_id: STO-PAP-2026-C.INS
+  kind: clause
+  clause_key: C.INS
+  part: Parte C — Conductores sin seguro
+  version: '2026.1'
+  text: Seguros Aburrá paga la indemnización por lesiones corporales que usted o un familiar tengan
+    derecho a reclamar al conductor o al dueño de un vehículo sin seguro. También cubrimos el caso en
+    que el vehículo responsable huye y no se logra identificar a su conductor ni a su dueño, siempre que
+    el hecho se haya denunciado a la policía.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-C.EXCL.1
+  kind: clause
+  clause_key: C.EXCL.1
+  part: Parte C — Conductores sin seguro
+  version: '2026.1'
+  text: No cubrimos las lesiones de quien va en un vehículo suyo o de un familiar que no está asegurado
+    en esta póliza.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-C.EXCL.2
+  kind: clause
+  clause_key: C.EXCL.2
+  part: Parte C — Conductores sin seguro
+  version: '2026.1'
+  text: No cubrimos una reclamación que el asegurado haya cerrado con el responsable o con su aseguradora
+    sin nuestro consentimiento escrito.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-C.EXCL.3
+  kind: clause
+  clause_key: C.EXCL.3
+  part: Parte C — Conductores sin seguro
+  version: '2026.1'
+  text: No hay cobertura mientras el vehículo transporta personas o mercancías a cambio de un pago.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-C.EXCL.4
+  kind: clause
+  clause_key: C.EXCL.4
+  part: Parte C — Conductores sin seguro
+  version: '2026.1'
+  text: No cubrimos a quien use un vehículo sin permiso de su dueño o sin motivos razonables para creer
+    que lo tenía.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-C.LIMIT
+  kind: clause
+  clause_key: C.LIMIT
+  part: Parte C — Conductores sin seguro
+  version: '2026.1'
+  text: Lo máximo que pagamos por esta parte es el límite para conductores sin seguro que muestra la carátula,
+    por persona y por accidente, sin importar cuántos vehículos o personas intervengan. Lo que el responsable
+    ya haya pagado se descuenta.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-C.OTHER
+  kind: clause
+  clause_key: C.OTHER
+  part: Parte C — Conductores sin seguro
+  version: '2026.1'
+  text: Si varias pólizas cubren a la misma persona por el mismo accidente, repartimos el pago en proporción
+    a los límites de cada una.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-C.ARBITRATION
+  kind: clause
+  clause_key: C.ARBITRATION
+  part: Parte C — Conductores sin seguro
+  version: '2026.1'
+  text: Si no estamos de acuerdo con el asegurado sobre si tiene derecho a la indemnización o sobre su
+    monto, cualquiera de los dos puede pedir que lo decida un árbitro en Corvane. Cada parte paga sus
+    propios gastos y la mitad de los honorarios del árbitro.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2025-C.INS.ALT
+  kind: distractor
+  clause_key: C.INS.ALT
+  part: Parte C — Conductores sin seguro
+  version: '2025.1'
+  text: Seguros Aburrá paga la indemnización por lesiones corporales que usted o un familiar tengan
+    derecho a reclamar al conductor de un vehículo sin seguro, siempre que ese conductor esté identificado.
+    Los accidentes en que el responsable huye no quedan cubiertos.
+  distractor_of: STO-PAP-2026-C.INS
+  distractor_reason: near_duplicate
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite

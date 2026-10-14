@@ -1,0 +1,244 @@
+# Textos fuente revisados de Seguros Aburrá, en espanol (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: stonecroft
+language: es
+part_key: part_d
+texts:
+- source_id: STO-PAP-2026-D.INS.COLLISION
+  kind: clause
+  clause_key: D.INS.COLLISION
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: Seguros Aburrá paga los daños directos y accidentales que sufra su vehículo cubierto por chocar
+    contra otro vehículo u objeto o por volcarse, menos el deducible de colisión que muestra la carátula.
+    Pagamos aunque usted haya causado el choque.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.INS.OTC
+  kind: clause
+  clause_key: D.INS.OTC
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: 'También pagamos, menos el deducible correspondiente, los daños a su vehículo cubierto que no
+    vengan de un choque: robo del vehículo o de sus partes, incendio, inundación, granizo, caída de objetos,
+    vandalismo, rotura de vidrios y golpes con animales.'
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.TRANSPORT
+  kind: clause
+  clause_key: D.TRANSPORT
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: Si su vehículo cubierto queda fuera de servicio por un robo o por un daño cubierto, le reembolsamos
+    los gastos de transporte que pague mientras tanto, hasta $18 por día y $540 en total. El reembolso
+    cuenta desde el día siguiente al robo o al daño.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.EXCL.1
+  kind: clause
+  clause_key: D.EXCL.1
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: No cubrimos los daños ocurridos mientras el vehículo transporta personas o mercancías a cambio
+    de un pago.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.EXCL.2
+  kind: clause
+  clause_key: D.EXCL.2
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: No cubrimos el desgaste por uso, el óxido, las fallas mecánicas o eléctricas ni los daños por
+    congelamiento, salvo que sean consecuencia de un robo o de otro daño cubierto.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.EXCL.3
+  kind: clause
+  clause_key: D.EXCL.3
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: No cubrimos equipos de sonido, pantallas, navegadores ni otros equipos electrónicos que no hayan
+    venido instalados de fábrica.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.EXCL.4
+  kind: clause
+  clause_key: D.EXCL.4
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: No cubrimos los objetos personales que estén dentro del vehículo, como ropa, herramientas, dinero
+    o teléfonos.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-D.EXCL.5
+  kind: clause
+  clause_key: D.EXCL.5
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: No cubrimos los daños que sufran solo las llantas, como pinchazos o reventones, salvo que vengan
+    de un incendio, un robo o un acto de vandalismo.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.EXCL.6
+  kind: clause
+  clause_key: D.EXCL.6
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: No cubrimos la pérdida del vehículo por decomiso, inmovilización o destrucción que ordene una
+    autoridad.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.EXCL.7
+  kind: clause
+  clause_key: D.EXCL.7
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: No cubrimos los daños causados por guerra, rebelión, terrorismo organizado o energía nuclear.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.EXCL.8
+  kind: clause
+  clause_key: D.EXCL.8
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: No cubrimos los daños sufridos en carreras, competencias de velocidad o pruebas de rendimiento,
+    ni en la práctica para ellas.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.EXCL.9
+  kind: clause
+  clause_key: D.EXCL.9
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: No cubrimos las piezas, accesorios o modificaciones que se hayan añadido al vehículo sin declararlos,
+    como rines especiales, suspensiones modificadas o mejoras del motor.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.EXCL.10
+  kind: clause
+  clause_key: D.EXCL.10
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: No cubrimos los daños que usted o un familiar causen a propósito al vehículo.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-D.EXCL.11
+  kind: clause
+  clause_key: D.EXCL.11
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: No cubrimos los daños causados por llevar en el vehículo más peso del que permite su fabricante.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.EXCL.12
+  kind: clause
+  clause_key: D.EXCL.12
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: No cubrimos el robo si el vehículo quedó abierto con las llaves adentro o con el motor encendido
+    en un lugar público.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.EXCL.13
+  kind: clause
+  clause_key: D.EXCL.13
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: No cubrimos los daños por inundación si el conductor entró a una vía que las autoridades habían
+    cerrado o señalado como inundada.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.LIMIT
+  kind: clause
+  clause_key: D.LIMIT
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: Lo máximo que pagamos por una pérdida es lo menor entre el valor comercial del vehículo en el
+    momento del daño y el costo de repararlo o de reponer las piezas robadas con otras equivalentes.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.PAYMENT
+  kind: clause
+  clause_key: D.PAYMENT
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: Nosotros decidimos si pagamos la pérdida en dinero o si nos encargamos de la reparación o de la
+    reposición. Si pagamos una pérdida total, el vehículo o sus restos pasan a ser nuestros. Si recuperamos
+    un vehículo robado, se lo devolvemos y pagamos los daños que haya sufrido.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.NO_BAILEE
+  kind: clause
+  clause_key: D.NO_BAILEE
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: 'Esta cobertura no beneficia a quien tenga el vehículo a su cargo por negocio, como un taller,
+    un parqueadero o una empresa de transporte de vehículos: si ellos causan el daño, podemos cobrárselo.'
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.OTHER_SOURCES
+  kind: clause
+  clause_key: D.OTHER_SOURCES
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: Si otra póliza u otra fuente cubre la misma pérdida, pagamos solo nuestra parte, en proporción
+    a nuestro límite frente al total.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-D.APPRAISAL
+  kind: clause
+  clause_key: D.APPRAISAL
+  part: Parte D — Daños a su vehículo
+  version: '2026.1'
+  text: Si no estamos de acuerdo con usted sobre el monto de la pérdida, cada uno nombra un perito y los
+    dos peritos eligen un tercero. Lo que acuerden dos de los tres es obligatorio para ambos. Cada uno
+    paga su perito y la mitad del tercero.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2025-D.INS.COLLISION.ALT
+  kind: distractor
+  clause_key: D.INS.COLLISION.ALT
+  part: Parte D — Daños a su vehículo
+  version: '2025.1'
+  text: Seguros Aburrá paga los daños directos que sufra su vehículo cubierto por chocar o volcarse,
+    menos el deducible de colisión, solo si el choque lo causó otra persona.
+  distractor_of: STO-PAP-2026-D.INS.COLLISION
+  distractor_reason: near_duplicate
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2025-D.TRANSPORT
+  kind: distractor
+  clause_key: D.TRANSPORT
+  part: Parte D — Daños a su vehículo
+  version: '2025.1'
+  text: Si su vehículo cubierto queda fuera de servicio por un robo o por un daño cubierto, le reembolsamos
+    los gastos de transporte hasta $12 por día y $360 en total, a partir del tercer día.
+  distractor_of: STO-PAP-2026-D.TRANSPORT
+  distractor_reason: superseded_version
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand

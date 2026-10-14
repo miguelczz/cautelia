@@ -1,0 +1,104 @@
+{
+  "stage": "nfr-requirements",
+  "unit": "u14-inbox",
+  "upstream_ids": [
+    "AC3.1.3",
+    "AC3.1.4",
+    "AC3.2.2",
+    "AC3.2.3",
+    "AC3.2.5",
+    "AC3.3.1",
+    "AC3.3.4",
+    "AC3.4.2",
+    "AC3.4.3",
+    "AC3.4.5",
+    "AC3.7.2",
+    "AC3.7.3",
+    "AC3.7.5",
+    "AC3.7.6",
+    "AC3.8.5",
+    "AC3.8.6"
+  ],
+  "coverage": [
+    {
+      "id": "AC3.1.3",
+      "status": "OK",
+      "target": "SEC-U14.1 en construction/u14-inbox/nfr-requirements/"
+    },
+    {
+      "id": "AC3.1.4",
+      "status": "OK",
+      "target": "SEC-U14.1 en construction/u14-inbox/nfr-requirements/"
+    },
+    {
+      "id": "AC3.2.2",
+      "status": "OK",
+      "target": "SEC-U14.6 en construction/u14-inbox/nfr-requirements/"
+    },
+    {
+      "id": "AC3.2.3",
+      "status": "OK",
+      "target": "OBS-U14.1 en construction/u14-inbox/nfr-requirements/"
+    },
+    {
+      "id": "AC3.2.5",
+      "status": "OK",
+      "target": "AC3.2.5 (meta humana, validacion del dia 30; no se cierra con N/A) en construction/u14-inbox/nfr-requirements/"
+    },
+    {
+      "id": "AC3.3.1",
+      "status": "OK",
+      "target": "REL-U14.5 en construction/u14-inbox/nfr-requirements/"
+    },
+    {
+      "id": "AC3.3.4",
+      "status": "OK",
+      "target": "SEC-U14.7 en construction/u14-inbox/nfr-requirements/"
+    },
+    {
+      "id": "AC3.4.2",
+      "status": "OK",
+      "target": "REL-U14.4 en construction/u14-inbox/nfr-requirements/"
+    },
+    {
+      "id": "AC3.4.3",
+      "status": "OK",
+      "target": "REL-U14.4 en construction/u14-inbox/nfr-requirements/"
+    },
+    {
+      "id": "AC3.4.5",
+      "status": "OK",
+      "target": "SEC-U14.7 en construction/u14-inbox/nfr-requirements/"
+    },
+    {
+      "id": "AC3.7.2",
+      "status": "OK",
+      "target": "SEC-U14.2 en construction/u14-inbox/nfr-requirements/"
+    },
+    {
+      "id": "AC3.7.3",
+      "status": "OK",
+      "target": "SEC-U14.3 en construction/u14-inbox/nfr-requirements/"
+    },
+    {
+      "id": "AC3.7.5",
+      "status": "OK",
+      "target": "SEC-U14.4 en construction/u14-inbox/nfr-requirements/"
+    },
+    {
+      "id": "AC3.7.6",
+      "status": "OK",
+      "target": "OBS-U14.5 en construction/u14-inbox/nfr-requirements/"
+    },
+    {
+      "id": "AC3.8.5",
+      "status": "OK",
+      "target": "SEC-U14.3 en construction/u14-inbox/nfr-requirements/"
+    },
+    {
+      "id": "AC3.8.6",
+      "status": "OK",
+      "target": "SEC-U14.5 en construction/u14-inbox/nfr-requirements/"
+    }
+  ]
+}

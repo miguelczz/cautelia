@@ -1,0 +1,54 @@
+# Senales del lado de la persona: angustia/llanto e insultos (BR5.2, BR5.4).
+#
+# Lista versionada, plegada (minusculas, sin tildes) por el mismo `fold` que
+# usa `spelling.py` y `normalization.py`: comparar sobre texto plegado es lo
+# que hace que "asustada" reconozca "Asustada" y "ASUSTADA" por igual, sin que
+# cada entrada tenga que repetirse en mayusculas.
+#
+# `distress` dispara el reconocimiento de BR5.2 (miedo o llanto). `insults`
+# cuenta para el contador de BR5.4 -- que dispara la frase de calma y despues
+# el cierre por abuso, con el numero que fija la configuracion de cada
+# aseguradora (TECH-U11.5) -- y tambien es la senal de enojo de BR5.2 cuando
+# el texto no trae ademas una palabra de `distress`.
+
+distress:
+  es:
+    - asustada
+    - asustado
+    - miedo
+    - llorando
+    - "(llorando)"
+    - lloro
+    - aterrada
+    - aterrado
+  en:
+    - scared
+    - afraid
+    - crying
+    - "(crying)"
+    - terrified
+
+insults:
+  es:
+    - idiota
+    - idiotas
+    - inutil
+    - inutiles
+    - incompetente
+    - incompetentes
+    - porqueria
+    - malparido
+    - malparidos
+    - estupido
+    - estupida
+  en:
+    - useless
+    - incompetent
+    - idiot
+    - idiots
+    - ridiculous
+    - stupid
+    - moron
+    - morons
+    - garbage
+    - scam

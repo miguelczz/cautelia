@@ -1,0 +1,176 @@
+{
+  "stage": "nfr-design",
+  "unit": "u3-pii-redaction",
+  "upstream_ids": [
+    "SEC-U3.1",
+    "SEC-U3.2",
+    "SEC-U3.3",
+    "SEC-U3.4",
+    "SEC-U3.5",
+    "SEC-U3.6",
+    "SEC-U3.7",
+    "SEC-U3.8",
+    "SEC-U3.9",
+    "SEC-U3.10",
+    "SEC-U3.11",
+    "SEC-U3.12",
+    "SEC-U3.13",
+    "SEC-U3.14",
+    "SEC-U3.15",
+    "NFR11.1",
+    "NFR11.2",
+    "NFR11.3",
+    "NFR11.4",
+    "NFR21.1",
+    "NFR18.2"
+  ],
+  "coverage": [
+    {
+      "id": "SEC-U3.1",
+      "status": "OK",
+      "target": "Capa 1 y 2 de `security-design.md`, y la pieza `sinks` mas la superficie `api` de `logical-components.md`: el tipo en las firmas, el registro de los seis puntos de salida y el contrato de importacion."
+    },
+    {
+      "id": "SEC-U3.2",
+      "status": "OK",
+      "target": "Capa 1: el chequeo `redaction:constructor`, analisis del arbol sintactico que falla si el constructor se invoca fuera de `api`. El tipo solo no lo garantiza porque `NewType` se borra en tiempo de ejecucion."
+    },
+    {
+      "id": "SEC-U3.3",
+      "status": "OK",
+      "target": "Capa 2 y la pieza `sinks`: el registro declara la superficie de cada punto, y `transcript`, `log` y `trace` son puntos de persistencia, no de exportacion."
+    },
+    {
+      "id": "SEC-U3.4",
+      "status": "OK",
+      "target": "Capa 3 y la decision NFRD-U3-1: un motor con los dos modelos residentes, no uno que se reconfigure por llamada."
+    },
+    {
+      "id": "SEC-U3.5",
+      "status": "OK",
+      "target": "Capa 3 y la pieza `recognizers`: los cuatro formatos por reconocedor son datos de configuracion, no ramas de codigo."
+    },
+    {
+      "id": "SEC-U3.6",
+      "status": "OK",
+      "target": "Capa 3: el respaldo corre despues de los reconocedores y solo reclama lo que ninguno reclamo; sus frases de contexto viven junto a los reconocedores (NFRD-U3-4)."
+    },
+    {
+      "id": "SEC-U3.7",
+      "status": "OK",
+      "target": "Capa 1 y la decision NFRD-U3-3: el mismo chequeo del constructor busca cualquier estructura que guarde un valor junto a su etiqueta."
+    },
+    {
+      "id": "SEC-U3.8",
+      "status": "OK",
+      "target": "Capa 1 y NFRD-U3-3: la irreversibilidad la comprueba una herramienta, no una lectura atenta del codigo."
+    },
+    {
+      "id": "SEC-U3.9",
+      "status": "OK",
+      "target": "Capa 4 y la pieza `detector`: cada hallazgo viaja con el identificador de su reconocedor y el informe cuenta por reconocedor ademas de por tipo."
+    },
+    {
+      "id": "SEC-U3.10",
+      "status": "OK",
+      "target": "La seccion 'Fallar cerrado' y la decision NFRD-U3-2: si los modelos no cargan el proceso no arranca, y una llamada fallida levanta el fallo en vez de devolver texto."
+    },
+    {
+      "id": "SEC-U3.11",
+      "status": "OK",
+      "target": "La seccion 'Los dos relojes' y la pieza `streaming`: el coste con el reloj del sistema, el aviso con el reloj controlado."
+    },
+    {
+      "id": "SEC-U3.12",
+      "status": "OK",
+      "target": "Capa 3 y la lista de lo que el modulo no contiene: contrato de importacion que prohibe cualquier cliente de red o de modelo de lenguaje dentro del modulo."
+    },
+    {
+      "id": "SEC-U3.13",
+      "status": "OK",
+      "target": "Capa 4 y la decision NFRD-U3-5: no existe bandera de dato de prueba, porque al escribir no se puede distinguir un numero del corpus de uno que escribio alguien."
+    },
+    {
+      "id": "SEC-U3.14",
+      "status": "OK",
+      "target": "Capa 4 y la pieza `labels`: el reporte describe el tipo y en que difiere, nunca el valor."
+    },
+    {
+      "id": "SEC-U3.15",
+      "status": "OK",
+      "target": "La seccion 'La frontera con U21' y la pieza `recognizers`: contrato de importacion, mas la configuracion versionada que U21 lee como archivo."
+    },
+    {
+      "id": "NFR11.1",
+      "status": "OK",
+      "target": "Capa 3 entera: los dos juegos corriendo siempre, los formatos por reconocedor y la resolucion de solapes son lo que hace alcanzable el 100 % sobre casos sembrados."
+    },
+    {
+      "id": "NFR11.2",
+      "status": "OK",
+      "target": "Capa 3 y Capa 4: el respaldo corre ultimo y nunca gana un solape, y su cifra viaja aparte en el informe."
+    },
+    {
+      "id": "NFR11.3",
+      "status": "OK",
+      "target": "La seccion 'Los dos relojes': se cronometra con el reloj del sistema alrededor de la llamada real."
+    },
+    {
+      "id": "NFR11.4",
+      "status": "OK",
+      "target": "La seccion 'Los dos relojes' y la pieza `streaming`: se prueba con el reloj controlado, porque es logica de temporizacion."
+    },
+    {
+      "id": "NFR21.1",
+      "status": "OK",
+      "target": "La lista de lo que el modulo no contiene: el contrato de importacion mantiene el camino del clon al reporte sin necesitar esta unidad cargada."
+    },
+    {
+      "id": "NFR18.2",
+      "status": "OK",
+      "target": "El reparto en seis piezas de `logical-components.md` es lo que hace alcanzable el piso del 80 % del modulo critico: cada pieza se prueba por su cuenta en vez de a traves de la superficie, que es donde la cobertura se queda corta. La redaccion entro a la lista de modulos criticos el 2026-09-20 por decision de Miguel, despues de que esta etapa se escribiera; el objetivo se declara aqui para que el diseno y sus metas no queden desalineados."
+    }
+  ],
+  "reverse": [
+    {
+      "id": "NFRD-U3-1",
+      "status": "N/A",
+      "target": "Un motor con los dos modelos residentes. Nace de que cargar solo el juego del turno es la forma natural de escribirlo y es exactamente el agujero de RT-15; ningun control aguas arriba lo pedia asi."
+    },
+    {
+      "id": "NFRD-U3-2",
+      "status": "N/A",
+      "target": "Si los modelos no cargan, el proceso no arranca. C-13 exige fallar cerrado en la llamada; que ademas no arranque es mas fuerte, porque un aplicativo vivo con la redaccion muerta parece que funciona."
+    },
+    {
+      "id": "NFRD-U3-3",
+      "status": "N/A",
+      "target": "Un solo chequeo cubre el constructor y la ausencia de boveda. Son la misma busqueda sobre el arbol sintactico y es mas barato de mantener que dos."
+    },
+    {
+      "id": "NFRD-U3-4",
+      "status": "N/A",
+      "target": "Las frases de contexto del respaldo viven junto a los reconocedores y no en el catalogo de textos, que es para lo que lee una persona y esta sometido al chequeo de paridad, que mide otra cosa."
+    },
+    {
+      "id": "NFRD-U3-5",
+      "status": "N/A",
+      "target": "No existe bandera de dato de prueba. Es la forma de diseno que hace cumplir SEC-U3.13 por construccion en vez de por disciplina."
+    },
+    {
+      "id": "Contrato interno de capas",
+      "status": "N/A",
+      "target": "Cuatro capas dentro del modulo mas `sinks` fuera de la escalera con su propio contrato prohibido. Ningun control lo pedia. `streaming` va ARRIBA de `api` porque el Flujo 2 exige que la llame; ponerlo debajo, como hacia la primera version, hacia que la regla escrita y el flujo obligatorio no pudieran cumplirse a la vez (hallazgo R-01 de la revision). `labels` no puede importar `detector`, lo que evita que la etiqueta lleve una pista del valor original; y `sinks` no importa nada, lo que evita que el registro se convierta en un septimo punto de salida encubierto."
+    },
+    {
+      "id": "NFRD-U3-6",
+      "status": "N/A",
+      "target": "La redaccion del parcial corre en el pool de hilos con semaforo por uso. Lo decidio ADR-004, que nombra la redaccion entre el trabajo de CPU que va fuera del bucle de eventos; el diseno no lo decia y el Flujo 2 es exactamente su caso."
+    },
+    {
+      "id": "NFRD-U3-7",
+      "status": "N/A",
+      "target": "El chequeo del tipo cubre constructor, `cast` y `type: ignore`. Como `NewType` se borra en tiempo de ejecucion, `cast(Redacted, texto)` entrega el tipo sin construirlo y el patron textual del constructor no lo veia."
+    }
+  ]
+}

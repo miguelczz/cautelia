@@ -1,0 +1,868 @@
+{
+  "stage": "code-generation",
+  "unit": "u7-synthetic-data",
+  "version": 1,
+  "writes": [
+    {
+      "path": "app/backend/.importlinter"
+    },
+    {
+      "path": "app/backend/pyproject.toml"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/rules.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/detector.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/labels.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/recognizers/en.yaml"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/recognizers/es.yaml"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/recognizers/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/content_checks.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/redaction_probes.py"
+    },
+    {
+      "path": "app/backend/src/untangle/paths.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/gemini/request.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/manual_ledger.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/synthetic_draft.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/synthetic_seed.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/voice_cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/__init__.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/canonical.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/cases.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/chooser.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/composition.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/corpus.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/draft_template/parts.yaml"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/draft_template/synthetic_draft.en.md"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/draft_template/synthetic_draft.es.md"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/drafting.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/ds8.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/fingerprints.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/generator.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/manifest.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/people.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/policies.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/review_sample.py"
+    },
+    {
+      "path": "app/backend/src/untangle/synthetic_data/sources.py"
+    },
+    {
+      "path": "app/backend/src/untangle/text_fingerprints.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/generate_contracts.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/redaction_report.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/schema_check.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/synthetic_fingerprints.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/tenancy_literals.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u7/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u7/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u7/test_seed.py"
+    },
+    {
+      "path": "app/backend/tests/unit/case_record/test_rules.py"
+    },
+    {
+      "path": "app/backend/tests/unit/providers/test_gemini.py"
+    },
+    {
+      "path": "app/backend/tests/unit/redaction/test_email_offline.py"
+    },
+    {
+      "path": "app/backend/tests/unit/redaction/test_recognizers.py"
+    },
+    {
+      "path": "app/backend/tests/unit/redaction/test_report_command.py"
+    },
+    {
+      "path": "app/backend/tests/unit/redaction/test_self_identification_and_vin.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/apoyo.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/red.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/test_case_sources.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/test_chooser.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/test_drafting.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/test_fingerprints.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/test_fronteras.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/test_generator.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/test_import_contracts.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/test_models.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/test_network_guard.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/test_redaction_canaries.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/test_review_sample.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/test_seed_contracts.py"
+    },
+    {
+      "path": "app/backend/tests/unit/synthetic_data/test_seed_paths.py"
+    },
+    {
+      "path": "app/backend/uv.lock"
+    },
+    {
+      "path": "app/config/content-checks.yaml"
+    },
+    {
+      "path": "app/config/content/third-party-shingles.json"
+    },
+    {
+      "path": "app/config/copy/en.yaml"
+    },
+    {
+      "path": "app/config/copy/es.yaml"
+    },
+    {
+      "path": "app/contracts/schemas/corpus-clause-relations.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/corpus-clauses.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/corpus-form.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/corpus-issued-policy.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/corpus-personal-values.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/corpus-seeded-case.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/dataset-manifest.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/manifest.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/recognizer-set.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/synthetic-differences.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/synthetic-review-sample.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/synthetic-seeded-criteria.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/synthetic-source.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/third-party-shingles.schema.json"
+    },
+    {
+      "path": "app/data/fixtures/ds8_isolation.json"
+    },
+    {
+      "path": "app/data/manifest.json"
+    },
+    {
+      "path": "app/data/personal_values.json"
+    },
+    {
+      "path": "app/data/sources/differences.yaml"
+    },
+    {
+      "path": "app/data/sources/knotwell/en/case_turns.yaml"
+    },
+    {
+      "path": "app/data/sources/knotwell/es/case_turns.yaml"
+    },
+    {
+      "path": "app/data/sources/reviews/stonecroft-2026-09-21.yaml"
+    },
+    {
+      "path": "app/data/sources/reviews/sunmeadow-2026-09-21.yaml"
+    },
+    {
+      "path": "app/data/sources/seeded_criteria.yaml"
+    },
+    {
+      "path": "app/data/sources/stonecroft/en/case_turns.yaml"
+    },
+    {
+      "path": "app/data/sources/stonecroft/es/agreement.yaml"
+    },
+    {
+      "path": "app/data/sources/stonecroft/es/case_turns.yaml"
+    },
+    {
+      "path": "app/data/sources/stonecroft/es/definitions.yaml"
+    },
+    {
+      "path": "app/data/sources/stonecroft/es/endorsements.yaml"
+    },
+    {
+      "path": "app/data/sources/stonecroft/es/jurisdiction.yaml"
+    },
+    {
+      "path": "app/data/sources/stonecroft/es/part_a.yaml"
+    },
+    {
+      "path": "app/data/sources/stonecroft/es/part_b.yaml"
+    },
+    {
+      "path": "app/data/sources/stonecroft/es/part_c.yaml"
+    },
+    {
+      "path": "app/data/sources/stonecroft/es/part_d.yaml"
+    },
+    {
+      "path": "app/data/sources/stonecroft/es/part_e.yaml"
+    },
+    {
+      "path": "app/data/sources/stonecroft/es/part_f.yaml"
+    },
+    {
+      "path": "app/data/sources/stonecroft/es/pools.yaml"
+    },
+    {
+      "path": "app/data/sources/sunmeadow/en/agreement.yaml"
+    },
+    {
+      "path": "app/data/sources/sunmeadow/en/case_turns.yaml"
+    },
+    {
+      "path": "app/data/sources/sunmeadow/en/definitions.yaml"
+    },
+    {
+      "path": "app/data/sources/sunmeadow/en/endorsements.yaml"
+    },
+    {
+      "path": "app/data/sources/sunmeadow/en/jurisdiction.yaml"
+    },
+    {
+      "path": "app/data/sources/sunmeadow/en/part_a.yaml"
+    },
+    {
+      "path": "app/data/sources/sunmeadow/en/part_b.yaml"
+    },
+    {
+      "path": "app/data/sources/sunmeadow/en/part_c.yaml"
+    },
+    {
+      "path": "app/data/sources/sunmeadow/en/part_d.yaml"
+    },
+    {
+      "path": "app/data/sources/sunmeadow/en/part_e.yaml"
+    },
+    {
+      "path": "app/data/sources/sunmeadow/en/part_f.yaml"
+    },
+    {
+      "path": "app/data/sources/sunmeadow/en/pools.yaml"
+    },
+    {
+      "path": "app/data/sources/sunmeadow/es/case_turns.yaml"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/en/awaiting-insured.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/en/capturing.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/en/closed.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/en/deciding.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/en/derived.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/en/id-dictated-other-language.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/en/identity-dictated.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/en/open.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/en/verifying.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/es/awaiting-insured.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/es/capturing.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/es/closed.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/es/deciding.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/es/derived.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/es/id-dictated-other-language.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/es/identity-dictated.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/es/open.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/cases/es/verifying.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clause_relations.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clauses/STO-JUR-2026.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clauses/STO-PAP-2025.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clauses/STO-PAP-2026-END-1.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clauses/STO-PAP-2026-END-2.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clauses/STO-PAP-2026-END-3.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clauses/STO-PAP-2026-END-4.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clauses/STO-PAP-2026-END-5.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clauses/STO-PAP-2026.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clauses/SUN-JUR-2026.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clauses/SUN-PAP-2025.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clauses/SUN-PAP-2026-END-1.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clauses/SUN-PAP-2026-END-2.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clauses/SUN-PAP-2026-END-3.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clauses/SUN-PAP-2026-END-4.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clauses/SUN-PAP-2026-END-5.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/clauses/SUN-PAP-2026.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/forms/STO-JUR-2026.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/forms/STO-PAP-2025.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/forms/STO-PAP-2026-END-1.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/forms/STO-PAP-2026-END-2.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/forms/STO-PAP-2026-END-3.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/forms/STO-PAP-2026-END-4.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/forms/STO-PAP-2026-END-5.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/forms/STO-PAP-2026.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/forms/SUN-JUR-2026.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/forms/SUN-PAP-2025.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/forms/SUN-PAP-2026-END-1.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/forms/SUN-PAP-2026-END-2.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/forms/SUN-PAP-2026-END-3.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/forms/SUN-PAP-2026-END-4.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/forms/SUN-PAP-2026-END-5.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/forms/SUN-PAP-2026.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/issued_policies/POL-173620.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/issued_policies/POL-200341.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/issued_policies/POL-650485.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/issued_policies/POL-916742.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/issued_policies/POL-943669.json"
+    },
+    {
+      "path": "app/data/tenants/knotwell/issued_policies/POL-979989.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/en/awaiting-insured.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/en/capturing.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/en/closed-approved.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/en/closed-rejected.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/en/closed.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/en/deciding.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/en/derived.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/en/identity-dictated.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/en/injured-and-other-drivers.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/en/open.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/en/other-parties-block.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/en/other-plate-missing.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/en/verifying.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/en/voice-phone-dictated.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/es/awaiting-insured.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/es/capturing.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/es/closed-approved.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/es/closed-rejected.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/es/closed.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/es/deciding.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/es/derived.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/es/identity-dictated.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/es/injured-and-other-drivers.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/es/open.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/es/other-parties-block.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/es/other-plate-missing.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/es/verifying.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/cases/es/voice-phone-dictated.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/clause_relations.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/clauses/STO-JUR-2026.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/clauses/STO-PAP-2025.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/clauses/STO-PAP-2026-END-1.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/clauses/STO-PAP-2026-END-2.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/clauses/STO-PAP-2026-END-3.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/clauses/STO-PAP-2026-END-4.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/clauses/STO-PAP-2026-END-5.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/clauses/STO-PAP-2026.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/forms/STO-JUR-2026.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/forms/STO-PAP-2025.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/forms/STO-PAP-2026-END-1.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/forms/STO-PAP-2026-END-2.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/forms/STO-PAP-2026-END-3.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/forms/STO-PAP-2026-END-4.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/forms/STO-PAP-2026-END-5.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/forms/STO-PAP-2026.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/issued_policies/POL-100042.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/issued_policies/POL-245782.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/issued_policies/POL-480915.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/issued_policies/POL-784054.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/issued_policies/POL-814225.json"
+    },
+    {
+      "path": "app/data/tenants/stonecroft/issued_policies/POL-897598.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/en/awaiting-insured.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/en/capturing.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/en/claim-five-of-seven.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/en/closed-approved.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/en/closed-rejected.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/en/closed.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/en/coverage-inquiry.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/en/deciding.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/en/derived.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/en/identity-dictated.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/en/name-injection.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/en/open.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/en/verifying.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/es/awaiting-insured.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/es/capturing.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/es/claim-five-of-seven.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/es/closed-approved.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/es/closed-rejected.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/es/closed.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/es/coverage-inquiry.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/es/deciding.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/es/derived.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/es/identity-dictated.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/es/name-injection.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/es/open.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/cases/es/verifying.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/clause_relations.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/clauses/SUN-JUR-2026.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/clauses/SUN-PAP-2025.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/clauses/SUN-PAP-2026-END-1.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/clauses/SUN-PAP-2026-END-2.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/clauses/SUN-PAP-2026-END-3.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/clauses/SUN-PAP-2026-END-4.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/clauses/SUN-PAP-2026-END-5.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/clauses/SUN-PAP-2026.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/forms/SUN-JUR-2026.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/forms/SUN-PAP-2025.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/forms/SUN-PAP-2026-END-1.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/forms/SUN-PAP-2026-END-2.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/forms/SUN-PAP-2026-END-3.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/forms/SUN-PAP-2026-END-4.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/forms/SUN-PAP-2026-END-5.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/forms/SUN-PAP-2026.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/issued_policies/POL-200117.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/issued_policies/POL-398476.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/issued_policies/POL-422088.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/issued_policies/POL-480915.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/issued_policies/POL-679093.json"
+    },
+    {
+      "path": "app/data/tenants/sunmeadow/issued_policies/POL-795628.json"
+    },
+    {
+      "path": "app/evals/fixtures/redaction/en.yaml"
+    },
+    {
+      "path": "app/evals/fixtures/redaction/es.yaml"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-keys.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-texts.ts"
+    },
+    {
+      "path": "mise.toml"
+    },
+    {
+      "path": "scripts/verify.sh"
+    }
+  ]
+}

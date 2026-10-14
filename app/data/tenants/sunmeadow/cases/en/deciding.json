@@ -1,0 +1,66 @@
+{
+  "case_key": "SEED/sunmeadow/en/deciding",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Swerved to avoid a motorcycle and hit a pole."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Mario Ruiz, policy POL-679093"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "No one injured"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "5th Avenue and 40th Street, Corvane"
+    },
+    "other_parties": {
+      "status": "confirmed",
+      "value": "None"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Hyundai Elantra 2018, plate XVN-3892, driven by Mario"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-679093",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "deciding",
+  "tenant_id": "sunmeadow",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Hi, I'm Mario Ruiz. My policy is POL-679093."
+    },
+    {
+      "speaker": "agent",
+      "text": "Was anyone hurt?"
+    },
+    {
+      "speaker": "insured",
+      "text": "No, I'm fine."
+    },
+    {
+      "speaker": "agent",
+      "text": "What happened?"
+    },
+    {
+      "speaker": "insured",
+      "text": "I swerved to avoid a motorcycle and hit a pole. Nobody else was involved."
+    }
+  ],
+  "used_by": [
+    "AC1.16.1"
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "case_key": "SEED/sunmeadow/es/closed",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Esquivó una moto y se golpeó contra un poste."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Olivia Russo, póliza POL-398476"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "Sin lesionados"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Carrera 5 con calle 40, Corvane"
+    },
+    "other_parties": {
+      "status": "confirmed",
+      "value": "Ninguno"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Toyota Camry 2023, placa ZNX-9706, lo conducía Olivia"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-398476",
+  "record_type": "claim",
+  "resolution": "registered",
+  "state": "closed",
+  "tenant_id": "sunmeadow",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Hola, soy Olivia Russo. Mi póliza es POL-398476."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Alguien resultó herido?"
+    },
+    {
+      "speaker": "insured",
+      "text": "No, estoy bien."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué pasó?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Esquivé una moto y me golpeé contra un poste. No hubo nadie más."
+    }
+  ],
+  "used_by": [
+    "AC1.14.3",
+    "AC4.10.1"
+  ]
+}

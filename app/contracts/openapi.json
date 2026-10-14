@@ -1,0 +1,6035 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Untangle",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/case-links/redeem": {
+      "post": {
+        "tags": [
+          "inbox"
+        ],
+        "summary": "Redeem Case Link",
+        "description": "Cambia el token por una cookie limitada a **ese** caso (BR5.2, BR5.6).\n\nLas cuatro causas de rechazo responden lo mismo: un mensaje distinto por\ncausa le dice a quien prueba enlaces cual de sus intentos acerto.",
+        "operationId": "redeemCaseLink",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RedeemIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RedeemOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/examples/{tenant_id}/cases": {
+      "get": {
+        "tags": [
+          "examples"
+        ],
+        "summary": "List Example Cases",
+        "description": "Los casos de ejemplo de la aseguradora, por estado y luego por numero.",
+        "operationId": "listExampleCases",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExampleCaseList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/examples/{tenant_id}/cases/{case_id}": {
+      "get": {
+        "tags": [
+          "examples"
+        ],
+        "summary": "Get Example Case",
+        "description": "Un caso de ejemplo con sus seis bloques, sin ninguna accion posible.",
+        "operationId": "getExampleCase",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseDetailOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chat/{tenant_id}/stream": {
+      "get": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Stream Chat",
+        "operationId": "streamChat",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "untangle_visitor",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Visitor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chat/{tenant_id}/messages": {
+      "post": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Send Message",
+        "operationId": "sendChatMessage",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "untangle_visitor",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Visitor"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/MessageAccepted"
+                    },
+                    {
+                      "$ref": "#/components/schemas/MessageRejected"
+                    },
+                    {
+                      "$ref": "#/components/schemas/MessageOutOfScope"
+                    },
+                    {
+                      "$ref": "#/components/schemas/DemoClosed"
+                    }
+                  ],
+                  "title": "Response Sendchatmessage"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "El texto no es una pregunta de cobertura (Q3 de U23)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageOutOfScope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Se alcanzo un limite (BR3.1)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageRejected"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "La demostracion no acepta casos nuevos (BR3.2 de U20)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DemoClosed"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chat/{tenant_id}/history": {
+      "get": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Chat History",
+        "description": "La conversacion de este navegador como estaba, para dibujarla al abrir.\n\n`locale` es el idioma de la pantalla: una conversacion que todavia no dijo\nnada se abre en el, y la apertura sale en el (decision de Miguel,\n2026-10-06). Una en marcha no cambia por el selector.\n\n**La apertura sale aqui, al cargar la pagina, y no con el primer mensaje.**\nEs lo que el docstring de `OpeningNotDeliveredError` daba por hecho desde\nU13 --\"la apertura sale al cargar la pagina, antes de que haya nada que\nescribir\"-- y hasta el 2026-10-06 nadie lo hacia: la agente se presentaba\n**despues** de que la persona escribiera, y al volver a entrar no se\npresentaba nunca. La ruta del mensaje conserva su entrega para quien\nescribe sin haber pasado por aqui (un guion, una corrida de evaluaciones).\n\n**Esta ruta si resuelve la clave del navegador**, al contrario que la del\nresumen de traza: la pantalla la llama al abrirse, igual que abre el flujo,\ny las dos tienen que acabar en la misma conversacion. La pantalla la pide\n**despues** de que el flujo abrio, para que la galleta ya este puesta.",
+        "operationId": "chatHistory",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "es",
+                    "en"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Locale"
+            }
+          },
+          {
+            "name": "untangle_visitor",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Visitor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatHistory"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chat/{tenant_id}/reset": {
+      "post": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Reset Conversation",
+        "description": "Empezar de cero: la conversacion nueva, con su apertura en el idioma de\nla pantalla, y el caso anterior guardado con su numero.",
+        "operationId": "resetChatConversation",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "es",
+                    "en"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Locale"
+            }
+          },
+          {
+            "name": "untangle_visitor",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Visitor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatHistory"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chat/{tenant_id}/case": {
+      "get": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Chat Case Status",
+        "description": "Donde va el caso de este navegador: numero, avance y enlace para abrirlo.\n\nSolo lee: sin galleta no hay conversacion y no se da de alta ninguna, como\nen el resumen de traza. `200` con `null` cuando no hay caso todavia: no es\nun error de quien pregunta, es que la conversacion acaba de empezar.",
+        "operationId": "chatCaseStatus",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "untangle_visitor",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Visitor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ChatCaseStatus"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "title": "Response Chatcasestatus"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chat/{tenant_id}/reasoning": {
+      "get": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Chat Reasoning",
+        "description": "El pensamiento de la agente sobre el caso de este navegador (2026-10-09).\n\nSolo lee, como el estado del caso: sin galleta o sin caso, `200` con `null`.",
+        "operationId": "chatReasoning",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "es",
+                "en"
+              ],
+              "type": "string",
+              "default": "es",
+              "title": "Language"
+            }
+          },
+          {
+            "name": "untangle_visitor",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Visitor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ChatReasoning"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "title": "Response Chatreasoning"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chat/{tenant_id}/trace/{trace_id}": {
+      "get": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Trace Summary",
+        "description": "El resumen de una respuesta, sin credencial y solo del propio navegador.\n\n**Sin cookie no se resuelve ninguna clave.** Un navegador que no ha escrito\nnunca no tiene resumen que ver, y resolverle una clave para responderle lo\nmismo solo dejaria una fila por cada visita a una direccion adivinada.\n\nEl resumen de la clave se calcula, no se da de alta: esta ruta lee y no crea\nnada. Y las tres causas de que no haya nada --no existe, es de otra\nconversacion, es de otra aseguradora-- salen por esta misma puerta.",
+        "operationId": "chatTraceSummary",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "trace_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Trace Id"
+            }
+          },
+          {
+            "name": "untangle_visitor",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Visitor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/TraceView"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "title": "Response Chattracesummary"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/inbox/{tenant_id}/cases": {
+      "get": {
+        "tags": [
+          "inbox"
+        ],
+        "summary": "List Cases",
+        "operationId": "listInboxCases",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "State"
+            }
+          },
+          {
+            "name": "channel",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Channel"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Language"
+            }
+          },
+          {
+            "name": "priority",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Priority"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "maximum": 100,
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "untangle_staff",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Staff"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueuePage"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/inbox/{tenant_id}/cases/{case_id}": {
+      "get": {
+        "tags": [
+          "inbox"
+        ],
+        "summary": "Get Case",
+        "description": "El caso con sus seis bloques, pedidos a quien los guarda (BR2.2).\n\nDos puertas: la credencial de personal y la cookie de caso del visitante.\nLa segunda abre **ese** caso y nada mas; la cola le responde como a quien\nno tiene nada (BR5.1), y eso lo decide la ruta de la cola, que no acepta\nla cookie de caso en absoluto.",
+        "operationId": "getInboxCase",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "untangle_staff",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Staff"
+            }
+          },
+          {
+            "name": "ut_case",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Ut Case"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseDetailOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/inbox/{tenant_id}/cases/{case_id}/fields/{field_key}": {
+      "patch": {
+        "tags": [
+          "inbox"
+        ],
+        "summary": "Correct Field",
+        "description": "Corrige un campo dejando rastro (BR3.1 a BR3.4).",
+        "operationId": "correctInboxCaseField",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "field_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Field Key"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "untangle_staff",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Staff"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CorrectionIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CorrectionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/inbox/{tenant_id}/cases/{case_id}/triage-note": {
+      "put": {
+        "tags": [
+          "inbox"
+        ],
+        "summary": "Annotate Triage",
+        "description": "Anota el monto estimado, la cobertura disputada y la sospecha de fraude.\n\nDos puertas, igual que decidir: la credencial de personal con el permiso del rol, y el\nenlace del caso del visitante (2026-10-13), que anota **solo su propio caso** y queda como\nvisitante. Guarda lo anotado --`null` es \"sin anotar\"--, deja su entrada en el historial\ndel caso y vuelve a evaluar las reglas de la aseguradora con todos los insumos del caso.\nNo cambia el estado del caso ni escribe en el chat.\n\nLo que cambia para el visitante: no lee ni pisa la nota que escribio el personal, guardar\nlo que ya estaba no escribe nada, y las entradas que puede dejar tienen tope. Los tres\nrechazos responden `409` y no escriben.",
+        "operationId": "annotateInboxCaseTriage",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "untangle_staff",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Staff"
+            }
+          },
+          {
+            "name": "ut_case",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Ut Case"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TriageNoteIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TriageNoteOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/inbox/{tenant_id}/stream": {
+      "get": {
+        "tags": [
+          "inbox"
+        ],
+        "summary": "Stream Inbox",
+        "description": "El flujo de avisos de la aseguradora (C-06, BR6.1, BR6.2).\n\nSin `Last-Event-ID` se **coloca al final**: quien abre la bandeja quiere lo\nque pase desde ahora, no que le reproduzcan la demostracion entera. Con el,\nrecibe lo que se perdio mientras estuvo caido.",
+        "operationId": "streamInbox",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "Last-Event-ID",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Last-Event-Id"
+            }
+          },
+          {
+            "name": "untangle_staff",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Staff"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/inbox/{tenant_id}/cases/{case_id}/decision": {
+      "post": {
+        "tags": [
+          "inbox"
+        ],
+        "summary": "Decide Case",
+        "description": "Aprobar, rechazar o marcar como enviado (BR4.1 a BR4.6, BR5.5).\n\nDos puertas para la misma accion: la credencial de personal y la cookie de\ncaso del visitante. Lo que cambia entre las dos es **quien queda como\nautor**, y nada mas: las reglas de que se puede decidir y con que\ncomentario son las mismas.",
+        "operationId": "decideInboxCase",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "untangle_staff",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Staff"
+            }
+          },
+          {
+            "name": "ut_case",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Ut Case"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecisionIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/voice/{tenant_id}/availability": {
+      "get": {
+        "tags": [
+          "voice"
+        ],
+        "summary": "Availability",
+        "description": "Lo que la consola pregunta **antes** de ofrecer el boton (BR1.1).\n\nOfrecer un boton que va a fallar es peor que no ofrecerlo. Aqui no se\ncrea nada: un navegador que solo mira no deja fila en ninguna tabla, y\npor eso la clave del visitante solo se **calcula** si ya la traia.",
+        "operationId": "voiceAvailability",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "untangle_visitor",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Visitor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Availability"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/voice/{tenant_id}/sessions": {
+      "post": {
+        "tags": [
+          "voice"
+        ],
+        "summary": "Open Call",
+        "description": "Abre la llamada. El microfono ya se concedio: eso pasa antes (BR1.2).",
+        "operationId": "openVoiceCall",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "untangle_visitor",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Visitor"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewCall"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CallOpened"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/voice/{tenant_id}/sessions/{call_id}": {
+      "delete": {
+        "tags": [
+          "voice"
+        ],
+        "summary": "End Call",
+        "description": "Cierra la llamada desde fuera del socket.\n\n**Una llamada de otro navegador responde igual que una que no existe**\n(CD-10): sin cookie no se resuelve ninguna clave, y un identificador que\nno es de este navegador no dice que exista.",
+        "operationId": "endVoiceCall",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "call_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Call Id"
+            }
+          },
+          {
+            "name": "untangle_visitor",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Visitor"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/voice/{tenant_id}/sessions/{call_id}/outcome": {
+      "get": {
+        "tags": [
+          "voice"
+        ],
+        "summary": "Call Outcome",
+        "description": "Donde quedo el caso de esta llamada (BR3.4).\n\n**La llamada de otro navegador responde igual que una que no existe**: sin\ngalleta no se resuelve ninguna clave, y la busqueda lleva el resumen dentro\nde la consulta.",
+        "operationId": "voiceCallOutcome",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "call_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Call Id"
+            }
+          },
+          {
+            "name": "untangle_visitor",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Visitor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CallOutcome"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/voice/{tenant_id}/sessions/{call_id}/handoff": {
+      "post": {
+        "tags": [
+          "voice"
+        ],
+        "summary": "Hand Off",
+        "description": "Pasa el caso a una persona, a peticion de quien llamo (BR3.4).\n\nEs la salida del caso que quedo esperando al asegurado: o vuelve dentro de\nsu ventana, o lo pasa ya a un ajustador y se lleva su enlace. Sin esto, ese\ncaso se queda sin salida y quien llamo sin saber que hacer.\n\n**Derivar es una transicion del caso y la hace U4**, con su motivo del\nconjunto cerrado: aqui no se escribe ningun estado a mano.",
+        "operationId": "handOffVoiceCase",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "call_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Call Id"
+            }
+          },
+          {
+            "name": "untangle_visitor",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Visitor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CallOutcome"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/metrics": {
+      "get": {
+        "tags": [
+          "metrics"
+        ],
+        "summary": "Metrics",
+        "operationId": "getMetrics",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsSnapshot"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/quality": {
+      "get": {
+        "tags": [
+          "metrics"
+        ],
+        "summary": "Quality",
+        "description": "La ultima corrida completa de evaluacion, como salio (2026-10-11).\n\n`200` con `null` cuando todavia no se ha guardado ninguna: no es un error\nde quien pregunta. Publica, como el panel de cifras: son resultados del\nconjunto de prueba versionado, no casos de visitantes.",
+        "operationId": "getQualityBoard",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/QualityBoard"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "title": "Response Getqualityboard"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/spend": {
+      "get": {
+        "tags": [
+          "spend"
+        ],
+        "summary": "Panel",
+        "operationId": "getSpend",
+        "parameters": [
+          {
+            "name": "untangle_visitor",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Untangle Visitor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpendPanel"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health/live": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Live",
+        "operationId": "getHealthLive",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveReport"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health/ready": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Ready",
+        "operationId": "getHealthReady",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthReport"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/site": {
+      "get": {
+        "tags": [
+          "site"
+        ],
+        "summary": "Site",
+        "operationId": "getSite",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SiteDirectory"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/policies/{tenant_id}": {
+      "get": {
+        "tags": [
+          "policies"
+        ],
+        "summary": "Policies",
+        "operationId": "getPolicies",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyCatalog"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/policies/{tenant_id}/documents": {
+      "get": {
+        "tags": [
+          "policies"
+        ],
+        "summary": "Documents",
+        "operationId": "getPolicyDocuments",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentsCatalog"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/policies/{tenant_id}/documents/{form_id}": {
+      "get": {
+        "tags": [
+          "policies"
+        ],
+        "summary": "Document",
+        "operationId": "getPolicyDocument",
+        "parameters": [
+          {
+            "name": "tenant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tenant Id"
+            }
+          },
+          {
+            "name": "form_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Form Id"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "es",
+                    "en"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Language"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with the C-01 shape",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActivitySpend": {
+        "properties": {
+          "activity": {
+            "$ref": "#/components/schemas/SpendActivity"
+          },
+          "total": {
+            "$ref": "#/components/schemas/SpendTotal"
+          },
+          "unpriced": {
+            "$ref": "#/components/schemas/UnpricedUsage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "activity",
+          "total"
+        ],
+        "title": "ActivitySpend",
+        "description": "Lo que costo una actividad: llamadas, chat, pruebas, lectura de polizas."
+      },
+      "Answer": {
+        "type": "string",
+        "enum": [
+          "present",
+          "none",
+          "pending"
+        ],
+        "title": "Answer",
+        "description": "Como quedo respondida una de las cinco preguntas."
+      },
+      "Availability": {
+        "properties": {
+          "available": {
+            "type": "boolean",
+            "title": "Available"
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/VoiceOffCode"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason Key"
+          },
+          "voice_mode": {
+            "$ref": "#/components/schemas/VoiceMode"
+          },
+          "limits": {
+            "$ref": "#/components/schemas/CallLimits"
+          },
+          "resume_until": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resume Until"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "available",
+          "voice_mode",
+          "limits"
+        ],
+        "title": "Availability",
+        "description": "Si hay voz, con que motivo no, con que modo y con que limites (C-08)."
+      },
+      "BudgetState": {
+        "properties": {
+          "window_start": {
+            "type": "string",
+            "format": "date",
+            "title": "Window Start"
+          },
+          "window_end": {
+            "type": "string",
+            "format": "date",
+            "title": "Window End"
+          },
+          "spent": {
+            "$ref": "#/components/schemas/SpendTotal"
+          },
+          "cap_usd": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Cap Usd",
+            "ge": 0
+          },
+          "alert_usd": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Alert Usd",
+            "ge": 0
+          },
+          "recording_reserve_usd": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "recording_spent": {
+            "$ref": "#/components/schemas/SpendTotal"
+          },
+          "public_remaining_usd": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "recording_remaining_usd": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BudgetStatus"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "window_start",
+          "window_end",
+          "spent",
+          "cap_usd",
+          "alert_usd",
+          "recording_reserve_usd",
+          "recording_spent",
+          "public_remaining_usd",
+          "recording_remaining_usd",
+          "status"
+        ],
+        "title": "BudgetState",
+        "description": "La foto del presupuesto que consumen la consola de voz, el chat y el gasto.\n\nLos dos restantes corren aparte a proposito (BR4.9): el publico es lo que un\nvisitante puede consumir, y el de grabacion existe para que un dia de trafico\nen el enlace publico no deje al proyecto sin presupuesto para grabar el video\nde la semana doce."
+      },
+      "BudgetStatus": {
+        "type": "string",
+        "enum": [
+          "ok",
+          "alerted",
+          "exhausted",
+          "unmeasured"
+        ],
+        "title": "BudgetStatus",
+        "description": "Los cuatro estados del **carril publico**, que es el que ve un visitante.\n\nNo se guardan: se derivan del acumulado, de la marca de alerta y de si la\nreserva de grabacion se pudo calcular. Guardarlos abriria la posibilidad de\nque el estado y el numero se contradigan.\n\n`EXHAUSTED` con reserva de grabacion disponible es un estado normal y\nesperado (BR4.10): el carril publico esta cerrado y el de grabacion no."
+      },
+      "CallLimits": {
+        "properties": {
+          "max_call_seconds": {
+            "type": "integer",
+            "title": "Max Call Seconds"
+          },
+          "warn_at_seconds": {
+            "type": "integer",
+            "title": "Warn At Seconds"
+          },
+          "resume_window_seconds": {
+            "type": "integer",
+            "title": "Resume Window Seconds"
+          },
+          "calls_per_visitor_day": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Calls Per Visitor Day"
+          },
+          "calls_per_site_day": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Calls Per Site Day"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "max_call_seconds",
+          "warn_at_seconds",
+          "resume_window_seconds"
+        ],
+        "title": "CallLimits",
+        "description": "Los limites que la consola dibuja antes de ofrecer el boton (BR1.1)."
+      },
+      "CallOpened": {
+        "properties": {
+          "call_id": {
+            "type": "string",
+            "title": "Call Id"
+          },
+          "case_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Case Id"
+          },
+          "voice_mode": {
+            "$ref": "#/components/schemas/VoiceMode"
+          },
+          "max_call_seconds": {
+            "type": "integer",
+            "title": "Max Call Seconds"
+          },
+          "transport": {
+            "$ref": "#/components/schemas/Transport"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "call_id",
+          "case_id",
+          "voice_mode",
+          "max_call_seconds",
+          "transport"
+        ],
+        "title": "CallOpened",
+        "description": "La respuesta de abrir una llamada (C-08)."
+      },
+      "CallOutcome": {
+        "properties": {
+          "case_number": {
+            "type": "string",
+            "title": "Case Number"
+          },
+          "state": {
+            "$ref": "#/components/schemas/CaseState"
+          },
+          "case_link": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Case Link"
+          },
+          "chat_continuation": {
+            "type": "boolean",
+            "title": "Chat Continuation",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "case_number",
+          "state"
+        ],
+        "title": "CallOutcome",
+        "description": "Donde quedo el caso de esta llamada, al terminar (BR3.4).\n\n**El enlace solo viaja cuando hay algo que abrir con el**: un caso derivado o\ncerrado tiene una pagina que leer, y uno que todavia espera al asegurado no\n--lo que ese necesita es volver o pedir que lo revise una persona, y eso son\nlas dos salidas que la consola ofrece--.\n\nEl numero del caso y no su identificador: es lo que la persona puede apuntar y\nlo que la bandeja muestra."
+      },
+      "CaseDetailOut": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "title": "Case Id"
+          },
+          "case_number": {
+            "type": "string",
+            "title": "Case Number"
+          },
+          "state": {
+            "$ref": "#/components/schemas/CaseState"
+          },
+          "record_type": {
+            "$ref": "#/components/schemas/RecordType"
+          },
+          "channel": {
+            "$ref": "#/components/schemas/Channel"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "es",
+              "en"
+            ],
+            "title": "Language"
+          },
+          "priority": {
+            "$ref": "#/components/schemas/Priority"
+          },
+          "derivation_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Derivation Reason"
+          },
+          "completeness_complete": {
+            "type": "integer",
+            "title": "Completeness Complete"
+          },
+          "completeness_total": {
+            "type": "integer",
+            "title": "Completeness Total"
+          },
+          "fields": {
+            "items": {
+              "$ref": "#/components/schemas/CaseFieldView"
+            },
+            "type": "array",
+            "title": "Fields"
+          },
+          "transcript": {
+            "items": {
+              "$ref": "#/components/schemas/TranscriptTurnView"
+            },
+            "type": "array",
+            "title": "Transcript"
+          },
+          "coverage_answers": {
+            "items": {
+              "$ref": "#/components/schemas/CoverageAnswerOut"
+            },
+            "type": "array",
+            "title": "Coverage Answers"
+          },
+          "rule_category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rule Category"
+          },
+          "fired_rules": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Fired Rules"
+          },
+          "controls_ok": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Controls Ok"
+          },
+          "control_findings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Control Findings"
+          },
+          "trace_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trace Status"
+          },
+          "trace_cost_usd": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trace Cost Usd"
+          },
+          "trace_cost_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trace Cost Status"
+          },
+          "trace_latency_ms": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trace Latency Ms"
+          },
+          "updated_at": {
+            "type": "string",
+            "title": "Updated At"
+          },
+          "resolution": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolution"
+          },
+          "available_actions": {
+            "items": {
+              "$ref": "#/components/schemas/InboxAction"
+            },
+            "type": "array",
+            "title": "Available Actions"
+          },
+          "can_correct_fields": {
+            "type": "boolean",
+            "title": "Can Correct Fields"
+          },
+          "explanation": {
+            "$ref": "#/components/schemas/ExplanationOut"
+          },
+          "triage_note": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TriageNoteView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "can_annotate_triage": {
+            "type": "boolean",
+            "title": "Can Annotate Triage",
+            "default": false
+          },
+          "triage_amount_steps": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Triage Amount Steps",
+            "default": []
+          },
+          "trace_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trace Url"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "case_id",
+          "case_number",
+          "state",
+          "record_type",
+          "channel",
+          "language",
+          "priority",
+          "derivation_reason",
+          "completeness_complete",
+          "completeness_total",
+          "fields",
+          "transcript",
+          "coverage_answers",
+          "rule_category",
+          "fired_rules",
+          "controls_ok",
+          "control_findings",
+          "trace_status",
+          "trace_cost_usd",
+          "trace_cost_status",
+          "trace_latency_ms",
+          "updated_at",
+          "resolution",
+          "available_actions",
+          "can_correct_fields",
+          "explanation"
+        ],
+        "title": "CaseDetailOut",
+        "description": "El caso con sus seis bloques (C-05)."
+      },
+      "CaseFieldView": {
+        "properties": {
+          "field_key": {
+            "type": "string",
+            "title": "Field Key"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "complete": {
+            "type": "boolean",
+            "title": "Complete"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional",
+            "default": false
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          },
+          "label_key": {
+            "type": "string",
+            "title": "Label Key"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "field_key",
+          "status",
+          "complete",
+          "label_key"
+        ],
+        "title": "CaseFieldView",
+        "description": "Un campo del caso: su clave, su estado, si esta completo y, a su dueno, su valor.\n\n**El valor solo viaja a quien entro con el enlace de su propio caso** (decision\nde Miguel del 2026-10-11): la pantalla decia \"Completo\" y quien decidia el caso\ncomo ajustador en la demo no veia que se habia anotado. Son sus propias\npalabras, en su pantalla. A una credencial de la bandeja sigue sin viajar: lo\nque lee es la transcripcion, ya redactada."
+      },
+      "CaseSpendItem": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "tenant_id": {
+            "type": "string",
+            "title": "Tenant Id"
+          },
+          "record_type": {
+            "type": "string",
+            "title": "Record Type"
+          },
+          "channel": {
+            "type": "string",
+            "title": "Channel"
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Started At"
+          },
+          "yours": {
+            "type": "boolean",
+            "title": "Yours"
+          },
+          "total": {
+            "$ref": "#/components/schemas/SpendTotal"
+          },
+          "by_provider": {
+            "items": {
+              "$ref": "#/components/schemas/ProviderSpend"
+            },
+            "type": "array",
+            "title": "By Provider"
+          },
+          "unpriced": {
+            "$ref": "#/components/schemas/UnpricedUsage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "key",
+          "tenant_id",
+          "record_type",
+          "channel",
+          "started_at",
+          "yours",
+          "total",
+          "by_provider"
+        ],
+        "title": "CaseSpendItem",
+        "description": "Un caso de la lista, **descrito y no identificado**.\n\nNo lleva el identificador ni el numero del caso, y no puede: es una superficie\npublica y los casos son de personas que usaron la demostracion. `key` es su\nposicion en esta respuesta y no sirve para nada fuera de ella."
+      },
+      "CaseState": {
+        "type": "string",
+        "enum": [
+          "open",
+          "capturing",
+          "verifying",
+          "deciding",
+          "derived",
+          "awaiting_insured",
+          "closed"
+        ],
+        "title": "CaseState",
+        "description": "Los siete estados (BR3.1, FR1.4). `CLOSED` es terminal."
+      },
+      "Channel": {
+        "type": "string",
+        "enum": [
+          "voice",
+          "chat"
+        ],
+        "title": "Channel",
+        "description": "Voz o chat. El del caso es por donde nacio; el del turno, por donde entro ese turno."
+      },
+      "ChatCaseStatus": {
+        "properties": {
+          "case_number": {
+            "type": "string",
+            "title": "Case Number"
+          },
+          "state": {
+            "type": "string",
+            "title": "State"
+          },
+          "complete": {
+            "type": "integer",
+            "title": "Complete"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "case_link": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Case Link"
+          },
+          "pending_block": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pending Block"
+          },
+          "policy_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Policy Ref"
+          },
+          "record_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Record Type"
+          },
+          "fields": {
+            "items": {
+              "$ref": "#/components/schemas/FieldProgress"
+            },
+            "type": "array",
+            "title": "Fields",
+            "default": []
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "case_number",
+          "state",
+          "complete",
+          "total",
+          "case_link"
+        ],
+        "title": "ChatCaseStatus",
+        "description": "Lo que la pantalla muestra bajo el titulo mientras el caso avanza."
+      },
+      "ChatHistory": {
+        "properties": {
+          "opening": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/OpeningView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "turns": {
+            "items": {
+              "$ref": "#/components/schemas/HistoryTurn"
+            },
+            "type": "array",
+            "title": "Turns"
+          },
+          "case_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Case Number"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "es",
+              "en"
+            ],
+            "title": "Language"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "opening",
+          "turns",
+          "case_number",
+          "language"
+        ],
+        "title": "ChatHistory",
+        "description": "Lo que la pantalla necesita para dibujar la conversacion como estaba.\n\n`opening` es `None` solo cuando la conversacion todavia no la tiene entregada,\nque tras pasar por la ruta no ocurre: la ruta la entrega antes de componer\nesto. El tipo lo conserva porque la composicion es pura y no puede asumir lo\nque la ruta hizo."
+      },
+      "ChatReasoning": {
+        "properties": {
+          "case_number": {
+            "type": "string",
+            "title": "Case Number"
+          },
+          "record_type": {
+            "type": "string",
+            "title": "Record Type"
+          },
+          "state": {
+            "type": "string",
+            "title": "State"
+          },
+          "policy_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Policy Ref"
+          },
+          "derivation_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Derivation Reason"
+          },
+          "fields": {
+            "items": {
+              "$ref": "#/components/schemas/FieldProgress"
+            },
+            "type": "array",
+            "title": "Fields"
+          },
+          "answers": {
+            "items": {
+              "$ref": "#/components/schemas/ReasoningAnswer"
+            },
+            "type": "array",
+            "title": "Answers"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "case_number",
+          "record_type",
+          "state",
+          "policy_ref",
+          "derivation_reason",
+          "fields",
+          "answers"
+        ],
+        "title": "ChatReasoning",
+        "description": "Lo que la pagina dibuja como el pensamiento de la agente."
+      },
+      "CitationDetail": {
+        "properties": {
+          "clause_id": {
+            "type": "string",
+            "title": "Clause Id"
+          },
+          "clause_version": {
+            "type": "string",
+            "title": "Clause Version"
+          },
+          "part": {
+            "type": "string",
+            "title": "Part"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "clause_language": {
+            "type": "string",
+            "enum": [
+              "es",
+              "en"
+            ],
+            "title": "Clause Language"
+          },
+          "amount_deferred": {
+            "type": "boolean",
+            "title": "Amount Deferred"
+          },
+          "issuer_label": {
+            "type": "string",
+            "title": "Issuer Label"
+          },
+          "translated_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Translated Text"
+          },
+          "translated_part": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Translated Part"
+          },
+          "part_in_other_language": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Part In Other Language"
+          },
+          "special_condition_number": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Special Condition Number"
+          }
+        },
+        "type": "object",
+        "required": [
+          "clause_id",
+          "clause_version",
+          "part",
+          "text",
+          "clause_language",
+          "amount_deferred",
+          "issuer_label"
+        ],
+        "title": "CitationDetail",
+        "description": "Una cita lista para el cable de C-04, con todo lo que la pagina muestra."
+      },
+      "CitationView": {
+        "properties": {
+          "clause_id": {
+            "type": "string",
+            "title": "Clause Id"
+          },
+          "clause_version": {
+            "type": "string",
+            "title": "Clause Version"
+          },
+          "part": {
+            "type": "string",
+            "title": "Part"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "clause_language": {
+            "type": "string",
+            "enum": [
+              "es",
+              "en"
+            ],
+            "title": "Clause Language"
+          },
+          "amount_deferred": {
+            "type": "boolean",
+            "title": "Amount Deferred"
+          },
+          "issuer_label": {
+            "type": "string",
+            "title": "Issuer Label"
+          },
+          "special_condition_number": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Special Condition Number"
+          },
+          "part_in_other_language": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Part In Other Language"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "clause_id",
+          "clause_version",
+          "part",
+          "text",
+          "clause_language",
+          "amount_deferred",
+          "issuer_label"
+        ],
+        "title": "CitationView",
+        "description": "Una clausula citada, con lo que la persona va a comparar contra su poliza."
+      },
+      "ClauseView": {
+        "properties": {
+          "clause_id": {
+            "type": "string",
+            "title": "Clause Id"
+          },
+          "clause_key": {
+            "type": "string",
+            "title": "Clause Key"
+          },
+          "part": {
+            "type": "string",
+            "title": "Part"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "amended_by": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Amended By"
+          },
+          "cited_last_week": {
+            "type": "integer",
+            "title": "Cited Last Week"
+          },
+          "language": {
+            "type": "string",
+            "title": "Language"
+          },
+          "translated_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Translated Text"
+          },
+          "translated_part": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Translated Part"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "clause_id",
+          "clause_key",
+          "part",
+          "text",
+          "amended_by",
+          "cited_last_week",
+          "language"
+        ],
+        "title": "ClauseView"
+      },
+      "ComparisonPart": {
+        "properties": {
+          "tenant_id": {
+            "type": "string",
+            "title": "Tenant Id"
+          },
+          "total": {
+            "$ref": "#/components/schemas/SpendTotal"
+          },
+          "unpriced": {
+            "$ref": "#/components/schemas/UnpricedUsage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tenant_id",
+          "total"
+        ],
+        "title": "ComparisonPart",
+        "description": "Lo que cobro una aseguradora dentro de una comparacion."
+      },
+      "ComparisonSpendItem": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Started At"
+          },
+          "yours": {
+            "type": "boolean",
+            "title": "Yours"
+          },
+          "total": {
+            "$ref": "#/components/schemas/SpendTotal"
+          },
+          "unpriced": {
+            "$ref": "#/components/schemas/UnpricedUsage"
+          },
+          "parts": {
+            "items": {
+              "$ref": "#/components/schemas/ComparisonPart"
+            },
+            "type": "array",
+            "title": "Parts"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "key",
+          "started_at",
+          "yours",
+          "total",
+          "parts"
+        ],
+        "title": "ComparisonSpendItem",
+        "description": "Las consultas de un mismo clic en \"Comparar\", **como una sola entrada**.\n\nComo el caso, se describe y no se identifica: `key` es su posicion entre las\ncomparaciones de esta respuesta. `started_at` es el del primer caso del grupo."
+      },
+      "CorrectionIn": {
+        "properties": {
+          "value": {
+            "type": "string",
+            "title": "Value"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "value"
+        ],
+        "title": "CorrectionIn",
+        "description": "Lo que se manda para corregir un campo."
+      },
+      "CorrectionOut": {
+        "properties": {
+          "receipt_id": {
+            "type": "string",
+            "title": "Receipt Id"
+          },
+          "field_key": {
+            "type": "string",
+            "title": "Field Key"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "receipt_id",
+          "field_key"
+        ],
+        "title": "CorrectionOut",
+        "description": "El recibo de la correccion. Repetir la misma clave devuelve este mismo."
+      },
+      "CostStatus": {
+        "type": "string",
+        "enum": [
+          "measured",
+          "not_measured"
+        ],
+        "title": "CostStatus",
+        "description": "Si el costo se pudo valorar (BR3.3, BR3.9).\n\n`NOT_MEASURED` no es cero y no se colapsa con el: un cero por falta de precio\ncontamina una cifra publicada con un fallo de configuracion, que es la misma\nconfusion que el proyecto prohibe entre \"no hay clausula\" y \"no pude\nverificar\"."
+      },
+      "CountedSpend": {
+        "properties": {
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          },
+          "total": {
+            "$ref": "#/components/schemas/SpendTotal"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "count",
+          "total"
+        ],
+        "title": "CountedSpend",
+        "description": "Lo que costaron todas las llamadas (o todos los chats) y cuantos fueron.\n\nEl promedio lo saca la pantalla: asi puede decir sobre cuantos se calculo, y\ncon cero no inventa un promedio."
+      },
+      "CoverageAnswerOut": {
+        "properties": {
+          "answer_id": {
+            "type": "string",
+            "title": "Answer Id"
+          },
+          "outcome": {
+            "type": "string",
+            "title": "Outcome"
+          },
+          "question_redacted": {
+            "type": "string",
+            "title": "Question Redacted"
+          },
+          "citations": {
+            "items": {
+              "$ref": "#/components/schemas/CitationView"
+            },
+            "type": "array",
+            "title": "Citations"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "answer_id",
+          "outcome",
+          "question_redacted",
+          "citations"
+        ],
+        "title": "CoverageAnswerOut",
+        "description": "Una respuesta de cobertura.\n\n`outcome` viaja con su valor propio: \"sin clausula\" y \"no pude verificar\" son\ndos cosas distintas y la pantalla les pone etiquetas distintas (BR2.5)."
+      },
+      "DatabaseStatus": {
+        "type": "string",
+        "enum": [
+          "ok",
+          "degraded",
+          "down"
+        ],
+        "title": "DatabaseStatus",
+        "description": "El estado de la base en el reporte (C-02).\n\nU6 produce `ok` y `down`. `degraded` es del contrato y queda reservado: nada\nen esta unidad sabe distinguir una base degradada de una que responde, y\nescribirlo sin saberlo seria inventar el estado."
+      },
+      "DatasetResult": {
+        "properties": {
+          "dataset": {
+            "type": "string",
+            "title": "Dataset"
+          },
+          "by_language": {
+            "$ref": "#/components/schemas/TallyByLanguage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "dataset",
+          "by_language"
+        ],
+        "title": "DatasetResult",
+        "description": "Un tipo de prueba (`DS-2`, `DS-3`...) y como le fue en cada idioma."
+      },
+      "DaySpend": {
+        "properties": {
+          "day": {
+            "type": "string",
+            "format": "date",
+            "title": "Day"
+          },
+          "activities": {
+            "items": {
+              "$ref": "#/components/schemas/ActivitySpend"
+            },
+            "type": "array",
+            "title": "Activities"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "day",
+          "activities"
+        ],
+        "title": "DaySpend",
+        "description": "Un dia de la grafica, en UTC, con lo que costo cada actividad ese dia."
+      },
+      "DecisionIn": {
+        "properties": {
+          "decision": {
+            "$ref": "#/components/schemas/InboxAction"
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Comment"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "decision",
+          "comment"
+        ],
+        "title": "DecisionIn",
+        "description": "Lo que se manda para decidir. `request_more` **no existe** aqui (BR4.7)."
+      },
+      "DecisionOut": {
+        "properties": {
+          "decision_id": {
+            "type": "string",
+            "title": "Decision Id"
+          },
+          "case_state": {
+            "$ref": "#/components/schemas/CaseState"
+          },
+          "resolution": {
+            "type": "string",
+            "title": "Resolution"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "decision_id",
+          "case_state",
+          "resolution"
+        ],
+        "title": "DecisionOut",
+        "description": "La decision registrada. El grafo se reanuda de fondo y no se espera."
+      },
+      "DemoClosed": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "demo_closed",
+            "title": "Kind",
+            "default": "demo_closed"
+          },
+          "copy_key": {
+            "type": "string",
+            "title": "Copy Key"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "copy_key"
+        ],
+        "title": "DemoClosed",
+        "description": "La demostracion no acepta casos nuevos ahora mismo (BR3.2 de U20).\n\n**Lleva `kind` y los otros dos rechazos no**, y no es adorno: el cliente\ngenerado no entrega el codigo de estado, asi que la pantalla distingue los\nrechazos **por su forma**. Un tercero con solo `copy_key` seria\nindistinguible del de fuera de proposito, y la pantalla diria \"esa no es una\npregunta de cobertura\" cuando lo que pasa es que la demo se estrecho."
+      },
+      "DemoResetCheck": {
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/DemoResetStatus"
+          },
+          "last_successful_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Successful At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "DemoResetCheck",
+        "description": "El estado del reinicio nocturno, con la hora del ultimo exitoso si se conoce.\n\nUna hora no es dato personal, y aqui no viaja nada mas: ni el identificador de\nla corrida ni lo que borro cada purgador."
+      },
+      "DemoResetStatus": {
+        "type": "string",
+        "enum": [
+          "current",
+          "overdue",
+          "unreadable"
+        ],
+        "title": "DemoResetStatus",
+        "description": "Si el reinicio nocturno de la demo esta al dia (BR3.2 de U20).\n\nTres valores y no dos: \"vencido\" y \"no pude leerlo\" son cosas distintas, y\ncolapsarlas haria pasar un fallo de lectura por un reinicio que no corrio, o\nal reves (convencion 8c del equipo)."
+      },
+      "DocumentDetail": {
+        "properties": {
+          "tenant_id": {
+            "type": "string",
+            "title": "Tenant Id"
+          },
+          "form_id": {
+            "type": "string",
+            "title": "Form Id"
+          },
+          "clauses": {
+            "items": {
+              "$ref": "#/components/schemas/ClauseView"
+            },
+            "type": "array",
+            "title": "Clauses"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tenant_id",
+          "form_id",
+          "clauses"
+        ],
+        "title": "DocumentDetail"
+      },
+      "DocumentView": {
+        "properties": {
+          "form_id": {
+            "type": "string",
+            "title": "Form Id"
+          },
+          "form_version": {
+            "type": "string",
+            "title": "Form Version"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "language": {
+            "type": "string",
+            "title": "Language"
+          },
+          "clause_count": {
+            "type": "integer",
+            "title": "Clause Count"
+          },
+          "in_force": {
+            "type": "boolean",
+            "title": "In Force"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "form_id",
+          "form_version",
+          "kind",
+          "language",
+          "clause_count",
+          "in_force"
+        ],
+        "title": "DocumentView",
+        "description": "Un documento del corpus de la aseguradora, para el panel de documentos."
+      },
+      "DocumentsCatalog": {
+        "properties": {
+          "tenant_id": {
+            "type": "string",
+            "title": "Tenant Id"
+          },
+          "documents": {
+            "items": {
+              "$ref": "#/components/schemas/DocumentView"
+            },
+            "type": "array",
+            "title": "Documents"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tenant_id",
+          "documents"
+        ],
+        "title": "DocumentsCatalog"
+      },
+      "EndorsementView": {
+        "properties": {
+          "form_id": {
+            "type": "string",
+            "title": "Form Id"
+          },
+          "clause_keys": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Clause Keys"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "form_id",
+          "clause_keys"
+        ],
+        "title": "EndorsementView",
+        "description": "Un endoso de la poliza y que clausulas cambia, por su clave."
+      },
+      "ExampleCaseItem": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "title": "Case Id"
+          },
+          "case_number": {
+            "type": "string",
+            "title": "Case Number"
+          },
+          "record_type": {
+            "$ref": "#/components/schemas/RecordType"
+          },
+          "state": {
+            "$ref": "#/components/schemas/CaseState"
+          },
+          "channel": {
+            "$ref": "#/components/schemas/Channel"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "es",
+              "en"
+            ],
+            "title": "Language"
+          },
+          "completeness_complete": {
+            "type": "integer",
+            "title": "Completeness Complete"
+          },
+          "completeness_total": {
+            "type": "integer",
+            "title": "Completeness Total"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "case_id",
+          "case_number",
+          "record_type",
+          "state",
+          "channel",
+          "language",
+          "completeness_complete",
+          "completeness_total"
+        ],
+        "title": "ExampleCaseItem",
+        "description": "Una fila de la lista publica de casos de ejemplo.\n\nMenos que `QueueItem` a proposito: sin prioridad ni espera, que son de quien\ndecide, y sin motivo de derivacion, que se lee al abrir el caso. Lo que hay son\nenums, numeros y el identificador con el que se pide el detalle."
+      },
+      "ExampleCaseList": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ExampleCaseItem"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "title": "ExampleCaseList",
+        "description": "Los casos de ejemplo de una aseguradora, ya en el orden en que se muestran."
+      },
+      "ExplanationOut": {
+        "properties": {
+          "asked": {
+            "$ref": "#/components/schemas/Answer"
+          },
+          "cited": {
+            "$ref": "#/components/schemas/Answer"
+          },
+          "rule": {
+            "$ref": "#/components/schemas/Answer"
+          },
+          "decided_by": {
+            "$ref": "#/components/schemas/Answer"
+          },
+          "decided_at": {
+            "$ref": "#/components/schemas/Answer"
+          },
+          "decided_by_kind": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Decided By Kind"
+          },
+          "decided_by_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Decided By Id"
+          },
+          "decided_at_iso": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Decided At Iso"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "asked",
+          "cited",
+          "rule",
+          "decided_by",
+          "decided_at",
+          "decided_by_kind",
+          "decided_by_id",
+          "decided_at_iso"
+        ],
+        "title": "ExplanationOut",
+        "description": "Las cinco preguntas de BR2.4 con su respuesta, y quien decidio si ya lo hizo.\n\nLas cinco viajan **siempre**: un hueco en la explicacion se lee como un dato que\nse perdio, y quien firma una decision sobre cobertura necesita distinguir \"no\nhabia\" de \"todavia no ha pasado\". El valor `pending` existe solo para las dos de\nla decision, y es la diferencia entre \"nadie decidio\" y \"aun no se ha decidido\".\n\n`decided_by` y `decided_at` traen **el mismo estado**, porque salen del mismo\nhecho. Van las dos porque la pantalla dibuja las cinco filas de la regla, y\nderivar una de la otra en el navegador seria escribir alli una regla que ya\nesta decidida aqui."
+      },
+      "FailedCase": {
+        "properties": {
+          "case_key": {
+            "type": "string",
+            "title": "Case Key"
+          },
+          "dataset": {
+            "type": "string",
+            "title": "Dataset"
+          },
+          "language": {
+            "type": "string",
+            "title": "Language"
+          },
+          "criteria": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Criteria",
+            "default": []
+          },
+          "blocking": {
+            "type": "boolean",
+            "title": "Blocking",
+            "default": false
+          },
+          "root_cause": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Root Cause"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "case_key",
+          "dataset",
+          "language"
+        ],
+        "title": "FailedCase",
+        "description": "Un caso del conjunto de prueba que fallo, con lo que fallo."
+      },
+      "FieldProgress": {
+        "properties": {
+          "field_key": {
+            "type": "string",
+            "title": "Field Key"
+          },
+          "label_key": {
+            "type": "string",
+            "title": "Label Key"
+          },
+          "done": {
+            "type": "boolean",
+            "title": "Done"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional",
+            "default": false
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "field_key",
+          "label_key",
+          "done"
+        ],
+        "title": "FieldProgress",
+        "description": "Un dato del caso y si ya quedo anotado.\n\n`optional` dice que el dato no cuenta para \"5 de 5\": la lista traia siete filas\nbajo un contador de cinco y no se entendia por que (2026-10-10).\n\n`value` es lo anotado, en claro, y **solo lo llena el pensamiento de la agente**,\nque es del propio caso de este navegador (decision de Miguel del 2026-10-11):\nantes decia \"Anotado\" sin mostrar que. El estado del caso, que se pregunta a\ncada rato, no abre ningun valor."
+      },
+      "Figure": {
+        "properties": {
+          "key": {
+            "$ref": "#/components/schemas/FigureKey"
+          },
+          "state": {
+            "$ref": "#/components/schemas/FigureState"
+          },
+          "not_measured_cause": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/NotMeasuredCause"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "by_language": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Measurement"
+            },
+            "propertyNames": {
+              "enum": [
+                "es",
+                "en"
+              ]
+            },
+            "type": "object",
+            "title": "By Language"
+          },
+          "latency": {
+            "items": {
+              "$ref": "#/components/schemas/LatencyMeasure"
+            },
+            "type": "array",
+            "title": "Latency",
+            "default": []
+          },
+          "source": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FigureSource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "key",
+          "state"
+        ],
+        "title": "Figure",
+        "description": "Una de las cinco cifras.\n\n`state` es `measured` solo si **todas** sus celdas lo estan. `by_language`\nnunca lleva una entrada combinada (BR1.4): es un mapa por idioma, y una cifra\nsin idioma lo trae vacio."
+      },
+      "FigureKey": {
+        "type": "string",
+        "enum": [
+          "completeness",
+          "citation_precision",
+          "latency",
+          "cost_per_case",
+          "cases_by_tenant"
+        ],
+        "title": "FigureKey",
+        "description": "Las cinco cifras (AC4.16.1). Lista cerrada."
+      },
+      "FigureSource": {
+        "properties": {
+          "baseline_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Baseline Id"
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Published At"
+          },
+          "commit_sha": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Commit Sha"
+          },
+          "run_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Run Id"
+          },
+          "run_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Url"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "baseline_id",
+          "published_at",
+          "commit_sha",
+          "run_id"
+        ],
+        "title": "FigureSource",
+        "description": "De donde sale una cifra medida: fecha, commit y corrida (BR1.3)."
+      },
+      "FigureState": {
+        "type": "string",
+        "enum": [
+          "measured",
+          "not_measured"
+        ],
+        "title": "FigureState"
+      },
+      "GateFamily": {
+        "type": "string",
+        "enum": [
+          "citations",
+          "no_promises",
+          "personal_data",
+          "isolation",
+          "conduct",
+          "content"
+        ],
+        "title": "GateFamily",
+        "description": "Las compuertas duras, agrupadas por lo que protegen. Cerrado: cada una tiene\nsu frase en el catalogo."
+      },
+      "GateResult": {
+        "properties": {
+          "family": {
+            "$ref": "#/components/schemas/GateFamily"
+          },
+          "by_language": {
+            "$ref": "#/components/schemas/TallyByLanguage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "family",
+          "by_language"
+        ],
+        "title": "GateResult",
+        "description": "Una compuerta dura: en cuantos casos se midio y en cuantos fallo.\n\nCon los dos recuentos en cero, esa compuerta **no se midio** en esta corrida."
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthChecks": {
+        "properties": {
+          "database": {
+            "$ref": "#/components/schemas/DatabaseStatus"
+          },
+          "tenants": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Tenants"
+          },
+          "surfaces": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/SurfaceCheck"
+            },
+            "propertyNames": {
+              "$ref": "#/components/schemas/SurfaceId"
+            },
+            "type": "object",
+            "title": "Surfaces"
+          },
+          "providers": {
+            "$ref": "#/components/schemas/ProviderIndicators"
+          },
+          "demo_reset": {
+            "$ref": "#/components/schemas/DemoResetCheck"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "database",
+          "tenants",
+          "surfaces",
+          "providers",
+          "demo_reset"
+        ],
+        "title": "HealthChecks",
+        "description": "Lo que se comprobo. `surfaces`, `providers` y `demo_reset` son aditivos a C-02."
+      },
+      "HealthReport": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ready",
+            "title": "Status",
+            "default": "ready"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "checks": {
+            "$ref": "#/components/schemas/HealthChecks"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "checks"
+        ],
+        "title": "HealthReport",
+        "description": "La respuesta de listo (C-02). Solo existe con 200."
+      },
+      "HistoryTurn": {
+        "properties": {
+          "turn_id": {
+            "type": "string",
+            "title": "Turn Id"
+          },
+          "speaker": {
+            "type": "string",
+            "enum": [
+              "visitor",
+              "agent"
+            ],
+            "title": "Speaker"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "es",
+              "en"
+            ],
+            "title": "Language"
+          },
+          "channel": {
+            "type": "string",
+            "title": "Channel"
+          },
+          "at": {
+            "type": "string",
+            "title": "At"
+          },
+          "citations": {
+            "items": {
+              "$ref": "#/components/schemas/CitationDetail"
+            },
+            "type": "array",
+            "title": "Citations",
+            "default": []
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "turn_id",
+          "speaker",
+          "text",
+          "language",
+          "channel",
+          "at"
+        ],
+        "title": "HistoryTurn",
+        "description": "Un turno guardado, tal como la pantalla lo vuelve a dibujar."
+      },
+      "InboxAction": {
+        "type": "string",
+        "enum": [
+          "approve",
+          "reject",
+          "mark_sent"
+        ],
+        "title": "InboxAction",
+        "description": "Las acciones que la bandeja ofrece. Conjunto cerrado y sin `request_more`."
+      },
+      "LatencyEvent": {
+        "type": "string",
+        "enum": [
+          "speech_end",
+          "first_audio",
+          "message_sent",
+          "first_word"
+        ],
+        "title": "LatencyEvent",
+        "description": "Los extremos entre los que se mide una latencia (AC4.16.3)."
+      },
+      "LatencyMeasure": {
+        "properties": {
+          "channel": {
+            "type": "string",
+            "pattern": "^(voice|chat)$",
+            "title": "Channel"
+          },
+          "start": {
+            "$ref": "#/components/schemas/LatencyEvent"
+          },
+          "end": {
+            "$ref": "#/components/schemas/LatencyEvent"
+          },
+          "dataset": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Dataset"
+          },
+          "percentiles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 2,
+            "title": "Percentiles"
+          },
+          "not_measured_cause": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/NotMeasuredCause"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "by_language": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/LatencyReading"
+            },
+            "propertyNames": {
+              "enum": [
+                "es",
+                "en"
+              ]
+            },
+            "type": "object",
+            "title": "By Language"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FigureSource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "channel",
+          "start",
+          "end",
+          "dataset",
+          "percentiles"
+        ],
+        "title": "LatencyMeasure",
+        "description": "Entre que eventos, sobre que conjunto y con que percentiles se mide (BR1.5).\n\n**Lleva su propia causa de no medida**, y no es un adorno: las dos latencias no\nestan sin medir por lo mismo. La de la voz se mide por hito contra proveedores\nde verdad, que es una decision; la del chat sale de la corrida de evaluaciones con\nconversaciones y de ninguna otra parte, asi que sin esa corrida en la linea base --o\nsin linea base-- esta sin medir hasta que alguien publique una. Una sola causa para las\ndos diria \"por hito\" de algo que nadie ha corrido, y mandaria a esperar un hito en vez de\na publicar una linea base.\n\n**O una causa para el canal entero o una lectura por idioma, nunca las dos.** Con\n`not_measured_cause` no hay lecturas (el canal no tiene nada que decir); con\n`by_language` cada idioma esta medido o explica por que no, y la medida cita la linea base\nde la que salio (`source`). No hay lectura combinada: el mapa es por idioma."
+      },
+      "LatencyReading": {
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/FigureState"
+          },
+          "p50_ms": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P50 Ms"
+          },
+          "p95_ms": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P95 Ms"
+          },
+          "turns": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Turns",
+            "default": 0
+          },
+          "not_measured_cause": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/NotMeasuredCause"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "state"
+        ],
+        "title": "LatencyReading",
+        "description": "La latencia de un canal en un idioma: p50 y p95 con su recuento, o su ausencia explicada.\n\nLleva el recuento de turnos **aunque este medida y aunque no**: un p95 sin saber sobre\ncuantos turnos sale es una cifra que no se puede juzgar, y el recuento de una no medida\ndice cuanto falto. Los tiempos son milisegundos enteros, de turnos que de verdad ocurrieron\n(percentil por rango mas proximo, sin interpolar)."
+      },
+      "LimitKind": {
+        "type": "string",
+        "enum": [
+          "session",
+          "origin",
+          "site_day",
+          "rate",
+          "size"
+        ],
+        "title": "LimitKind",
+        "description": "Cual de los cinco controles rechazo el mensaje. Conjunto cerrado.\n\nViaja al evento de la traza (OBS-U13.2) y decide la clave del catalogo con\nla que se responde. **El texto del mensaje rechazado no viaja con el**: para\nentender un rechazo basta saber cual limite fue."
+      },
+      "LiveReport": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "live",
+            "title": "Status",
+            "default": "live"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "LiveReport",
+        "description": "La respuesta de vivo."
+      },
+      "Measurement": {
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/FigureState"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          },
+          "not_measured_cause": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/NotMeasuredCause"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "state"
+        ],
+        "title": "Measurement",
+        "description": "Una celda: el valor de una cifra en un idioma, o su ausencia explicada."
+      },
+      "MessageAccepted": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "es",
+              "en"
+            ],
+            "title": "Language"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "session_id",
+          "language"
+        ],
+        "title": "MessageAccepted",
+        "description": "La respuesta del `POST`: se admitio y la respuesta sale por el flujo."
+      },
+      "MessageIn": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Text"
+          },
+          "surface": {
+            "$ref": "#/components/schemas/Surface",
+            "default": "chat"
+          },
+          "locale": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "es",
+                  "en"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Locale"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "title": "MessageIn",
+        "description": "Lo que el navegador manda. El texto entra como dato, nunca como instruccion.\n\nLos dos campos de U23 son **aditivos y con valor por omision**, asi que el chat\nsigue mandando lo que mandaba (FD-U23-1: ninguna ruta nueva)."
+      },
+      "MessageOutOfScope": {
+        "properties": {
+          "copy_key": {
+            "type": "string",
+            "title": "Copy Key"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "copy_key"
+        ],
+        "title": "MessageOutOfScope",
+        "description": "El texto no es una pregunta de cobertura y la superficie solo admite esas.\n\nLleva la clave de la frase y nunca la frase, como el rechazo por limite: una\nfrase resuelta en dos sitios acaba diciendose de dos maneras."
+      },
+      "MessageRejected": {
+        "properties": {
+          "limit": {
+            "$ref": "#/components/schemas/LimitKind"
+          },
+          "copy_key": {
+            "type": "string",
+            "title": "Copy Key"
+          },
+          "retry_after": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retry After"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "limit",
+          "copy_key"
+        ],
+        "title": "MessageRejected",
+        "description": "Se alcanzo un limite. Lleva **cual** y la clave de la frase, nunca el texto.\n\nEl navegador resuelve la frase de su catalogo, igual que con la de espera: una\nfrase resuelta en dos sitios acaba diciendose de dos maneras."
+      },
+      "MetricsSnapshot": {
+        "properties": {
+          "baseline_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Baseline Id"
+          },
+          "commit_sha": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Commit Sha"
+          },
+          "published_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Published At"
+          },
+          "run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Id"
+          },
+          "figures": {
+            "items": {
+              "$ref": "#/components/schemas/Figure"
+            },
+            "type": "array",
+            "title": "Figures"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "figures"
+        ],
+        "title": "MetricsSnapshot",
+        "description": "La vista de lectura de la linea base vigente (entities.md)."
+      },
+      "ModelSpend": {
+        "properties": {
+          "model": {
+            "type": "string",
+            "title": "Model"
+          },
+          "total": {
+            "$ref": "#/components/schemas/SpendTotal"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "model",
+          "total"
+        ],
+        "title": "ModelSpend",
+        "description": "Lo que costo un modelo, con su identificador exacto: el que se cobro."
+      },
+      "Money": {
+        "properties": {
+          "amount_usd": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "ge": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount Usd"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CostStatus"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "Money",
+        "description": "Una cantidad de dinero **y si se midio**. El par es el tipo (BR3.4).\n\nNo existe un costo suelto en esta unidad. Es lo que impide que \"no se pudo\nvalorar\" se escriba como cero y despues se sume como si fuera cierto."
+      },
+      "Monogram": {
+        "type": "string",
+        "enum": [
+          "arch",
+          "horizon",
+          "rings"
+        ],
+        "title": "Monogram",
+        "description": "La forma geometrica que dibuja la interfaz como marca de una aseguradora.\n\nLa configuracion elige la forma; el codigo no sabe que aseguradora la usa\n(BR1.6, convencion 9 del equipo)."
+      },
+      "NewCall": {
+        "properties": {
+          "language": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "es",
+                  "en"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "NewCall",
+        "description": "Lo que la consola manda para abrir. **Sin `case_id`**: ver la cabecera.\n\n`language` es **opcional desde U18** (BR1.1, decision D5), y su ausencia no es\nun descuido: significa \"nadie eligio\", y entonces manda el idioma de la\naseguradora. La diferencia entre \"eligio espanol\" y \"asi vino la pestana\" la\nsabe el selector del navegador y no el servidor, asi que el servidor no la\npuede adivinar: lo unico que puede hacer es distinguir el dato que llega del\nque no llega. Es aditivo, asi que la API no cambia de version (decision de\nMiguel del 2026-09-18)."
+      },
+      "NodeView": {
+        "properties": {
+          "node": {
+            "type": "string",
+            "title": "Node"
+          },
+          "duration_ms": {
+            "type": "integer",
+            "title": "Duration Ms"
+          },
+          "cost_usd": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Usd"
+          },
+          "cost_status": {
+            "type": "string",
+            "title": "Cost Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "node",
+          "duration_ms",
+          "cost_usd",
+          "cost_status"
+        ],
+        "title": "NodeView",
+        "description": "Un nodo del recorrido, como la pagina lo muestra."
+      },
+      "NotMeasuredCause": {
+        "type": "string",
+        "enum": [
+          "no_baseline",
+          "criterion_absent",
+          "criterion_not_built",
+          "measured_per_milestone",
+          "not_connected",
+          "latency_not_in_baseline",
+          "too_few_turns"
+        ],
+        "title": "NotMeasuredCause",
+        "description": "Por que una cifra no se midio. Cerrada: cada valor tiene su frase en el catalogo."
+      },
+      "NotMeasuredGroup": {
+        "properties": {
+          "cause": {
+            "type": "string",
+            "title": "Cause"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "cause",
+          "count"
+        ],
+        "title": "NotMeasuredGroup"
+      },
+      "OpeningView": {
+        "properties": {
+          "message_id": {
+            "type": "string",
+            "title": "Message Id"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "es",
+              "en"
+            ],
+            "title": "Language"
+          },
+          "suggestions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Suggestions",
+            "default": []
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "message_id",
+          "text",
+          "language"
+        ],
+        "title": "OpeningView",
+        "description": "El primer mensaje de la agente, con el mismo identificador que viaja por el flujo."
+      },
+      "PolicyCatalog": {
+        "properties": {
+          "tenant_id": {
+            "type": "string",
+            "title": "Tenant Id"
+          },
+          "example_policy": {
+            "type": "string",
+            "title": "Example Policy"
+          },
+          "policies": {
+            "items": {
+              "$ref": "#/components/schemas/PolicyView"
+            },
+            "type": "array",
+            "title": "Policies"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tenant_id",
+          "example_policy",
+          "policies"
+        ],
+        "title": "PolicyCatalog"
+      },
+      "PolicyView": {
+        "properties": {
+          "policy_number": {
+            "type": "string",
+            "title": "Policy Number"
+          },
+          "holder_name": {
+            "type": "string",
+            "title": "Holder Name"
+          },
+          "issuer_name": {
+            "type": "string",
+            "title": "Issuer Name"
+          },
+          "vehicles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Vehicles"
+          },
+          "period_start": {
+            "type": "string",
+            "format": "date",
+            "title": "Period Start"
+          },
+          "period_end": {
+            "type": "string",
+            "format": "date",
+            "title": "Period End"
+          },
+          "limits": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Limits"
+          },
+          "endorsements": {
+            "items": {
+              "$ref": "#/components/schemas/EndorsementView"
+            },
+            "type": "array",
+            "title": "Endorsements"
+          },
+          "questions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Questions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "policy_number",
+          "holder_name",
+          "issuer_name",
+          "vehicles",
+          "period_start",
+          "period_end",
+          "limits",
+          "endorsements",
+          "questions"
+        ],
+        "title": "PolicyView",
+        "description": "Una poliza de ejemplo, tal como la dibuja la pestana."
+      },
+      "Priority": {
+        "type": "string",
+        "enum": [
+          "normal",
+          "high"
+        ],
+        "title": "Priority",
+        "description": "La prioridad del caso. `HIGH` cuando se derivo por peticion de persona (BR3.8)."
+      },
+      "Problem": {
+        "additionalProperties": false,
+        "description": "El cuerpo de un error de la API (C-01, RFC 9457).",
+        "properties": {
+          "type": {
+            "default": "about:blank",
+            "title": "Type",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "integer"
+          },
+          "detail": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Detail"
+          },
+          "instance": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Instance"
+          },
+          "trace_id": {
+            "title": "Trace Id",
+            "type": "string"
+          },
+          "retry_after_s": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Retry After S"
+          },
+          "code": {
+            "$ref": "#/components/schemas/ProblemCode"
+          }
+        },
+        "required": [
+          "title",
+          "status",
+          "trace_id",
+          "code"
+        ],
+        "title": "Problem",
+        "type": "object"
+      },
+      "ProblemCode": {
+        "description": "Los codigos de error de C-01. **Lista cerrada**.\n\nUn codigo nuevo es un cambio aditivo solo porque la interfaz tiene una rama\npor defecto para los que no conoce (BR3.3); aun asi, se anade aqui y en el\ncontrato en el mismo cambio, nunca se inventa en una ruta.",
+        "enum": [
+          "validation_failed",
+          "not_found",
+          "forbidden_origin",
+          "link_invalid",
+          "conflict_idempotency",
+          "conflict_state",
+          "rate_limited_session",
+          "rate_limited_daily",
+          "rate_limited_site",
+          "budget_exhausted",
+          "provider_timeout",
+          "provider_unavailable",
+          "unverifiable",
+          "demo_closed",
+          "internal"
+        ],
+        "title": "ProblemCode",
+        "type": "string"
+      },
+      "ProviderIndicators": {
+        "properties": {
+          "priced_units": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Priced Units"
+          },
+          "uses_with_key": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Uses With Key"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "priced_units",
+          "uses_with_key"
+        ],
+        "title": "ProviderIndicators",
+        "description": "Los indicadores de diagnostico de U1 y U5 (FD-U6-6).\n\nNombres de uso y un conteo, **nunca una clave**. No vuelven no apto al\nproceso: sin precio el costo se registra como no medido, y un uso sin clave\nfalla al pedirlo nombrando la variable que falta."
+      },
+      "ProviderName": {
+        "type": "string",
+        "enum": [
+          "gemini",
+          "deepgram",
+          "cartesia",
+          "anthropic"
+        ],
+        "title": "ProviderName",
+        "description": "Los proveedores del proyecto (BR3.1).\n\nUno nuevo es una entrada nueva en esta lista, no una cadena libre, y llega con\nsu revision de migracion: la restriccion `spend_entry_proveedor_valido` del\nlibro mayor enumera los mismos valores, y una prueba de integracion falla si\nla base y esta lista dicen cosas distintas.\n\nLos dos ultimos son la voz, construida por U15 `speech-providers`: Deepgram\ntranscribe y da la voz de respaldo (Aura-2), y Cartesia da la principal\n(Catalina). Hubo un cuarto, `fallback_tts`, que U5 reservo para una voz de\nrespaldo sin proveedor decidido; la enmienda del 2026-09-21 de ADR-008 la dio\na Deepgram, el nombre dejo de describir nada construido y se retiro con la\nrevision `u15_speech_0001_provider_check`."
+      },
+      "ProviderSpend": {
+        "properties": {
+          "provider": {
+            "$ref": "#/components/schemas/ProviderName"
+          },
+          "total": {
+            "$ref": "#/components/schemas/SpendTotal"
+          },
+          "models": {
+            "items": {
+              "$ref": "#/components/schemas/ModelSpend"
+            },
+            "type": "array",
+            "title": "Models",
+            "default": []
+          },
+          "unpriced": {
+            "$ref": "#/components/schemas/UnpricedUsage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "provider",
+          "total"
+        ],
+        "title": "ProviderSpend",
+        "description": "Lo que costo un proveedor, con lo que no se pudo medir."
+      },
+      "QualityBoard": {
+        "properties": {
+          "run_id": {
+            "type": "string",
+            "title": "Run Id"
+          },
+          "commit_sha": {
+            "type": "string",
+            "title": "Commit Sha"
+          },
+          "produced_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Produced At"
+          },
+          "duration_seconds": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration Seconds"
+          },
+          "comparable": {
+            "type": "boolean",
+            "title": "Comparable",
+            "default": true
+          },
+          "dirty_tree": {
+            "type": "boolean",
+            "title": "Dirty Tree",
+            "default": false
+          },
+          "models": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Models",
+            "default": []
+          },
+          "totals": {
+            "$ref": "#/components/schemas/TallyByLanguage"
+          },
+          "datasets": {
+            "items": {
+              "$ref": "#/components/schemas/DatasetResult"
+            },
+            "type": "array",
+            "title": "Datasets",
+            "default": []
+          },
+          "gates": {
+            "items": {
+              "$ref": "#/components/schemas/GateResult"
+            },
+            "type": "array",
+            "title": "Gates",
+            "default": []
+          },
+          "failures": {
+            "items": {
+              "$ref": "#/components/schemas/FailedCase"
+            },
+            "type": "array",
+            "title": "Failures",
+            "default": []
+          },
+          "not_measured": {
+            "items": {
+              "$ref": "#/components/schemas/NotMeasuredGroup"
+            },
+            "type": "array",
+            "title": "Not Measured",
+            "default": []
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "run_id",
+          "commit_sha",
+          "produced_at",
+          "totals"
+        ],
+        "title": "QualityBoard",
+        "description": "Lo que la pestana dibuja."
+      },
+      "QueueItem": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "title": "Case Id"
+          },
+          "case_number": {
+            "type": "string",
+            "title": "Case Number"
+          },
+          "state": {
+            "$ref": "#/components/schemas/CaseState"
+          },
+          "record_type": {
+            "$ref": "#/components/schemas/RecordType"
+          },
+          "channel": {
+            "$ref": "#/components/schemas/Channel"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "es",
+              "en"
+            ],
+            "title": "Language"
+          },
+          "priority": {
+            "$ref": "#/components/schemas/Priority"
+          },
+          "completeness": {
+            "type": "number",
+            "title": "Completeness"
+          },
+          "completeness_complete": {
+            "type": "integer",
+            "title": "Completeness Complete"
+          },
+          "completeness_total": {
+            "type": "integer",
+            "title": "Completeness Total"
+          },
+          "derivation_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Derivation Reason"
+          },
+          "updated_at": {
+            "type": "string",
+            "title": "Updated At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "case_id",
+          "case_number",
+          "state",
+          "record_type",
+          "channel",
+          "language",
+          "priority",
+          "completeness",
+          "completeness_complete",
+          "completeness_total",
+          "updated_at"
+        ],
+        "title": "QueueItem",
+        "description": "Una fila de la cola, con la forma que C-05 declara."
+      },
+      "QueuePage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/QueueItem"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "title": "QueuePage",
+        "description": "La pagina de C-01: sus filas y por donde sigue."
+      },
+      "ReasoningAnswer": {
+        "properties": {
+          "question": {
+            "type": "string",
+            "title": "Question"
+          },
+          "outcome": {
+            "type": "string",
+            "title": "Outcome"
+          },
+          "clauses": {
+            "items": {
+              "$ref": "#/components/schemas/ReasoningClause"
+            },
+            "type": "array",
+            "title": "Clauses",
+            "default": []
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "question",
+          "outcome"
+        ],
+        "title": "ReasoningAnswer",
+        "description": "Una pregunta de cobertura y como se respondio."
+      },
+      "ReasoningClause": {
+        "properties": {
+          "clause_id": {
+            "type": "string",
+            "title": "Clause Id"
+          },
+          "part": {
+            "type": "string",
+            "title": "Part"
+          },
+          "verified": {
+            "type": "boolean",
+            "title": "Verified"
+          },
+          "claim": {
+            "type": "string",
+            "title": "Claim"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "clause_id",
+          "part",
+          "verified",
+          "claim"
+        ],
+        "title": "ReasoningClause",
+        "description": "Una clausula que la agente cito, con la parte de la poliza donde esta."
+      },
+      "RecordType": {
+        "type": "string",
+        "enum": [
+          "claim",
+          "coverage_inquiry",
+          "quote_request"
+        ],
+        "title": "RecordType",
+        "description": "Los tres tipos de registro (BR1.1, ADR-005, D18)."
+      },
+      "RedeemIn": {
+        "properties": {
+          "token": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Token"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "token"
+        ],
+        "title": "RedeemIn",
+        "description": "El token del enlace. Llega en el cuerpo y **nunca** en la direccion."
+      },
+      "RedeemOut": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "title": "Case Id"
+          },
+          "tenant": {
+            "type": "string",
+            "title": "Tenant"
+          },
+          "access": {
+            "type": "string",
+            "title": "Access"
+          },
+          "expires_at": {
+            "type": "string",
+            "title": "Expires At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "case_id",
+          "tenant",
+          "access",
+          "expires_at"
+        ],
+        "title": "RedeemOut",
+        "description": "Lo que la pantalla del visitante necesita saber de su sesion (C-07)."
+      },
+      "SiteDirectory": {
+        "properties": {
+          "tenants": {
+            "items": {
+              "$ref": "#/components/schemas/TenantPresentation"
+            },
+            "type": "array",
+            "title": "Tenants"
+          },
+          "surfaces": {
+            "items": {
+              "$ref": "#/components/schemas/SurfaceId"
+            },
+            "type": "array",
+            "title": "Surfaces"
+          },
+          "links": {
+            "$ref": "#/components/schemas/SiteLinks"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tenants",
+          "surfaces",
+          "links"
+        ],
+        "title": "SiteDirectory",
+        "description": "La respuesta de `GET /api/site`."
+      },
+      "SiteLinks": {
+        "properties": {
+          "readme_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Readme Url"
+          },
+          "video_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Video Url"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "SiteLinks",
+        "description": "Los enlaces externos configurados. El que falta no viaja (BR4.4)."
+      },
+      "SpendActivity": {
+        "type": "string",
+        "enum": [
+          "calls",
+          "chat",
+          "quality_tests",
+          "policy_reading",
+          "operations"
+        ],
+        "title": "SpendActivity",
+        "description": "En que se fue el gasto, como lo entiende quien mira la telemetria (2026-10-09).\n\nNo es el `Use`: el uso decide la clave y el plan, y una llamada de voz gasta en\ntres usos --transcripcion, voz y el modelo que entiende--. Lo que una persona\nquiere saber es cuanto costaron las llamadas, cuanto el chat y cuanto las\npruebas. Lo deriva la consulta, con la regla escrita en `repository.ACTIVIDAD`."
+      },
+      "SpendPanel": {
+        "properties": {
+          "window": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BudgetState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "alert_sent_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Alert Sent At"
+          },
+          "total": {
+            "$ref": "#/components/schemas/SpendTotal"
+          },
+          "by_activity": {
+            "items": {
+              "$ref": "#/components/schemas/ActivitySpend"
+            },
+            "type": "array",
+            "title": "By Activity"
+          },
+          "by_provider": {
+            "items": {
+              "$ref": "#/components/schemas/ProviderSpend"
+            },
+            "type": "array",
+            "title": "By Provider"
+          },
+          "by_day": {
+            "items": {
+              "$ref": "#/components/schemas/DaySpend"
+            },
+            "type": "array",
+            "title": "By Day"
+          },
+          "calls": {
+            "$ref": "#/components/schemas/CountedSpend"
+          },
+          "chats": {
+            "$ref": "#/components/schemas/CountedSpend"
+          },
+          "cases": {
+            "items": {
+              "$ref": "#/components/schemas/CaseSpendItem"
+            },
+            "type": "array",
+            "title": "Cases"
+          },
+          "comparisons": {
+            "items": {
+              "$ref": "#/components/schemas/ComparisonSpendItem"
+            },
+            "type": "array",
+            "title": "Comparisons",
+            "default": []
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "window",
+          "alert_sent_at",
+          "total",
+          "by_activity",
+          "by_provider",
+          "by_day",
+          "calls",
+          "chats",
+          "cases"
+        ],
+        "title": "SpendPanel",
+        "description": "El tablero entero.\n\n**`window` admite nulo y eso es un estado, no un hueco**: sin fila de la\nventana no hay acumulado que mostrar, y escribir un cero diria \"se midio y dio\ncero\"."
+      },
+      "SpendTotal": {
+        "properties": {
+          "measured_usd": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Measured Usd",
+            "ge": 0
+          },
+          "unmeasured_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Unmeasured Count"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "measured_usd",
+          "unmeasured_count"
+        ],
+        "title": "SpendTotal",
+        "description": "Lo que devuelve **toda** agregacion de costo de esta unidad (BR3.5).\n\nLleva dentro el conteo de llamadas no medidas, asi que publicar el total sin\ndecir cuanto no se midio exige desarmar el tipo a proposito."
+      },
+      "Surface": {
+        "type": "string",
+        "enum": [
+          "chat",
+          "comparison"
+        ],
+        "title": "Surface",
+        "description": "Desde que pantalla se esta conversando (FD-U23-8 de U23).\n\n**Es un dato de la conversacion y no una rama por pantalla.** La vista de\ncomparacion habla por estas mismas rutas y ya muestra **su** divulgacion --cada\ncolumna dice quien responde y que es una asistente de IA, y el aviso de\ndemostracion va junto al cuadro de texto--; sin este dato, quien la abre leeria\nademas tres aperturas del chat y tres ofertas de reportar un siniestro en una\npantalla que compara coberturas.\n\nLo que cambia con la superficie son dos cosas y ninguna es una rama de\nconducta: **que texto de apertura se publica** --ninguno, cuando la pantalla ya\nlo mostro-- y **que clave queda registrada** como la divulgacion que se dio."
+      },
+      "SurfaceCheck": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "down"
+            ],
+            "title": "Status"
+          },
+          "duration_ms": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Duration Ms"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status",
+          "duration_ms"
+        ],
+        "title": "SurfaceCheck",
+        "description": "El resultado de la sonda de una superficie montada (OBS-U6.1)."
+      },
+      "SurfaceId": {
+        "type": "string",
+        "enum": [
+          "chat",
+          "voice_console",
+          "comparison",
+          "inbox",
+          "case_link",
+          "metrics_panel",
+          "spend_panel"
+        ],
+        "title": "SurfaceId",
+        "description": "Las siete superficies del aplicativo. Lista cerrada (FD-U6-1)."
+      },
+      "Tally": {
+        "properties": {
+          "passed": {
+            "type": "integer",
+            "title": "Passed",
+            "default": 0
+          },
+          "failed": {
+            "type": "integer",
+            "title": "Failed",
+            "default": 0
+          },
+          "not_measured": {
+            "type": "integer",
+            "title": "Not Measured",
+            "default": 0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Tally",
+        "description": "Cuantos pasan, fallan y no se midieron. De un solo idioma."
+      },
+      "TallyByLanguage": {
+        "properties": {
+          "es": {
+            "$ref": "#/components/schemas/Tally",
+            "default": {
+              "passed": 0,
+              "failed": 0,
+              "not_measured": 0
+            }
+          },
+          "en": {
+            "$ref": "#/components/schemas/Tally",
+            "default": {
+              "passed": 0,
+              "failed": 0,
+              "not_measured": 0
+            }
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "TallyByLanguage",
+        "description": "Los dos idiomas, lado a lado. No hay un tercero combinado."
+      },
+      "TenantBrandView": {
+        "properties": {
+          "accent": {
+            "type": "string",
+            "title": "Accent"
+          },
+          "accent_on_dark": {
+            "type": "string",
+            "title": "Accent On Dark"
+          },
+          "monogram": {
+            "$ref": "#/components/schemas/Monogram"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "accent",
+          "accent_on_dark",
+          "monogram"
+        ],
+        "title": "TenantBrandView",
+        "description": "La marca de una aseguradora, tal como la dibuja la interfaz (BR1.6)."
+      },
+      "TenantKind": {
+        "type": "string",
+        "enum": [
+          "carrier",
+          "agency"
+        ],
+        "title": "TenantKind",
+        "description": "Una agencia deriva siempre a quien emitio la poliza; una aseguradora decide."
+      },
+      "TenantPresentation": {
+        "properties": {
+          "tenant_id": {
+            "type": "string",
+            "title": "Tenant Id"
+          },
+          "display_name": {
+            "type": "string",
+            "title": "Display Name"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/TenantKind"
+          },
+          "default_language": {
+            "type": "string",
+            "enum": [
+              "es",
+              "en"
+            ],
+            "title": "Default Language"
+          },
+          "example_policy": {
+            "type": "string",
+            "title": "Example Policy"
+          },
+          "example_policy_issuer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Example Policy Issuer"
+          },
+          "character_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Character Key"
+          },
+          "brand": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TenantBrandView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "agent_name": {
+            "type": "string",
+            "title": "Agent Name"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tenant_id",
+          "display_name",
+          "kind",
+          "default_language",
+          "example_policy",
+          "agent_name"
+        ],
+        "title": "TenantPresentation",
+        "description": "Lo que el inicio muestra de una aseguradora (entidad `TenantPresentation`).\n\n`character_key` y `brand` son opcionales porque su configuracion puede no\ntraerlos (CG-U6-4): lo que falta no se muestra ni se inventa (BR4.2)."
+      },
+      "TraceView": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "nodes": {
+            "items": {
+              "$ref": "#/components/schemas/NodeView"
+            },
+            "type": "array",
+            "title": "Nodes"
+          },
+          "clauses_retrieved": {
+            "type": "integer",
+            "title": "Clauses Retrieved"
+          },
+          "clauses_verified": {
+            "type": "integer",
+            "title": "Clauses Verified"
+          },
+          "latency_ms": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latency Ms"
+          },
+          "cost_usd": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Usd"
+          },
+          "cost_status": {
+            "type": "string",
+            "title": "Cost Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "nodes",
+          "clauses_retrieved",
+          "clauses_verified",
+          "latency_ms",
+          "cost_usd",
+          "cost_status"
+        ],
+        "title": "TraceView",
+        "description": "El resumen de una respuesta. `status` decide que dibuja la pagina."
+      },
+      "TranscriptTurnView": {
+        "properties": {
+          "turn_id": {
+            "type": "string",
+            "title": "Turn Id"
+          },
+          "speaker": {
+            "type": "string",
+            "title": "Speaker"
+          },
+          "text_redacted": {
+            "type": "string",
+            "title": "Text Redacted"
+          },
+          "started_at": {
+            "type": "string",
+            "title": "Started At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "turn_id",
+          "speaker",
+          "text_redacted",
+          "started_at"
+        ],
+        "title": "TranscriptTurnView",
+        "description": "Un turno, **ya redactado por U3**. La bandeja no lo destapa (BR2.3)."
+      },
+      "Transport": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "websocket",
+            "title": "Kind",
+            "default": "websocket"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "token": {
+            "type": "string",
+            "title": "Token"
+          },
+          "encoding": {
+            "type": "string",
+            "title": "Encoding"
+          },
+          "sample_rate_hz": {
+            "type": "integer",
+            "title": "Sample Rate Hz"
+          },
+          "channels": {
+            "type": "integer",
+            "title": "Channels"
+          },
+          "frame_ms": {
+            "type": "integer",
+            "title": "Frame Ms"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "url",
+          "token",
+          "encoding",
+          "sample_rate_hz",
+          "channels",
+          "frame_ms"
+        ],
+        "title": "Transport",
+        "description": "El objeto que C-08 dejo abierto y que D1 cierra (C-29).\n\nUn WebSocket del mismo origen con PCM de 16 bits, mono, a 24 kHz --el unico\nformato del aplicativo-- y el token en el primer cuadro, nunca en esta URL."
+      },
+      "TriageNoteIn": {
+        "properties": {
+          "claim_amount": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 10000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Claim Amount"
+          },
+          "coverage_disputed": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Coverage Disputed"
+          },
+          "fraud_suspected": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fraud Suspected"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "claim_amount",
+          "coverage_disputed",
+          "fraud_suspected"
+        ],
+        "title": "TriageNoteIn",
+        "description": "Lo que se manda para anotar: **los tres datos, siempre**, cada uno con su valor o `null`.\n\nEs el estado completo y no un cambio parcial (PUT): `null` es \"sin anotar\", y es lo que\npermite quitar algo ya anotado y volver a dejarlo sin anotar. Con un cuerpo parcial, un\ndato ausente seria ambiguo entre \"no lo toques\" y \"quitalo\", y la pantalla no podria\ndeshacer una anotacion. Los tipos son estrictos: un `true` no es un monto de 1, ni un\n`1` un si."
+      },
+      "TriageNoteOut": {
+        "properties": {
+          "receipt_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Receipt Id"
+          },
+          "rule_category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rule Category"
+          },
+          "fired_rules": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Fired Rules"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "receipt_id",
+          "rule_category",
+          "fired_rules"
+        ],
+        "title": "TriageNoteOut",
+        "description": "La anotacion registrada y lo que las reglas dijeron con ella.\n\nRepetir la misma clave devuelve esta misma respuesta (C-05). `rule_category` y\n`fired_rules` son de la evaluacion que dejo esta peticion; la pantalla vuelve a leer el\ncaso para mostrarla, y esto es lo que le dice que ya existe.\n\n`receipt_id` es `null` solo cuando quien guardo entro con el enlace de su caso y guardo lo\nque ya estaba: no se escribio nada, asi que no hay recibo. Entonces `rule_category` y\n`fired_rules` son los de la evaluacion vigente del caso (o `null` y vacio si no hay ninguna)."
+      },
+      "TriageNoteView": {
+        "properties": {
+          "claim_amount": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Claim Amount"
+          },
+          "coverage_disputed": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Coverage Disputed"
+          },
+          "fraud_suspected": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fraud Suspected"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "claim_amount",
+          "coverage_disputed",
+          "fraud_suspected"
+        ],
+        "title": "TriageNoteView",
+        "description": "Lo que un ajustador anoto para las reglas, tal como esta guardado.\n\n**Cada dato puede venir `null`, y `null` es \"sin anotar\"**, que no es lo mismo que\n`false`: una regla que lee un dato ausente no dispara, y una que lee `false` afirma que\nalguien lo comprobo. La pantalla los distingue y no los mezcla.\n\n`claim_amount` es la cifra interna del motor (la que comparan las reglas); el proyecto\nla muestra en pesos multiplicandola por mil."
+      },
+      "UnpricedUsage": {
+        "properties": {
+          "tokens": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Tokens",
+            "default": 0
+          },
+          "uncounted": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Uncounted",
+            "default": 0
+          },
+          "free_plan": {
+            "type": "boolean",
+            "title": "Free Plan",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "UnpricedUsage",
+        "description": "Lo que consumieron las llamadas **sin precio publicado**, en tokens (2026-10-11).\n\nExiste porque \"sin precio\" no es \"sin dato\": el proveedor reporta cuantos\ntokens conto aunque la tabla de precios no tenga la linea de ese modelo. Viaja\n**al lado** de `SpendTotal` y no dentro, porque ese tipo lo consume la cuenta\ndel techo y esto es solo para mostrar: nada de aqui suma contra el presupuesto.\n\n- `tokens`: los de las llamadas sin precio que traen recuento.\n- `uncounted`: cuantas llamadas sin precio **no** traen recuento de tokens (el\n  proveedor no lo reporto, o la unidad no es de tokens). De ellas no se sabe\n  nada, y por eso no suman a `tokens`.\n- `free_plan`: todas las llamadas sin precio --traigan recuento o no-- son de un\n  uso en plan gratuito (`billable` en falso). Con una sola de pago, o sin\n  ninguna, es falso: la pantalla solo dice \"plan gratuito\" cuando el dato lo\n  respalda. Cubre tambien las que no traen recuento porque es el caso real: el\n  servicio de vectores de Google no reporta tokens (comprobado el 2026-10-11),\n  y de esas lo que se puede decir con verdad es cuantas fueron y que no cuestan."
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "VoiceMode": {
+        "type": "string",
+        "enum": [
+          "primary",
+          "fallback"
+        ],
+        "title": "VoiceMode",
+        "description": "Con que voz se atiende la llamada (BR5.7).\n\nSe decide antes de abrir y no cambia a mitad: cambiar de voz a mitad de\nllamada suena a fallo, aunque sea un ahorro."
+      },
+      "VoiceOffCode": {
+        "type": "string",
+        "enum": [
+          "rate_limited_daily",
+          "rate_limited_site",
+          "budget_exhausted",
+          "provider_unavailable",
+          "demo_closed"
+        ],
+        "title": "VoiceOffCode",
+        "description": "Por qué no hay voz ahora mismo. **Lista cerrada**, la de C-08.\n\nLos dos carriles diarios están aquí porque el contrato los declara y la\nconsola tiene una frase para cada uno. Los aplica U17 (`admission.decide`) y los\ndevuelven las dos puertas: la disponibilidad como `reason_code` y abrir la llamada\ncomo el `code` del problema, con el mismo valor."
+      }
+    }
+  }
+}

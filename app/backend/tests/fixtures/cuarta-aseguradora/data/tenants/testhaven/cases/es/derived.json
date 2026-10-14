@@ -1,0 +1,56 @@
+{
+  "case_key": "SEED/testhaven/es/derived",
+  "channel": "chat",
+  "derivation_reason": "person_requested",
+  "fields": {
+    "description": {
+      "status": "confirmed",
+      "value": "Le rayaron la puerta del conductor mientras estaba parqueado."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Tomas Herrera Nieto, poliza POL-777001"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-30 09:10"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-777001",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "derived",
+  "tenant_id": "testhaven",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Buenos dias. Soy Tomas Herrera Nieto, mi poliza es POL-777001."
+    },
+    {
+      "speaker": "agent",
+      "text": "Cuando paso?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Anteayer, como a las nueve y diez de la manana."
+    },
+    {
+      "speaker": "agent",
+      "text": "Que paso?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Me rayaron la puerta del conductor mientras estaba parqueado."
+    },
+    {
+      "speaker": "agent",
+      "text": "Donde estaba parqueado el vehiculo?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Prefiero hablar con una persona, por favor."
+    }
+  ],
+  "used_by": ["AC5.1.1"]
+}

@@ -1,0 +1,136 @@
+# Textos fuente revisados de Seguros Aburrá, en espanol (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: stonecroft
+language: es
+part_key: part_e
+texts:
+- source_id: STO-PAP-2026-E.DUTIES.A.1
+  kind: clause
+  clause_key: E.DUTIES.A.1
+  part: Parte E — Obligaciones después de un accidente o pérdida
+  version: '2026.1'
+  text: Avísenos de cualquier accidente o pérdida lo antes posible y siempre dentro del plazo que fija
+    el documento de jurisdicción de Corvane.
+  refers_to:
+  - STO-JUR-2026-J.3
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-E.DUTIES.A.2
+  kind: clause
+  clause_key: E.DUTIES.A.2
+  part: Parte E — Obligaciones después de un accidente o pérdida
+  version: '2026.1'
+  text: Cuéntenos cómo, cuándo y dónde pasó, y qué vehículos y personas estaban involucrados.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-E.DUTIES.A.3
+  kind: clause
+  clause_key: E.DUTIES.A.3
+  part: Parte E — Obligaciones después de un accidente o pérdida
+  version: '2026.1'
+  text: Denos el nombre y un dato de contacto de los lesionados y de los testigos que conozca.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-E.DUTIES.B.1
+  kind: clause
+  clause_key: E.DUTIES.B.1
+  part: Parte E — Obligaciones después de un accidente o pérdida
+  version: '2026.1'
+  text: Colabore con nosotros en la revisión del caso y en la defensa de cualquier reclamación contra
+    usted.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-E.DUTIES.B.2
+  kind: clause
+  clause_key: E.DUTIES.B.2
+  part: Parte E — Obligaciones después de un accidente o pérdida
+  version: '2026.1'
+  text: Envíenos enseguida copia de toda notificación, citación o demanda que reciba por el accidente.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-E.DUTIES.B.3
+  kind: clause
+  clause_key: E.DUTIES.B.3
+  part: Parte E — Obligaciones después de un accidente o pérdida
+  version: '2026.1'
+  text: Si la reclamación incluye lesiones, asista a los exámenes médicos que le pidamos, con médicos
+    que nosotros pagamos, tantas veces como sea razonable.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-E.DUTIES.B.4
+  kind: clause
+  clause_key: E.DUTIES.B.4
+  part: Parte E — Obligaciones después de un accidente o pérdida
+  version: '2026.1'
+  text: Autorice que obtengamos su historia clínica y los demás documentos sobre las lesiones, y entréguenos
+    por escrito la relación de la pérdida si se la pedimos.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-E.DUTIES.C.1
+  kind: clause
+  clause_key: E.DUTIES.C.1
+  part: Parte E — Obligaciones después de un accidente o pérdida
+  version: '2026.1'
+  text: Si el responsable huyó sin identificarse, denuncie el hecho a la policía dentro de las 24 horas
+    siguientes.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-E.DUTIES.C.2
+  kind: clause
+  clause_key: E.DUTIES.C.2
+  part: Parte E — Obligaciones después de un accidente o pérdida
+  version: '2026.1'
+  text: Si demanda a un conductor sin seguro, envíenos copia de la demanda y de lo que reciba en ese proceso.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-E.DUTIES.D.1
+  kind: clause
+  clause_key: E.DUTIES.D.1
+  part: Parte E — Obligaciones después de un accidente o pérdida
+  version: '2026.1'
+  text: Tome las medidas razonables para evitar que el vehículo sufra más daños; le devolvemos lo que
+    gaste en ellas.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-E.DUTIES.D.2
+  kind: clause
+  clause_key: E.DUTIES.D.2
+  part: Parte E — Obligaciones después de un accidente o pérdida
+  version: '2026.1'
+  text: Si le robaron el vehículo o alguna de sus partes, denúncielo a la policía de inmediato.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-E.DUTIES.D.3
+  kind: clause
+  clause_key: E.DUTIES.D.3
+  part: Parte E — Obligaciones después de un accidente o pérdida
+  version: '2026.1'
+  text: Permítanos ver y tasar el vehículo antes de repararlo o de deshacerse de él.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2025-E.DUTIES.A.1.ALT
+  kind: distractor
+  clause_key: E.DUTIES.A.1.ALT
+  part: Parte E — Obligaciones después de un accidente o pérdida
+  version: '2025.1'
+  text: Avísenos de cualquier accidente o pérdida dentro de los treinta días siguientes; pasado ese plazo,
+    el aviso ya no se recibe.
+  distractor_of: STO-PAP-2026-E.DUTIES.A.1
+  distractor_reason: near_duplicate
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite

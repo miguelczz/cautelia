@@ -1,0 +1,280 @@
+{
+  "$defs": {
+    "CaseResult": {
+      "additionalProperties": false,
+      "description": "El veredicto de un caso dentro de una corrida.",
+      "properties": {
+        "result_id": {
+          "minLength": 1,
+          "title": "Result Id",
+          "type": "string"
+        },
+        "run_id": {
+          "minLength": 1,
+          "title": "Run Id",
+          "type": "string"
+        },
+        "case_key": {
+          "title": "Case Key",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/CaseStatus"
+        },
+        "not_measured_cause": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NotMeasuredCause"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "criteria_results": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Criteria Results",
+          "type": "object"
+        },
+        "off_script_turns": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Off Script Turns",
+          "type": "integer"
+        },
+        "duration_seconds": {
+          "default": 0.0,
+          "minimum": 0.0,
+          "title": "Duration Seconds",
+          "type": "number"
+        },
+        "root_cause": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RootCause"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "trace_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Trace Ref"
+        },
+        "chat_latencies": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ChatTurnLatency"
+          },
+          "title": "Chat Latencies",
+          "type": "array"
+        }
+      },
+      "required": [
+        "result_id",
+        "run_id",
+        "case_key",
+        "status"
+      ],
+      "title": "CaseResult",
+      "type": "object"
+    },
+    "CaseStatus": {
+      "description": "El veredicto de un caso dentro de una corrida.\n\n`not_measured` nunca se suma con `failed`: uno dice \"esto esta mal\" y el otro\n\"no lo se\", y colapsarlos contamina una metrica publicada con fallos de\ninfraestructura.",
+      "enum": [
+        "passed",
+        "failed",
+        "not_measured"
+      ],
+      "title": "CaseStatus",
+      "type": "string"
+    },
+    "ChatTurnLatency": {
+      "additionalProperties": false,
+      "description": "Lo que tardo un turno del chat en dar su primera palabra, en la corrida.\n\nEs el mismo numero que emite `chat.first_word` (`chat/latency.py`): el conductor lo toma\nde la entrega y no lo mide por su cuenta. **Lleva el idioma en que se atendio el turno**\ny no el del caso, porque un caso puede cambiar de idioma a mitad (RT-10) y la latencia de\nun turno en ingles no es una latencia en espanol. No lleva ni texto ni identificador de\ncaso: es lo unico que sube hasta la linea base.",
+      "properties": {
+        "language": {
+          "enum": [
+            "es",
+            "en"
+          ],
+          "title": "Language",
+          "type": "string"
+        },
+        "first_word_ms": {
+          "minimum": 0,
+          "title": "First Word Ms",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "language",
+        "first_word_ms"
+      ],
+      "title": "ChatTurnLatency",
+      "type": "object"
+    },
+    "NonComparableCause": {
+      "description": "Por que una corrida no se puede comparar contra la linea base (BR1.5).",
+      "enum": [
+        "provider_unavailable",
+        "provider_timeout",
+        "quota_exhausted",
+        "model_changed",
+        "not_measured_cases"
+      ],
+      "title": "NonComparableCause",
+      "type": "string"
+    },
+    "NotMeasuredCause": {
+      "description": "Por que un caso no se pudo medir. Lista cerrada (OBS-U1.3).",
+      "enum": [
+        "provider_unavailable",
+        "provider_timeout",
+        "quota_exhausted",
+        "budget_exhausted",
+        "runner_timeout",
+        "provider_key_missing",
+        "target_unavailable"
+      ],
+      "title": "NotMeasuredCause",
+      "type": "string"
+    },
+    "RootCause": {
+      "description": "La taxonomia cerrada de causa raiz del PRD 11.3, mas una novena.\n\nCerrada y no una lista abierta: es lo que permite que la seccion \"Como\nfalla\" del README se genere agrupando, en vez de con una redaccion distinta\npor caso (U21, BR1.1).\n\n**`NOT_BUILT` no viene del PRD** (decision de Miguel del 2026-09-27, opcion\nA, durante la revision de U8 tanda 2). Los ocho valores del PRD describen\nlas formas en que falla un sistema **construido**; un caso previo de la rama\nevaluada falla por algo distinto --la conducta que mide todavia no existe--\ny ninguno de los ocho lo dice. Marcarlo `INFRASTRUCTURE` seria justo la\nmezcla que U8 prohibe en su BR3.4: contar como fallo del producto algo que\nno lo es. Y dejarlo vacio rompe BR1.1 y deja sin agrupar, hoy, 42 de 100\ncasos del reporte.",
+      "enum": [
+        "extraction",
+        "retrieval",
+        "verification",
+        "rules",
+        "style",
+        "latency",
+        "provider_error",
+        "infrastructure",
+        "not_built"
+      ],
+      "title": "RootCause",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Una ejecucion del corredor de evaluaciones.\n\nLos campos de cabecera son obligatorios porque sin ellos dos corridas no se\npueden comparar (OBS-U1.1): el commit, el identificador exacto de modelo por\nuso --nunca un alias movil-- y el hash del prompt de cada nodo.",
+  "properties": {
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "commit_sha": {
+      "minLength": 1,
+      "title": "Commit Sha",
+      "type": "string"
+    },
+    "subset": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Subset"
+    },
+    "subset_declared": {
+      "default": false,
+      "title": "Subset Declared",
+      "type": "boolean"
+    },
+    "model_ids": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Model Ids",
+      "type": "object"
+    },
+    "prompt_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Prompt Hashes",
+      "type": "object"
+    },
+    "comparable": {
+      "default": true,
+      "title": "Comparable",
+      "type": "boolean"
+    },
+    "non_comparable_cause": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/NonComparableCause"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "duration_seconds": {
+      "default": 0.0,
+      "minimum": 0.0,
+      "title": "Duration Seconds",
+      "type": "number"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "finished_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Finished At"
+    },
+    "results": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/CaseResult"
+      },
+      "title": "Results",
+      "type": "array"
+    },
+    "traces_available": {
+      "default": false,
+      "title": "Traces Available",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "run_id",
+    "commit_sha",
+    "started_at"
+  ],
+  "title": "EvalRun",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/eval-run.schema.json"
+}

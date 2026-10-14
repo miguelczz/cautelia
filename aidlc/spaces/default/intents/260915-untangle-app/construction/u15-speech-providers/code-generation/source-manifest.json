@@ -1,0 +1,244 @@
+{
+  "stage": "code-generation",
+  "unit": "u15-speech-providers",
+  "version": 1,
+  "writes": [
+    {
+      "path": ".env.example"
+    },
+    {
+      "path": "app/backend/.importlinter"
+    },
+    {
+      "path": "app/backend/migrations/versions/u15_speech_0001_provider_check.py"
+    },
+    {
+      "path": "app/backend/pyproject.toml"
+    },
+    {
+      "path": "app/backend/src/untangle/base.py"
+    },
+    {
+      "path": "app/backend/src/untangle/paths.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/cartesia/__init__.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/cartesia/catalog.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/cartesia/protocol.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/cartesia/tts.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/deepgram/__init__.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/deepgram/catalog.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/deepgram/protocol.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/deepgram/stt.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/deepgram/tts.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/speech_common.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/wire.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/ceiling.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/config.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/factory.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/ports.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/speech_wire.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/voice_availability.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/composition.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/speech.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/spend_wiring.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/voice_cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/voice_recording.py"
+    },
+    {
+      "path": "app/backend/src/untangle/settings.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/schema_check.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u15/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u15/test_ledger_providers.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u5/test_wiring.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/apoyo.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/recorded/cartesia-tts-error-402-no-credit.json"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/recorded/cartesia-tts-error-429-rate-limited.json"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/recorded/cartesia-tts-error-500-unavailable.json"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/recorded/cartesia-tts-sonic-3.6-en.json"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/recorded/cartesia-tts-sonic-3.6-es.json"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/recorded/cartesia-tts-unknown-voice.json"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/recorded/deepgram-listen-402-no-credit.json"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/recorded/deepgram-listen-closed-1011.json"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/recorded/deepgram-listen-nova-3-en.json"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/recorded/deepgram-listen-nova-3-es.json"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/recorded/deepgram-speak-429-rate-limited.json"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/recorded/deepgram-speak-503-unavailable.json"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/recorded/deepgram-speak-aura-2-en.json"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/recorded/deepgram-speak-aura-2-es.json"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/recorded/deepgram-speak-unknown-voice.json"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/red.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/replay.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/test_cartesia_tts.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/test_deepgram_stt.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/test_deepgram_tts.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/test_network_guard.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/test_speech_contract.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/test_voice_cli.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/test_voice_config.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/test_wire.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice_providers/test_wiring.py"
+    },
+    {
+      "path": "app/backend/uv.lock"
+    },
+    {
+      "path": "app/config/copy/en.yaml"
+    },
+    {
+      "path": "app/config/copy/es.yaml"
+    },
+    {
+      "path": "app/config/providers/prices.yaml"
+    },
+    {
+      "path": "app/config/providers/providers.yaml"
+    },
+    {
+      "path": "app/config/tenants/knotwell/tenant.yaml"
+    },
+    {
+      "path": "app/config/tenants/stonecroft/tenant.yaml"
+    },
+    {
+      "path": "app/config/tenants/sunmeadow/tenant.yaml"
+    },
+    {
+      "path": "app/contracts/schemas/prices.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/providers.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/tenant.schema.json"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-keys.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-texts.ts"
+    },
+    {
+      "path": "mise.toml"
+    },
+    {
+      "path": "scripts/experimento-1.py"
+    },
+    {
+      "path": "scripts/poner-claves-de-voz.py"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+case_key: DS-2/en/017
+dataset: DS-2
+language: en
+channel: chat
+tenant: stonecroft
+requires_provider_key: true
+script:
+  - field_key: incident.location
+    sequence: 1
+    text: I crashed on 80th and 33rd
+expected_record:
+  state: derived

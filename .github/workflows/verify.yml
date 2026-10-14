@@ -1,0 +1,139 @@
+# La compuerta del proyecto.
+#
+# Corre **despues** de que el cambio ya entro a `main`: no hay rama corta, no hay
+# pull request y no hay segundo revisor. Es la forma de trabajo afirmada por el
+# equipo, elegida con los ojos abiertos. La consecuencia es que el tronco puede
+# ponerse rojo, y entonces arreglarlo pasa por delante de cualquier otra tarea.
+#
+# El flujo **invoca** `scripts/verify.sh`; no mantiene su propia lista de pasos.
+# Una unidad nueva no anade trabajos aqui: anade pasos al guion.
+
+# **Donde corre: en los servidores de GitHub.** El 2026-10-12 la cuenta iba en el 90 % de
+# los 3.000 minutos del mes: cada corrida tarda unos 37 y se habia subido varias veces
+# por noche. Se probo pasarla a la Mac de Miguel y se descarto ese mismo dia (la calienta
+# y tarda). La decision que quedo: **una subida a `main` al dia como mucho, en una sola
+# tanda**. Al agotarse los minutos GitHub deja de correr hasta el mes siguiente; no cobra.
+#
+# La variable del repositorio `RUNS_ON` (Settings -> Secrets and variables -> Actions ->
+# Variables) permite mandar la corrida a otro corredor sin tocar el codigo, por ejemplo
+# `["self-hosted","macOS","ARM64"]`. Sin variable, corre aqui. El corredor propio esta
+# descrito en `docs/reference/corredor-propio.md`; **nunca con el repositorio publico**.
+
+name: verify
+
+on:
+  push:
+    branches: [main]
+    # Un cambio que solo toca documentacion o el registro del flujo no dispara la
+    # corrida completa. Lo que estos filtros **nunca** apagan es la compuerta de
+    # evaluaciones: un filtro que la desactive la convierte en una sugerencia, y
+    # el fallo seria invisible porque las corridas seguirian saliendo verdes.
+    paths-ignore:
+      - "docs/**"
+      - "aidlc/**"
+      - "review/**"
+      - "**/*.md"
+  workflow_dispatch:
+
+# Permisos vacios por defecto, elevados por trabajo solo a lo que haga falta.
+permissions: {}
+
+concurrency:
+  # Dos corridas sobre el mismo trabajo son minutos regalados, y el plan trae
+  # 2.000 al mes con bloqueo al agotarse.
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Primero y solo. El aviso llega en minutos y no al final de la corrida, que es
+  # lo que exige la practica afirmada. Va **sin credenciales** a proposito: es el
+  # trabajo con mas superficie de todo el flujo.
+  secrets:
+    name: escaneo de secretos
+    runs-on: ${{ fromJSON(vars.RUNS_ON || '["ubuntu-latest"]') }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # El historial completo: el escaneo mira el cambio y, cuando hay
+          # historial, tambien lo que quedo detras.
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+        with:
+          # La cache de la accion restaura el directorio de herramientas de `mise`. En
+          # un servidor de GitHub ahorra la instalacion; en la Mac de Miguel pisaria
+          # las herramientas que el ya tiene instaladas, asi que ahi no se usa.
+          cache: ${{ runner.environment == 'github-hosted' }}
+
+      - run: scripts/verify.sh --only secrets
+
+  verify:
+    name: verificacion
+    needs: secrets
+    runs-on: ${{ fromJSON(vars.RUNS_ON || '["ubuntu-latest"]') }}
+    # Sin techo, GitHub espera seis horas: el 2026-10-07 la instalacion de
+    # navegadores se colgo hora y media y se comio esos minutos del plan gratuito.
+    # El techo es cerca de vez y media lo normal. Lo normal crecio con las pruebas:
+    # unos 21 minutos al principio, 45 el 2026-10-13, y el 2026-10-14 la corrida se
+    # corto a los 45 con las pruebas del servidor al 86 %, sin ningun rojo. Subirlo
+    # no relaja ninguna compuerta: es cuanto se espera, no que se exige.
+    timeout-minutes: 75
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+        with:
+          cache: ${{ runner.environment == 'github-hosted' }}
+
+      - name: dependencias
+        run: mise run deps:install
+
+      # Los tres navegadores del arnes de accesibilidad (U6), con las bibliotecas
+      # del sistema que piden en Linux. Paso propio y **fuera** de `bootstrap`
+      # (NFR21.3): son cientos de megas que el camino del clon al reporte no
+      # necesita. El guion los usa en su paso 5.
+      # El espejo de Ubuntu del corredor dejo de responder el 2026-10-07 y `apt`
+      # esperaba su tiempo por defecto en cada archivo antes de pasar al espejo
+      # publico: la instalacion de navegadores se colgo dos veces. Con espera
+      # corta y reintentos, el salto al espejo que responde es inmediato.
+      - name: apt con espera corta
+        if: runner.os == 'Linux'
+        run: printf 'Acquire::http::Timeout "15";\nAcquire::https::Timeout "15";\nAcquire::Retries "3";\n' | sudo tee /etc/apt/apt.conf.d/99-espera-corta
+
+      - name: navegadores del arnes
+        # Tarda un minuto; colgado, no deja correr nada mas (2026-10-07).
+        timeout-minutes: 10
+        # Las bibliotecas del sistema (`--with-deps`) son cosa de Linux y piden `sudo`.
+        # En la Mac los tres navegadores ya estan y este paso solo lo comprueba.
+        run: mise run browsers:install ${{ runner.os == 'Linux' && '-- --with-deps' || '' }}
+
+      # **No se levanta `docker compose`, y sigue sin haber contenedor de
+      # servicio del flujo.** Desde U2 hay pasos que necesitan base de datos, y
+      # la levanta la propia suite con la misma imagen anclada por huella que el
+      # entorno local y con el rol del aplicativo --el que no puede saltarse las
+      # politicas de fila--. Asi hay **un solo camino**: lo que corre en la
+      # maquina de Miguel es literalmente lo que corre aqui. Un contenedor de
+      # servicio seria un segundo camino que solo existe en la tuberia, y los
+      # fallos de aislamiento son tan a menudo de configuracion como de codigo.
+      #
+      # El motor de contenedores ya viene en el corredor de GitHub; en la Mac de
+      # Miguel tiene que estar abierto. Si falta, la suite falla nombrandolo en vez
+      # de saltarse la compuerta.
+      - name: los ocho pasos restantes
+        run: scripts/verify.sh --skip secrets
+
+      - name: reporte de la corrida
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: eval-report-${{ github.sha }}
+          path: tmp/evals/reports/
+          if-no-files-found: warn
+          retention-days: 30

@@ -1,0 +1,184 @@
+{
+  "stage": "code-generation",
+  "unit": "u2-tenancy",
+  "version": 1,
+  "writes": [
+    {
+      "path": ".env.example"
+    },
+    {
+      "path": ".github/workflows/verify.yml"
+    },
+    {
+      "path": "mise.toml"
+    },
+    {
+      "path": "docker-compose.yml"
+    },
+    {
+      "path": "scripts/verify.sh"
+    },
+    {
+      "path": "scripts/db-init/01-app-role.sh"
+    },
+    {
+      "path": "app/backend/pyproject.toml"
+    },
+    {
+      "path": "app/backend/uv.lock"
+    },
+    {
+      "path": "app/backend/.importlinter"
+    },
+    {
+      "path": "app/backend/migrations/env.py"
+    },
+    {
+      "path": "app/backend/migrations/script.py.mako"
+    },
+    {
+      "path": "app/backend/migrations/versions/u2_tenancy_0001_tenancy_tables.py"
+    },
+    {
+      "path": "app/backend/src/untangle/paths.py"
+    },
+    {
+      "path": "app/backend/src/untangle/settings.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/composition.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/config.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/ephemeral.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/purge.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/rls_assertion.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/session.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/staff_identity.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/visitor_access.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/live_probes.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/runner/failures.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/coverage_gate.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/generate_contracts.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/schema_check.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/tenancy_literals.py"
+    },
+    {
+      "path": "app/backend/tests/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u2/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u2/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u2/test_import_contracts.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u2/test_isolation.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_cli.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_config.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_purge.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_rls_assertion.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_staff_identity.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_visitor_access.py"
+    },
+    {
+      "path": "app/backend/tests/unit/evals/test_live_probes.py"
+    },
+    {
+      "path": "app/config/role-permissions.yaml"
+    },
+    {
+      "path": "app/config/tenants/stonecroft/tenant.yaml"
+    },
+    {
+      "path": "app/config/tenants/sunmeadow/tenant.yaml"
+    },
+    {
+      "path": "app/config/tenants/knotwell/tenant.yaml"
+    },
+    {
+      "path": "app/data/fixtures/ds8_isolation.json"
+    },
+    {
+      "path": "app/evals/manifest.yaml"
+    },
+    {
+      "path": "app/evals/subsets/rt4-live.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt4/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds6/rt4/en.yaml"
+    },
+    {
+      "path": "app/contracts/schemas/tenant.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/ruleset.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/eval-run.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/eval-report.schema.json"
+    }
+  ]
+}

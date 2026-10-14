@@ -1,0 +1,236 @@
+{
+  "reference_now": "2026-09-15T16:00 (martes, hora local)",
+  "notes": "Turnos sintéticos del asegurado. Los campos que un caso no nombra deben quedar en null, salvo description, que solo se evalúa cuando el caso la nombra. {\"any\": true} desactiva la evaluación de un campo en ese caso.",
+  "cases": [
+    {
+      "id": "es-01",
+      "lang": "es",
+      "question": "¿Cuándo y dónde fue el accidente?",
+      "utterance": "Fue ayer por la tarde, como a las cinco y media, en la autopista sur, a la altura de la salida 12.",
+      "expected": {
+        "when_date": "2026-09-14",
+        "when_time": "17:30",
+        "place": {"keywords": ["autopista", "12"]}
+      }
+    },
+    {
+      "id": "es-02",
+      "lang": "es",
+      "question": "¿Me dice la placa del carro, por favor?",
+      "utterance": "Sí, claro: es la K L M cuatro ocho dos, un Mazda 3 gris.",
+      "expected": {
+        "plate": "KLM482",
+        "vehicle": {"keywords": ["mazda"]}
+      }
+    },
+    {
+      "id": "es-03",
+      "lang": "es",
+      "question": "¿Me da su número de póliza?",
+      "utterance": "La póliza es la S T N guion cuatro ocho dos nueve uno tres, y mi cédula es uno cero tres seis cinco cinco cinco cero uno dos.",
+      "expected": {
+        "policy_number": "STN482913",
+        "national_id": "1036555012"
+      }
+    },
+    {
+      "id": "es-04",
+      "lang": "es",
+      "question": "Para empezar, ¿todos están bien?",
+      "utterance": "Sí, todos bien, gracias a Dios. Fue un golpecito en el bómper de atrás.",
+      "expected": {
+        "injuries": "none",
+        "description": {"keywords": ["bomper"]}
+      }
+    },
+    {
+      "id": "es-05",
+      "lang": "es",
+      "question": "¿Hubo otro vehículo involucrado?",
+      "utterance": "Sí, una camioneta blanca, pero el señor se fue sin darme la placa.",
+      "expected": {
+        "other_parties": 1,
+        "other_vehicle_plate": null,
+        "description": {"any": true}
+      }
+    },
+    {
+      "id": "es-06",
+      "lang": "es",
+      "question": "¿Alguien resultó herido?",
+      "utterance": "Mi hija iba conmigo y se golpeó la muñeca, pero está bien; no hubo que llevarla al hospital.",
+      "expected": {
+        "injuries": "minor",
+        "other_parties": {"any": true},
+        "description": {"any": true}
+      }
+    },
+    {
+      "id": "es-07",
+      "lang": "es",
+      "question": "¿Cuándo y dónde fue?",
+      "utterance": "El martes pasado, tipo ocho de la mañana, saliendo del parqueadero del centro comercial.",
+      "expected": {
+        "when_date": "2026-09-08",
+        "when_time": "08:00",
+        "place": {"keywords": ["parqueadero"]}
+      }
+    },
+    {
+      "id": "es-08",
+      "lang": "es",
+      "question": "¿A qué teléfono le podemos llamar?",
+      "utterance": "Al cinco cinco cinco, cero uno cuatro dos.",
+      "expected": {
+        "phone": "5550142"
+      }
+    },
+    {
+      "id": "es-09",
+      "lang": "es",
+      "question": "Anotado: autopista sur, salida 12, ayer como a las cinco y media. ¿Correcto?",
+      "utterance": "No, espere: no era la salida 12, era la 14.",
+      "expected": {
+        "place": {"keywords": ["14"], "forbidden": ["12"]},
+        "when_date": {"any": true},
+        "when_time": {"any": true}
+      }
+    },
+    {
+      "id": "es-10",
+      "lang": "es",
+      "question": "¿Qué pasó?",
+      "utterance": "Anoche, con la tormenta, se cayó una rama grande encima del carro, que estaba parqueado frente a la casa.",
+      "expected": {
+        "when_date": "2026-09-14",
+        "when_time": null,
+        "place": {"keywords": ["casa"]},
+        "description": {"keywords": ["rama"]}
+      }
+    },
+    {
+      "id": "es-11",
+      "lang": "es",
+      "question": "¿Quién iba manejando?",
+      "utterance": "Iba manejando mi esposo, Julián; yo iba de copiloto.",
+      "expected": {
+        "driver_is_policyholder": false
+      }
+    },
+    {
+      "id": "en-01",
+      "lang": "en",
+      "question": "When and where did the accident happen?",
+      "utterance": "It was yesterday afternoon, around five thirty, on Highway 9, near exit 12.",
+      "expected": {
+        "when_date": "2026-09-14",
+        "when_time": "17:30",
+        "place": {"keywords": ["highway", "12"]}
+      }
+    },
+    {
+      "id": "en-02",
+      "lang": "en",
+      "question": "Could you give me your license plate, please?",
+      "utterance": "Sure, it's B K R four eight two, a gray Honda Civic.",
+      "expected": {
+        "plate": "BKR482",
+        "vehicle": {"keywords": ["honda", "civic"]}
+      }
+    },
+    {
+      "id": "en-03",
+      "lang": "en",
+      "question": "Could you give me your policy number?",
+      "utterance": "It's S U N dash six one zero four four seven, and my driver's license number is four one two five five five zero nine eight.",
+      "expected": {
+        "policy_number": "SUN610447",
+        "national_id": "412555098"
+      }
+    },
+    {
+      "id": "en-04",
+      "lang": "en",
+      "question": "First, is everyone okay?",
+      "utterance": "Yes, nobody got hurt. It's just a small dent on the rear door.",
+      "expected": {
+        "injuries": "none",
+        "description": {"keywords": ["dent"]}
+      }
+    },
+    {
+      "id": "en-05",
+      "lang": "en",
+      "question": "Was there another vehicle involved?",
+      "utterance": "Yeah, a black pickup, but the driver took off before I could get the plate.",
+      "expected": {
+        "other_parties": 1,
+        "other_vehicle_plate": null,
+        "description": {"any": true}
+      }
+    },
+    {
+      "id": "en-06",
+      "lang": "en",
+      "question": "Was anyone injured?",
+      "utterance": "My son was in the back seat and hurt his neck; the paramedics took him to the hospital.",
+      "expected": {
+        "injuries": "serious",
+        "other_parties": {"any": true},
+        "description": {"any": true}
+      }
+    },
+    {
+      "id": "en-07",
+      "lang": "en",
+      "question": "When and where did it happen?",
+      "utterance": "Last Tuesday, around eight in the morning, pulling out of the mall parking lot.",
+      "expected": {
+        "when_date": "2026-09-08",
+        "when_time": "08:00",
+        "place": {"keywords": ["parking"]}
+      }
+    },
+    {
+      "id": "en-08",
+      "lang": "en",
+      "question": "What's the best phone number to reach you?",
+      "utterance": "Five five five, zero one eight nine.",
+      "expected": {
+        "phone": "5550189"
+      }
+    },
+    {
+      "id": "en-09",
+      "lang": "en",
+      "question": "Got it: Highway 9, exit 12, yesterday around five thirty. Is that right?",
+      "utterance": "Actually no, it wasn't exit 12, it was exit 14.",
+      "expected": {
+        "place": {"keywords": ["14"], "forbidden": ["12"]},
+        "when_date": {"any": true},
+        "when_time": {"any": true}
+      }
+    },
+    {
+      "id": "en-10",
+      "lang": "en",
+      "question": "What happened?",
+      "utterance": "A big branch fell on my car while it was parked in front of my house during the storm last night.",
+      "expected": {
+        "when_date": "2026-09-14",
+        "when_time": null,
+        "place": {"keywords": ["house"]},
+        "description": {"keywords": ["branch"]}
+      }
+    },
+    {
+      "id": "en-11",
+      "lang": "en",
+      "question": "Who was driving?",
+      "utterance": "My wife was driving; I was in the passenger seat.",
+      "expected": {
+        "driver_is_policyholder": false
+      }
+    }
+  ]
+}

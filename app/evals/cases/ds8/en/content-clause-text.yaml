@@ -1,0 +1,6 @@
+case_key: DS-8/en/content-clause-text
+dataset: DS-8
+language: en
+requires_provider_key: false
+expected_verdicts:
+  content_clause_text: pass

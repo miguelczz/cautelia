@@ -1,0 +1,602 @@
+{
+  "stage": "code-generation",
+  "unit": "u5-provider-platform",
+  "upstream_ids": [
+    "AC4.8.1",
+    "AC4.8.2",
+    "AC4.8.3",
+    "AC4.8.4",
+    "AC4.8.5",
+    "AC4.12.1",
+    "AC4.12.2",
+    "AC4.12.3",
+    "AC4.12.4",
+    "AC4.12.5",
+    "AC5.14.1",
+    "AC5.14.2",
+    "AC5.14.3",
+    "AC5.14.4",
+    "AC5.14.5",
+    "AC5.14.6",
+    "BR1.1",
+    "BR1.2",
+    "BR1.3",
+    "BR1.4",
+    "BR1.5",
+    "BR1.6",
+    "BR1.7",
+    "BR2.1",
+    "BR2.2",
+    "BR2.3",
+    "BR2.4",
+    "BR2.5",
+    "BR3.1",
+    "BR3.2",
+    "BR3.3",
+    "BR3.4",
+    "BR3.5",
+    "BR3.6",
+    "BR3.7",
+    "BR3.8",
+    "BR3.9",
+    "BR4.1",
+    "BR4.2",
+    "BR4.3",
+    "BR4.4",
+    "BR4.5",
+    "BR4.6",
+    "BR4.7",
+    "BR4.8",
+    "BR4.9",
+    "BR4.10",
+    "BR5.1",
+    "BR5.2",
+    "BR5.3",
+    "BR5.4",
+    "BR5.5",
+    "BR5.6",
+    "BR5.7",
+    "BR5.8",
+    "BR5.9",
+    "BR6.1",
+    "BR6.2",
+    "BR6.3",
+    "BR6.4",
+    "BR6.5",
+    "BR6.6",
+    "BR6.7",
+    "BR7.1",
+    "BR7.2",
+    "BR7.3",
+    "BR7.4",
+    "BR7.5",
+    "BR7.6",
+    "NFR11.5",
+    "NFR11.6",
+    "NFR14.1",
+    "NFR14.2",
+    "NFR14.3",
+    "NFR15.1",
+    "NFR15.2",
+    "NFR15.3",
+    "NFR15.4",
+    "NFR15.5",
+    "NFR15.6",
+    "NFR18.1",
+    "PA-9",
+    "PA-10",
+    "SEC-U5.1",
+    "SEC-U5.2",
+    "SEC-U5.3",
+    "SEC-U5.4",
+    "SEC-U5.5",
+    "SEC-U5.6",
+    "SEC-U5.7",
+    "SEC-U5.8",
+    "SEC-U5.9",
+    "SEC-U5.10",
+    "SEC-U5.11",
+    "SEC-U5.12",
+    "SEC-U5.13",
+    "SEC-U5.14",
+    "SEC-U5.15",
+    "SEC-U5.16"
+  ],
+  "coverage": [
+    {
+      "id": "AC4.8.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/traces/api.py"
+    },
+    {
+      "id": "AC4.8.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/traces/api.py"
+    },
+    {
+      "id": "AC4.8.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/traces/api.py"
+    },
+    {
+      "id": "AC4.8.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/pricing.py"
+    },
+    {
+      "id": "AC4.8.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/providers/adapters/gemini/api.py"
+    },
+    {
+      "id": "AC4.12.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/traces/export.py"
+    },
+    {
+      "id": "AC4.12.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/traces/export.py"
+    },
+    {
+      "id": "AC4.12.3",
+      "status": "Deferred",
+      "target": "La transcripcion en vivo de la consola de voz es de U16 `voice-call`; esta unidad no dibuja ninguna pantalla"
+    },
+    {
+      "id": "AC4.12.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/traces/export.py"
+    },
+    {
+      "id": "AC4.12.5",
+      "status": "Deferred",
+      "target": "El reporte de la corrida de evaluaciones es de U21 `eval-gates`; esta unidad exporta la traza que ese reporte enlaza"
+    },
+    {
+      "id": "AC5.14.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/repository.py"
+    },
+    {
+      "id": "AC5.14.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/budget.py"
+    },
+    {
+      "id": "AC5.14.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/labels.py"
+    },
+    {
+      "id": "AC5.14.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/purge.py"
+    },
+    {
+      "id": "AC5.14.5",
+      "status": "Deferred",
+      "target": "Las pantallas de gasto son de U22 `public-evidence`; esta unidad entrega el costo por llamada a precio de lista con su marca de facturable y las cuatro agregaciones que esas pantallas leen"
+    },
+    {
+      "id": "AC5.14.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/spend_report.py"
+    },
+    {
+      "id": "BR1.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/providers/ports.py"
+    },
+    {
+      "id": "BR1.2",
+      "status": "OK",
+      "target": "app/backend/.importlinter"
+    },
+    {
+      "id": "BR1.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/providers/factory.py"
+    },
+    {
+      "id": "BR1.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/providers/config.py"
+    },
+    {
+      "id": "BR1.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/providers/adapters/gemini/api.py"
+    },
+    {
+      "id": "BR1.6",
+      "status": "Deferred",
+      "target": "La prueba de contrato con respuesta grabada necesita una clave y algo de cuota; se graba la primera vez que haya clave y corre por hito. Las pruebas de esta entrega inyectan los errores sin clave y sin costo: `app/backend/tests/unit/providers/test_gemini.py`"
+    },
+    {
+      "id": "BR1.7",
+      "status": "OK",
+      "target": "app/backend/src/untangle/providers/prompts.py"
+    },
+    {
+      "id": "BR2.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/providers/adapters/gemini/errors.py"
+    },
+    {
+      "id": "BR2.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/providers/ports.py"
+    },
+    {
+      "id": "BR2.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/providers/adapters/gemini/errors.py"
+    },
+    {
+      "id": "BR2.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/providers/adapters/gemini/api.py"
+    },
+    {
+      "id": "BR2.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/providers/adapters/gemini/api.py"
+    },
+    {
+      "id": "BR3.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/api.py"
+    },
+    {
+      "id": "BR3.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/pricing.py"
+    },
+    {
+      "id": "BR3.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/pricing.py"
+    },
+    {
+      "id": "BR3.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/models.py"
+    },
+    {
+      "id": "BR3.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/repository.py"
+    },
+    {
+      "id": "BR3.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/providers/config.py"
+    },
+    {
+      "id": "BR3.7",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/spend_report.py"
+    },
+    {
+      "id": "BR3.8",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/repository.py"
+    },
+    {
+      "id": "BR3.9",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/models.py"
+    },
+    {
+      "id": "BR4.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/models.py"
+    },
+    {
+      "id": "BR4.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/models.py"
+    },
+    {
+      "id": "BR4.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/budget.py"
+    },
+    {
+      "id": "BR4.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/labels.py"
+    },
+    {
+      "id": "BR4.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/api.py"
+    },
+    {
+      "id": "BR4.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/repository.py"
+    },
+    {
+      "id": "BR4.7",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/purge.py"
+    },
+    {
+      "id": "BR4.8",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/budget.py"
+    },
+    {
+      "id": "BR4.9",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/budget.py"
+    },
+    {
+      "id": "BR4.10",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/budget.py"
+    },
+    {
+      "id": "BR5.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/models.py"
+    },
+    {
+      "id": "BR5.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/quota.py"
+    },
+    {
+      "id": "BR5.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/quota.py"
+    },
+    {
+      "id": "BR5.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/api.py"
+    },
+    {
+      "id": "BR5.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/repository.py"
+    },
+    {
+      "id": "BR5.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/quota.py"
+    },
+    {
+      "id": "BR5.7",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/quota.py"
+    },
+    {
+      "id": "BR5.8",
+      "status": "OK",
+      "target": "app/config/providers/prices.yaml"
+    },
+    {
+      "id": "BR5.9",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/budget.py"
+    },
+    {
+      "id": "BR6.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/traces/models.py"
+    },
+    {
+      "id": "BR6.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/traces/api.py"
+    },
+    {
+      "id": "BR6.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/traces/api.py"
+    },
+    {
+      "id": "BR6.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/traces/api.py"
+    },
+    {
+      "id": "BR6.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/traces/export.py"
+    },
+    {
+      "id": "BR6.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/traces/repository.py"
+    },
+    {
+      "id": "BR6.7",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/traces/models.py"
+    },
+    {
+      "id": "BR7.1",
+      "status": "OK",
+      "target": "app/backend/pyproject.toml"
+    },
+    {
+      "id": "BR7.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/tenancy/rls_assertion.py"
+    },
+    {
+      "id": "BR7.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/models.py"
+    },
+    {
+      "id": "BR7.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/traces/models.py"
+    },
+    {
+      "id": "BR7.5",
+      "status": "OK",
+      "target": "app/backend/migrations/versions/u5_platform_0001_spend_tables.py"
+    },
+    {
+      "id": "BR7.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/purge.py"
+    },
+    {
+      "id": "NFR11.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/traces/api.py"
+    },
+    {
+      "id": "NFR11.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/providers/adapters/gemini/errors.py"
+    },
+    {
+      "id": "NFR14.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/pricing.py"
+    },
+    {
+      "id": "NFR14.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/pricing.py"
+    },
+    {
+      "id": "NFR14.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/models.py"
+    },
+    {
+      "id": "NFR15.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/repository.py"
+    },
+    {
+      "id": "NFR15.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/repository.py"
+    },
+    {
+      "id": "NFR15.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/purge.py"
+    },
+    {
+      "id": "NFR15.4",
+      "status": "OK",
+      "target": "app/backend/.importlinter"
+    },
+    {
+      "id": "NFR15.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/api.py"
+    },
+    {
+      "id": "NFR15.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/spend/api.py"
+    },
+    {
+      "id": "NFR18.1",
+      "status": "Deferred",
+      "target": "El piso agregado de cobertura es de U1 `workspace`, que lo declara con su comando y su umbral; esta unidad lo cumple y no lo impone"
+    },
+    {
+      "id": "PA-9",
+      "status": "OK",
+      "target": "app/config/providers/prices.yaml"
+    },
+    {
+      "id": "PA-10",
+      "status": "Deferred",
+      "target": "El canal por el que sale la alerta de los 3 USD lo fija el intent `infra`; aqui se emite el evento y se escribe la marca en la fila de la ventana"
+    },
+    {
+      "id": "SEC-U5.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/providers/test_factory.py"
+    },
+    {
+      "id": "SEC-U5.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/providers/test_config.py"
+    },
+    {
+      "id": "SEC-U5.3",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u5/test_repository.py"
+    },
+    {
+      "id": "SEC-U5.4",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u5/test_api.py"
+    },
+    {
+      "id": "SEC-U5.5",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u5/test_api.py"
+    },
+    {
+      "id": "SEC-U5.6",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u5/test_isolation.py"
+    },
+    {
+      "id": "SEC-U5.7",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u5/test_isolation.py"
+    },
+    {
+      "id": "SEC-U5.8",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u5/test_wiring.py"
+    },
+    {
+      "id": "SEC-U5.9",
+      "status": "Deferred",
+      "target": "Solo la mitad es de esta unidad y esta hecha: el carril por omision es el publico, asi que una peticion que no lo pide explicitamente nunca toca la reserva (`app/backend/src/untangle/telemetry/spend/api.py`). Comprobar la credencial de la aseguradora de quien SI lo pide es de U16 `voice-call` y U17 `voice-public-link`, porque se comprueba donde se abre la llamada: lo dice la seccion 7 de `functional-design/functional-spec.md`"
+    },
+    {
+      "id": "SEC-U5.10",
+      "status": "OK",
+      "target": "app/backend/tests/unit/telemetry/test_budget.py"
+    },
+    {
+      "id": "SEC-U5.11",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/traces/export.py"
+    },
+    {
+      "id": "SEC-U5.12",
+      "status": "OK",
+      "target": "app/backend/tests/unit/telemetry/test_traces.py"
+    },
+    {
+      "id": "SEC-U5.13",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u5/test_trace_summary.py"
+    },
+    {
+      "id": "SEC-U5.14",
+      "status": "OK",
+      "target": "app/backend/tests/unit/providers/test_gemini.py"
+    },
+    {
+      "id": "SEC-U5.15",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u5/test_repository.py"
+    },
+    {
+      "id": "SEC-U5.16",
+      "status": "OK",
+      "target": "app/backend/tests/unit/providers/test_gemini.py"
+    }
+  ]
+}

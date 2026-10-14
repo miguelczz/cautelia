@@ -1,0 +1,39 @@
+# Por donde entra el trafico de `cautelia.app`.
+#
+# Este archivo se copia a `/opt/cautelia/cloudflared/config.yml` en la instancia
+# y se completa con el identificador del tunel, que lo da Cloudflare al crearlo.
+#
+# **El orden de las reglas importa**: Cloudflare toma la primera que encaja, asi
+# que la ultima tiene que ser el 404 que atrapa todo lo demas. Sin ella, el tunel
+# no arranca.
+
+tunnel: REEMPLAZAR_CON_EL_ID_DEL_TUNEL
+credentials-file: /etc/cloudflared/credenciales.json
+
+# El tunel habla con el contenedor del aplicativo por el nombre del servicio que
+# le da Compose, no por `localhost`: `localhost` dentro del contenedor del tunel
+# es el propio tunel.
+# **El dominio raiz no es del aplicativo, es de la landing.** `cautelia.app` lo
+# sirve Vercel, que es donde vive la landing y donde seguira viviendo: no comparte
+# tuberia con el aplicativo (D-013) y desplegarla no puede depender de que la
+# instancia este viva. El aplicativo vive en un subdominio, y el boton de la
+# landing lleva ahi. Al reves --el aplicativo en la raiz-- obligaria a servir la
+# landing desde el contenedor, que es justo la dependencia que D-013 evita.
+ingress:
+  - hostname: app.cautelia.app
+    service: http://aplicativo:8080
+    originRequest:
+      # Una llamada de voz dura tres minutos y el WebSocket tiene que aguantarla
+      # entera. Comprobado el 2026-10-03: Cloudflare no pone limite de duracion
+      # y solo corta por inactividad, que aqui no llega a darse porque el
+      # navegador envia audio tambien durante los silencios.
+      noTLSVerify: false
+      connectTimeout: 10s
+      # El tiempo que el tunel espera **sin recibir nada** antes de cerrar. Se
+      # sube por encima del turno mas lento que admitimos, no "por si acaso":
+      # el presupuesto de un turno es 800 ms y el de la voz es mas estricto.
+      tcpKeepAlive: 30s
+
+  # La regla que atrapa todo lo demas. Obligatoria: sin ella `cloudflared` se
+  # niega a arrancar.
+  - service: http_status:404

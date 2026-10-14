@@ -1,0 +1,26 @@
+# Distractor (AC2.1.2): existe una clausula parecida en la version anterior del formulario (marcada is_distractor); la vigente es la del formulario 2026.1.
+# Criterio(s): AC2.1.2. Par ES/EN: 'distractor-uninsured-coverage'.
+# Lo mide `mise run evals:citas` (fase 1, 2026-10-08): recupera, propone las citas con
+# Claude y las verifica, igual que el chat. La prueba estatica CG-U8-2 sigue comprobando
+# que clause_id exista en app/data/, sea de esta aseguradora y de esta poliza y no sea
+# distractor.
+# No prueba el numero de poliza ajeno (eso es DS-8) ni la clausula con instrucciones (eso es DS-6, FD-U8-3).
+
+case_key: DS-3/es/distractor-uninsured-coverage
+dataset: DS-3
+language: es
+tenant: stonecroft
+axes:
+- distractor
+- citation-verification
+citation:
+  policy_number: POL-245782
+  clause_id: STO-PAP-2026-C.INS
+  expected_outcome: verified
+  question: ¿Qué pagan si un conductor sin seguro me lesiona?
+  forbidden_clause_ids:
+  - STO-PAP-2025-C.INS.ALT
+expected_verdicts:
+  citation_distractor_uninsured_coverage: pass
+  citation_exists_distractor_uninsured_coverage: pass
+requires_provider_key: true

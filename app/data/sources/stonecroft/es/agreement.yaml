@@ -1,0 +1,29 @@
+# Textos fuente revisados de Seguros Aburrá, en espanol (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: stonecroft
+language: es
+part_key: agreement
+texts:
+- source_id: STO-PAP-2026-AGREEMENT.1
+  kind: clause
+  clause_key: AGREEMENT.1
+  part: Acuerdo
+  version: '2026.1'
+  text: Seguros Aburrá se compromete a proteger al asegurado en los términos de este contrato. La protección
+    cubre los hechos que describe cada parte de la póliza cuando ocurren en el territorio que fija la
+    Parte F.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-AGREEMENT.2
+  kind: clause
+  clause_key: AGREEMENT.2
+  part: Acuerdo
+  version: '2026.1'
+  text: La protección rige durante el periodo que muestra la carátula de la póliza. Para mantenerla vigente,
+    el asegurado atiende las obligaciones que le asigna este contrato, en especial las de la Parte E.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite

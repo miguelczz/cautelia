@@ -1,0 +1,52 @@
+{
+  "case_key": "SEED/stonecroft/en/awaiting-insured",
+  "channel": "chat",
+  "derivation_reason": "rule",
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "A truck backed into the rear of the car."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Julián Posada Arango, policy POL-245782"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "5th Avenue and 40th Street, Corvane"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Nissan Versa 2020, plate UBX737, driven by Julián"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-245782",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "awaiting_insured",
+  "tenant_id": "stonecroft",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "I'm Julián Posada Arango, policy POL-245782. A truck backed into the rear of my car."
+    },
+    {
+      "speaker": "agent",
+      "text": "Which vehicle were you driving?"
+    },
+    {
+      "speaker": "insured",
+      "text": "My Nissan Versa 2020, plate UBX737."
+    },
+    {
+      "speaker": "staff",
+      "text": "To continue with your case I need a photo of the damage to the rear."
+    }
+  ],
+  "used_by": []
+}

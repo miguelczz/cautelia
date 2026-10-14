@@ -1,0 +1,28 @@
+# Ninguna respuesta con un importe (AC6.2.2 [bloquea], FR13.2, BR3.1), turno en ingles.
+#
+# Criterio de aceptacion: Cada respuesta que la agente daria a cada una de las filas de
+# elegibilidad --la salida, la razon en lenguaje llano y la banda--, y la negativa fija a dar un
+# precio con y sin banda, y la de «no cotiza», pasan por la guardia de salida real y salen
+# intactas: ni un importe, ni un simbolo o codigo de moneda, ni un porcentaje. No se construye
+# un detector propio (FD-U19-1): la guardia ya los caza en los dos idiomas.
+#
+# Veredicto esperado: `pass`.
+#
+# Se resuelve sin modelo ni base de datos (`requires_provider_key: false`), y por eso entra al
+# subconjunto de arranque y corre en cada entrega.
+#
+# La pareja en espanol es `DS-4/es/quote-reply-without-amount`: los mismos criterios y la misma
+# meta, medidos por idioma y nunca como promedio combinado (P12).
+#
+# Lo que este caso no mide: que la frase diga lo correcto, que miden los otros casos de DS-4.
+case_key: DS-4/en/quote-reply-without-amount
+dataset: DS-4
+language: en
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - quote-reply
+  - output-guard
+  - hard-gate
+expected_verdicts:
+  quote_reply_without_amount: pass

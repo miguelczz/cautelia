@@ -1,0 +1,40 @@
+# El nombre completo de quien conducia queda anotado junto al carro, de una forma que la regla puede leer.
+#
+# Comprension de un mensaje. Segunda mitad de `understand-other-driver-name-asked`: la agente ya
+# pidio el nombre y la persona lo da, sin repetir que alguien conducia («his name is Carlos
+# Ramirez Ospina, he's my brother»). `vehicle_and_driver` se **reemplaza** cada vez que se anota,
+# asi que el modelo tiene que escribir el valor completo --el carro que ya estaba mas quien
+# conducia, con su nombre-- y no solo el nombre: sin el verbo de conducir pegado al nombre,
+# `unlisted_driver` no lo lee (lectura `unlisted`: nombre y apellido que la poliza no declara), y
+# sin el carro el campo deja de decir de que carro se habla.
+# Escrito antes del cambio de la instruccion `conversation`; no se ha corrido contra el modelo.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/en/understand-other-driver-name-given
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  record_type: claim
+  captured:
+  - injuries
+  - identity_and_policy
+  - vehicle_and_driver
+  captured_values:
+    vehicle_and_driver: Renault Logan. Driven by her brother
+  last_agent_text: Can you tell me the full name of whoever was driving?
+  message: His name is Carlos Ramírez Ospina, he's my brother
+  wants:
+  - continue
+  answer: 'none'
+  items:
+    vehicle_and_driver: Renault Logan
+  declared_drivers:
+  - Natalia Henao Rendón
+  - Mateo Henao Gómez
+  driver_reading: unlisted
+expected_verdicts:
+  understanding_other_driver_name_given: pass

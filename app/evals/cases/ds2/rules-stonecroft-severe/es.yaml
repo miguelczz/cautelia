@@ -1,0 +1,27 @@
+# Categoria esperada de Stonecroft con heridos (BR1.1, BR2.2, FR6.1), turno en
+# espanol.
+#
+# Criterio de aceptacion: sobre la fila `category-expected/01` de
+# `app/evals/fixtures/rules/es.yaml` -- un caso de Stonecroft con heridos y sin
+# ningun otro dato -- el motor real de esa aseguradora da la categoria
+# `referral`: Stonecroft es estricta y deriva heridos sin que haga falta
+# ninguna otra senal (CG-U9-1).
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en ingles es `DS-2/en/rules-stonecroft-severe`: los mismos insumos
+# y la misma meta, medidos por idioma y nunca como promedio combinado (P12).
+#
+# Lo que este caso no mide: si la explicacion que ve el asegurado nombra la
+# regla o la aseguradora -- eso es BR2.5 y corre en `copy:check` -- ni el nodo
+# `decision` que guarda esta evaluacion, que llega en el paso 7 de esta unidad.
+case_key: DS-2/es/rules-stonecroft-severe
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - rules-engine
+  - category-precedence
+expected_verdicts:
+  rules_category_expected: pass

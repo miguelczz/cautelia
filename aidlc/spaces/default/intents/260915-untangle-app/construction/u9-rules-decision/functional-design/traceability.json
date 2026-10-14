@@ -1,0 +1,125 @@
+{
+  "stage": "functional-design",
+  "unit": "u9-rules-decision",
+  "upstream_ids": [
+    "AC1.15.1",
+    "AC1.15.2",
+    "AC1.15.3",
+    "AC1.15.4",
+    "AC1.15.5",
+    "AC1.17.1",
+    "AC1.17.2",
+    "AC1.17.3",
+    "AC1.17.4",
+    "AC1.4.1",
+    "AC1.4.2",
+    "AC1.4.3",
+    "AC1.12.1",
+    "AC1.12.2",
+    "AC1.12.3"
+  ],
+  "coverage": [
+    {
+      "id": "AC1.15.1",
+      "status": "OK",
+      "target": "BR1.1, BR1.4"
+    },
+    {
+      "id": "AC1.15.2",
+      "status": "OK",
+      "target": "BR2.4, BR2.5"
+    },
+    {
+      "id": "AC1.15.3",
+      "status": "OK",
+      "target": "BR2.1"
+    },
+    {
+      "id": "AC1.15.4",
+      "status": "OK",
+      "target": "BR2.3"
+    },
+    {
+      "id": "AC1.15.5",
+      "status": "Deferred",
+      "target": "U21: la meta de derivaciones se mide sobre DS-2 completo (NFR13, duena U21); U9 aporta sus casos de DS-2 con la categoria esperada"
+    },
+    {
+      "id": "AC1.17.1",
+      "status": "OK",
+      "target": "BR3.1"
+    },
+    {
+      "id": "AC1.17.2",
+      "status": "Deferred",
+      "target": "U12: la frase ya esta en el catalogo (U10); la dice el cierre cuando el grafo lo conecte"
+    },
+    {
+      "id": "AC1.17.3",
+      "status": "OK",
+      "target": "BR2.3"
+    },
+    {
+      "id": "AC1.17.4",
+      "status": "Deferred",
+      "target": "U14: la vista del caso por enlace firmado de una hora (M8)"
+    },
+    {
+      "id": "AC1.4.1",
+      "status": "N/A",
+      "target": "Conducta de captura de U11; U9 no participa"
+    },
+    {
+      "id": "AC1.4.2",
+      "status": "N/A",
+      "target": "Conducta de captura de U11; U9 no participa"
+    },
+    {
+      "id": "AC1.4.3",
+      "status": "Deferred",
+      "target": "U11: termina en 'la categoria es derivacion, con la regla que la exige'. U9 aporta esa regla y required_inputs (C-19); se comprueba de punta a punta al construir U11"
+    },
+    {
+      "id": "AC1.12.1",
+      "status": "N/A",
+      "target": "Conducta de captura de U11; U9 no participa"
+    },
+    {
+      "id": "AC1.12.2",
+      "status": "N/A",
+      "target": "Conducta de captura de U11; U9 no participa"
+    },
+    {
+      "id": "AC1.12.3",
+      "status": "Deferred",
+      "target": "U11: termina en la categoria derivacion con la regla que la exige. U9 aporta la regla y required_inputs (C-19); se comprueba de punta a punta al construir U11"
+    }
+  ],
+  "reverse": [
+    {
+      "id": "BR1.2",
+      "status": "N/A",
+      "target": "Operadores cerrados sobre campos del caso. Q1 y C-19"
+    },
+    {
+      "id": "BR1.3",
+      "status": "N/A",
+      "target": "Una regla por defecto. Q2 y FR6.2"
+    },
+    {
+      "id": "BR2.2",
+      "status": "N/A",
+      "target": "Precedencia de categorias. Q2 y FR6.2"
+    },
+    {
+      "id": "BR2.6",
+      "status": "N/A",
+      "target": "La agencia deriva por regla. FR6.4"
+    },
+    {
+      "id": "BR4.1",
+      "status": "N/A",
+      "target": "Borrado con su caso. UG-3 y M9"
+    }
+  ]
+}

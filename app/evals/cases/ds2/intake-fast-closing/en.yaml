@@ -1,0 +1,49 @@
+# The fast path (P4; BR3.2, BR5.1), English turn.
+#
+# Acceptance criterion: with the four mandatory facts given (safety is seeded, as
+# in every intake case) the agent reads nothing back and never asks "is that
+# correct?": it closes naming the case number, says the case is with an adjuster
+# and offers the optional blocks **once** --vehicle and driver, other parties-- in
+# a single question with no forbidden register. To that offer, "No, that's fine"
+# leaves the case as it is (even though it would confirm a readback) and "Yes,
+# let's add that" asks the first optional block. The closing after the no names
+# the case and asks nothing.
+#
+# Expected verdict: `pass`.
+#
+# Miguel's decision of 2026-10-06: the chat must not ask whether what it was told
+# is correct; it keeps what it is told. Replaces `intake-readback-leading-no`,
+# which measured the confirmation readback that no longer exists. What the node
+# writes and when it derives the case is covered by
+# `tests/unit/intake/test_node.py` and `tests/integration/u12/test_turn.py`; this
+# measures what the person reads.
+#
+# Its Spanish pair is `DS-2/es/intake-fast-closing`: same criteria and same
+# target, measured per language and never as a combined average (P12). The two
+# answers to the offer are indexed by the first optional block
+# (`vehicle_and_driver`).
+case_key: DS-2/en/intake-fast-closing
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - intake
+  - conversation
+script:
+  - field_key: identity_and_policy
+    text: "I'm Laura Gomez, my policy is POL-480915."
+  - field_key: description
+    text: "Another car hit me from behind while I was stopped at a light."
+  - field_key: incident_datetime
+    text: "It was yesterday, around five in the afternoon."
+  - field_key: location
+    text: "On Main Street at 5th, downtown."
+  - field_key: vehicle_and_driver
+    sequence: 1
+    text: "No, that's fine."
+  - field_key: vehicle_and_driver
+    sequence: 2
+    text: "Yes, let's add that."
+expected_verdicts:
+  intake_fast_closing: pass

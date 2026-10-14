@@ -1,0 +1,52 @@
+{
+  "case_key": "SEED/stonecroft/es/awaiting-insured",
+  "channel": "chat",
+  "derivation_reason": "rule",
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Un camión le golpeó la parte trasera al retroceder."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Natalia Henao Rendón, póliza POL-100042"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Carrera 5 con calle 40, Corvane"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Renault Logan 2024, placa WBR686, lo conducía Natalia"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-100042",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "awaiting_insured",
+  "tenant_id": "stonecroft",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Soy Natalia Henao Rendón, póliza POL-100042. Un camión me golpeó la parte trasera al retroceder."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué vehículo manejaba?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Mi Renault Logan 2024, placa WBR686."
+    },
+    {
+      "speaker": "staff",
+      "text": "Para seguir con su caso necesito una foto del daño en la parte trasera."
+    }
+  ],
+  "used_by": []
+}

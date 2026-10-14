@@ -1,0 +1,382 @@
+{
+  "stage": "functional-design",
+  "unit": "u12-graph-runtime",
+  "upstream_ids": [
+    "AC4.9.1",
+    "AC4.9.2",
+    "AC4.9.3",
+    "AC4.9.4",
+    "AC4.9.5",
+    "AC1.19.1",
+    "AC1.19.2",
+    "AC1.19.3",
+    "AC1.19.4",
+    "AC1.19.5",
+    "AC1.25.1",
+    "AC1.25.2",
+    "AC1.25.3",
+    "AC1.25.4",
+    "AC2.4.1",
+    "AC2.4.2",
+    "AC2.4.3",
+    "AC2.10.1",
+    "AC2.10.2",
+    "AC2.10.5",
+    "AC2.10.3",
+    "AC2.10.4",
+    "AC1.9.1",
+    "AC1.9.2",
+    "AC1.9.3",
+    "AC1.9.4",
+    "AC1.15.1",
+    "AC1.15.2",
+    "AC1.15.3",
+    "AC1.15.4",
+    "AC1.15.5",
+    "AC1.16.1",
+    "AC1.16.2",
+    "AC1.16.3",
+    "AC1.16.4",
+    "AC2.6.1",
+    "AC2.6.2",
+    "AC2.6.3",
+    "AC2.6.4",
+    "AC4.8.1",
+    "AC4.8.2",
+    "AC4.8.3",
+    "AC4.8.4",
+    "AC4.8.5",
+    "AC4.10.1",
+    "AC4.10.2",
+    "AC4.10.3",
+    "AC4.10.4",
+    "AC4.10.5",
+    "AC4.11.1",
+    "AC4.11.2",
+    "AC4.11.3",
+    "AC4.11.4",
+    "AC4.11.5"
+  ],
+  "coverage": [
+    {
+      "id": "AC4.9.1",
+      "status": "OK",
+      "target": "BR1.1 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC4.9.2",
+      "status": "OK",
+      "target": "BR1.2 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC4.9.3",
+      "status": "OK",
+      "target": "BR1.3 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC4.9.4",
+      "status": "OK",
+      "target": "BR1.6 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC4.9.5",
+      "status": "OK",
+      "target": "BR1.5 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.19.1",
+      "status": "OK",
+      "target": "BR3.3 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.19.2",
+      "status": "OK",
+      "target": "BR3.2 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.19.3",
+      "status": "OK",
+      "target": "BR3.4 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.19.4",
+      "status": "OK",
+      "target": "BR3.1 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.19.5",
+      "status": "OK",
+      "target": "BR3.5 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.25.1",
+      "status": "OK",
+      "target": "BR2.1 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.25.2",
+      "status": "OK",
+      "target": "BR2.2 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.25.3",
+      "status": "OK",
+      "target": "BR2.4 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.25.4",
+      "status": "OK",
+      "target": "BR2.3 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.4.1",
+      "status": "OK",
+      "target": "BR4.2 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.4.2",
+      "status": "OK",
+      "target": "BR4.3 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.4.3",
+      "status": "OK",
+      "target": "BR4.1 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.10.1",
+      "status": "OK",
+      "target": "BR5.3 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.10.2",
+      "status": "OK",
+      "target": "BR5.2 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.10.5",
+      "status": "OK",
+      "target": "BR5.6 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.10.3",
+      "status": "N/A",
+      "target": "US2.10 la comparte con U15 `speech-providers` y U16 `voice-call`: la caida del reconocedor la detecta el adaptador de transcripcion y el cierre de la llamada es del canal de voz. U12 aporta la politica de fallo que conserva el caso (BR5.3)"
+    },
+    {
+      "id": "AC2.10.4",
+      "status": "N/A",
+      "target": "US2.10 la construye U15 `speech-providers`: la voz de respaldo cuando la sintesis principal falla es de su adaptador, y no pasa por el grafo"
+    },
+    {
+      "id": "AC4.9.3",
+      "status": "OK",
+      "target": "BR1.4 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.10.1",
+      "status": "OK",
+      "target": "BR2.5 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.4.3",
+      "status": "OK",
+      "target": "BR4.4 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.10.1",
+      "status": "OK",
+      "target": "BR5.1 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.19.4",
+      "status": "OK",
+      "target": "BR5.4 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.19.4",
+      "status": "OK",
+      "target": "BR5.5 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.19.3",
+      "status": "OK",
+      "target": "BR6.1 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.25.1",
+      "status": "OK",
+      "target": "BR6.2 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.19.4",
+      "status": "OK",
+      "target": "BR6.3 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.19.1",
+      "status": "OK",
+      "target": "BR6.4 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.9.1",
+      "status": "OK",
+      "target": "BR2.2 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC1.9.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U10 `compliance` --la peticion de persona y su frase de derivacion; U12 aporta que el resultado de fondo llegue al turno siguiente--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.9.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U10 `compliance` --la peticion de persona y su frase de derivacion; U12 aporta que el resultado de fondo llegue al turno siguiente--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.9.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U10 `compliance` --la peticion de persona y su frase de derivacion; U12 aporta que el resultado de fondo llegue al turno siguiente--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.15.1",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U9 `rules-decision` --las reglas versionadas y la categoria; U12 aporta la ejecucion de fondo del nodo--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.15.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U9 `rules-decision` --las reglas versionadas y la categoria; U12 aporta la ejecucion de fondo del nodo--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.15.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U9 `rules-decision` --las reglas versionadas y la categoria; U12 aporta la ejecucion de fondo del nodo--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.15.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U9 `rules-decision` --las reglas versionadas y la categoria; U12 aporta la ejecucion de fondo del nodo--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.15.5",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U9 `rules-decision` --las reglas versionadas y la categoria; U12 aporta la ejecucion de fondo del nodo--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.16.1",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U10 `compliance` --los controles y los adjuntos del cierre; U12 aporta el cierre o la derivacion desde el grafo--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.16.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U10 `compliance` --los controles y los adjuntos del cierre; U12 aporta el cierre o la derivacion desde el grafo--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.16.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U10 `compliance` --los controles y los adjuntos del cierre; U12 aporta el cierre o la derivacion desde el grafo--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC1.16.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U10 `compliance` --los controles y los adjuntos del cierre; U12 aporta el cierre o la derivacion desde el grafo--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC2.6.1",
+      "status": "OK",
+      "target": "BR5.2 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC2.6.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U8 `policy-rag` --el resultado 'no pude verificar'; U12 aporta la politica de fallo del nodo--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC2.6.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U8 `policy-rag` --el resultado 'no pude verificar'; U12 aporta la politica de fallo del nodo--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC2.6.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U8 `policy-rag` --el resultado 'no pude verificar'; U12 aporta la politica de fallo del nodo--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.8.1",
+      "status": "OK",
+      "target": "BR6.2 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC4.8.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U5 `provider-platform` --los tres niveles de la traza; U12 aporta la traza de un caso completo--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.8.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U5 `provider-platform` --los tres niveles de la traza; U12 aporta la traza de un caso completo--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.8.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U5 `provider-platform` --los tres niveles de la traza; U12 aporta la traza de un caso completo--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.8.5",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U5 `provider-platform` --los tres niveles de la traza; U12 aporta la traza de un caso completo--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.10.1",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U4 `case-record` --el juego cerrado de transiciones; U12 aporta que las transiciones las aplique el runtime--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.10.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U4 `case-record` --el juego cerrado de transiciones; U12 aporta que las transiciones las aplique el runtime--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.10.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U4 `case-record` --el juego cerrado de transiciones; U12 aporta que las transiciones las aplique el runtime--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.10.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U4 `case-record` --el juego cerrado de transiciones; U12 aporta que las transiciones las aplique el runtime--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.10.5",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U4 `case-record` --el juego cerrado de transiciones; U12 aporta que las transiciones las aplique el runtime--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.11.1",
+      "status": "OK",
+      "target": "BR6.1 en construction/u12-graph-runtime/functional-design/rules.md"
+    },
+    {
+      "id": "AC4.11.2",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U2 `tenancy` --la asercion de aislamiento; U12 aporta sus tres tablas, incluidas las de puntos de control--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.11.3",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U2 `tenancy` --la asercion de aislamiento; U12 aporta sus tres tablas, incluidas las de puntos de control--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.11.4",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U2 `tenancy` --la asercion de aislamiento; U12 aporta sus tres tablas, incluidas las de puntos de control--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    },
+    {
+      "id": "AC4.11.5",
+      "status": "N/A",
+      "target": "Comprobacion de punta a punta del mapa de historias: la construye U2 `tenancy` --la asercion de aislamiento; U12 aporta sus tres tablas, incluidas las de puntos de control--. No agrega dependencia (UG-8) y se verifica en Build and Test"
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "case_key": "SEED/knotwell/en/closed",
+  "channel": "chat",
+  "derivation_reason": "rule",
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Another car ran a red light and hit the driver's door."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Lucía Ochoa Henao, policy POL-650485"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "No one injured"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "5th Avenue and 40th Street, Corvane"
+    },
+    "other_parties": {
+      "status": "stated",
+      "value": "One driver, Martin Medina, in a vehicle with plate EGD-9068"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Kia Sportage 2013, plate JTS836, driven by Lucía"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-650485",
+  "record_type": "claim",
+  "resolution": "sent_to_insurer",
+  "state": "closed",
+  "tenant_id": "knotwell",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Good morning, I want to report a crash. I'm Lucía Ochoa Henao, policy POL-650485."
+    },
+    {
+      "speaker": "agent",
+      "text": "Was anyone hurt?"
+    },
+    {
+      "speaker": "insured",
+      "text": "No, nobody."
+    },
+    {
+      "speaker": "agent",
+      "text": "When and where did it happen?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Today at a quarter past seven in the morning, at 5th Avenue and 40th Street."
+    },
+    {
+      "speaker": "agent",
+      "text": "What happened?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Another car ran a red light and hit my driver's door."
+    },
+    {
+      "speaker": "agent",
+      "text": "Which vehicle were you driving?"
+    },
+    {
+      "speaker": "insured",
+      "text": "My Kia Sportage 2013, plate JTS836. I was driving."
+    },
+    {
+      "speaker": "agent",
+      "text": "Do you have the other driver's details?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Yes, the name is Martin Medina and the car's plate is EGD-9068."
+    },
+    {
+      "speaker": "staff",
+      "text": "We sent your case to Seguros Aburrá with everything we recorded."
+    }
+  ],
+  "used_by": [
+    "AC1.14.3",
+    "AC4.10.1"
+  ]
+}

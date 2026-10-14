@@ -1,0 +1,24 @@
+# Expected category for Knotwell with injuries (BR1.1, BR2.2, BR2.6, FR6.4), English turn. Knotwell always refers by its agency rule; this scenario also carries injuries, to exercise the expected category on a case that would be severe under any carrier anyway.
+#
+# Criterio de aceptacion: sobre la fila `category-expected/02` de
+# `app/evals/fixtures/rules/en.yaml`, el motor real de `knotwell` da la
+# categoria declarada en esa fila.
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en espanol es `DS-2/es/rules-knotwell-typical`:
+# los mismos insumos y la misma meta, medidos por idioma y nunca como promedio
+# combinado (P12).
+#
+# Lo que este caso no mide: la explicacion que ve el asegurado (BR2.5, en
+# `copy:check`) ni el nodo `decision`, que llega en el paso 7 de esta unidad.
+case_key: DS-2/en/rules-knotwell-typical
+dataset: DS-2
+language: en
+tenant: knotwell
+requires_provider_key: false
+axes:
+  - rules-engine
+  - category-precedence
+expected_verdicts:
+  rules_category_expected: pass

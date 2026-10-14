@@ -1,0 +1,50 @@
+{
+  "case_key": "SEED/sunmeadow/es/claim-five-of-seven",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Le pegaron por detrás en la glorieta."
+    },
+    "identity_and_policy": {
+      "status": "stated",
+      "value": "Olivia Russo, póliza POL-398476"
+    },
+    "incident_datetime": {
+      "status": "stated",
+      "value": "2026-09-15 12:30"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Glorieta de Los Almendros, Corvane"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Toyota Camry 2023, placa ZNX-9706, lo conducía Olivia"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-398476",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "capturing",
+  "tenant_id": "sunmeadow",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Soy Olivia Russo, póliza POL-398476. Me chocaron en la glorieta de Los Almendros."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué vehículo manejaba?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Mi Toyota Camry 2023, placa ZNX-9706. Lo manejaba yo."
+    }
+  ],
+  "used_by": [
+    "AC4.10.3"
+  ]
+}

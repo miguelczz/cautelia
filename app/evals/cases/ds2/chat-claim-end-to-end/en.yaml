@@ -1,0 +1,69 @@
+# A claim reported end to end through the chat channel (US1.1, US2.1; BR1.1,
+# BR2.1, BR6.4), English turn.
+#
+# The first DS-2 case that **does not simulate the walk**: U13's text driver runs
+# it where it actually happens. U11's probes measure the capture with the real
+# block and composition code but with no channel -- no conversation, no limits, no
+# language detection and no transcript -- and that measures the capture but not
+# what is needed now: real transcripts to calibrate the judge against (DS-7,
+# PENDIENTES-MIGUEL 1.6). A transcript nobody had over a channel is not the one a
+# person would have had.
+#
+# What it checks, and how:
+#   - BR1.1: the opening with its disclosure is the first turn, before the person
+#     writes anything. The driver emits and records it before admitting any
+#     message, exactly as the route does.
+#   - BR2.1: the answer goes in the language of the message. The script is all in
+#     English and the case is recorded in English.
+#   - The capture walk reaches its end: the claim's seven fields are complete and
+#     the case leaves `capturing`.
+#
+# Which field each turn answers is **not guessed from the question text**: the
+# driver reads it from the completeness the previous turn left, with the same
+# `blocks.next_block` the agent uses. That is why the script is indexed by field
+# and not by order, and the conversation still works if the agent asks in a
+# different order, which is the normal behaviour.
+#
+# `requires_provider_key: true`: extraction calls the model. It stays out of the
+# start-up subset, which runs with no provider key, and runs in the full
+# per-milestone run.
+#
+# Expected verdict: `pass`.
+#
+# Its Spanish pair is `DS-2/es/chat-claim-end-to-end`: same criteria and same
+# target, measured per language and never as a combined average (P12).
+case_key: DS-2/en/chat-claim-end-to-end
+dataset: DS-2
+language: en
+tenant: stonecroft
+channel: chat
+axes:
+  - chat-channel
+  - intake
+  - language-adherence
+script:
+  - field_key: identity_and_policy
+    text: "I'm Marcus Reed, my policy is POL-000001."
+  - field_key: injuries
+    text: "No, nobody was hurt."
+  - field_key: description
+    text: "A truck hit me from behind while I was stopped at a light."
+  - field_key: incident_datetime
+    text: "Yesterday, around three in the afternoon."
+  - field_key: location
+    text: "On 43rd Avenue at 10th Street."
+  - field_key: vehicle_and_driver
+    text: "My car is a grey 2019 Mazda 3, and I was the one driving."
+  - field_key: other_parties
+    text: "The truck belonged to a moving company; I couldn't read the plate."
+# El registro entero, no solo el tipo y el idioma: el corredor compara el registro
+# completo, y con dos claves este caso no podia pasar nunca (visto en la primera
+# corrida completa, 2026-10-09). Stonecroft deriva todo caso al ajustador.
+expected_record:
+  record_type: claim
+  state: derived
+  complete: 5
+  total: 5
+  language: en
+expected_verdicts: {}
+requires_provider_key: true

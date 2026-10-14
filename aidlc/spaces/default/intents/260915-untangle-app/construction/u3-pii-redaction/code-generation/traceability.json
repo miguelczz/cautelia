@@ -1,0 +1,384 @@
+{
+  "stage": "code-generation",
+  "unit": "u3-pii-redaction",
+  "upstream_ids": [
+    "AC4.12.1",
+    "AC4.12.2",
+    "AC4.12.3",
+    "AC4.12.4",
+    "AC4.12.5",
+    "AC4.13.1",
+    "AC4.13.2",
+    "AC4.13.3",
+    "AC4.13.4",
+    "BR1.1",
+    "BR1.2",
+    "BR1.3",
+    "BR1.4",
+    "BR1.5",
+    "BR1.6",
+    "BR1.7",
+    "BR1.8",
+    "BR2.1",
+    "BR2.2",
+    "BR2.3",
+    "BR2.4",
+    "BR2.5",
+    "BR2.6",
+    "BR2.7",
+    "BR2.8",
+    "BR2.9",
+    "BR3.1",
+    "BR3.2",
+    "BR3.3",
+    "BR3.4",
+    "BR3.5",
+    "BR4.1",
+    "BR4.2",
+    "BR4.3",
+    "BR4.4",
+    "BR4.5",
+    "BR4.6",
+    "NFR11.1",
+    "NFR11.2",
+    "NFR11.3",
+    "NFR11.4",
+    "NFR18.1",
+    "NFR18.2",
+    "NFR21.1",
+    "SEC-U3.1",
+    "SEC-U3.2",
+    "SEC-U3.3",
+    "SEC-U3.4",
+    "SEC-U3.5",
+    "SEC-U3.6",
+    "SEC-U3.7",
+    "SEC-U3.8",
+    "SEC-U3.9",
+    "SEC-U3.10",
+    "SEC-U3.11",
+    "SEC-U3.12",
+    "SEC-U3.13",
+    "SEC-U3.14",
+    "SEC-U3.15"
+  ],
+  "coverage": [
+    {
+      "id": "AC4.12.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/sinks.py"
+    },
+    {
+      "id": "AC4.12.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/redaction_constructor.py"
+    },
+    {
+      "id": "AC4.12.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/redaction/test_streaming.py"
+    },
+    {
+      "id": "AC4.12.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/redaction/test_detector.py"
+    },
+    {
+      "id": "AC4.12.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/redaction_report.py"
+    },
+    {
+      "id": "AC4.13.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/recognizers/es.yaml"
+    },
+    {
+      "id": "AC4.13.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/redaction/test_recognizers.py"
+    },
+    {
+      "id": "AC4.13.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/redaction_report.py"
+    },
+    {
+      "id": "AC4.13.4",
+      "status": "OK",
+      "target": "app/evals/cases/ds6/rt15/es.yaml"
+    },
+    {
+      "id": "BR1.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/sinks.py"
+    },
+    {
+      "id": "BR1.2",
+      "status": "OK",
+      "target": "app/backend/.importlinter"
+    },
+    {
+      "id": "BR1.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/sinks.py"
+    },
+    {
+      "id": "BR1.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/redaction/test_api.py"
+    },
+    {
+      "id": "BR1.5",
+      "status": "OK",
+      "target": "app/backend/tests/unit/redaction/test_api.py"
+    },
+    {
+      "id": "BR1.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/redaction_constructor.py"
+    },
+    {
+      "id": "BR1.7",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/api.py"
+    },
+    {
+      "id": "BR1.8",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/redaction_constructor.py"
+    },
+    {
+      "id": "BR2.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/recognizers/en.yaml"
+    },
+    {
+      "id": "BR2.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/redaction/test_recognizers.py"
+    },
+    {
+      "id": "BR2.3",
+      "status": "OK",
+      "target": "app/evals/cases/ds6/rt15/en.yaml"
+    },
+    {
+      "id": "BR2.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/recognizers/es.yaml"
+    },
+    {
+      "id": "BR2.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/detector.py"
+    },
+    {
+      "id": "BR2.6",
+      "status": "OK",
+      "target": "app/backend/tests/unit/redaction/test_recognizers.py"
+    },
+    {
+      "id": "BR2.7",
+      "status": "OK",
+      "target": "app/backend/tests/unit/redaction/test_recognizers.py"
+    },
+    {
+      "id": "BR2.8",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/recognizers/loading.py"
+    },
+    {
+      "id": "BR2.9",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/detector.py"
+    },
+    {
+      "id": "BR3.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/labels.py"
+    },
+    {
+      "id": "BR3.2",
+      "status": "OK",
+      "target": "app/config/copy/es.yaml"
+    },
+    {
+      "id": "BR3.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/redaction/test_labels.py"
+    },
+    {
+      "id": "BR3.4",
+      "status": "OK",
+      "target": "app/config/copy/en.yaml"
+    },
+    {
+      "id": "BR3.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/streaming.py"
+    },
+    {
+      "id": "BR4.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/redaction_report.py"
+    },
+    {
+      "id": "BR4.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/redaction_report.py"
+    },
+    {
+      "id": "BR4.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/redaction/test_detector.py"
+    },
+    {
+      "id": "BR4.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/redaction_report.py"
+    },
+    {
+      "id": "BR4.5",
+      "status": "OK",
+      "target": "app/evals/subsets/rt14.yaml"
+    },
+    {
+      "id": "BR4.6",
+      "status": "OK",
+      "target": "app/backend/.importlinter"
+    },
+    {
+      "id": "NFR11.1",
+      "status": "OK",
+      "target": "app/evals/cases/ds6/rt14/es.yaml"
+    },
+    {
+      "id": "NFR11.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/redaction_report.py"
+    },
+    {
+      "id": "NFR11.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/redaction/test_streaming.py"
+    },
+    {
+      "id": "NFR11.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/redaction/test_streaming.py"
+    },
+    {
+      "id": "NFR18.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/coverage_gate.py"
+    },
+    {
+      "id": "NFR18.2",
+      "status": "OK",
+      "target": "app/backend/pyproject.toml"
+    },
+    {
+      "id": "NFR21.1",
+      "status": "OK",
+      "target": "app/backend/.importlinter"
+    },
+    {
+      "id": "SEC-U3.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/sinks.py"
+    },
+    {
+      "id": "SEC-U3.2",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/redaction_constructor.py"
+    },
+    {
+      "id": "SEC-U3.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/redaction/test_api.py"
+    },
+    {
+      "id": "SEC-U3.4",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/detector.py"
+    },
+    {
+      "id": "SEC-U3.5",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/recognizers/models.py"
+    },
+    {
+      "id": "SEC-U3.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/detector.py"
+    },
+    {
+      "id": "SEC-U3.7",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/redaction_constructor.py"
+    },
+    {
+      "id": "SEC-U3.8",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/redaction_constructor.py"
+    },
+    {
+      "id": "SEC-U3.9",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/redaction_report.py"
+    },
+    {
+      "id": "SEC-U3.10",
+      "status": "OK",
+      "target": "app/backend/src/untangle/compliance/redaction/api.py"
+    },
+    {
+      "id": "SEC-U3.11",
+      "status": "OK",
+      "target": "app/backend/tests/unit/redaction/test_streaming.py"
+    },
+    {
+      "id": "SEC-U3.12",
+      "status": "OK",
+      "target": "app/backend/.importlinter"
+    },
+    {
+      "id": "SEC-U3.13",
+      "status": "OK",
+      "target": "app/backend/tests/unit/redaction/test_detector.py"
+    },
+    {
+      "id": "SEC-U3.14",
+      "status": "OK",
+      "target": "app/backend/src/untangle/workspace/redaction_report.py"
+    },
+    {
+      "id": "SEC-U3.15",
+      "status": "OK",
+      "target": "app/backend/.importlinter"
+    }
+  ],
+  "reverse": [
+    {
+      "id": "CG-U3-1",
+      "status": "N/A",
+      "target": "La sonda de RT-4 y la comprobacion contra despliegue vivo no se construyen aqui: no hay despliegue hasta U14. Los casos de RT-14 corren en local sobre casos sembrados."
+    },
+    {
+      "id": "Acotacion de BR2.9",
+      "status": "N/A",
+      "target": "app/backend/src/untangle/compliance/redaction/detector.py, constante `PASADA_DEL_OTRO_IDIOMA`: los reconocedores por formato de los dos idiomas corren siempre, los del modelo de lenguaje solo en el del turno. Medido: 8 hallazgos falsos sin acotar frente a 1, con los mismos 5 verdaderos. La regla y el Flujo 1 se acotaron para decir lo que el codigo hace."
+    },
+    {
+      "id": "Memoria residente de los modelos",
+      "status": "N/A",
+      "target": "Medida 636 MB con los dos modelos `md`, frente a los 71 MB que NFRD-U3-1 daba por residentes --esa cifra era el tamano de las ruedas en disco--. Ninguna prueba ni compuerta de U3 mide memoria; afecta a INF-U3-4 y al plan de hospedaje, y esta escalado a Miguel con la alternativa medida (165 MB con los modelos `sm`)."
+    },
+    {
+      "id": "Alcance de la Regla 2 del chequeo del constructor",
+      "status": "N/A",
+      "target": "app/backend/src/untangle/workspace/redaction_constructor.py: la busqueda de bovedas cubre `ast.Assign` y `ast.Dict`, no `AugAssign`, `NamedExpr` ni comprensiones de diccionario. Es defensa en profundidad; la garantia dura es la Regla 1 sobre el tipo `Redacted`. Declarado tras el hallazgo R-03 de la revision."
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+# Advanced field (AC1.5.4, BR3.3), English turn. See `es.yaml`.
+case_key: DS-2/en/intake-advanced-field
+dataset: DS-2
+language: en
+tenant: knotwell
+requires_provider_key: false
+axes:
+  - intake
+  - advanced-field
+script:
+  - field_key: identity_and_policy
+    text: "I'm Marta Diaz, policy POL-556677. Nobody was hurt, it all happened on 45th and 10th."
+  - field_key: description
+    text: "A car ran a red light and hit me on the side."
+  - field_key: incident_datetime
+    text: "This morning."
+expected_verdicts:
+  intake_advanced_field: pass

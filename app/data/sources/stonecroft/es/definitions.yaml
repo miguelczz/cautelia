@@ -1,0 +1,143 @@
+# Textos fuente revisados de Seguros Aburrá, en espanol (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: stonecroft
+language: es
+part_key: definitions
+texts:
+- source_id: STO-PAP-2026-DEF.YOU
+  kind: clause
+  clause_key: DEF.YOU
+  part: Definiciones
+  version: '2026.1'
+  text: «Usted» es la persona que aparece como asegurada principal en la carátula. También lo es quien
+    comparte con ella la vida en pareja y la vivienda, mientras mantenga esa convivencia.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-DEF.WE
+  kind: clause
+  clause_key: DEF.WE
+  part: Definiciones
+  version: '2026.1'
+  text: «Nosotros» es Seguros Aburrá, la aseguradora que emite este contrato y responde por él.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-DEF.BODILY_INJURY
+  kind: clause
+  clause_key: DEF.BODILY_INJURY
+  part: Definiciones
+  version: '2026.1'
+  text: '«Lesión corporal» es todo daño a la salud de una persona causado por el accidente: las heridas,
+    la enfermedad que se derive de ellas y, si ocurre, la muerte.'
+  defines_terms:
+  - lesión corporal
+  - lesiones corporales
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-DEF.PROPERTY_DAMAGE
+  kind: clause
+  clause_key: DEF.PROPERTY_DAMAGE
+  part: Definiciones
+  version: '2026.1'
+  text: «Daño a bienes» es la rotura, la destrucción o la imposibilidad de usar un objeto que se puede
+    tocar, como un vehículo, una cerca o una fachada, cuando es de otra persona.
+  defines_terms:
+  - daño a bienes
+  - daños a bienes
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-DEF.COVERED_AUTO
+  kind: clause
+  clause_key: DEF.COVERED_AUTO
+  part: Definiciones
+  version: '2026.1'
+  text: «Vehículo cubierto» es el vehículo que figura en la carátula y el remolque que figure en ella.
+    También lo es el vehículo que usted compre durante la vigencia, si nos avisa dentro de los diez días
+    siguientes a recibirlo.
+  defines_terms:
+  - vehículo cubierto
+  - vehículos cubiertos
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-DEF.TEMPORARY_SUBSTITUTE
+  kind: clause
+  clause_key: DEF.TEMPORARY_SUBSTITUTE
+  part: Definiciones
+  version: '2026.1'
+  text: «Vehículo sustituto» es el que usted maneja de forma temporal, sin ser su dueño, mientras su vehículo
+    cubierto está fuera de servicio por reparación, avería, robo o pérdida total. Mientras dure esa situación,
+    recibe la misma protección que el vehículo cubierto.
+  defines_terms:
+  - vehículo sustituto
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-DEF.TRAILER
+  kind: clause
+  clause_key: DEF.TRAILER
+  part: Definiciones
+  version: '2026.1'
+  text: «Remolque» es un vehículo sin motor propio pensado para ir enganchado a un automóvil de uso particular,
+    como un tráiler de carga liviana o una casa rodante pequeña.
+  defines_terms:
+  - remolque
+  - remolques
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-DEF.FAMILY_MEMBER
+  kind: clause
+  clause_key: DEF.FAMILY_MEMBER
+  part: Definiciones
+  version: '2026.1'
+  text: «Familiar» es la persona que vive en su hogar y es su pariente de sangre, por matrimonio o unión,
+    o por adopción, incluidos los hijos bajo su cuidado legal.
+  defines_terms:
+  - familiar
+  - familiares
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-DEF.OCCUPYING
+  kind: clause
+  clause_key: DEF.OCCUPYING
+  part: Definiciones
+  version: '2026.1'
+  text: «Ocupante» es quien va dentro del vehículo o está subiendo o bajando de él. También lo es quien
+    está junto al vehículo cargándolo o empujándolo con las manos.
+  defines_terms:
+  - ocupante
+  - ocupantes
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2025-DEF.YOU.ALT
+  kind: distractor
+  clause_key: DEF.YOU.ALT
+  part: Definiciones
+  version: '2025.1'
+  text: «Usted» es solamente la persona que aparece como asegurada principal en la carátula; su pareja
+    no queda incluida aunque viva con ella.
+  distractor_of: STO-PAP-2026-DEF.YOU
+  distractor_reason: near_duplicate
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2025-DEF.COVERED_AUTO
+  kind: distractor
+  clause_key: DEF.COVERED_AUTO
+  part: Definiciones
+  version: '2025.1'
+  text: «Vehículo cubierto» es el vehículo que figura en la carátula. Un vehículo comprado durante la
+    vigencia solo queda cubierto desde que se incluye en la carátula mediante un endoso.
+  distractor_of: STO-PAP-2026-DEF.COVERED_AUTO
+  distractor_reason: superseded_version
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand

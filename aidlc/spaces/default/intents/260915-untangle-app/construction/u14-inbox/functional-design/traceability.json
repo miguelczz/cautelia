@@ -1,0 +1,248 @@
+{
+  "stage": "functional-design",
+  "unit": "u14-inbox",
+  "upstream_ids": [
+    "AC3.1.1",
+    "AC3.1.2",
+    "AC3.1.3",
+    "AC3.1.4",
+    "AC3.1.5",
+    "AC3.2.1",
+    "AC3.2.2",
+    "AC3.2.3",
+    "AC3.2.4",
+    "AC3.2.5",
+    "AC3.3.1",
+    "AC3.3.2",
+    "AC3.3.3",
+    "AC3.3.4",
+    "AC3.4.1",
+    "AC3.4.2",
+    "AC3.4.3",
+    "AC3.4.4",
+    "AC3.4.5",
+    "AC3.5.1",
+    "AC3.5.2",
+    "AC3.5.3",
+    "AC3.5.4",
+    "AC3.6.1",
+    "AC3.6.2",
+    "AC3.6.3",
+    "AC3.6.4",
+    "AC3.6.5",
+    "AC3.7.1",
+    "AC3.7.2",
+    "AC3.7.3",
+    "AC3.7.4",
+    "AC3.7.5",
+    "AC3.7.6",
+    "AC3.8.1",
+    "AC3.8.2",
+    "AC3.8.3",
+    "AC3.8.4",
+    "AC3.8.5",
+    "AC3.8.6"
+  ],
+  "coverage": [
+    {
+      "id": "AC3.1.1",
+      "status": "OK",
+      "target": "BR1.1 y BR1.2 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.1.2",
+      "status": "OK",
+      "target": "BR1.3 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.1.3",
+      "status": "OK",
+      "target": "BR1.4 [bloquea] en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.1.4",
+      "status": "OK",
+      "target": "BR1.4 [bloquea] en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.1.5",
+      "status": "OK",
+      "target": "BR1.6 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.2.1",
+      "status": "OK",
+      "target": "BR2.1 en construction/u14-inbox/functional-design/rules.md; el encabezado pegajoso en construction/u14-inbox/functional-design/frontend-components.md"
+    },
+    {
+      "id": "AC3.2.2",
+      "status": "OK",
+      "target": "BR2.2 y BR2.3 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.2.3",
+      "status": "OK",
+      "target": "BR2.4 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.2.4",
+      "status": "OK",
+      "target": "BR2.5 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.2.5",
+      "status": "OK",
+      "target": "BR2.2 en construction/u14-inbox/functional-design/rules.md (tres bloques abiertos); la medición es humana y vive en la validacion del dia 30"
+    },
+    {
+      "id": "AC3.3.1",
+      "status": "OK",
+      "target": "BR3.1 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.3.2",
+      "status": "OK",
+      "target": "BR3.2 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.3.3",
+      "status": "OK",
+      "target": "BR3.3 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.3.4",
+      "status": "OK",
+      "target": "BR3.4 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.4.1",
+      "status": "OK",
+      "target": "BR4.1 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.4.2",
+      "status": "OK",
+      "target": "BR4.2 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.4.3",
+      "status": "OK",
+      "target": "BR4.2 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.4.4",
+      "status": "OK",
+      "target": "BR4.3 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.4.5",
+      "status": "OK",
+      "target": "BR4.4 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.5.1",
+      "status": "OK",
+      "target": "BR1.5 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.5.2",
+      "status": "OK",
+      "target": "Flujo 4 en construction/u14-inbox/functional-design/functional-spec.md"
+    },
+    {
+      "id": "AC3.5.3",
+      "status": "OK",
+      "target": "BR4.3 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.5.4",
+      "status": "OK",
+      "target": "BR1.5 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.6.1",
+      "status": "OK",
+      "target": "Regla de la aseguradora en U9 (rules-decision); U14 muestra su resultado"
+    },
+    {
+      "id": "AC3.6.2",
+      "status": "OK",
+      "target": "BR4.5 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.6.3",
+      "status": "OK",
+      "target": "BR4.5 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.6.4",
+      "status": "OK",
+      "target": "BR2.6 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.6.5",
+      "status": "OK",
+      "target": "BR4.6 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.7.1",
+      "status": "OK",
+      "target": "El enlace lo entregan U13 (chat) y U17 (consola); U14 lo canjea"
+    },
+    {
+      "id": "AC3.7.2",
+      "status": "OK",
+      "target": "BR5.1 [bloquea] y BR4.5 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.7.3",
+      "status": "OK",
+      "target": "BR5.2 [bloquea] en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.7.4",
+      "status": "OK",
+      "target": "BR5.3 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.7.5",
+      "status": "OK",
+      "target": "BR5.5 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.7.6",
+      "status": "OK",
+      "target": "Flujo 3 en construction/u14-inbox/functional-design/functional-spec.md; la reanudacion la hace U12 por C-14"
+    },
+    {
+      "id": "AC3.8.1",
+      "status": "OK",
+      "target": "VisitorHeader en construction/u14-inbox/functional-design/frontend-components.md; Flujo 3 en construction/u14-inbox/functional-design/functional-spec.md"
+    },
+    {
+      "id": "AC3.8.2",
+      "status": "OK",
+      "target": "VisitorOutcome en construction/u14-inbox/functional-design/frontend-components.md; Flujo 3 en construction/u14-inbox/functional-design/functional-spec.md"
+    },
+    {
+      "id": "AC3.8.3",
+      "status": "OK",
+      "target": "BR5.4 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.8.4",
+      "status": "OK",
+      "target": "BR5.7 en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.8.5",
+      "status": "OK",
+      "target": "BR5.2 [bloquea] en construction/u14-inbox/functional-design/rules.md"
+    },
+    {
+      "id": "AC3.8.6",
+      "status": "OK",
+      "target": "BR5.6 en construction/u14-inbox/functional-design/rules.md"
+    }
+  ]
+}

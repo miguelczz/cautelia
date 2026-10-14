@@ -1,0 +1,25 @@
+# Saying you have a question is not the question yet.
+#
+# Comprension de un mensaje. Nace de una conversacion simulada del 2026-10-13 en la que
+# «tengo una duda de mi poliza» se guardo como la pregunta y la agente contesto
+# «no encuentro una clausula que hable de eso».
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/en/understand-question-announced-not-asked
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  last_agent_text: "Hi, I'm Catalina, the artificial intelligence assistant of Seguros Aburrá. This is a demo with sample policies, so please don't type real personal data. I can help you report a claim or answer questions about your policy."
+  message: Hi, I have a question about my policy
+  wants:
+  - policy_question
+  asks_about_coverage: false
+  asks_question: false
+  absent_items:
+  - question_asked
+expected_verdicts:
+  understanding_question_announced_not_asked: pass

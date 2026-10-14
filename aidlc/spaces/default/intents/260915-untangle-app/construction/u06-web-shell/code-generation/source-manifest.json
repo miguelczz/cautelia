@@ -1,0 +1,544 @@
+{
+  "stage": "code-generation",
+  "unit": "u06-web-shell",
+  "version": 1,
+  "writes": [
+    {
+      "path": ".env.example"
+    },
+    {
+      "path": ".github/workflows/verify.yml"
+    },
+    {
+      "path": "app/backend/.importlinter"
+    },
+    {
+      "path": "app/backend/migrations/versions/u6_web_0001_activation_tables.py"
+    },
+    {
+      "path": "app/backend/src/untangle/copy_catalog/checks.py"
+    },
+    {
+      "path": "app/backend/src/untangle/copy_catalog/keys_module.py"
+    },
+    {
+      "path": "app/backend/src/untangle/paths.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/composition.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/health.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/openapi_export.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/problems.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/security_headers.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/site.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/surfaces.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/web.py"
+    },
+    {
+      "path": "app/backend/src/untangle/settings.py"
+    },
+    {
+      "path": "app/backend/src/untangle/surface_spec.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/activation/__init__.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/activation/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/activation/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/activation/purge.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/activation/repository.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/activation_report.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/generate_contracts.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/supply_chain_check.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u1/test_composition.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u6/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u6/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u6/test_activation_repository.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u6/test_activation_service.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u6/test_activation_tables.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u6/test_api.py"
+    },
+    {
+      "path": "app/backend/tests/unit/activation/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/activation/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/unit/activation/test_report.py"
+    },
+    {
+      "path": "app/backend/tests/unit/activation/test_service.py"
+    },
+    {
+      "path": "app/backend/tests/unit/copy_catalog/test_checks_interfaz.py"
+    },
+    {
+      "path": "app/backend/tests/unit/copy_catalog/test_keys_module_interfaz.py"
+    },
+    {
+      "path": "app/backend/tests/unit/server/test_supply_chain_check.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_purge.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/espias.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/eventos.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/rutas_de_prueba.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/superficie_repetida.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/superficie_sin_sonda.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/superficies_con_sonda.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/test_dependencies_ledger.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/test_health.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/test_served_process.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/test_site.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/test_site_example.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/test_surfaces.py"
+    },
+    {
+      "path": "app/backend/tests/unit/web/test_tenant_brand.py"
+    },
+    {
+      "path": "app/config/copy/en.yaml"
+    },
+    {
+      "path": "app/config/copy/es.yaml"
+    },
+    {
+      "path": "app/config/tenants/knotwell/tenant.yaml"
+    },
+    {
+      "path": "app/config/tenants/stonecroft/tenant.yaml"
+    },
+    {
+      "path": "app/config/tenants/sunmeadow/tenant.yaml"
+    },
+    {
+      "path": "app/contracts/examples/site-directory.json"
+    },
+    {
+      "path": "app/contracts/openapi.json"
+    },
+    {
+      "path": "app/contracts/schemas/tenant.schema.json"
+    },
+    {
+      "path": "app/frontend/.prettierignore"
+    },
+    {
+      "path": "app/frontend/DEPENDENCIES.md"
+    },
+    {
+      "path": "app/frontend/e2e/a11y.spec.ts"
+    },
+    {
+      "path": "app/frontend/e2e/journey.spec.ts"
+    },
+    {
+      "path": "app/frontend/e2e/playwright.config.ts"
+    },
+    {
+      "path": "app/frontend/e2e/render.spec.ts"
+    },
+    {
+      "path": "app/frontend/e2e/support/harness.ts"
+    },
+    {
+      "path": "app/frontend/e2e/timing.spec.ts"
+    },
+    {
+      "path": "app/frontend/e2e/visitable-routes.ts"
+    },
+    {
+      "path": "app/frontend/eslint.config.ts"
+    },
+    {
+      "path": "app/frontend/index.html"
+    },
+    {
+      "path": "app/frontend/openapi-ts.config.ts"
+    },
+    {
+      "path": "app/frontend/package.json"
+    },
+    {
+      "path": "app/frontend/pnpm-lock.yaml"
+    },
+    {
+      "path": "app/frontend/pnpm-workspace.yaml"
+    },
+    {
+      "path": "app/frontend/public/theme-boot.js"
+    },
+    {
+      "path": "app/frontend/src/app/App.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/app.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/readiness-gate.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/routed-app.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/router.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/shell/app-shell.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/shell/frame.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/shell/language-selector.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/shell/shell.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/shell/site-footer.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/shell/skip-link.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/shell/surface-nav.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/shell/theme-toggle.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/styles.css"
+    },
+    {
+      "path": "app/frontend/src/app/surfaces.ts"
+    },
+    {
+      "path": "app/frontend/src/app/testing.tsx"
+    },
+    {
+      "path": "app/frontend/src/app/visitable-routes.test.ts"
+    },
+    {
+      "path": "app/frontend/src/main.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/home/home-page.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/home/home.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/home/insurer-row.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/home/sample-policy-card.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/status/case-link-status.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/status/status-kinds.ts"
+    },
+    {
+      "path": "app/frontend/src/pages/status/status-page.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/status/status-routes.tsx"
+    },
+    {
+      "path": "app/frontend/src/pages/status/status.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/connectivity.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/fake-server.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/problems.test.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/problems.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/query-client.test.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/query-client.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/readiness.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/readiness.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/site.test.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/site.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/@tanstack/react-query.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/client.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/client/client.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/client/index.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/client/types.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/client/utils.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/core/auth.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/core/bodySerializer.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/core/params.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/core/pathSerializer.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/core/queryKeySerializer.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/core/serverSentEvents.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/core/types.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/core/utils.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/index.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/sdk.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/types.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-keys.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-texts.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/tenant-characters.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/i18n/initial-locale.test.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/i18n/initial-locale.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/i18n/locale-provider.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/i18n/locale-provider.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/i18n/translate.test.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/i18n/translate.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/theme/fonts.css"
+    },
+    {
+      "path": "app/frontend/src/shared/theme/preference.test.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/theme/preference.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/theme/tenant-accent.test.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/theme/tenant-accent.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/theme/testing.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/theme/theme-boot.test.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/theme/theme-provider.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/theme/theme-provider.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/theme/tokens.css"
+    },
+    {
+      "path": "app/frontend/src/shared/theme/tokens.test.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/ui/announcer.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/ui/announcer.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/ui/button.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/ui/cn.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/ui/demo-notice.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/ui/disclosure.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/ui/inline-alert.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/ui/input.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/ui/monogram.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/ui/primitives.test.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/ui/segmented-toggle.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/ui/select.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/ui/skeleton.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/ui/tabs.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/ui/tag.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/ui/textarea.tsx"
+    },
+    {
+      "path": "app/frontend/tsconfig.json"
+    },
+    {
+      "path": "app/frontend/types/element-timing.d.ts"
+    },
+    {
+      "path": "app/frontend/vite.config.ts"
+    },
+    {
+      "path": "app/frontend/vitest.config.ts"
+    },
+    {
+      "path": "app/frontend/vitest.setup.ts"
+    },
+    {
+      "path": "mise.toml"
+    },
+    {
+      "path": "scripts/servidor-del-arnes.py"
+    },
+    {
+      "path": "scripts/verify.sh"
+    }
+  ]
+}

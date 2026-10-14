@@ -1,0 +1,24 @@
+# Cierre directo sin dinero de Sunmeadow (FR6.1), turno en espanol. Sunmeadow es flexible y cierra directo lo simple, sin terceros ni heridos: un caso limpio no dispara ninguna regla de dinero.
+#
+# Criterio de aceptacion: sobre la fila `direct-close/01` de
+# `app/evals/fixtures/rules/es.yaml`, el motor real de `sunmeadow` da la
+# categoria declarada en esa fila.
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en ingles es `DS-2/en/rules-sunmeadow-direct-close`:
+# los mismos insumos y la misma meta, medidos por idioma y nunca como promedio
+# combinado (P12).
+#
+# Lo que este caso no mide: la explicacion que ve el asegurado (BR2.5, en
+# `copy:check`) ni el nodo `decision`, que llega en el paso 7 de esta unidad.
+case_key: DS-2/es/rules-sunmeadow-direct-close
+dataset: DS-2
+language: es
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - rules-engine
+  - category-precedence
+expected_verdicts:
+  direct_close_without_money: pass

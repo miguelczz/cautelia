@@ -1,0 +1,83 @@
+{
+  "$defs": {
+    "FingerprintSource": {
+      "additionalProperties": false,
+      "description": "De donde salieron las huellas: el specimen, no su texto.",
+      "properties": {
+        "form": {
+          "minLength": 1,
+          "title": "Form",
+          "type": "string"
+        },
+        "edition": {
+          "minLength": 1,
+          "title": "Edition",
+          "type": "string"
+        },
+        "publisher": {
+          "minLength": 1,
+          "title": "Publisher",
+          "type": "string"
+        },
+        "retrieved_at": {
+          "format": "date",
+          "title": "Retrieved At",
+          "type": "string"
+        },
+        "file_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "File Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "form",
+        "edition",
+        "publisher",
+        "retrieved_at",
+        "file_sha256"
+      ],
+      "title": "FingerprintSource",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Las huellas: **solo hashes**, en orden y sin repetir (SEC-U7.2).\n\nNo hay ningun campo donde quepa una secuencia legible: el modelo no admite\ncampos de mas, y los hashes solo admiten 64 digitos hexadecimales.",
+  "properties": {
+    "shingle_size": {
+      "default": 8,
+      "minimum": 1,
+      "title": "Shingle Size",
+      "type": "integer"
+    },
+    "normalization": {
+      "minLength": 1,
+      "title": "Normalization",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/FingerprintSource"
+      },
+      "title": "Sources",
+      "type": "array"
+    },
+    "hashes": {
+      "items": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Hashes",
+      "type": "array"
+    }
+  },
+  "required": [
+    "normalization",
+    "sources",
+    "hashes"
+  ],
+  "title": "FingerprintSet",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/third-party-shingles.schema.json"
+}

@@ -1,0 +1,10 @@
+{
+  "clause_ids": ["TST-PAP-2026-A.1"],
+  "form_id": "TST-PAP-2026",
+  "form_kind": "policy",
+  "form_version": "2026.1",
+  "issuer_label": "Testhaven Mutual",
+  "issuer_tenant": "testhaven",
+  "jurisdiction_ref": null,
+  "language": "es"
+}

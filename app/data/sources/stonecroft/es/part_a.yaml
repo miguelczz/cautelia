@@ -1,0 +1,220 @@
+# Textos fuente revisados de Seguros Aburrá, en espanol (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: stonecroft
+language: es
+part_key: part_a
+texts:
+- source_id: STO-PAP-2026-A.INS
+  kind: clause
+  clause_key: A.INS
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: Si un accidente con un vehículo cubierto o con un vehículo sustituto obliga al asegurado a responder
+    ante otra persona por lesiones corporales o daños a bienes, Seguros Aburrá paga esa indemnización
+    hasta el límite de esta parte. También asumimos la defensa del asegurado frente a esas reclamaciones,
+    con abogados que elegimos nosotros, y podemos llegar a un acuerdo cuando lo consideremos conveniente.
+    Dejamos de defenderlo cuando lo pagado por esta parte alcanza su límite.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-A.SUPP
+  kind: clause
+  clause_key: A.SUPP
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: Además del límite de esta parte, Seguros Aburrá paga los gastos de la defensa, el costo de
+    las fianzas judiciales que se exijan al asegurado por un accidente cubierto y los gastos razonables
+    en que el asegurado incurra cuando le pedimos ayuda con el caso, incluido su transporte a las audiencias.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-A.EXCL.A.1
+  kind: clause
+  clause_key: A.EXCL.A.1
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: No hay cobertura para las lesiones o daños que el asegurado cause a propósito, ni para los que
+    cause otra persona siguiendo sus órdenes.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-A.EXCL.A.2
+  kind: clause
+  clause_key: A.EXCL.A.2
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: No cubrimos los daños a bienes que sean del asegurado o que el asegurado esté transportando.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-A.EXCL.A.3
+  kind: clause
+  clause_key: A.EXCL.A.3
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: No cubrimos los daños a bienes que el asegurado tenga alquilados, prestados o bajo su cuidado.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-A.EXCL.A.4
+  kind: clause
+  clause_key: A.EXCL.A.4
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: 'No cubrimos las lesiones corporales de un empleado del asegurado ocurridas mientras trabaja para
+    él: esas lesiones las atiende el régimen laboral que corresponda.'
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-A.EXCL.A.5
+  kind: clause
+  clause_key: A.EXCL.A.5
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: No cubrimos la responsabilidad que surja mientras el vehículo transporta personas o mercancías
+    a cambio de un pago, incluidos los viajes contratados por una aplicación. Compartir entre conocidos
+    los gastos de un viaje no se considera un pago.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-A.EXCL.A.6
+  kind: clause
+  clause_key: A.EXCL.A.6
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: No cubrimos al asegurado mientras usa un vehículo como parte de un negocio de venta, reparación,
+    lavado, parqueo o custodia de vehículos.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-A.EXCL.A.7
+  kind: clause
+  clause_key: A.EXCL.A.7
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: No cubrimos a quien use un vehículo sin permiso de su dueño o sin motivos razonables para creer
+    que lo tenía.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-A.EXCL.A.8
+  kind: clause
+  clause_key: A.EXCL.A.8
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: No cubrimos los accidentes ocurridos durante carreras, competencias de velocidad o pruebas de
+    rendimiento, ni durante la práctica para participar en ellas.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-A.EXCL.A.9
+  kind: clause
+  clause_key: A.EXCL.A.9
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: No pagamos multas, sanciones, recargos ni indemnizaciones que un juez imponga como castigo y no
+    como reparación del daño.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-A.EXCL.B.1
+  kind: clause
+  clause_key: A.EXCL.B.1
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: No hay cobertura mientras el asegurado conduce una moto, un triciclo motorizado u otro vehículo
+    de dos o tres ruedas.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-A.EXCL.B.2
+  kind: clause
+  clause_key: A.EXCL.B.2
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: No cubrimos el uso de un vehículo que sea suyo y que no figure en la carátula, salvo el vehículo
+    recién comprado que incluye la definición de vehículo cubierto.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-A.EXCL.B.3
+  kind: clause
+  clause_key: A.EXCL.B.3
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: No cubrimos el uso de un vehículo que sea de un familiar, o que un familiar tenga a su disposición
+    de forma habitual, si ese vehículo no figura en la carátula.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-PAP-2026-A.LIMIT
+  kind: clause
+  clause_key: A.LIMIT
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: El límite por persona que muestra la carátula es lo máximo que pagamos por las lesiones corporales
+    de una misma persona en un accidente. El límite por accidente es lo máximo por todas las lesiones
+    de ese accidente, y el de daños a bienes, lo máximo por todos los bienes dañados. Esos límites no
+    crecen porque haya más asegurados, más vehículos o más reclamaciones.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-A.OUT_OF_STATE
+  kind: clause
+  clause_key: A.OUT_OF_STATE
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: Si el accidente ocurre fuera de Corvane y la ley del lugar exige límites mínimos más altos que
+    los de esta póliza, aplicamos esos mínimos a ese accidente. Nunca pagamos dos veces por el mismo daño.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-A.FIN_RESP
+  kind: clause
+  clause_key: A.FIN_RESP
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: Cuando una autoridad de Corvane pide prueba de que el conductor tiene seguro de responsabilidad
+    civil, esta póliza sirve como esa prueba, con al menos los mínimos que fija el documento de jurisdicción.
+  refers_to:
+  - STO-JUR-2026-J.1
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2026-A.OTHER
+  kind: clause
+  clause_key: A.OTHER
+  part: Parte A — Responsabilidad civil
+  version: '2026.1'
+  text: Si otro seguro de responsabilidad civil también responde por el accidente, repartimos el pago
+    en proporción a los límites de cada seguro. Cuando el vehículo no es suyo, paga primero el seguro
+    de ese vehículo y nosotros cubrimos lo que falte.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2025-A.INS
+  kind: distractor
+  clause_key: A.INS
+  part: Parte A — Responsabilidad civil
+  version: '2025.1'
+  text: 'Seguros Aburrá paga los daños que el asegurado cause con un vehículo cubierto, hasta el límite
+    de esta parte, pero no asume su defensa: los honorarios de los abogados corren por cuenta del asegurado.'
+  distractor_of: STO-PAP-2026-A.INS
+  distractor_reason: superseded_version
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-PAP-2025-A.EXCL.A.5.ALT
+  kind: distractor
+  clause_key: A.EXCL.A.5.ALT
+  part: Parte A — Responsabilidad civil
+  version: '2025.1'
+  text: No cubrimos la responsabilidad que surja mientras el vehículo transporta personas o mercancías,
+    con pago o sin él, incluidos los viajes en que conocidos comparten los gastos.
+  distractor_of: STO-PAP-2026-A.EXCL.A.5
+  distractor_reason: near_duplicate
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand

@@ -1,0 +1,137 @@
+# Textos fuente revisados de Autos Poblado, en ingles (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Los borradores del modelo en ingles calcaban giros del formulario de referencia: se
+# reescribieron a mano y por eso casi todos dicen drafted_with: hand.
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: sunmeadow
+language: en
+part_key: part_e
+texts:
+- source_id: SUN-PAP-2026-E.DUTIES.A.1
+  kind: clause
+  clause_key: E.DUTIES.A.1
+  part: Part E — Duties After an Accident or Loss
+  version: '2026.1'
+  text: Tell us about any accident or loss as soon as you can, and always within the deadline set in the
+    Corvane jurisdiction document.
+  refers_to:
+  - SUN-JUR-2026-J.3
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-E.DUTIES.A.2
+  kind: clause
+  clause_key: E.DUTIES.A.2
+  part: Part E — Duties After an Accident or Loss
+  version: '2026.1'
+  text: Tell us how, when and where it happened, and which vehicles and people were involved.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-E.DUTIES.A.3
+  kind: clause
+  clause_key: E.DUTIES.A.3
+  part: Part E — Duties After an Accident or Loss
+  version: '2026.1'
+  text: Give us the name and a way to reach any injured person and any witness you know of.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-E.DUTIES.B.1
+  kind: clause
+  clause_key: E.DUTIES.B.1
+  part: Part E — Duties After an Accident or Loss
+  version: '2026.1'
+  text: Work with us as we look into the claim and as we defend any claim made against you.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-E.DUTIES.B.2
+  kind: clause
+  clause_key: E.DUTIES.B.2
+  part: Part E — Duties After an Accident or Loss
+  version: '2026.1'
+  text: Send us right away a copy of any notice, summons or lawsuit you receive about the accident.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-E.DUTIES.B.3
+  kind: clause
+  clause_key: E.DUTIES.B.3
+  part: Part E — Duties After an Accident or Loss
+  version: '2026.1'
+  text: If the claim involves injuries, attend the medical exams we request, with doctors we pay for,
+    as often as is reasonable.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-E.DUTIES.B.4
+  kind: clause
+  clause_key: E.DUTIES.B.4
+  part: Part E — Duties After an Accident or Loss
+  version: '2026.1'
+  text: Allow us to obtain your medical records and other documents about the injuries, and give us a
+    written account of the loss if we ask for one.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-E.DUTIES.C.1
+  kind: clause
+  clause_key: E.DUTIES.C.1
+  part: Part E — Duties After an Accident or Loss
+  version: '2026.1'
+  text: If the vehicle at fault drove off without being identified, report it to the police within 24
+    hours.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-E.DUTIES.C.2
+  kind: clause
+  clause_key: E.DUTIES.C.2
+  part: Part E — Duties After an Accident or Loss
+  version: '2026.1'
+  text: If you sue an uninsured driver, send us a copy of the lawsuit and of any papers you receive in
+    that case.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-E.DUTIES.D.1
+  kind: clause
+  clause_key: E.DUTIES.D.1
+  part: Part E — Duties After an Accident or Loss
+  version: '2026.1'
+  text: Take reasonable steps to keep the vehicle from further damage; we pay back what you spend doing
+    so.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-E.DUTIES.D.2
+  kind: clause
+  clause_key: E.DUTIES.D.2
+  part: Part E — Duties After an Accident or Loss
+  version: '2026.1'
+  text: If the vehicle or any of its parts was stolen, report it to the police immediately.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-E.DUTIES.D.3
+  kind: clause
+  clause_key: E.DUTIES.D.3
+  part: Part E — Duties After an Accident or Loss
+  version: '2026.1'
+  text: Let us see and appraise the vehicle before you repair it or get rid of it.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2025-E.DUTIES.A.1.ALT
+  kind: distractor
+  clause_key: E.DUTIES.A.1.ALT
+  part: Part E — Duties After an Accident or Loss
+  version: '2025.1'
+  text: Tell us about any accident or loss within 30 days; after that, the notice is no longer accepted.
+  distractor_of: SUN-PAP-2026-E.DUTIES.A.1
+  distractor_reason: near_duplicate
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite

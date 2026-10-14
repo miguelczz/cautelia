@@ -1,0 +1,34 @@
+# Sin clausula en la poliza (AC2.5.1, AC2.5.4): la poliza no dice nada sobre el tema preguntado.
+# Criterio(s): AC2.5.1, AC2.5.4. Par ES/EN: 'no-clause-roadside-fuel'.
+# Lo mide `mise run evals:citas` (fase 1, 2026-10-08): recupera, propone las citas con
+# Claude y las verifica, igual que el chat. La prueba estatica CG-U8-2 sigue comprobando
+# que clause_id exista en app/data/, sea de esta aseguradora y de esta poliza y no sea
+# distractor.
+# No prueba un fallo de recuperacion (`unverifiable`): esto es un resultado verificado de 'no hay clausula', no un fallo de infraestructura (BR3.4).
+# Por que no hay clausula (buscado el 2026-10-11 en todo el corpus de la poliza: formulario base, endosos,
+# documento de jurisdiccion y version anterior). Se busco gasolina, combustible, asistencia, auxilio, grua y
+# bateria en espanol, y gas, gasoline, fuel, roadside, assistance y battery en ingles, y no aparece ninguno.
+# Lo unico que sale por 'remolque' ('towed') es la definicion de trailer, y por 'ayuda' ('help'), la ayuda
+# que el asegurado le da a la aseguradora con un caso (A.SUPP, F.RECOVERY). Quedarse sin combustible no es
+# un dano ni una falla mecanica, asi que ni el reembolso de transporte (D.TRANSPORT, que pide robo o dano
+# cubierto) ni la exclusion de fallas (D.EXCL.2) lo tocan.
+# Escrito el 2026-10-11 para reponer los 'sin clausula' que se perdieron al corregir tres casos que si tenian
+# respuesta (auditoria del 2026-10-10, E10), y aun sin correr contra un modelo. Si `evals:citas` encuentra una
+# clausula que la toca, se corrige el caso con su razon: no se baja el criterio.
+
+case_key: DS-3/en/no-clause-roadside-fuel
+dataset: DS-3
+language: en
+tenant: sunmeadow
+axes:
+- sin_clausula
+- citation-verification
+citation:
+  policy_number: POL-200117
+  clause_id: null
+  expected_outcome: no_clause_found
+  question: Does this policy send help if I run out of gas on the road?
+expected_verdicts:
+  citation_no_clause_roadside_fuel: pass
+  citation_exists_no_clause_roadside_fuel: pass
+requires_provider_key: true

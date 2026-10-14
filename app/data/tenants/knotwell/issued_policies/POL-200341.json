@@ -1,0 +1,53 @@
+{
+  "drivers": [
+    {
+      "full_name": "Daniel Foster"
+    },
+    {
+      "full_name": "Martin Foster"
+    }
+  ],
+  "endorsement_ids": [
+    "SUN-PAP-2026-END-1",
+    "SUN-PAP-2026-END-2",
+    "SUN-PAP-2026-END-3",
+    "SUN-PAP-2026-END-4",
+    "SUN-PAP-2026-END-5"
+  ],
+  "form_id": "SUN-PAP-2026",
+  "form_version": "2026.1",
+  "issuer_tenant": "sunmeadow",
+  "limits_and_deductibles": {
+    "a.bodily_injury_per_accident": 100000,
+    "a.bodily_injury_per_person": 50000,
+    "a.property_damage": 50000,
+    "b.medical_payments_per_person": 5000,
+    "c.uninsured_per_accident": 100000,
+    "c.uninsured_per_person": 50000,
+    "d.collision_deductible": 250,
+    "d.other_than_collision_deductible": 500
+  },
+  "named_insured": {
+    "email": "daniel.foster@example.org",
+    "full_name": "Daniel Foster",
+    "national_id": "969-12-7532",
+    "persona_id": "kno-per-200341",
+    "phone": "312-555-0144"
+  },
+  "period_end": "2027-01-25",
+  "period_start": "2026-01-25",
+  "policy_number": "POL-200341",
+  "tenant_id": "knotwell",
+  "vehicles": [
+    {
+      "make_model_year": "Jeep Cherokee 2015",
+      "plate": "JRS-3930",
+      "vin": "HGRMFZKU7W6819927"
+    },
+    {
+      "make_model_year": "Chevrolet Equinox 2014",
+      "plate": "LNR-0957",
+      "vin": "WNXEHA101VT896148"
+    }
+  ]
+}

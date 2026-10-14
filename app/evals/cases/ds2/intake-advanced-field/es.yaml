@@ -1,0 +1,30 @@
+# Dato adelantado (AC1.5.4, BR3.3), turno en espanol.
+#
+# Al responder la pregunta de seguridad, la persona cuenta tambien donde fue
+# el accidente sin que se lo hayan pedido todavia. BR3.3 exige que ese dato no
+# se vuelva a preguntar cuando le llegue el turno a su bloque: es la queja que
+# US1.5 existe para evitar, y la que mas rapido delata a un sistema que no
+# escucha.
+#
+# Escrito en el paso 2 de la tanda 1, antes de que exista el mecanismo que
+# comprueba "lo ya dicho no se repite" (BR3.3, paso 5, tanda 2): falla hoy
+# nombrando esa razon.
+#
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/intake-advanced-field
+dataset: DS-2
+language: es
+tenant: knotwell
+requires_provider_key: false
+axes:
+  - intake
+  - advanced-field
+script:
+  - field_key: identity_and_policy
+    text: "Soy Marta Diaz, poliza POL-556677. No hubo ningun herido, todo pasó en la calle 45 con carrera 10."
+  - field_key: description
+    text: "Un carro se paso el semaforo en rojo y me golpeo de lado."
+  - field_key: incident_datetime
+    text: "Hoy en la mañana."
+expected_verdicts:
+  intake_advanced_field: pass

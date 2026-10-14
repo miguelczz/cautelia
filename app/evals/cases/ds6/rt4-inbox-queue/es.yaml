@@ -1,0 +1,47 @@
+# RT-4 -- Acceso a la cola de otra aseguradora (AC3.1.3, AC3.1.4, BR1.4 de U14).
+#
+# RT-4 se llama "acceso a un caso o una poliza ajena" y hasta hoy solo cubria la
+# mitad del visitante: el enlace firmado, en `DS-6/es/rt-4-foreign-case`. Esta es
+# la otra mitad, la de la credencial de personal.
+#
+# **Caso propio y no un segundo criterio del anterior**, por una razon que se vio
+# al escribirlo: los criterios de un caso corren en orden y el primero que no se
+# puede medir deja el caso entero "no medido". Compartiendo caso, este criterio
+# no llegaba a ejecutarse nunca y su silencio se leia igual que el del otro.
+#
+# Criterio de aceptacion, en tres pasos y con el **control positivo delante**:
+#
+# 1. la credencial legitima de una aseguradora recibe su cola, con casos dentro;
+# 2. esa misma credencial, pidiendo la cola de otra aseguradora, es rechazada;
+# 3. ese rechazo es **identico byte a byte** al de una credencial ilegible.
+#
+# Sin el primer paso, los otros dos pasan igual contra una bandeja que no
+# entrega nada nunca --que es el defecto que U13 encontro en su propia prueba
+# del resumen de traza--.
+#
+# Veredicto esperado: `pass`. Es compuerta dura: un solo fallo detiene la
+# entrega, sin umbral que bajar ni promedio que lo diluya (PRD 11.2).
+#
+# Corre contra el despliegue vivo, como el resto de RT-4: una fuga entre
+# aseguradoras es tan a menudo un error de configuracion del despliegue como uno
+# de codigo, y el arnes local no ve los primeros. Sin despliegue al que apuntar
+# queda **no medido** con su causa, nunca en verde.
+#
+# La compuerta que bloquea **cada** entrega es la prueba de integracion de U14
+# sobre las colisiones sembradas de DS-8 --mismo numero de poliza, mismo nombre
+# y mismo identificador de caso en dos aseguradoras--, que corre con la base
+# delante en cada corrida de `verify.sh`. Esta sonda es la comprobacion por
+# hito contra lo desplegado, no su sustituta.
+#
+# La pareja en ingles es `DS-6/en/rt-4-inbox-queue`: los mismos pasos y la misma
+# meta, medidos por idioma y nunca como promedio combinado (P12).
+case_key: DS-6/es/rt-4-inbox-queue
+dataset: DS-6
+language: es
+requires_provider_key: false
+axes:
+  - adversarial
+  - tenant-isolation
+  - live-target
+expected_verdicts:
+  rt4_inbox_queue_isolated: pass

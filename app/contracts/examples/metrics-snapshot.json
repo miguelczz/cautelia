@@ -1,0 +1,97 @@
+{
+  "baseline_id": null,
+  "commit_sha": null,
+  "published_at": null,
+  "run_id": null,
+  "figures": [
+    {
+      "key": "completeness",
+      "state": "not_measured",
+      "not_measured_cause": "criterion_not_built",
+      "by_language": {
+        "es": {
+          "state": "not_measured",
+          "value": null,
+          "not_measured_cause": "criterion_not_built"
+        },
+        "en": {
+          "state": "not_measured",
+          "value": null,
+          "not_measured_cause": "criterion_not_built"
+        }
+      },
+      "latency": [],
+      "source": null
+    },
+    {
+      "key": "citation_precision",
+      "state": "not_measured",
+      "not_measured_cause": "criterion_not_built",
+      "by_language": {
+        "es": {
+          "state": "not_measured",
+          "value": null,
+          "not_measured_cause": "criterion_not_built"
+        },
+        "en": {
+          "state": "not_measured",
+          "value": null,
+          "not_measured_cause": "criterion_not_built"
+        }
+      },
+      "latency": [],
+      "source": null
+    },
+    {
+      "key": "latency",
+      "state": "not_measured",
+      "not_measured_cause": "measured_per_milestone",
+      "by_language": {},
+      "latency": [
+        {
+          "channel": "voice",
+          "start": "speech_end",
+          "end": "first_audio",
+          "dataset": "DS-5",
+          "percentiles": [
+            "p50",
+            "p95"
+          ],
+          "not_measured_cause": "measured_per_milestone",
+          "by_language": {},
+          "source": null
+        },
+        {
+          "channel": "chat",
+          "start": "message_sent",
+          "end": "first_word",
+          "dataset": "DS-2",
+          "percentiles": [
+            "p50",
+            "p95"
+          ],
+          "not_measured_cause": "no_baseline",
+          "by_language": {},
+          "source": null
+        }
+      ],
+      "source": null
+    },
+    {
+      "key": "cost_per_case",
+      "state": "not_measured",
+      "not_measured_cause": "not_connected",
+      "by_language": {},
+      "latency": [],
+      "source": null
+    },
+    {
+      "key": "cases_by_tenant",
+      "state": "not_measured",
+      "not_measured_cause": "not_connected",
+      "by_language": {},
+      "latency": [],
+      "source": null
+    }
+  ]
+}

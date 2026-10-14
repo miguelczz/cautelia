@@ -1,0 +1,27 @@
+# Conductor que no figura en la poliza, del campo del caso a la categoria (FR6.1), turno en espanol. Quien conducia es alguien que la poliza no declara y la persona nombro con nombre y apellidos: el insumo `unlisted_driver` llega al motor en verdadero, la regla del conductor dispara y las aseguradoras derivan -- tambien Autos Poblado, que de otro modo cerraria directo.
+#
+# Criterio de aceptacion: sobre las filas `driver-unlisted/*` de
+# `app/evals/fixtures/rules/es.yaml`, el campo `vehicle_and_driver` del caso y los
+# conductores que declara la poliza se derivan a `unlisted_driver` con la misma funcion del
+# aplicativo, el insumo sale como `unlisted` (verdadero) y el motor real de la aseguradora de
+# cada fila da la categoria declarada en ella.
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en ingles es `DS-2/en/rules-driver-unlisted`:
+# los mismos escenarios y la misma meta, medidos por idioma y nunca como promedio
+# combinado (P12).
+#
+# Lo que este caso no mide: la lectura del campo sellado ni de la poliza en la base, ni el
+# cableado del nodo `decision` (lo cubre la prueba de integracion de la cadena de fondo), ni la
+# frase que recibe la persona.
+case_key: DS-2/es/rules-driver-unlisted
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - rules-engine
+  - driver-derivation
+expected_verdicts:
+  triage_from_driver_unlisted: pass

@@ -1,0 +1,200 @@
+name: smoke
+reason: >
+  Camino de arranque de NFR21: la lista mas corta que demuestra que el sistema
+  funciona, ejecutable SIN clave de ningun proveedor. La regla de admision es
+  esa y solo esa: entra el caso que se resuelve sin llamar a ningun modelo.
+
+  Arranca con los chequeos deterministas que U1 ya puede producir (decision CG-2
+  del plan). Una lista vacia habria producido un reporte de cero casos, y el
+  primer Bolt no podria demostrar su propio criterio de terminado.
+
+  Tope escrito: un caso por chequeo y por idioma. Una lista que crece sin control
+  deja de ser un arranque rapido, y el fallo seria silencioso -- se notaria como
+  un cronometro que sube, meses despues.
+
+  U10 anade sus veintiocho casos --catorce comprobaciones de los controles de
+  cumplimiento, una por idioma-- porque cumplen la regla: se resuelven con
+  reglas, sin modelo, sin base de datos y sin los modelos de lenguaje de la
+  redaccion. Son compuertas duras (NFR9.1, NFR12.2), y por eso corren en cada
+  entrega y no por hito.
+
+  U9 anade sus doce casos --seis escenarios del motor de reglas, uno por
+  idioma-- por la misma regla: la categoria de un caso la deciden reglas
+  versionadas, sin modelo y sin base de datos, y una de ellas es compuerta dura
+  (AC1.17.3: una regla de dinero nunca cierra directo).
+
+  U11 anade sus dieciseis casos --ocho criterios de la captura, uno por
+  idioma-- desde la tanda 2 (`code-generation-plan.md`, paso 9): el bloque que
+  toca, la lectura de confirmacion, el tono y la composicion son codigo
+  determinista sobre un caso simulado en memoria (`intake_probes.py`), sin
+  modelo y sin base de datos. Tres son compuerta dura (BR5.4, BR1.5, BR5.3).
+  El 2026-10-06 suma catorce mas --siete criterios de conversacion, uno por
+  idioma--: saludo, agradecimiento, despedida, pregunta por el avance, el
+  "no, asi esta bien" que confirma, lo social dicho en el otro idioma, y la
+  poliza buscada en el corpus con su titular confirmado; todos
+  reconocidos por reglas versionadas, sin modelo (decision de Miguel).
+
+  U14 anade sus cuatro casos --la explicacion de un caso derivado y las acciones
+  que ofrece un caso, uno por idioma-- por la misma regla: los dos se resuelven
+  con funciones puras sobre escenarios estructurados
+  (`app/evals/fixtures/inbox/`), la configuracion versionada de cada aseguradora
+  y el catalogo de textos. **Sin base de datos**, que es lo que los deja entrar:
+  lo que esta unidad prueba con base --el aislamiento, la decision, el enlace--
+  vive en sus pruebas de integracion y no aqui.
+  U19 anade sus doce casos --seis criterios de la cotizacion, uno por idioma-- por la misma
+  regla: la elegibilidad, la derivacion con sus umbrales por los dos lados, la razon en
+  lenguaje llano, la negativa a dar un precio y la cotizacion apagada son codigo y frases
+  del catalogo sobre escenarios estructurados (`app/evals/fixtures/quote/`), con la
+  guardia de salida de verdad y **sin base de datos ni modelo**. Dos son compuerta dura
+  (AC6.2.2, AC6.2.4). Los dos casos de canal de DS-4 piden la clave del proveedor y no
+  entran.
+
+  El 2026-10-13 suman seis casos --tres criterios del recorrido del campo de heridos del
+  caso a la categoria, uno por idioma--: la derivacion de `injuries_present` es una funcion
+  pura sobre el texto guardado, y el motor es el real; sin modelo y sin base.
+
+  El mismo dia suman otros cuatro --dos criterios del final del recorrido, uno por idioma:
+  cerrar solo o dejar con un ajustador--: la decision de que hacer con el caso es una
+  funcion pura sobre la categoria, la decision de cierre y las reglas disparadas.
+
+  Y otros seis --tres criterios del conductor, uno por idioma: figura, no figura y no se
+  sabe--: la derivacion de `unlisted_driver` es una funcion pura sobre el texto guardado y
+  los conductores que declara la poliza, y el motor es el real; sin modelo y sin base.
+
+  Y otros cuatro --dos criterios de la poliza que el reconocedor entrega mal, uno por idioma:
+  proponer la del titular cuando el numero llega incompleto, y pedir repetirla cifra por cifra
+  una sola vez cuando no hay a quien proponer--: corren el nodo `intake` de verdad, con lo
+  entendido ya entregado y el corpus versionado de la aseguradora detras de sus puertos; sin
+  modelo y sin base.
+requires_provider_key: false
+case_keys:
+  - DS-8/es/copy-catalog-parity
+  - DS-8/en/copy-catalog-parity
+  - DS-8/es/copy-catalog-consumers
+  - DS-8/en/copy-catalog-consumers
+  - DS-8/es/copy-forbidden-forms
+  - DS-8/en/copy-forbidden-forms
+  - DS-8/es/golden-case-schema
+  - DS-8/en/golden-case-schema
+  - DS-8/es/content-forbidden-claims
+  - DS-8/en/content-forbidden-claims
+  - DS-8/es/content-clause-text
+  - DS-8/en/content-clause-text
+  - DS-8/es/content-spanish-register
+  - DS-8/en/content-spanish-register
+
+  # --- U10: los controles de cumplimiento ---
+  - DS-6/es/rt-1-direct-injection
+  - DS-6/en/rt-1-direct-injection
+  - DS-6/es/rt-1-humanity-claim
+  - DS-6/en/rt-1-humanity-claim
+  - DS-6/es/rt-2-data-injection
+  - DS-6/en/rt-2-data-injection
+  - DS-6/es/rt-3-pressure
+  - DS-6/en/rt-3-pressure
+  - DS-6/es/rt-5-config-disclosure
+  - DS-6/en/rt-5-config-disclosure
+  - DS-6/es/rt-6-fault-legal-advice
+  - DS-6/en/rt-6-fault-legal-advice
+  - DS-6/es/rt-8-emergency
+  - DS-6/en/rt-8-emergency
+  - DS-6/es/rt-15-guard-bilingual
+  - DS-6/en/rt-15-guard-bilingual
+  - DS-2/es/human-request-direct
+  - DS-2/en/human-request-direct
+  - DS-2/es/human-request-indirect
+  - DS-2/en/human-request-indirect
+  - DS-2/es/human-request-negatives
+  - DS-2/en/human-request-negatives
+  - DS-2/es/identity-question
+  - DS-2/en/identity-question
+  - DS-2/es/serious-injury
+  - DS-2/en/serious-injury
+  - DS-2/es/emergency-negatives
+  - DS-2/en/emergency-negatives
+  - DS-2/es/rules-stonecroft-severe
+  - DS-2/en/rules-stonecroft-severe
+  - DS-2/es/rules-knotwell-typical
+  - DS-2/en/rules-knotwell-typical
+  - DS-2/es/rules-default-rule
+  - DS-2/en/rules-default-rule
+  - DS-2/es/rules-sunmeadow-direct-close
+  - DS-2/en/rules-sunmeadow-direct-close
+  - DS-2/es/rules-money-forces-referral
+  - DS-2/en/rules-money-forces-referral
+  - DS-2/es/rules-agency-always-referral
+  - DS-2/en/rules-agency-always-referral
+  - DS-2/es/rules-injuries-denied
+  - DS-2/en/rules-injuries-denied
+  - DS-2/es/rules-injuries-reported
+  - DS-2/en/rules-injuries-reported
+  - DS-2/es/rules-injuries-unclear
+  - DS-2/en/rules-injuries-unclear
+  - DS-2/es/rules-closure-registers
+  - DS-2/en/rules-closure-registers
+  - DS-2/es/rules-closure-refers
+  - DS-2/en/rules-closure-refers
+  - DS-2/es/rules-driver-listed
+  - DS-2/en/rules-driver-listed
+  - DS-2/es/rules-driver-unlisted
+  - DS-2/en/rules-driver-unlisted
+  - DS-2/es/rules-driver-unknown
+  - DS-2/en/rules-driver-unknown
+
+  # --- U11: la captura de reporte ---
+  - DS-2/es/intake-ordered-story
+  - DS-2/en/intake-ordered-story
+  - DS-2/es/intake-disordered-story
+  - DS-2/en/intake-disordered-story
+  - DS-2/es/intake-advanced-field
+  - DS-2/en/intake-advanced-field
+  - DS-2/es/intake-distress-crying
+  - DS-2/en/intake-distress-crying
+  - DS-2/es/intake-anger
+  - DS-2/en/intake-anger
+  - DS-2/es/intake-greeting-only
+  - DS-2/en/intake-greeting-only
+  - DS-2/es/intake-thanks-mid-report
+  - DS-2/en/intake-thanks-mid-report
+  - DS-2/es/intake-progress-question
+  - DS-2/en/intake-progress-question
+  - DS-2/es/intake-goodbye-mid-report
+  - DS-2/en/intake-goodbye-mid-report
+  - DS-2/es/intake-fast-closing
+  - DS-2/en/intake-fast-closing
+  - DS-2/es/intake-correction
+  - DS-2/en/intake-correction
+  - DS-2/es/intake-social-other-language
+  - DS-2/en/intake-social-other-language
+  - DS-2/es/intake-policy-holder-confirmed
+  - DS-2/en/intake-policy-holder-confirmed
+  - DS-2/es/intake-policy-heard-incomplete
+  - DS-2/en/intake-policy-heard-incomplete
+  - DS-2/es/intake-policy-not-found-repeat
+  - DS-2/en/intake-policy-not-found-repeat
+  - DS-6/es/rt7-two-versions
+  - DS-6/en/rt7-two-versions
+  - DS-6/es/rt9-third-party-reporter
+  - DS-6/en/rt9-third-party-reporter
+  - DS-6/es/rt11-insults
+  - DS-6/en/rt11-insults
+
+  # --- U14: la bandeja ---
+  - DS-2/es/inbox-derived-explanation
+  - DS-2/en/inbox-derived-explanation
+  - DS-2/es/inbox-agency-actions
+  - DS-2/en/inbox-agency-actions
+
+  # --- U19: la cotizacion ---
+  - DS-4/es/quote-eligibility-expected
+  - DS-4/en/quote-eligibility-expected
+  - DS-4/es/quote-referrals-correct
+  - DS-4/en/quote-referrals-correct
+  - DS-4/es/quote-reply-without-amount
+  - DS-4/en/quote-reply-without-amount
+  - DS-4/es/quote-reason-plain-language
+  - DS-4/en/quote-reason-plain-language
+  - DS-4/es/quote-price-pressure-refused
+  - DS-4/en/quote-price-pressure-refused
+  - DS-4/es/quote-unavailable-where-off
+  - DS-4/en/quote-unavailable-where-off

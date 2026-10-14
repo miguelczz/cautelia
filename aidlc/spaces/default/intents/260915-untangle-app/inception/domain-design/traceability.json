@@ -1,0 +1,529 @@
+{
+  "stage": "domain-design",
+  "upstream_ids": [
+    "US1.1",
+    "US1.2",
+    "US1.3",
+    "US1.4",
+    "US1.5",
+    "US1.6",
+    "US1.7",
+    "US1.8",
+    "US1.9",
+    "US1.10",
+    "US1.11",
+    "US1.12",
+    "US1.13",
+    "US1.14",
+    "US1.15",
+    "US1.16",
+    "US1.17",
+    "US1.18",
+    "US1.19",
+    "US1.20",
+    "US1.21",
+    "US1.22",
+    "US1.23",
+    "US1.24",
+    "US1.25",
+    "US1.26",
+    "US1.27",
+    "US1.28",
+    "US1.29",
+    "US1.30",
+    "US1.31",
+    "US1.32",
+    "US1.33",
+    "US2.1",
+    "US2.2",
+    "US2.3",
+    "US2.4",
+    "US2.5",
+    "US2.6",
+    "US2.7",
+    "US2.8",
+    "US2.9",
+    "US2.10",
+    "US3.1",
+    "US3.2",
+    "US3.3",
+    "US3.4",
+    "US3.5",
+    "US3.6",
+    "US3.7",
+    "US3.8",
+    "US4.1",
+    "US4.2",
+    "US4.3",
+    "US4.4",
+    "US4.5",
+    "US4.6",
+    "US4.7",
+    "US4.8",
+    "US4.9",
+    "US4.10",
+    "US4.11",
+    "US4.12",
+    "US4.13",
+    "US4.14",
+    "US4.15",
+    "US4.16",
+    "US4.17",
+    "US5.1",
+    "US5.2",
+    "US5.3",
+    "US5.4",
+    "US5.5",
+    "US5.6",
+    "US5.7",
+    "US5.8",
+    "US5.9",
+    "US5.10",
+    "US5.11",
+    "US5.12",
+    "US5.13",
+    "US5.14",
+    "US5.15",
+    "US5.16",
+    "US6.1",
+    "US6.2",
+    "US6.3"
+  ],
+  "coverage": [
+    {
+      "id": "US1.1",
+      "status": "OK",
+      "target": "ChatChannel"
+    },
+    {
+      "id": "US1.2",
+      "status": "OK",
+      "target": "ChatChannel"
+    },
+    {
+      "id": "US1.3",
+      "status": "OK",
+      "target": "IntakeNode"
+    },
+    {
+      "id": "US1.4",
+      "status": "OK",
+      "target": "IntakeNode"
+    },
+    {
+      "id": "US1.5",
+      "status": "OK",
+      "target": "IntakeNode"
+    },
+    {
+      "id": "US1.6",
+      "status": "OK",
+      "target": "ComplianceControls"
+    },
+    {
+      "id": "US1.7",
+      "status": "OK",
+      "target": "IntakeNode"
+    },
+    {
+      "id": "US1.8",
+      "status": "OK",
+      "target": "CaseRecord"
+    },
+    {
+      "id": "US1.9",
+      "status": "OK",
+      "target": "ComplianceControls"
+    },
+    {
+      "id": "US1.10",
+      "status": "OK",
+      "target": "ComplianceControls"
+    },
+    {
+      "id": "US1.11",
+      "status": "OK",
+      "target": "ComplianceControls"
+    },
+    {
+      "id": "US1.12",
+      "status": "OK",
+      "target": "IntakeNode"
+    },
+    {
+      "id": "US1.13",
+      "status": "OK",
+      "target": "IntakeNode"
+    },
+    {
+      "id": "US1.14",
+      "status": "OK",
+      "target": "CaseRecord"
+    },
+    {
+      "id": "US1.15",
+      "status": "OK",
+      "target": "RulesEngine"
+    },
+    {
+      "id": "US1.16",
+      "status": "OK",
+      "target": "ComplianceNode"
+    },
+    {
+      "id": "US1.17",
+      "status": "OK",
+      "target": "DecisionNode"
+    },
+    {
+      "id": "US1.18",
+      "status": "OK",
+      "target": "ChatChannel"
+    },
+    {
+      "id": "US1.19",
+      "status": "OK",
+      "target": "Orchestration"
+    },
+    {
+      "id": "US1.20",
+      "status": "OK",
+      "target": "ChatChannel"
+    },
+    {
+      "id": "US1.21",
+      "status": "OK",
+      "target": "VoiceChannel"
+    },
+    {
+      "id": "US1.22",
+      "status": "OK",
+      "target": "VoiceChannel"
+    },
+    {
+      "id": "US1.23",
+      "status": "OK",
+      "target": "VoiceChannel"
+    },
+    {
+      "id": "US1.24",
+      "status": "OK",
+      "target": "VoiceChannel"
+    },
+    {
+      "id": "US1.25",
+      "status": "OK",
+      "target": "Orchestration"
+    },
+    {
+      "id": "US1.26",
+      "status": "OK",
+      "target": "VoiceChannel"
+    },
+    {
+      "id": "US1.27",
+      "status": "OK",
+      "target": "VoiceChannel"
+    },
+    {
+      "id": "US1.28",
+      "status": "OK",
+      "target": "VoiceChannel"
+    },
+    {
+      "id": "US1.29",
+      "status": "OK",
+      "target": "VoiceChannel"
+    },
+    {
+      "id": "US1.30",
+      "status": "OK",
+      "target": "VoiceChannel"
+    },
+    {
+      "id": "US1.31",
+      "status": "OK",
+      "target": "VoiceChannel"
+    },
+    {
+      "id": "US1.32",
+      "status": "OK",
+      "target": "VoiceChannel"
+    },
+    {
+      "id": "US1.33",
+      "status": "OK",
+      "target": "WebClient"
+    },
+    {
+      "id": "US2.1",
+      "status": "OK",
+      "target": "PolicyCorpus"
+    },
+    {
+      "id": "US2.2",
+      "status": "OK",
+      "target": "CitationVerifier"
+    },
+    {
+      "id": "US2.3",
+      "status": "OK",
+      "target": "WebClient"
+    },
+    {
+      "id": "US2.4",
+      "status": "OK",
+      "target": "Orchestration"
+    },
+    {
+      "id": "US2.5",
+      "status": "OK",
+      "target": "PolicyVerificationNode"
+    },
+    {
+      "id": "US2.6",
+      "status": "OK",
+      "target": "PolicyVerificationNode"
+    },
+    {
+      "id": "US2.7",
+      "status": "OK",
+      "target": "PolicyVerificationNode"
+    },
+    {
+      "id": "US2.8",
+      "status": "OK",
+      "target": "PolicyCorpus"
+    },
+    {
+      "id": "US2.9",
+      "status": "OK",
+      "target": "ChatChannel"
+    },
+    {
+      "id": "US2.10",
+      "status": "OK",
+      "target": "Orchestration"
+    },
+    {
+      "id": "US3.1",
+      "status": "OK",
+      "target": "Inbox"
+    },
+    {
+      "id": "US3.2",
+      "status": "OK",
+      "target": "Inbox"
+    },
+    {
+      "id": "US3.3",
+      "status": "OK",
+      "target": "Inbox"
+    },
+    {
+      "id": "US3.4",
+      "status": "OK",
+      "target": "Inbox"
+    },
+    {
+      "id": "US3.5",
+      "status": "OK",
+      "target": "Inbox"
+    },
+    {
+      "id": "US3.6",
+      "status": "OK",
+      "target": "Inbox"
+    },
+    {
+      "id": "US3.7",
+      "status": "OK",
+      "target": "Inbox"
+    },
+    {
+      "id": "US3.8",
+      "status": "OK",
+      "target": "TenantIdentity"
+    },
+    {
+      "id": "US4.1",
+      "status": "OK",
+      "target": "Evaluation"
+    },
+    {
+      "id": "US4.2",
+      "status": "N/A",
+      "target": "Entregable de MOD-15 (video grabado), no componente de código; sus cifras vienen del MetricsSnapshot de Evaluation"
+    },
+    {
+      "id": "US4.3",
+      "status": "N/A",
+      "target": "Entregable de MOD-15 (landing de site/), fuera del aplicativo por D-005 y D-013; se realinea en las semanas 7 y 11"
+    },
+    {
+      "id": "US4.4",
+      "status": "OK",
+      "target": "Evaluation"
+    },
+    {
+      "id": "US4.5",
+      "status": "OK",
+      "target": "Evaluation"
+    },
+    {
+      "id": "US4.6",
+      "status": "OK",
+      "target": "Evaluation"
+    },
+    {
+      "id": "US4.7",
+      "status": "OK",
+      "target": "Evaluation"
+    },
+    {
+      "id": "US4.8",
+      "status": "OK",
+      "target": "Telemetry"
+    },
+    {
+      "id": "US4.9",
+      "status": "OK",
+      "target": "Orchestration"
+    },
+    {
+      "id": "US4.10",
+      "status": "OK",
+      "target": "CaseRecord"
+    },
+    {
+      "id": "US4.11",
+      "status": "OK",
+      "target": "TenantIdentity"
+    },
+    {
+      "id": "US4.12",
+      "status": "OK",
+      "target": "PiiRedaction"
+    },
+    {
+      "id": "US4.13",
+      "status": "OK",
+      "target": "PiiRedaction"
+    },
+    {
+      "id": "US4.14",
+      "status": "OK",
+      "target": "Evaluation"
+    },
+    {
+      "id": "US4.15",
+      "status": "OK",
+      "target": "ComplianceControls"
+    },
+    {
+      "id": "US4.16",
+      "status": "OK",
+      "target": "Evaluation"
+    },
+    {
+      "id": "US4.17",
+      "status": "OK",
+      "target": "WebClient"
+    },
+    {
+      "id": "US5.1",
+      "status": "OK",
+      "target": "DemoOperations"
+    },
+    {
+      "id": "US5.2",
+      "status": "OK",
+      "target": "PolicyCorpus"
+    },
+    {
+      "id": "US5.3",
+      "status": "OK",
+      "target": "SyntheticData"
+    },
+    {
+      "id": "US5.4",
+      "status": "OK",
+      "target": "SyntheticData"
+    },
+    {
+      "id": "US5.5",
+      "status": "OK",
+      "target": "SyntheticData"
+    },
+    {
+      "id": "US5.6",
+      "status": "OK",
+      "target": "SyntheticData"
+    },
+    {
+      "id": "US5.7",
+      "status": "OK",
+      "target": "TenantIdentity"
+    },
+    {
+      "id": "US5.8",
+      "status": "OK",
+      "target": "CopyCatalog"
+    },
+    {
+      "id": "US5.9",
+      "status": "OK",
+      "target": "Evaluation"
+    },
+    {
+      "id": "US5.10",
+      "status": "OK",
+      "target": "ProviderGateway"
+    },
+    {
+      "id": "US5.11",
+      "status": "OK",
+      "target": "VoiceChannel"
+    },
+    {
+      "id": "US5.12",
+      "status": "OK",
+      "target": "UsageBudget"
+    },
+    {
+      "id": "US5.13",
+      "status": "OK",
+      "target": "UsageBudget"
+    },
+    {
+      "id": "US5.14",
+      "status": "OK",
+      "target": "UsageBudget"
+    },
+    {
+      "id": "US5.15",
+      "status": "OK",
+      "target": "DemoOperations"
+    },
+    {
+      "id": "US5.16",
+      "status": "OK",
+      "target": "WebClient"
+    },
+    {
+      "id": "US6.1",
+      "status": "OK",
+      "target": "IntakeNode"
+    },
+    {
+      "id": "US6.2",
+      "status": "OK",
+      "target": "DecisionNode"
+    },
+    {
+      "id": "US6.3",
+      "status": "OK",
+      "target": "Inbox"
+    }
+  ]
+}

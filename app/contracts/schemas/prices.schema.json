@@ -1,0 +1,179 @@
+{
+  "$defs": {
+    "CapKind": {
+      "description": "Que figura detiene el gasto **del lado del proveedor** (BR5.8, PA-9).\n\nUna alerta de presupuesto **no** es ninguna de estas cuatro y no se anota:\navisa mientras el gasto sigue, que es exactamente fallar abierto. Donde el\nproveedor no ofrece tope duro, lo que lo sustituye es un saldo prepagado con\nla recarga automatica desactivada, porque el saldo si se agota con la\naplicacion detenida.",
+      "enum": [
+        "prepaid_balance",
+        "monthly_cap",
+        "rate_limit",
+        "none_available"
+      ],
+      "title": "CapKind",
+      "type": "string"
+    },
+    "PriceLine": {
+      "additionalProperties": false,
+      "description": "Una linea de precio de lista, sin la version ni la fecha.\n\nLas dos son de la tabla entera y no de la linea: una tabla donde cada linea\npudiera declarar su propia fecha permitiria mezclar precios de dos momentos y\npublicar una cifra que no corresponde a ninguno.",
+      "properties": {
+        "provider": {
+          "$ref": "#/$defs/ProviderName"
+        },
+        "model": {
+          "minLength": 1,
+          "title": "Model",
+          "type": "string"
+        },
+        "unit_kind": {
+          "$ref": "#/$defs/UnitKind"
+        },
+        "unit_price_usd": {
+          "ge": 0,
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "title": "Unit Price Usd",
+          "type": "string"
+        }
+      },
+      "required": [
+        "provider",
+        "model",
+        "unit_kind",
+        "unit_price_usd"
+      ],
+      "title": "PriceLine",
+      "type": "object"
+    },
+    "ProviderCapConfig": {
+      "additionalProperties": false,
+      "description": "El tope de un uso en su proveedor, con cuando se comprobo por ultima vez.\n\nLa fecha no es burocracia: un tope que nadie miro en meses es una creencia,\nno un control, y `schema:check` la compara contra hoy.",
+      "properties": {
+        "provider": {
+          "$ref": "#/$defs/ProviderName"
+        },
+        "use": {
+          "$ref": "#/$defs/Use"
+        },
+        "cap_kind": {
+          "$ref": "#/$defs/CapKind"
+        },
+        "cap_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cap Value"
+        },
+        "substitute": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Substitute"
+        },
+        "last_checked_at": {
+          "format": "date",
+          "title": "Last Checked At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "provider",
+        "use",
+        "cap_kind",
+        "last_checked_at"
+      ],
+      "title": "ProviderCapConfig",
+      "type": "object"
+    },
+    "ProviderName": {
+      "description": "Los proveedores del proyecto (BR3.1).\n\nUno nuevo es una entrada nueva en esta lista, no una cadena libre, y llega con\nsu revision de migracion: la restriccion `spend_entry_proveedor_valido` del\nlibro mayor enumera los mismos valores, y una prueba de integracion falla si\nla base y esta lista dicen cosas distintas.\n\nLos dos ultimos son la voz, construida por U15 `speech-providers`: Deepgram\ntranscribe y da la voz de respaldo (Aura-2), y Cartesia da la principal\n(Catalina). Hubo un cuarto, `fallback_tts`, que U5 reservo para una voz de\nrespaldo sin proveedor decidido; la enmienda del 2026-09-21 de ADR-008 la dio\na Deepgram, el nombre dejo de describir nada construido y se retiro con la\nrevision `u15_speech_0001_provider_check`.",
+      "enum": [
+        "gemini",
+        "deepgram",
+        "cartesia",
+        "anthropic"
+      ],
+      "title": "ProviderName",
+      "type": "string"
+    },
+    "UnitKind": {
+      "description": "Que cobra el proveedor.\n\nNo se convierte a una unidad comun: hacerlo perderia el precio de lista con\nel que se calculo, que es lo que AC4.8.4 exige guardar.",
+      "enum": [
+        "input_tokens",
+        "output_tokens",
+        "embedding_tokens",
+        "audio_seconds",
+        "characters"
+      ],
+      "title": "UnitKind",
+      "type": "string"
+    },
+    "Use": {
+      "description": "Para que se llama al proveedor (BR1.3).\n\nNo es una etiqueta: decide el proyecto del proveedor, la clave, el plan y si\nla llamada se factura. Las claves estan separadas por uso justamente para que\nuna cuota agotada en el chat no apague la voz.",
+      "enum": [
+        "voice",
+        "chat",
+        "evals",
+        "operations",
+        "corpus",
+        "chat_reply",
+        "evals_chat"
+      ],
+      "title": "Use",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "El archivo `prices.yaml` entero: la tabla de precios y los topes.",
+  "properties": {
+    "config_version": {
+      "minimum": 1,
+      "title": "Config Version",
+      "type": "integer"
+    },
+    "list_version": {
+      "minLength": 1,
+      "title": "List Version",
+      "type": "string"
+    },
+    "effective_date": {
+      "format": "date",
+      "title": "Effective Date",
+      "type": "string"
+    },
+    "entries": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PriceLine"
+      },
+      "title": "Entries",
+      "type": "array"
+    },
+    "caps": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ProviderCapConfig"
+      },
+      "title": "Caps",
+      "type": "array"
+    }
+  },
+  "required": [
+    "config_version",
+    "list_version",
+    "effective_date"
+  ],
+  "title": "PricesConfig",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/prices.schema.json"
+}

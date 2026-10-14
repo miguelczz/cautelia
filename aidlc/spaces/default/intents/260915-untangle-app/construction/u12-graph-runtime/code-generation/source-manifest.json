@@ -1,0 +1,178 @@
+{
+  "stage": "code-generation",
+  "unit": "u12-graph-runtime",
+  "version": 1,
+  "writes": [
+    {
+      "path": "app/backend/.importlinter"
+    },
+    {
+      "path": "app/backend/migrations/versions/u12_graph_0001_runtime_tables.py"
+    },
+    {
+      "path": "app/backend/migrations/versions/u12_graph_0002_checkpointer.py"
+    },
+    {
+      "path": "app/backend/pyproject.toml"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/purge.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/abandonment.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/case_context.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/checkpoint.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/coverage_detour.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/executor.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/graph.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/graph_runtime.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/node_run.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/node_run_repository.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/intake/node.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/nodes/policy_verification/node.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/output.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/pause.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/pause_repository.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/phrases.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/resume.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/rhythm.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/state.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/sweep.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/transition.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/turn.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/composition.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/license_check.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u12/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u12/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u12/test_checkpointer.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u12/test_node_run_repository.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u12/test_pause_repository.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u12/test_resume.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u12/test_runtime_tables.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u12/test_turn.py"
+    },
+    {
+      "path": "app/backend/tests/unit/orchestration/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/orchestration/test_coverage_detour.py"
+    },
+    {
+      "path": "app/backend/tests/unit/orchestration/test_executor.py"
+    },
+    {
+      "path": "app/backend/tests/unit/orchestration/test_graph.py"
+    },
+    {
+      "path": "app/backend/tests/unit/orchestration/test_output.py"
+    },
+    {
+      "path": "app/backend/tests/unit/orchestration/test_pause.py"
+    },
+    {
+      "path": "app/backend/tests/unit/orchestration/test_performance.py"
+    },
+    {
+      "path": "app/backend/tests/unit/orchestration/test_rhythm.py"
+    },
+    {
+      "path": "app/backend/tests/unit/orchestration/test_state.py"
+    },
+    {
+      "path": "app/backend/tests/unit/orchestration/test_sweep.py"
+    },
+    {
+      "path": "app/backend/tests/unit/orchestration/test_transition.py"
+    },
+    {
+      "path": "app/backend/uv.lock"
+    },
+    {
+      "path": "app/config/copy/en.yaml"
+    },
+    {
+      "path": "app/config/copy/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/coverage-question-mid-report/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/coverage-question-mid-report/es.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/dropped-call-resumed/en.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds2/dropped-call-resumed/es.yaml"
+    },
+    {
+      "path": "app/evals/manifest.yaml"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-keys.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-texts.ts"
+    }
+  ]
+}

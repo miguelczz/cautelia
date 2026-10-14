@@ -1,0 +1,30 @@
+# Derivacion al suscriptor (AC6.2.5 (100 % de derivaciones correctas), NFR13 (10 % o menos de
+# derivaciones innecesarias), BR2.2), turno en espanol.
+#
+# Criterio de aceptacion: Sobre las filas `referral/*` y `no-referral/*`, cada solicitud que
+# debe derivarse se deriva con la banda `pending_review` --nunca una banda afirmada-- y cada una
+# que queda justo por debajo de un umbral no se deriva. Los tres umbrales (dos siniestros con
+# culpa, menos de un anio de licencia, mas de veinticinco anios de antiguedad) se prueban por
+# sus dos lados.
+#
+# Veredicto esperado: `pass`.
+#
+# Se resuelve sin modelo ni base de datos (`requires_provider_key: false`), y por eso entra al
+# subconjunto de arranque y corre en cada entrega.
+#
+# La pareja en ingles es `DS-4/en/quote-referrals-correct`: los mismos criterios y la misma
+# meta, medidos por idioma y nunca como promedio combinado (P12).
+#
+# Lo que este caso no mide: la salida de las demas solicitudes, que mide
+# `DS-4/es/quote-eligibility-expected`.
+case_key: DS-4/es/quote-referrals-correct
+dataset: DS-4
+language: es
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - quote-eligibility
+  - referral
+  - thresholds
+expected_verdicts:
+  quote_referrals_correct: pass

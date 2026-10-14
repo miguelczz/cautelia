@@ -1,0 +1,49 @@
+# El recorrido rápido (P4; BR3.2, BR5.1), turno en español.
+#
+# Criterio de aceptación: con los cuatro datos obligatorios dichos (la seguridad va
+# sembrada, como en todos los casos de la captura) la agente no lee nada de vuelta
+# ni pregunta «¿es correcto?»: cierra nombrando el número del caso, dice que queda
+# con un ajustador y ofrece **una sola vez** lo opcional —vehículo y conductor,
+# otras personas— en una sola pregunta sin registro prohibido. Ante esa oferta,
+# «No, así está bien» deja el caso como está (aunque ante una lectura confirmara)
+# y «Sí, agreguemos eso» pide el primer bloque opcional. La frase de cierre tras el
+# no nombra el caso y no pregunta nada.
+#
+# Veredicto esperado: `pass`.
+#
+# Decisión de Miguel del 2026-10-06: «no quiero que el chat pregunte si es correcto
+# lo que le están diciendo, simplemente quiero que lo que le digan lo guarde».
+# Reemplaza a `intake-readback-leading-no`, que medía la lectura de confirmación
+# que ya no existe. Lo que el nodo escribe y cuándo deriva el caso lo prueban
+# `tests/unit/intake/test_node.py` y `tests/integration/u12/test_turn.py`; aquí
+# se mide lo que la persona lee.
+#
+# La pareja en inglés es `DS-2/en/intake-fast-closing`: los mismos criterios y la
+# misma meta, medidos por idioma y nunca como promedio combinado (P12). Las dos
+# respuestas a la oferta se indexan por el primer bloque opcional
+# (`vehicle_and_driver`).
+case_key: DS-2/es/intake-fast-closing
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - intake
+  - conversation
+script:
+  - field_key: identity_and_policy
+    text: "Soy Laura Gomez, mi poliza es POL-480915."
+  - field_key: description
+    text: "Otro carro me choco por detras cuando estaba parada en un semaforo."
+  - field_key: incident_datetime
+    text: "Fue ayer, sobre las cinco de la tarde."
+  - field_key: location
+    text: "En la avenida Boyaca con calle 80, en Bogota."
+  - field_key: vehicle_and_driver
+    sequence: 1
+    text: "No, así está bien."
+  - field_key: vehicle_and_driver
+    sequence: 2
+    text: "Sí, agreguemos eso."
+expected_verdicts:
+  intake_fast_closing: pass

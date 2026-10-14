@@ -1,0 +1,37 @@
+# Social turns said in the other language (BR2.2, BR3.1, BR5.1), English conversation.
+#
+# Acceptance criterion: a short turn does not change the conversation's language
+# (BR2.2), so "Gracias" reaches an English conversation with English as its
+# language; it is still recognised as thanks and as a turn with nothing to
+# extract, and "No, así está bien" counts as a yes to a pending readback. The
+# reply goes out in English, the conversation's language.
+#
+# Expected verdict: `pass`.
+#
+# Seen in production on 2026-10-06 with the insurer whose default language is
+# English: "Gracias" was read as a no and the readback was repeated. Not a hard
+# gate on its own, but it runs on every delivery and a case that starts failing
+# is a regression (`team.md`'s definition).
+#
+# Its Spanish pair is `DS-2/es/intake-social-other-language`: same criteria and
+# same target, measured per language and never as a combined average (P12).
+# The turns are indexed by the field that was pending when they were said
+# (`injuries`): a script only admits schema fields.
+case_key: DS-2/en/intake-social-other-language
+dataset: DS-2
+language: en
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - intake
+  - conversation
+  - language-adherence
+script:
+  - field_key: injuries
+    sequence: 1
+    text: "Gracias"
+  - field_key: injuries
+    sequence: 2
+    text: "No, así está bien."
+expected_verdicts:
+  intake_social_other_language: pass

@@ -1,0 +1,70 @@
+name: entender
+reason: >
+  La comprension de un mensaje (fase 0 de
+  `docs/propuesta-2026-10/03-propuesta-y-diseno.md`): que la agente entienda la
+  intencion, los datos, el si o el no y la pregunta de la persona por el sentido
+  y no por palabras clave. Llama a Claude Haiku 5.5 con la clave de evaluaciones
+  (`UNTANGLE_ANTHROPIC_API_KEY_EVALS`), separada de la del chat, y cuesta unos
+  0,02 USD por corrida. Se corre a mano con `mise run evals:entender` y en cada
+  hito; sin la clave, los casos quedan no medidos con su causa. Tope escrito: los
+  casos `understand-*` y ninguno mas.
+requires_provider_key: true
+case_keys:
+  - DS-2/es/understand-active-insurance-no-lapse
+  - DS-2/en/understand-active-insurance-no-lapse
+  - DS-2/es/understand-birth-date
+  - DS-2/en/understand-birth-date
+  - DS-2/es/understand-claim-first-message-with-details
+  - DS-2/en/understand-claim-first-message-with-details
+  - DS-2/es/understand-claim-without-keywords
+  - DS-2/en/understand-claim-without-keywords
+  - DS-2/es/understand-correction-is-a-no
+  - DS-2/en/understand-correction-is-a-no
+  - DS-2/es/understand-coverage-inside-report
+  - DS-2/en/understand-coverage-inside-report
+  - DS-2/es/understand-coverage-question-inside-inquiry
+  - DS-2/en/understand-coverage-question-inside-inquiry
+  - DS-2/es/understand-general-question
+  - DS-2/en/understand-general-question
+  - DS-2/es/understand-greeting-other-words
+  - DS-2/en/understand-greeting-other-words
+  - DS-2/es/understand-holder-but-son-driving
+  - DS-2/en/understand-holder-but-son-driving
+  - DS-2/es/understand-injected-instruction
+  - DS-2/en/understand-injected-instruction
+  - DS-2/es/understand-license-years-computed
+  - DS-2/en/understand-license-years-computed
+  - DS-2/es/understand-no-injuries-unless-said
+  - DS-2/en/understand-no-injuries-unless-said
+  - DS-2/es/understand-policy-question-other-words
+  - DS-2/en/understand-policy-question-other-words
+  - DS-2/es/understand-question-announced-not-asked
+  - DS-2/en/understand-question-announced-not-asked
+  - DS-2/es/understand-quote-first-message
+  - DS-2/en/understand-quote-first-message
+  - DS-2/es/understand-quote-other-words
+  - DS-2/en/understand-quote-other-words
+  - DS-2/es/understand-talking-to-you-is-not-a-person
+  - DS-2/en/understand-talking-to-you-is-not-a-person
+  - DS-2/es/understand-talk-to-person-other-words
+  - DS-2/en/understand-talk-to-person-other-words
+  - DS-2/es/understand-report-with-coverage-question
+  - DS-2/en/understand-report-with-coverage-question
+  - DS-2/es/understand-others-not-mentioned
+  - DS-2/en/understand-others-not-mentioned
+  - DS-2/es/understand-others-named
+  - DS-2/en/understand-others-named
+  - DS-2/es/understand-others-denied
+  - DS-2/en/understand-others-denied
+  - DS-2/es/understand-vague-opening
+  - DS-2/en/understand-vague-opening
+  - DS-2/es/understand-vague-opening-in-call
+  - DS-2/en/understand-vague-opening-in-call
+  - DS-2/es/understand-other-driver-name-asked
+  - DS-2/en/understand-other-driver-name-asked
+  - DS-2/es/understand-other-driver-name-given
+  - DS-2/en/understand-other-driver-name-given
+  - DS-2/es/understand-done-with-data-missing
+  - DS-2/en/understand-done-with-data-missing
+  - DS-2/es/understand-whats-next-with-data-missing
+  - DS-2/en/understand-whats-next-with-data-missing

@@ -1,0 +1,27 @@
+# Asking whether the policy covers something that happened, inside an inquiry, is still asking.
+#
+# Comprension de un mensaje. Nace de una conversacion simulada del 2026-10-13 en la que
+# quien consultaba su poliza conto un choque para preguntar si lo cubria, y la
+# conversacion paso sola a un reporte de accidente que nadie pidio.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/en/understand-coverage-question-inside-inquiry
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  record_type: coverage_inquiry
+  captured:
+  - identity_and_policy
+  last_agent_text: What would you like to know about your policy?
+  message: Yesterday I hit a motorcyclist on 80th Street, does the policy cover the damage I caused him?
+  wants:
+  - continue
+  - policy_question
+  asks_about_coverage: true
+  asks_question: true
+expected_verdicts:
+  understanding_coverage_question_inside_inquiry: pass

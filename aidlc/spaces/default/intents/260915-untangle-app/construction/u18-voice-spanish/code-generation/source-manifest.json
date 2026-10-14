@@ -1,0 +1,145 @@
+{
+  "stage": "code-generation",
+  "unit": "u18-voice-spanish",
+  "version": 1,
+  "writes": [
+    {
+      "path": "app/backend/.importlinter"
+    },
+    {
+      "path": "app/backend/src/untangle/chat/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/compliance/redaction/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/copy_catalog/checks.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/content_checks.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/drivers/chat.py"
+    },
+    {
+      "path": "app/backend/src/untangle/language.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/contracts.py"
+    },
+    {
+      "path": "app/backend/src/untangle/orchestration/turn.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/voice_routes.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/call.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/language_request.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/latency.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/loop.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/retry.py"
+    },
+    {
+      "path": "app/backend/src/untangle/voice/session.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u12/test_turn.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u16/test_call_engine.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u18/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u18/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u18/test_import_contracts.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u18/test_language_switch.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u18/test_spanish_call.py"
+    },
+    {
+      "path": "app/backend/tests/unit/copy_catalog/test_checks_interfaz.py"
+    },
+    {
+      "path": "app/backend/tests/unit/evals/test_content_checks.py"
+    },
+    {
+      "path": "app/backend/tests/unit/redaction/test_api.py"
+    },
+    {
+      "path": "app/backend/tests/unit/test_language.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice/test_language_request.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice/test_opening.py"
+    },
+    {
+      "path": "app/backend/tests/unit/voice/test_retry.py"
+    },
+    {
+      "path": "app/config/content-checks.yaml"
+    },
+    {
+      "path": "app/config/copy/en.yaml"
+    },
+    {
+      "path": "app/config/copy/es.yaml"
+    },
+    {
+      "path": "app/contracts/openapi.json"
+    },
+    {
+      "path": "app/contracts/schemas/tenant.schema.json"
+    },
+    {
+      "path": "app/evals/cases/ds8/en/content-spanish-register.yaml"
+    },
+    {
+      "path": "app/evals/cases/ds8/es/content-spanish-register.yaml"
+    },
+    {
+      "path": "app/evals/manifest.yaml"
+    },
+    {
+      "path": "app/evals/subsets/smoke.yaml"
+    },
+    {
+      "path": "app/frontend/src/pages/voice/voice-page.tsx"
+    },
+    {
+      "path": "app/frontend/src/shared/api-client/voice.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/api/types.gen.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-keys.ts"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-texts.ts"
+    }
+  ]
+}

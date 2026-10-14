@@ -1,0 +1,25 @@
+# Cliente de la agencia Knotwell (AC2.8.1, AC2.8.2): el corpus lo decide la emisora de la poliza (BR2.5), no 'knotwell'.
+# Criterio(s): AC2.8.1, AC2.8.2. Par ES/EN: 'knotwell-collision-coverage'.
+# Lo mide `mise run evals:citas` (fase 1, 2026-10-08): recupera, propone las citas con
+# Claude y las verifica, igual que el chat. La prueba estatica CG-U8-2 sigue comprobando
+# que clause_id exista en app/data/, sea de esta aseguradora y de esta poliza y no sea
+# distractor.
+# No prueba el numero de poliza de otra aseguradora usado en el chat de Knotwell (AC2.8.4): eso es DS-8, no DS-3 (functional-spec.md).
+
+case_key: DS-3/en/knotwell-collision-coverage
+dataset: DS-3
+language: en
+tenant: knotwell
+axes:
+- knotwell
+- citation-verification
+citation:
+  policy_number: POL-200341
+  clause_id: SUN-PAP-2026-D.INS.COLLISION
+  expected_outcome: verified
+  issuer_tenant: sunmeadow
+  question: Am I covered if I crash?
+expected_verdicts:
+  citation_knotwell_collision_coverage: pass
+  citation_exists_knotwell_collision_coverage: pass
+requires_provider_key: true

@@ -1,0 +1,64 @@
+{
+  "$defs": {
+    "ClauseRelationRecord": {
+      "additionalProperties": false,
+      "description": "Una relacion entre dos clausulas (ADR-010).",
+      "properties": {
+        "from_clause": {
+          "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?-[A-Za-z0-9]+(?:\\.[A-Za-z0-9_]+)*$",
+          "title": "From Clause",
+          "type": "string"
+        },
+        "to_clause": {
+          "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?-[A-Za-z0-9]+(?:\\.[A-Za-z0-9_]+)*$",
+          "title": "To Clause",
+          "type": "string"
+        },
+        "relation": {
+          "$ref": "#/$defs/RelationKind"
+        }
+      },
+      "required": [
+        "from_clause",
+        "to_clause",
+        "relation"
+      ],
+      "title": "ClauseRelationRecord",
+      "type": "object"
+    },
+    "RelationKind": {
+      "description": "Las tres relaciones entre clausulas (ADR-010, FD-U7-2: en ingles).",
+      "enum": [
+        "endorsement_modifies",
+        "defines",
+        "refers_to"
+      ],
+      "title": "RelationKind",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Las relaciones del espacio de una aseguradora (`clause_relations.json`).",
+  "properties": {
+    "tenant_id": {
+      "pattern": "^[a-z][a-z0-9-]{1,30}$",
+      "title": "Tenant Id",
+      "type": "string"
+    },
+    "relations": {
+      "items": {
+        "$ref": "#/$defs/ClauseRelationRecord"
+      },
+      "title": "Relations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "relations"
+  ],
+  "title": "ClauseRelationFile",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/corpus-clause-relations.schema.json"
+}

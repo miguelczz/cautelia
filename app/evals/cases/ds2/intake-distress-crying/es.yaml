@@ -1,0 +1,25 @@
+# Llanto (AC1.13.1, BR5.2), turno en espanol.
+#
+# La persona responde llorando que esta muy asustada. BR5.2 exige que el turno
+# empiece con una sola frase de reconocimiento del catalogo y siga con una
+# sola pregunta -- nunca dos preguntas, nunca una pregunta sola sin reconocer
+# primero.
+#
+# Escrito en el paso 2 de la tanda 1, antes de que exista la composicion de
+# turno que aplica el reconocimiento (BR5.2, paso 7, tanda 2): falla hoy
+# nombrando esa razon.
+#
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/intake-distress-crying
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - intake
+  - emotion
+script:
+  - field_key: description
+    text: "(llorando) Estoy muy asustada, el carro venia muy rapido y no pude hacer nada."
+expected_verdicts:
+  intake_distress_crying: pass

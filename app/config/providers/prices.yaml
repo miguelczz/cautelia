@@ -1,0 +1,255 @@
+# Cuanto cuesta, y que lo detiene del lado del proveedor (U5 `provider-platform`).
+#
+# La tabla lleva **su version y su fecha** porque una cifra publicada tiene que
+# poder reproducirse meses despues, cuando el precio del proveedor ya cambio
+# (AC4.8.4). Cada fila de gasto guarda con que precio, de que lista y de que
+# fecha se calculo.
+#
+# Los importes se escriben **entre comillas**. Sin ellas, YAML los lee como coma
+# flotante y el cargador los rechaza: sumar veinte fracciones de centavo en coma
+# flotante da un total que depende del orden en que se sumaron, el techo cortaria
+# en un punto distinto segun el orden de las llamadas, y la cifra publicada
+# dejaria de ser reproducible desde el mismo commit.
+config_version: 1
+list_version: "4"
+effective_date: 2026-10-07
+
+# --- Precios de lista ---------------------------------------------------------
+# Leidos de la pagina oficial de precios de la API de Gemini el **2026-09-21**:
+# https://ai.google.dev/gemini-api/docs/pricing
+#
+# Se escriben **por token**, que es la unidad en la que el adaptador reporta el
+# uso. La pagina los publica por millon de tokens, asi que la division esta hecha
+# aqui y no en el codigo: una cifra publicada tiene que poder reproducirse desde
+# la fuente sin que nadie vuelva a dividir.
+#
+#   entrada  0,25 USD / 1M tokens  ->  0.00000025 por token
+#   salida   1,50 USD / 1M tokens  ->  0.00000150 por token
+#
+# La misma pagina publica 0,50 USD por millon para la **entrada de audio**. No se
+# anota, y no es un olvido: la arquitectura de voz es en cascada (ADR-018), asi
+# que al modelo le llega texto transcrito y nunca audio. El dia que eso cambie,
+# entra su linea con su unidad.
+#
+# No se escribe "0.00" para los usos en plan gratuito. El precio de lista se
+# registra siempre y el plan se expresa en la marca `billable` de
+# `providers.yaml` (BR3.6): un cero aqui haria desaparecer el costo por caso del
+# chat, que es justo lo que esa regla existe para impedir, y la terna de esta
+# tabla --proveedor, modelo, unidad-- no distingue el plano en el que corre cada
+# uso, asi que el mismo cero caeria tambien sobre la voz de pago.
+#
+# **Lo que sigue sin precio, y por que.** `gemini-embedding-001` **ya no aparece
+# en la pagina de precios**: el unico modelo de embeddings publicado es
+# `gemini-embedding-2`, a 0,20 USD por millon de tokens. No se anota el precio de
+# uno para el otro. Mientras falte, sus llamadas se registran como **no medidas**
+# y nunca como cero (BR3.3), y el acumulado lleva su conteo aparte para que
+# ninguna cifra publicada esconda el hueco (BR3.5). Es un hallazgo que toca
+# tambien a U8 `policy-rag`, que es quien consume los embeddings.
+#
+# Deepgram y Cartesia traen los suyos con U15 `speech-providers`.
+#
+# Anadir una linea es escribir proveedor, modelo, tipo de unidad y precio entre
+# comillas, y subir `list_version` y `effective_date`.
+entries:
+  - provider: gemini
+    model: gemini-3.1-flash-lite
+    unit_kind: input_tokens
+    unit_price_usd: "0.00000025"
+  - provider: gemini
+    model: gemini-3.1-flash-lite
+    unit_kind: output_tokens
+    unit_price_usd: "0.00000150"
+  # Leido el 2026-10-06 de la pagina publica de precios de la API de Gemini
+  # (ai.google.dev/gemini-api/docs/pricing): 0,30 USD por millon de entrada y
+  # 2,50 por millon de salida. El plan gratuito no cobra; se registra igual, a
+  # precio de lista, como todo lo del chat (ADR-006).
+  - provider: gemini
+    model: gemini-3.5-flash-lite
+    unit_kind: input_tokens
+    unit_price_usd: "0.00000030"
+  - provider: gemini
+    model: gemini-3.5-flash-lite
+    unit_kind: output_tokens
+    unit_price_usd: "0.00000250"
+
+  # --- La voz, leida el 2026-09-21 de las paginas publicas de cada proveedor --
+  #
+  # https://deepgram.com/pricing y https://cartesia.ai/pricing. ADR-007 decia que
+  # el precio de la transcripcion en streaming "se toma de la consola"; resulto
+  # que los dos son publicos y no hizo falta entrar a ninguna cuenta.
+  #
+  # **Se anota el precio regular y no el promocional.** Deepgram anuncia
+  # "limited-time promotional rates on streaming": nova-3 multilingue esta hoy a
+  # 0,0058 USD por minuto y su precio regular es 0,0092. Se registra el regular,
+  # que es el lado conservador: el techo existe para no pasarse, y valorar con una
+  # tarifa que puede terminarse contaria de menos justo cuando mas importa. El dia
+  # que la promocion se haga permanente, esta fila baja con su fecha.
+  - provider: deepgram
+    model: nova-3
+    unit_kind: audio_seconds
+    # 0,0092 USD por minuto / 60 = 0,000153333... La division es periodica, asi
+    # que esto es un redondeo en el decimoctavo decimal: sobre una llamada de
+    # tres minutos el error es de millonesimas de centavo. Se deja escrito porque
+    # las otras filas de esta tabla si son exactas y la diferencia importa.
+    #
+    # Queda abierto para U15: **si Deepgram redondea el audio al minuto**. Su
+    # pagina lo menciona en las preguntas frecuentes y no se leyo. Si redondea, el
+    # costo real de una llamada corta es mayor que el que sale de esta fila.
+    unit_price_usd: "0.000153333333333333"
+
+  # 5 USD por 100.000 creditos en el plan Pro, y **1 credito = 1 caracter** segun
+  # sus preguntas frecuentes. La division es exacta.
+  #
+  # Cartesia no vende por uso sino por **suscripcion mensual con creditos
+  # incluidos**, asi que en el plan gratuito el costo marginal no es este numero:
+  # es cero hasta agotar los 20.000 creditos del mes --unos 27 minutos de audio--
+  # y ahi se detiene. Se registra igual el precio de lista, como manda BR3.6, y el
+  # plan se expresa en la marca de facturable.
+  - provider: cartesia
+    model: sonic-3.6
+    unit_kind: characters
+    unit_price_usd: "0.00005"
+
+  # 0,030 USD por mil caracteres. Division exacta.
+  #
+  # La voz de respaldo, Aura-2, decidida en la enmienda del 2026-09-21 de
+  # ADR-008. Se anota bajo **deepgram**, que es de quien es, y el adaptador de U15
+  # reporta su gasto con este mismo proveedor y el modelo `aura-2` --la familia,
+  # no la voz concreta--, asi que la busqueda de precio encuentra esta fila con
+  # cualquier voz de Aura-2. La cabecera `dg-char-count` de la respuesta grabada
+  # confirma que Deepgram cobra los mismos caracteres que cuenta el adaptador.
+  - provider: deepgram
+    model: aura-2
+    unit_kind: characters
+    unit_price_usd: "0.00003"
+
+  # Claude Haiku 5.5, precio de lista para prompts de hasta 100 000 tokens
+  # (https://platform.claude.com/docs/en/about-claude/pricing, visto el
+  # 2026-10-07). Los de la redaccion del chat rondan los 500.
+  - provider: anthropic
+    model: claude-haiku-5-5
+    unit_kind: input_tokens
+    unit_price_usd: "0.00000010"
+  - provider: anthropic
+    model: claude-haiku-5-5
+    unit_kind: output_tokens
+    unit_price_usd: "0.00000050"
+
+# --- Topes configurados en el proveedor (BR5.8, PA-9) -------------------------
+# Un limite que vive solo en la aplicacion falla abierto cuando lo que falla es
+# la aplicacion. Por eso cada uso declara que figura lo detiene **del lado del
+# proveedor**, y cuando se comprobo por ultima vez: un tope que nadie miro en
+# meses es una creencia, no un control, y `schema:check` compara esa fecha contra
+# hoy.
+#
+# Una **alerta de presupuesto no cuenta como tope** y no se anota en estas filas:
+# avisa mientras el gasto sigue, que es exactamente fallar abierto.
+#
+# La comprobacion del 2026-09-17 (ADR-006, enmienda) encontro que Gemini solo
+# ofrece topes de gasto en el plan de pago, y que los aplica por proyecto. De ahi
+# que las cuatro filas de Gemini digan hoy que no hay tope disponible, cada una
+# con lo que lo sustituye. Es el hueco de PA-9 declarado con nombre propio en vez
+# de escondido.
+#
+# Las dos filas de la voz las llena U15 (PA-9.2) con la politica que fijo U5: donde
+# no hay tope duro, lo sustituye un saldo prepagado sin recarga automatica. Todo
+# proveedor que declara un modelo de transcripcion o de sintesis en
+# `providers.yaml` tiene que tener aqui su fila del uso `voice`: `schema:check`
+# falla nombrandolo si falta, igual que falla si una fila pasa de treinta dias
+# sin comprobarse.
+#
+# **Comprobacion del 2026-10-02 en las tres consolas** (Miguel, con captura de cada
+# pantalla). Lo que cambio no es ninguna cifra: es que las tres filas de proveedor
+# pasaron de creerse a verse. Deepgram sigue en 199,92 USD con la recarga automatica
+# apagada; Cartesia sigue en plan gratuito, con sus 20.000 creditos y su fecha de
+# renovacion a la vista; y la facturacion de Gemini **no existe** --la pantalla dice
+# que no hay cuenta de facturacion--, que es mas fuerte que "el plan gratuito no
+# factura": sin cuenta de facturacion no hay forma de que un excedente se cobre.
+# Ningun proveedor del proyecto tiene hoy un medio de cobro activo.
+caps:
+  - provider: gemini
+    use: voice
+    cap_kind: none_available
+    substitute: >
+      Saldo prepagado con la recarga automatica desactivada, que es lo unico que
+      se detiene con la aplicacion parada. El proyecto de pago y su saldo se
+      crean el dia que la voz se publique, y esta fila se actualiza entonces con
+      la figura, su valor y su fecha. Hasta ese dia no hay uso de pago que topar.
+    last_checked_at: 2026-10-02
+  - provider: gemini
+    use: chat
+    cap_kind: none_available
+    substitute: >
+      El plan gratuito no factura: no hay saldo que agotar ni gasto que topar, y
+      Gemini no ofrece topes de gasto fuera del plan de pago. Lo que acota el uso
+      son los limites del propio tier, que son del proveedor y no una cifra que
+      este proyecto configure, mas las cuotas por sesion, por visitante y por dia
+      que aplica la aplicacion.
+    last_checked_at: 2026-10-02
+  - provider: gemini
+    use: evals
+    cap_kind: none_available
+    substitute: >
+      Mismo caso que el chat, con proyecto y clave propios para que una cuota
+      agotada en uno no detenga al otro. La corrida de evaluaciones admite ademas
+      un subconjunto declarado cuando no cabe en los limites del tier.
+    last_checked_at: 2026-10-02
+  - provider: gemini
+    use: operations
+    cap_kind: none_available
+    substitute: >
+      Mismo caso que el chat, con proyecto y clave propios. La generacion de
+      datos sinteticos es determinista y sembrada: su salida se commitea, asi que
+      no se regenera en cada corrida.
+    last_checked_at: 2026-10-02
+  # --- La voz (U15, PA-9.2) -----------------------------------------------------
+  # Transcripcion y voz de respaldo. La cuenta usa el credito gratuito de alta en
+  # el plan Pay As You Go, con la recarga automatica apagada: cuando el saldo
+  # llega a cero, Deepgram deja de atender tambien con la aplicacion detenida. Que
+  # contesta 402 lo dice su documentacion y no se capturo: agotarlo gastaria lo
+  # que la fila protege (`deepgram-listen-402-no-credit.json`, sin capturar a
+  # proposito).
+  #
+  # `cap_value` es la cifra que Miguel leyo en la consola (Billing - Overview,
+  # "Credit remaining") el dia de `last_checked_at`, con la recarga automatica
+  # apagada en la misma pantalla. Baja con el uso: se vuelve a leer cuando la
+  # compuerta de los 30 dias lo pida.
+  - provider: deepgram
+    use: voice
+    cap_kind: prepaid_balance
+    cap_value: "199,92 USD de credito prepagado restante, recarga automatica apagada"
+    last_checked_at: 2026-10-02
+  # Catalina. El plan gratuito trae un cupo mensual de creditos que se detiene al
+  # agotarse, sin cobro de excedentes; el 402 de cupo agotado esta documentado y
+  # tampoco se capturo, por la misma razon. La cifra salio de la pagina publica de
+  # precios (https://cartesia.ai/pricing) y desde el 2026-10-02 esta **vista en la
+  # consola**: Subscription dice plan Free, con 20.000 creditos de modelo y su fecha
+  # de renovacion.
+  #
+  # Lo que esa cifra implica para el enlace publico no esta aqui sino en la pasada de
+  # publicacion: 20.000 caracteres al mes contra los 1.300 que `providers.yaml`
+  # reserva por llamada son unas quince llamadas **al mes**, que es justo lo que
+  # `voice_limits.site_daily_cap` admite en **un dia**. El cupo del dia se deriva del
+  # presupuesto en dolares y de los dias que faltan (BR5.6), y ese calculo no mira
+  # este cupo mensual de caracteres: hoy el plan gratuito de la voz principal se
+  # agotaria mucho antes que el presupuesto.
+  - provider: cartesia
+    use: voice
+    cap_kind: monthly_cap
+    cap_value: "20.000 creditos al mes del plan gratuito (1 credito = 1 caracter), sin excedentes"
+    last_checked_at: 2026-10-02
+  # La redaccion natural del chat. Saldo prepagado comprado por Miguel el
+  # 2026-10-07 en la consola de Claude, con la recarga automatica apagada: al
+  # agotarse, la API deja de responder tambien con la aplicacion detenida.
+  - provider: anthropic
+    use: chat_reply
+    cap_kind: prepaid_balance
+    cap_value: "5,00 USD de credito prepagado, recarga automatica apagada"
+    last_checked_at: 2026-10-07
+  # Las evaluaciones de la comprension, con su propia clave de la misma cuenta: el
+  # credito prepagado es de la organizacion, asi que comparten los mismos 5 USD.
+  - provider: anthropic
+    use: evals_chat
+    cap_kind: prepaid_balance
+    cap_value: "el mismo credito prepagado de la cuenta (5,00 USD), recarga automatica apagada"
+    last_checked_at: 2026-10-08

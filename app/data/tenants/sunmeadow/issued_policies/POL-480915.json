@@ -1,0 +1,46 @@
+{
+  "drivers": [
+    {
+      "full_name": "Alex Moreno"
+    }
+  ],
+  "endorsement_ids": [
+    "SUN-PAP-2026-END-3"
+  ],
+  "form_id": "SUN-PAP-2026",
+  "form_version": "2026.1",
+  "issuer_tenant": "sunmeadow",
+  "limits_and_deductibles": {
+    "a.bodily_injury_per_accident": 50000,
+    "a.bodily_injury_per_person": 25000,
+    "a.property_damage": 50000,
+    "b.medical_payments_per_person": 10000,
+    "c.uninsured_per_accident": 50000,
+    "c.uninsured_per_person": 25000,
+    "d.collision_deductible": 1000,
+    "d.other_than_collision_deductible": 100
+  },
+  "named_insured": {
+    "email": "alex.moreno@example.org",
+    "full_name": "Alex Moreno",
+    "national_id": "918-18-0100",
+    "persona_id": "sun-per-480915",
+    "phone": "702-555-0121"
+  },
+  "period_end": "2027-03-15",
+  "period_start": "2026-03-15",
+  "policy_number": "POL-480915",
+  "tenant_id": "sunmeadow",
+  "vehicles": [
+    {
+      "make_model_year": "Hyundai Elantra 2024",
+      "plate": "NKV-9219",
+      "vin": "BZ33H2UP7VS373157"
+    },
+    {
+      "make_model_year": "Kia Soul 2016",
+      "plate": "PAA-8682",
+      "vin": "G88XNZ6E82G824670"
+    }
+  ]
+}

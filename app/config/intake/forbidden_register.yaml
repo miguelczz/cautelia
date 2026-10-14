@@ -1,0 +1,45 @@
+# Registro prohibido del lado de la agente (BR5.3, TECH-U11.4).
+#
+# Se comprueba **por codigo sobre el texto ya compuesto** de cada turno de la
+# agente -- nunca por el juez (FD-U11-4) -- con la misma forma que
+# `app/config/copy/forbidden-forms.yaml`: un identificador estable, su razon y
+# sus patrones por idioma, para que el chequeo nombre cual encontro y no solo
+# "fallo".
+#
+# Los patrones se comparan sobre el texto **plegado** (minusculas, sin
+# tildes, `compliance.controls.normalization.fold`), asi que se escriben ya
+# plegados aqui.
+
+forms:
+  - id: IR-1
+    reason: >
+      Culpa o minimizacion. La captura nunca acusa ni resta importancia a lo
+      que la persona reporta (BR5.6, guia de voz).
+    patterns:
+      - '(?i)\b(no debio|deberia haber|tuvo la culpa|no es para tanto|eso no es nada)\b'
+      - '(?i)\b(you should have|your fault|not a big deal|it.?s not that bad)\b'
+
+  - id: IR-2
+    reason: >
+      Trato con genero asumido, o formal en exceso para el tono de la guia de
+      voz (BR3.6, FF-1 de `copy/forbidden-forms.yaml`, aqui repetido porque
+      esta lista corre sobre texto compuesto y no solo sobre el catalogo).
+    patterns:
+      - '(?i)\b(estimad[oa]|querid[oa])\b'
+      - '(?i)\b(dear sir|dear madam)\b'
+
+  - id: IR-3
+    reason: >
+      Trato informal que la guia de voz prohibe en espanol: "mija", "mijo",
+      "parce" y "¿que mas?" como saludo no son el registro de una agente de
+      seguros.
+    patterns:
+      - '(?i)\b(mija|mijo|parce)\b'
+      - '(?i)que\s+mas\??'
+
+  - id: IR-4
+    reason: >
+      Groserias. Ninguna, ni siquiera para hacer eco del enojo de la persona
+      (BR5.6): reconocer la emocion no es repetir su vocabulario.
+    patterns:
+      - '(?i)\b(malparid[oa]s?|hijueputa|marica|pendej[oa]s?|gonorrea)\b'

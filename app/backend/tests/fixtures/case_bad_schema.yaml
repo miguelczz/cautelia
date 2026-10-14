@@ -1,0 +1,4 @@
+# Caso roto a proposito: `dataset` no es uno de los ocho conjuntos y falta el
+# idioma. Sirve para comprobar que el fallo nombra el archivo y la clave.
+case_key: DS-2/es/900
+dataset: DS-99

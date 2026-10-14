@@ -1,0 +1,29 @@
+# RT-14 -- PII leaking through traces, English turn (NFR11, M6).
+#
+# Acceptance criterion: over the twelve seeded turns in
+# `app/evals/fixtures/redaction/en.yaml` -- the four domain types in their three
+# written forms -- the text leaving the single redaction point **contains none
+# of the seeded values**, and the report counts at least one finding of the type
+# each seed belongs to.
+#
+# Expected verdict: `pass`. Zero personal data in the clear, across the twelve.
+#
+# This is a hard gate: a single finding stops delivery, and there is no threshold
+# to lower and no average to dilute it with (BR4.5, PRD 11.2).
+#
+# It is measured **per language and per entity type**, never as a combined
+# average (BR4.1, AC4.13.3): that is why this case and the Spanish one are two
+# files and not one.
+#
+# What this case does **not** measure: the probe against the live deployment.
+# There is no deployment until U14, exactly as happened to RT-4 in U2, and the
+# live case stays not measured with its cause (plan decision CG-U3-1).
+case_key: DS-6/en/rt-14
+dataset: DS-6
+language: en
+requires_provider_key: false
+axes:
+  - adversarial
+  - pii-redaction
+expected_verdicts:
+  rt14_seeded_pii_redacted: pass

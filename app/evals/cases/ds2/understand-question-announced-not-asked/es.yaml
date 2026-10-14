@@ -1,0 +1,25 @@
+# Decir que se tiene una duda no es todavia la pregunta.
+#
+# Comprension de un mensaje. Nace de una conversacion simulada del 2026-10-13 en la que
+# «tengo una duda de mi poliza» se guardo como la pregunta y la agente contesto
+# «no encuentro una clausula que hable de eso».
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/understand-question-announced-not-asked
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  last_agent_text: 'Hola, soy Catalina, la asistente de inteligencia artificial de Seguros Aburrá. Esto es una demostración con pólizas de ejemplo, así que no escribas datos personales reales. Puedo ayudarte a reportar un siniestro o a resolver dudas sobre tu póliza.'
+  message: Hola, tengo una duda de mi póliza
+  wants:
+  - policy_question
+  asks_about_coverage: false
+  asks_question: false
+  absent_items:
+  - question_asked
+expected_verdicts:
+  understanding_question_announced_not_asked: pass

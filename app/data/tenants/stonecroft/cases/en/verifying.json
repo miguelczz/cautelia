@@ -1,0 +1,91 @@
+{
+  "case_key": "SEED/stonecroft/en/verifying",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Another car ran a red light and hit the driver's door."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Natalia Henao Rendón, policy POL-100042"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "No one injured"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "5th Avenue and 40th Street, Corvane"
+    },
+    "other_parties": {
+      "status": "stated",
+      "value": "One driver, Marco Moreno, in a vehicle with plate FAC-5950"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Renault Logan 2024, plate WBR686, driven by Natalia"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-100042",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "verifying",
+  "tenant_id": "stonecroft",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Good morning, I want to report a crash. I'm Natalia Henao Rendón, policy POL-100042."
+    },
+    {
+      "speaker": "agent",
+      "text": "Was anyone hurt?"
+    },
+    {
+      "speaker": "insured",
+      "text": "No, nobody."
+    },
+    {
+      "speaker": "agent",
+      "text": "When and where did it happen?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Today at a quarter past seven in the morning, at 5th Avenue and 40th Street."
+    },
+    {
+      "speaker": "agent",
+      "text": "What happened?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Another car ran a red light and hit my driver's door."
+    },
+    {
+      "speaker": "agent",
+      "text": "Which vehicle were you driving?"
+    },
+    {
+      "speaker": "insured",
+      "text": "My Renault Logan 2024, plate WBR686. I was driving."
+    },
+    {
+      "speaker": "agent",
+      "text": "Do you have the other driver's details?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Yes, the name is Marco Moreno and the car's plate is FAC-5950."
+    }
+  ],
+  "used_by": [
+    "AC1.14.1",
+    "AC4.8.1"
+  ]
+}

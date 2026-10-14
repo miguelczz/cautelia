@@ -1,0 +1,27 @@
+# Cotizar donde esta apagada (AC6.1.3, BR1.5, decision D4 de User Stories), turno en espanol.
+#
+# Criterio de aceptacion: Donde la aseguradora tiene la cotizacion apagada --Stonecroft y
+# Knotwell-- pedir cotizar recibe la respuesta de que esta demostracion no cotiza y lo que si
+# puede hacer. Donde esta activa --Sunmeadow-- no se dice. Que la apertura ofrezca cotizar solo
+# donde esta activa lo miden las pruebas unitarias, no este caso. A mitad de un relato,
+# mencionar una cotizacion (la del taller) no es pedirla.
+#
+# Veredicto esperado: `pass`.
+#
+# Se resuelve sin modelo ni base de datos (`requires_provider_key: false`), y por eso entra al
+# subconjunto de arranque y corre en cada entrega.
+#
+# La pareja en ingles es `DS-4/en/quote-unavailable-where-off`: los mismos criterios y la misma
+# meta, medidos por idioma y nunca como promedio combinado (P12).
+#
+# Lo que este caso no mide: la conversacion de la solicitud, que mide
+# `DS-4/es/quote-end-to-end`.
+case_key: DS-4/es/quote-unavailable-where-off
+dataset: DS-4
+language: es
+requires_provider_key: false
+axes:
+  - quote-availability
+  - tenant-config
+expected_verdicts:
+  quote_unavailable_where_off: pass

@@ -1,0 +1,416 @@
+{
+  "stage": "code-generation",
+  "unit": "u06-web-shell",
+  "upstream_ids": [
+    "AC1.33.1",
+    "AC1.33.2",
+    "AC1.33.3",
+    "AC1.33.4",
+    "AC1.33.5",
+    "AC1.33.6",
+    "AC5.16.1",
+    "AC5.16.2",
+    "AC5.16.3",
+    "AC5.16.4",
+    "AC5.16.5",
+    "AC5.16.6",
+    "NFR10.5",
+    "NFR11.7",
+    "NFR16.1",
+    "NFR16.2",
+    "NFR16.3",
+    "NFR16.4",
+    "NFR16.5",
+    "NFR16.6",
+    "NFR18.4",
+    "NFR19.3",
+    "NFR20.1",
+    "NFR21.3",
+    "BR1.1",
+    "BR1.2",
+    "BR1.3",
+    "BR1.4",
+    "BR1.5",
+    "BR1.6",
+    "BR2.1",
+    "BR2.2",
+    "BR2.3",
+    "BR2.4",
+    "BR2.5",
+    "BR3.1",
+    "BR3.2",
+    "BR3.3",
+    "BR3.4",
+    "BR3.5",
+    "BR4.1",
+    "BR4.2",
+    "BR4.3",
+    "BR4.4",
+    "BR4.5",
+    "BR5.1",
+    "BR5.2",
+    "BR5.3",
+    "BR5.4",
+    "BR5.5",
+    "BR5.6",
+    "BR5.7",
+    "BR6.1",
+    "BR6.2",
+    "BR6.3",
+    "BR6.4",
+    "BR7.1",
+    "BR7.2",
+    "BR7.3",
+    "BR7.4",
+    "BR7.5",
+    "BR7.6",
+    "BR7.7",
+    "BR8.1",
+    "BR8.2",
+    "BR8.3",
+    "BR8.4",
+    "BR8.5"
+  ],
+  "coverage": [
+    {
+      "id": "AC1.33.1",
+      "status": "OK",
+      "target": "app/frontend/e2e/visitable-routes.ts"
+    },
+    {
+      "id": "AC1.33.2",
+      "status": "OK",
+      "target": "app/frontend/e2e/a11y.spec.ts"
+    },
+    {
+      "id": "AC1.33.3",
+      "status": "OK",
+      "target": "app/frontend/e2e/support/harness.ts"
+    },
+    {
+      "id": "AC1.33.4",
+      "status": "OK",
+      "target": "app/frontend/src/shared/ui/announcer.test.tsx"
+    },
+    {
+      "id": "AC1.33.5",
+      "status": "OK",
+      "target": "app/frontend/e2e/a11y.spec.ts"
+    },
+    {
+      "id": "AC1.33.6",
+      "status": "OK",
+      "target": "app/frontend/e2e/playwright.config.ts"
+    },
+    {
+      "id": "AC5.16.1",
+      "status": "OK",
+      "target": "app/backend/src/untangle/surface_spec.py"
+    },
+    {
+      "id": "AC5.16.2",
+      "status": "Deferred",
+      "target": "Intent infra (PA-10): la disponibilidad mensual se calcula con los resultados del chequeo periodico, que es de ese intent. U6 deja la salud de listo que ese chequeo consulta (app/backend/src/untangle/server/health.py)"
+    },
+    {
+      "id": "AC5.16.3",
+      "status": "Deferred",
+      "target": "Intent infra (PA-10): el canal de la alerta y la regla de dos fallos seguidos son del chequeo periodico. U6 deja la salud que falla de forma distinguible (NFR16.2)"
+    },
+    {
+      "id": "AC5.16.4",
+      "status": "OK",
+      "target": "app/frontend/src/app/readiness-gate.tsx"
+    },
+    {
+      "id": "AC5.16.5",
+      "status": "Deferred",
+      "target": "Intent infra: el checklist del segundo dia se corre en el primer despliegue (D-014). Criterio humano; U6 no despliega"
+    },
+    {
+      "id": "AC5.16.6",
+      "status": "OK",
+      "target": "app/backend/src/untangle/telemetry/activation/models.py"
+    },
+    {
+      "id": "NFR10.5",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u6/test_activation_repository.py"
+    },
+    {
+      "id": "NFR11.7",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u6/test_activation_tables.py"
+    },
+    {
+      "id": "NFR16.1",
+      "status": "Deferred",
+      "target": "Intent infra (PA-10): la disponibilidad mensual la mide el chequeo periodico de ese intent; hoy no medida"
+    },
+    {
+      "id": "NFR16.2",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u6/test_api.py"
+    },
+    {
+      "id": "NFR16.3",
+      "status": "OK",
+      "target": "app/frontend/e2e/timing.spec.ts"
+    },
+    {
+      "id": "NFR16.4",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u6/test_api.py"
+    },
+    {
+      "id": "NFR16.5",
+      "status": "OK",
+      "target": "app/frontend/src/shared/api-client/readiness.test.tsx"
+    },
+    {
+      "id": "NFR16.6",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u6/test_api.py"
+    },
+    {
+      "id": "NFR18.4",
+      "status": "OK",
+      "target": "app/frontend/vitest.config.ts"
+    },
+    {
+      "id": "NFR19.3",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u6/test_activation_repository.py"
+    },
+    {
+      "id": "NFR20.1",
+      "status": "OK",
+      "target": "app/frontend/src/pages/status/status.test.tsx"
+    },
+    {
+      "id": "NFR21.3",
+      "status": "OK",
+      "target": "app/frontend/e2e/playwright.config.ts"
+    },
+    {
+      "id": "BR1.1",
+      "status": "OK",
+      "target": "app/frontend/e2e/a11y.spec.ts"
+    },
+    {
+      "id": "BR1.2",
+      "status": "OK",
+      "target": "app/frontend/e2e/journey.spec.ts"
+    },
+    {
+      "id": "BR1.3",
+      "status": "OK",
+      "target": "app/frontend/e2e/journey.spec.ts"
+    },
+    {
+      "id": "BR1.4",
+      "status": "OK",
+      "target": "app/frontend/src/shared/theme/preference.test.ts"
+    },
+    {
+      "id": "BR1.5",
+      "status": "OK",
+      "target": "app/frontend/src/shared/theme/tokens.test.ts"
+    },
+    {
+      "id": "BR1.6",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u6/conftest.py"
+    },
+    {
+      "id": "BR2.1",
+      "status": "OK",
+      "target": "app/frontend/e2e/a11y.spec.ts"
+    },
+    {
+      "id": "BR2.2",
+      "status": "OK",
+      "target": "app/frontend/src/shared/i18n/locale-provider.test.tsx"
+    },
+    {
+      "id": "BR2.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/copy_catalog/test_checks_interfaz.py"
+    },
+    {
+      "id": "BR2.4",
+      "status": "OK",
+      "target": "app/frontend/e2e/a11y.spec.ts"
+    },
+    {
+      "id": "BR2.5",
+      "status": "OK",
+      "target": "app/frontend/src/app/shell/shell.test.tsx"
+    },
+    {
+      "id": "BR3.1",
+      "status": "OK",
+      "target": "app/frontend/src/shared/api-client/site.test.ts"
+    },
+    {
+      "id": "BR3.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/copy_catalog/test_checks_interfaz.py"
+    },
+    {
+      "id": "BR3.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/copy_catalog/test_checks_interfaz.py"
+    },
+    {
+      "id": "BR3.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/copy_catalog/test_checks_interfaz.py"
+    },
+    {
+      "id": "BR3.5",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u6/test_activation_repository.py"
+    },
+    {
+      "id": "BR4.1",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u6/test_api.py"
+    },
+    {
+      "id": "BR4.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/web/test_site.py"
+    },
+    {
+      "id": "BR4.3",
+      "status": "OK",
+      "target": "app/backend/src/untangle/surface_spec.py"
+    },
+    {
+      "id": "BR4.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/web/test_site.py"
+    },
+    {
+      "id": "BR4.5",
+      "status": "OK",
+      "target": "app/backend/tests/unit/web/test_site.py"
+    },
+    {
+      "id": "BR5.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/web/test_health.py"
+    },
+    {
+      "id": "BR5.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/web/superficie_sin_sonda.py"
+    },
+    {
+      "id": "BR5.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/web/test_health.py"
+    },
+    {
+      "id": "BR5.4",
+      "status": "OK",
+      "target": "app/frontend/e2e/support/harness.ts"
+    },
+    {
+      "id": "BR5.5",
+      "status": "OK",
+      "target": "app/frontend/src/pages/status/status.test.tsx"
+    },
+    {
+      "id": "BR5.6",
+      "status": "OK",
+      "target": "app/config/copy/es.yaml"
+    },
+    {
+      "id": "BR5.7",
+      "status": "OK",
+      "target": "app/frontend/e2e/support/harness.ts"
+    },
+    {
+      "id": "BR6.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/web/test_served_process.py"
+    },
+    {
+      "id": "BR6.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/web/test_served_process.py"
+    },
+    {
+      "id": "BR6.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/web/test_served_process.py"
+    },
+    {
+      "id": "BR6.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/web/rutas_de_prueba.py"
+    },
+    {
+      "id": "BR7.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/tenancy/test_purge.py"
+    },
+    {
+      "id": "BR7.2",
+      "status": "OK",
+      "target": "app/frontend/e2e/a11y.spec.ts"
+    },
+    {
+      "id": "BR7.3",
+      "status": "OK",
+      "target": "app/frontend/e2e/a11y.spec.ts"
+    },
+    {
+      "id": "BR7.4",
+      "status": "OK",
+      "target": "app/frontend/e2e/support/harness.ts"
+    },
+    {
+      "id": "BR7.5",
+      "status": "OK",
+      "target": "app/frontend/src/shared/ui/announcer.test.tsx"
+    },
+    {
+      "id": "BR7.6",
+      "status": "OK",
+      "target": "app/frontend/e2e/playwright.config.ts"
+    },
+    {
+      "id": "BR7.7",
+      "status": "OK",
+      "target": "app/frontend/src/shared/ui/primitives.test.tsx"
+    },
+    {
+      "id": "BR8.1",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u6/test_activation_repository.py"
+    },
+    {
+      "id": "BR8.2",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u6/test_activation_repository.py"
+    },
+    {
+      "id": "BR8.3",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u6/test_activation_service.py"
+    },
+    {
+      "id": "BR8.4",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u6/test_activation_service.py"
+    },
+    {
+      "id": "BR8.5",
+      "status": "OK",
+      "target": "app/backend/tests/unit/activation/test_report.py"
+    }
+  ]
+}

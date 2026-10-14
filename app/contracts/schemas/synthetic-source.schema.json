@@ -1,0 +1,409 @@
+{
+  "$defs": {
+    "DistractorReason": {
+      "description": "Por que un distractor se confunde con su clausula (BR3.4).",
+      "enum": [
+        "superseded_version",
+        "near_duplicate"
+      ],
+      "title": "DistractorReason",
+      "type": "string"
+    },
+    "PolicyPart": {
+      "description": "Las partes que se redactan y se versionan, una por archivo (`DraftText.part`).\n\nLas ocho primeras son las secciones de la referencia de estructura\n(`docs/reference/estructura-poliza-iso-pap.md`); las dos ultimas son las\npiezas que la referencia no trae y el corpus si: los endosos y el documento\nde jurisdiccion de cada emisora.",
+      "enum": [
+        "agreement",
+        "definitions",
+        "part_a",
+        "part_b",
+        "part_c",
+        "part_d",
+        "part_e",
+        "part_f",
+        "endorsements",
+        "jurisdiction"
+      ],
+      "title": "PolicyPart",
+      "type": "string"
+    },
+    "ReviewedBy": {
+      "description": "Quien reviso: el agente contra la estructura y P8, o Miguel en la muestra.",
+      "enum": [
+        "conductor",
+        "miguel"
+      ],
+      "title": "ReviewedBy",
+      "type": "string"
+    },
+    "SeededCaseSpec": {
+      "additionalProperties": false,
+      "description": "Lo que dice la fuente de un caso sembrado, ademas de sus turnos (FD-U7-7).\n\nLos valores de los campos y de los turnos pueden llevar marcadores\n--`{insured_name}`, `{policy_number}`, `{plate}`...-- que la composicion llena\ncon la persona y el vehiculo de una poliza emitida de la aseguradora: asi cada\ndato personal de un caso sale del conjunto sembrado y esta en la lista de\nvalores personales (BR7.2).",
+      "properties": {
+        "name": {
+          "maxLength": 60,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Name",
+          "type": "string"
+        },
+        "record_type": {
+          "$ref": "#/$defs/SeededRecordType",
+          "default": "claim"
+        },
+        "channel": {
+          "$ref": "#/$defs/SeededChannel",
+          "default": "chat"
+        },
+        "state": {
+          "$ref": "#/$defs/SeededState"
+        },
+        "resolution": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SeededResolution"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "derivation_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SeededDerivationReason"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "persona_language": {
+          "anyOf": [
+            {
+              "enum": [
+                "es",
+                "en"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Persona Language"
+        },
+        "example_policy": {
+          "default": false,
+          "title": "Example Policy",
+          "type": "boolean"
+        },
+        "fields": {
+          "patternProperties": {
+            "^[a-z][a-z0-9_]*(?:\\.[a-z0-9_]+)*$": {
+              "$ref": "#/$defs/SeededField"
+            }
+          },
+          "title": "Fields",
+          "type": "object"
+        },
+        "used_by": {
+          "default": [],
+          "items": {
+            "pattern": "^AC\\d+\\.\\d+\\.\\d+$",
+            "type": "string"
+          },
+          "title": "Used By",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "state"
+      ],
+      "title": "SeededCaseSpec",
+      "type": "object"
+    },
+    "SeededChannel": {
+      "description": "Por donde entro el caso. Copia de `case_record.models.Channel`.",
+      "enum": [
+        "voice",
+        "chat"
+      ],
+      "title": "SeededChannel",
+      "type": "string"
+    },
+    "SeededDerivationReason": {
+      "description": "Por que se derivo. Copia de `case_record.models.DerivationReason`.",
+      "enum": [
+        "demo_limit",
+        "person_requested",
+        "rule"
+      ],
+      "title": "SeededDerivationReason",
+      "type": "string"
+    },
+    "SeededField": {
+      "additionalProperties": false,
+      "description": "Un campo de un caso sembrado: su valor y si se dijo o ya se confirmo.\n\nEl estado importa: tres campos del siniestro solo cuentan confirmados (BR2.2\nde U4), y un criterio como \"tres de siete campos confirmados\" no se puede\nsembrar con solo el valor.",
+      "properties": {
+        "value": {
+          "minLength": 1,
+          "title": "Value",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/SeededFieldStatus"
+        }
+      },
+      "required": [
+        "value",
+        "status"
+      ],
+      "title": "SeededField",
+      "type": "object"
+    },
+    "SeededFieldStatus": {
+      "description": "Los dos estados de un campo que se ha dicho. Copia parcial de\n`case_record.models.FieldStatus`: un campo que no se ha dicho no se siembra,\nsimplemente no esta.",
+      "enum": [
+        "stated",
+        "confirmed"
+      ],
+      "title": "SeededFieldStatus",
+      "type": "string"
+    },
+    "SeededRecordType": {
+      "description": "Los tres tipos de registro. Copia de `case_record.models.RecordType`.",
+      "enum": [
+        "claim",
+        "coverage_inquiry",
+        "quote_request"
+      ],
+      "title": "SeededRecordType",
+      "type": "string"
+    },
+    "SeededResolution": {
+      "description": "Las cuatro resoluciones. Copia de `case_record.models.Resolution`.",
+      "enum": [
+        "registered",
+        "approved",
+        "rejected",
+        "sent_to_insurer"
+      ],
+      "title": "SeededResolution",
+      "type": "string"
+    },
+    "SeededState": {
+      "description": "Los siete estados del caso. Copia de `case_record.models.CaseState`.",
+      "enum": [
+        "open",
+        "capturing",
+        "verifying",
+        "deciding",
+        "derived",
+        "awaiting_insured",
+        "closed"
+      ],
+      "title": "SeededState",
+      "type": "string"
+    },
+    "SourceEntry": {
+      "additionalProperties": false,
+      "description": "Un texto fuente tal como se escribe dentro de su archivo de parte.\n\nLa aseguradora y el idioma no se repiten en cada entrada: los dice la\ncabecera del archivo, y el cargador los anade al construir el `SourceText`.\nTodo lo demas es de la entrada, **incluida la marca de revision**: cada texto\nse revisa por separado, y uno sin `reviewed_at`, `reviewed_by` o\n`drafted_with` no entra al corpus (BR2.2).",
+      "properties": {
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/SourceKind"
+        },
+        "clause_key": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9]+(?:\\.[A-Za-z0-9_]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Clause Key"
+        },
+        "part": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Part"
+        },
+        "version": {
+          "pattern": "^\\d{4}\\.[1-9]\\d*$",
+          "title": "Version",
+          "type": "string"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "distractor_of": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?-[A-Za-z0-9]+(?:\\.[A-Za-z0-9_]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Distractor Of"
+        },
+        "distractor_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DistractorReason"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "defines_terms": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Defines Terms",
+          "type": "array"
+        },
+        "refers_to": {
+          "default": [],
+          "items": {
+            "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?-[A-Za-z0-9]+(?:\\.[A-Za-z0-9_]+)*$",
+            "type": "string"
+          },
+          "title": "Refers To",
+          "type": "array"
+        },
+        "case": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SeededCaseSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "reviewed_at": {
+          "format": "date",
+          "title": "Reviewed At",
+          "type": "string"
+        },
+        "reviewed_by": {
+          "$ref": "#/$defs/ReviewedBy"
+        },
+        "drafted_with": {
+          "pattern": "^[a-z0-9][a-z0-9.\\-]*$",
+          "title": "Drafted With",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "kind",
+        "version",
+        "text",
+        "reviewed_at",
+        "reviewed_by",
+        "drafted_with"
+      ],
+      "title": "SourceEntry",
+      "type": "object"
+    },
+    "SourceKind": {
+      "description": "Que es un texto fuente (`entities.md`).",
+      "enum": [
+        "clause",
+        "endorsement",
+        "jurisdiction",
+        "distractor",
+        "persona_pool",
+        "vehicle_pool",
+        "case_turns"
+      ],
+      "title": "SourceKind",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Un archivo de `app/data/sources/<aseguradora>/<idioma>/<parte>.yaml`.\n\nLa cabecera repite lo que dice la ruta y el cargador comprueba que coincidan:\nun archivo movido a la carpeta de otra aseguradora no puede cambiar de dueno\nen silencio.",
+  "properties": {
+    "format_version": {
+      "const": 1,
+      "title": "Format Version",
+      "type": "integer"
+    },
+    "tenant_id": {
+      "pattern": "^[a-z][a-z0-9-]{1,30}$",
+      "title": "Tenant Id",
+      "type": "string"
+    },
+    "language": {
+      "enum": [
+        "es",
+        "en"
+      ],
+      "title": "Language",
+      "type": "string"
+    },
+    "part_key": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PolicyPart"
+        },
+        {
+          "enum": [
+            "pools",
+            "case_turns"
+          ],
+          "type": "string"
+        }
+      ],
+      "title": "Part Key"
+    },
+    "texts": {
+      "items": {
+        "$ref": "#/$defs/SourceEntry"
+      },
+      "minItems": 1,
+      "title": "Texts",
+      "type": "array"
+    }
+  },
+  "required": [
+    "format_version",
+    "tenant_id",
+    "language",
+    "part_key",
+    "texts"
+  ],
+  "title": "SourceFile",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/synthetic-source.schema.json"
+}

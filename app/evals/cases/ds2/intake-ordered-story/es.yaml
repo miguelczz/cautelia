@@ -1,0 +1,38 @@
+# Relato ordenado (AC1.5.2, BR3.2), turno en espanol.
+#
+# La persona cuenta el siniestro en el mismo orden en que la agente pregunta:
+# identidad y poliza, que paso, cuando y donde, vehiculo y conductor. Es el
+# caso mas simple de la unidad, y el que demuestra que el bloque que toca se
+# deduce del caso y no de un contador (BR3.2, FD-U11-1): con el mismo caso, dos
+# corridas preguntan lo mismo, en el mismo orden.
+#
+# Escrito en el paso 2 de la tanda 1 (`code-generation-plan.md`), antes de que
+# exista ningun mecanismo que decida el orden de las preguntas: la deduccion
+# del bloque (BR3.2) es del paso 5, tanda 2. Hoy falla nombrando esa razon
+# (CG-U11-2); pasara cuando el paso 5 este cerrado.
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en ingles es `DS-2/en/intake-ordered-story`: los mismos criterios
+# y la misma meta, medidos por idioma y nunca como promedio combinado (P12).
+case_key: DS-2/es/intake-ordered-story
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - intake
+  - turn-order
+script:
+  - field_key: identity_and_policy
+    text: "Soy Laura Gomez, mi poliza es POL-480915."
+  - field_key: description
+    text: "Otro carro me choco por detras cuando estaba parada en un semaforo."
+  - field_key: incident_datetime
+    text: "Fue ayer, sobre las cinco de la tarde."
+  - field_key: location
+    text: "En la avenida Boyaca con calle 80, en Bogota."
+  - field_key: vehicle_and_driver
+    text: "Mi carro es un Mazda 3 gris, placa ABC123."
+expected_verdicts:
+  intake_ordered_story: pass

@@ -1,0 +1,119 @@
+{
+  "experiment": "04-paisa-voices",
+  "finished_utc": "2026-09-16T23:11:34Z",
+  "models": {
+    "cartesia": "sonic-3.6",
+    "elevenlabs": "eleven_flash_v2_5"
+  },
+  "voices": 2,
+  "measurements": [
+    {
+      "code": "V1",
+      "text_id": "es-opening",
+      "lang": "es",
+      "characters": 339,
+      "first_byte_ms": 1066,
+      "total_ms": 3754,
+      "file": "V1-es-opening.wav"
+    },
+    {
+      "code": "V1",
+      "text_id": "es-confirm",
+      "lang": "es",
+      "characters": 87,
+      "first_byte_ms": 699,
+      "total_ms": 1428,
+      "file": "V1-es-confirm.wav"
+    },
+    {
+      "code": "V1",
+      "text_id": "es-calm",
+      "lang": "es",
+      "characters": 59,
+      "first_byte_ms": 605,
+      "total_ms": 1172,
+      "file": "V1-es-calm.wav"
+    },
+    {
+      "code": "V1",
+      "text_id": "es-honesty",
+      "lang": "es",
+      "characters": 158,
+      "first_byte_ms": 375,
+      "total_ms": 1557,
+      "file": "V1-es-honesty.wav"
+    },
+    {
+      "code": "V1",
+      "text_id": "en-opening",
+      "lang": "en",
+      "characters": 282,
+      "first_byte_ms": 460,
+      "total_ms": 3275,
+      "file": "V1-en-opening.wav"
+    },
+    {
+      "code": "V1",
+      "text_id": "en-confirm",
+      "lang": "en",
+      "characters": 85,
+      "first_byte_ms": 604,
+      "total_ms": 1486,
+      "file": "V1-en-confirm.wav"
+    },
+    {
+      "code": "V2",
+      "text_id": "es-opening",
+      "lang": "es",
+      "characters": 339,
+      "first_byte_ms": 355,
+      "total_ms": 3851,
+      "file": "V2-es-opening.wav"
+    },
+    {
+      "code": "V2",
+      "text_id": "es-confirm",
+      "lang": "es",
+      "characters": 87,
+      "first_byte_ms": 296,
+      "total_ms": 1000,
+      "file": "V2-es-confirm.wav"
+    },
+    {
+      "code": "V2",
+      "text_id": "es-calm",
+      "lang": "es",
+      "characters": 59,
+      "first_byte_ms": 313,
+      "total_ms": 978,
+      "file": "V2-es-calm.wav"
+    },
+    {
+      "code": "V2",
+      "text_id": "es-honesty",
+      "lang": "es",
+      "characters": 158,
+      "first_byte_ms": 293,
+      "total_ms": 1742,
+      "file": "V2-es-honesty.wav"
+    },
+    {
+      "code": "V2",
+      "text_id": "en-opening",
+      "lang": "en",
+      "characters": 282,
+      "first_byte_ms": 355,
+      "total_ms": 2855,
+      "file": "V2-en-opening.wav"
+    },
+    {
+      "code": "V2",
+      "text_id": "en-confirm",
+      "lang": "en",
+      "characters": 85,
+      "first_byte_ms": 370,
+      "total_ms": 1164,
+      "file": "V2-en-confirm.wav"
+    }
+  ]
+}

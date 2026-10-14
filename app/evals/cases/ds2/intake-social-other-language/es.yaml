@@ -1,0 +1,37 @@
+# Lo social dicho en el otro idioma (BR2.2, BR3.1, BR5.1), conversación en español.
+#
+# Criterio de aceptación: un turno corto no cambia el idioma de la conversación
+# (BR2.2), así que "Thanks" llega a una conversación en español con su idioma;
+# igual se reconoce como agradecimiento y como turno sin nada que extraer, y
+# "No, that's fine" cuenta como sí a una lectura pendiente. La respuesta sale en
+# español, el idioma de la conversación.
+#
+# Veredicto esperado: `pass`.
+#
+# Visto en producción el 2026-10-06 con la aseguradora que habla inglés por
+# omisión: "Gracias" se leía como un no y la lectura se repetía. No es compuerta
+# dura por sí solo, pero corre en cada entrega y un caso que pasa a fallar es una
+# regresión (definición de regresión de `team.md`).
+#
+# La pareja en inglés es `DS-2/en/intake-social-other-language`: los mismos
+# criterios y la misma meta, medidos por idioma y nunca como promedio combinado (P12).
+# Los turnos se indexan por el campo que estaba pendiente cuando se dijeron
+# (`injuries`): el guion solo admite campos del esquema.
+case_key: DS-2/es/intake-social-other-language
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - intake
+  - conversation
+  - language-adherence
+script:
+  - field_key: injuries
+    sequence: 1
+    text: "Thanks"
+  - field_key: injuries
+    sequence: 2
+    text: "No, that's fine."
+expected_verdicts:
+  intake_social_other_language: pass

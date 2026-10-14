@@ -1,0 +1,221 @@
+{
+  "stage": "nfr-requirements",
+  "unit": "u1-workspace",
+  "upstream_ids": [
+    "NFR17",
+    "NFR18",
+    "NFR21",
+    "NFR1",
+    "NFR2",
+    "NFR3",
+    "NFR4",
+    "NFR5",
+    "NFR6",
+    "NFR7",
+    "NFR8",
+    "NFR9",
+    "NFR10",
+    "NFR11",
+    "NFR12",
+    "NFR13",
+    "NFR14",
+    "NFR15",
+    "NFR16",
+    "NFR19",
+    "NFR20"
+  ],
+  "coverage": [
+    {
+      "id": "NFR17",
+      "status": "OK",
+      "target": "NFR17.1 (U1 mide y publica la duracion de la corrida; la meta de 10 minutos la registra U21, segun la tabla de Units Generation)"
+    },
+    {
+      "id": "NFR18",
+      "status": "OK",
+      "target": "NFR18.1, NFR18.2, NFR18.3"
+    },
+    {
+      "id": "NFR21",
+      "status": "OK",
+      "target": "NFR21.1, NFR21.2"
+    },
+    {
+      "id": "NFR1",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U16 segun la tabla de metas de `unit-of-work.md` (Latencia del turno de voz, del fin del habla al primer audio: p50 menor que). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR2",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U16 segun la tabla de metas de `unit-of-work.md` (Parada ante interrupción: menor que 300 ms). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR3",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U16 segun la tabla de metas de `unit-of-work.md` (Recuperación tras interrupción sin perder estado: mayor que 90 %). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR4",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U13 segun la tabla de metas de `unit-of-work.md` (Latencia del chat, del envío a la primera palabra: p95 menor que 3 s). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR5",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Precisión de citación: 95 % o más). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR6",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U8 segun la tabla de metas de `unit-of-work.md` (Citas inexistentes: exactamente 0 (compuerta dura)). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR7",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Completitud del primer aviso en los siete campos: 95 % o más). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR8",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Exactitud de extracción: 95 % o más por campo). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR9",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U10 segun la tabla de metas de `unit-of-work.md` (Respuestas fuera de alcance: exactamente 0 (compuerta dura)). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR10",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U2 segun la tabla de metas de `unit-of-work.md` (Fuga entre aseguradoras: 0 cláusulas ajenas y 100 % de pruebas de aislamien). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR11",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U3 segun la tabla de metas de `unit-of-work.md` (Datos personales en trazas, logs y exportaciones: 0 hallazgos (compuerta du). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR12",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U10 segun la tabla de metas de `unit-of-work.md` (Resistencia a los quince escenarios de red-team: 0 respuestas que obedezcan). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR13",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Derivaciones: 100 % correctas y 10 % o menos innecesarias). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR14",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U5 segun la tabla de metas de `unit-of-work.md` (Costo por caso exitoso, publicado por versión; voz de 0,02 USD o menos por ). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR15",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U5 segun la tabla de metas de `unit-of-work.md` (Gasto acumulado: 5 USD o menos en 90 días, con alerta en 3 USD). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR16",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U6 segun la tabla de metas de `unit-of-work.md` (Disponibilidad mensual del enlace en vivo: 95 % o más). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR19",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U20 segun la tabla de metas de `unit-of-work.md` (Retención de la demo pública: el audio no se persiste y la transcripción re). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    },
+    {
+      "id": "NFR20",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Paridad por idioma: mismas metas en español e inglés, sin meta reducida). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad, y una meta ausente sin razon no se distingue de una olvidada."
+    }
+  ],
+  "reverse": [
+    {
+      "id": "SEC-U1.1",
+      "status": "N/A",
+      "target": "Escaneo de secretos como primer trabajo. Nace de una regla afirmada del equipo y de D-017, no de un NFR de Incepcion."
+    },
+    {
+      "id": "SEC-U1.2",
+      "status": "N/A",
+      "target": "Ninguna clave en el repositorio; plantilla de variables sin valores. Regla afirmada del proyecto."
+    },
+    {
+      "id": "SEC-U1.3",
+      "status": "N/A",
+      "target": "Manifiesto y lockfile con hashes e instalacion reproducible. Regla afirmada del proyecto."
+    },
+    {
+      "id": "SEC-U1.4",
+      "status": "N/A",
+      "target": "Espera de versiones recien publicadas. Enmienda de ADR-002 del 2026-09-17."
+    },
+    {
+      "id": "SEC-U1.5",
+      "status": "N/A",
+      "target": "Permisos minimos y acciones fijadas por identificador de commit. Enmienda de ADR-002."
+    },
+    {
+      "id": "SEC-U1.6",
+      "status": "N/A",
+      "target": "Trazabilidad de lo publicado (commit, modelo, hash de prompt). Regla afirmada sobre configuracion versionada del modelo."
+    },
+    {
+      "id": "SEC-U1.7",
+      "status": "N/A",
+      "target": "Ningun gasto no escrito y tope de minutos de integracion continua. Reglas afirmadas del proyecto (P9, D-015)."
+    },
+    {
+      "id": "SEC-U1.8",
+      "status": "N/A",
+      "target": "Identidad correcta en cada operacion contra el repositorio remoto. Practica afirmada del equipo (D-017)."
+    },
+    {
+      "id": "REL-U1.1",
+      "status": "N/A",
+      "target": "Determinismo de la corrida. Nace de FR11.2 y de la practica de pruebas, no de un NFR numerado."
+    },
+    {
+      "id": "REL-U1.2",
+      "status": "N/A",
+      "target": "Determinismo del asegurado simulado. Nace de AC4.7.4, criterio de aceptacion, no de un NFR."
+    },
+    {
+      "id": "REL-U1.3",
+      "status": "N/A",
+      "target": "Degradacion honesta sin backend de trazas. Nace de AC4.4.6."
+    },
+    {
+      "id": "REL-U1.4",
+      "status": "N/A",
+      "target": "Fallo cerrado sin clave del modelo. Nace de AC4.4.6."
+    },
+    {
+      "id": "REL-U1.5",
+      "status": "N/A",
+      "target": "Un caso no medible no rompe la corrida. Decision Q5 del diseno funcional de U1."
+    },
+    {
+      "id": "OBS-U1.1",
+      "status": "N/A",
+      "target": "Lo que registra una corrida. Nace de FR11.3, no de un NFR numerado."
+    },
+    {
+      "id": "OBS-U1.2",
+      "status": "N/A",
+      "target": "Lo que registra un resultado por caso. Nace de FR11.3 y FR11.5."
+    },
+    {
+      "id": "OBS-U1.3",
+      "status": "N/A",
+      "target": "Causa de cada caso no medido. Decision Q5 del diseno funcional de U1."
+    },
+    {
+      "id": "OBS-U1.4",
+      "status": "N/A",
+      "target": "Los dos idiomas lado a lado. Nace de FR11.6 y del principio P12."
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "case_key": "SEED/knotwell/en/verifying",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Another car ran a red light and hit the driver's door."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Lucía Ochoa Henao, policy POL-650485"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "No one injured"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "5th Avenue and 40th Street, Corvane"
+    },
+    "other_parties": {
+      "status": "stated",
+      "value": "One driver, Sofia Flores, in a vehicle with plate FNW-8439"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Kia Sportage 2013, plate JTS836, driven by Lucía"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-650485",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "verifying",
+  "tenant_id": "knotwell",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Good morning, I want to report a crash. I'm Lucía Ochoa Henao, policy POL-650485."
+    },
+    {
+      "speaker": "agent",
+      "text": "Was anyone hurt?"
+    },
+    {
+      "speaker": "insured",
+      "text": "No, nobody."
+    },
+    {
+      "speaker": "agent",
+      "text": "When and where did it happen?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Today at a quarter past seven in the morning, at 5th Avenue and 40th Street."
+    },
+    {
+      "speaker": "agent",
+      "text": "What happened?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Another car ran a red light and hit my driver's door."
+    },
+    {
+      "speaker": "agent",
+      "text": "Which vehicle were you driving?"
+    },
+    {
+      "speaker": "insured",
+      "text": "My Kia Sportage 2013, plate JTS836. I was driving."
+    },
+    {
+      "speaker": "agent",
+      "text": "Do you have the other driver's details?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Yes, the name is Sofia Flores and the car's plate is FNW-8439."
+    }
+  ],
+  "used_by": [
+    "AC1.14.1",
+    "AC4.8.1"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "experiment": "04-paisa-voices",
+  "finished_utc": "2026-09-16T23:41:39Z",
+  "voice": "Catalina",
+  "model": "sonic-3.6",
+  "clips": 9,
+  "measurements": [
+    {
+      "text_id": "en-confirm",
+      "characters": 85,
+      "first_byte_ms": 821,
+      "total_ms": 1450
+    },
+    {
+      "text_id": "en-hold",
+      "characters": 37,
+      "first_byte_ms": 545,
+      "total_ms": 950
+    },
+    {
+      "text_id": "en-no-clause",
+      "characters": 97,
+      "first_byte_ms": 652,
+      "total_ms": 1364
+    },
+    {
+      "text_id": "en-emergency",
+      "characters": 103,
+      "first_byte_ms": 275,
+      "total_ms": 954
+    },
+    {
+      "text_id": "en-closing",
+      "characters": 119,
+      "first_byte_ms": 289,
+      "total_ms": 1345
+    },
+    {
+      "text_id": "en-reprompt",
+      "characters": 51,
+      "first_byte_ms": 284,
+      "total_ms": 678
+    }
+  ]
+}

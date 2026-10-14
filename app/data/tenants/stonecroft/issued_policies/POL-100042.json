@@ -1,0 +1,53 @@
+{
+  "drivers": [
+    {
+      "full_name": "Natalia Henao Rendón"
+    },
+    {
+      "full_name": "Ricardo Henao Ospina"
+    }
+  ],
+  "endorsement_ids": [
+    "STO-PAP-2026-END-1",
+    "STO-PAP-2026-END-2",
+    "STO-PAP-2026-END-3",
+    "STO-PAP-2026-END-4",
+    "STO-PAP-2026-END-5"
+  ],
+  "form_id": "STO-PAP-2026",
+  "form_version": "2026.1",
+  "issuer_tenant": "stonecroft",
+  "limits_and_deductibles": {
+    "a.bodily_injury_per_accident": 200000,
+    "a.bodily_injury_per_person": 100000,
+    "a.property_damage": 20000,
+    "b.medical_payments_per_person": 5000,
+    "c.uninsured_per_accident": 200000,
+    "c.uninsured_per_person": 100000,
+    "d.collision_deductible": 250,
+    "d.other_than_collision_deductible": 100
+  },
+  "named_insured": {
+    "email": "natalia.henao@example.org",
+    "full_name": "Natalia Henao Rendón",
+    "national_id": "45.819.323",
+    "persona_id": "sto-per-100042",
+    "phone": "304 555 0160"
+  },
+  "period_end": "2027-01-02",
+  "period_start": "2026-01-02",
+  "policy_number": "POL-100042",
+  "tenant_id": "stonecroft",
+  "vehicles": [
+    {
+      "make_model_year": "Renault Logan 2024",
+      "plate": "WBR686",
+      "vin": "8NVC72ZM3C1571828"
+    },
+    {
+      "make_model_year": "Mazda 2 2015",
+      "plate": "NMC080",
+      "vin": "Z6AN0Y5X2AG650275"
+    }
+  ]
+}

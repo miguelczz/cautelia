@@ -1,0 +1,27 @@
+# Preguntar si la poliza cubre algo que paso, dentro de una consulta, es seguir consultando.
+#
+# Comprension de un mensaje. Nace de una conversacion simulada del 2026-10-13 en la que
+# quien consultaba su poliza conto un choque para preguntar si lo cubria, y la
+# conversacion paso sola a un reporte de accidente que nadie pidio.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/understand-coverage-question-inside-inquiry
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  record_type: coverage_inquiry
+  captured:
+  - identity_and_policy
+  last_agent_text: ¿Qué quieres saber de tu póliza?
+  message: Ayer choqué a un motociclista en la calle 80, ¿la póliza cubre los daños que le hice?
+  wants:
+  - continue
+  - policy_question
+  asks_about_coverage: true
+  asks_question: true
+expected_verdicts:
+  understanding_coverage_question_inside_inquiry: pass

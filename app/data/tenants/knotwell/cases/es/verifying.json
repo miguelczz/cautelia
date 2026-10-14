@@ -1,0 +1,91 @@
+{
+  "case_key": "SEED/knotwell/es/verifying",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Otro carro se pasó el semáforo en rojo y le pegó en la puerta del conductor."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Camilo Muñoz Correa, póliza POL-916742"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "Sin lesionados"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Carrera 5 con calle 40, Corvane"
+    },
+    "other_parties": {
+      "status": "stated",
+      "value": "Un conductor, Camilo Henao Montoya, en un vehículo de placa DKC061"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Suzuki Swift 2015, placa VDY720, lo conducía Camilo"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-916742",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "verifying",
+  "tenant_id": "knotwell",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Buenos días, quiero reportar un choque. Soy Camilo Muñoz Correa, póliza POL-916742."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Alguien resultó herido?"
+    },
+    {
+      "speaker": "insured",
+      "text": "No, nadie."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Cuándo y dónde fue?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Hoy a las siete y cuarto de la mañana, en la carrera 5 con calle 40."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué pasó?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Otro carro se pasó el semáforo en rojo y me pegó en la puerta del conductor."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué vehículo manejaba?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Mi Suzuki Swift 2015, placa VDY720. Lo manejaba yo."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Tienes los datos del otro conductor?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Sí, se llama Camilo Henao Montoya y la placa de su carro es DKC061."
+    }
+  ],
+  "used_by": [
+    "AC1.14.1",
+    "AC4.8.1"
+  ]
+}

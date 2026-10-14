@@ -1,0 +1,22 @@
+# Disordered story (AC1.5.2, BR3.2), English turn. See `es.yaml`.
+case_key: DS-2/en/intake-disordered-story
+dataset: DS-2
+language: en
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - intake
+  - turn-order
+script:
+  - field_key: vehicle_and_driver
+    text: "I was driving my white Toyota pickup truck, plate XYZ987."
+  - field_key: identity_and_policy
+    text: "Oh, I forgot to say, I'm Carlos Ruiz, policy POL-102938."
+  - field_key: description
+    text: "A motorcycle cut in front of me suddenly and I swerved into a pole."
+  - field_key: incident_datetime
+    text: "That was the day before yesterday, in the morning."
+  - field_key: location
+    text: "Near the central park in Medellin."
+expected_verdicts:
+  intake_disordered_story: pass

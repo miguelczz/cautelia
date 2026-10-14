@@ -1,0 +1,80 @@
+{
+  "stage": "nfr-design",
+  "unit": "u5-provider-platform",
+  "upstream_ids": [
+    "NFR11.5",
+    "NFR11.6",
+    "NFR14.1",
+    "NFR14.2",
+    "NFR14.3",
+    "NFR15.1",
+    "NFR15.2",
+    "NFR15.3",
+    "NFR15.4",
+    "NFR15.5",
+    "NFR15.6",
+    "NFR18.1"
+  ],
+  "coverage": [
+    {
+      "id": "NFR11.5",
+      "status": "OK",
+      "target": "Lista cerrada de nombres de atributo en el ayudante de tramos, exigida por el comprobador de tipos, mas chequeo estatico que prohibe el SDK de trazas fuera del modulo, mas redaccion antes de exportar y prueba de canarios como segunda capa (observability-design, security-design capa 4)"
+    },
+    {
+      "id": "NFR11.6",
+      "status": "OK",
+      "target": "El cliente no se exporta fuera de la fabrica, el error del adaptador lleva solo tipo, proveedor e intento con representacion definida, y la clave no esta en la lista cerrada de atributos (security-design, seccion de claves)"
+    },
+    {
+      "id": "NFR14.1",
+      "status": "OK",
+      "target": "Tabla de precios en memoria cargada al arrancar, agregacion que devuelve el par medido/no medidas, e indices por fecha, por proveedor y parcial por caso para las tres vistas (performance-design, scalability-design)"
+    },
+    {
+      "id": "NFR14.2",
+      "status": "OK",
+      "target": "El costo por llamada se calcula con la tabla versionada y su fecha; la medicion sobre DS-5 corre por el corredor de evaluaciones, que no es de esta unidad (performance-design)"
+    },
+    {
+      "id": "NFR14.3",
+      "status": "OK",
+      "target": "Transcripcion y sintesis se registran en filas propias con su unidad de cobro, sin mezclarse con el modelo en una sola cifra (performance-design, aclaracion sobre NFR14 y D7)"
+    },
+    {
+      "id": "NFR15.1",
+      "status": "OK",
+      "target": "Transaccion de dos sentencias sin lectura previa, con actualizacion condicional que devuelve el acumulado ya incrementado; el motor serializa sobre la fila unica (performance-design, reliability-design)"
+    },
+    {
+      "id": "NFR15.2",
+      "status": "OK",
+      "target": "La marca de alerta se escribe dentro de la misma transaccion que incrementa; su existencia es lo que impide la segunda alerta (performance-design)"
+    },
+    {
+      "id": "NFR15.3",
+      "status": "OK",
+      "target": "El purgador declara explicitamente que no toca la fila de la ventana ni el registro de gasto, y la ventana no depende del mes (logical-components, reliability-design)"
+    },
+    {
+      "id": "NFR15.4",
+      "status": "OK",
+      "target": "Regla de importacion: `telemetry/spend/` no importa `telemetry/traces/`. La exportacion corre por lotes fuera del camino de la respuesta y su fallo solo registra la perdida (logical-components regla 4, observability-design)"
+    },
+    {
+      "id": "NFR15.5",
+      "status": "OK",
+      "target": "Tiempo maximo de sentencia en la lectura del presupuesto; la llamada facturable se rechaza y el chat no consulta el presupuesto porque sus llamadas no son facturables, asi que la asimetria sale del carril y no de una rama (security-design, reliability-design)"
+    },
+    {
+      "id": "NFR15.6",
+      "status": "OK",
+      "target": "Carril de grabacion con credencial de la aseguradora, escrito en la sesion y en cada fila; el presupuesto publico descuenta la reserva antes de comparar (security-design, reliability-design)"
+    },
+    {
+      "id": "NFR18.1",
+      "status": "N/A",
+      "target": "El piso agregado de cobertura es de U1, que lo declara con su comando y su umbral en `tech-stack-decisions.md`. U5 lo hereda y no anade diseno propio: no esta en la lista afirmada de modulos criticos con piso propio, y esa observacion queda escrita en `../nfr-requirements/security-requirements.md` como decision de Miguel, no de esta etapa. La fila de cobertura de sus dos modulos entra en el manifiesto en la generacion de codigo, cuando las rutas existan."
+    }
+  ]
+}

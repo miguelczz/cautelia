@@ -1,0 +1,198 @@
+{
+  "stage": "functional-design",
+  "unit": "u4-case-record",
+  "upstream_ids": [
+    "AC1.8.1",
+    "AC1.8.2",
+    "AC1.8.3",
+    "AC1.8.4",
+    "AC1.14.1",
+    "AC1.14.2",
+    "AC1.14.3",
+    "AC1.14.4",
+    "AC4.10.1",
+    "AC4.10.2",
+    "AC4.10.3",
+    "AC4.10.4",
+    "AC4.10.5"
+  ],
+  "coverage": [
+    {
+      "id": "AC1.8.1",
+      "status": "OK",
+      "target": "BR1.7"
+    },
+    {
+      "id": "AC1.8.2",
+      "status": "OK",
+      "target": "BR1.8, BR2.3, BR2.6"
+    },
+    {
+      "id": "AC1.8.3",
+      "status": "OK",
+      "target": "BR2.2, BR2.4 (la lectura de confirmacion en voz alta la realiza U11 `intake`; U4 exige su marca antes de dejar el campo confirmado)"
+    },
+    {
+      "id": "AC1.8.4",
+      "status": "OK",
+      "target": "BR2.3, BR2.6"
+    },
+    {
+      "id": "AC1.14.1",
+      "status": "OK",
+      "target": "BR4.1, BR4.2, BR4.3 (el resumen de tres frases del cierre lo emite U13 `chat`; U4 aporta el numero con su forma)"
+    },
+    {
+      "id": "AC1.14.2",
+      "status": "Deferred",
+      "target": "U10 `compliance` y U13 `chat`: la lista versionada de frases prohibidas de plazos, llamadas y mensajes de texto, y el turno que las evita. U4 no emite texto hacia la persona"
+    },
+    {
+      "id": "AC1.14.3",
+      "status": "Deferred",
+      "target": "U13 `chat` con el catalogo de textos de U1 `workspace`: la frase de despedida es copy por idioma, no conducta del registro"
+    },
+    {
+      "id": "AC1.14.4",
+      "status": "Deferred",
+      "target": "U21 `eval-gates` corre la meta sobre DS-2. U4 aporta el modelo cerrado que la hace medible: BR3.1 y la tabla de transiciones"
+    },
+    {
+      "id": "AC4.10.1",
+      "status": "OK",
+      "target": "BR3.1, BR3.2, BR5.4"
+    },
+    {
+      "id": "AC4.10.2",
+      "status": "OK",
+      "target": "BR3.4, BR3.5, BR3.6"
+    },
+    {
+      "id": "AC4.10.3",
+      "status": "OK",
+      "target": "BR1.2, BR2.7"
+    },
+    {
+      "id": "AC4.10.4",
+      "status": "OK",
+      "target": "BR4.4, BR4.5, BR4.6"
+    },
+    {
+      "id": "AC4.10.5",
+      "status": "Deferred",
+      "target": "U21 `eval-gates` corre DS-2 y compara con el registro esperado. U4 aporta el estado y la resolucion que se comparan: BR3.1 y BR3.4"
+    }
+  ],
+  "reverse": [
+    {
+      "id": "BR1.1",
+      "status": "N/A",
+      "target": "Validacion del conjunto cerrado de tipos de registro. La ejercitan las historias que abren cada tipo: AC1.3.6 (consulta de cobertura, U11 `intake`) y las de U19 `quote`"
+    },
+    {
+      "id": "BR1.3",
+      "status": "N/A",
+      "target": "El esquema versionado por tipo es el contrato C-12, cuyos criterios viven en las historias de la captura (U11) y de la bandeja (U14)"
+    },
+    {
+      "id": "BR1.4",
+      "status": "N/A",
+      "target": "Asercion de arranque sobre los siete campos de FR1.1. No tiene criterio propio: es la comprobacion de que el esquema declara lo que el requisito dice"
+    },
+    {
+      "id": "BR1.5",
+      "status": "N/A",
+      "target": "Deriva de AC1.3.6, criterio de US1.3, que pertenece a U11 `intake`. U4 lo realiza declarando los dos campos"
+    },
+    {
+      "id": "BR1.6",
+      "status": "N/A",
+      "target": "El esquema de la solicitud de cotizacion lo aporta U19 `quote`; sus criterios viven en las historias de esa unidad"
+    },
+    {
+      "id": "BR2.1",
+      "status": "N/A",
+      "target": "Enumeracion de los tres estados por campo. La ejercitan AC1.8.2 y AC1.8.3 a traves de BR2.2 y BR2.3; por si sola no tiene criterio"
+    },
+    {
+      "id": "BR2.5",
+      "status": "N/A",
+      "target": "Correccion desde la bandeja. Su criterio observable es AC5.9.x de las historias de la bandeja, que pertenecen a U14 `inbox`"
+    },
+    {
+      "id": "BR2.8",
+      "status": "N/A",
+      "target": "Forma en que se publica la completitud. Lo observable es la cifra, que AC4.10.3 ya cubre a traves de BR2.7"
+    },
+    {
+      "id": "BR3.3",
+      "status": "N/A",
+      "target": "La vuelta por limite de la demostracion la ejercita AC5.12.2, criterio de US5.12, que pertenece a U17 `voice-public-link`"
+    },
+    {
+      "id": "BR3.7",
+      "status": "N/A",
+      "target": "El conjunto cerrado de motivos de derivacion lo ejercitan AC1.9.1 (U11 `intake`) y las reglas de U9 `rules-decision`"
+    },
+    {
+      "id": "BR3.8",
+      "status": "N/A",
+      "target": "La prioridad alta por solicitud de persona la fija AC1.9.1, criterio de US1.9, que pertenece a U11 `intake`"
+    },
+    {
+      "id": "BR3.9",
+      "status": "N/A",
+      "target": "Que derivar no pierda lo capturado lo comprueba AC1.9.4, criterio de US1.9, que pertenece a U11 `intake`"
+    },
+    {
+      "id": "BR5.1",
+      "status": "N/A",
+      "target": "El historial de cambios es FR1.6, cuyo criterio observable es la correccion del ajustador en las historias de U14 `inbox`"
+    },
+    {
+      "id": "BR5.2",
+      "status": "N/A",
+      "target": "El autor de una correccion con credencial se observa en la vista de caso de U14 `inbox`"
+    },
+    {
+      "id": "BR5.3",
+      "status": "N/A",
+      "target": "Solo anexar. Es una propiedad del almacenamiento, no una conducta con criterio: se comprueba con una prueba de propiedad"
+    },
+    {
+      "id": "BR6.1",
+      "status": "N/A",
+      "target": "Que la transcripcion guarde texto ya redactado es el contrato C-13 de U3 `pii-redaction`; su criterio es AC4.12.x de esa unidad, y aqui se comprueba con el chequeo de tipos"
+    },
+    {
+      "id": "BR6.2",
+      "status": "N/A",
+      "target": "Los datos obligatorios del turno los consumen la vista de caso (U14) y la transcripcion del chat (U13); sus criterios viven alli"
+    },
+    {
+      "id": "BR6.3",
+      "status": "N/A",
+      "target": "Los cinco adjuntos del cierre son FR1.7; su criterio observable es la vista del caso derivado de U14 `inbox`"
+    },
+    {
+      "id": "BR6.4",
+      "status": "N/A",
+      "target": "Que la evidencia de cierre se guarde y no cambie sostiene a BR6.3; su efecto visible es el mismo"
+    },
+    {
+      "id": "BR7.1",
+      "status": "N/A",
+      "target": "El punto unico de sesion es el contrato C-09 de U2 `tenancy`; su criterio es AC4.11.2, de US4.11, que pertenece a U2"
+    },
+    {
+      "id": "BR7.2",
+      "status": "N/A",
+      "target": "La marca de dato de visitante y su purgador son el contrato C-11 de U2 `tenancy`; el reinicio que los llama es U20 `demo-operations`"
+    },
+    {
+      "id": "BR7.3",
+      "status": "N/A",
+      "target": "Que un caso ajeno responda como uno inexistente es el escenario RT-4, cuyo criterio vive en AC4.11.x de U2 `tenancy`"
+    }
+  ]
+}

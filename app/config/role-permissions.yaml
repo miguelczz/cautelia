@@ -1,0 +1,138 @@
+# Que puede hacer cada rol de la bandeja (BR2.5, decision Q4 del diseno funcional).
+#
+# **Una sola tabla versionada en el repositorio**, no una clave dentro de la
+# carpeta de cada aseguradora. Si viviera ahi, una aseguradora podria concederse
+# a si misma la aprobacion de sus propios casos, y esa no es una diferencia entre
+# aseguradoras: es una regla del producto.
+#
+# **Lo que no aparece aqui se deniega.** No hay valor por defecto permisivo: una
+# pareja (rol, accion) que nadie declaro es una pareja que nadie penso, y el
+# lugar donde eso se descubre no puede ser una peticion directa a la API.
+#
+# La comprobacion no vive en ninguna ruta: vive en un punto por el que pasan
+# todas, para que una ruta nueva no pueda olvidarse de ella.
+#
+# Las ocho acciones son las que hoy nombran las historias de U2, U14 y U19. Una
+# accion nueva la anade **la unidad que la introduce**, con su fila y su prueba.
+#
+# **Y se declaran todas las parejas, incluidas las denegadas.** Omitir una la
+# deniega igual, pero entonces la tabla no dice si se penso: y este es el archivo
+# que se lee cuando hay que explicar por que se rechazo una peticion. Una prueba
+# comprueba que no falte ninguna pareja (rol, accion).
+version: 1
+permissions:
+  # --- Ajustador: decide cobertura sobre los casos de su aseguradora ---------
+  - role: adjuster
+    action: view_case
+    allowed: true
+  - role: adjuster
+    action: list_cases
+    allowed: true
+  - role: adjuster
+    action: decide_case
+    allowed: true
+  - role: adjuster
+    action: correct_field
+    allowed: true
+  - role: adjuster
+    action: send_message
+    allowed: true
+  # Marcar como enviado a la emisora es de la agencia, no de quien emite: una
+  # aseguradora que emite decide el caso, no lo traspasa (BR4.5 de U14).
+  - role: adjuster
+    action: mark_sent
+    allowed: false
+  # Decidir una solicitud de cotizacion es del suscriptor, y esta es la fila que
+  # realiza AC6.3.3: un ajustador decide cobertura de siniestros y no cotizaciones.
+  # Su prueba compara la peticion directa contra la de la pantalla, y la solicitud
+  # no cambia en ninguna de las dos.
+  - role: adjuster
+    action: decide_quote
+    allowed: false
+  # Anotar para las reglas de triage el monto estimado, la cobertura disputada y la
+  # sospecha de fraude: un juicio del ajustador (decision del 2026-10-03) que la bandeja
+  # le ofrece desde el 2026-10-13. Lo que anota solo lo ven las reglas y quien decide.
+  - role: adjuster
+    action: annotate_triage
+    allowed: true
+
+  # --- Agente de cuenta: acompana el caso y **no decide cobertura** ----------
+  # Es la agencia: coloca polizas de las aseguradoras emisoras y marca el caso
+  # como enviado a la emisora, que lo cierra con esa resolucion y no con una
+  # decision de cobertura (BR4.6 de U14). La fila que realiza AC5.7.3 es
+  # la de `decide_case`, y su prueba compara la peticion directa contra la de la
+  # pantalla: las dos se rechazan igual y el caso no cambia.
+  - role: account_agent
+    action: view_case
+    allowed: true
+  - role: account_agent
+    action: list_cases
+    allowed: true
+  - role: account_agent
+    action: decide_case
+    allowed: false
+  - role: account_agent
+    action: correct_field
+    allowed: true
+  - role: account_agent
+    action: send_message
+    allowed: true
+  # La accion propia de la agencia, anadida por U14 el 2026-09-28.
+  #
+  # `decide_case` sigue en `false` y eso no cambia: la agencia no aprueba ni
+  # rechaza cobertura, que es lo que AC5.7.3 comprueba. Lo que si hace es cerrar
+  # el caso con resolucion "enviado a la aseguradora" (BR4.6), y eso necesitaba
+  # su propia accion: sin ella, la unica forma de darle esa capacidad habria sido
+  # abrirle `decide_case`, que le habria dado tambien las otras dos.
+  #
+  # El comentario de arriba decia que esta agencia "nunca lo cierra". Lo cierra,
+  # con **su** resolucion; lo que nunca hace es decidir la cobertura.
+  - role: account_agent
+    action: mark_sent
+    allowed: true
+  # Tampoco cotiza: la agencia coloca polizas de quien las emite, y quien emite
+  # es quien cotiza (BR4.1 de U19).
+  - role: account_agent
+    action: decide_quote
+    allowed: false
+  # La agencia deriva siempre a quien emitio la poliza: estimar el monto o dudar de la
+  # cobertura es del ajustador de esa aseguradora, no de quien la coloco.
+  - role: account_agent
+    action: annotate_triage
+    allowed: false
+
+  # --- Suscriptor: decide las solicitudes de cotizacion derivadas -------------
+  # El rol que anadio U19 (FD-U19-5). Su bandeja son las solicitudes derivadas de
+  # su aseguradora y su unica decision es declararlas elegibles o no.
+  #
+  # `decide_case` en `false` a proposito: no decide cobertura. Si hiciera las dos
+  # cosas, la fila de arriba que le niega la cotizacion al ajustador no estaria
+  # separando nada, porque el permiso de decidir volveria a ser uno solo.
+  - role: underwriter
+    action: view_case
+    allowed: true
+  - role: underwriter
+    action: list_cases
+    allowed: true
+  - role: underwriter
+    action: decide_quote
+    allowed: true
+  - role: underwriter
+    action: decide_case
+    allowed: false
+  # Corregir un campo y escribirle al asegurado son de quien lleva el siniestro:
+  # el suscriptor lee la solicitud ya capturada y la decide.
+  - role: underwriter
+    action: correct_field
+    allowed: false
+  - role: underwriter
+    action: send_message
+    allowed: false
+  - role: underwriter
+    action: mark_sent
+    allowed: false
+  # Las reglas de triage son de siniestros y el suscriptor lee solicitudes de cotizacion,
+  # que se deciden por el conjunto de elegibilidad.
+  - role: underwriter
+    action: annotate_triage
+    allowed: false

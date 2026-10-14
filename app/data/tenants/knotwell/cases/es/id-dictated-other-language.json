@@ -1,0 +1,30 @@
+{
+  "case_key": "SEED/knotwell/es/id-dictated-other-language",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "identity_and_policy": {
+      "status": "stated",
+      "value": "Mario Morales, póliza POL-979989"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-979989",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "capturing",
+  "tenant_id": "knotwell",
+  "transcript": [
+    {
+      "speaker": "agent",
+      "text": "¿Me dices tu número de documento?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Mi número de documento es nine nine five three zero eight nine two three."
+    }
+  ],
+  "used_by": [
+    "AC4.13.4"
+  ]
+}

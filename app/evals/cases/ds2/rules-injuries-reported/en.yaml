@@ -1,0 +1,26 @@
+# Injuries mentioned, from the case field to the category (AC1.15.2), English turn. Whoever names someone hurt gets referred, and so does whoever says "no" and goes on to harm to a person: the input arrives as true and never as false.
+#
+# Criterio de aceptacion: sobre las filas `injuries-reported/*` de
+# `app/evals/fixtures/rules/en.yaml`, el campo `injuries` del caso se deriva a
+# `injuries_present` con la misma funcion del aplicativo y el motor real de la
+# aseguradora de cada fila da la categoria declarada en ella.
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en espanol es `DS-2/es/rules-injuries-reported`:
+# los mismos escenarios y la misma meta, medidos por idioma y nunca como promedio
+# combinado (P12).
+#
+# Lo que este caso no mide: la lectura del campo sellado en la base ni el cableado
+# del nodo `decision` (lo cubre la prueba de integracion de la cadena de fondo),
+# ni la emergencia, que detectan los controles del turno (`serious-injury`).
+case_key: DS-2/en/rules-injuries-reported
+dataset: DS-2
+language: en
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - rules-engine
+  - injuries-derivation
+expected_verdicts:
+  triage_from_injuries_reported: pass

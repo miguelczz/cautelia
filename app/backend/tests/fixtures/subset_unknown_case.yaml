@@ -1,0 +1,5 @@
+name: roto
+reason: Nombra un caso que no existe como archivo, para comprobar que la carga se detiene nombrandolo.
+case_keys:
+  - DS-2/es/017
+  - DS-3/en/404

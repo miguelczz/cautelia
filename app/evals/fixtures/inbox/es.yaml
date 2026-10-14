@@ -1,0 +1,138 @@
+# Escenarios de prueba de la bandeja (U14, tanda 4), lado espanol.
+#
+# Dos escenarios, y los dos miden conducta que **no depende del idioma**: que la
+# explicacion de un caso responde sus cinco preguntas sin dejar ninguna en blanco
+# (BR2.4), y que las acciones que ofrece un caso salen de la configuracion de su
+# aseguradora y de su estado (BR4.5, BR4.3).
+#
+# Los insumos son **recuentos y enums, nunca texto**, igual que en los escenarios
+# del motor de reglas: la conducta medida solo depende de si hay algo o no hay
+# nada, no de lo que diga. Por eso las mismas filas viven en `es.yaml` y en
+# `en.yaml`, valor por valor, y la paridad EN<->ES es real y no una traduccion
+# (P12). Lo unico que cambia es el caso de golden set que las corre, uno por
+# idioma.
+#
+# Las tres aseguradoras son las reales de `app/config/tenants/` (C-25): ninguna
+# se nombra en el codigo de la sonda.
+language: es
+rows:
+  # --- La explicacion de un caso (BR2.4) --------------------------------------
+
+  # Un caso derivado y sin decidir: las tres primeras preguntas tienen contenido
+  # y las dos de la decision estan **pendientes**, que no es lo mismo que vacias.
+  # Un hueco se lee como un dato que se perdio; "pendiente de decision" dice la
+  # verdad, que es que todavia no ha pasado.
+  - id: explanation/01
+    scenario: explanation
+    tenant_id: stonecroft
+    state: derived
+    questions: 1
+    cited_clauses: 2
+    fired_rules: 1
+    rule_category: referral
+    decided_by_kind: null
+    expected:
+      asked: present
+      cited: present
+      rule: present
+      decided_by: pending
+      decided_at: pending
+
+  # Un caso derivado que todavia no pregunto por cobertura: "que se cito" se
+  # responde con **nada citado**, que es una respuesta. Sin este caso, la sonda
+  # pasaria con una explicacion que solo sabe hablar cuando hay de todo.
+  - id: explanation/02
+    scenario: explanation
+    tenant_id: sunmeadow
+    state: derived
+    questions: 0
+    cited_clauses: 0
+    fired_rules: 1
+    rule_category: standard_review
+    decided_by_kind: null
+    expected:
+      asked: none
+      cited: none
+      rule: present
+      decided_by: pending
+      decided_at: pending
+
+  # Un caso cerrado por una persona de la aseguradora: las cinco respondidas.
+  - id: explanation/03
+    scenario: explanation
+    tenant_id: stonecroft
+    state: closed
+    questions: 1
+    cited_clauses: 1
+    fired_rules: 1
+    rule_category: referral
+    decided_by_kind: staff
+    expected:
+      asked: present
+      cited: present
+      rule: present
+      decided_by: present
+      decided_at: present
+
+  # Un caso cerrado con el enlace de demostracion: la atribucion es del
+  # visitante y **nunca** de una persona de la aseguradora (BR5.5). Es la fila
+  # que distingue una explicacion que dice quien decidio de una que dice
+  # "alguien".
+  - id: explanation/04
+    scenario: explanation
+    tenant_id: knotwell
+    state: closed
+    questions: 1
+    cited_clauses: 1
+    fired_rules: 1
+    rule_category: referral
+    decided_by_kind: insured
+    expected:
+      asked: present
+      cited: present
+      rule: present
+      decided_by: present
+      decided_at: present
+
+  # Un caso cerrado sin ninguna regla disparada no existe hoy --toda decision
+  # pasa por el motor--, y por eso no hay fila para el: inventarla mediria una
+  # situacion que el sistema no produce.
+
+  # --- Las acciones que ofrece un caso (BR4.5, BR4.3) -------------------------
+
+  # La agencia: su unica accion es marcar como enviado a la emisora.
+  - id: agency-actions/01
+    scenario: agency-actions
+    tenant_id: knotwell
+    state: derived
+    expected_actions: [mark_sent]
+
+  # Una emisora: aprueba y rechaza, y **no** marca como enviado. Sin esta mitad,
+  # una lista de acciones vacia pasaria la fila de arriba.
+  - id: agency-actions/02
+    scenario: agency-actions
+    tenant_id: stonecroft
+    state: derived
+    expected_actions: [approve, reject]
+
+  - id: agency-actions/03
+    scenario: agency-actions
+    tenant_id: sunmeadow
+    state: derived
+    expected_actions: [approve, reject]
+
+  # Un caso que espera al asegurado no se decide, ni en la emisora que mas
+  # acciones ofrece (BR4.3).
+  - id: agency-actions/04
+    scenario: agency-actions
+    tenant_id: stonecroft
+    state: awaiting_insured
+    expected_actions: []
+
+  # Un caso ya cerrado tampoco: es la misma regla que impide que dos personas
+  # decidan el mismo caso (BR4.4), leida desde la pantalla.
+  - id: agency-actions/05
+    scenario: agency-actions
+    tenant_id: knotwell
+    state: closed
+    expected_actions: []

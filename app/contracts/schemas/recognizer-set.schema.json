@@ -1,0 +1,343 @@
+{
+  "$defs": {
+    "EngineRecognizer": {
+      "additionalProperties": false,
+      "description": "De donde sale un reconocedor que no es nuestro.\n\nLos de nombre, lugar y correo los aporta el detector de base. Se declaran\nigual que los propios --con sus cinco campos-- porque U21 necesita ver\n**todos** los mecanismos que este detector usa, no solo los que escribimos\nnosotros.",
+      "properties": {
+        "recognizer": {
+          "minLength": 1,
+          "title": "Recognizer",
+          "type": "string"
+        },
+        "entity": {
+          "minLength": 1,
+          "title": "Entity",
+          "type": "string"
+        }
+      },
+      "required": [
+        "recognizer",
+        "entity"
+      ],
+      "title": "EngineRecognizer",
+      "type": "object"
+    },
+    "EntityType": {
+      "description": "El conjunto cerrado de lo que se tapa.\n\nCerrado a proposito: la etiqueta que ve una persona sale del catalogo de\ntextos, y una clave sin valor la detecta el chequeo de paridad del catalogo.\nUn tipo abierto haria imposible esa comprobacion.",
+      "enum": [
+        "license_plate",
+        "national_id",
+        "phone",
+        "policy_number",
+        "person",
+        "email",
+        "location",
+        "unclassified",
+        "vin"
+      ],
+      "title": "EntityType",
+      "type": "string"
+    },
+    "FallbackRule": {
+      "additionalProperties": false,
+      "description": "La regla de respaldo por contexto (BR2.5, decision FD-U3-9).\n\nCorre **despues** de los reconocedores y solo reclama lo que ninguno\nreclamo. Cubre el formato que nadie previo, que es por donde se escapan las\ncosas; el costo aceptado es alguna redaccion de mas, que es el lado seguro\ndel error.\n\nDeclara los mismos cinco campos que un reconocedor, porque es uno mas a ojos\nde U21: tiene mecanismo propio y sus hallazgos se cuentan aparte (BR4.2).",
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "pattern": "^(es|en)-[a-z0-9-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "entity_type": {
+          "$ref": "#/$defs/EntityType"
+        },
+        "language": {
+          "enum": [
+            "es",
+            "en"
+          ],
+          "title": "Language",
+          "type": "string"
+        },
+        "mechanism": {
+          "$ref": "#/$defs/Mechanism"
+        },
+        "source": {
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "min_digits": {
+          "maximum": 20,
+          "minimum": 4,
+          "title": "Min Digits",
+          "type": "integer"
+        },
+        "window": {
+          "maximum": 200,
+          "minimum": 1,
+          "title": "Window",
+          "type": "integer"
+        },
+        "context_phrases": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Context Phrases",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "entity_type",
+        "language",
+        "mechanism",
+        "source",
+        "min_digits",
+        "window",
+        "context_phrases"
+      ],
+      "title": "FallbackRule",
+      "type": "object"
+    },
+    "Mechanism": {
+      "description": "Como encuentra un reconocedor lo que encuentra.\n\nDeclarado, y no deducido, porque U21 exige que el segundo detector **no\ncomparta mecanismo** con este (AC4.14.1). U21 lee estos archivos como\narchivos, sin importar este modulo (BR4.6); sin esta declaracion, esa\ncomprobacion seria una afirmacion en un documento.",
+      "enum": [
+        "pattern",
+        "context",
+        "checksum",
+        "model"
+      ],
+      "title": "Mechanism",
+      "type": "string"
+    },
+    "Recognizer": {
+      "additionalProperties": false,
+      "description": "La declaracion de un reconocedor (BR2.6, BR2.7, BR2.8).\n\nCinco campos obligatorios --identificador, tipo, idioma, mecanismo y\nprocedencia-- y uno de los dos modos: patrones propios o reconocedor del\nmotor. Si falta cualquiera de los cinco, **no carga y el arranque falla\nnombrandolo**: un reconocedor a medias es un agujero que no avisa.",
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "pattern": "^(es|en)-[a-z0-9-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "entity_type": {
+          "$ref": "#/$defs/EntityType"
+        },
+        "language": {
+          "enum": [
+            "es",
+            "en"
+          ],
+          "title": "Language",
+          "type": "string"
+        },
+        "mechanism": {
+          "$ref": "#/$defs/Mechanism"
+        },
+        "source": {
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "context": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Context",
+          "type": "array"
+        },
+        "patterns": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/RecognizerPattern"
+          },
+          "title": "Patterns",
+          "type": "array"
+        },
+        "provided_by": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EngineRecognizer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "id",
+        "entity_type",
+        "language",
+        "mechanism",
+        "source"
+      ],
+      "title": "Recognizer",
+      "type": "object"
+    },
+    "RecognizerPattern": {
+      "additionalProperties": false,
+      "description": "Una forma de escritura de un tipo, con su expresion y su puntaje.\n\nEl puntaje decide dos cosas: si el hallazgo supera el umbral del idioma sin\nayuda del contexto, y quien gana un solape entre dos hallazgos del mismo\ntamano. Un patron con estructura propia --`POL-######`-- puntua alto; uno\nque es una tira de digitos a secas puntua bajo y depende del contexto.",
+      "properties": {
+        "form": {
+          "$ref": "#/$defs/WritingForm"
+        },
+        "regex": {
+          "minLength": 1,
+          "title": "Regex",
+          "type": "string"
+        },
+        "score": {
+          "exclusiveMinimum": 0.0,
+          "maximum": 1.0,
+          "title": "Score",
+          "type": "number"
+        }
+      },
+      "required": [
+        "form",
+        "regex",
+        "score"
+      ],
+      "title": "RecognizerPattern",
+      "type": "object"
+    },
+    "SelfIdentificationRule": {
+      "additionalProperties": false,
+      "description": "La regla de autoidentificacion: el nombre que sigue a \"me llamo\" (U7, NFR11.10).\n\nDespues de una frase con la que alguien dice quien es --\"my name is\", \"me\nllamo\", \"soy\", \"le habla\"--, la secuencia de `min_tokens` a `max_tokens`\npalabras con mayuscula que sigue se tapa como nombre, **la etiquete como la\netiquete el modelo de lenguaje**: `en_core_web_md` llama organizacion a\n\"Megan Hughes\" en \"My name is Megan Hughes.\", y el modelo ingles no reconoce un\nnombre espanol dentro de una frase inglesa. Esta regla no depende de ninguno\nde los dos.\n\n**Corre en los dos idiomas en cada llamada**, sea cual sea el del turno, como\nlos reconocedores por formato: no es un modelo de lenguaje, asi que correrla\nsobre el otro idioma no anade el ruido que `PASADA_DEL_OTRO_IDIOMA` evita, y\ndecir el nombre con la frase del otro idioma no puede ser la via para sacarlo.\n\n**Lo que no tapa** esta en `organization_words`: una secuencia con una palabra\nde organizacion (\"Auto\", \"Mutual\", \"Seguros\") es una empresa y no una persona.\nEs la negativa de \"This is Ridgeway Mutual calling\": U3 no conoce aseguradoras\n--`redact()` recibe texto e idioma, y un identificador de aseguradora aqui\nseria la rama por aseguradora que BR4.2 de U2 prohibe--, asi que la negativa\nse decide por la estructura del nombre y no por una lista de aseguradoras. La\nprueba que recorre los nombres visibles de todas las carpetas de aseguradora\nes la que vuelve comprobable que ninguna se tapa.\n\nTapar de mas en el otro lado --\"This is Part A\" sale como nombre-- es el costo\naceptado de la decision FD-U3-9.",
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "pattern": "^(es|en)-[a-z0-9-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "entity_type": {
+          "$ref": "#/$defs/EntityType"
+        },
+        "language": {
+          "enum": [
+            "es",
+            "en"
+          ],
+          "title": "Language",
+          "type": "string"
+        },
+        "mechanism": {
+          "$ref": "#/$defs/Mechanism"
+        },
+        "source": {
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "cues": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Cues",
+          "type": "array"
+        },
+        "min_tokens": {
+          "maximum": 8,
+          "minimum": 2,
+          "title": "Min Tokens",
+          "type": "integer"
+        },
+        "max_tokens": {
+          "maximum": 8,
+          "minimum": 2,
+          "title": "Max Tokens",
+          "type": "integer"
+        },
+        "organization_words": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Organization Words",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "entity_type",
+        "language",
+        "mechanism",
+        "source",
+        "cues",
+        "min_tokens",
+        "max_tokens",
+        "organization_words"
+      ],
+      "title": "SelfIdentificationRule",
+      "type": "object"
+    },
+    "WritingForm": {
+      "description": "Las tres formas en que se escribe un mismo dato (BR2.2).\n\nSon datos de configuracion y no ramas de codigo: anadir una forma nueva es\nanadir una entrada al archivo versionado.",
+      "enum": [
+        "compact",
+        "separated",
+        "spoken"
+      ],
+      "title": "WritingForm",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "El juego de reconocedores de un idioma, tal como lo declara su archivo.",
+  "properties": {
+    "language": {
+      "enum": [
+        "es",
+        "en"
+      ],
+      "title": "Language",
+      "type": "string"
+    },
+    "score_threshold": {
+      "exclusiveMinimum": 0.0,
+      "maximum": 1.0,
+      "title": "Score Threshold",
+      "type": "number"
+    },
+    "recognizers": {
+      "items": {
+        "$ref": "#/$defs/Recognizer"
+      },
+      "minItems": 1,
+      "title": "Recognizers",
+      "type": "array"
+    },
+    "fallback": {
+      "$ref": "#/$defs/FallbackRule"
+    },
+    "self_identification": {
+      "$ref": "#/$defs/SelfIdentificationRule"
+    },
+    "never_personal": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Never Personal",
+      "type": "array"
+    }
+  },
+  "required": [
+    "language",
+    "score_threshold",
+    "recognizers",
+    "fallback",
+    "self_identification"
+  ],
+  "title": "RecognizerSet",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/recognizer-set.schema.json"
+}

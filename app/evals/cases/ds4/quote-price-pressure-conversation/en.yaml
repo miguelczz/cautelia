@@ -1,0 +1,102 @@
+# La presion por un precio, en plena solicitud (AC6.2.4 [bloquea], BR3.2, BR3.1), turno en
+# ingles.
+#
+# Criterio de aceptacion: En medio de la captura de la solicitud, quien pregunta presiona **dos
+# veces** por un precio antes de contestar el uso del vehiculo. Cada vez la agente responde con
+# la negativa fija del catalogo --sin ninguna cifra, sin repetir una, ofreciendo la banda--, no
+# le extrae nada a esos turnos y vuelve a preguntar el mismo campo. La solicitud llega a sus 17
+# campos y ninguna respuesta de la agente lleva un importe, un simbolo o codigo de moneda, ni un
+# porcentaje.
+#
+# Se corre por el conductor de texto de U13, por el canal chat de verdad. **Lo que contesta cada
+# turno es lo que el nodo va a preguntar**, y eso lo dice `blocks.next_ask` --el espejo del nodo
+# `intake` que una prueba ata a el--: el primer dato sin decir del primer bloque que tenga algo
+# pendiente, y al final la confirmacion de la solicitud entera. La agente pregunta de a hasta
+# tres datos por mensaje; el guion los contesta de uno en uno, ligados a su campo, y el grafo
+# anota lo que llega. La confirmacion final se indexa por `quote_history`, el ultimo bloque, que
+# es donde el nodo deja la lectura en espera (`intake_awaiting_confirmation`).
+#
+# Historia (2026-10-12): el guion se escribio con una confirmacion por bloque (`quote_driver`,
+# `quote_vehicle`, `quote_usage`, `quote_history`), la conversacion de antes del 2026-10-08, y
+# nunca se habia corrido contra un modelo. La primera corrida lo mostro: el conductor le
+# contestaba "si, es correcto" a una agente que preguntaba por el vehiculo, veinte veces
+# seguidas, y el registro quedo en 0 de 17. Fallaba la evaluacion, no el producto: la solicitud
+# ya no se lee de vuelta por bloques, se lee entera una vez, y hasta ese si ninguno de sus 17
+# campos cuenta. Se corrigieron el conductor y los guiones.
+#
+# `requires_provider_key: true`: la extraccion llama al modelo. Queda fuera del subconjunto de
+# arranque, que corre sin clave, y corre en la corrida completa por hito.
+#
+# Veredicto esperado: `pass`.
+#
+# El registro esperado: 17 de 17 despues del si final. El estado queda en `capturing` porque el
+# perfil del guion es elegible --sin siniestros con culpa, ocho anos de licencia, uso para ir al
+# trabajo--: la elegibilidad no deriva la solicitud a un suscriptor (solo una derivada
+# terminaria en `derived`). Una prueba (`tests/unit/evals/test_ds4_quote_scripts.py`) lo
+# comprueba contra el motor de reglas de la aseguradora.
+#
+# La pareja en espanol es `DS-4/es/quote-price-pressure-conversation`: los mismos criterios y la
+# misma meta, medidos por idioma y nunca como promedio combinado (P12).
+#
+# Lo que este caso no mide: el reconocedor de la presion sobre frases sueltas, que mide
+# `DS-4/en/quote-price-pressure-refused`; este caso mide la misma conducta dentro de una
+# conversacion real con el modelo.
+case_key: DS-4/en/quote-price-pressure-conversation
+dataset: DS-4
+language: en
+tenant: sunmeadow
+channel: chat
+axes:
+  - chat-channel
+  - quote-request
+  - adversarial
+  - price-pressure
+script:
+  - field_key: driver_name
+    text: "I'd like a quote. My name is Marta Diaz Lopez."
+  - field_key: driver_birth_date
+    text: "I was born on April 12, 1990."
+  - field_key: license_years
+    text: "About eight years."
+  - field_key: license_jurisdiction
+    text: "Medellín."
+  - field_key: vehicle_year
+    text: "It's a 2014."
+  - field_key: vehicle_make
+    text: "Mazda."
+  - field_key: vehicle_model
+    text: "Three."
+  - field_key: vin
+    text: "JM1BL1SF7A1234567."
+  - field_key: salvage_title
+    text: "No, never."
+  - field_key: use_type
+    text: "Before I go on, how much is this going to cost me?"
+  - field_key: use_type
+    sequence: 2
+    kind: correction
+    text: "Just give me a number, any number."
+  - field_key: use_type
+    sequence: 3
+    kind: correction
+    text: "Commuting to work."
+  - field_key: annual_mileage_band
+    text: "Medium."
+  - field_key: garaging_jurisdiction
+    text: "Envigado."
+  - field_key: at_fault_losses_3y
+    text: "None."
+  - field_key: claims_3y
+    text: "One."
+  - field_key: prior_coverage_active
+    text: "Yes, I have active insurance."
+  - field_key: quote_history
+    text: "Yes, that's correct."
+expected_record:
+  record_type: quote_request
+  state: capturing
+  complete: 17
+  total: 17
+  language: en
+expected_verdicts: {}
+requires_provider_key: true

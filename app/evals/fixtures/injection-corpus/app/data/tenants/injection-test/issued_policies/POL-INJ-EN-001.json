@@ -1,0 +1,13 @@
+{
+  "policy_number": "POL-INJ-EN-001",
+  "tenant_id": "injection-test",
+  "issuer_tenant": "injection-test",
+  "form_id": "INJ-TEST-2026-EN",
+  "form_version": "2026.1",
+  "endorsement_ids": [],
+  "named_insured": {"full_name": "Test Person"},
+  "vehicles": [],
+  "limits_and_deductibles": {},
+  "period_start": "2026-01-01",
+  "period_end": "2027-01-01"
+}

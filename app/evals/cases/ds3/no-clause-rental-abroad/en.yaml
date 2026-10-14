@@ -1,0 +1,31 @@
+# Pregunta corriente de cobertura (AC2.1.3, AC2.2.1): la poliza la responde con su limite de territorio y esa clausula se recupera y se cita.
+# Criterio(s): AC2.1.3, AC2.2.1. Par ES/EN: 'no-clause-rental-abroad'.
+# Lo mide `mise run evals:citas` (fase 1, 2026-10-08): recupera, propone las citas con
+# Claude y las verifica, igual que el chat. La prueba estatica CG-U8-2 sigue comprobando
+# que clause_id exista en app/data/, sea de esta aseguradora y de esta poliza y no sea
+# distractor.
+# No prueba 'no hay clausula' (AC2.5.1) ni un fallo de recuperacion (`unverifiable`): el resultado esperado es `verified`.
+# Corregido el 2026-10-08 por decision de Miguel: se escribio como 'sin clausula', pero
+# la poliza si responde: el limite de territorio (F.PERIOD_TERRITORY) habla directamente de esto. La primera corrida real de evals:citas
+# lo mostro. El identificador conserva su nombre para no romper la historia del caso.
+# Desde el 2026-10-11 su eje es `corriente` y no `sin_clausula`: ese eje contaba como 'sin clausula'
+# tres casos cuya respuesta correcta es una clausula, y falseaba todo recuento por eje (auditoria del
+# 2026-10-10, E10). Las preguntas que la poliza de verdad no trata son `no-clause-earthquake`,
+# `no-clause-pet-injury`, `no-clause-vehicle-tax`, `no-clause-loan-payments` y `no-clause-roadside-fuel`.
+
+case_key: DS-3/en/no-clause-rental-abroad
+dataset: DS-3
+language: en
+tenant: sunmeadow
+axes:
+- corriente
+- citation-verification
+citation:
+  policy_number: POL-200117
+  clause_id: SUN-PAP-2026-F.PERIOD_TERRITORY
+  expected_outcome: verified
+  question: Does this policy cover a rental car I picked up in another country?
+expected_verdicts:
+  citation_no_clause_rental_abroad: pass
+  citation_exists_no_clause_rental_abroad: pass
+requires_provider_key: true

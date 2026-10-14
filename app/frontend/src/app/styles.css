@@ -1,0 +1,246 @@
+/*
+ * La hoja de estilos de la aplicacion.
+ *
+ * Tailwind entra aqui y la compila su complemento de Vite, sin archivo de
+ * configuracion aparte: en la version 4 los tokens se declaran en CSS
+ * (`shared/theme/tokens.css`). Todo color sale de un token (BR1.5).
+ */
+@import "tailwindcss";
+@import "../shared/theme/fonts.css";
+@import "../shared/theme/tokens.css";
+
+/*
+ * `roomy`: un computador con espacio, ancho de escritorio (64 rem) y alto para que
+ * una pantalla entera quepa en la vista (42 rem). Por debajo --telefono, tablet
+ * vertical, una ventana baja-- la pagina fluye y se desplaza como siempre. Lo usan
+ * las rutas que declaran `onePage` (plan-estilos-2026-10.md, seccion 1).
+ */
+@custom-variant roomy (@media (min-width: 64rem) and (min-height: 42rem));
+
+@layer base {
+  html {
+    background-color: var(--ut-page);
+    color: var(--ut-text);
+    font-family: var(--font-body);
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  /*
+   * Con una pantalla que llena la vista (el chat), la pagina no se desplaza nunca:
+   * una diferencia de un pixel por redondeo del zoom bastaba para que apareciera una
+   * segunda barra junto a la de la conversacion (visto por Miguel el 2026-10-08).
+   */
+  html:has([data-fill-view]) {
+    overflow: hidden;
+  }
+
+  body {
+    min-height: 100dvh;
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+  }
+
+  /*
+   * El anillo de foco del sistema: 2 px con 2 px de separacion, en el color de
+   * la marca o, dentro de una aseguradora, en su acento (design-system-mapping.md,
+   * `border.focus`). Solo con teclado: `:focus-visible`.
+   */
+  :focus-visible {
+    outline: 2px solid var(--ut-focus);
+    outline-offset: 2px;
+  }
+
+  /* Lo seleccionado va en el cobre de la marca, no en el azul del navegador
+     (Miguel, 2026-10-11). El texto conserva su color: el contraste es el del tema --al 50 %,
+     6,5 a 1 en oscuro y 7,7 a 1 en claro sobre el fondo de la pagina--. */
+  ::selection {
+    background-color: color-mix(in srgb, var(--ut-brand) 50%, transparent);
+    color: var(--ut-text);
+  }
+
+  /* Los datos van en la monoespaciada, con digitos tabulares. */
+  code,
+  kbd,
+  samp {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  a {
+    color: var(--ut-link);
+    text-underline-offset: 0.2em;
+  }
+
+  /*
+   * El puntero dice que se puede pulsar: la mano en todo lo clicable, y el
+   * "no disponible" en lo deshabilitado. Va aqui, en la base, para que ningun
+   * componente tenga que acordarse; la preflight de Tailwind deja los botones
+   * con la flecha.
+   */
+  a[href],
+  button,
+  summary,
+  select,
+  label[for],
+  [role="button"],
+  [role="tab"],
+  [role="option"],
+  [role="menuitem"],
+  input[type="checkbox"],
+  input[type="radio"],
+  input[type="submit"],
+  input[type="button"] {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  select:disabled,
+  input:disabled,
+  [aria-disabled="true"],
+  [data-disabled] {
+    cursor: not-allowed;
+  }
+
+  /* Cargando: ocupado, y la regla de arriba no lo pisa. */
+  [aria-busy="true"] {
+    cursor: progress;
+  }
+}
+
+/*
+ * El cambio de modo es inmediato (BR1.3): mientras el selector cambia el modo,
+ * ninguna transicion corre. Sin esto, los botones con transicion de color de
+ * 160 ms se desvanecerian de un modo al otro, que es justo el golpe visual que
+ * se quiere evitar.
+ */
+:root[data-theme-switching] *,
+:root[data-theme-switching] *::before,
+:root[data-theme-switching] *::after {
+  transition: none !important;
+}
+
+/*
+ * Movimiento reducido (BR7.6): sin desplazamientos ni escalas. Las animaciones
+ * se cortan a un instante y las transiciones que quedan son de color y opacidad,
+ * de hasta 160 ms, que cada componente ya declara asi.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* La aparicion de un contenido plegable: solo opacidad (design-system-mapping.md). */
+@keyframes ut-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/*
+ * El hilo de la pagina de espera: la linea que avanza en "despertando" (M11).
+ * Es decorativo y esta oculto para el lector de pantalla; con movimiento
+ * reducido no existe y en su lugar se lee "Despertando" (BR5.7).
+ */
+@keyframes ut-thread-advance {
+  from {
+    transform: scaleX(0.08);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.ut-thread {
+  transform-origin: left center;
+  animation: ut-thread-advance 2.4s var(--ease-in-out) infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ut-thread {
+    display: none;
+  }
+}
+
+/*
+ * La entrada de una ventana de confirmacion (`ConfirmDialog`): fundido y una escala
+ * corta, de 0,96 a 1. El fondo oscuro reusa `ut-fade-in`. Quien la usa solo la aplica
+ * con `motion-safe:`, asi que con movimiento reducido la ventana aparece sin animar.
+ */
+@keyframes ut-dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/*
+ * El desvanecido de una lista que se desplaza por dentro: el borde por el que todavia
+ * hay mas contenido se funde con el fondo, para que ninguna tarjeta quede cortada a
+ * ras. Lo dibuja el propio desplazamiento (animacion ligada al scroll, sin JavaScript):
+ * si la lista cabe entera no hay desplazamiento y no se funde nada; al llegar a un
+ * extremo, ese borde vuelve a quedar nitido. Sin soporte del navegador no pasa nada: la
+ * lista se desplaza igual, solo que sin desvanecido.
+ */
+@property --ut-fade-top {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --ut-fade-bottom {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes ut-fade-top {
+  from {
+    --ut-fade-top: 0px;
+  }
+  to {
+    --ut-fade-top: 1.75rem;
+  }
+}
+
+@keyframes ut-fade-bottom {
+  from {
+    --ut-fade-bottom: 1.75rem;
+  }
+  to {
+    --ut-fade-bottom: 0px;
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .ut-scroll-fade-y {
+    animation:
+      ut-fade-top linear both,
+      ut-fade-bottom linear both;
+    animation-timeline: scroll(self block), scroll(self block);
+    animation-range:
+      0 1.75rem,
+      calc(100% - 1.75rem) 100%;
+    /* Una mascara solo lee la opacidad: `black` no pinta nada, no es un color de la marca. */
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      black var(--ut-fade-top),
+      black calc(100% - var(--ut-fade-bottom)),
+      transparent
+    );
+  }
+}

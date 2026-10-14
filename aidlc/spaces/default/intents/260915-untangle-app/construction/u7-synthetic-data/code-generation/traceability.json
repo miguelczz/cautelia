@@ -1,0 +1,326 @@
+{
+  "stage": "code-generation",
+  "unit": "u7-synthetic-data",
+  "upstream_ids": [
+    "AC5.3.1",
+    "AC5.3.2",
+    "AC5.3.3",
+    "AC5.3.4",
+    "AC5.3.5",
+    "AC5.4.1",
+    "AC5.4.2",
+    "AC5.4.3",
+    "AC5.4.4",
+    "AC5.4.5",
+    "AC5.5.1",
+    "AC5.5.2",
+    "AC5.5.3",
+    "AC5.5.4",
+    "AC5.5.5",
+    "AC5.5.6",
+    "AC5.6.1",
+    "AC5.6.2",
+    "AC5.6.3",
+    "AC5.6.4",
+    "NFR10.7",
+    "NFR11.10",
+    "NFR20.4",
+    "BR1.1",
+    "BR1.2",
+    "BR1.3",
+    "BR1.4",
+    "BR1.5",
+    "BR2.1",
+    "BR2.2",
+    "BR2.3",
+    "BR3.1",
+    "BR3.2",
+    "BR3.3",
+    "BR3.4",
+    "BR3.5",
+    "BR3.6",
+    "BR3.7",
+    "BR4.1",
+    "BR4.2",
+    "BR4.3",
+    "BR5.1",
+    "BR5.2",
+    "BR5.3",
+    "BR5.4",
+    "BR6.1",
+    "BR6.2",
+    "BR6.3",
+    "BR6.4",
+    "BR7.1",
+    "BR7.2",
+    "BR7.3",
+    "BR8.1"
+  ],
+  "coverage": [
+    {
+      "id": "AC5.3.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_generator.py"
+    },
+    {
+      "id": "AC5.3.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_generator.py"
+    },
+    {
+      "id": "AC5.3.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_generator.py"
+    },
+    {
+      "id": "AC5.3.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_fronteras.py"
+    },
+    {
+      "id": "AC5.3.5",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_seed_contracts.py"
+    },
+    {
+      "id": "AC5.4.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "AC5.4.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_models.py"
+    },
+    {
+      "id": "AC5.4.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "AC5.4.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_fingerprints.py"
+    },
+    {
+      "id": "AC5.4.5",
+      "status": "OK",
+      "target": "app/data/sources/reviews/stonecroft-2026-09-21.yaml"
+    },
+    {
+      "id": "AC5.5.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "AC5.5.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_models.py"
+    },
+    {
+      "id": "AC5.5.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "AC5.5.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "AC5.5.5",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_fingerprints.py"
+    },
+    {
+      "id": "AC5.5.6",
+      "status": "OK",
+      "target": "app/data/sources/reviews/sunmeadow-2026-09-21.yaml"
+    },
+    {
+      "id": "AC5.6.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "AC5.6.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_case_sources.py"
+    },
+    {
+      "id": "AC5.6.3",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u7/test_seed.py"
+    },
+    {
+      "id": "AC5.6.4",
+      "status": "Deferred",
+      "target": "U20 en la pasada de publicacion (DP-14): el reinicio nocturno que borra visitantes y devuelve los sembrados a su estado. U7 entrega los sembrados con el origen generator (app/backend/src/untangle/server/synthetic_seed.py), que el borrado de U4 no toca"
+    },
+    {
+      "id": "NFR10.7",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "NFR11.10",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_redaction_canaries.py"
+    },
+    {
+      "id": "NFR20.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "BR1.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_generator.py"
+    },
+    {
+      "id": "BR1.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_generator.py"
+    },
+    {
+      "id": "BR1.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_generator.py"
+    },
+    {
+      "id": "BR1.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_generator.py"
+    },
+    {
+      "id": "BR1.5",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_generator.py"
+    },
+    {
+      "id": "BR2.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_fronteras.py"
+    },
+    {
+      "id": "BR2.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_case_sources.py"
+    },
+    {
+      "id": "BR2.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_drafting.py"
+    },
+    {
+      "id": "BR3.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "BR3.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_models.py"
+    },
+    {
+      "id": "BR3.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "BR3.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "BR3.5",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "BR3.6",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_models.py"
+    },
+    {
+      "id": "BR3.7",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "BR4.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "BR4.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "BR4.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "BR5.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_fingerprints.py"
+    },
+    {
+      "id": "BR5.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_fingerprints.py"
+    },
+    {
+      "id": "BR5.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_fingerprints.py"
+    },
+    {
+      "id": "BR5.4",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_review_sample.py"
+    },
+    {
+      "id": "BR6.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "BR6.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_case_sources.py"
+    },
+    {
+      "id": "BR6.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_seed_contracts.py"
+    },
+    {
+      "id": "BR6.4",
+      "status": "OK",
+      "target": "app/backend/tests/integration/u7/test_seed.py"
+    },
+    {
+      "id": "BR7.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_case_sources.py"
+    },
+    {
+      "id": "BR7.2",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_redaction_canaries.py"
+    },
+    {
+      "id": "BR7.3",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_composition.py"
+    },
+    {
+      "id": "BR8.1",
+      "status": "OK",
+      "target": "app/backend/tests/unit/synthetic_data/test_seed_contracts.py"
+    }
+  ]
+}

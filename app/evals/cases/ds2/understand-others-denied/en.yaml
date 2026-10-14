@@ -1,0 +1,23 @@
+# Quien dice con claridad que no hubo nadie mas deja `other_parties` como una negacion clara.
+#
+# Es el lado contrario de `understand-others-not-mentioned` y `understand-others-named`: sin
+# esto el cierre directo (US1.17) nunca ocurriria, porque `other_parties_data_pending` solo
+# acepta una negacion de una lista cerrada («ninguno», «nadie mas», "none"...). El campo tiene
+# que quedar anotado y la funcion que decide el cierre tiene que leerlo como «no hubo terceros»
+# (`other_parties_denied: true`).
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/en/understand-others-denied
+dataset: DS-2
+language: en
+tenant: sunmeadow
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  message: "hi, I hit a pole on the highway, there was nobody else involved"
+  wants:
+  - report_accident
+  other_parties_denied: true
+expected_verdicts:
+  understanding_others_denied: pass

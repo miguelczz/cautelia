@@ -1,0 +1,42 @@
+# La peticion de hablar con una persona, juego en espanol (U10, BR2.1).
+#
+# Mira lo que dijo la persona, ya redactado y normalizado, en **cualquier**
+# turno: la peticion puede llegar a mitad de una pregunta (AC1.9.1). Una
+# coincidencia levanta la senal `human_request` y el runtime deriva en el turno
+# siguiente (BR2.2).
+#
+# Lo que distingue una peticion de un turno que solo nombra a una persona es el
+# verbo: "quiero hablar con una persona" pide; "hable con una persona de la
+# grua" cuenta algo que ya paso. Por eso los verbos van en infinitivo o en
+# imperativo, y el pasado no esta (los negativos de DS-2 lo comprueban).
+#
+# Los objetos llevan tambien las palabras inglesas ("a real person", "someone"):
+# es la mitad del ataque bilingue (RT-15) que le toca a este juego.
+language: es
+family: human_request
+version: "2026-09-21.1"
+
+patterns:
+  # "quiero hablar con una persona", "¿puedo hablar con un ajustador?",
+  # "quiero hablar con alguien de la aseguradora" (AC1.9.3).
+  - id: human_request.es.signal.001
+    regex: '\b(hablar|comunicarme|conversar)\s+con\s+(una\s+persona|un\s+humano|una\s+humana|un\s+ser\s+humano|alguien|un\s+ajustador|una\s+ajustadora|un\s+agente|una\s+agente|un\s+asesor|una\s+asesora|un\s+operador|una\s+operadora|a\s+real\s+person|a\s+person|a\s+human|someone|an\s+adjuster)\b'
+  # "paseme con un humano".
+  - id: human_request.es.signal.002
+    regex: '\b(paseme|pasame|comuniqueme|comunicame|transfierame|transfiereme|conecteme|conectame)\s+con\b'
+  # "¿me pasa con alguien?", "¿me comunica con alguien?".
+  - id: human_request.es.signal.003
+    regex: '\bme\s+(pasa|pase|pasan|comunica|comunique|comunican|transfiere|transfiera|conecta|conecte)\s+con\b'
+  # "prefiero que una persona revise mi caso", "necesito que alguien de verdad
+  # me atienda".
+  - id: human_request.es.signal.004
+    regex: '\b(prefiero|preferiria|quiero|quisiera|necesito)\s+que\s+(me\s+atienda\s+|lo\s+revise\s+|me\s+llame\s+)?(una\s+persona|un\s+humano|una\s+humana|alguien|un\s+ajustador|una\s+ajustadora|un\s+agente|una\s+agente)\b'
+  # "mejor que me llame alguien de ustedes".
+  - id: human_request.es.signal.005
+    regex: '\bque\s+(me\s+)?(llame|atienda|ayude|contacte|revise)\s+(alguien|una\s+persona|un\s+humano|un\s+ajustador)\b'
+  # "necesito que alguien de verdad me atienda ya".
+  - id: human_request.es.signal.006
+    regex: '\balguien\s+(de\s+verdad|real|humano)\b'
+  # "¿no hay nadie mas con quien pueda hablar?".
+  - id: human_request.es.signal.007
+    regex: '\b(nadie|alguien)\s+(mas\s+)?con\s+quien\s+(pueda\s+|podria\s+)?hablar\b'

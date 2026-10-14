@@ -1,0 +1,21 @@
+# "Quiero hablarte" es hablar con la agente, no pedir una persona.
+#
+# Visto en una llamada real el 2026-10-11: la persona dijo "quiero hablarte" y, tras
+# una pausa, "referente a mi poliza". La primera mitad se entendio como pedir un
+# ajustador y la llamada se cerro. Pedir una persona es pedir a **otro**: un asesor,
+# un humano, el ajustador.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/understand-talking-to-you-is-not-a-person
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  message: No, la verdad quiero hablarte referente a mi póliza
+  wants:
+  - policy_question
+expected_verdicts:
+  understanding_talking_to_you_is_not_a_person: pass

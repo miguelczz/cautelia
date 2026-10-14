@@ -1,0 +1,44 @@
+# La explicacion de un caso derivado (AC3.2.3, AC3.2.4, BR2.4, BR2.5 de U14),
+# lado ingles.
+#
+# La bandeja es donde una persona firma lo que el sistema dice sobre cobertura, y
+# la explicacion es lo que le permite firmarlo con algo delante. Este caso mide
+# las dos reglas que dicen que la explicacion **no puede callar**:
+#
+# 1. BR2.4 -- responde sus cinco preguntas: que se pregunto, que se cito, que
+#    regla se disparo, quien decidio y cuando. En un caso sin decidir las dos
+#    ultimas dicen **pendiente de decision** y no quedan en blanco: un hueco se
+#    lee como un dato que se perdio.
+# 2. BR2.5 -- "sin clausula" y "no pude verificar" llevan etiquetas **distintas**.
+#    Son dos valores distintos en el estado, en la traza y en el reporte de
+#    evaluaciones, y colapsarlos en la pantalla contaminaria con fallos de
+#    infraestructura una respuesta que si se verifico.
+#
+# Criterio de aceptacion, sobre las filas del escenario `explanation` de
+# `app/evals/fixtures/inbox/en.yaml`: para cada fila, los cinco estados de la
+# explicacion son los declarados, y un caso cerrado con el enlace de demostracion
+# se atribuye al visitante y nunca a una persona de la aseguradora (BR5.5). Para
+# el segundo criterio, las cuatro salidas de cobertura de U8 tienen cada una su
+# frase en el catalogo y las cuatro son distintas entre si.
+#
+# Veredicto esperado: `pass` en los dos.
+#
+# **Los insumos son recuentos y enums, nunca texto**: lo que se mide es si la
+# explicacion deja una pregunta sin responder, y eso no depende de lo que diga
+# nadie. Por eso las mismas filas corren en los dos idiomas.
+#
+# Lo que este caso no mide: como se dibujan los seis bloques ni cuales van
+# plegados, que se prueba en la pantalla; ni el aislamiento, que es `DS-6/es/rt-4-inbox-queue`.
+#
+# La pareja en espanol es `DS-2/es/inbox-derived-explanation`: los mismos insumos
+# y la misma meta, medidos por idioma y nunca como promedio combinado (P12).
+case_key: DS-2/en/inbox-derived-explanation
+dataset: DS-2
+language: en
+requires_provider_key: false
+axes:
+  - case-explanation
+  - inbox
+expected_verdicts:
+  inbox_explanation_answers_five: pass
+  inbox_coverage_outcomes_labelled: pass

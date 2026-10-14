@@ -1,0 +1,18 @@
+# La pregunta de si la agente es una persona, juego en ingles (U10, BR2.4).
+#
+# La pareja de `es/identity_question.yaml`; como se lee esta explicado alla.
+language: en
+family: identity_question
+version: "2026-09-21.1"
+
+patterns:
+  # "are you a real person?" (literal de AC1.10.2), "are you human or a
+  # machine?", "are you una persona real?".
+  - id: identity_question.en.signal.001
+    regex: '\b(are\s+you|r\s+u)\s+(a\s+|an\s+)?(real\s+|live\s+|actual\s+)?(person|human|human\s+being|bot|robot|machine|ai|computer|real|una\s+persona|un\s+humano|humana|humano)\b'
+  # "am i talking to a bot?".
+  - id: identity_question.en.signal.002
+    regex: '\b(am\s+i|are\s+we)\s+(talking|speaking|chatting)\s+(to|with)\s+(a\s+|an\s+)?(real\s+|live\s+|actual\s+)?(person|human|bot|robot|machine|ai|computer|recording)\b'
+  # "is this a real person?".
+  - id: identity_question.en.signal.003
+    regex: '\bis\s+this\s+(a\s+|an\s+)?(real\s+|live\s+)?(person|human|bot|robot|machine|ai|recording)\b'

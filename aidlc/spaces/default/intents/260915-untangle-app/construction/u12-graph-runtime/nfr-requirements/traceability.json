@@ -1,0 +1,404 @@
+{
+  "stage": "nfr-requirements",
+  "unit": "u12-graph-runtime",
+  "upstream_ids": [
+    "NFR1",
+    "NFR2",
+    "NFR3",
+    "NFR4",
+    "NFR5",
+    "NFR6",
+    "NFR7",
+    "NFR8",
+    "NFR9",
+    "NFR10",
+    "NFR11",
+    "NFR12",
+    "NFR13",
+    "NFR14",
+    "NFR15",
+    "NFR16",
+    "NFR17",
+    "NFR18",
+    "NFR19",
+    "NFR20",
+    "NFR21",
+    "PERF-U12.1",
+    "PERF-U12.2",
+    "PERF-U12.3",
+    "PERF-U12.4",
+    "PERF-U12.5",
+    "PERF-U12.6",
+    "PERF-U12.7",
+    "PERF-U12.8",
+    "NFR1.1",
+    "NFR4.2",
+    "REL-U12.1",
+    "REL-U12.2",
+    "REL-U12.3",
+    "REL-U12.4",
+    "REL-U12.5",
+    "REL-U12.6",
+    "REL-U12.7",
+    "NFR13.5",
+    "SEC-U12.1",
+    "SEC-U12.2",
+    "SEC-U12.3",
+    "SEC-U12.4",
+    "SEC-U12.5",
+    "SEC-U12.6",
+    "SEC-U12.7",
+    "NFR11.11",
+    "NFR12.5",
+    "TECH-U12.1",
+    "TECH-U12.2",
+    "TECH-U12.3",
+    "TECH-U12.4",
+    "TECH-U12.5",
+    "TECH-U12.6",
+    "TECH-U12.7",
+    "SCALE-U12.1",
+    "SCALE-U12.2",
+    "SCALE-U12.3",
+    "SCALE-U12.4",
+    "OBS-U12.1",
+    "OBS-U12.2",
+    "OBS-U12.3",
+    "OBS-U12.4",
+    "OBS-U12.5",
+    "OBS-U12.6",
+    "NFR11.12"
+  ],
+  "coverage": [
+    {
+      "id": "NFR1",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U16 (Latencia del turno de voz). El aporte de U12 se declara como NFR1.1 en construction/u12-graph-runtime/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "NFR2",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U16 segun la tabla de metas de `unit-of-work.md` (Parada ante interrupcion). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR3",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U16 segun la tabla de metas de `unit-of-work.md` (Recuperacion tras interrupcion). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR4",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U13 (Latencia del chat). El aporte de U12 se declara como NFR4.2 en construction/u12-graph-runtime/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "NFR5",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Precision de citacion). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR6",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U8 segun la tabla de metas de `unit-of-work.md` (Citas inexistentes). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR7",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Completitud del primer aviso). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR8",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Exactitud de extraccion). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR9",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U10 segun la tabla de metas de `unit-of-work.md` (Respuestas fuera de alcance). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR10",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U2 segun la tabla de metas de `unit-of-work.md` (Fuga entre aseguradoras). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR11",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U3 (Datos personales en trazas, logs y exportaciones). El aporte de U12 se declara como NFR11.11 en construction/u12-graph-runtime/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "NFR12",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U10 (Resistencia a los quince escenarios de red-team). El aporte de U12 se declara como NFR12.5 en construction/u12-graph-runtime/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "NFR13",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 (Derivaciones). El aporte de U12 se declara como NFR13.5 en construction/u12-graph-runtime/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "NFR14",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U5 segun la tabla de metas de `unit-of-work.md` (Costo por caso exitoso). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR15",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U5 segun la tabla de metas de `unit-of-work.md` (Gasto acumulado). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR16",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U6 segun la tabla de metas de `unit-of-work.md` (Disponibilidad del enlace en vivo). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR17",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Duracion de la corrida de evaluacion). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR18",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U1 segun la tabla de metas de `unit-of-work.md` (Cobertura de lineas). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR19",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U20 segun la tabla de metas de `unit-of-work.md` (Retencion de la demo publica). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR20",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U21 segun la tabla de metas de `unit-of-work.md` (Paridad por idioma). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "NFR21",
+      "status": "N/A",
+      "target": "No es de esta unidad: su dueno es U1 segun la tabla de metas de `unit-of-work.md` (Del clon al reporte). Se declara porque el comprobador resuelve los NFR del proyecto entero sin acotar por unidad."
+    },
+    {
+      "id": "PERF-U12.1",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "PERF-U12.2",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "PERF-U12.3",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "PERF-U12.4",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "PERF-U12.5",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "PERF-U12.6",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "PERF-U12.7",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "PERF-U12.8",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "NFR1.1",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "NFR4.2",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/performance-requirements.md"
+    },
+    {
+      "id": "REL-U12.1",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "REL-U12.2",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "REL-U12.3",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "REL-U12.4",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "REL-U12.5",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "REL-U12.6",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "REL-U12.7",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "NFR13.5",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/reliability-requirements.md"
+    },
+    {
+      "id": "SEC-U12.1",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "SEC-U12.2",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "SEC-U12.3",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "SEC-U12.4",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "SEC-U12.5",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "SEC-U12.6",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "SEC-U12.7",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "NFR11.11",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "NFR12.5",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/security-requirements.md"
+    },
+    {
+      "id": "TECH-U12.1",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/tech-stack-decisions.md"
+    },
+    {
+      "id": "TECH-U12.2",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/tech-stack-decisions.md"
+    },
+    {
+      "id": "TECH-U12.3",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/tech-stack-decisions.md"
+    },
+    {
+      "id": "TECH-U12.4",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/tech-stack-decisions.md"
+    },
+    {
+      "id": "TECH-U12.5",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/tech-stack-decisions.md"
+    },
+    {
+      "id": "TECH-U12.6",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/tech-stack-decisions.md"
+    },
+    {
+      "id": "TECH-U12.7",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/tech-stack-decisions.md"
+    },
+    {
+      "id": "SCALE-U12.1",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/scalability-requirements.md"
+    },
+    {
+      "id": "SCALE-U12.2",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/scalability-requirements.md"
+    },
+    {
+      "id": "SCALE-U12.3",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/scalability-requirements.md"
+    },
+    {
+      "id": "SCALE-U12.4",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/scalability-requirements.md"
+    },
+    {
+      "id": "OBS-U12.1",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/observability-requirements.md"
+    },
+    {
+      "id": "OBS-U12.2",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/observability-requirements.md"
+    },
+    {
+      "id": "OBS-U12.3",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/observability-requirements.md"
+    },
+    {
+      "id": "OBS-U12.4",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/observability-requirements.md"
+    },
+    {
+      "id": "OBS-U12.5",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/observability-requirements.md"
+    },
+    {
+      "id": "OBS-U12.6",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/observability-requirements.md"
+    },
+    {
+      "id": "NFR11.12",
+      "status": "OK",
+      "target": "construction/u12-graph-runtime/nfr-requirements/observability-requirements.md"
+    }
+  ]
+}

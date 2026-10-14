@@ -1,0 +1,31 @@
+# Un agradecimiento a mitad del reporte (BR3.1, BR5.1), turno en español.
+#
+# Criterio de aceptación: "Gracias" como respuesta a una lectura de confirmación
+# no la niega: la lectura sigue pendiente y se vuelve a leer, con la frase de
+# agradecimiento delante. Antes, cualquier cosa que no fuera un sí borraba el
+# bloque y lo volvía a preguntar.
+#
+# Veredicto esperado: `pass`.
+#
+# No es compuerta dura por sí solo, pero corre en cada entrega y un caso que pasa a
+# fallar es una regresión (definición de regresión de `team.md`). Decisión de
+# Miguel del 2026-10-06: la agente contesta lo que le dijeron antes de seguir con
+# lo pendiente, sin llamar a ningún modelo para ello.
+#
+# La pareja en inglés es `DS-2/en/intake-thanks-mid-report`: los mismos criterios y la misma meta,
+# medidos por idioma y nunca como promedio combinado (P12).
+case_key: DS-2/es/intake-thanks-mid-report
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - intake
+  - conversation
+script:
+# El turno se indexa por el campo que **estaba pendiente** cuando la persona lo dijo
+# (`injuries`): el guion solo admite campos del esquema, y lo social no es un campo.
+  - field_key: injuries
+    text: "Gracias"
+expected_verdicts:
+  intake_thanks_mid_report: pass

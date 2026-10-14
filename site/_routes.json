@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "include": [
+    "/*"
+  ],
+  "exclude": [
+    "/",
+    "/index.html",
+    "/assets/og.jpg",
+    "/PHOSPHOR-LICENSE.txt",
+    "/LUCIDE-LICENSE.txt",
+    "/assets/caso.webm",
+    "/assets/caso.mp4",
+    "/assets/caso-poster.webp",
+    "/assets/hero.webp"
+  ]
+}

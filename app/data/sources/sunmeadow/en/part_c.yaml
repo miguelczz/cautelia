@@ -1,0 +1,106 @@
+# Textos fuente revisados de Autos Poblado, en ingles (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Los borradores del modelo en ingles calcaban giros del formulario de referencia: se
+# reescribieron a mano y por eso casi todos dicen drafted_with: hand.
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: sunmeadow
+language: en
+part_key: part_c
+texts:
+- source_id: SUN-PAP-2026-C.INS
+  kind: clause
+  clause_key: C.INS
+  part: Part C — Uninsured Motorists Coverage
+  version: '2026.1'
+  text: Autos Poblado pays the damages for bodily injury that you or a family member are entitled to
+    claim from the driver or owner of an uninsured vehicle. This includes an accident where the vehicle
+    at fault drives off and neither its driver nor its owner can be identified, as long as the police
+    received a report of it.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-C.EXCL.1
+  kind: clause
+  clause_key: C.EXCL.1
+  part: Part C — Uninsured Motorists Coverage
+  version: '2026.1'
+  text: Part C does not cover injuries to anyone riding in a vehicle owned by you or a family member that
+    is not insured under this policy.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-C.EXCL.2
+  kind: clause
+  clause_key: C.EXCL.2
+  part: Part C — Uninsured Motorists Coverage
+  version: '2026.1'
+  text: Part C does not cover a claim the insured settled with the at-fault party or its insurer without
+    our written agreement.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-C.EXCL.3
+  kind: clause
+  clause_key: C.EXCL.3
+  part: Part C — Uninsured Motorists Coverage
+  version: '2026.1'
+  text: Part C does not apply while the vehicle is carrying people or goods for pay.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-C.EXCL.4
+  kind: clause
+  clause_key: C.EXCL.4
+  part: Part C — Uninsured Motorists Coverage
+  version: '2026.1'
+  text: Part C does not cover anyone using a vehicle without the owner's permission or without a sound
+    reason to believe they had it.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-C.LIMIT
+  kind: clause
+  clause_key: C.LIMIT
+  part: Part C — Uninsured Motorists Coverage
+  version: '2026.1'
+  text: The most we pay under this part is the uninsured motorist limit shown on the declarations page,
+    per person and per accident, however many vehicles or people are involved. Anything the at-fault party
+    has already paid is subtracted.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-C.OTHER
+  kind: clause
+  clause_key: C.OTHER
+  part: Part C — Uninsured Motorists Coverage
+  version: '2026.1'
+  text: If several policies cover the same person for the same accident, we split the payment in proportion
+    to each policy's limits.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2026-C.ARBITRATION
+  kind: clause
+  clause_key: C.ARBITRATION
+  part: Part C — Uninsured Motorists Coverage
+  version: '2026.1'
+  text: If we and the insured disagree about whether damages are owed or about how much, either side may
+    ask for the question to be decided by a single arbitrator in Corvane. Each side pays its own costs
+    and half of the arbitrator's fee.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: SUN-PAP-2025-C.INS.ALT
+  kind: distractor
+  clause_key: C.INS.ALT
+  part: Part C — Uninsured Motorists Coverage
+  version: '2025.1'
+  text: Autos Poblado pays the damages for bodily injury that you or a family member are entitled to
+    claim from the driver of an uninsured vehicle, but only when that driver is identified. Accidents
+    where the vehicle at fault drives off are not covered.
+  distractor_of: SUN-PAP-2026-C.INS
+  distractor_reason: near_duplicate
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite

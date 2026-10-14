@@ -1,0 +1,253 @@
+# Turnos de los casos sembrados de Agencia Castilla en espanol (U7, FD-U7-7, CG-U7-2).
+# Escritos a mano. Los datos personales van como marcador ({insured_name}, {plate}...) y
+# los llena el generador con la persona y el vehiculo de una poliza emitida (BR7.2).
+# Ningun turno de la agente copia una frase fija aprobada: solo preguntas de captura.
+format_version: 1
+tenant_id: knotwell
+language: es
+part_key: case_turns
+texts:
+- source_id: KNO-CASE-ES-OPEN
+  kind: case_turns
+  version: '2026.1'
+  text: 'agent: ¿Me dices tu nombre completo y el número de tu póliza?'
+  case:
+    name: open
+    state: open
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: KNO-CASE-ES-CAPTURING
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    agent: ¿Me dices tu nombre completo y el número de tu póliza?
+    insured: Soy {insured_name}, la póliza es {policy_number}.
+    agent: ¿Cuándo fue el accidente?
+    insured: Ayer, como a las seis y cuarenta de la tarde.
+    agent: ¿Dónde pasó?
+    insured: En la Avenida del Puerto con calle 12.
+    agent: Anoto Avenida del Puerto con calle 12. ¿Es correcto?
+    insured: Sí, correcto.
+    agent: ¿Qué vehículo manejaba y quién lo conducía?
+  case:
+    name: capturing
+    state: capturing
+    fields:
+      identity_and_policy:
+        value: '{insured_name}, póliza {policy_number}'
+        status: confirmed
+      incident_datetime:
+        value: 2026-09-14 18:40
+        status: stated
+      location:
+        value: Avenida del Puerto con calle 12, Corvane
+        status: confirmed
+    used_by:
+    - AC1.6.2
+    - AC1.9.1
+    - AC4.7.2
+    - AC1.10.1
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: KNO-CASE-ES-VERIFYING
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    insured: Buenos días, quiero reportar un choque. Soy {insured_name}, póliza {policy_number}.
+    agent: ¿Alguien resultó herido?
+    insured: No, nadie.
+    agent: ¿Cuándo y dónde fue?
+    insured: Hoy a las siete y cuarto de la mañana, en la carrera 5 con calle 40.
+    agent: ¿Qué pasó?
+    insured: Otro carro se pasó el semáforo en rojo y me pegó en la puerta del conductor.
+    agent: ¿Qué vehículo manejaba?
+    insured: Mi {vehicle}, placa {plate}. Lo manejaba yo.
+    agent: ¿Tienes los datos del otro conductor?
+    insured: Sí, se llama {other_name_1} y la placa de su carro es {other_plate_1}.
+  case:
+    name: verifying
+    state: verifying
+    fields: &id006
+      identity_and_policy: &id001
+        value: '{insured_name}, póliza {policy_number}'
+        status: confirmed
+      incident_datetime: &id002
+        value: 2026-09-12 07:15
+        status: confirmed
+      location: &id003
+        value: Carrera 5 con calle 40, Corvane
+        status: confirmed
+      description:
+        value: Otro carro se pasó el semáforo en rojo y le pegó en la puerta del conductor.
+        status: stated
+      vehicle_and_driver: &id004
+        value: '{vehicle}, placa {plate}, lo conducía {insured_first_name}'
+        status: confirmed
+      other_parties:
+        value: Un conductor, {other_name_1}, en un vehículo de placa {other_plate_1}
+        status: stated
+      injuries: &id005
+        value: Sin lesionados
+        status: confirmed
+    used_by:
+    - AC1.14.1
+    - AC4.8.1
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: KNO-CASE-ES-DECIDING
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    insured: Hola, soy {insured_name}. Mi póliza es {policy_number}.
+    agent: ¿Alguien resultó herido?
+    insured: No, estoy bien.
+    agent: ¿Qué pasó?
+    insured: Esquivé una moto y me golpeé contra un poste. No hubo nadie más.
+  case:
+    name: deciding
+    state: deciding
+    fields:
+      identity_and_policy: *id001
+      incident_datetime: *id002
+      location: *id003
+      description:
+        value: Esquivó una moto y se golpeó contra un poste.
+        status: stated
+      vehicle_and_driver: *id004
+      other_parties:
+        value: Ninguno
+        status: confirmed
+      injuries: *id005
+    used_by:
+    - AC1.16.1
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: KNO-CASE-ES-DERIVED
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    insured: Buenas noches. Soy {insured_name}, mi póliza es {policy_number}.
+    agent: ¿Cuándo pasó?
+    insured: Anoche, como a las nueve y diez.
+    agent: ¿Qué pasó?
+    insured: Me rayaron el carro y me rompieron el espejo mientras estaba parqueado.
+    agent: ¿Dónde estaba parqueado el vehículo?
+    insured: Prefiero hablar con una persona, por favor.
+  case:
+    name: derived
+    state: derived
+    derivation_reason: person_requested
+    fields:
+      identity_and_policy:
+        value: '{insured_name}, póliza {policy_number}'
+        status: confirmed
+      incident_datetime:
+        value: 2026-09-13 21:10
+        status: confirmed
+      description:
+        value: Le rayaron el carro y le rompieron el espejo mientras estaba parqueado.
+        status: confirmed
+    used_by:
+    - AC1.9.2
+    - AC1.9.4
+    - AC1.14.2
+    - AC1.14.3
+    - AC1.16.2
+    - AC1.16.4
+    - AC4.8.3
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: KNO-CASE-ES-AWAITING-INSURED
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    insured: Soy {insured_name}, póliza {policy_number}. Un camión me golpeó la parte trasera al retroceder.
+    agent: ¿Qué vehículo manejaba?
+    insured: Mi {vehicle}, placa {plate}.
+    staff: Para seguir con su caso necesito una foto del daño en la parte trasera.
+  case:
+    name: awaiting-insured
+    state: awaiting_insured
+    derivation_reason: rule
+    fields:
+      identity_and_policy: *id001
+      incident_datetime: *id002
+      location: *id003
+      description:
+        value: Un camión le golpeó la parte trasera al retroceder.
+        status: stated
+      vehicle_and_driver: *id004
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: KNO-CASE-ES-CLOSED
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    insured: Buenos días, quiero reportar un choque. Soy {insured_name}, póliza {policy_number}.
+    agent: ¿Alguien resultó herido?
+    insured: No, nadie.
+    agent: ¿Cuándo y dónde fue?
+    insured: Hoy a las siete y cuarto de la mañana, en la carrera 5 con calle 40.
+    agent: ¿Qué pasó?
+    insured: Otro carro se pasó el semáforo en rojo y me pegó en la puerta del conductor.
+    agent: ¿Qué vehículo manejaba?
+    insured: Mi {vehicle}, placa {plate}. Lo manejaba yo.
+    agent: ¿Tienes los datos del otro conductor?
+    insured: Sí, se llama {other_name_1} y la placa de su carro es {other_plate_1}.
+    staff: Enviamos su caso a {issuer} con todo lo que registramos.
+  case:
+    name: closed
+    state: closed
+    resolution: sent_to_insurer
+    derivation_reason: rule
+    fields: *id006
+    used_by:
+    - AC4.10.1
+    - AC1.14.3
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: KNO-CASE-ES-IDENTITY-DICTATED
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    agent: ¿Me da sus datos para ubicar la póliza?
+    insured: Mi cédula es {national_id}, mi celular {phone}, la placa del carro {plate} y la póliza {policy_number}.
+  case:
+    name: identity-dictated
+    state: capturing
+    fields:
+      identity_and_policy:
+        value: '{insured_name}, póliza {policy_number}'
+        status: stated
+    used_by:
+    - AC4.12.1
+    - AC4.13.1
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: KNO-CASE-ES-ID-DICTATED-OTHER-LANGUAGE
+  kind: case_turns
+  version: '2026.1'
+  text: |-
+    agent: ¿Me dices tu número de documento?
+    insured: Mi número de documento es {national_id_spoken}.
+  case:
+    name: id-dictated-other-language
+    state: capturing
+    persona_language: en
+    fields:
+      identity_and_policy:
+        value: '{insured_name}, póliza {policy_number}'
+        status: stated
+    used_by:
+    - AC4.13.4
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand

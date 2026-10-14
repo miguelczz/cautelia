@@ -1,0 +1,64 @@
+{
+  "case_key": "SEED/stonecroft/en/derived",
+  "channel": "chat",
+  "derivation_reason": "person_requested",
+  "fields": {
+    "description": {
+      "status": "confirmed",
+      "value": "The car was scratched and a mirror broken while it was parked."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Julián Posada Arango, policy POL-245782"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-13 21:10"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-245782",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "derived",
+  "tenant_id": "stonecroft",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Good evening. I'm Julián Posada Arango, my policy is POL-245782."
+    },
+    {
+      "speaker": "agent",
+      "text": "When did it happen?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Last night, around ten past nine."
+    },
+    {
+      "speaker": "agent",
+      "text": "What happened?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Someone scratched my car and broke a mirror while it was parked."
+    },
+    {
+      "speaker": "agent",
+      "text": "Where was the vehicle parked?"
+    },
+    {
+      "speaker": "insured",
+      "text": "I'd rather talk to a person, please."
+    }
+  ],
+  "used_by": [
+    "AC1.14.2",
+    "AC1.14.3",
+    "AC1.16.2",
+    "AC1.16.4",
+    "AC1.9.2",
+    "AC1.9.4",
+    "AC4.8.3"
+  ]
+}

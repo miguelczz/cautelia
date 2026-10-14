@@ -1,0 +1,183 @@
+{
+  "stage": "nfr-design",
+  "unit": "u1-workspace",
+  "upstream_ids": [
+    "NFR17.1",
+    "NFR18.1",
+    "NFR18.2",
+    "NFR18.3",
+    "NFR21.1",
+    "NFR21.2",
+    "SEC-U1.1",
+    "SEC-U1.2",
+    "SEC-U1.3",
+    "SEC-U1.4",
+    "SEC-U1.5",
+    "SEC-U1.6",
+    "SEC-U1.7",
+    "SEC-U1.8",
+    "REL-U1.1",
+    "REL-U1.2",
+    "REL-U1.3",
+    "REL-U1.4",
+    "REL-U1.5",
+    "OBS-U1.1",
+    "OBS-U1.2",
+    "OBS-U1.3",
+    "OBS-U1.4"
+  ],
+  "coverage": [
+    {
+      "id": "NFR21.1",
+      "status": "OK",
+      "target": "performance-design.md: tarea unica de arranque que encadena instalacion, servicios, migraciones y subconjunto smoke; las cinco decisiones que compran los minutos, incluida la de no levantar el backend de trazas"
+    },
+    {
+      "id": "NFR21.2",
+      "status": "OK",
+      "target": "performance-design.md: trabajo semanal y por hito en entorno limpio y sin cache, que publica el tiempo total y por paso como artefacto de la corrida (decision Q4)"
+    },
+    {
+      "id": "NFR17.1",
+      "status": "OK",
+      "target": "performance-design.md y observability-design.md: el corredor toma la hora al abrir y cerrar, guarda duration_seconds y la duracion por caso, y el reporte la publica como campo propio"
+    },
+    {
+      "id": "NFR18.1",
+      "status": "OK",
+      "target": "logical-components.md: alcance de las herramientas declarado al prefijo del aplicativo; el comando de cobertura agregado ya esta fijado en tech-stack-decisions.md y esta etapa no lo cambia"
+    },
+    {
+      "id": "NFR18.2",
+      "status": "OK",
+      "target": "logical-components.md: fronteras por modulo comprobables por contratos de importacion, que es lo que hace medible la cobertura por modulo critico cuando lleguen U2, U4, U8 y U9"
+    },
+    {
+      "id": "NFR18.3",
+      "status": "OK",
+      "target": "logical-components.md, tabla de aislamiento: el alcance se declara como prefijo y no como lista de exclusiones que crece; site/, docs/, .claude/ y aidlc/ quedan fuera por construccion"
+    },
+    {
+      "id": "SEC-U1.1",
+      "status": "OK",
+      "target": "security-design.md: dos trabajos en el flujo, el primero invoca el guion acotado al paso de secretos y el segundo corre el resto; corte inmediato de la corrida ante un hallazgo (decision Q1)"
+    },
+    {
+      "id": "SEC-U1.2",
+      "status": "OK",
+      "target": "security-design.md: .env.example versionado con nombres agrupados por uso, negacion en el .gitignore y chequeo bidireccional entre la plantilla y las variables que el codigo lee; lectura en un unico punto de configuracion en la raiz de composicion"
+    },
+    {
+      "id": "SEC-U1.3",
+      "status": "OK",
+      "target": "security-design.md: lockfile con hashes en el primer commit e instalacion en modo reproducible; la deriva del lockfile hace fallar el paso sin necesidad de un chequeo aparte"
+    },
+    {
+      "id": "SEC-U1.4",
+      "status": "OK",
+      "target": "security-design.md: espera de versiones recien publicadas configurada en los dos gestores y en el robot de dependencias, con su razon escrita"
+    },
+    {
+      "id": "SEC-U1.5",
+      "status": "OK",
+      "target": "security-design.md: permisos vacios por defecto elevados por trabajo, acciones fijadas por identificador de commit, analizador de flujos como paso del guion, y el trabajo del escaneo sin secretos"
+    },
+    {
+      "id": "SEC-U1.6",
+      "status": "OK",
+      "target": "observability-design.md, OBS-U1.1: commit, identificador exacto de modelo por uso y hash del prompt de cada nodo como campos obligatorios de la corrida, mostrados en la cabecera del reporte"
+    },
+    {
+      "id": "SEC-U1.7",
+      "status": "OK",
+      "target": "reliability-design.md, capa 3: cortacircuitos que detiene la corrida tras tres fallos seguidos de cuota o presupuesto; scalability-design.md, valvula 3: cancelacion, filtros y medicion semanal de los minutos de integracion continua"
+    },
+    {
+      "id": "SEC-U1.8",
+      "status": "OK",
+      "target": "security-design.md: comprobacion de que la cuenta activa es miguelczz antes de cada operacion contra el repositorio remoto, declarado explicitamente como control humano y no automatizado"
+    },
+    {
+      "id": "REL-U1.1",
+      "status": "OK",
+      "target": "reliability-design.md: subconjunto como lista ordenada, listado de archivos ordenado explicitamente, temperatura cero y semilla fija, identificador de modelo exacto; prueba que corre dos veces y compara la lista de casos"
+    },
+    {
+      "id": "REL-U1.2",
+      "status": "OK",
+      "target": "reliability-design.md: el respondedor contesta por indice de campo sin fuente de azar y sin llamar a ningun modelo (BR1.11); prueba que repite la secuencia de campos y compara"
+    },
+    {
+      "id": "REL-U1.3",
+      "status": "OK",
+      "target": "reliability-design.md: el backend de trazas es dependencia opcional; el reporte se genera con los enlaces marcados como no disponibles y la corrida sigue siendo comparable"
+    },
+    {
+      "id": "REL-U1.4",
+      "status": "OK",
+      "target": "reliability-design.md: la validacion de variables vive en la construccion del objeto de configuracion, que es lo primero que hace la raiz de composicion, antes de construir ningun cliente de proveedor"
+    },
+    {
+      "id": "REL-U1.5",
+      "status": "OK",
+      "target": "reliability-design.md, tres capas: taxonomia cerrada en la frontera del proveedor, un reintento para lo pasajero y cero para la cuota, y corte de la corrida tras tres fallos seguidos (decision Q2)"
+    },
+    {
+      "id": "OBS-U1.1",
+      "status": "OK",
+      "target": "observability-design.md: siete campos obligatorios de la corrida, mostrados en la cabecera del reporte antes de la primera cifra"
+    },
+    {
+      "id": "OBS-U1.2",
+      "status": "OK",
+      "target": "observability-design.md: estado, criterios, desvios del guion, causa de no medido, enlace de traza y duracion por caso, con el identificador del caso sin traducir en todo el sistema"
+    },
+    {
+      "id": "OBS-U1.3",
+      "status": "OK",
+      "target": "observability-design.md: lista cerrada de cinco causas, para que un caso fallido y un caso no medido nunca se sumen"
+    },
+    {
+      "id": "OBS-U1.4",
+      "status": "OK",
+      "target": "observability-design.md: el idioma es una dimension de la estructura del reporte, no una etiqueta; no existe campo donde escribir un promedio combinado"
+    }
+  ],
+  "reverse": [
+    {
+      "id": "smoke",
+      "status": "N/A",
+      "target": "Subconjunto de arranque declarado por U1, con tope de un caso por conjunto por entrega y por idioma. Nace de la decision Q3 de esta etapa, no de un NFR: el subconjunto de la compuerta lo declara U21 (PA-11)."
+    },
+    {
+      "id": "verify-fail-policy",
+      "status": "N/A",
+      "target": "El guion corre los nueve pasos hasta el final menos el escaneo de secretos, que corta en el acto. Decision Q1 de esta etapa; los pasos baratos van primero."
+    },
+    {
+      "id": "runner-concurrency",
+      "status": "N/A",
+      "target": "Los casos se ejecutan de uno en uno. No es una meta de rendimiento: es lo que REL-U1.1 exige y lo que hace predecible el corte por cuota. La valvula ante el crecimiento es el subconjunto, no la concurrencia."
+    },
+    {
+      "id": "copy-catalog-load",
+      "status": "N/A",
+      "target": "El catalogo se carga una vez al arrancar el proceso, como estructura inmutable, sin invalidacion. Nace de C-21 y del hecho de que un cambio de texto es un cambio de archivo versionado."
+    },
+    {
+      "id": "no-availability-slo",
+      "status": "N/A",
+      "target": "Sin SLA ni SLO de disponibilidad: la unidad no se despliega y no atiende trafico. Declarado para que la ausencia sea una decision y no un olvido."
+    },
+    {
+      "id": "error-cause-mapping",
+      "status": "N/A",
+      "target": "Tabla de traduccion entre la taxonomia cerrada de la frontera del proveedor (convencion 8a de team.md) y los cinco valores de not_measured_cause de entities.md, con invalid_response declarado como fallo de calidad y no como caso no medido. Nace del hallazgo R-01 de la revision de esta etapa."
+    },
+    {
+      "id": "dependency-wait-window",
+      "status": "N/A",
+      "target": "Tres dias de espera antes de instalar una version recien publicada, con excepcion escrita para las que corrigen un aviso de seguridad conocido. Concreta SEC-U1.4; nace del hallazgo R-02 de la revision de esta etapa."
+    }
+  ]
+}

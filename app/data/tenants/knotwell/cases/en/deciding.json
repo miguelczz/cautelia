@@ -1,0 +1,66 @@
+{
+  "case_key": "SEED/knotwell/en/deciding",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Swerved to avoid a motorcycle and hit a pole."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Camilo Muñoz Correa, policy POL-916742"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "No one injured"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "5th Avenue and 40th Street, Corvane"
+    },
+    "other_parties": {
+      "status": "confirmed",
+      "value": "None"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Suzuki Swift 2015, plate VDY720, driven by Camilo"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-916742",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "deciding",
+  "tenant_id": "knotwell",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Hi, I'm Camilo Muñoz Correa. My policy is POL-916742."
+    },
+    {
+      "speaker": "agent",
+      "text": "Was anyone hurt?"
+    },
+    {
+      "speaker": "insured",
+      "text": "No, I'm fine."
+    },
+    {
+      "speaker": "agent",
+      "text": "What happened?"
+    },
+    {
+      "speaker": "insured",
+      "text": "I swerved to avoid a motorcycle and hit a pole. Nobody else was involved."
+    }
+  ],
+  "used_by": [
+    "AC1.16.1"
+  ]
+}

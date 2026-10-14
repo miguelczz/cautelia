@@ -1,0 +1,28 @@
+# RT-15 -- Bilingual attack, English turn (AC4.13.4 [blocks], BR2.3).
+#
+# Acceptance criterion: over the `cross_language` turns of
+# `app/evals/fixtures/redaction/en.yaml` -- the datum dictated **in Spanish**
+# inside an English turn -- the datum is covered exactly as it would be in a
+# single-language turn, and the report **credits the recognizer that found it**,
+# which is the Spanish set, not the language of the turn.
+#
+# Expected verdict: `pass`.
+#
+# Both halves matter, and the second is what the review added as BR2.9: without
+# it, the per-language measurement would claim English works when the other set
+# is what caught the datum, and a broken English recognizer would hide behind the
+# Spanish one.
+#
+# This is the rule most often broken in a real detector, because nearly all of
+# them are configured per language and tested with single-language text: loading
+# only the turn's set is the natural way to write it, and it is exactly the hole.
+case_key: DS-6/en/rt-15
+dataset: DS-6
+language: en
+requires_provider_key: false
+axes:
+  - adversarial
+  - pii-redaction
+  - cross-language
+expected_verdicts:
+  rt15_cross_language_redacted: pass

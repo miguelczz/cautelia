@@ -1,0 +1,60 @@
+# Formas prohibidas del catalogo (BR3.6).
+#
+# Lista versionada. Cada entrada lleva su identificador estable, su razon y sus
+# expresiones en los dos idiomas: el chequeo nombra el identificador y la clave
+# culpable, no solo "fallo".
+#
+# Una promesa que la demostracion no cumple es exactamente lo que el proyecto
+# declara que no hara (P7).
+
+forms:
+  - id: FF-1
+    reason: >
+      Trato con genero. La agente no asume el genero de quien le habla.
+    patterns:
+      - '(?i)\b(estimad[oa]\s+(señor|señora|sr\.?|sra\.?))\b'
+      - '(?i)\b(dear\s+(sir|madam))\b'
+
+  - id: FF-2
+    reason: >
+      Plazos o llamadas que la demostracion no cumple. No hay nadie al otro lado
+      que devuelva una llamada ni un reloj que cuente 24 horas.
+    patterns:
+      - '(?i)\b(lo\s+llamamos|te\s+llamamos|le\s+devolvemos\s+la\s+llamada)\b'
+      - '(?i)\b(en\s+(24|48|72)\s+horas)\b'
+      - '(?i)\b(we.?ll\s+call\s+you\s+back|within\s+(24|48|72)\s+hours)\b'
+
+  - id: FF-3
+    reason: >
+      Transferencia en vivo. La derivacion es a la agencia por su canal, no un
+      pase de llamada que no existe.
+    patterns:
+      - '(?i)\b(le\s+(paso|transfiero)\s+con|lo\s+comunico\s+con)\b'
+      - '(?i)\b(transferring\s+you\s+(now|to)|let\s+me\s+transfer\s+you)\b'
+
+  - id: FF-4
+    reason: >
+      Afirmacion de cumplimiento normativo. Se dice "inspirado en", nunca
+      "cumple con" (P6, R9).
+    patterns:
+      - '(?i)\b(cumple\s+con)\b.{0,40}\b(NAIC|TCPA|EU\s+AI\s+Act|SOC\s*2|HIPAA)\b'
+      - '(?i)\b(complies\s+with)\b.{0,40}\b(NAIC|TCPA|EU\s+AI\s+Act|SOC\s*2|HIPAA)\b'
+
+  - id: FF-5
+    reason: >
+      Jerga que la guia de voz prohibe: la persona no habla de "siniestros
+      tramitados" ni de "su expediente", y la agente tampoco.
+    patterns:
+      - '(?i)\b(su\s+expediente|tramitacion\s+del\s+siniestro|a\s+la\s+brevedad)\b'
+      - '(?i)\b(kindly\s+be\s+advised|at\s+your\s+earliest\s+convenience)\b'
+
+  - id: FF-6
+    reason: >
+      Identificador de regla o jerga tecnica en un texto que lee el asegurado
+      (BR2.5, U9): ni el codigo de una regla del motor ni palabras como FNOL,
+      tenant o endoso pertenecen a lo que ve una persona.
+    patterns:
+      - '(?i)\b(STO|SUN|KNO)-R-\d+\b'
+      - '(?i)\bFNOL\b'
+      - '(?i)\btenants?\b'
+      - '(?i)\b(endoso|endosos|endorsement)\b'

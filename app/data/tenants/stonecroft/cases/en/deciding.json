@@ -1,0 +1,66 @@
+{
+  "case_key": "SEED/stonecroft/en/deciding",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Swerved to avoid a motorcycle and hit a pole."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Julián Posada Arango, policy POL-245782"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "No one injured"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "5th Avenue and 40th Street, Corvane"
+    },
+    "other_parties": {
+      "status": "confirmed",
+      "value": "None"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Nissan Versa 2020, plate UBX737, driven by Julián"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-245782",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "deciding",
+  "tenant_id": "stonecroft",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Hi, I'm Julián Posada Arango. My policy is POL-245782."
+    },
+    {
+      "speaker": "agent",
+      "text": "Was anyone hurt?"
+    },
+    {
+      "speaker": "insured",
+      "text": "No, I'm fine."
+    },
+    {
+      "speaker": "agent",
+      "text": "What happened?"
+    },
+    {
+      "speaker": "insured",
+      "text": "I swerved to avoid a motorcycle and hit a pole. Nobody else was involved."
+    }
+  ],
+  "used_by": [
+    "AC1.16.1"
+  ]
+}

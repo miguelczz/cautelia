@@ -1,0 +1,59 @@
+# Textos fuente revisados de Seguros Aburrá, en espanol (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: stonecroft
+language: es
+part_key: jurisdiction
+texts:
+- source_id: STO-JUR-2026-J.1
+  kind: jurisdiction
+  clause_key: J.1
+  part: Documento de jurisdicción de Corvane
+  version: '2026.1'
+  text: 'En Corvane, todo vehículo que circule por vías públicas debe tener un seguro de responsabilidad
+    civil con estos mínimos: $25.000 por las lesiones corporales de una persona, $50.000 por todas las
+    lesiones de un mismo accidente y $20.000 por los daños a bienes.'
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-JUR-2026-J.2
+  kind: jurisdiction
+  clause_key: J.2
+  part: Documento de jurisdicción de Corvane
+  version: '2026.1'
+  text: La aseguradora que decida cancelar una póliza debe avisarlo al asegurado con al menos veinte días
+    de anticipación. Si la causa es la falta de pago de la prima, el aviso puede ser de diez días.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-JUR-2026-J.3
+  kind: jurisdiction
+  clause_key: J.3
+  part: Documento de jurisdicción de Corvane
+  version: '2026.1'
+  text: Quien sufra un accidente o una pérdida debe avisarlo a su aseguradora dentro de los sesenta días
+    siguientes, salvo que demuestre que no pudo hacerlo antes.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-JUR-2026-J.4
+  kind: jurisdiction
+  clause_key: J.4
+  part: Documento de jurisdicción de Corvane
+  version: '2026.1'
+  text: El conductor debe llevar consigo la prueba vigente de su seguro, en papel o en formato digital,
+    y mostrarla cuando una autoridad de tránsito se la pida.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: STO-JUR-2026-J.5
+  kind: jurisdiction
+  clause_key: J.5
+  part: Documento de jurisdicción de Corvane
+  version: '2026.1'
+  text: La demanda contra una aseguradora por una póliza de automóvil debe presentarse dentro de los dos
+    años siguientes al accidente o a la pérdida.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand

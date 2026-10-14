@@ -1,0 +1,30 @@
+# The person asks how much is left (BR3.2, BR5.1), English turn.
+#
+# Acceptance criterion: with three of the seven fields confirmed, the reply says
+# "3 of 7", names the missing blocks read from the case --not safety, which is
+# done-- and goes on with the question of the block that is due.
+#
+# Expected verdict: `pass`.
+#
+# Not a hard gate on its own, but it runs on every delivery and a case that
+# starts failing is a regression (`team.md`'s definition). Miguel's decision of
+# 2026-10-06: the agent answers what it was told before going on with what is
+# pending, without calling any model for it.
+#
+# Its Spanish pair is `DS-2/es/intake-progress-question`: same criteria and same target, measured per
+# language and never as a combined average (P12).
+case_key: DS-2/en/intake-progress-question
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - intake
+  - conversation
+script:
+# The turn is indexed by the field that **was pending** when the person said it
+# (`incident_datetime`): a script only admits schema fields, and the social turn is not one.
+  - field_key: incident_datetime
+    text: "How much is left?"
+expected_verdicts:
+  intake_progress_question: pass

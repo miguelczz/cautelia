@@ -1,0 +1,61 @@
+# Textos fuente revisados de Autos Poblado, en ingles (U7, F2).
+# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
+# Los borradores del modelo en ingles calcaban giros del formulario de referencia: se
+# reescribieron a mano y por eso casi todos dicen drafted_with: hand.
+# Se edita a mano y se regenera con `mise run synthetic:generate`.
+format_version: 1
+tenant_id: sunmeadow
+language: en
+part_key: jurisdiction
+texts:
+- source_id: SUN-JUR-2026-J.1
+  kind: jurisdiction
+  clause_key: J.1
+  part: Corvane Jurisdiction Document
+  version: '2026.1'
+  text: 'In Corvane, every vehicle on a public road must carry liability insurance with at least these
+    limits: $25,000 for bodily injury to one person, $50,000 for all bodily injury in one accident and
+    $20,000 for property damage.'
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: SUN-JUR-2026-J.2
+  kind: jurisdiction
+  clause_key: J.2
+  part: Corvane Jurisdiction Document
+  version: '2026.1'
+  text: An insurer that decides to cancel a policy must notify the policyholder at least 20 days in advance.
+    When the reason is unpaid premium, 10 days' notice is enough.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: SUN-JUR-2026-J.3
+  kind: jurisdiction
+  clause_key: J.3
+  part: Corvane Jurisdiction Document
+  version: '2026.1'
+  text: Anyone who has an accident or a loss must report it to their insurer within 60 days, unless they
+    show they could not do so sooner.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: SUN-JUR-2026-J.4
+  kind: jurisdiction
+  clause_key: J.4
+  part: Corvane Jurisdiction Document
+  version: '2026.1'
+  text: Drivers must carry current proof of insurance, on paper or in digital form, and show it when a
+    traffic officer asks.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: gemini-3.1-flash-lite
+- source_id: SUN-JUR-2026-J.5
+  kind: jurisdiction
+  clause_key: J.5
+  part: Corvane Jurisdiction Document
+  version: '2026.1'
+  text: A lawsuit against an insurer over an auto policy must be filed within two years of the accident
+    or loss.
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand

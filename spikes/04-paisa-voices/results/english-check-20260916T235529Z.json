@@ -1,0 +1,89 @@
+{
+  "experiment": "04-paisa-voices",
+  "finished_utc": "2026-09-16T23:55:29Z",
+  "rule": {
+    "pass_mark": 4.0,
+    "floor_same_person": 3.0,
+    "control_max_same_person": 2.0
+  },
+  "sheets": 1,
+  "clips": [
+    {
+      "clip": "clip-08",
+      "group": "control",
+      "voice": "Mariana",
+      "text_id": "en-opening",
+      "same_person": 1.0,
+      "sounds_real": 5.0
+    },
+    {
+      "clip": "clip-03",
+      "group": "earlier",
+      "voice": "Catalina",
+      "text_id": "en-confirm",
+      "same_person": 5.0,
+      "sounds_real": 5.0
+    },
+    {
+      "clip": "clip-06",
+      "group": "earlier",
+      "voice": "Catalina",
+      "text_id": "en-opening",
+      "same_person": 5.0,
+      "sounds_real": 5.0
+    },
+    {
+      "clip": "clip-04",
+      "group": "new",
+      "voice": "Catalina",
+      "text_id": "en-closing",
+      "same_person": 5.0,
+      "sounds_real": 5.0
+    },
+    {
+      "clip": "clip-09",
+      "group": "new",
+      "voice": "Catalina",
+      "text_id": "en-confirm",
+      "same_person": 5.0,
+      "sounds_real": 5.0
+    },
+    {
+      "clip": "clip-07",
+      "group": "new",
+      "voice": "Catalina",
+      "text_id": "en-emergency",
+      "same_person": 5.0,
+      "sounds_real": 5.0
+    },
+    {
+      "clip": "clip-02",
+      "group": "new",
+      "voice": "Catalina",
+      "text_id": "en-hold",
+      "same_person": 5.0,
+      "sounds_real": 5.0
+    },
+    {
+      "clip": "clip-01",
+      "group": "new",
+      "voice": "Catalina",
+      "text_id": "en-no-clause",
+      "same_person": 5.0,
+      "sounds_real": 5.0
+    },
+    {
+      "clip": "clip-05",
+      "group": "new",
+      "voice": "Catalina",
+      "text_id": "en-reprompt",
+      "same_person": 5.0,
+      "sounds_real": 5.0
+    }
+  ],
+  "new_same_person": 5.0,
+  "new_sounds_real": 5.0,
+  "control_ok": true,
+  "passes": true,
+  "verdict": "la voz conserva su identidad en inglés"
+}

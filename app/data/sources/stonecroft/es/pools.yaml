@@ -1,0 +1,99 @@
+# Repertorios de datos ficticios en espanol (U7, CG-U7-2): escritos a mano y revisados.
+# Los usan todas las aseguradoras para las personas y vehiculos en espanol; el generador
+# compone cada nombre, telefono, documento, placa y VIN desde la semilla (BR7.1).
+format_version: 1
+tenant_id: stonecroft
+language: es
+part_key: pools
+texts:
+- source_id: STO-POOL-GIVEN-NAMES
+  kind: persona_pool
+  version: '2026.1'
+  text: |-
+    Mariana
+    Camilo
+    Valentina
+    Andrés
+    Daniela
+    Santiago
+    Laura
+    Julián
+    Natalia
+    Sebastián
+    Paula
+    Felipe
+    Juliana
+    Mateo
+    Carolina
+    Esteban
+    Luisa
+    Alejandro
+    Manuela
+    Tomás
+    Isabela
+    Nicolás
+    Sara
+    Ximena
+    Óscar
+    Gloria
+    Hernán
+    Lucía
+    Ricardo
+    Adriana
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-POOL-FAMILY-NAMES
+  kind: persona_pool
+  version: '2026.1'
+  text: |-
+    Ospina
+    Restrepo
+    Gómez
+    Jaramillo
+    Cardona
+    Arango
+    Montoya
+    Zapata
+    Quintero
+    Salazar
+    Henao
+    Giraldo
+    Mejía
+    Vélez
+    Londoño
+    Castaño
+    Betancur
+    Echeverri
+    Correa
+    Muñoz
+    Rendón
+    Toro
+    Agudelo
+    Posada
+    Ochoa
+    Villegas
+    Duque
+    Marín
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand
+- source_id: STO-POOL-VEHICLES
+  kind: vehicle_pool
+  version: '2026.1'
+  text: |-
+    Chevrolet Onix
+    Renault Logan
+    Mazda 2
+    Kia Picanto
+    Nissan Versa
+    Toyota Corolla Cross
+    Renault Duster
+    Suzuki Swift
+    Volkswagen Gol
+    Hyundai Accent
+    Mazda CX-30
+    Kia Sportage
+  reviewed_at: '2026-09-21'
+  reviewed_by: conductor
+  drafted_with: hand

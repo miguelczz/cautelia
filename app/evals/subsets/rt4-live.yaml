@@ -1,0 +1,28 @@
+name: rt4-live
+reason: >
+  El escenario RT-4 del conjunto adversarial contra el **despliegue vivo**, en
+  los dos idiomas. Es el comando que produce el valor real de NFR10.3, y corre
+  por hito (semanas 6, 9 y 12), no en cada cambio: las fallas de aislamiento son
+  tan a menudo errores de configuracion del despliegue como errores de codigo, y
+  el arnes local no ve los primeros (BR1.9).
+
+  Necesita `UNTANGLE_LIVE_TARGET_URL` apuntando al despliegue. Sin ella, los dos
+  casos quedan **no medidos** con su causa y la corrida se marca no comparable:
+  una compuerta que no se pudo ejecutar se declara "no medida", jamas se omite y
+  jamas se da por verde.
+
+  Desde U14 son cuatro y no dos: al enlace firmado del visitante se suma la
+  credencial de personal pidiendo la cola de otra aseguradora, que es la otra
+  mitad del mismo escenario. Van en casos separados porque los criterios de un
+  caso corren en orden y el primero que no se puede medir deja el caso entero
+  no medido: compartiendo caso, el segundo criterio no se ejecutaria nunca.
+
+  Tope escrito: los casos de RT-4 y ninguno mas. Este subconjunto no es el sitio
+  donde meter un caso porque "tambien conviene correrlo": el suyo es el
+  subconjunto completo.
+requires_provider_key: false
+case_keys:
+  - DS-6/es/rt-4-foreign-case
+  - DS-6/en/rt-4-foreign-case
+  - DS-6/es/rt-4-inbox-queue
+  - DS-6/en/rt-4-inbox-queue

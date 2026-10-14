@@ -1,0 +1,93 @@
+{
+  "clauses": [
+    {
+      "clause_id": "STO-PAP-2025-DEF.YOU.ALT",
+      "clause_key": "DEF.YOU.ALT",
+      "form_id": "STO-PAP-2025",
+      "form_version": "2025.1",
+      "is_distractor": true,
+      "issuer_label": "Seguros Aburrá",
+      "language": "es",
+      "part": "Definiciones",
+      "text": "«Usted» es solamente la persona que aparece como asegurada principal en la carátula; su pareja no queda incluida aunque viva con ella."
+    },
+    {
+      "clause_id": "STO-PAP-2025-DEF.COVERED_AUTO",
+      "clause_key": "DEF.COVERED_AUTO",
+      "form_id": "STO-PAP-2025",
+      "form_version": "2025.1",
+      "is_distractor": true,
+      "issuer_label": "Seguros Aburrá",
+      "language": "es",
+      "part": "Definiciones",
+      "text": "«Vehículo cubierto» es el vehículo que figura en la carátula. Un vehículo comprado durante la vigencia solo queda cubierto desde que se incluye en la carátula mediante un endoso."
+    },
+    {
+      "clause_id": "STO-PAP-2025-A.INS",
+      "clause_key": "A.INS",
+      "form_id": "STO-PAP-2025",
+      "form_version": "2025.1",
+      "is_distractor": true,
+      "issuer_label": "Seguros Aburrá",
+      "language": "es",
+      "part": "Parte A — Responsabilidad civil",
+      "text": "Seguros Aburrá paga los daños que el asegurado cause con un vehículo cubierto, hasta el límite de esta parte, pero no asume su defensa: los honorarios de los abogados corren por cuenta del asegurado."
+    },
+    {
+      "clause_id": "STO-PAP-2025-A.EXCL.A.5.ALT",
+      "clause_key": "A.EXCL.A.5.ALT",
+      "form_id": "STO-PAP-2025",
+      "form_version": "2025.1",
+      "is_distractor": true,
+      "issuer_label": "Seguros Aburrá",
+      "language": "es",
+      "part": "Parte A — Responsabilidad civil",
+      "text": "No cubrimos la responsabilidad que surja mientras el vehículo transporta personas o mercancías, con pago o sin él, incluidos los viajes en que conocidos comparten los gastos."
+    },
+    {
+      "clause_id": "STO-PAP-2025-C.INS.ALT",
+      "clause_key": "C.INS.ALT",
+      "form_id": "STO-PAP-2025",
+      "form_version": "2025.1",
+      "is_distractor": true,
+      "issuer_label": "Seguros Aburrá",
+      "language": "es",
+      "part": "Parte C — Conductores sin seguro",
+      "text": "Seguros Aburrá paga la indemnización por lesiones corporales que usted o un familiar tengan derecho a reclamar al conductor de un vehículo sin seguro, siempre que ese conductor esté identificado. Los accidentes en que el responsable huye no quedan cubiertos."
+    },
+    {
+      "clause_id": "STO-PAP-2025-D.INS.COLLISION.ALT",
+      "clause_key": "D.INS.COLLISION.ALT",
+      "form_id": "STO-PAP-2025",
+      "form_version": "2025.1",
+      "is_distractor": true,
+      "issuer_label": "Seguros Aburrá",
+      "language": "es",
+      "part": "Parte D — Daños a su vehículo",
+      "text": "Seguros Aburrá paga los daños directos que sufra su vehículo cubierto por chocar o volcarse, menos el deducible de colisión, solo si el choque lo causó otra persona."
+    },
+    {
+      "clause_id": "STO-PAP-2025-D.TRANSPORT",
+      "clause_key": "D.TRANSPORT",
+      "form_id": "STO-PAP-2025",
+      "form_version": "2025.1",
+      "is_distractor": true,
+      "issuer_label": "Seguros Aburrá",
+      "language": "es",
+      "part": "Parte D — Daños a su vehículo",
+      "text": "Si su vehículo cubierto queda fuera de servicio por un robo o por un daño cubierto, le reembolsamos los gastos de transporte hasta $12 por día y $360 en total, a partir del tercer día."
+    },
+    {
+      "clause_id": "STO-PAP-2025-E.DUTIES.A.1.ALT",
+      "clause_key": "E.DUTIES.A.1.ALT",
+      "form_id": "STO-PAP-2025",
+      "form_version": "2025.1",
+      "is_distractor": true,
+      "issuer_label": "Seguros Aburrá",
+      "language": "es",
+      "part": "Parte E — Obligaciones después de un accidente o pérdida",
+      "text": "Avísenos de cualquier accidente o pérdida dentro de los treinta días siguientes; pasado ese plazo, el aviso ya no se recibe."
+    }
+  ],
+  "form_id": "STO-PAP-2025"
+}

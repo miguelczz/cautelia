@@ -1,0 +1,122 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u3-pii-redaction",
+  "upstream_ids": [
+    "SEC-U3.1",
+    "SEC-U3.2",
+    "SEC-U3.4",
+    "SEC-U3.7",
+    "SEC-U3.9",
+    "SEC-U3.10",
+    "SEC-U3.12",
+    "NFR11.2",
+    "NFR11.3",
+    "NFR11.4",
+    "NFR18.2",
+    "NFR21.1"
+  ],
+  "coverage": [
+    {
+      "id": "SEC-U3.1",
+      "status": "OK",
+      "target": "Paso 6 del guion: `redaction:constructor` entra junto a los siete chequeos que ya estan, y `lint` sigue llevando el contrato de importacion del registro de puntos de salida."
+    },
+    {
+      "id": "SEC-U3.2",
+      "status": "OK",
+      "target": "Tarea nueva `redaction:constructor` en el paso 6, con su comando exacto declarado en el archivo de tareas."
+    },
+    {
+      "id": "SEC-U3.4",
+      "status": "OK",
+      "target": "Paso 5: `mise run cov` corre las pruebas de la unidad, que incluyen el caso de RT-15. El guion instala el extra de modelos antes de ese paso porque sin ellos no corre."
+    },
+    {
+      "id": "SEC-U3.7",
+      "status": "OK",
+      "target": "La misma tarea `redaction:constructor`: un solo analisis con dos reglas, quien produce el tipo y quien guarda un valor junto a su etiqueta."
+    },
+    {
+      "id": "SEC-U3.9",
+      "status": "OK",
+      "target": "Tarea nueva `redaction:report`, que produce el informe por idioma, por tipo y por reconocedor con la cifra del respaldo aparte."
+    },
+    {
+      "id": "SEC-U3.10",
+      "status": "OK",
+      "target": "El despliegue: los modelos viajan con el, y si no estan el proceso no arranca (INF-U3-4, NFRD-U3-2)."
+    },
+    {
+      "id": "SEC-U3.12",
+      "status": "OK",
+      "target": "Sin servicio nuevo, sin puerto y sin variable de entorno nueva: la unidad no habla con nada fuera del proceso y el contrato de importacion lo hace cumplir."
+    },
+    {
+      "id": "NFR11.2",
+      "status": "OK",
+      "target": "`redaction:report` publica la proporcion del respaldo por idioma, que es el comando que produce el valor del techo de 1 de cada 10."
+    },
+    {
+      "id": "NFR11.3",
+      "status": "OK",
+      "target": "Paso 5 del guion: las pruebas que cronometran la pasada con el reloj del sistema corren dentro de `mise run cov`. El valor real se mide en la primera corrida verde y no se estima aqui (INF-U3-5)."
+    },
+    {
+      "id": "NFR11.4",
+      "status": "OK",
+      "target": "Paso 5 igualmente: la prueba del aviso usa el reloj controlado, asi que no anade tiempo real a la corrida de la compuerta."
+    },
+    {
+      "id": "NFR18.2",
+      "status": "OK",
+      "target": "Paso 5: `mise run cov` mide el piso del modulo critico, que ahora incluye la redaccion por decision de Miguel del 2026-09-20."
+    },
+    {
+      "id": "NFR21.1",
+      "status": "OK",
+      "target": "El reparto de INF-U3-2: los modelos viven en un extra que `deps:install` no instala, asi que el camino del clon al reporte no crece por esta unidad."
+    }
+  ],
+  "reverse": [
+    {
+      "id": "INF-U3-1",
+      "status": "N/A",
+      "target": "Los modelos entran fijados por URL con su hash y no con `spacy download`. Ningun control lo pedia; lo exige la practica afirmada de instalacion reproducible, que la forma documentada por spaCy y por Presidio incumple."
+    },
+    {
+      "id": "INF-U3-2",
+      "status": "N/A",
+      "target": "Los modelos viven en un extra y no en el juego principal. Comprobado en la herramienta: `--all-groups` no incluye extras, asi que `deps:install` no se descarga 72 MB y NFR21 no empeora por esta unidad."
+    },
+    {
+      "id": "INF-U3-3",
+      "status": "N/A",
+      "target": "Si los modelos faltan, el cargador falla nombrandolos y nombrando `mise run models:install`. Un ImportError de spaCy a mitad de una prueba no dice que hacer."
+    },
+    {
+      "id": "INF-U3-5",
+      "status": "N/A",
+      "target": "Las tres cifras pendientes --carga de modelos en memoria, coste real de la pasada y efecto medido sobre el arranque en frio-- no se estiman: se miden en la primera corrida verde de la generacion de codigo."
+    },
+    {
+      "id": "infrastructure-specification",
+      "status": "N/A",
+      "target": "No aplica: la unidad es de tipo `library` y no despliega nada. No hay servicio, ni puerto, ni variable de entorno nueva; va embebida en el proceso unico."
+    },
+    {
+      "id": "monitoring-design",
+      "status": "N/A",
+      "target": "No aplica por el mismo motivo. Lo observable de esta unidad --el informe por idioma y por tipo-- lo publica el reporte de evaluaciones, que es de U21."
+    },
+    {
+      "id": "INF-U3-6",
+      "status": "N/A",
+      "target": "La cache de `~/.cache/uv` se propone como paso explicito y no se da por hecha. La accion del flujo cachea solo el directorio de `mise`, comprobado en su codigo fuente; hasta que exista ese paso, cada corrida descarga los 72 MB. Hallazgo R-02 de la revision."
+    },
+    {
+      "id": "INF-U3-7",
+      "status": "N/A",
+      "target": "La instalacion del extra va en `scripts/verify.sh` justo antes del paso 5, no en el flujo ni en `deps:install`. La tuberia invoca el guion y no mantiene su propia lista, y `deps:install` lo corre `bootstrap`. Hallazgo R-01 de la revision."
+    }
+  ]
+}

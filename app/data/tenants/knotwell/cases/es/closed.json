@@ -1,0 +1,95 @@
+{
+  "case_key": "SEED/knotwell/es/closed",
+  "channel": "chat",
+  "derivation_reason": "rule",
+  "fields": {
+    "description": {
+      "status": "stated",
+      "value": "Otro carro se pasó el semáforo en rojo y le pegó en la puerta del conductor."
+    },
+    "identity_and_policy": {
+      "status": "confirmed",
+      "value": "Rosa Iturbe, póliza POL-173620"
+    },
+    "incident_datetime": {
+      "status": "confirmed",
+      "value": "2026-09-12 07:15"
+    },
+    "injuries": {
+      "status": "confirmed",
+      "value": "Sin lesionados"
+    },
+    "location": {
+      "status": "confirmed",
+      "value": "Carrera 5 con calle 40, Corvane"
+    },
+    "other_parties": {
+      "status": "stated",
+      "value": "Un conductor, Daniela Montoya Betancur, en un vehículo de placa NVH032"
+    },
+    "vehicle_and_driver": {
+      "status": "confirmed",
+      "value": "Nissan Versa 2015, placa MKD653, lo conducía Rosa"
+    }
+  },
+  "language": "es",
+  "policy_number": "POL-173620",
+  "record_type": "claim",
+  "resolution": "sent_to_insurer",
+  "state": "closed",
+  "tenant_id": "knotwell",
+  "transcript": [
+    {
+      "speaker": "insured",
+      "text": "Buenos días, quiero reportar un choque. Soy Rosa Iturbe, póliza POL-173620."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Alguien resultó herido?"
+    },
+    {
+      "speaker": "insured",
+      "text": "No, nadie."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Cuándo y dónde fue?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Hoy a las siete y cuarto de la mañana, en la carrera 5 con calle 40."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué pasó?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Otro carro se pasó el semáforo en rojo y me pegó en la puerta del conductor."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Qué vehículo manejaba?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Mi Nissan Versa 2015, placa MKD653. Lo manejaba yo."
+    },
+    {
+      "speaker": "agent",
+      "text": "¿Tienes los datos del otro conductor?"
+    },
+    {
+      "speaker": "insured",
+      "text": "Sí, se llama Daniela Montoya Betancur y la placa de su carro es NVH032."
+    },
+    {
+      "speaker": "staff",
+      "text": "Enviamos su caso a Seguros Aburrá con todo lo que registramos."
+    }
+  ],
+  "used_by": [
+    "AC1.14.3",
+    "AC4.10.1"
+  ]
+}

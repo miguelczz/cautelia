@@ -1,0 +1,20 @@
+# Una duda general no es un accidente (C1).
+#
+# Comprension de un mensaje (fase 0 de docs/propuesta-2026-10/03-propuesta-y-diseno.md).
+# Escrito antes del codigo que la implementa: falla hasta que la agente entienda con el modelo.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/understand-general-question
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  message: ¿Qué es un deducible?
+  wants:
+  - general_question
+  asks_question: true
+expected_verdicts:
+  understanding_general_question: pass

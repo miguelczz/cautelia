@@ -1,0 +1,166 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u1-workspace",
+  "upstream_ids": [
+    "NFR17.1",
+    "NFR18.1",
+    "NFR18.3",
+    "NFR21.1",
+    "NFR21.2",
+    "SEC-U1.1",
+    "SEC-U1.2",
+    "SEC-U1.3",
+    "SEC-U1.4",
+    "SEC-U1.5",
+    "SEC-U1.6",
+    "SEC-U1.7",
+    "SEC-U1.8",
+    "REL-U1.1",
+    "REL-U1.3",
+    "REL-U1.4",
+    "REL-U1.5",
+    "OBS-U1.1",
+    "OBS-U1.2",
+    "OBS-U1.3",
+    "OBS-U1.4"
+  ],
+  "coverage": [
+    {
+      "id": "NFR21.1",
+      "status": "OK",
+      "target": "infrastructure-specification.md: docker compose con el perfil de trazas separado, imagenes ancladas por huella y puertos que fallan nombrando la variable en vez de elegir otro en silencio"
+    },
+    {
+      "id": "NFR21.2",
+      "status": "OK",
+      "target": "cicd-pipeline.md: flujo aparte fresh-clone, semanal y por hito, en entorno limpio sin cache, que publica el tiempo total y por paso como artefacto y no bloquea la entrega"
+    },
+    {
+      "id": "NFR17.1",
+      "status": "OK",
+      "target": "monitoring-design.md: duracion de la corrida como metrica publicada en el artefacto de cada corrida, sin recolector externo"
+    },
+    {
+      "id": "NFR18.1",
+      "status": "OK",
+      "target": "cicd-pipeline.md: el paso 5 del guion corre las pruebas de los dos proyectos con su umbral de cobertura; la tuberia invoca el guion y no mantiene su propia lista"
+    },
+    {
+      "id": "NFR18.3",
+      "status": "N/A",
+      "target": "La lista de exclusion versionada del calculo de cobertura (landing, corpus, datasets generados y migraciones) es configuracion de la herramienta de cobertura, no infraestructura: la fija tech-stack-decisions.md y se crea en code-generation. Esta etapa solo garantiza que el comando que la lee corra en la tuberia. La cita anterior a los filtros de ruta del flujo era otro mecanismo: decide si la corrida se dispara, no que entra en el calculo. Corregido por el hallazgo R-01 de la revision de esta etapa."
+    },
+    {
+      "id": "SEC-U1.1",
+      "status": "OK",
+      "target": "cicd-pipeline.md: job 1 `secrets` invoca el guion acotado a ese paso, corre sin credenciales y sin base de datos, y su fallo detiene el flujo entero"
+    },
+    {
+      "id": "SEC-U1.2",
+      "status": "OK",
+      "target": "infrastructure-specification.md, tabla de secretos: .env local cargado por el archivo de tareas, secretos del repositorio en la tuberia, y verificado que el .gitignore ya exceptua .env.example"
+    },
+    {
+      "id": "SEC-U1.3",
+      "status": "OK",
+      "target": "cicd-pipeline.md: el paso de instalacion del guion usa el modo reproducible; un lockfile desactualizado hace fallar el paso sin chequeo aparte"
+    },
+    {
+      "id": "SEC-U1.4",
+      "status": "OK",
+      "target": "cicd-pipeline.md: las acciones de terceros se fijan por identificador de commit y no por etiqueta; la espera de tres dias para dependencias vive en el robot de dependencias (security-design.md)"
+    },
+    {
+      "id": "SEC-U1.5",
+      "status": "OK",
+      "target": "cicd-pipeline.md: permisos vacios por defecto a nivel de flujo, elevados por trabajo; secretos entregados solo al trabajo que los necesita; analizador de flujos como paso del guion"
+    },
+    {
+      "id": "SEC-U1.6",
+      "status": "OK",
+      "target": "monitoring-design.md: el artefacto de cada corrida lleva commit, modelos e identificador de corrida, y el diff contra la linea base no depende de la retencion del proveedor porque se hace entre archivos versionados"
+    },
+    {
+      "id": "SEC-U1.7",
+      "status": "OK",
+      "target": "cicd-pipeline.md, seccion de ahorro de minutos: cancelacion de corridas anteriores, filtros de ruta, cache del gestor y medicion de los 15 minutos fuera del camino de cada cambio; los filtros nunca apagan la compuerta"
+    },
+    {
+      "id": "SEC-U1.8",
+      "status": "N/A",
+      "target": "Identidad correcta en las operaciones contra el repositorio remoto: es un control humano previo al push, sin pieza de infraestructura que lo implemente. Declarado como tal en security-design.md"
+    },
+    {
+      "id": "REL-U1.1",
+      "status": "OK",
+      "target": "infrastructure-specification.md: imagenes ancladas por huella de contenido (decision Q1), para que dos corridas del mismo commit levanten los mismos bytes de servicio"
+    },
+    {
+      "id": "REL-U1.3",
+      "status": "OK",
+      "target": "infrastructure-specification.md: Langfuse en un perfil aparte que no arranca por defecto, que es la condicion que hace real la degradacion honesta sin backend de trazas"
+    },
+    {
+      "id": "REL-U1.4",
+      "status": "OK",
+      "target": "infrastructure-specification.md, tabla de secretos: en las dos rutas (local y tuberia) la ausencia de una variable termina con codigo distinto de cero nombrandola, antes de la primera llamada"
+    },
+    {
+      "id": "REL-U1.5",
+      "status": "OK",
+      "target": "cicd-pipeline.md: cuando falta la clave del proveedor la corrida se marca no comparable con su causa y el reporte lo dice; nunca se salta el paso en silencio"
+    },
+    {
+      "id": "OBS-U1.1",
+      "status": "OK",
+      "target": "cicd-pipeline.md y monitoring-design.md: el reporte de la corrida se publica como artefacto con su commit y su fecha; el registro en base de datos existe solo en local"
+    },
+    {
+      "id": "OBS-U1.2",
+      "status": "OK",
+      "target": "monitoring-design.md, tabla de registro estructurado: una linea por evento con el identificador de la corrida y del caso, legible en la tuberia sin descargar el artefacto"
+    },
+    {
+      "id": "OBS-U1.3",
+      "status": "OK",
+      "target": "monitoring-design.md: la proporcion de casos no medidos es una metrica propia con su causa, declarada como la senal mas facil de ignorar y la mas importante"
+    },
+    {
+      "id": "OBS-U1.4",
+      "status": "OK",
+      "target": "monitoring-design.md: el reporte publicado como artefacto conserva la estructura por idioma de observability-design.md; la infraestructura no agrega ni promedia nada"
+    }
+  ],
+  "reverse": [
+    {
+      "id": "image-digest-pinning",
+      "status": "N/A",
+      "target": "Anclaje de imagenes por huella de contenido con un comando del archivo de tareas que la resuelve y la etiqueta legible en un comentario al lado. Decision Q1 de esta etapa."
+    },
+    {
+      "id": "ci-database-source",
+      "status": "N/A",
+      "target": "La tuberia levanta el mismo docker-compose.yml que la maquina de quien desarrolla, en vez de los contenedores de servicio de GitHub Actions: una sola descripcion de la base de datos. Decision Q2 de esta etapa."
+    },
+    {
+      "id": "red-trunk-revert-window",
+      "status": "N/A",
+      "target": "Arreglar hacia adelante con corte escrito: pasados 30 minutos sin verde se revierte el commit, con un commit de reversion y nunca con push forzado. Decision Q3 de esta etapa; precisa la practica afirmada que solo decia 'tiene prioridad'."
+    },
+    {
+      "id": "failure-notification-channel",
+      "status": "N/A",
+      "target": "Notificaciones propias de GitHub para corridas fallidas sobre main, sin servicio ni credencial adicional. Decision Q4 de esta etapa; sin ellas la palabra incidente no significa nada."
+    },
+    {
+      "id": "no-deployment-in-u1",
+      "status": "N/A",
+      "target": "U1 no despliega: sin modelo de computo, sin topologia de red, sin entornos y sin estrategia de despliegue. Declarado como decision con su razon y con la lista de encargos al intent infra, en vez de inventar infraestructura que no existe."
+    },
+    {
+      "id": "gitignore-env-example",
+      "status": "N/A",
+      "target": "Verificado contra el archivo: .gitignore ya ignora .env y .env.* y ya exceptua .env.example. Los requisitos de seguridad lo daban como pendiente; esta etapa lo corrige."
+    }
+  ]
+}

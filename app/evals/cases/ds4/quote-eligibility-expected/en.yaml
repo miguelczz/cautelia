@@ -1,0 +1,30 @@
+# Elegibilidad de la solicitud (AC6.2.1, BR2.1, BR2.2, respuestas Q1 y Q3 de Miguel), turno en
+# ingles.
+#
+# Criterio de aceptacion: Sobre las filas `eligibility/*` de `app/evals/fixtures/quote/en.yaml`,
+# el motor real de elegibilidad de Autos Poblado da la salida, la banda y las reglas que
+# decidieron declaradas en cada fila: la solicitud limpia es riesgo habitual, un siniestro con
+# culpa o dos anios de licencia suben a riesgo elevado, el uso comercial y el titulo de
+# salvamento son no elegibles, y no elegible le gana a derivar.
+#
+# Veredicto esperado: `pass`.
+#
+# Se resuelve sin modelo ni base de datos (`requires_provider_key: false`), y por eso entra al
+# subconjunto de arranque y corre en cada entrega.
+#
+# La pareja en espanol es `DS-4/es/quote-eligibility-expected`: los mismos criterios y la misma
+# meta, medidos por idioma y nunca como promedio combinado (P12).
+#
+# Lo que este caso no mide: la derivacion y sus umbrales, que miden
+# `DS-4/en/quote-referrals-correct`.
+case_key: DS-4/en/quote-eligibility-expected
+dataset: DS-4
+language: en
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - quote-eligibility
+  - rules-engine
+  - risk-band
+expected_verdicts:
+  quote_eligibility_expected: pass

@@ -1,0 +1,250 @@
+{
+  "stage": "code-generation",
+  "unit": "u5-provider-platform",
+  "version": 1,
+  "writes": [
+    {
+      "path": ".env.example"
+    },
+    {
+      "path": ".gitignore"
+    },
+    {
+      "path": "app/backend/.importlinter"
+    },
+    {
+      "path": "app/backend/migrations/versions/u5_platform_0001_spend_tables.py"
+    },
+    {
+      "path": "app/backend/migrations/versions/u5_platform_0002_call_release.py"
+    },
+    {
+      "path": "app/backend/migrations/versions/u5_platform_0003_recording_lane.py"
+    },
+    {
+      "path": "app/backend/pyproject.toml"
+    },
+    {
+      "path": "app/backend/src/untangle/base.py"
+    },
+    {
+      "path": "app/backend/src/untangle/case_record/purge.py"
+    },
+    {
+      "path": "app/backend/src/untangle/evals/cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/paths.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/gemini/__init__.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/gemini/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/gemini/breaker.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/gemini/errors.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/gemini/request.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/adapters/gemini/transport.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/config.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/factory.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/ports.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/prompts.py"
+    },
+    {
+      "path": "app/backend/src/untangle/providers/transport.py"
+    },
+    {
+      "path": "app/backend/src/untangle/server/composition.py"
+    },
+    {
+      "path": "app/backend/src/untangle/settings.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/spend/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/spend/budget.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/spend/labels.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/spend/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/spend/pricing.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/spend/purge.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/spend/quota.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/spend/repository.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/traces/api.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/traces/export.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/traces/labels.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/traces/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/telemetry/traces/repository.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/cli.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/models.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/rls_assertion.py"
+    },
+    {
+      "path": "app/backend/src/untangle/tenancy/session.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/coverage_gate.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/generate_contracts.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/schema_check.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/spend_report.py"
+    },
+    {
+      "path": "app/backend/src/untangle/workspace/tenancy_literals.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u1/test_composition.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u5/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u5/conftest.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u5/test_api.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u5/test_call_release.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u5/test_isolation.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u5/test_repository.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u5/test_trace_summary.py"
+    },
+    {
+      "path": "app/backend/tests/integration/u5/test_wiring.py"
+    },
+    {
+      "path": "app/backend/tests/unit/providers/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/providers/test_config.py"
+    },
+    {
+      "path": "app/backend/tests/unit/providers/test_factory.py"
+    },
+    {
+      "path": "app/backend/tests/unit/providers/test_gemini.py"
+    },
+    {
+      "path": "app/backend/tests/unit/providers/test_transport.py"
+    },
+    {
+      "path": "app/backend/tests/unit/redaction/test_streaming.py"
+    },
+    {
+      "path": "app/backend/tests/unit/server/test_workspace_tools.py"
+    },
+    {
+      "path": "app/backend/tests/unit/telemetry/__init__.py"
+    },
+    {
+      "path": "app/backend/tests/unit/telemetry/test_budget.py"
+    },
+    {
+      "path": "app/backend/tests/unit/telemetry/test_labels.py"
+    },
+    {
+      "path": "app/backend/tests/unit/telemetry/test_models.py"
+    },
+    {
+      "path": "app/backend/tests/unit/telemetry/test_pricing.py"
+    },
+    {
+      "path": "app/backend/tests/unit/telemetry/test_quota.py"
+    },
+    {
+      "path": "app/backend/tests/unit/telemetry/test_traces.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_purge.py"
+    },
+    {
+      "path": "app/backend/tests/unit/tenancy/test_rls_assertion.py"
+    },
+    {
+      "path": "app/backend/uv.lock"
+    },
+    {
+      "path": "app/config/copy/en.yaml"
+    },
+    {
+      "path": "app/config/copy/es.yaml"
+    },
+    {
+      "path": "app/config/prompts/README.md"
+    },
+    {
+      "path": "app/config/providers/prices.yaml"
+    },
+    {
+      "path": "app/config/providers/providers.yaml"
+    },
+    {
+      "path": "app/contracts/schemas/prices.schema.json"
+    },
+    {
+      "path": "app/contracts/schemas/providers.schema.json"
+    },
+    {
+      "path": "app/frontend/src/shared/copy/copy-keys.ts"
+    },
+    {
+      "path": "mise.toml"
+    }
+  ]
+}

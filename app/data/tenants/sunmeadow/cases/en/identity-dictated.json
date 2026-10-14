@@ -1,0 +1,31 @@
+{
+  "case_key": "SEED/sunmeadow/en/identity-dictated",
+  "channel": "chat",
+  "derivation_reason": null,
+  "fields": {
+    "identity_and_policy": {
+      "status": "stated",
+      "value": "Lina Herrera, policy POL-795628"
+    }
+  },
+  "language": "en",
+  "policy_number": "POL-795628",
+  "record_type": "claim",
+  "resolution": null,
+  "state": "capturing",
+  "tenant_id": "sunmeadow",
+  "transcript": [
+    {
+      "speaker": "agent",
+      "text": "Could you give me your details so I can find the policy?"
+    },
+    {
+      "speaker": "insured",
+      "text": "My ID number is 935-02-5270, my cell is 919-555-0136, the car's plate is YWT-6641 and the policy is POL-795628."
+    }
+  ],
+  "used_by": [
+    "AC4.12.1",
+    "AC4.13.1"
+  ]
+}

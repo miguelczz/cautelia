@@ -1,0 +1,37 @@
+# Llamada cortada con reanudacion (BR3.1, BR3.2), turno en espanol.
+#
+# La persona reporta parte del siniestro, la sesion se corta (el navegador se
+# cierra o la llamada se cae -- el disparador es del canal, U13/U16, no de
+# esta unidad), y una sesion nueva retoma el mismo caso. Lo que este caso
+# comprueba (`tests/integration/u12/test_turn.py`, la sonda generica): el
+# turno que retoma no vuelve a preguntar identity_and_policy ni description,
+# ya confirmados antes del corte -- la completitud real del caso (BR3.2), no
+# una copia en memoria del proceso que el reinicio simulado perderia.
+#
+# La sonda simula el reinicio con un `TenantCheckpointSaver` y un `GraphRuntime`
+# nuevos sobre la misma base (mismo patron que
+# `test_resume.py::test_reanudar_tras_un_reinicio_simulado_lee_lo_confirmado`,
+# paso 6): nada se comparte entre el turno de antes del corte y el de despues
+# salvo la base de datos.
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en ingles es `DS-2/en/dropped-call-resumed`: mismos criterios y
+# misma meta, medidos por idioma y nunca como promedio combinado (P12).
+case_key: DS-2/es/dropped-call-resumed
+dataset: DS-2
+language: es
+tenant: knotwell
+requires_provider_key: false
+axes:
+  - orchestration
+  - resume
+script:
+  - field_key: identity_and_policy
+    text: "Soy Felipe Duarte, mi poliza es POL-000002."
+  - field_key: description
+    text: "Un carro se paso el semaforo en rojo y me choco de lado."
+  - field_key: incident_datetime
+    text: "Ayer por la tarde, cerca de las cuatro."
+expected_verdicts:
+  resume_after_simulated_restart_does_not_reask_confirmed_fields: pass

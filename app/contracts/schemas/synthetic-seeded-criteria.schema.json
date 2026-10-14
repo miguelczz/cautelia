@@ -1,0 +1,76 @@
+{
+  "$defs": {
+    "ReviewedBy": {
+      "description": "Quien reviso: el agente contra la estructura y P8, o Miguel en la muestra.",
+      "enum": [
+        "conductor",
+        "miguel"
+      ],
+      "title": "ReviewedBy",
+      "type": "string"
+    },
+    "SeededCriterion": {
+      "additionalProperties": false,
+      "description": "Un criterio de aceptacion que parte de un caso sembrado, y de que unidad es.",
+      "properties": {
+        "ac_id": {
+          "pattern": "^AC\\d+\\.\\d+\\.\\d+$",
+          "title": "Ac Id",
+          "type": "string"
+        },
+        "unit": {
+          "pattern": "^U\\d+$",
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ac_id",
+        "unit"
+      ],
+      "title": "SeededCriterion",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "`app/data/sources/seeded_criteria.yaml`: los criterios que exigen su caso (BR6.2).\n\nCrece con cada unidad: la que construye un criterio que parte de un caso\nsembrado lo anade aqui junto con el caso, y la siguiente generacion comprueba\nque tenga al menos uno.",
+  "properties": {
+    "format_version": {
+      "const": 1,
+      "title": "Format Version",
+      "type": "integer"
+    },
+    "reviewed_at": {
+      "format": "date",
+      "title": "Reviewed At",
+      "type": "string"
+    },
+    "reviewed_by": {
+      "$ref": "#/$defs/ReviewedBy"
+    },
+    "drafted_with": {
+      "pattern": "^[a-z0-9][a-z0-9.\\-]*$",
+      "title": "Drafted With",
+      "type": "string"
+    },
+    "criteria": {
+      "items": {
+        "$ref": "#/$defs/SeededCriterion"
+      },
+      "minItems": 1,
+      "title": "Criteria",
+      "type": "array"
+    }
+  },
+  "required": [
+    "format_version",
+    "reviewed_at",
+    "reviewed_by",
+    "drafted_with",
+    "criteria"
+  ],
+  "title": "SeededCriteriaFile",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/synthetic-seeded-criteria.schema.json"
+}

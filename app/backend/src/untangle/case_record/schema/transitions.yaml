@@ -1,0 +1,98 @@
+# La tabla de transiciones del caso (BR3.2, FR1.4, ADR-005).
+#
+# Doce filas y ninguna mas. Toda pareja que no este aqui se rechaza: el caso no
+# cambia y se anexa una entrada de tipo `transition_rejected` con los dos
+# estados (AC4.10.1). Es la regla que sostiene "ningun caso llega a cerrado por
+# un camino que nadie diseno".
+#
+# Anadir una transicion es anadir una fila aqui. No hay rama de codigo que
+# decida: el ejecutor busca la pareja en esta tabla y no en un `if`.
+#
+# El diagrama del ciclo de vida que aparece en `functional-spec.md` **se genera
+# desde este archivo** y `mise run case:transitions` falla si divergen (enmienda
+# de ADR-005): un diagrama editado a mano describe un ciclo de vida que el
+# codigo no aplica.
+#
+# Los siete estados son `open`, `capturing`, `verifying`, `deciding`, `derived`,
+# `awaiting_insured` y `closed`. `closed` es terminal: ninguna fila sale de el.
+schema_version: 1
+
+transitions:
+  - id: T1
+    from: open
+    to: capturing
+    when: "Llega el primer turno de la persona"
+    conditions: []
+
+  - id: T2
+    from: capturing
+    to: verifying
+    when: "La captura cierra un bloque y el ritmo de fondo va a verificar la poliza"
+    conditions: []
+
+  - id: T3
+    from: capturing
+    to: derived
+    when: "Cumplimiento deriva durante la captura"
+    conditions: [derivation_reason_declared]
+
+  - id: T4
+    from: verifying
+    to: deciding
+    when: "La verificacion termino y las reglas evaluan"
+    conditions: []
+
+  - id: T5
+    from: verifying
+    to: derived
+    when: "Cumplimiento deriva durante la verificacion"
+    conditions: [derivation_reason_declared]
+
+  - id: T6
+    from: deciding
+    to: closed
+    when: "Las reglas resuelven y cumplimiento cierra"
+    conditions: [resolution_declared, closing_evidence_complete]
+
+  - id: T7
+    from: deciding
+    to: derived
+    when: "Las reglas piden que lo revise una persona"
+    conditions: [derivation_reason_declared]
+
+  - id: T8
+    from: derived
+    to: awaiting_insured
+    when: "El ajustador necesita un dato que solo el asegurado tiene"
+    conditions: []
+
+  - id: T9
+    from: derived
+    to: closed
+    when: "El ajustador decide desde la bandeja"
+    conditions: [resolution_declared, closing_evidence_complete]
+
+  - id: T10
+    from: awaiting_insured
+    to: derived
+    when: "El asegurado respondio y el caso vuelve a la bandeja"
+    conditions: []
+
+  - id: T11
+    from: awaiting_insured
+    to: closed
+    when: "Se cierra sin mas respuesta del asegurado"
+    conditions: [resolution_declared, closing_evidence_complete]
+
+  # La unica vuelta a la captura, y la unica con cuatro condiciones a la vez
+  # (BR3.3, ADR-005). Los bordes se prueban con reloj inyectado en 14:59 y
+  # 15:01: un borde que solo se prueba "por dentro" no prueba el borde.
+  - id: T12
+    from: derived
+    to: capturing
+    when: "La persona retoma una llamada cortada por el limite de la demostracion"
+    conditions:
+      - derivation_reason_is_demo_limit
+      - within_resume_window
+      - same_browser_key
+      - no_decision_started

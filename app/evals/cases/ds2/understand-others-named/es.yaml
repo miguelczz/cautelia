@@ -1,0 +1,23 @@
+# Un tercero nombrado queda anotado como tercero, nunca como una negacion.
+#
+# El cierre directo (US1.17) solo ocurre si `other_parties` es una negacion clara. Si la persona
+# nombra a alguien --un taxi que se fue, sin datos-- y el modelo escribe «ninguno» (o cualquier
+# negacion), el caso se cierra sin ajustador con un tercero sin identificar: el error caro.
+# El campo tiene que quedar anotado, y con algo que `other_parties_data_pending` no lea como
+# «nadie mas» (`other_parties_denied: false`).
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/understand-others-named
+dataset: DS-2
+language: es
+tenant: sunmeadow
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  message: "hola, quiero reportar que ayer un taxi me chocó por detrás en un semáforo y se fue sin dejar datos"
+  wants:
+  - report_accident
+  other_parties_denied: false
+expected_verdicts:
+  understanding_others_named: pass

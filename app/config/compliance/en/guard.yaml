@@ -1,0 +1,132 @@
+# La guardia de salida, juego en ingles (U10, BR1.1 a BR1.8).
+#
+# La pareja de `es/guard.yaml`: las mismas siete categorias y las mismas reglas
+# de escritura --texto normalizado, sin mayusculas ni tildes fuera de una
+# secuencia de escape--. Como se lee este archivo y por que los dos juegos se
+# aplican a cada frase esta explicado alla; aqui no se repite para que no haya
+# dos explicaciones que puedan divergir.
+#
+# Los apostrofos van rectos ("i'm", "you're"): la normalizacion convierte los
+# tipograficos en rectos antes de que ningun patron mire la frase.
+language: en
+family: guard
+version: "2026-09-21.1"
+
+# BR1.8. La misma lista que `es/guard.yaml`; el cargador falla si difieren.
+exempt_catalog_keys: []
+# Sigue vacia, y ahora por una razon medida y no por una pendiente.
+#
+# U13 la iba a usar para el aviso de la decision del ajustador (BR5.2), hasta que
+# se comprobo dos cosas el 2026-09-28. La primera: la plantilla del aviso **no
+# dispara ningun patron** --afirmar que un ajustador aprobo un caso no es afirmar
+# cobertura-- asi que la exencion no hacia falta. La segunda, que es la que
+# importa: el aviso lleva dentro el **comentario libre del ajustador**, y eximir
+# la clave eximia el texto entero. Un comentario que dijera "su poliza cubre el
+# choque" pasaba sin intervencion; sin la exencion, la guardia lo sustituye.
+#
+# La firma de una persona autoriza **su decision**, no cualquier frase que
+# escriba. Por eso el comentario pasa por la guardia por su cuenta y la plantilla
+# se compone despues.
+patterns:
+  # --- Promesa de cobertura (AC1.11.1, AC4.15.1) ------------------------------
+  - id: guard.en.coverage_promise.001
+    category: coverage_promise
+    regex: '\b(is|are|re|be|been|being|isn''t|aren''t|isnt|arent|not)\s+(fully\s+|completely\s+|totally\s+|definitely\s+|not\s+)?(covered|cubiert[oa]s?)\b'
+  - id: guard.en.coverage_promise.002
+    category: coverage_promise
+    regex: '\b(policy|poliza|insurance|insurer)\s+(does\s+|doesn''t\s+|does\s+not\s+|will\s+|won''t\s+|would\s+|definitely\s+)?(covers?|cubre)\b'
+  - id: guard.en.coverage_promise.003
+    category: coverage_promise
+    regex: '\b(they|we|the\s+insurer|the\s+insurance|the\s+company|the\s+carrier)(''ll|\s+will|\s+would|\s+are\s+going\s+to|\s+is\s+going\s+to|\s+do|\s+does)?\s+(definitely\s+|totally\s+|fully\s+)?cover\b'
+  - id: guard.en.coverage_promise.004
+    category: coverage_promise
+    regex: '\b(i|we)(''ve|\s+have|\s+just|\s+already)?\s+(approved|authorized|denied|rejected)\b'
+  - id: guard.en.coverage_promise.005
+    category: coverage_promise
+    regex: '\b(been|is|was|got|has\s+been|will\s+be)\s+(already\s+)?(approved|authorized|denied|rejected)\b'
+
+  # --- Montos (AC1.11.1, AC1.11.5) --------------------------------------------
+  - id: guard.en.amount.001
+    category: amount
+    regex: '(\$|\busd|€|\beur)\s?\d'
+  - id: guard.en.amount.002
+    category: amount
+    regex: '\b\d[\d.,]*\s*(thousand\s+|million\s+|hundred\s+|k\s+)?(dollars|bucks|usd|pesos|euros)\b'
+  - id: guard.en.amount.003
+    category: amount
+    regex: '\b(one|two|three|four|five|six|seven|eight|nine|ten|twenty|thirty|forty|fifty|hundred|thousand|million|a\s+few|several)\b[^.?!]{0,25}\b(dollars|bucks|pesos)\b'
+  - id: guard.en.amount.004
+    category: amount
+    regex: '\b\d+([.,]\d+)?\s*(%|percent|per\s+cent)'
+
+  # --- Culpa (AC1.11.2) -------------------------------------------------------
+  - id: guard.en.fault.001
+    category: fault
+    regex: '\b(your|his|her|their|my|our|the\s+other\s+driver''s|the\s+other\s+party''s)\s+fault\b'
+  - id: guard.en.fault.002
+    category: fault
+    regex: '\b(was|were|is|are|be)\s+(at\s+)?fault\b'
+  - id: guard.en.fault.003
+    category: fault
+    regex: '\b(you''re|you\s+are|you\s+were|he''s|he\s+is|he\s+was|she''s|she\s+is|she\s+was|they''re|they\s+are|they\s+were|the\s+other\s+driver\s+(is|was))\s+(responsible|liable|to\s+blame)\b'
+
+  # --- Consejo legal (AC1.11.2) -----------------------------------------------
+  - id: guard.en.legal_advice.001
+    category: legal_advice
+    regex: '\bmy\s+(legal\s+)?advice\s+is\b'
+  - id: guard.en.legal_advice.002
+    category: legal_advice
+    regex: '\bi\s+(would\s+)?(recommend|advise|suggest)\s+(that\s+)?(you\s+)?((don''t|do\s+not|not\s+to|not)\s+)?(sign|sue|admit|accept|hire|file|press|tell|say)\b'
+  - id: guard.en.legal_advice.003
+    category: legal_advice
+    regex: '\b(you\s+should|you\s+need\s+to|you\s+must)\s+(sue|get\s+a\s+lawyer|hire\s+a\s+lawyer|not\s+admit|not\s+sign|press\s+charges)\b'
+  - id: guard.en.legal_advice.004
+    category: legal_advice
+    regex: '\b(sue\s+(the|him|her|them)|(don''t|do\s+not)\s+(admit|sign|accept)\s+(anything|fault|liability))\b'
+
+  # --- Afirmacion de ser humana (AC1.10.3, BR2.5) -----------------------------
+  # La respuesta fija de identidad dice "i'm an ai assistant": "an ai
+  # assistant" no esta en ninguna lista, y "i'm not a person" no cae porque el
+  # patron exige la palabra justo despues de "i'm".
+  - id: guard.en.humanity_claim.001
+    category: humanity_claim
+    regex: '\b(i''m|i\s+am|im)\s+(a\s+|an\s+)?(real\s+|live\s+|actual\s+)?(person|human|human\s+being|man|woman)\b'
+  - id: guard.en.humanity_claim.002
+    category: humanity_claim
+    regex: '\b(you''re|you\s+are)\s+(talking|speaking|chatting)\s+(to|with)\s+(a\s+|an\s+)?(real\s+|live\s+|actual\s+)?(person|human)\b'
+  - id: guard.en.humanity_claim.003
+    category: humanity_claim
+    regex: '\b(i''m|i\s+am|im)\s+not\s+(a\s+|an\s+)?(bot|robot|machine|ai|computer|program|virtual\s+assistant)\b'
+  - id: guard.en.humanity_claim.004
+    category: humanity_claim
+    regex: '\b(i''m|i\s+am|im)\s+(a\s+)?(real|live|human|actual)\s+(agent|representative|operator|adjuster)\b'
+
+  # --- Transferencia o plazo que no existe (AC1.9.2) ---------------------------
+  # La lista versionada del criterio: "i'm transferring you now" y "today". La
+  # frase de derivacion ("i'm passing this to an adjuster") entrega el caso, no
+  # la llamada, y no cae.
+  - id: guard.en.transfer_or_deadline.001
+    category: transfer_or_deadline
+    regex: '\b(i''m|i\s+am|im|we''re|we\s+are)\s+(transferring|connecting|putting|patching)\s+you\b'
+  - id: guard.en.transfer_or_deadline.002
+    category: transfer_or_deadline
+    regex: '\b(i''ll|i\s+will|let\s+me|i''m\s+going\s+to|i\s+am\s+going\s+to)\s+(transfer|connect|put|patch)\s+you\s+(through|to|now|with)\b'
+  - id: guard.en.transfer_or_deadline.003
+    category: transfer_or_deadline
+    regex: '\b(you''ll|you\s+will|they''ll|they\s+will|we''ll|we\s+will|it''ll|it\s+will)\s+(get|receive|hear|have|be\s+paid|be\s+contacted|be\s+called)\b[^.?!]{0,30}\b(today|tomorrow|tonight|this\s+(afternoon|evening|week)|within\s+\d+|in\s+(\d+|a|an|one|two|three|a\s+few)\s+(minutes?|hours?|days?|weeks?)|by\s+(tomorrow|tonight|monday|tuesday|wednesday|thursday|friday|end\s+of))\b'
+  - id: guard.en.transfer_or_deadline.004
+    category: transfer_or_deadline
+    regex: '\b(answer|response|payment|decision|refund|check)\b[^.?!]{0,20}\b(arrives?|will\s+(arrive|be\s+ready|come|be\s+out)|comes?|is\s+coming|goes\s+out)\b[^.?!]{0,20}\b(today|tomorrow|tonight|within\s+\d+|in\s+(\d+|a|an|one|two|three|a\s+few)\s+(hours?|days?|weeks?))\b'
+
+  # --- Revelacion de configuracion o de otro caso (AC4.15.3, BR1.7) ------------
+  # Las mismas formas que el juego en espanol: un secreto no tiene idioma, pero
+  # cada juego tiene que cubrir las siete categorias por su cuenta (P12).
+  - id: guard.en.config_disclosure.001
+    category: config_disclosure
+    regex: '(?<![a-z0-9_-])(?=[a-z0-9_-]*\d)(?=[a-z0-9_-]*[a-z])[a-z0-9_-]{24,}(?![a-z0-9_-])'
+  - id: guard.en.config_disclosure.002
+    category: config_disclosure
+    regex: '\b((sk|pk|rk)-[a-z0-9_-]{16,}|aiza[0-9a-z_-]{20,}|gh[pousr]_[a-z0-9]{20,})'
+  - id: guard.en.config_disclosure.003
+    category: config_disclosure
+    regex: '-----begin [a-z ]*private key-----'

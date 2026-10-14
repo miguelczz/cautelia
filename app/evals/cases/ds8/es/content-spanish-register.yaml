@@ -1,0 +1,10 @@
+# El registro de la voz en espanol: la agente habla de tu (U18, BR5.4, AC1.28.3;
+# de tu desde el 2026-10-09). Es la mitad de ese criterio que se comprueba por
+# codigo; la otra --la calidez del tu, el registro paisa ligero-- la juzga el juez, y si se
+# descalibra se reporta "no medida" mientras esta sigue bloqueando (D8).
+case_key: DS-8/es/content-spanish-register
+dataset: DS-8
+language: es
+requires_provider_key: false
+expected_verdicts:
+  content_spanish_register: pass

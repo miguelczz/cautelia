@@ -1,0 +1,80 @@
+# La tabla de deletreo, unica para leer en voz alta (BR2.5, TECH-U11.3) y para
+# reconocer lo que la persona deletreo al dictar una placa, una poliza o una
+# cedula (BR2.4, TECH-U11.2). Es la misma tabla para texto y voz: el canal de
+# texto la usa igual que el de voz, sin una segunda copia.
+#
+# Cada letra lleva, por idioma, su nombre hablado (`name`, como se dice la
+# letra sola: "be", "bee") y su palabra de desambiguacion (`disambiguation`,
+# la que la distingue al oido: "be de burro", "b as in bravo"). Cada digito
+# lleva solo su nombre hablado: los digitos no se confunden al oido de la
+# misma forma que las letras, y el PRD no pide desambiguarlos.
+#
+# Anadir un idioma es anadir una columna aqui, nunca una rama en el codigo.
+schema_version: 1
+
+letters:
+  A: {es: {name: a, disambiguation: ábaco}, en: {name: ay, disambiguation: alpha}}
+  B: {es: {name: be, disambiguation: burro}, en: {name: bee, disambiguation: bravo}}
+  C: {es: {name: ce, disambiguation: casa}, en: {name: see, disambiguation: charlie}}
+  D: {es: {name: de, disambiguation: dado}, en: {name: dee, disambiguation: delta}}
+  E: {es: {name: e, disambiguation: elefante}, en: {name: ee, disambiguation: echo}}
+  F: {es: {name: efe, disambiguation: foca}, en: {name: eff, disambiguation: foxtrot}}
+  G: {es: {name: ge, disambiguation: gato}, en: {name: gee, disambiguation: golf}}
+  H: {es: {name: hache, disambiguation: hotel}, en: {name: aitch, disambiguation: hotel}}
+  I: {es: {name: i, disambiguation: iglú}, en: {name: eye, disambiguation: india}}
+  J: {es: {name: jota, disambiguation: jirafa}, en: {name: jay, disambiguation: juliett}}
+  K: {es: {name: ka, disambiguation: kilo}, en: {name: kay, disambiguation: kilo}}
+  L: {es: {name: ele, disambiguation: luna}, en: {name: el, disambiguation: lima}}
+  M: {es: {name: eme, disambiguation: mono}, en: {name: em, disambiguation: mike}}
+  N: {es: {name: ene, disambiguation: nido}, en: {name: en, disambiguation: november}}
+  O: {es: {name: o, disambiguation: oso}, en: {name: oh, disambiguation: oscar}}
+  P: {es: {name: pe, disambiguation: pato}, en: {name: pee, disambiguation: papa}}
+  Q: {es: {name: cu, disambiguation: queso}, en: {name: cue, disambiguation: quebec}}
+  R: {es: {name: ere, disambiguation: ratón}, en: {name: are, disambiguation: romeo}}
+  S: {es: {name: ese, disambiguation: sapo}, en: {name: ess, disambiguation: sierra}}
+  T: {es: {name: te, disambiguation: tigre}, en: {name: tee, disambiguation: tango}}
+  U: {es: {name: u, disambiguation: uva}, en: {name: you, disambiguation: uniform}}
+  V: {es: {name: uve, disambiguation: vaca}, en: {name: vee, disambiguation: victor}}
+  W: {es: {name: uvedoble, disambiguation: waffle}, en: {name: double-u, disambiguation: whiskey}}
+  X: {es: {name: equis, disambiguation: xilófono}, en: {name: ex, disambiguation: xray}}
+  Y: {es: {name: ye, disambiguation: yoyó}, en: {name: why, disambiguation: yankee}}
+  Z: {es: {name: zeta, disambiguation: zorro}, en: {name: zee, disambiguation: zulu}}
+
+digits:
+  "0": {es: cero, en: zero}
+  "1": {es: uno, en: one}
+  "2": {es: dos, en: two}
+  "3": {es: tres, en: three}
+  "4": {es: cuatro, en: four}
+  "5": {es: cinco, en: five}
+  "6": {es: seis, en: six}
+  "7": {es: siete, en: seven}
+  "8": {es: ocho, en: eight}
+  "9": {es: nueve, en: nine}
+
+# La particula que conecta una letra con su palabra de desambiguacion al
+# dictar ("be DE burro", "b AS IN bravo"). Reconocerla es lo que permite
+# distinguir "be de burro" (una letra, B) de "be de seis" (dos letras, B y D):
+# ver `normalization.py`, `_decode_spelled_code`.
+connector:
+  es: de
+  en: as in
+
+# Las letras que se confunden al oido, por idioma (AC1.23.2, U16).
+#
+# **Es una lista y no una regla derivada** porque el criterio pide una lista
+# versionada: dos letras se confunden o no por como suenan por telefono, y eso no
+# se calcula del nombre escrito. Cada grupo son letras que comparten nucleo
+# vocalico y se distinguen solo por una consonante inicial sorda o sonora, que es
+# justo lo que una linea con ruido se come.
+#
+# En espanol, la familia grande es la de las que terminan en "e" --be, ce, de,
+# e, ge, pe, te-- mas el par clasico be/uve. En ingles es la familia "ee" --bee,
+# cee, dee, ee, gee, pee, tee, vee, zee--, mas m/n y f/s.
+#
+# Una letra que aparezca aqui obliga a leer el codigo entero y a esperar
+# confirmacion antes de anotarlo; no se lee solo ese caracter, porque leer una
+# letra suelta de una placa no ayuda a nadie a comprobarla.
+confusable:
+  es: [B, C, D, E, G, P, T, V, M, N, S, F]
+  en: [B, C, D, E, G, P, T, V, Z, M, N, S, F]

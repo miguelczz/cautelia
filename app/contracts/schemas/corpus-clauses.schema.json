@@ -1,0 +1,95 @@
+{
+  "$defs": {
+    "ClauseRecord": {
+      "additionalProperties": false,
+      "description": "Una clausula, con la forma exacta de C-26.",
+      "properties": {
+        "clause_id": {
+          "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?-[A-Za-z0-9]+(?:\\.[A-Za-z0-9_]+)*$",
+          "title": "Clause Id",
+          "type": "string"
+        },
+        "form_id": {
+          "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
+          "title": "Form Id",
+          "type": "string"
+        },
+        "form_version": {
+          "pattern": "^\\d{4}\\.[1-9]\\d*$",
+          "title": "Form Version",
+          "type": "string"
+        },
+        "clause_key": {
+          "pattern": "^[A-Za-z0-9]+(?:\\.[A-Za-z0-9_]+)*$",
+          "title": "Clause Key",
+          "type": "string"
+        },
+        "part": {
+          "minLength": 1,
+          "title": "Part",
+          "type": "string"
+        },
+        "language": {
+          "enum": [
+            "es",
+            "en"
+          ],
+          "title": "Language",
+          "type": "string"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "is_distractor": {
+          "default": false,
+          "title": "Is Distractor",
+          "type": "boolean"
+        },
+        "issuer_label": {
+          "minLength": 1,
+          "title": "Issuer Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "clause_id",
+        "form_id",
+        "form_version",
+        "clause_key",
+        "part",
+        "language",
+        "text",
+        "issuer_label"
+      ],
+      "title": "ClauseRecord",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Las clausulas de un formulario (`clauses/<form_id>.json`).",
+  "properties": {
+    "form_id": {
+      "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
+      "title": "Form Id",
+      "type": "string"
+    },
+    "clauses": {
+      "items": {
+        "$ref": "#/$defs/ClauseRecord"
+      },
+      "minItems": 1,
+      "title": "Clauses",
+      "type": "array"
+    }
+  },
+  "required": [
+    "form_id",
+    "clauses"
+  ],
+  "title": "ClauseFile",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/corpus-clauses.schema.json"
+}

@@ -1,0 +1,182 @@
+{
+  "$defs": {
+    "DriverRef": {
+      "additionalProperties": false,
+      "description": "Un conductor que la poliza declara. Solo su nombre: es lo unico que se compara.\n\nEl telefono, la cedula y el correo son del titular (`PersonaRef`); un conductor adicional\nno los necesita, y cada dato personal de mas es uno mas que sembrar, redactar y vigilar.",
+      "properties": {
+        "full_name": {
+          "minLength": 3,
+          "title": "Full Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "full_name"
+      ],
+      "title": "DriverRef",
+      "type": "object"
+    },
+    "PersonaRef": {
+      "additionalProperties": false,
+      "description": "Una persona ficticia. Alimenta los canarios del segundo detector (ADR-013).\n\nCada dato tiene una forma que lo delata como ficticio, y la forma que\nreconoce la redaccion de U3 para que la prueba de fuga lo encuentre (FR12.3).",
+      "properties": {
+        "persona_id": {
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
+          "title": "Persona Id",
+          "type": "string"
+        },
+        "full_name": {
+          "minLength": 3,
+          "title": "Full Name",
+          "type": "string"
+        },
+        "phone": {
+          "pattern": "^\\+?[\\d(][\\d ()\\-]*$",
+          "title": "Phone",
+          "type": "string"
+        },
+        "national_id": {
+          "pattern": "^(?:\\d{8,10}|\\d{1,3}(?:\\.\\d{3}){2,3}|\\d{3}-\\d{2}-\\d{4})$",
+          "title": "National Id",
+          "type": "string"
+        },
+        "email": {
+          "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*@example\\.(?:com|org)$",
+          "title": "Email",
+          "type": "string"
+        }
+      },
+      "required": [
+        "persona_id",
+        "full_name",
+        "phone",
+        "national_id",
+        "email"
+      ],
+      "title": "PersonaRef",
+      "type": "object"
+    },
+    "VehicleRef": {
+      "additionalProperties": false,
+      "description": "Un vehiculo ficticio.",
+      "properties": {
+        "plate": {
+          "pattern": "^(?:[A-Z]{3}[ \\-]?(?:\\d{3}|\\d{2}[A-Z])|[A-Z]{3}[ \\-]?\\d{4}|\\d[A-Z]{3}\\d{3})$",
+          "title": "Plate",
+          "type": "string"
+        },
+        "make_model_year": {
+          "pattern": "^\\S.*\\s(?:19|20)\\d{2}$",
+          "title": "Make Model Year",
+          "type": "string"
+        },
+        "vin": {
+          "pattern": "^[A-HJ-NPR-Z0-9]{17}$",
+          "title": "Vin",
+          "type": "string"
+        }
+      },
+      "required": [
+        "plate",
+        "make_model_year",
+        "vin"
+      ],
+      "title": "VehicleRef",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Una poliza emitida, con sus declaraciones y endosos vigentes (FR5.2).\n\nQue el formulario y cada endoso existan, y que la `example_policy` de cada\naseguradora este entre las emitidas, lo comprueba la composicion, que tiene\nel conjunto: aqui se comprueba todo lo que se ve en la poliza sola.",
+  "properties": {
+    "policy_number": {
+      "pattern": "^POL-\\d{6}$",
+      "title": "Policy Number",
+      "type": "string"
+    },
+    "tenant_id": {
+      "pattern": "^[a-z][a-z0-9-]{1,30}$",
+      "title": "Tenant Id",
+      "type": "string"
+    },
+    "issuer_tenant": {
+      "pattern": "^[a-z][a-z0-9-]{1,30}$",
+      "title": "Issuer Tenant",
+      "type": "string"
+    },
+    "form_id": {
+      "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
+      "title": "Form Id",
+      "type": "string"
+    },
+    "form_version": {
+      "pattern": "^\\d{4}\\.[1-9]\\d*$",
+      "title": "Form Version",
+      "type": "string"
+    },
+    "endorsement_ids": {
+      "items": {
+        "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
+        "type": "string"
+      },
+      "title": "Endorsement Ids",
+      "type": "array"
+    },
+    "period_start": {
+      "format": "date",
+      "title": "Period Start",
+      "type": "string"
+    },
+    "period_end": {
+      "format": "date",
+      "title": "Period End",
+      "type": "string"
+    },
+    "named_insured": {
+      "$ref": "#/$defs/PersonaRef"
+    },
+    "drivers": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/DriverRef"
+      },
+      "title": "Drivers",
+      "type": "array"
+    },
+    "vehicles": {
+      "items": {
+        "$ref": "#/$defs/VehicleRef"
+      },
+      "minItems": 1,
+      "title": "Vehicles",
+      "type": "array"
+    },
+    "limits_and_deductibles": {
+      "minProperties": 1,
+      "patternProperties": {
+        "^[a-z][a-z0-9_]*(?:\\.[a-z0-9_]+)*$": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "title": "Limits And Deductibles",
+      "type": "object"
+    }
+  },
+  "required": [
+    "policy_number",
+    "tenant_id",
+    "issuer_tenant",
+    "form_id",
+    "form_version",
+    "endorsement_ids",
+    "period_start",
+    "period_end",
+    "named_insured",
+    "vehicles",
+    "limits_and_deductibles"
+  ],
+  "title": "IssuedPolicyRecord",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/corpus-issued-policy.schema.json"
+}

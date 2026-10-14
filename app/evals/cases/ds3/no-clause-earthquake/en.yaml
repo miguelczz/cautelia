@@ -1,0 +1,24 @@
+# Sin clausula en la poliza (AC2.5.1, AC2.5.4): la poliza no dice nada sobre el tema preguntado.
+# Criterio(s): AC2.5.1, AC2.5.4. Par ES/EN: 'no-clause-earthquake'.
+# Lo mide `mise run evals:citas` (fase 1, 2026-10-08): recupera, propone las citas con
+# Claude y las verifica, igual que el chat. La prueba estatica CG-U8-2 sigue comprobando
+# que clause_id exista en app/data/, sea de esta aseguradora y de esta poliza y no sea
+# distractor.
+# No prueba un fallo de recuperacion (`unverifiable`): esto es un resultado verificado de 'no hay clausula', no un fallo de infraestructura (BR3.4).
+
+case_key: DS-3/en/no-clause-earthquake
+dataset: DS-3
+language: en
+tenant: sunmeadow
+axes:
+- sin_clausula
+- citation-verification
+citation:
+  policy_number: POL-200117
+  clause_id: null
+  expected_outcome: no_clause_found
+  question: Does this policy cover earthquake damage to the car?
+expected_verdicts:
+  citation_no_clause_earthquake: pass
+  citation_exists_no_clause_earthquake: pass
+requires_provider_key: true

@@ -1,0 +1,3125 @@
+{
+  "voices": [
+    {
+      "provider": "elevenlabs",
+      "voice_id": "qHkrJuifPpn95wK3rm2A",
+      "public_owner_id": "a5457557280d83c0c3d591443bb3e47c4d7010eeedcbbc03b9e8b2f34e4bc9dc",
+      "name": "Andrea - Polite, Cheerful and Calm",
+      "description": "Voice of a young Colombian woman with a Paisa accent, specialized in sales calls.",
+      "accent": "latin american",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/AUiOudcyrBgldqnAJhuGI9X0Ktn2/voices/qHkrJuifPpn95wK3rm2A/C0HIbK1Fqc9zwzlyvuTI.mp3",
+      "free_users_allowed": true,
+      "relevance": 2,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "ebdrtet3LErOzR0r2i60",
+      "public_owner_id": "23413ee30eacdc08eeab9c323f5492341d470ee8f04d390f6618316e06c061eb",
+      "name": "Marcela - Clear and Natural Voice",
+      "description": "Young female Latin American voice from Medellín, Colombia. Clear and natural, perfect for: \n- Narrations and audiobooks \n- Educational videos and tutorials \n- Podcasts and conversational content \n- Friendly commercial voiceovers\n - Virtual assistants. \nWarm, versatile, and professional tone. Neutral Colombian accent.\n",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/81f58d58997f4f138c89d54f3e867004/voices/ebdrtet3LErOzR0r2i60/MmPqtEpNqIpuyP4XNOkg.mp3",
+      "free_users_allowed": true,
+      "relevance": 2,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "3Fx71T889APcHRu4VtQf",
+      "public_owner_id": "127ac92d7972e38494e8deac5493c64cddd9f55c8cf55a16d63f80f0ce1a8765",
+      "name": "Medellin -  Conversational and Intense",
+      "description": "Young female Spanish voice. Great for conversations.",
+      "accent": "latin american",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/SHD8m3NZ9NcJJuewz6s2cKBdRui2/voices/3Fx71T889APcHRu4VtQf/8aa33e87-8fe4-4fbe-92fb-713c4a0591c5.mp3",
+      "free_users_allowed": true,
+      "relevance": 2,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "b2htR0pMe28pYwCY9gnP",
+      "public_owner_id": "33822640db169fffd2b45009a79f882bbfbb04b7e59077c8c5cd8c1926a6b61a",
+      "name": "Sofía - Natural and Conversational",
+      "description": "Sofía's voice is warm and authentic, with a soft Medellín accent. Designed to connect with Latin American audiences, she's perfect for social media sales and customer service. Friendly and professional, she conveys calmness and builds trusting relationships.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/fHOiFx8lXIazL4fNHvmcoBi71SK2/voices/b2htR0pMe28pYwCY9gnP/YqHhQtUxgVpJ7rXY5dmz.mp3",
+      "free_users_allowed": true,
+      "relevance": 2,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "J4vZAFDEcpenkMp3f3R9",
+      "public_owner_id": "ae7b0b35f39d691ebe3c9d977ed42bfa0b3cd358ffc5fbe5cb9fa77da84ea420",
+      "name": "Valentina - Joyful, Lively Friend",
+      "description": "Young Colombian woman from Medellín with a warm, conversational, and friendly tone that feels natural and engaging.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/Yb0B8bJu9XhmTzORxR23RpxsDAb2/voices/J4vZAFDEcpenkMp3f3R9/w6dSSPdIpQ00o4yFIzlz.mp3",
+      "free_users_allowed": true,
+      "relevance": 2,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "JcWDFG8DiES2OzGhZJUJ",
+      "public_owner_id": "0782f22664728a200c8463b83938f571c5d0a40e9d6c259a326eeaa6117dd7cf",
+      "name": "Valentina - Paisa",
+      "description": "Valentina is a true Paisa with a natural Paisa accent, specializing in sales.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/71fdb13df2674194a0a27a5af23de703/voices/JcWDFG8DiES2OzGhZJUJ/WtjVDWTthv6RrpC62q9U.mp3",
+      "free_users_allowed": false,
+      "relevance": 2,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "wutgczPT1RZgTX0H3qRJ",
+      "public_owner_id": "f70b9f071749ad509105482cffcc4eead441c5525dc894879a5b99d4e33a82ae",
+      "name": "Vanessa ",
+      "description": "Warm and charismatic Colombian female voice with a Paisa accent, perfect for digital content, social media, and storytelling. Versatile in various Latin American accents. Ideal for short videos, commercials, e-learning, animated characters, and projects that require a relatable, expressive, and authentic voice.  A ​​natural, conversational tone that connects emotionally with the audience.\n",
+      "accent": "latin american",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/Qar7ER1xwTd9yoa4d2bUJiY7wwr2/voices/wutgczPT1RZgTX0H3qRJ/ok1wdGJ6VeVdhWQKkmBg.mp3",
+      "free_users_allowed": true,
+      "relevance": 2,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "162e0f37-8504-474c-bb33-c606c01890dc",
+      "name": "Catalina",
+      "description": "Natural, approachable for everyday conversations",
+      "accent": [
+        {
+          "accent": "colombian",
+          "locale": "es-CO",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": true
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "ae823354-f9be-4aef-8543-f569644136b4",
+      "name": "Mariana",
+      "description": "Motherly voice with a calm, nurturing tone",
+      "accent": [
+        {
+          "accent": "colombian",
+          "locale": "es-CO",
+          "is_native": true
+        },
+        {
+          "accent": "british",
+          "locale": "en-GB",
+          "is_native": false
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "canadian-french",
+          "locale": "fr-CA",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "standard-japanese",
+          "locale": "ja-JP",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "central-thai",
+          "locale": "th-TH",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": true
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "3pwz9prJRqL2Ws5zBmTh",
+      "public_owner_id": "920ec9afd4d0ee189f3a213f34d53341143919a60a3305254a03f25e98b7a688",
+      "name": "Adri",
+      "description": "Corporate, smooth, Colombian.\n",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/d6c02260c254429b9f1bf447dacd0d73/voices/3pwz9prJRqL2Ws5zBmTh/b051d337-8998-4d95-ad85-35533f5f82ed.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "SmgKjOvC1aIujLWcMzqq",
+      "public_owner_id": "4a9fc4c40a9a5614a733ce606ac5c062451cf4bce8a80743cc4175053f53b878",
+      "name": "Alisson - Tender and Mellow",
+      "description": "Colombian female voice with a natural, medium pitch, neutral Latin accent, and relaxed rhythm. It sounds warm, friendly, and authentic, like a quiet conversation with someone you trust. It conveys empathy, gentleness, and emotional clarity. Perfect for podcasts, everyday stories, reflections, and educational content with a human and warm touch.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://api.us.elevenlabs.io/v1/voices/SmgKjOvC1aIujLWcMzqq/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ1c2VyX2lkIjoiVmZDTDZIZzdqVWZVbUJiSFE4bWpPbFJOQ0F3MiIsImZpbGVuYW1lIjoia25IdlpROGQ4MEhJbE44WWhNSGkubXAzIiwidGltZXN0YW1wIjoxNzg5NTk5NjAwMDAwMDAwfQ%3D%3D",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "4kaLaTbziI05Jwh8zWad",
+      "public_owner_id": "2ac24f6b91ed086a5e88b1134613bb2b2447202144d63ed58a8e2f8aa3f230e1",
+      "name": "Amaf - Melodic Colombian ",
+      "description": "A warm, authentic, and approachable Colombian female voice. It features a medium-low pitch with a conversational, expressive, and natural style. It conveys trust, empathy, and authority without sounding like a typical announcer. Characterized by clear diction, a fluid pace, natural pauses, and a subtle emotional delivery. Ideal for storytelling, coaching, personal development, relationship-focused content, podcasts, courses, and high-impact social media content.\n",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/cd7618043adb45eeb87843b7d8222271/voices/4kaLaTbziI05Jwh8zWad/817e4f1c-c246-4001-9261-17d9e07d1261.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "YPh7OporwNAJ28F5IQrm",
+      "public_owner_id": "e2b15a70e5cd30fc5581314181b9ca148b292b27283f10c5d3eac07bcaa2cd85",
+      "name": "Angie Vendedora - Polite and Soft",
+      "description": "\nColombian voice from Bogota with experience in product sales.",
+      "accent": "latin american",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/Z15XAHN4w9TxtnaMtlGCbYMU1Lo1/voices/YPh7OporwNAJ28F5IQrm/idoAcxNJdzLykhJP6XA1.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "WKIYAVSTdl1Lerecpf4E",
+      "public_owner_id": "7841d9416ef84354d9ce783061fdb3a1039323f33e894b6a9ee5a1ac602dae5f",
+      "name": "Aurora - Vibrant & Kind Storyteller",
+      "description": "A warm and vibrant Colombian Latin American accent with an enthusiastic and magical tone. Perfect for telling captivating stories, fantasy narrations, and engaging social media content that feels grand, upbeat, and deeply welcoming.",
+      "accent": "latin american",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/9e02f8f844354cdc9722b18e7efb59d0/voices/WKIYAVSTdl1Lerecpf4E/dyYO3bLb2w6DQK1Uibfw.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "kmcS4vnMNzneqDSErHEd",
+      "public_owner_id": "c3656d1aedfe8791be52a54d74d3e7d54a7575f31a49ca909847c9088b64d70e",
+      "name": "Camila ",
+      "description": "Conversational female voice.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://api.us.elevenlabs.io/v1/voices/kmcS4vnMNzneqDSErHEd/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiIxM2U2ZGZiMWE2Njg0OGFlOTYxZTVmNjQzNzE1MDQ5ZiIsImZpbGVuYW1lIjoibnV1WHZoa3d1c2hXd1ZKS3pLb2oubXAzIiwidGltZXN0YW1wIjoxNzg5NTk5NjAwMDAwMDAwfQ%3D%3D",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "J8BF9c7OgbHiqagCNoEj",
+      "public_owner_id": "66ce2679115600b9fd12b06aa934c95e301231987a77891bdb9e94d7d9544b38",
+      "name": "Carito - Conversational",
+      "description": "Young female voice from Bogotá. Cute, conversational delivery with natural warmth—ideal for intimate narration, casual dialogue, and relatable storytelling.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/7051166418d24423aa9fe28a9a22f164/voices/J8BF9c7OgbHiqagCNoEj/fsornKBBO1RfX88eZaaj.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "k7v2xzj8pZoayBVu9pvq",
+      "public_owner_id": "64cbc624eb5aab4e95a968e1f41d75402277cca6e549036ed17e56ea33bbbc9e",
+      "name": "Catalina - Sunny and Engaging",
+      "description": "A bright, youthful Colombian female voice with a naturally cheerful energy and a warm, melodic cadence. Her conversational tone feels genuine and inviting, with a lively spark that instantly puts listeners at ease—perfect for lifestyle content, social media narration, or friendly brand messaging.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/1da06ea679a54975ad96a2221fe6530d/voices/k7v2xzj8pZoayBVu9pvq/XKuWpxqpjZA0UsUMs2Pu.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "SplyIQAjgy4DKGAnOrHi",
+      "public_owner_id": "f4112a475b9eb09b949aa6cffad1ca53900eccf04815ea4ace7aa8dfdcf1fcfa",
+      "name": "Clau - Steady and Neutral",
+      "description": "Discover a natural, neutral voice perfect for any project. With a clear, fluid, and friendly tone, this regionally accent-free voice adapts to a global audience, ensuring a comfortable and understandable listening experience.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/L7MNGVvFG0NuPDKLoQSKcond2WL2/voices/SplyIQAjgy4DKGAnOrHi/AFerDFSeMXO3gis2mw4S.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "wKvrrFnAmhvpNRpZkbmh",
+      "public_owner_id": "77b66232e281c5495d30d1368adbac88c8856993402e387da67e460c964fad4d",
+      "name": "Diana - Warm & Persuasive PT/ES",
+      "description": "Stop settling for generic AI voices. This is warmth that builds trust, and persuasion that drives action — fluent in Spanish and authentic European Portuguese (not Brazilian). Ideal for brands, ads, social media content, and audiobooks that need to connect, convince, and convert. A voice people remember — and act on. \n\n Ideal for: audiobooks, e-learning, brand storytelling, social media content, and commercial voiceover.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/ddba74d667e64876ae0d9e5cb67ee59b/voices/wKvrrFnAmhvpNRpZkbmh/kgvia2FljtDDBDIobeJ5.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "irla3teuChAApguKnzms",
+      "public_owner_id": "af36747c11789e9834459f42c92dd76a108f2ec34aa805e081aff07014923653",
+      "name": "Diana García - Sales, Warm & Persuasive",
+      "description": "Warm, human-sounding voice with a natural, explanatory tone — ideal for sales, coaching, and business content in Spanish and Portuguese.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/66e02cc132244ea1a14ad1ce9b8a7d4a/voices/irla3teuChAApguKnzms/jbXnmbUK4xksvoSpOmvL.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "Pzocg9GZr24gNfKRHiyy",
+      "public_owner_id": "e38f9a4c40ca4577a9e84660e9f917404e82b6c67c337dff0a2f946337684131",
+      "name": "Elisa Maria",
+      "description": "Female voice in Spanish with a Colombian accent. Energetic and expressive. Great for conversations and narration.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/9b13ef96052a4b269868224f014f77f4/voices/Pzocg9GZr24gNfKRHiyy/iURrE9ftIVF1QMGSR65z.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "6sefJctHkzCgLShKcnrI",
+      "public_owner_id": "64cbc624eb5aab4e95a968e1f41d75402277cca6e549036ed17e56ea33bbbc9e",
+      "name": "Esperanza - Serene and Assured",
+      "description": "A calm, confident Colombian female voice with a smooth, velvety tone and an unhurried cadence. Her warm, grounded delivery carries a quiet authority that instantly puts listeners at ease, making her perfect for guided meditations, wellness content, or professional narration.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/1da06ea679a54975ad96a2221fe6530d/voices/6sefJctHkzCgLShKcnrI/cab399de-2979-428d-8fff-86236bc92d22.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "rQXSFvSjxR8Agb8vn1VY",
+      "public_owner_id": "733ec37ed4502876dbd27f8205f998c76306df70a95c7210ca209080c8926e14",
+      "name": "Eva - Australian Female Narrator",
+      "description": "A confident, articulate Australian female narrator with a naturally warm delivery and subtle Colombian heritage, creating a distinctive voice that is both professional and engaging. Perfect for narration, documentaries, eLearning, corporate training, explainers and audiobooks. Studio-recorded for exceptional clarity, consistency, and natural long-form storytelling.",
+      "accent": "australian",
+      "language": "en",
+      "preview_url": "https://api.us.elevenlabs.io/v1/voices/rQXSFvSjxR8Agb8vn1VY/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJhODRlYzBkZmE4NmM0OWFlOTY5NjhiNTAzZjYwNjJlNiIsImZpbGVuYW1lIjoiODYyMjJjYzQtM2Q0Zi00NWE0LTg3MjAtMTEyMTU5YTQzNDI4Lm1wMyIsInRpbWVzdGFtcCI6MTc4OTU5OTYwMDAwMDAwMH0%3D",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "1aJyZpkt0vxhGPBnPyrs",
+      "public_owner_id": "96f4174624b1c8079c37c958b0581b30132c9618a3899114d97554c24b661255",
+      "name": "Fernanda Sanmiguel - Neutral and Serious",
+      "description": "Female Latina South American Spanish voice — neutral, passionate, and emotional. Deep and expressive, perfect for audiobooks, narrations, podcasts, reflections, and announcements. \n\nNatural flow that connects with audiences across Mexico, Colombia, Spain, Argentina, Peru, Venezuela, Chile, Ecuador, Guatemala, and Bolivia.",
+      "accent": "latin american",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/PYGok9UhxRbdtZ64YIeKKB4oRNz1/voices/1aJyZpkt0vxhGPBnPyrs/KSbOAlMMKVpbVAnmVVHk.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "Mf0RJxPVoxXD0xzgV88r",
+      "public_owner_id": "203e51a7bb82f1c7e64086aebe23567961f9d9698c166dd38ffad6145a5c68bd",
+      "name": "Gisela - Young & Upbeat",
+      "description": "Young Latina woman with a beautiful, feminine voice. Elegant, articulate, and naturally expressive, delivering every line with warmth, charm, and confidence.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/914e112ffb6c4eb28f6cfe3bdad2bc92/voices/Mf0RJxPVoxXD0xzgV88r/FxsirKfj6nQWGhVXo5iW.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "dMeBcNV5QVbfDqzti5Jl",
+      "public_owner_id": "998ab0c807b4b6a2f0bc4899545bc0d8ded863211d330ac87806b52bd7d5f22b",
+      "name": "Ivonny",
+      "description": "A warm, magnetic, and distinctly Latin female voice with an approachable, confident, and natural tone. It conveys trust, sensitivity, and elegance, possessing an engaging energy that easily connects with the audience. Ideal for inspirational, educational, and commercial content, as well as wellness, beauty, technology, and storytelling with a human touch.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/9e2c6789c17a46a8a2d4311d8484bcdf/voices/dMeBcNV5QVbfDqzti5Jl/d0bc38ae-bb97-4492-a5be-cc7c4f7b0aa9.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "Y11rBAl8on4Ba9ZpY3DY",
+      "public_owner_id": "a1dc454839633917a070e33555d5e58e16ae530f0ef27d9ea19aeea667f6b5e7",
+      "name": "Jennifer - Warm Colombian",
+      "description": "A warm, youthful, and natural Colombian Spanish female voice with a clear, friendly and engaging tone. Jennifer has a smooth, expressive delivery that feels authentic and conversational, with a confident yet approachable personality. Her voice works beautifully for social media content, storytelling, travel, podcasts, and professional narration.\n\nBest for: Social media, UGC, advertising, lifestyle, beauty, travel, storytelling, podcasts, and narration.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/cb56ceb864404a0cb2b2910f6e6ba508/voices/Y11rBAl8on4Ba9ZpY3DY/7bc78220-1788-4a7d-b5fe-5ef652fa4c1a.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "MqSrMUk8EHh32HBKytrG",
+      "public_owner_id": "933192dea13e6595471f2fc5bd22fd2ac5ec168b2978c3afdb671bf012d07d02",
+      "name": "Jessica - Natural",
+      "description": "Natural Colombian female voice with a warm, friendly tone and clear articulation. Expressive and approachable, ideal for everyday narration, commercials, corporate content, and authentic, trustworthy messaging.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://api.us.elevenlabs.io/v1/voices/MqSrMUk8EHh32HBKytrG/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiI3NTQ3MTk5ZjU2MGY0MGMxYTZiZjc3NjUzOGE2MTNlYSIsImZpbGVuYW1lIjoiY1BnUWxKYzRTVE1YU3VuVUxUQ1gubXAzIiwidGltZXN0YW1wIjoxNzg5NTk5NjAwMDAwMDAwfQ%3D%3D",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "C1cKsB5KZglIOozCoRBY",
+      "public_owner_id": "624f7274a0168e70b3b8d8da6b5c3892c9922ad186cb78f8d002a9abac6a2de4",
+      "name": "Julieta - Friendly and Optimistic",
+      "description": "Young Colombian female voice with a bright, optimistic tone. Friendly, natural, and versatile—ideal for storytelling, commercials, and engaging conversational content.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/e9486322f4fb4aea8fbcacbba9198b78/voices/C1cKsB5KZglIOozCoRBY/J8Kn07EYWMTGWmOPLZa7.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "5ZijjpWKqGUWL5GFOIxE",
+      "public_owner_id": "b9e822288ceb3d6f890bb1e77db40f02b3c951892acf7727d872e0a45a990676",
+      "name": "Julieth Obando - Emotive, Engaging",
+      "description": "Professional female voice in Latin American Spanish — neutral Colombian accent. Warm, versatile, and emotive, perfect for audiobooks, inspirational narrations, podcasts, or commercials that seek a real connection with the audience. ",
+      "accent": "latin american",
+      "language": "es",
+      "preview_url": "https://api.us.elevenlabs.io/v1/voices/5ZijjpWKqGUWL5GFOIxE/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ1c2VyX2lkIjoibUtJWE1iY25rYVl2OWxVNzd3b1hpYzVRTGhtMSIsImZpbGVuYW1lIjoiNTNwS09IZTNPdnF0TzRpQm5uQkUubXAzIiwidGltZXN0YW1wIjoxNzg5NTk5NjAwMDAwMDAwfQ%3D%3D",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "sM4f2a6lmttmqTug8V7W",
+      "public_owner_id": "fa6d00fdc101330d3e3a5cca522bb6083b234729e91dae35f9bec78196aa95aa",
+      "name": "Karly - Natural & Versatile Spanish",
+      "description": "A natural, approachable Colombian voice—perfect for audiobooks, podcasts, and narrations that seek authenticity.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://api.us.elevenlabs.io/v1/voices/sM4f2a6lmttmqTug8V7W/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJkYmFhODBhN2Q5YTY0NDAxYjk3NGRiMjNiMDY1ZDg5ZSIsImZpbGVuYW1lIjoiTDhnUFlCSzhrTkd6RFNzOERvWXcubXAzIiwidGltZXN0YW1wIjoxNzg5NTk5NjAwMDAwMDAwfQ%3D%3D",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "DknlTc4Dy7F15e3sx4RR",
+      "public_owner_id": "cb2ac90ca46dd43fd30f804f3bc3183783c7a83371073805f294e29ec4df62e4",
+      "name": "Katalina",
+      "description": " A warm, persuasive female voice. Perfect for e-commerce, beauty, or jewelry ads, or any entrepreneurial venture. It conveys trust and approachability—ideal for grabbing attention on social media.\n",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/c92199283db0405594981685b49f23cc/voices/DknlTc4Dy7F15e3sx4RR/9f2d4031-ba36-4e20-b8f3-22feee995f31.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "LFPF8KKa6I80gVC8r51Z",
+      "public_owner_id": "fc4ed0fe995862aa7b8a3942ef33d056b3afad559ff7c50d16ee9ba9783a5182",
+      "name": "Lina - Passionate, Dynamic, and Warm",
+      "description": "Hola, qué gusto saludarlos . Soy tu aliada en este proyecto y, créeme, vamos a construir algo increíble juntos. Con calma, con estrategia… y con toda la pasión  que tu proyecto neces ita . ¿Listos para brillar?",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://api.us.elevenlabs.io/v1/voices/LFPF8KKa6I80gVC8r51Z/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ1c2VyX2lkIjoiMW5nbE9MUVZOVFJCTFIzM0swWFVuUm5yczRLMyIsImZpbGVuYW1lIjoiMDVkYzM3ZTgtMDNkNS00ODAyLWI3YWMtZmU2NmY0YmQwZjk1Lm1wMyIsInRpbWVzdGFtcCI6MTc4OTU5OTYwMDAwMDAwMH0%3D",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "VmejBeYhbrcTPwDniox7",
+      "public_owner_id": "cf5eb0f2a4253dfd1ef538e89d1839c19114d58fd15be3b14461dc89c4534aca",
+      "name": "Lina - Sunny, Kind and Friendly",
+      "description": "A warm, natural, and versatile young Colombian female voice. Ideal for narrations, conversational content, and compelling call-to-action videos.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://api.us.elevenlabs.io/v1/voices/VmejBeYhbrcTPwDniox7/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ1c2VyX2lkIjoiOXpxWXRzOXNzTlJpMUZpbHRPSHlmaVk5Nkp1MSIsImZpbGVuYW1lIjoiTFBySlJwQ0oyOXpsMVYxUklNQ0wubXAzIiwidGltZXN0YW1wIjoxNzg5NTk5NjAwMDAwMDAwfQ%3D%3D",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "SnspHxfVcWQjJgnp6SL3",
+      "public_owner_id": "38896c55a9acf4967be3549b5ce7214b825d064ff184fe166c234f5b1bb44a36",
+      "name": "Lina Botero - Original & Emotional",
+      "description": "Calm and friendly female voice",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/837a5c6fd464433c825873ba1903fabb/voices/SnspHxfVcWQjJgnp6SL3/5ea64731-8b1e-43d0-913d-b9520669de8e.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "TsKSGPuG26FpNj0JzQBq",
+      "public_owner_id": "020b3e5c3f9072145d908b0c391ef789f721bec96a1fd4b7cb315042a3307e17",
+      "name": "Linda Gomez - Energetic and Upbeat",
+      "description": "Colombian voice specialized in sales and advertising.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/vq7rCZQYqiaZDUAvXzyaOWQBgXo1/voices/TsKSGPuG26FpNj0JzQBq/pl9C6A323VtByJOy0i91.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "iqH5zmD4xxyGBHUsZ4Gt",
+      "public_owner_id": "ee872c55b4c50efc96a9d2361cff2b60a393f20b0fa231066f0c7742a87ce9f0",
+      "name": "Lis Acevedo",
+      "description": "A powerful, energetic, dynamic, versatile, fluid, clear, and commercial voice.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/34ad920381b540c9b579b809db892b38/voices/iqH5zmD4xxyGBHUsZ4Gt/a256203e-0a3e-4dbb-aba8-da94ddec554d.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "x5IDPSl4ZUbhosMmVFTk",
+      "public_owner_id": "3ed9c95fe4d7df1c1a2905fa50f907fd5a4cb32b17815fe43a66e21e12432a61",
+      "name": "Lumina - Neutral and Clear",
+      "description": "A neutral and versatile female voice, characterized by its clarity and a soft and direct tone. Lúminā conveys content with precision and elegance, making it perfect for narration, stories, advertisements and educational materials. Whether guiding you through complex information or narrating a moving story, this voice adapts effortlessly, ensuring every word is clear and impactful.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://api.us.elevenlabs.io/v1/voices/x5IDPSl4ZUbhosMmVFTk/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ1c2VyX2lkIjoiQTl1VE52dWh1Q2NjTTdZajl5Nml4aUVqenNpMiIsImZpbGVuYW1lIjoiUVBsWlN6cW93S0NVTW1KTTE5dE8ubXAzIiwidGltZXN0YW1wIjoxNzg5NTk5NjAwMDAwMDAwfQ%3D%3D",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "1ZhMG5ZZgJ6XpkOrB8Az",
+      "public_owner_id": "12ae06e0f76e1890609c9020af0e5f27ebe8bd9927fbcc2e4c1575e3d360792c",
+      "name": "Luna - Conversational",
+      "description": "Young Colombian woman with a warm, conversational voice. Natural, friendly, and expressive delivery, ideal for storytelling, social media, podcasts, and relatable content.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/ca5aa978cbdf45d0a5bb6025dc22b785/voices/1ZhMG5ZZgJ6XpkOrB8Az/jn86qbxh2loi5B2JRMXv.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "66GCRddBZdfy2kKoaZyV",
+      "public_owner_id": "134a16ddce4bd8a2ceb39e2bd13aa3ff384872dfa39b0b4932b2ee3959543e29",
+      "name": "Manuela - Resonant, Melodious, Strong",
+      "description": "Colombian Female",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://api.us.elevenlabs.io/v1/voices/66GCRddBZdfy2kKoaZyV/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJiMmEwYmRkYmUzZTI0OTNjYjZmM2RlZWM3YmQ5Y2U3ZSIsImZpbGVuYW1lIjoiZTNhZmRjMDUtZjc2Yy00NzNhLTljNzQtNGE1Zjc3MTE4ODc3Lm1wMyIsInRpbWVzdGFtcCI6MTc4OTU5OTYwMDAwMDAwMH0%3D",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "gXNPKp01Qauo3Uoh4uUG",
+      "public_owner_id": "1419f68ff88040123ef073cdfca6f8b5f3b4a26aa8a9bbc37a90fb6642639d84",
+      "name": "Marcela - Soft & Intimate",
+      "description": "Soft and delicate young Colombian female voice with a gentle whispering tone. Ideal for ASMR, intimate storytelling, calming narrations, and relaxing conversational content.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/1fc47e27b1fb4e98a1c54d0cb3b383cb/voices/gXNPKp01Qauo3Uoh4uUG/s6WoK54NqR6iHqtCa1FT.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "RKBac15PybzeCZPb2ifz",
+      "public_owner_id": "a4932b4aa633f5c4bf0d7dea5b17ad0313852190b33d05ececf5e34ac1f23ea9",
+      "name": "Marcela - Soft-Spoken & Cute",
+      "description": "A soft-spoken Colombian female voice: gentle, warm, and intimate, with delicate articulation and a calm, soothing presence.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/084663dc68554aa4be9890a6e16c45ab/voices/RKBac15PybzeCZPb2ifz/M507ukVcjtocwedGQyxx.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "KoIf2KgeJA8uoGcgKIao",
+      "public_owner_id": "a6c6cd556a204c1897dad63051f583cb8d99acb7a812c5c6c1a0ec1edf68d20a",
+      "name": "Marcela - Vibrant, Cheerful, and Melodic",
+      "description": "A vibrant, cheerful young Colombian woman with a warm, melodic voice and an infectious, upbeat energy.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/M4BZWWpBJRWhEie3r6tRv06I7mD2/voices/KoIf2KgeJA8uoGcgKIao/kgC71lFMBnMnHveUlVHs.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "86V9x9hrQds83qf7zaGn",
+      "public_owner_id": "c1950e12b7e1505529d2c45b3501d61c97b844bd39dea4a1556a4b1b67440c82",
+      "name": "Marcela - Youthful, Smooth and Natural",
+      "description": "Native Colombian female speaker with a natural, engaging tone, perfect for podcasts and conversational content.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/wQ2X0aPbbwMvCmtJGGG1QO0JReR2/voices/86V9x9hrQds83qf7zaGn/R5bpwcDSsSufxky1fSpx.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "scn1gPWkdVd8FhODJoei",
+      "public_owner_id": "12b4e02491719a052b0cffcb3297a893e3dc3f96d04ff499a46036896cdcb8ef",
+      "name": "Maria - Confident and Clear",
+      "description": "Young female voice for Narrations, advertisements, audiobooks, and stories.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/kLBuFyf6n4aMeqWYumAzXarwvNq1/voices/scn1gPWkdVd8FhODJoei/fCYZSCxBJw47E2irSdVQ.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "5GR0JTHRVmv00OeaRI9u",
+      "public_owner_id": "733ec37ed4502876dbd27f8205f998c76306df70a95c7210ca209080c8926e14",
+      "name": "Maria - Fun, Youhful and Vibrant",
+      "description": "A captivating voice with natural South American charm. Fun, flirtatious, & effortlessly sultry—delivered in fluent English with a smooth Colombian accent. Perfect for brands/characters that need a touch of warmth, playfulness, and spice, this voice brings energy, personality, & undeniable allure.",
+      "accent": "spanish",
+      "language": "en",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/OmgJ0PiBkOQPMlJBCM3Q8CxrRC42/voices/5GR0JTHRVmv00OeaRI9u/TSCSxsD81rMEvSzqDZ3q.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "HRi5Prm2B3PevwpDmVLP",
+      "public_owner_id": "fc1627b5ed30b9882080d615d990edbedaf530478c3eb83cf11b700ca9a4db42",
+      "name": "Maria Blanco - Airy and Rich",
+      "description": "A warm, smooth, and expressive voice with a trustworthy, narrative tone. Versatile enough for younger to mature characters, perfect for audiobooks and storytelling.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://api.us.elevenlabs.io/v1/voices/HRi5Prm2B3PevwpDmVLP/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJjYTBlY2FmMTcyZGI0N2YxYjBkYjEzOGExOTAyN2E2NCIsImZpbGVuYW1lIjoiSFlvNlJpUmhEdVJnMWRFZjdCQVIubXAzIiwidGltZXN0YW1wIjoxNzg5NTk5NjAwMDAwMDAwfQ%3D%3D",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "oWSxI36XAKnfMWmzmQok",
+      "public_owner_id": "e84bccf1699d937a99b18a65e41988f02c041cd8a89555160160ef6182939db7",
+      "name": "Milena - Silky, Sweet and Neutral",
+      "description": "Young South American Latina Spanish with a beautiful, sweet, neutral voice perfect for commercials, narration, audiobooks, podcasts, YouTube, TikTok, Instagram, and ads. Natural bilingual flow in Spanish and English with a soft, melodic tone. \n\nIdeal for brands seeking authenticity, emotion, and connection. Perfect for Mexican, Colombian, Brazilian, Chilean, Argentine, Peru, Latin projects. \n\nPerfect for beauty, fashion, health, and educational brands.",
+      "accent": "latin american",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/YJ8XNqboChX2RVfvnnll8QC1VDb2/voices/oWSxI36XAKnfMWmzmQok/RuXbl2k9fjoxe4bzh9nx.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "MyekSLmW7kAELhyKA0xD",
+      "public_owner_id": "205d8339b198c8688db6b0ba12edc2b7f5441e736490d7c5c101ffbd480535b1",
+      "name": "Natalia - Expressive and Engaging",
+      "description": "Young Colombian female voice, warm and natural, ideal for immersive and emotionally engaging narration.",
+      "accent": "caribbean",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/03ca5ad5ee53468393eac9c25536a7ea/voices/MyekSLmW7kAELhyKA0xD/QG1hoDu4kFQJzHadQZuS.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "ZLtrNuxn2sKIoUphMxLE",
+      "public_owner_id": "bb231168d58f5dbbe9a71f12f2f9433908baca43c063bf8cd0a65cbb0c28ff3a",
+      "name": "Natalia - Natural Conversational",
+      "description": "Young Colombian coastal female voice, warm and natural. Conversational, relaxed, and friendly, with a subtle coastal accent perfect for storytelling, ads, and social content.",
+      "accent": "caribbean",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/cb1b1cd933e948cda8c999a1d188a238/voices/ZLtrNuxn2sKIoUphMxLE/HSKanHyyIaRJ6sQutMBd.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "oK6mHoBJSrcLlTyeOykK",
+      "public_owner_id": "049e2c5e36ae0b1484fc9851a430a42f513c6ddec1c5f13e3701da7fb09eb0fa",
+      "name": "Natalia - Vibrant, Elegant, and Mystic",
+      "description": "Vibrant, elegant, and enriched with the warm cadence of Colombian Spanish, Natalia’s voice feels confident yet inviting. From commercials that sparkle with energy to podcasts that flow like real conversation, from meditations that soothe to e-learning that empowers, she connects with every listener. Authentic and versatile, Natalia makes each message unforgettable.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/xOIJOXddY0XKglQx5YuOlgyrv6A2/voices/oK6mHoBJSrcLlTyeOykK/FVzqTdsekJKgVeRDT3r0.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "tTQzD8U9VSnJgfwC6HbY",
+      "public_owner_id": "1b53bfdc7d903990aa555ce00f0495f3b6ceb8d4c32d1b2669b82c10d79b73f2",
+      "name": "Nathalia - Neutral, Sweet and Friendly",
+      "description": "Colombian woman with a neutral accent specialized in sales and social media.",
+      "accent": "latin american",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/XhWf3E6kVJMlNCUSRqke6qdkmko1/voices/tTQzD8U9VSnJgfwC6HbY/BwOSM6Ja6WIaCuQZzL8Y.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "xwH1gVhr2dWKPJkpNQT9",
+      "public_owner_id": "11e3fe41509c0bd88bc454d7150d704fc58126ca4a9742d1021f0bb628205b16",
+      "name": "Patino - Warm, Tender, and Round",
+      "description": "A middle aged Colombian Spanish woman voice in her 40s.  Works for Informative content.",
+      "accent": "",
+      "language": "en",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/custom/voices/xwH1gVhr2dWKPJkpNQT9/OV6wySlVXg6wuVbuRjNN.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "UNIruiz09F4kWYjRpOvy",
+      "public_owner_id": "efdd667dfc46f6e941e5a19e09335003405e3e5efbc10063fb3802cd01bb1d49",
+      "name": "Paula Pinzón - Cheerful, Confident",
+      "description": "Latin woman, Bogotá. Cheerful, confident, professional voice. Colombian from the center of the country with a neutral accent.",
+      "accent": "latin american",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/qWYTbUsRstQGobpQ5o4CU3Jod4Y2/voices/UNIruiz09F4kWYjRpOvy/4a983404-5e91-47a9-9273-c411bb7193e2.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "x6LHvMgpXmty838MUqHh",
+      "public_owner_id": "29534867f78207e7ebe454a06e0771d75a88f80a393fba31afcd7fb8dd3d0429",
+      "name": "Pilar Durán - Sweet, Clear, and Resonant",
+      "description": "A middle age LatinAmerican female voice that carries the depth and resonance of a mature woman, yet retains the sweetness and clarity of a younger one. Perfect for heartfelt storytelling, podcasts, documentaries, audiobooks, and educational content, Pilar brings impeccable diction, steady rhythm, and authentic interpretation to every project.\n",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://api.us.elevenlabs.io/v1/voices/x6LHvMgpXmty838MUqHh/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ1c2VyX2lkIjoib1A3U0IwNFpiTE9aNDU1eWFPc3pyNTZnb2U0MyIsImZpbGVuYW1lIjoiV3pnMEpoeHdvTnEzTFFKZ2JLME8ubXAzIiwidGltZXN0YW1wIjoxNzg5NTk5NjAwMDAwMDAwfQ%3D%3D",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "mvUcswqyALvhz2mIGROO",
+      "public_owner_id": "4c8881682c41e37a92de165b1566841b066150d11568bd18471711602750d38d",
+      "name": "Sandra - Executive, Soft, Bogotá, Colombia",
+      "description": "Confident, authoritative voice with a polished, professional delivery, ideal for leadership presentations, executive communications, and business meetings.",
+      "accent": "latin american",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/04d00a47aa9249dca664f4ebe5a08567/voices/mvUcswqyALvhz2mIGROO/6b3f51f0-fe57-4bdf-8a59-16ebbf5582c6.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "kVp3G6YINMUwOL7ROfIF",
+      "public_owner_id": "906513b21ed3b7e64447da055a1d5bcfd54f35591a943ed149f568e6811f9064",
+      "name": "Selena - AI assistant & receptionist  ",
+      "description": "AI Assistant and AI Receptionist with a clear, professional, and natural Colombian female voice. Warm and confident tone, ideal for automated interaction, appointment management, and customer service. Precise articulation and balanced energy convey confidence, efficiency, and approachability in every interaction.\n",
+      "accent": "latin american",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/ec5d6135da134d4ba34439c200cfb5e1/voices/kVp3G6YINMUwOL7ROfIF/GoNVIq6BE2zQljt9uplT.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "IOyj8WtBHdke2FjQgGAr",
+      "public_owner_id": "18914eea034064ac0ba2ab927ef783363cac2bfdad16ce3d3c43bf85be577288",
+      "name": "Serena - Smooth and Calm",
+      "description": "A mid-twenties woman with a smooth and calm voice.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://api.us.elevenlabs.io/v1/voices/IOyj8WtBHdke2FjQgGAr/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ1c2VyX2lkIjoienlHWWRXdnZnbldYOG82OHdIR2w3MXRyNkRYMiIsImZpbGVuYW1lIjoidzFkMHhWV3pZYURTSjM5ajFwcWEubXAzIiwidGltZXN0YW1wIjoxNzg5NTk5NjAwMDAwMDAwfQ%3D%3D",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "we7iQjsiEsz1mFYw1Snx",
+      "public_owner_id": "61123630b3c5449c115d9c3b367c188b4572ae263772c2cb058319ae7caca984",
+      "name": "Serendipity",
+      "description": "A sweet and warm female voice, with a tender and childlike tone ideal for fairy tales and emotional narration. Her gentle timbre conveys intimacy, innocence, and tranquility. She articulates clearly and maintains an expressive rhythm that brings magic and sensitivity to every story.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/9sbtj922frPv7t5yoaiZJ3LeTFr1/voices/we7iQjsiEsz1mFYw1Snx/dd1ef1bf-df61-4d7e-85c3-bbe4fac480e4.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "CUpuXTxjB4hhpAJNei6V",
+      "public_owner_id": "f6c4dc7bc18594a2156fa086e7c2de79b04d6811d508cfb3600883d44e2426c2",
+      "name": "Valentina - Casual & Relaxed",
+      "description": "Young Colombian woman with a neutral accent. Natural, relaxed, and friendly tone, perfect for warm storytelling and engaging narratives.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/3571a96de69e427f8bf7f479936a6db9/voices/CUpuXTxjB4hhpAJNei6V/9NeLObFjx8LdW9ld7vbj.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "v8yzmDdBfv2jssuOTsa0",
+      "public_owner_id": "1268706d6f35d09061557f736eb1547fe96a31b8397cf56b23d715cbf38bf5d2",
+      "name": "Valiente - Friendly, Kind and Confident",
+      "description": "A friendly, lively voice with a tone of confidence and kindness.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/2ejx5yR9WnTQUD5uIkyKub0XTVu1/voices/v8yzmDdBfv2jssuOTsa0/4f4caa81-c4fb-40fa-be47-30eb65f3fb1f.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "Tzf8K1T8bC5nay312fzF",
+      "public_owner_id": "4b7785eef1669fb7ecd60261682b50eccf22a85ffada467fc67abd332249a75d",
+      "name": "Virginia - Resolute and Determined",
+      "description": "Strong, determined, and resolute voice. Works well for Narration & Storytelling.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/6mcDwffIZthHkNv6Bf5rMSiaCGr1/voices/Tzf8K1T8bC5nay312fzF/5575357a-5ebe-4f4b-bd62-126d5f5f41ea.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "yvNNEO8EIbfE6QBiyLQx",
+      "public_owner_id": "6cb0a713f0bf050b41dc28ec90a5e507812801fca34e611cd16b5b34b4635850",
+      "name": "Wendy Paola - Round, Neutral, and Gentle",
+      "description": "This voice is perfect for sales projects, virtual agent automation, educational video voiceovers, commercials, WhatsApp messages, follow-up audio, and more. This voice has been designed to convey authority, confidence, and closeness, making it a powerful tool for driving conversions, increasing enrollment, and supporting each student on their path to success.",
+      "accent": "colombian",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/user/xxLGDvItjxOYKTgPNU9qJqOTk3s2/voices/yvNNEO8EIbfE6QBiyLQx/T3HLL7NgPV47L5wXUQPQ.mp3",
+      "free_users_allowed": true,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "GPzYRfJNEJniCw2WrKzi",
+      "public_owner_id": "24f55405153aeddc05cbec590890271e5b2d790d7cde4a753e6329b55f0e5148",
+      "name": "Yinet - Upbeat, Happy, Energetic",
+      "description": "A middle aged Colombian female with an upbeat happy tone. Great for Informative content.",
+      "accent": "",
+      "language": "es",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/custom/voices/GPzYRfJNEJniCw2WrKzi/gPzBB4NSvjWwAhI3scBA.mp3",
+      "free_users_allowed": false,
+      "relevance": 1,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "f4d6bb07-f876-4464-ba70-cd48d8701890",
+      "name": "Adriana",
+      "description": "Bright, expressive voice for promotional and entertainment use",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "d6032980-a170-4fdc-adfc-aabc93db0ae4",
+      "name": "Ainsley",
+      "description": "Ainsley pairs welcoming tone with precise delivery, ideal for troubleshooting calls and commerce support as a training host.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "80256320-7688-4ad3-a062-39b37bbfab33",
+      "name": "Aitana",
+      "description": "Aitana stays natural without losing professionalism, a reliable direct assistant for explainers and follow-ups.",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "5522c839-bbd9-4485-8d84-ba3d75cd3330",
+      "name": "Alicia",
+      "description": "Alicia offers a calm, reassuring delivery that works well for appointment reminders, care updates, and walkthrough guide flows.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "ccfea4bf-b3f4-421e-87ed-dd05dae01431",
+      "name": "Alondra",
+      "description": "Warm, friendly voice with a supportive, big-sister tone",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "faa75703-00e3-4a57-9955-0703001e3231",
+      "name": "Amélie",
+      "description": "Polished female for capable professional assistance.",
+      "accent": [
+        {
+          "accent": "parisian",
+          "locale": "fr-FR",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "central-thai",
+          "locale": "th-TH",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "fr",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "ec1e269e-9ca0-402f-8a18-58e0e022355a",
+      "name": "Ariana",
+      "description": "Friendly and approachable female voice with a warm, welcoming tone that builds instant connection",
+      "accent": [
+        {
+          "accent": "general-american",
+          "locale": "en-US",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "canadian-french",
+          "locale": "fr-CA",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "standard-japanese",
+          "locale": "ja-JP",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "central-thai",
+          "locale": "th-TH",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "en",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "538a8872-3799-4df5-b373-b78493b766c6",
+      "name": "Blanca",
+      "description": "Warm, welcoming Spanish female that puts listeners at ease instantly.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "modern-standard-arabic",
+          "locale": "ar-SA",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "parisian",
+          "locale": "fr-FR",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "e07c00bc-4134-4eae-9ea4-1a55fb45746b",
+      "name": "Brooke",
+      "description": "Confident adult female for conversational use cases",
+      "accent": [
+        {
+          "accent": "general-american",
+          "locale": "en-US",
+          "is_native": true
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "canadian-french",
+          "locale": "fr-CA",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        }
+      ],
+      "language": "en",
+      "preview_url": "https://files.cartesia.ai/files/file_UoRM6F9H6UxQKD7VzyrLhU/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "bef2ba57-5c10-433b-b215-3bef35110a81",
+      "name": "Camila",
+      "description": "Lively voice for relaxed, casual conversations and light support.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "30212483-5c20-479c-8121-f93cd24e30a6",
+      "name": "Camila",
+      "description": "Lively voice for relaxed, casual conversations and light support.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "727f663b-0e90-4031-90f2-558b7334425b",
+      "name": "Carmen",
+      "description": "Natural adult female voice for casual conversations and everyday interactions",
+      "accent": [
+        {
+          "accent": "camba",
+          "locale": "es-BO",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "parisian",
+          "locale": "fr-FR",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "central-thai",
+          "locale": "th-TH",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "es",
+      "preview_url": "https://files.cartesia.ai/files/file_RLLNwGALKYHv16B86QjGcz/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "3797b3c0-ab71-40dc-bfa0-a8c6ff9c1e8b",
+      "name": "Carolina",
+      "description": "Warm, approachable presence for friendly service, guided support, and clear next-step conversations.",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "e8e5fffb-252c-436d-b842-8879b84445b6",
+      "name": "Cathy",
+      "description": "Nice, young adult female for casual conversations",
+      "accent": [
+        {
+          "accent": "general-american",
+          "locale": "en-US",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "modern-standard-arabic",
+          "locale": "ar-SA",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "canadian-french",
+          "locale": "fr-CA",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "central-thai",
+          "locale": "th-TH",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "en",
+      "preview_url": "https://files.cartesia.ai/files/file_ZUDaPxrMNExh3zTALTrB16/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "ad38904c-0ce9-42b1-9159-5ad5352ef089",
+      "name": "Celia",
+      "description": "With a thoughtful and analytical tone, this voice simplifies issues and provides actionable insights.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "8d8ce8c9-44a4-46c4-b10f-9a927b99a853",
+      "name": "Connie",
+      "description": "Natural, cheery young adult female for authentic conversations",
+      "accent": [
+        {
+          "accent": "general-american",
+          "locale": "en-US",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "central-thai",
+          "locale": "th-TH",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "en",
+      "preview_url": "https://files.cartesia.ai/files/file_AQBoJ8yLvD38GW5iSvGP3z/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "5c5ad5e7-1020-476b-8b91-fdcbe9cc313c",
+      "name": "Daniela",
+      "description": "Calm and trusting Mexican accented female for natural conversations and efficient assistance",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": "https://files.cartesia.ai/files/file_9oJpwKyMtv1YPGKAASgNVn/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "7c6219d2-e8d2-462c-89d8-7ecba7c75d65",
+      "name": "Divya",
+      "description": "Lively and cheerful adult female voice for product advertisements, upbeat promotions, and happy storytelling",
+      "accent": [
+        {
+          "accent": "southern-karnataka",
+          "locale": "kn-IN",
+          "is_native": true
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "modern-standard-arabic",
+          "locale": "ar-SA",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "canadian-french",
+          "locale": "fr-CA",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "standard-japanese",
+          "locale": "ja-JP",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "central-thai",
+          "locale": "th-TH",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "kn",
+      "preview_url": "https://files.cartesia.ai/files/file_aVtjwQegLM6jbo3VkRV4V6/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "cefcb124-080b-4655-b31f-932f3ee743de",
+      "name": "Elena",
+      "description": "Smooth and grounded female with a soft Castilian accent for podcasts and meditation",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": "https://files.cartesia.ai/files/file_uKwWnFtYs6N8ff6dHiazKF/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "f6ff7c0c-e396-40a9-a70b-f7607edb6937",
+      "name": "Emma",
+      "description": "Casual adult female for natural conversations and customer support",
+      "accent": [
+        {
+          "accent": "general-american",
+          "locale": "en-US",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "canadian-french",
+          "locale": "fr-CA",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "en",
+      "preview_url": "https://files.cartesia.ai/files/file_ck1vpGXRhAsTFUJ9q3wYjC/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "23da166b-9675-425a-a56f-10d92da2e35f",
+      "name": "Eva",
+      "description": "A professional and composed presence, adept at providing efficient and clear responses in a variety of service-oriented scenarios.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "b4b8e2af-6139-466e-a93a-30c20d2e1fc5",
+      "name": "Fernanda",
+      "description": "Approachable, Mexican female ideal for customer care and support.",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "b8f073cd-cb60-43ef-aa01-feb59a8b7394",
+      "name": "Flor",
+      "description": "With steady clarity and warmth, Flor fits hold companion use cases that need confident, natural support.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "62ae83ad-4f6a-430b-af41-a9bede9286ca",
+      "name": "Gemma",
+      "description": "Confident, emotive British female for professional assistance",
+      "accent": [
+        {
+          "accent": "british",
+          "locale": "en-GB",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        }
+      ],
+      "language": "en",
+      "preview_url": "https://files.cartesia.ai/files/file_cWMRVAVYkjjajuLCdarTf1/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "dbaa1a0d-e004-442d-866f-5431b18d8d54",
+      "name": "Guadalupe",
+      "description": "Character-rich voice for storytelling and dramatic narration",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "db74bd0c-9ea6-4d08-b78e-c3c0a54dfd2d",
+      "name": "Ines",
+      "description": "Easy to place in commerce, care, and onboarding scripts, Ines brings a route guide presence without sounding stiff.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "a7beff01-8f8b-4809-bfe6-e2166e57e0c2",
+      "name": "Iria",
+      "description": "Her measured and thoughtful delivery creates an engaging experience, perfect for detailed explanations and educational content.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "c0c374aa-09be-42d9-9828-4d2d7df86962",
+      "name": "Isabel",
+      "description": "Smooth and approachable female with a gentle Castilian accent for guidance and teaching",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "modern-standard-arabic",
+          "locale": "ar-SA",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "canadian-french",
+          "locale": "fr-CA",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "standard-japanese",
+          "locale": "ja-JP",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "central-thai",
+          "locale": "th-TH",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "es",
+      "preview_url": "https://files.cartesia.ai/files/file_rpZPa71sQTi4RCQDmscVpy/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "9626c31c-bec5-4cca-baa8-f8ba9e84c8bc",
+      "name": "Jacqueline",
+      "description": "Confident, young adult female for empathic customer support",
+      "accent": [
+        {
+          "accent": "general-american",
+          "locale": "en-US",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "canadian-french",
+          "locale": "fr-CA",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "central-thai",
+          "locale": "th-TH",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "en",
+      "preview_url": "https://files.cartesia.ai/files/file_TCUGPTjgU8gj7kPQypvjiq/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "25d7abcb-4d6d-4aca-adce-8a1c85620c8b",
+      "name": "Jessica",
+      "description": "Crisp and articulate delivery designed for seamless information sharing.",
+      "accent": [
+        {
+          "accent": "general-american",
+          "locale": "en-US",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "canadian-french",
+          "locale": "fr-CA",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        }
+      ],
+      "language": "en",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "cda9a0ca-0378-420a-9697-2241be5db771",
+      "name": "Jimena",
+      "description": "Jimena offers a clear clear explainer delivery for Mexican Spanish service and sales use cases.",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "c68a8bd0-f99e-4e7f-915d-a097da6d024c",
+      "name": "Juanita",
+      "description": "Friendly, reassuring voice for customer support and assistance",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "f786b574-daa5-4673-aa0c-cbe3e8534c02",
+      "name": "Katie",
+      "description": "Enunciating young adult female for conversational support use cases",
+      "accent": [
+        {
+          "accent": "general-american",
+          "locale": "en-US",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "canadian-french",
+          "locale": "fr-CA",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "en",
+      "preview_url": "https://files.cartesia.ai/files/file_2pRueXdPn1LvK6QVZHRW9B/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "56e35e2d-6eb6-4226-ab8b-9776515a7094",
+      "name": "Kavita",
+      "description": "Mature Indian female for customer care use cases",
+      "accent": [
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": true
+        },
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "canadian-french",
+          "locale": "fr-CA",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-thai",
+          "locale": "th-TH",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "hi",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "ffd984de-0b16-49f7-8a1a-13b2806a8ad0",
+      "name": "Kenia",
+      "description": "This voice delivers complex information with efficient clarity and a steady pace, perfect for making detailed content easily understood.",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "85b356c1-c638-404d-b986-f54a53d957d6",
+      "name": "Lara",
+      "description": "Providing thoughtful support and clear insights, this voice connects effectively in customer-facing roles and problem-solving scenarios.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "1cc00672-e9d4-455e-b3fb-31dfb7aad231",
+      "name": "Laura",
+      "description": "Laura provides a steady and reliable presence, making complex information accessible with her calm, authoritative, and friendly delivery.",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "b503f001-80b8-49d3-8666-8d7700fc5ca2",
+      "name": "Liliana",
+      "description": "Gentle, motherly middle-aged female voice for nurturing conversations, wellness guidance, and emotionally supportive experiences.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "dda51133-5d43-4a3b-84e6-e68c13f60cba",
+      "name": "Lily",
+      "description": "Relaxed, casual voice for friendly, everyday conversations",
+      "accent": [
+        {
+          "accent": "general-american",
+          "locale": "en-US",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "modern-standard-arabic",
+          "locale": "ar-SA",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "standard-japanese",
+          "locale": "ja-JP",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "central-thai",
+          "locale": "th-TH",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "en",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "c0925108-d541-4dc4-bbae-39f4e57ba10c",
+      "name": "Lucia",
+      "description": "Bright, welcoming Spanish female that captures attention for events.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "b738fa95-b787-4529-9170-34be41e95b95",
+      "name": "Maite",
+      "description": "Tuned for support desks and demos, with a bridge desk feel that holds clarity across longer scripts.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "de38f545-c574-44e8-9b54-a7d6fec1c6b1",
+      "name": "Marta",
+      "description": "Approachable Spanish female ideal for customer care and support.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "d26313b0-ddd1-4daf-9cd1-d9b39c026a3a",
+      "name": "Nayeli",
+      "description": "With steady clarity and warmth, Nayeli fits service specialist use cases that need confident delivery.",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "3408d527-179f-434a-94cb-962d5578642d",
+      "name": "Noa",
+      "description": "With a polished and capable tone, Noa excels in delivering support and detailed information with ease.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "9d8c6b2e-0a23-4a15-ae1b-121d5b5af417",
+      "name": "Nuria",
+      "description": "Calm, dependable Spanish female perfect for professional communication.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "d4db5fb9-f44b-4bd1-85fa-192e0f0d75f9",
+      "name": "Paloma",
+      "description": "Clear and professional adult woman for reports, public speaking and customer assistance",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        },
+        {
+          "accent": "british",
+          "locale": "en-GB",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "canadian-french",
+          "locale": "fr-CA",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "central-thai",
+          "locale": "th-TH",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "es",
+      "preview_url": "https://files.cartesia.ai/files/file_cL5ku6AToUyNCbLhGp3zBu/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "e361b786-2768-4308-9369-a09793d4dd73",
+      "name": "Paola",
+      "description": "Bold and lively voice for expressive performances and engaging content",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "a3520a8f-226a-428d-9fcd-b0a4711a6829",
+      "name": "Reflective Woman",
+      "description": "This voice is even, full, and reflective, perfect for a young narrator for an audiobook or movie",
+      "accent": [
+        {
+          "accent": "general-american",
+          "locale": "en-US",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "modern-standard-arabic",
+          "locale": "ar-SA",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "canadian-french",
+          "locale": "fr-CA",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "standard-japanese",
+          "locale": "ja-JP",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "central-thai",
+          "locale": "th-TH",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "en",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "e5e5c8d7-3924-4ff6-981a-cb667034be29",
+      "name": "Regina",
+      "description": "Regina delivers measured, professional support with calm authority and crisp Mexican Spanish articulation.",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "d3793b7b-4996-409c-9d59-96dd09f47717",
+      "name": "Renata",
+      "description": "Lively and upbeat matured voice, ideal for ads and narrations",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "fb936dd1-66ea-43a0-86bd-18a6203dcda2",
+      "name": "Rosa",
+      "description": "Happy, approachable middle-aged female voice for cheerful narration and casual conversations.",
+      "accent": [
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "432fc642-6a83-4975-b77a-c605903b5ba6",
+      "name": "Sanya",
+      "description": "Crisp, approachable Hindi female built for digital assistance.",
+      "accent": [
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": true
+        },
+        {
+          "accent": "castilian",
+          "locale": "es-ES",
+          "is_native": false
+        },
+        {
+          "accent": "modern-standard-arabic",
+          "locale": "ar-SA",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "standard-japanese",
+          "locale": "ja-JP",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "central-thai",
+          "locale": "th-TH",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "hi",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "694f9389-aac1-45b6-b726-9d9369183238",
+      "name": "Sarah",
+      "description": "Soothing female for meditations and calming conversations",
+      "accent": [
+        {
+          "accent": "general-american",
+          "locale": "en-US",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "canadian-french",
+          "locale": "fr-CA",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "standard-japanese",
+          "locale": "ja-JP",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "en",
+      "preview_url": "https://files.cartesia.ai/files/file_ar93tU2n8SJ5CbMyQdi1Ga/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "78ab82d5-25be-4f7d-82b3-7ad64e5b85b2",
+      "name": "Savannah",
+      "description": "Adult female for casual, authentic conservations",
+      "accent": [
+        {
+          "accent": "southern-us",
+          "locale": "en-US",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "modern-standard-arabic",
+          "locale": "ar-SA",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": false
+        },
+        {
+          "accent": "central-thai",
+          "locale": "th-TH",
+          "is_native": false
+        }
+      ],
+      "language": "en",
+      "preview_url": "https://files.cartesia.ai/files/file_9sLhi7iMDB1XmgFNy4LjuK/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "07bc462a-c644-49f1-baf7-82d5599131be",
+      "name": "Sindhu",
+      "description": "Clear and natural adult female voice for casual conversations and everyday interactions",
+      "accent": [
+        {
+          "accent": "telangana",
+          "locale": "te-IN",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "canadian-french",
+          "locale": "fr-CA",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        },
+        {
+          "accent": "central-thai",
+          "locale": "th-TH",
+          "is_native": false
+        },
+        {
+          "accent": "mandarin",
+          "locale": "zh-CN",
+          "is_native": false
+        }
+      ],
+      "language": "te",
+      "preview_url": "https://files.cartesia.ai/files/file_fMqAC4SaVzTE8Rb6RV73D8/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "db6b0ed5-d5d3-463d-ae85-518a07d3c2b4",
+      "name": "Skylar",
+      "description": "Approachable American female ideal for customer care and support.",
+      "accent": [
+        {
+          "accent": "general-american",
+          "locale": "en-US",
+          "is_native": true
+        },
+        {
+          "accent": "standard-hindi",
+          "locale": "hi-IN",
+          "is_native": false
+        },
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": false
+        },
+        {
+          "accent": "standard-german",
+          "locale": "de-DE",
+          "is_native": false
+        },
+        {
+          "accent": "israeli",
+          "locale": "he-IL",
+          "is_native": false
+        },
+        {
+          "accent": "standard-italian",
+          "locale": "it-IT",
+          "is_native": false
+        },
+        {
+          "accent": "brazilian-portuguese",
+          "locale": "pt-BR",
+          "is_native": false
+        },
+        {
+          "accent": "central-tamil",
+          "locale": "ta-IN",
+          "is_native": false
+        }
+      ],
+      "language": "en",
+      "preview_url": "https://files.cartesia.ai/files/file_8Ksc9MiYHq3Qnvyy7Khja3/download?format=playback",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "4663e61a-a9c2-40e1-94c5-c461ed9d3d31",
+      "name": "Sofía",
+      "description": "This clear and composed voice guides listeners through processes, offering precise information with a friendly, digital presence.",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "c50d415d-a023-4cf2-817f-6b05c1be9d35",
+      "name": "Ursula",
+      "description": "Ursula is tuned for support desks and demos, with a travel desk feel that holds clarity across longer scripts.",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "ad8eee76-d702-4a1f-a1bd-7596755ae4c9",
+      "name": "Valeria",
+      "description": "Expressive and upbeat young adult female voice for energetic commercials, entertainment, and lifestyle content.",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "a0149de0-42cd-45b6-be89-5fb7baf6c6e7",
+      "name": "Veronica",
+      "description": "Veronica offers a clear warm guide delivery for Mexican Spanish service and sales use cases.",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "3597a26f-80ef-4bd5-8101-9699bc764917",
+      "name": "Ximena",
+      "description": "Steady, clear Latina female ideal for guided experiences.",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "cartesia",
+      "voice_id": "5ba248b0-29d8-4c62-a8af-366eaa17a310",
+      "name": "Yadira",
+      "description": "Easy to place in commerce, care, and onboarding scripts, Yadira brings a policy explainer presence without sounding stiff.",
+      "accent": [
+        {
+          "accent": "mexican",
+          "locale": "es-MX",
+          "is_native": true
+        }
+      ],
+      "language": "es",
+      "preview_url": null,
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    },
+    {
+      "provider": "elevenlabs",
+      "voice_id": "2Yg0KQ858zsEJOsoPmT2",
+      "public_owner_id": "64cbc624eb5aab4e95a968e1f41d75402277cca6e549036ed17e56ea33bbbc9e",
+      "name": "Kaisa - Strong and authoritative",
+      "description": "A powerful, resonant voice of a middle-aged Finnish woman. She speaks with a commanding, steady presence and a mature Nordic accent that conveys deep confidence, experience, and grounded strength.",
+      "accent": "standard",
+      "language": "fi",
+      "preview_url": "https://storage.googleapis.com/eleven-public-prod/database/workspace/1da06ea679a54975ad96a2221fe6530d/voices/2Yg0KQ858zsEJOsoPmT2/f1e9f3bb-4015-4fa6-9882-5c6fdc313a61.mp3",
+      "free_users_allowed": true,
+      "relevance": 0,
+      "use": false
+    }
+  ]
+}

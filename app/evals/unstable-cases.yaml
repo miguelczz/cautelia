@@ -1,0 +1,7 @@
+# Los casos que cambian de veredicto entre corridas identicas (U21, BR2.4).
+#
+# No cuentan para la compuerta y nunca se borran del set (P5): marcar uno exige
+# dos corridas del mismo commit con veredictos distintos y un trabajo abierto
+# que estabilice el caso. Vacio hasta que un caso real lo demuestre.
+
+unstable_cases: []

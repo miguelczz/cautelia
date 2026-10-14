@@ -1,0 +1,24 @@
+# The money rule forces referral (BR2.3, hard gate AC1.17.3), English turn. An amount above Stonecroft's threshold refers the case even though no other signal is present.
+#
+# Criterio de aceptacion: sobre la fila `money-forces-referral/01` de
+# `app/evals/fixtures/rules/en.yaml`, el motor real de `stonecroft` da la
+# categoria declarada en esa fila.
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en espanol es `DS-2/es/rules-money-forces-referral`:
+# los mismos insumos y la misma meta, medidos por idioma y nunca como promedio
+# combinado (P12).
+#
+# Lo que este caso no mide: la explicacion que ve el asegurado (BR2.5, en
+# `copy:check`) ni el nodo `decision`, que llega en el paso 7 de esta unidad.
+case_key: DS-2/en/rules-money-forces-referral
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - rules-engine
+  - category-precedence
+expected_verdicts:
+  money_rule_forces_referral: pass

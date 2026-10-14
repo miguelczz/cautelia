@@ -1,0 +1,46 @@
+# Quien dice «eso es todo» con el reporte a medias oye que falta algo, no que quedo registrado.
+#
+# Comprension de un mensaje. Visto en una llamada simulada el 2026-10-13: con el lugar del
+# choque todavia sin decir (el caso seguia tomando datos), la persona contesto «No, asi esta
+# bien, eso es todo, gracias» y el modelo dijo «Ya quedo anotado tu reporte; un ajustador lo
+# revisara con tu poliza». Es falso, y la persona se iba creyendo que su reporte estaba hecho.
+# Lo que le pasa a un reporte al terminar --queda registrado, o lo revisa un ajustador-- lo dice
+# solo el codigo, con frases fijas, cuando de verdad pasa. Este caso mide tres cosas de lo que el
+# modelo contesta: que no da el reporte por hecho ni dice que lo revisa un ajustador
+# (`outcome_claim`, la misma funcion con la que el chat descarta esa respuesta), que dice que
+# falta el lugar, y que no se inventa uno.
+# Escrito antes del cambio que descarta esa respuesta en el chat; no se ha corrido contra el
+# modelo. Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+# Corregido el 2026-10-13 tras la primera corrida con el modelo: el caso pedia que la respuesta
+# **preguntara** por lo que falta, y lo que la instruccion pide es **decirlo** («todavia me falta
+# el lugar; puedes decirmelo ahora o seguir despues»). Mide que lo nombre, sea pregunta o no.
+case_key: DS-2/en/understand-done-with-data-missing
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  record_type: claim
+  captured:
+  - injuries
+  - identity_and_policy
+  - incident_datetime
+  - description
+  last_agent_text: I noted that nobody was hurt and that it happened yesterday afternoon. Do you want
+    to add anything else about what happened?
+  message: No, that's fine, that's all, thanks.
+  wants:
+  - continue
+  - other
+  absent_items:
+  - location
+  reply_claims_no_outcome: true
+  reply_mentions_any:
+  - where
+  - place
+  - location
+expected_verdicts:
+  understanding_done_with_data_missing: pass

@@ -1,0 +1,25 @@
+# Endoso vigente (AC2.2.5, ADR-011): un endoso vigente con relacion endorsement_modifies hacia la clausula citada la rechaza si la respuesta no cita tambien el endoso.
+# Criterio(s): AC2.2.5. Par ES/EN: 'endorsement-electronics-exclusion'.
+# Lo mide `mise run evals:citas` (fase 1, 2026-10-08): recupera, propone las citas con
+# Claude y las verifica, igual que el chat. La prueba estatica CG-U8-2 sigue comprobando
+# que clause_id exista en app/data/, sea de esta aseguradora y de esta poliza y no sea
+# distractor.
+# No prueba el registro de `amended_by` cuando el endoso SI se cita: ese caso es de las pruebas unitarias de CitationVerifier (tanda 2), no de este golden set.
+
+case_key: DS-3/en/endorsement-electronics-exclusion
+dataset: DS-3
+language: en
+tenant: sunmeadow
+axes:
+- endoso
+- citation-verification
+citation:
+  policy_number: POL-795628
+  clause_id: SUN-PAP-2026-F.TERMINATION
+  expected_outcome: verified
+  amended_by: SUN-PAP-2026-END-5
+  question: How can I cancel this policy?
+expected_verdicts:
+  citation_endorsement_electronics_exclusion: pass
+  citation_exists_endorsement_electronics_exclusion: pass
+requires_provider_key: true

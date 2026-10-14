@@ -1,0 +1,24 @@
+# La regla de dinero fuerza la derivacion (BR2.3, compuerta dura AC1.17.3), turno en espanol. Un monto por encima del umbral de Stonecroft deriva el caso aunque ninguna otra senal este presente.
+#
+# Criterio de aceptacion: sobre la fila `money-forces-referral/01` de
+# `app/evals/fixtures/rules/es.yaml`, el motor real de `stonecroft` da la
+# categoria declarada en esa fila.
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en ingles es `DS-2/en/rules-money-forces-referral`:
+# los mismos insumos y la misma meta, medidos por idioma y nunca como promedio
+# combinado (P12).
+#
+# Lo que este caso no mide: la explicacion que ve el asegurado (BR2.5, en
+# `copy:check`) ni el nodo `decision`, que llega en el paso 7 de esta unidad.
+case_key: DS-2/es/rules-money-forces-referral
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - rules-engine
+  - category-precedence
+expected_verdicts:
+  money_rule_forces_referral: pass

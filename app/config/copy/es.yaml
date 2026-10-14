@@ -1,0 +1,4014 @@
+# Catalogo de textos en espanol.
+#
+# Toda frase que lee una persona sale de aqui. Ninguna se escribe en linea en un
+# nodo, un adaptador o una pantalla (BR3.3).
+#
+# U1 entrega el catalogo con sus chequeos, no con su contenido: cada unidad
+# agrega sus frases cuando construye la conducta que las usa. Hoy hay una sola
+# clave, la que U1 consume de verdad.
+#
+# Cada clave existe tambien en `en.yaml` (BR3.1) y tiene al menos un consumidor
+# literal en el codigo (BR3.2).
+
+evals:
+  scripted_insured:
+    unknown_field:
+      text: No sé, eso no lo tengo.
+      surface: system
+
+# Las etiquetas de la redacción (U3, BR3.2, BR3.4). En lugar del dato aparece la
+# etiqueta de su tipo, **nunca sus dígitos ni una parte de ellos**: no se deja un
+# prefijo, un sufijo ni una longitud.
+#
+# Se escriben en el idioma de la conversación y se guardan **ya escritas**, para
+# que un renglón de log o una traza exportada se entiendan fuera del aplicativo,
+# sin catálogo que resolver.
+#
+# El número distingue dos datos distintos del mismo tipo dentro del mismo texto
+# --el teléfono del asegurado y el del testigo-- y empieza de nuevo en cada
+# llamada: mantenerlo entre turnos exigiría guardar la correspondencia entre el
+# valor real y su número, que es justo la bóveda que la unidad prohíbe.
+redaction:
+  label:
+    license_plate:
+      text: "[PLACA {n}]"
+      surface: system
+    national_id:
+      text: "[CÉDULA {n}]"
+      surface: system
+    phone:
+      text: "[TELÉFONO {n}]"
+      surface: system
+    policy_number:
+      text: "[PÓLIZA {n}]"
+      surface: system
+    person:
+      text: "[NOMBRE {n}]"
+      surface: system
+    email:
+      text: "[CORREO {n}]"
+      surface: system
+    location:
+      text: "[LUGAR {n}]"
+      surface: system
+    unclassified:
+      text: "[DATO {n}]"
+      surface: system
+    vin:
+      text: "[VIN {n}]"
+      surface: system
+  # Lo que se dice en voz alta en lugar de una etiqueta (2026-10-13). Una etiqueta se lee
+  # en pantalla; en un altavoz sonaría a lo que el sintetizador decida. Solo se usa si una
+  # frase que se va a decir todavía trae alguna --un comentario que un ajustador escribió y
+  # se guardó tapado, una explicación con un lugar que el detector confundió con un dato--.
+  # No destapa nada: "ese nombre" no dice cuál.
+  spoken:
+    license_plate:
+      text: esa placa
+      surface: system
+    national_id:
+      text: ese documento
+      surface: system
+    phone:
+      text: ese teléfono
+      surface: system
+    policy_number:
+      text: esa póliza
+      surface: system
+    person:
+      text: ese nombre
+      surface: system
+    email:
+      text: ese correo
+      surface: system
+    location:
+      text: ese lugar
+      surface: system
+    unclassified:
+      text: ese dato
+      surface: system
+    vin:
+      text: ese número de serie
+      surface: system
+  # Lo que responde un punto de salida cuando la redacción no se pudo ejecutar.
+  # No sale el texto sin tapar: sale esto. Fallar cerrado es la única opción.
+  degraded:
+    text: No puedo mostrar este texto ahora mismo.
+    surface: system
+
+# Las etiquetas del caso (U4, SEC-U4.15, BR3.6, AC4.10.2). Ninguna salida
+# imprime el valor interno de un estado, una resolución, un tipo de registro o
+# un motivo de derivación: `awaiting_insured` no es texto para una persona.
+#
+# La correspondencia entre cada valor del enum y su clave vive en un solo
+# archivo del código, junto a la definición del enum, para que no haya dos
+# listas que puedan decir cosas distintas.
+case:
+  # `waiting` **no esta aqui, y su ausencia es la decision**: el diseno listaba
+  # "un momento" como un cuarto estado, y el protocolo no tiene tal estado. Lo que
+  # ese cuarto estado queria --que la frase de espera se lea y no solo se oiga--
+  # ya se cumple, porque cada cosa que la agente dice viaja tambien como
+  # transcripcion. Una etiqueta generica en su lugar diria menos que la frase.
+  state:
+    open:
+      text: Abierto
+      surface: inbox
+    capturing:
+      text: Tomando datos
+      surface: inbox
+    verifying:
+      text: Verificando la póliza
+      surface: inbox
+    deciding:
+      text: Evaluando
+      surface: inbox
+    derived:
+      text: Con un ajustador
+      surface: inbox
+    awaiting_insured:
+      text: Esperando al asegurado
+      surface: inbox
+    closed:
+      text: Cerrado
+      surface: inbox
+  resolution:
+    registered:
+      text: Registrado
+      surface: inbox
+    approved:
+      text: Aprobado
+      surface: inbox
+    rejected:
+      text: Rechazado
+      surface: inbox
+    sent_to_insurer:
+      text: Enviado a la aseguradora
+      surface: inbox
+  record_type:
+    claim:
+      text: Siniestro
+      surface: inbox
+    coverage_inquiry:
+      text: Consulta de cobertura
+      surface: inbox
+    quote_request:
+      text: Solicitud de cotización
+      surface: inbox
+  derivation_reason:
+    demo_limit:
+      text: Se alcanzó el límite de la demostración
+      surface: inbox
+    person_requested:
+      text: La persona pidió hablar con alguien
+      surface: inbox
+    rule:
+      text: Una regla lo envió a revisión
+      surface: inbox
+  # Lo que se muestra en lugar de un campo que no se pudo descifrar. El caso se
+  # abre igual y el campo aparece marcado: un caso que no abre solo dice que
+  # algo pasó; uno con un hueco señalado se puede seguir trabajando.
+  field_unavailable:
+    text: No disponible — cifrado con una clave que este servidor no tiene
+    surface: inbox
+  # Las etiquetas de los ocho campos del caso, que la bandeja muestra en su
+  # bloque de completitud (U14, BR2.1). La correspondencia entre cada clave de
+  # campo y su clave de catalogo vive en `case_record/labels.py`, junto a las de
+  # los enums, y su prueba compara los dos conjuntos en los dos sentidos.
+  field:
+    identity_and_policy:
+      text: Nombre y póliza
+      surface: inbox
+    incident_datetime:
+      text: Cuándo ocurrió
+      surface: inbox
+    location:
+      text: Dónde ocurrió
+      surface: inbox
+    description:
+      text: Qué pasó
+      surface: inbox
+    vehicle_and_driver:
+      text: Vehículo y conductor
+      surface: inbox
+    other_parties:
+      text: Otras partes
+      surface: inbox
+    injuries:
+      text: Heridos
+      surface: inbox
+    question_asked:
+      text: La pregunta que se hizo
+      surface: inbox
+    driver_name:
+      text: Nombre del conductor
+      surface: inbox
+    driver_birth_date:
+      text: Fecha de nacimiento del conductor
+      surface: inbox
+    license_years:
+      text: Años con licencia
+      surface: inbox
+    license_jurisdiction:
+      text: Ciudad donde sacó la licencia
+      surface: inbox
+    vehicle_year:
+      text: Año del vehículo
+      surface: inbox
+    vehicle_make:
+      text: Marca del vehículo
+      surface: inbox
+    vehicle_model:
+      text: Modelo del vehículo
+      surface: inbox
+    vin:
+      text: VIN
+      surface: inbox
+    salvage_title:
+      text: Declarado pérdida total
+      surface: inbox
+    vehicle_age_years:
+      text: Antigüedad del vehículo en años
+      surface: inbox
+    use_type:
+      text: Uso del vehículo
+      surface: inbox
+    annual_mileage_band:
+      text: Recorrido anual
+      surface: inbox
+    garaging_jurisdiction:
+      text: Ciudad donde se guarda el vehículo
+      surface: inbox
+    at_fault_losses_3y:
+      text: Siniestros con culpa en tres años
+      surface: inbox
+    claims_3y:
+      text: Siniestros reportados en tres años
+      surface: inbox
+    prior_coverage_active:
+      text: Seguro vigente hoy
+      surface: inbox
+    lapse_months:
+      text: Meses sin cobertura
+      surface: inbox
+  # El canal por el que llegó el caso. Es el mismo token que nombra el nodo y la
+  # etiqueta de la traza; lo que se lee aquí sale del catálogo, nunca el enum.
+  channel:
+    voice:
+      text: Llamada
+      surface: inbox
+    chat:
+      text: Chat
+      surface: inbox
+
+# Los motivos de rechazo de cuota y del techo (U5, BR5.3, BR4.4, AC5.14.3).
+# Ninguna superficie imprime el valor del enum: `rate_limited_site` no es texto
+# para una persona. La correspondencia entre cada motivo y su clave vive en un
+# solo archivo del código, junto a la definición del enum.
+#
+# `budget_exhausted` lleva **la frase literal de AC5.14.3**, que es a la vez el
+# motivo de cuota y el mensaje con el que la voz corta antes de pedir el
+# micrófono. Una sola clave para las dos cosas: dos entradas con el mismo texto
+# es como un día dejan de decir lo mismo.
+spend:
+  quota:
+    rate_limited_session:
+      text: Esta conversación llegó a su límite de mensajes. Abre una nueva para seguir.
+      surface: chat
+    rate_limited_daily:
+      text: Llegaste al límite de hoy. Vuelve mañana y seguimos.
+      surface: chat
+    rate_limited_site:
+      text: La demostración llegó a su cupo de llamadas de hoy. Vuelve mañana y seguimos.
+      surface: voice
+    budget_exhausted:
+      text: La demostración de voz llegó a su presupuesto y no está recibiendo llamadas. El chat sigue disponible.
+      surface: voice
+
+# Los tres estados del resumen de traza que el chat enseña junto a cada
+# respuesta (U5, BR6.7). `lost` es un valor y no un fallo: su frase dice que el
+# rastro no llegó, no que algo se rompió.
+trace:
+  summary:
+    recording:
+      text: Registrándose…
+      surface: chat
+    ready:
+      text: Listo
+      surface: chat
+    lost:
+      text: El rastro de esta respuesta no llegó
+      surface: chat
+  # La pagina del resumen (BR4.3, BR4.4). Sin credencial y solo de la propia
+  # conversacion: lo inexistente y lo ajeno dicen exactamente lo mismo.
+  page:
+    title:
+      text: Cómo se respondió
+      surface: chat
+    nodes:
+      text: Pasos recorridos
+      surface: chat
+    clauses:
+      text: Cláusulas recuperadas y verificadas
+      surface: chat
+    latency:
+      text: Tiempo de respuesta
+      surface: chat
+    cost:
+      text: Costo
+      surface: chat
+    not_measured:
+      text: No medido
+      surface: chat
+    recording_hint:
+      text: Todavía se está registrando. Esta página se actualiza sola.
+      surface: chat
+    nothing_here:
+      text: No hay nada que mostrar aquí.
+      surface: chat
+    milliseconds:
+      text: "{value} ms"
+      surface: chat
+    back:
+      text: Volver a la conversación
+      surface: chat
+  # Cada paso con lo que hizo, sin su nombre interno (fase 3, 2026-10-08).
+  node:
+    intake:
+      text: Entender lo que contaste y anotarlo
+      surface: chat
+    policy_verification:
+      text: Buscar y verificar en tu póliza
+      surface: chat
+    decision:
+      text: Preparar el caso para el ajustador
+      surface: chat
+    compliance:
+      text: Revisar el cumplimiento
+      surface: chat
+
+# --- La base de la interfaz (U6) ----------------------------------------------
+#
+# El marco comun, el inicio, las seis paginas de estado y los errores de la API
+# dichos en palabras. Todo lo que se ve en esas pantallas sale de aqui (BR2.3).
+#
+# Las frases del inicio **solo describen lo construido** (BR4.1, BR4.3): hay una
+# version del titulo, de "Como funciona" y de "Que puedes probar" por canal, y la
+# interfaz dibuja solo la que corresponde a lo que el servidor declara montado.
+
+shell:
+  skip_to_content:
+    text: Saltar al contenido
+    surface: system
+  brand_name:
+    text: Cautelia
+    surface: system
+  nav_label:
+    text: Navegación principal
+    surface: system
+  nav:
+    # El boton de la barra que vuelve a la landing: la pagina de presentacion del
+    # proyecto, en la raiz del sitio. "Sitio" y no "landing", que es jerga.
+    landing:
+      text: Volver al sitio
+      surface: system
+  # El boton que, en telefono, abre la navegacion y los dos selectores (2026-10-08).
+  menu:
+    button:
+      text: Menú
+      surface: system
+  loading:
+    text: Cargando
+    surface: system
+  # Cada idioma se nombra en su propia lengua, en los dos catalogos: quien no
+  # lee espanol encuentra "English" sin tener que adivinar (U-04).
+  language:
+    group:
+      text: Idioma
+      surface: system
+    es:
+      text: Español
+      surface: system
+    en:
+      text: English
+      surface: system
+    # Se anuncia una vez, en el idioma nuevo (BR2.5).
+    changed:
+      text: "Idioma: español"
+      surface: system
+  theme:
+    group:
+      text: Modo de color
+      surface: system
+    light:
+      text: Claro
+      surface: system
+    dark:
+      text: Oscuro
+      surface: system
+  footer:
+    demo:
+      text: Demostración de portafolio con datos sintéticos.
+      surface: system
+    # El nombre llega como dato (`shared/site/author.ts`): es el mismo en los dos idiomas.
+    made_by:
+      text: Creado por {name}
+      surface: system
+    linkedin:
+      text: LinkedIn
+      surface: system
+    linkedin_label:
+      text: "{name} en LinkedIn (se abre en una pestaña nueva)"
+      surface: system
+    github:
+      text: GitHub
+      surface: system
+    github_label:
+      text: "{name} en GitHub (se abre en una pestaña nueva)"
+      surface: system
+
+# La telemetria (2026-10-09): un solo enlace con dos pestanas, el gasto y los
+# resultados. El tablero de gasto es publico y describe los casos sin su numero.
+# Un importe sin precio nunca lleva un cero (BR1.2) y cada total dice cuantas
+# consultas no se pudieron medir (BR3.5).
+telemetry:
+  title:
+    text: "Telemetría"
+    surface: system
+  lead:
+    text: "Cuánto cuesta atender a cada persona y qué tan bien lo hace la agente, con las cifras reales de esta demostración."
+    surface: system
+  tab_cost:
+    text: "Cuánto cuesta"
+    surface: system
+  tab_quality:
+    text: "Qué tan bien funciona"
+    surface: system
+
+# El tablero "Que tan bien funciona" (2026-10-11): la ultima corrida completa de
+# evaluacion, como salio. Palabras llanas: quien llega no sabe que es un golden set.
+quality:
+  loading:
+    text: "Cargando la última evaluación"
+    surface: system
+  empty:
+    text: "Todavía no se ha guardado ninguna evaluación completa, así que aquí no hay nada medido."
+    surface: system
+  intro:
+    text: "Ponemos a prueba a la agente con {total} situaciones escritas de antemano, las mismas en español y en inglés: reportes de choque, preguntas de póliza e intentos de engañarla. Así le fue en la última evaluación."
+    surface: system
+  run:
+    when:
+      text: "Última evaluación: {when}"
+      surface: system
+    commit:
+      text: "Código {commit}"
+      surface: system
+    duration:
+      text: "Duró {minutes} min"
+      surface: system
+    models:
+      text: "Modelos:"
+      surface: system
+    dirty:
+      text: "Se corrió con cambios sin guardar: el código que se nombra no describe del todo lo medido."
+      surface: system
+    not_comparable:
+      text: "Hubo situaciones que no se pudieron medir, así que esta corrida no se compara con otras."
+      surface: system
+    details:
+      text: "Detalles técnicos de la evaluación"
+      surface: system
+  lang:
+    es:
+      text: "En español"
+      surface: system
+    en:
+      text: "En inglés"
+      surface: system
+  totals:
+    passed:
+      text: "{passed} de {total}"
+      surface: system
+    hint:
+      text: "situaciones bien resueltas"
+      surface: system
+  legend:
+    passed:
+      text: "Bien"
+      surface: system
+    failed:
+      text: "Falló"
+      surface: system
+    not_measured:
+      text: "No se midió"
+      surface: system
+  count:
+    failed:
+      text: "{count} fallaron"
+      surface: system
+    not_measured:
+      text: "{count} sin medir"
+      surface: system
+  datasets:
+    title:
+      text: "Resultado por tipo de prueba"
+      surface: system
+  dataset:
+    ds2:
+      name:
+        text: "Conversaciones de reporte"
+        surface: system
+      help:
+        text: "Entiende lo que le dicen, pregunta lo que falta y anota bien."
+        surface: system
+    ds3:
+      name:
+        text: "Preguntas de póliza"
+        surface: system
+      help:
+        text: "Responde con la cláusula que corresponde a esa póliza."
+        surface: system
+    ds4:
+      name:
+        text: "Cotizaciones"
+        surface: system
+      help:
+        text: "Pide los datos de una cotización y no promete un precio."
+        surface: system
+    ds6:
+      name:
+        text: "Intentos de engañarla"
+        surface: system
+      help:
+        text: "Presión, instrucciones escondidas e insultos para que diga lo que no debe."
+        surface: system
+    ds8:
+      name:
+        text: "Aislamiento y textos"
+        surface: system
+      help:
+        text: "Lo que se publica y lo que separa a una aseguradora de otra."
+        surface: system
+    other:
+      name:
+        text: "Otras pruebas"
+        surface: system
+      help:
+        text: "Pruebas de otro conjunto."
+        surface: system
+  gates:
+    title:
+      text: "Reglas que no se pueden romper"
+      surface: system
+    lead:
+      text: "Con un solo fallo en una de ellas, la versión no se publica."
+      surface: system
+  gate:
+    citations:
+      text: "No inventa cláusulas"
+      surface: system
+    no_promises:
+      text: "No promete cobertura, pagos ni culpa"
+      surface: system
+    personal_data:
+      text: "Guarda los datos personales tapados"
+      surface: system
+    isolation:
+      text: "Una aseguradora no ve los casos de otra"
+      surface: system
+    conduct:
+      text: "Maneja bien emergencias e insultos"
+      surface: system
+    content:
+      text: "No afirma cumplir normas ni copia textos ajenos"
+      surface: system
+    all_passed:
+      text: "{total} de {total}"
+      surface: system
+    some_failed:
+      text: "{failed} de {total} fallaron"
+      surface: system
+    not_measured:
+      text: "No se midió"
+      surface: system
+  failures:
+    title:
+      text: "Lo que falló"
+      surface: system
+    none:
+      text: "Ninguna situación falló en esta corrida."
+      surface: system
+    blocking:
+      text: "Rompe una regla dura"
+      surface: system
+    reference:
+      text: "Referencia"
+      surface: system
+    cause:
+      text: "Causa"
+      surface: system
+  cause:
+    extraction:
+      text: "anotó mal un dato"
+      surface: system
+    retrieval:
+      text: "no encontró la cláusula"
+      surface: system
+    verification:
+      text: "la verificación de la cita"
+      surface: system
+    rules:
+      text: "las reglas de la aseguradora"
+      surface: system
+    style:
+      text: "la forma de decirlo"
+      surface: system
+    latency:
+      text: "tardó demasiado"
+      surface: system
+    provider_error:
+      text: "el proveedor respondió algo que no sirve"
+      surface: system
+    infrastructure:
+      text: "un fallo de infraestructura"
+      surface: system
+    not_built:
+      text: "una conducta que todavía no está construida"
+      surface: system
+    unknown:
+      text: "sin causa anotada todavía"
+      surface: system
+  pending:
+    title:
+      text: "Lo que no se midió"
+      surface: system
+    lead:
+      text: "No medido no es lo mismo que bien. Por eso va aparte, con su motivo."
+      surface: system
+    none:
+      text: "Todo lo que esta corrida intentó medir, se midió."
+      surface: system
+    count:
+      text: "{count} situaciones:"
+      surface: system
+    provider_unavailable:
+      text: "el proveedor del modelo no respondió"
+      surface: system
+    provider_timeout:
+      text: "el modelo tardó más del plazo"
+      surface: system
+    quota_exhausted:
+      text: "se acabó la cuota del proveedor"
+      surface: system
+    budget_exhausted:
+      text: "se llegó al tope de gasto"
+      surface: system
+    runner_timeout:
+      text: "la prueba tardó más de lo permitido"
+      surface: system
+    provider_key_missing:
+      text: "falta la clave del proveedor"
+      surface: system
+    target_unavailable:
+      text: "lo que se prueba no estaba disponible, por ejemplo el sitio publicado"
+      surface: system
+    other:
+      text: "otro motivo"
+      surface: system
+    always:
+      voice:
+        text: "La rapidez de la voz se mide aparte, con llamadas grabadas, y todavía no hay una medición publicada."
+        surface: system
+      chat:
+        text: "La rapidez del chat todavía no tiene cómo medirse."
+        surface: system
+
+spend_panel:
+  loading:
+    text: "Cargando el gasto"
+    surface: system
+  not_measured:
+    text: "Sin precio"
+    surface: system
+  tokens:
+    count:
+      text: "{amount} tokens"
+      surface: system
+    also:
+      text: "+ {amount} tokens"
+      surface: system
+    free_plan:
+      text: "plan gratuito"
+      surface: system
+    lookup_one:
+      text: "1 consulta"
+      surface: system
+    lookups:
+      text: "{count} consultas"
+      surface: system
+    also_lookups:
+      text: "+ {lookups}"
+      surface: system
+  kpi:
+    total:
+      text: "Gastado en total"
+      surface: system
+    total_hint:
+      text: "Desde el {date}: lo registrado por esta demostración, a precio de lista, más los ajustes que se anotan al comparar con lo que cobra cada proveedor."
+      surface: system
+    budget:
+      text: "Presupuesto usado"
+      surface: system
+    budget_hint:
+      text: "{spent} de {cap}. La alerta salta en {alert}."
+      surface: system
+    per_call:
+      text: "Cuesta una llamada"
+      surface: system
+    per_call_hint:
+      text: "En promedio. Llamadas medidas: {count}."
+      surface: system
+    per_chat:
+      text: "Cuesta un chat"
+      surface: system
+    per_chat_hint:
+      text: "En promedio. Conversaciones con caso: {count}."
+      surface: system
+    none_yet:
+      text: "Todavía sin datos"
+      surface: system
+    none_hint:
+      text: "Aparece en cuanto alguien la use."
+      surface: system
+  status_value:
+    ok:
+      text: "Por debajo de la alerta"
+      surface: system
+    alerted:
+      text: "Pasó la alerta; la demo sigue abierta"
+      surface: system
+    exhausted:
+      text: "Llegó al techo; lo que cuesta dinero está en pausa"
+      surface: system
+    unmeasured:
+      text: "No se puede calcular cuánto queda"
+      surface: system
+  daily:
+    title:
+      text: "Gasto por día"
+      surface: system
+    lead:
+      text: "Los últimos 30 días, separado por actividad."
+      surface: system
+    bar:
+      text: "{date}: {amount}"
+      surface: system
+    quiet:
+      text: "Ningún gasto en estos 30 días."
+      surface: system
+  activity:
+    title:
+      text: "En qué se va"
+      surface: system
+    lead:
+      text: "Todo lo gastado desde que empezó el proyecto, por actividad."
+      surface: system
+    calls:
+      text: "Llamadas"
+      surface: system
+    calls_help:
+      text: "Transcribir lo que dices, entenderlo y responderte con voz."
+      surface: system
+    chat:
+      text: "Chat"
+      surface: system
+    chat_help:
+      text: "Entender cada mensaje y redactar la respuesta."
+      surface: system
+    quality_tests:
+      text: "Pruebas de calidad"
+      surface: system
+    quality_tests_help:
+      text: "Las conversaciones de prueba que miden qué tan bien funciona la agente."
+      surface: system
+    policy_reading:
+      text: "Lectura de pólizas"
+      surface: system
+    policy_reading_help:
+      text: "Buscar en las pólizas la cláusula que responde una pregunta."
+      surface: system
+    operations:
+      text: "Operación"
+      surface: system
+    operations_help:
+      text: "Tareas de mantenimiento de la demostración."
+      surface: system
+    share:
+      text: "{percent} del total"
+      surface: system
+  provider:
+    models:
+      text: "Modelos:"
+      surface: system
+    title:
+      text: "Quién cobra"
+      surface: system
+    lead:
+      text: "Cada proveedor hace una parte del trabajo."
+      surface: system
+    anthropic:
+      text: "Anthropic"
+      surface: system
+    anthropic_role:
+      text: "Claude entiende lo que dices y redacta la respuesta."
+      surface: system
+    deepgram:
+      text: "Deepgram"
+      surface: system
+    deepgram_role:
+      text: "Convierte tu voz en texto durante la llamada."
+      surface: system
+    cartesia:
+      text: "Cartesia"
+      surface: system
+    cartesia_role:
+      text: "Le da voz a la agente."
+      surface: system
+    gemini:
+      text: "Gemini"
+      surface: system
+    gemini_role:
+      text: "Lee las pólizas para encontrar la cláusula, en su plan gratuito."
+      surface: system
+  window:
+    title:
+      text: "Presupuesto de la demostración"
+      surface: system
+    lead:
+      text: "La demo tiene un techo de gasto para una ventana de 90 días. Antes de llegar avisa, y al llegar pausa lo que cuesta dinero."
+      surface: system
+    range:
+      text: "Del {start} al {end}"
+      surface: system
+    remaining:
+      text: "Quedan {amount}"
+      surface: system
+    none:
+      text: "No hay una ventana de presupuesto vigente, así que no hay acumulado que mostrar."
+      surface: system
+    cap_label:
+      text: "Techo {amount}"
+      surface: system
+    alert_label:
+      text: "Alerta {amount}"
+      surface: system
+  cases:
+    title:
+      text: "Lo que costó cada caso"
+      surface: system
+    lead:
+      text: "Elige un caso para ver cuánto costó y quién cobró. Se describen sin su número, porque son de personas que usaron la demo."
+      surface: system
+    label:
+      text: "Caso"
+      surface: system
+    describe:
+      text: "{type} con {insurer}, por {channel} · {when}"
+      surface: system
+    describe_comparison:
+      text: "Comparación de {count} aseguradoras · {when}"
+      surface: system
+    describe_comparison_one:
+      text: "Comparación con {insurer} · {when}"
+      surface: system
+    comparison_hint:
+      text: "Una sola pregunta enviada a {count} aseguradoras a la vez."
+      surface: system
+    mine:
+      text: "Tuyo"
+      surface: system
+    yours:
+      text: "Tu caso"
+      surface: system
+    type_claim:
+      text: "Reclamo"
+      surface: system
+    type_coverage_inquiry:
+      text: "Consulta de cobertura"
+      surface: system
+    type_quote_request:
+      text: "Cotización"
+      surface: system
+    channel_chat:
+      text: "chat"
+      surface: system
+    channel_voice:
+      text: "llamada"
+      surface: system
+    empty:
+      text: "Todavía no hay casos con gasto. Habla con la agente por chat o por llamada y tu caso aparecerá aquí."
+      surface: system
+
+# Los nombres de las superficies que el inicio y la barra enlazan cuando estan
+# montadas (U-03: sin jerga de proyecto).
+surface:
+  telemetry:
+    text: "Telemetría"
+    surface: system
+  comparison:
+    text: Comparar aseguradoras
+    surface: system
+
+# Los enlaces externos, solo si estan configurados (BR4.4).
+# La vista de comparacion (U23): todo lo que se lee en ella. Ninguna frase
+# afirma cobertura ni explica por que dos columnas difieren (BR3.2).
+comparison:
+  page:
+    title:
+      text: "Comparar aseguradoras"
+      surface: system
+    lead:
+      text: "La misma pregunta, tres aseguradoras. Cada una responde según su póliza y muestra la cláusula en la que se apoya."
+      surface: system
+    loading:
+      text: "Cargando las aseguradoras…"
+      surface: system
+  # Lo que la pantalla dice de sí misma antes de que se escriba: quién responde en
+  # cada columna y, en el aviso junto al cuadro de texto, que responden asistentes de
+  # IA y que es una demostración. Es el bloque que el servidor registra como la
+  # divulgación de esta superficie (`comparison.disclosure`). Desde el 2026-10-12 la
+  # columna dice solo «Responde {agent}» (decisión de Miguel); que es una IA se dice
+  # una vez, en el aviso, para que el registro siga diciendo la verdad.
+  disclosure:
+    assistant:
+      text: "Responde {agent}"
+      surface: system
+    demo:
+      text: "Demostración con pólizas de ejemplo; responden asistentes de IA. No escribas datos personales reales. Cada pregunta cuenta como tres mensajes."
+      surface: system
+    incomplete:
+      text: "No pudimos cargar las pólizas de ejemplo de cada aseguradora, así que todavía no puedes preguntar."
+      surface: system
+  # La pregunta ya hecha. Se recuerda en este navegador por 24 horas, porque los
+  # datos de la demostración se reinician cada noche.
+  asked:
+    label:
+      text: "Tu pregunta"
+      surface: system
+    meta:
+      text: "Preguntada: {when}. Se guarda en este navegador por 24 horas."
+      surface: system
+    new:
+      text: "Nueva pregunta"
+      surface: system
+  examples:
+    title:
+      text: "Preguntas de ejemplo"
+      surface: system
+    rental_car:
+      text: "¿Me pagan un carro de alquiler mientras reparan el mío?"
+      surface: system
+    hail:
+      text: "¿Mi póliza responde por los daños del granizo?"
+      surface: system
+    uninsured_driver:
+      text: "¿Qué pasa si me choca alguien que no tiene seguro?"
+      surface: system
+    stolen_keys:
+      text: "¿Me cubren si me roban el carro y dejé las llaves adentro?"
+      surface: system
+    ride_app:
+      text: "¿Estoy cubierto si uso mi carro en una app de transporte?"
+      surface: system
+    blown_tire:
+      text: "¿Me cubren si se me revienta una llanta?"
+      surface: system
+    passenger_medical:
+      text: "¿Pagan los gastos médicos de mis pasajeros?"
+      surface: system
+    lend_car:
+      text: "¿Estoy cubierto si le presto mi carro a un amigo?"
+      surface: system
+  composer:
+    label:
+      text: "Tu pregunta de cobertura"
+      surface: system
+    send:
+      text: "Preguntar a las tres"
+      surface: system
+  out_of_scope:
+    explanation:
+      text: "Esta vista compara respuestas de cobertura. Para reportar un siniestro, abre el chat de la aseguradora:"
+      surface: system
+    chat_link:
+      text: "Chat de {insurer}"
+      surface: system
+  state:
+    loading:
+      text: "Revisando"
+      surface: system
+    answered:
+      text: "Respondida"
+      surface: system
+    failed:
+      text: "No se pudo revisar"
+      surface: system
+    interrupted:
+      text: "Sin respuesta"
+      surface: system
+    rejected:
+      text: "Límite alcanzado"
+      surface: system
+  column:
+    # El renglón va al pie de la tarjeta, justo encima de las cláusulas, y no en el
+    # encabezado (2026-10-12): ahí es donde dice a qué póliza pertenecen.
+    policy:
+      text: "Cláusulas de la póliza {policy}"
+      surface: system
+    policy_issued_by:
+      text: "Cláusulas de la póliza {policy}, emitida por {issuer}"
+      surface: system
+    idle:
+      text: "Aquí aparecerá su respuesta y la cláusula en la que se apoya."
+      surface: system
+    loading:
+      text: "Revisando la póliza de {insurer}…"
+      surface: system
+    failed:
+      text: "No se pudo revisar la póliza de {insurer}."
+      surface: system
+    interrupted:
+      text: "La respuesta no llegó antes de que salieras de la página."
+      surface: system
+    retry:
+      text: "Volver a preguntar"
+      surface: system
+    rejected_title:
+      text: "Se alcanzó un límite"
+      surface: system
+
+site:
+  link:
+    readme:
+      text: Cómo está hecho
+      surface: system
+    video:
+      text: Ver el video
+      surface: system
+
+home:
+  # Sin canales, el titulo no promete ninguno (BR4.3).
+  title_neutral:
+    text: Demostración de Cautelia
+    surface: system
+  # Corto a proposito (decision de Miguel, 2026-10-06: menos texto en el inicio);
+  # los pasos de abajo dicen el resto.
+  title:
+    text: Reporta un accidente y pregunta por tu póliza.
+    surface: system
+  # La segunda mitad de la frase de M1 ("los datos se borran cada noche") la
+  # agrega U20 cuando exista el reinicio nocturno.
+  demo_line:
+    # "Compañías" y no "aseguradoras": justo debajo, el título de la sección dice
+    # "Elige una aseguradora", y repetir la palabra en dos líneas seguidas se lee mal.
+    text: "Demostración con compañías ficticias."
+    surface: system
+  no_channels:
+    text: La demostración todavía no tiene canales abiertos. Por ahora puedes conocer las aseguradoras y sus pólizas de ejemplo.
+    surface: system
+  loading:
+    text: Cargando las aseguradoras
+    surface: system
+  how:
+    # El texto del botón que lleva a la guía; las tres frases de abajo son el título de
+    # la sección de aseguradoras, segun los canales montados (decision de Miguel,
+    # 2026-10-06: reemplazan "Elige una aseguradora" y la tira numerada).
+    title:
+      text: Cómo funciona
+      surface: system
+    report_chat:
+      text: Elige una aseguradora y cuenta lo que pasó por chat.
+      surface: system
+    report_voice:
+      text: Elige una aseguradora y cuenta lo que pasó por voz.
+      surface: system
+    report_both:
+      text: Elige una aseguradora y cuenta lo que pasó, por chat o por voz.
+      surface: system
+  insurers:
+    title:
+      text: Las aseguradoras de la demostración
+      surface: system
+  action:
+    chat:
+      text: Abrir chat
+      surface: system
+    chat_with:
+      text: Abrir chat con {insurer}
+      surface: system
+    voice:
+      text: Llamar
+      surface: system
+    voice_with:
+      text: Llamar a {insurer}
+      surface: system
+    policies:
+      text: Ver pólizas
+      surface: system
+    policies_of:
+      text: Ver las pólizas de {insurer}
+      surface: system
+# La guia "Como funciona" (/how-it-works): el recorrido paso a paso y el instructivo
+# para quien quiera probar la demostracion (plan-estilos-2026-10.md, seccion 9). Cada
+# paso se dibuja solo si lo que cuenta esta montado (BR4.1).
+guide:
+  title:
+    text: Cómo funciona
+    surface: system
+  about:
+    what:
+      text: "Cautelia es una demostración de una agente de inteligencia artificial para seguros de auto. Atiende a quien acaba de chocar: recoge lo que pasó, arma el caso y responde dudas de la póliza mostrando la cláusula en la que se apoya."
+      surface: system
+    limit:
+      text: "La agente no decide coberturas ni pagos: eso lo firma un ajustador. En esta demo, el ajustador eres tú."
+      surface: system
+    sample:
+      text: "Todo es de ejemplo: las aseguradoras son ficticias y las pólizas y los datos, inventados."
+      surface: system
+  steps:
+    title:
+      text: El recorrido
+      surface: system
+    choose:
+      title:
+        text: Elige una aseguradora
+        surface: system
+      body:
+        text: Cada una trae su póliza de ejemplo. Puedes probar varias.
+        surface: system
+    report:
+      title:
+        text: Cuenta lo que pasó
+        surface: system
+      both:
+        text: Por chat o por voz, con tus palabras.
+        surface: system
+      chat:
+        text: Por chat, con tus palabras.
+        surface: system
+      voice:
+        text: Por voz, con tus palabras.
+        surface: system
+      policy:
+        text: Cuando te pida la póliza, usa la de ejemplo.
+        surface: system
+    link:
+      title:
+        text: Recibe tu caso
+        surface: system
+      body:
+        text: La agente pregunta lo que falta y te da el enlace a tu caso.
+        surface: system
+    decide:
+      title:
+        text: Decide como ajustador
+        surface: system
+      body:
+        text: Con ese enlace decides tu propio caso, como lo haría un ajustador.
+        surface: system
+  try:
+    title:
+      text: Qué más puedes probar
+      surface: system
+    ask_coverage:
+      text: Pregunta si tu póliza cubre algo y abre la cláusula que cita.
+      surface: system
+    interrupt:
+      text: En la llamada, interrumpe a la agente mientras habla.
+      surface: system
+    compare:
+      text: Haz la misma pregunta a todas las aseguradoras a la vez.
+      surface: system
+    cases:
+      text: Mira casos de ejemplo como los ve un ajustador.
+      surface: system
+    telemetry:
+      text: Mira cuánto cuesta cada conversación y qué tan bien responde la agente.
+      surface: system
+  differences:
+    title:
+      text: Qué cambia entre aseguradoras
+      surface: system
+    same:
+      text: Todas hacen las mismas preguntas. Cambia quién te atiende y qué pasa con tu reporte.
+      surface: system
+    agent:
+      text: Te atiende {agent}.
+      surface: system
+    tip:
+      text: Para notarlo, reporta el mismo choque en dos de ellas.
+      surface: system
+  start:
+    text: Elegir una aseguradora
+    surface: system
+
+# El caracter de cada aseguradora. Lo consume su `tenant.yaml` por
+# `character_key`, no el codigo: la diferencia entre aseguradoras vive en su
+# configuracion (convencion 9).
+insurer:
+  # El nombre con el que la agente se presenta. Uno solo para las tres, por
+  # decisión de Miguel del 2026-09-28, coherente con la decisión ya tomada de una
+  # sola voz bilingüe (D-016). Es una desviación anotada del ejemplo de AC1.1.1,
+  # que nombraba "Valentina" para Stonecroft: el criterio se cumple en sustancia
+  # —el primer mensaje dice quién habla y que es una inteligencia artificial— y
+  # no en el nombre de su ejemplo.
+  #
+  # Vive en el catálogo y no en la configuración porque es texto visible.
+  # Si algún día se quiere un nombre por aseguradora, el patrón ya existe:
+  # `character_key` en su `tenant.yaml`, igual que el carácter de abajo.
+  agent:
+    name:
+      text: Catalina
+      surface: chat
+  character:
+    conservative:
+      text: "Prudente: un ajustador revisa todos los casos antes de cerrarlos."
+      surface: system
+    flexible:
+      text: "Ágil: cierra por su cuenta los reportes simples, como un choque sin heridos, y también ofrece cotizaciones."
+      surface: system
+    agency:
+      text: "Agencia: no decide los casos, los pasa a la aseguradora que emitió la póliza."
+      surface: system
+
+# Las seis paginas de estado de M11, con una sola plantilla (BR5.5). Ninguna
+# muestra un codigo, una traza ni el nombre de una aseguradora.
+status:
+  unavailable:
+    title:
+      text: La demo no está disponible ahora
+      surface: system
+    body:
+      text: Esperamos un minuto y no respondió. Puedes intentarlo de nuevo.
+      surface: system
+  # El mismo texto para un enlace manipulado y para un caso que no existe
+  # (BR5.6): la diferencia permitiria adivinar que casos existen.
+  link_invalid:
+    title:
+      text: Este enlace no es válido
+      surface: system
+    body:
+      text: Revisa que lo copiaste completo o pide uno nuevo en la conversación donde creaste el caso.
+      surface: system
+  link_expired:
+    title:
+      text: Este enlace venció
+      surface: system
+    body:
+      text: Tu caso sigue guardado hasta el reinicio de esta noche. Pide un enlace nuevo en la misma conversación, desde el navegador donde lo creaste.
+      surface: system
+  data_reset:
+    title:
+      text: Estos datos ya no existen
+      surface: system
+    body:
+      text: Los datos de la demostración se borran cada noche.
+      surface: system
+  not_found:
+    title:
+      text: No encontramos esta página
+      surface: system
+    body:
+      text: Revisa la dirección o vuelve al inicio de la demo.
+      surface: system
+  service_unavailable:
+    title:
+      text: El servicio no está disponible en este momento
+      surface: system
+    body:
+      text: Intenta de nuevo en unos minutos.
+      surface: system
+
+action:
+  go_home:
+    text: Ir al inicio
+    surface: system
+  retry:
+    text: Reintentar
+    surface: system
+  back_to_conversation:
+    text: Volver a la conversación
+    surface: system
+  start_over:
+    text: Empezar de nuevo
+    surface: system
+
+# Los errores de la API dichos en palabras (BR3.2 a BR3.4). La tabla unica que
+# lleva cada codigo de C-01 a su clave vive en
+# `app/frontend/src/shared/api-client/problems.ts`; los cuatro limites de uso
+# reutilizan las frases de U5 (`spend.quota.*`).
+problem:
+  validation_failed:
+    text: Revisa los datos que enviaste e inténtalo de nuevo.
+    surface: system
+  not_found:
+    text: No encontramos lo que buscabas.
+    surface: system
+  forbidden_origin:
+    text: No pudimos completar la acción desde esta página. Recárgala e inténtalo de nuevo.
+    surface: system
+  link_invalid:
+    text: Este enlace no es válido. Pide uno nuevo en la conversación donde creaste el caso.
+    surface: system
+  conflict:
+    text: Esta acción ya se había registrado.
+    surface: system
+  # El estado de lo que se pidio no admite la accion: un caso ya decidido,
+  # uno cerrado, una accion que esa aseguradora no ofrece. Distinto de
+  # `conflict`, que es una clave de idempotencia reusada: aquella dice "ya lo
+  # hiciste" y esta dice "esto ya no se puede".
+  conflict_state:
+    text: Este caso ya no admite esa acción. Recarga para ver cómo quedó.
+    surface: system
+  unverifiable:
+    text: No pudimos comprobarlo en este momento. Intenta de nuevo en unos minutos.
+    surface: system
+  service_unavailable:
+    text: El servicio no está disponible en este momento. Intenta de nuevo en unos minutos.
+    surface: system
+
+# El aviso fijo de las pantallas de canal (`DemoNotice`). El texto del aviso lo
+# trae cada canal; aqui van las piezas del componente.
+demo:
+  notice:
+    label:
+      text: Aviso de demostración
+      surface: system
+    more:
+      text: Más información
+      surface: system
+    less:
+      text: Menos información
+      surface: system
+  # El reinicio nocturno de los datos de demostración (U20, US5.15).
+  reset:
+    # Lo que lee una conversación viva cuando el reinicio borra su caso (AC5.15.3):
+    # su mensaje siguiente abre un caso nuevo, sin error.
+    conversation_notice:
+      text: La demostración se reinició y tu caso anterior ya no existe. Tu siguiente mensaje abre un caso nuevo.
+      surface: chat
+    # Lo que lee quien llega cuando pasaron 24 horas sin un reinicio exitoso
+    # (AC5.15.5). No promete una hora de regreso: no la sabe.
+    surfaces_closed:
+      text: La demostración no acepta casos nuevos por ahora, porque el último reinicio de datos no se completó. Vuelve en unas horas.
+      surface: system
+
+# --- Los controles de cumplimiento (U10) ---------------------------------------
+#
+# Las frases que la agente dice cuando un control actua. Las fijas se copian
+# **literales** del criterio que las fija --AC1.10.1, AC1.6.3, AC1.9.1 y
+# AC1.17.2--: una frase aprobada parafraseada deja de ser la aprobada.
+#
+# Todas pasan por la guardia como cualquier otra frase hacia el asegurado
+# (BR1.1), y una prueba de U10 comprueba que ninguna dispara una intervencion: la
+# frase que sale en lugar de una promesa no puede ser otra promesa.
+compliance:
+  # Lo que sale en lugar de una frase detenida, una por categoria (BR1.4). La
+  # afirmacion de ser humana la reemplaza la respuesta de identidad, de abajo.
+  guard:
+    coverage_promise:
+      text: No puedo confirmar la cobertura yo misma; la confirma un ajustador con la cláusula exacta.
+      surface: chat
+    amount:
+      text: No puedo darte montos ni cifras; un ajustador los define al revisar tu caso.
+      surface: chat
+    fault:
+      text: Anoto los hechos tal como me los contaste; lo de la responsabilidad lo revisa el ajustador.
+      surface: chat
+    legal_advice:
+      text: Eso es mejor tratarlo con el ajustador; yo registro lo que pasó.
+      surface: chat
+    transfer_or_deadline:
+      text: Un ajustador revisa tu caso con todo lo que registramos. No te puedo dar un plazo exacto.
+      surface: chat
+    config_disclosure:
+      text: No puedo compartir esa información. ¿Seguimos con tu reporte o con tu póliza?
+      surface: chat
+    # La guardia no pudo evaluar: la frase no sale y sale esta (BR1.5).
+    degraded:
+      text: No pude preparar esta respuesta. ¿Me lo puedes repetir, por favor?
+      surface: chat
+  # AC1.10.1.
+  identity:
+    answer:
+      text: No, soy una asistente de inteligencia artificial, pero te voy a ayudar con todo esto, y si prefieres, paso tu caso a un ajustador.
+      surface: chat
+  # AC1.6.3. La pública es la de por omisión (BR3.3); la local es la que
+  # comprueban los casos de DS-2 y DS-6.
+  emergency:
+    public:
+      text: Si alguien está herido de gravedad, llama ya al número de emergencias de donde te encuentres. Esta es una demostración y no puede enviar ayuda.
+      surface: chat
+    local:
+      text: Si alguien está herido de gravedad, llama ya al 911. Cuando todos estén a salvo, seguimos con el reporte.
+      surface: chat
+  # AC1.9.1: la frase de toda derivación (AC1.9.2).
+  handoff:
+    adjuster_review:
+      text: Con lo que me contaste, este caso lo revisa un ajustador. Le paso todo lo que registramos para que no tengas que repetirlo.
+      surface: chat
+    # En una consulta nadie conto nada: la frase de toda derivacion decia "con lo que
+    # me conto" (2026-10-08).
+    adjuster_review_inquiry:
+      text: "Listo: un ajustador revisa tu consulta con la cláusula que encontramos. Le paso todo para que no tengas que repetirlo."
+      surface: chat
+  # AC1.17.2.
+  closure:
+    direct:
+      text: Tu siniestro quedó registrado y no necesita la revisión de un ajustador. Aquí te dejo el enlace para ver tu caso.
+      surface: chat
+  # Qué falta para cerrar, dicho para quien abre el caso en la bandeja (BR6.1).
+  finding:
+    disclosure_missing:
+      text: Falta el registro de que la agente dijo que es una inteligencia artificial.
+      surface: inbox
+    human_route_missed:
+      text: La persona pidió hablar con alguien y el caso no se derivó en el turno siguiente.
+      surface: inbox
+    pii_found:
+      text: La transcripción tiene datos personales sin tapar.
+      surface: inbox
+    attachment_missing:
+      text: Faltan adjuntos del caso, entre la transcripción, las citas, las reglas disparadas y el identificador de la traza.
+      surface: inbox
+
+# La voz apagada de una aseguradora (U15, BR2.2, AC5.10.4). La consola de voz
+# (U16) enseña una de estas dos frases y el chat sigue vivo. Son dos y no una
+# porque dicen cosas distintas: "todavía no hay voz" y "la voz se rompió". El
+# detalle técnico --qué valor falló-- no es para el visitante: sale en el evento
+# técnico con su motivo cerrado, para quien opera la demostración.
+voice:
+  # Probar el microfono sin llamar (2026-10-09): mismo camino que la llamada, gratis.
+  mic_check:
+    start:
+      text: "Probar micrófono"
+      surface: voice
+    listening:
+      text: "Escuchando… habla un momento"
+      surface: voice
+    failed:
+      text: "No se pudo abrir el micrófono. Revisa el permiso del navegador."
+      surface: voice
+    device:
+      text: "Micrófono que usa el navegador: {device}"
+      surface: voice
+    ok:
+      text: "Llega sonido: la llamada te va a oír."
+      surface: voice
+    silent:
+      text: "No llega sonido. Elige otro micrófono abajo y vuelve a probar, o revisa el permiso del navegador en la configuración de tu sistema."
+      surface: voice
+    detail:
+      text: "Nivel máximo {peak} · {rate} Hz · silenciado por el sistema: {muted}"
+      surface: voice
+    answer_yes:
+      text: "sí"
+      surface: voice
+    answer_no:
+      text: "no"
+      surface: voice
+    choose:
+      text: "Micrófono para la llamada"
+      surface: voice
+    browser_default:
+      text: "El que elija el navegador"
+      surface: voice
+  availability:
+    not_configured:
+      text: La voz de esta aseguradora todavía no está configurada. El chat sigue disponible.
+      surface: voice
+    misconfigured:
+      text: La voz de esta aseguradora está apagada por un error de configuración. El chat sigue disponible.
+      surface: voice
+    # Los dos límites diarios de la llamada (2026-10-11). Antes la consola decía
+    # "la voz está apagada" ante cualquier rechazo: el visitante no sabía si volver
+    # mañana, cambiar de conexión o dejar de insistir. Cada una dice de quién es el
+    # límite y no promete más que "mañana" (el contador se reinicia a diario) ni cifras.
+    rate_limited_daily:
+      text: Ya usaste tus llamadas de hoy desde esta conexión; mañana puedes volver a llamar. El chat sigue disponible.
+      surface: voice
+    rate_limited_site:
+      text: Hoy ya se hicieron todas las llamadas de la demostración; vuelve mañana o usa el chat.
+      surface: voice
+
+
+  # La consola de llamada (U16, tanda 6). Todo lo que se **oye** tambien se
+  # **lee**: la transcripcion en vivo es el equivalente textual de la llamada, y
+  # es lo que hace que esta pantalla se pueda usar sin oir nada.
+  #
+  # `mic_denied` y `mic_help` son el camino de BR1.2: el permiso se pide **antes**
+  # de abrir la sesion, asi que negarlo no deja ni llamada ni caso, y la pantalla
+  # lo dice en vez de dejar a la persona mirando un boton que no hace nada.
+  console:
+    title:
+      text: Habla con {insurer}
+      surface: voice
+    intro:
+      text: Una llamada, sin formularios. Cuéntanos qué pasó.
+      surface: voice
+    call:
+      text: Llamar
+      surface: voice
+    hangup:
+      text: Colgar
+      surface: voice
+    connecting:
+      text: Conectando
+      surface: voice
+    transcript_label:
+      text: Transcripción en vivo de la llamada
+      surface: voice
+    speaker_insured:
+      text: Tú
+      surface: voice
+    interrupted:
+      text: interrumpida
+      surface: voice
+    mic_denied:
+      text: Este navegador no dio acceso al micrófono, así que no hay llamada y no se guardó nada.
+      surface: voice
+    mic_help:
+      text: Permite el micrófono para este sitio desde la barra de direcciones del navegador y vuelve a pulsar llamar.
+      surface: voice
+    # Seis segundos escuchando sin que entre nivel por el microfono (2026-10-07):
+    # la llamada del 7 de octubre se cayo por silencio sin que nadie supiera que el
+    # audio no salia del navegador.
+    no_audio:
+      text: "No está llegando sonido del micrófono. Revisa que el navegador tenga permiso de usar el micrófono en la configuración de tu sistema, que no esté silenciado y que sea el micrófono correcto."
+      surface: voice
+    use_chat:
+      text: O repórtalo por chat
+      surface: voice
+    unavailable:
+      text: La voz está apagada ahora mismo
+      surface: voice
+    checking:
+      text: Comprobando si hay voz
+      surface: voice
+    outcome_title:
+      text: "Dónde quedó tu caso"
+      surface: voice
+    outcome_number:
+      text: "Número de tu caso: {number}. Sirve para retomarlo o consultarlo."
+      surface: voice
+    outcome_chat:
+      text: "También puedes seguir por chat: escribe ese número allí, desde este mismo navegador."
+      surface: voice
+    outcome_derived:
+      text: "Quedó con un ajustador para que lo revise."
+      surface: voice
+    outcome_closed:
+      text: "Quedó cerrado."
+      surface: voice
+    outcome_awaiting:
+      text: "Quedó esperando datos tuyos."
+      surface: voice
+    outcome_in_progress:
+      text: "Quedó en curso: todavía falta información."
+      surface: voice
+    outcome_open_case:
+      text: "Abrir mi caso"
+      surface: voice
+    outcome_hand_off:
+      text: "Que lo revise un ajustador"
+      surface: voice
+    last_latency:
+      text: "Última respuesta: {ms} ms"
+      surface: voice
+    time_left:
+      text: "Quedan {clock}"
+      surface: voice
+    time_left_label:
+      text: "Tiempo que queda de la llamada"
+      surface: voice
+    limit_minutes:
+      text: "Duración máxima de cada llamada: {minutes} min."
+      surface: voice
+    limit_seconds:
+      text: "Duración máxima de cada llamada: {seconds} s."
+      surface: voice
+    limit_daily:
+      text: "Llamadas al día desde esta conexión: {count}."
+      surface: voice
+    # En qué idioma atenderá la llamada, dicho antes de pedir el micrófono (2026-10-11).
+    # Es el idioma de la página: el que la persona eligió o, si no eligió, el de la
+    # aseguradora, que es lo mismo que decide `openCall`. Por eso cada idioma lo dice con
+    # su propio nombre en vez de recibirlo como variable.
+    call_language:
+      text: "Llamada en español."
+      surface: voice
+    # El navegador puede dejar el audio de salida detenido hasta que la persona toque la
+    # pantalla (sobre todo en iPhone): sin este aviso la llamada parece muda.
+    audio_blocked:
+      text: "El navegador tiene el sonido bloqueado, y no vas a oír a la agente hasta que lo actives."
+      surface: voice
+    audio_enable:
+      text: "Activar el sonido"
+      surface: voice
+    fallback_voice:
+      text: Hoy la llamada se atiende con una voz de respaldo, que puede sonar distinta en español y en inglés.
+      surface: voice
+    sample_button:
+      text: ¿Qué póliza digo?
+      surface: voice
+    sample_intro:
+      text: "Cuando la agente te la pida, di:"
+      surface: voice
+    sample_say:
+      text: "Soy {name}, mi póliza es {policy}"
+      surface: voice
+    sample_say_number:
+      text: "Mi póliza es {policy}"
+      surface: voice
+
+  # Los cuatro estados que se ven (functional-design, "Los cuatro estados"). Cada
+  # uno tiene su forma en pantalla porque ninguno se ve solo: el microfono puede
+  # estar tomado y la agente sin oir.
+  state:
+    listening:
+      text: Escuchando
+      surface: voice
+    speaking:
+      text: Hablando
+      surface: voice
+    ended:
+      text: Llamada terminada
+      surface: voice
+
+  # Por que termino la llamada, uno por cada motivo del conjunto cerrado (BR1.6).
+  # Una llamada que se corta sin decir por que es la peor pantalla posible, y un
+  # motivo sin frase aqui dejaria ese hueco sin que nada avisara.
+  ended:
+    silence:
+      text: La llamada terminó después de un silencio largo. Tu caso queda guardado.
+      surface: voice
+    max_duration:
+      text: La llamada llegó a su límite de tiempo. Tu caso queda guardado.
+      surface: voice
+    dropped:
+      text: La llamada se cortó. Tu caso queda guardado.
+      surface: voice
+    error:
+      text: Algo falló en la llamada. Tu caso queda guardado.
+      surface: voice
+    # La persona pidió dejarlo guardado (2026-10-11).
+    saved:
+      text: Dejaste tu caso guardado.
+      surface: voice
+    # Hasta cuándo se puede retomar, con la hora que da el servidor. Va aparte de los
+    # motivos de arriba porque solo se dice cuando el servidor la entrega: sin ella no se
+    # afirma que se pueda retomar.
+    resume_until:
+      text: "Tienes hasta {time} para retomarlo."
+      surface: voice
+    completed:
+      text: Tu reporte quedó completo.
+      surface: voice
+    # El caso paso a un ajustador y la agente se despidio (2026-10-11).
+    handed_off:
+      text: Tu caso pasó a un ajustador.
+      surface: voice
+
+  # La apertura de la llamada (U16, BR2.1, BR2.2, AC1.28.1). Va **antes de
+  # cualquier pregunta** y es de voz, no la del chat: dice ademas que la llamada
+  # queda transcrita, y termina preguntando si hay heridos.
+  #
+  # Cuatro claves y no un texto con un `if` dentro, por la misma razon que el
+  # chat: una rama por aseguradora en el texto es lo que prohibe la convencion 9.
+  # `capability_quote` solo sale si esa aseguradora tiene la cotizacion activa.
+  opening:
+    disclosure:
+      text: Hola, te habla {agent}, la asistente de inteligencia artificial de {insurer}. Esta llamada queda transcrita para registrar tu caso.
+      surface: voice
+    # Cierra la apertura. Abierta desde el 2026-10-11 (decision de Miguel): antes
+    # preguntaba "¿hubo alguien herido?" a toda llamada, como si todas fueran un
+    # accidente, y quien llama puede tener una duda de su poliza.
+    first_question:
+      text: ¿En qué te puedo ayudar?
+      surface: voice
+
+  # La escalera de silencios (U16, BR5.1, BR5.2, AC1.30.2). Tres tiempos
+  # iguales, contados desde que la agente termina de hablar.
+  silence:
+    still_there:
+      text: ¿Sigues ahí?
+      surface: voice
+    # El tercer silencio no cuelga en seco: se despide y deja el caso guardado.
+    # La despedida es la variante que **no invita a volver a llamar**, porque el
+    # enlace publico admite una llamada al dia y prometer otra seria prometer lo
+    # que no se puede cumplir (AC1.23.4, guia de voz punto 9).
+    farewell:
+      text: Te dejo el caso guardado. Que estés muy bien.
+      surface: voice
+
+  # Cuando no se entendio lo que se dijo (U16, BR3.4, AC1.23.3 en ingles y
+  # AC1.29.3 en espanol).
+  #
+  # **Corregida el 2026-09-29.** Decia "Perdon, no le entendi. ¿Me lo repite?",
+  # que la escribi yo: se la lleve a Miguel como una frase sin criterio y la
+  # aprobo. AC1.29.3 si la fijaba, en una unidad que todavia no habia leido. Con
+  # las dos sobre la mesa, Miguel eligio la del criterio, y ademas dice mejor lo
+  # que de verdad pasa: el problema fue del oido --el reconocedor no entendio-- y
+  # "no le entendi" se puede leer como que lo dicho no tenia sentido.
+  retry:
+    not_understood:
+      text: Perdón, no te escuché bien, ¿me repites?
+      surface: voice
+
+  # El aviso de que la llamada se acerca a su duracion maxima (U16, C-29). Es una
+  # clave y no un texto: viaja por el socket como cuadro `notice` y la consola la
+  # resuelve con su catalogo, igual que hace el chat con las de limite.
+  #
+  # **Cortar sin avisar es la peor pantalla posible.** No promete otra llamada
+  # --el enlace publico admite una al dia-- y no da un plazo: dice que se guarda
+  # el caso, que es lo que de verdad pasa.
+  notice:
+    time_running_out:
+      text: Ya estamos cerca del límite de tiempo de la llamada. Te guardo el caso antes de que termine.
+      surface: voice
+
+  # Cuando no se entiende dos veces seguidas (U18, BR4.2, BR4.4, AC1.31.4).
+  #
+  # **Lleva las dos lenguas dentro, y es una sola clave.** Quien la oye la oye una
+  # vez: componerla de dos claves que alguien concatena deja que un dia salga
+  # media. Dice que idiomas se atienden, que la llamada sigue en el idioma en que
+  # empezo --el cambio a mitad de llamada se quito el 2026-10-11, ver `stays`-- y
+  # ofrece que un ajustador revise el caso.
+  #
+  # **En la voz, un tercer idioma no se distingue de no haber entendido**: el
+  # reconocedor devuelve el idioma de cada transcrito, pero el puerto de C-16
+  # colapsa a nulo todo lo que no sea espanol o ingles, y lo que llega transcrito
+  # de alguien hablando portugues son palabras que se le parecieron. Por eso el
+  # disparador es el mismo que el de "no le escuche bien", que es literalmente lo
+  # que AC1.31.4 escribe en su Dado.
+  languages:
+    # Lleva las dos lenguas dentro porque quien no entiende una de las dos tiene que poder
+    # entender la otra, y le dice cómo cambiar (2026-10-13): «in English» o «en español»
+    # cambian la llamada de verdad, con la voz y con el oído (AC1.31.4).
+    only_two:
+      text: No te estoy entendiendo bien. Solo atiendo en español y en inglés, y puedes decir «in English» o «en español» cuando quieras para cambiar de idioma. Si prefieres, paso tu caso a un ajustador. I'm having trouble understanding you. I only handle Spanish and English, and you can say “in English” or “en español” whenever you like to switch. If you prefer, I can pass your case to an adjuster.
+      surface: voice
+    # Alguien pidió el otro idioma y la llamada ya está en él (2026-10-13). Se dice en el
+    # idioma **nuevo** --por eso cada lengua tiene la suya--, y la pregunta que había
+    # quedado en el aire la pone a continuación quien la dice. Reemplaza a `stays`, que
+    # desde el 2026-10-11 decía que la llamada seguía en su idioma porque el reconocedor
+    # era de uno solo por llamada.
+    switched:
+      text: Claro, seguimos en español.
+      surface: voice
+
+  # Pedir que la agente espere (2026-10-11): "un momento", "dame un segundo". Dice
+  # que espera y la llamada deja de preguntar si sigue ahí hasta pasada una espera
+  # más larga.
+  hold:
+    acknowledge:
+      text: Claro, aquí espero.
+      surface: voice
+
+  # Una muletilla dicha mientras la agente prepara la respuesta (2026-10-12): entre que la
+  # persona termina y suena algo pasaban dos o tres segundos de silencio. Son tres y rotan,
+  # sin repetir una dos veces seguidas. No son contenido: no se anotan en el caso, y la
+  # medición de latencia sigue contando desde el primer audio de la respuesta de verdad.
+  filler:
+    one:
+      text: "Listo…"
+      surface: voice
+    two:
+      text: "Ajá…"
+      surface: voice
+    three:
+      text: "Okey…"
+      surface: voice
+
+  # Cómo se dice en voz alta lo que se escribe con letras y números (2026-10-11).
+  # Solo lo que se oye; la pantalla y la transcripción guardada siguen escritas.
+  spoken:
+    policy:
+      text: póliza
+      surface: voice
+
+  # La oferta de la decision D8, copiada literal. La usan **los dos** caminos: el
+  # segundo silencio y la tercera vez que no se entiende. Nunca ofrece devolver
+  # la llamada: la devolucion es C3, no existe, y P7 prohibe ofrecer lo que no
+  # esta construido.
+  offer:
+    save_or_adjuster:
+      text: Si prefieres, dejamos tu caso guardado para seguir después, o se lo paso a un ajustador.
+      surface: voice
+    # Contestaron "sí" o "no" sin decir cuál de las dos (2026-10-11): se pregunta una vez más.
+    choose:
+      text: ¿Lo dejamos guardado o se lo paso a un ajustador?
+      surface: voice
+    # Eligieron el ajustador: va antes del número de caso y la despedida.
+    handed_off:
+      text: Listo, se lo paso a un ajustador con todo lo que registramos.
+      surface: voice
+
+  # La lectura de confirmacion de un codigo dictado (U16, BR3.5, AC1.23.2). Se
+  # lee el codigo **entero**, deletreado con la tabla de U11: leer solo la letra
+  # dudosa de una placa no ayuda a nadie a comprobarla.
+  readback:
+    confirm:
+      text: "Te lo repito: {spelled}. ¿Está bien?"
+      surface: voice
+
+  # Lo que la agente dice al ceder el turno cuando la interrumpen (U16, BR4.1,
+  # AC1.30.1), cuando no toma la correccion directamente.
+  barge_in:
+    acknowledge:
+      text: Sí, dime.
+      surface: voice
+
+  # El cierre de un reporte completo por voz (U16, BR3.7, AC1.29.x). Tres
+  # frases: lo que quedo registrado, que sigue, y el numero de caso.
+  #
+  # El resumen es el de U11 **sin su pregunta final**: aquel cierra el bloque
+  # pidiendo confirmacion y este cierra la llamada, y una llamada que termina
+  # preguntando no termina.
+  closing:
+    # Copiada literal de la decision D9. Sin plazo y sin llamada saliente.
+    next_step:
+      text: Un ajustador revisa tu caso; la decisión te aparece en esta pantalla.
+      surface: voice
+    # El caso se cerró solo (US1.17, 2026-10-13): las reglas lo registraron y no necesita
+    # ajustador. La misma idea de `compliance.closure.direct`, dicha para una llamada: el
+    # enlace no se pronuncia, aparece en la pantalla.
+    registered:
+      text: Tu siniestro quedó registrado y no necesita la revisión de un ajustador. El enlace para ver tu caso te aparece en esta pantalla.
+      surface: voice
+    # La llamada se despide antes de que las reglas terminen de revisar: no promete ni un cierre
+    # ni un ajustador, y dice dónde se verá el resultado.
+    pending:
+      text: Tu reporte quedó guardado. El resultado te aparece en esta pantalla.
+      surface: voice
+    # `spoken` trae el nombre de la aseguradora y los seis digitos uno a uno,
+    # con "cero" y nunca "o" (decision D2).
+    case_number:
+      text: "Tu número de caso con {insurer} es {spoken}."
+      surface: voice
+    # La despedida que **no invita a volver a llamar**: el enlace publico admite
+    # una llamada al dia (AC1.23.4).
+    farewell:
+      text: Que estés muy bien.
+      surface: voice
+    # Se acabo el tiempo y el reporte no quedo completo (2026-10-11): la llamada no
+    # corta en seco. El caso pasa a la cola del ajustador con lo que haya.
+    time_is_up:
+      text: "Se nos acabó el tiempo de esta llamada. Tu caso queda guardado con lo que alcanzamos a anotar, y lo revisa un ajustador."
+      surface: voice
+    # Eligieron dejarlo guardado (2026-10-11). La ventana es la de retoma de la
+    # aseguradora, dicha en minutos; la búsqueda es solo por el navegador (BR6.3).
+    saved:
+      text: "Listo, tu caso queda guardado. Si vuelves a llamar desde este navegador en los próximos {window}, lo retomamos."
+      surface: voice
+
+  # La ventana de retoma, dicha. Dos claves y no un plural dentro de una: la configuración
+  # admite desde un minuto.
+  duration:
+    minute:
+      text: "un minuto"
+      surface: voice
+    minutes:
+      text: "{minutes} minutos"
+      surface: voice
+
+  # Lo que la agente dice fuera de un turno (2026-10-11): al traer la respuesta de
+  # cobertura que el fondo calculo, retoma la pregunta que quedo en el aire.
+  answer:
+    back_to_report:
+      text: "Volviendo a tu reporte:"
+      surface: voice
+    delayed:
+      text: "Sigo revisando tu póliza; te lo digo apenas lo tenga."
+      surface: voice
+
+  # La voz no toma cotizaciones (son diecisiete datos): quien llama a cotizar donde
+  # la aseguradora cotiza oye por donde se hace y que si puede hacer aqui (2026-10-11).
+  quote:
+    by_chat:
+      text: "Las cotizaciones las hago por chat, no por llamada. Aquí puedo tomar el reporte de un accidente o resolver una duda de tu póliza. ¿Qué prefieres?"
+      surface: voice
+
+  # La primera frase de la llamada solo anuncia que quiere consultar algo, sin decir que
+  # («quería consultar sobre…», «tengo una pregunta»): se le pregunta a que viene, con
+  # otras palabras que las de la apertura, y no se abre ni se sigue ningun reporte (2026-10-13).
+  first_turn:
+    clarify:
+      text: "Claro. Puedo tomar el reporte de un accidente o resolver una duda de tu póliza. ¿Cuál de las dos necesitas?"
+      surface: voice
+
+  # El aviso de que queda poco, dicho: antes solo salia en la pantalla.
+  time:
+    running_out:
+      text: "Nos queda menos de un minuto de llamada."
+      surface: voice
+
+  # La retoma de una llamada que se corto (U16, BR6.2 a BR6.5, AC1.30.3,
+  # AC1.30.4). Va **despues** de la apertura completa, nunca en su lugar: la
+  # divulgacion no se salta porque la persona ya la oyo la vez pasada.
+  resume:
+    offer:
+      text: Veo que tienes un caso abierto. ¿Seguimos con ese?
+      surface: voice
+    # Lo que se dice según lo que conteste (2026-10-11). Antes la llamada callaba tras
+    # cualquier respuesta y a los cinco segundos preguntaba "¿sigues ahí?".
+    accepted:
+      text: Perfecto, seguimos con ese.
+      surface: voice
+    # Cuando el caso no tiene pregunta pendiente (ya decidido, o solo falta su lectura).
+    continue_open:
+      text: ¿Qué más quieres contarme?
+      surface: voice
+    new_case:
+      text: Listo, empezamos uno nuevo.
+      surface: voice
+  # Lo que se decidio sobre un caso, dicho al volver a llamar (AC1.30.4). Son
+  # claves propias y no las del chat: aquella pantalla puede enlazar y esta no,
+  # y lo que se lee no se dice igual que lo que se oye.
+  decision:
+    approved:
+      text: Un ajustador revisó tu caso {case_number} y lo aprobó.
+      surface: voice
+    rejected:
+      text: Un ajustador revisó tu caso {case_number} y no lo aprobó. Si prefieres, un ajustador lo puede volver a mirar.
+      surface: voice
+    sent_to_insurer:
+      text: Tu caso {case_number} se envió a la aseguradora que emitió tu póliza.
+      surface: voice
+    # El comentario va en su propia clave y se dice **solo si lo hay**. Con el
+    # dentro de las tres de arriba, una decision sin nota diria "su comentario
+    # fue." y sonaria a frase cortada.
+    note:
+      text: Tu comentario fue {comment}.
+      surface: voice
+    pending:
+      text: Un ajustador todavía está revisando tu caso. Aún no hay respuesta.
+      surface: voice
+
+# El runtime del grafo (U12, paso 5), no un nodo. La frase de espera de AC1.25.3,
+# copiada literal del criterio: cuando el ritmo del turno necesita un resultado
+# del ritmo de fondo que todavía no volvió (BR2.4), esto es lo que dice antes de
+# dos segundos de silencio.
+#
+# Revisión del paso 7: esta clave quedó marcada `surface: voice` porque su
+# criterio (AC1.25.3) se mide en la voz, pero el camino del turno que la emite
+# (`handle_turn`, C-14) sirve a los dos canales por igual. Se resuelve dando a
+# cada canal su propia clave con el mismo texto aprobado -- nunca parafraseado
+# (regla del proyecto sobre frases fijas) -- en vez de forzar una superficie
+# que no le corresponde a ninguno de los dos: `orchestration.turn.waiting`
+# sigue siendo la de voz, y `chat.turn.waiting`, más abajo, es la de texto.
+# `orchestration.turn.error` es su pareja para el camino de error del turno
+# (BR2.5): también pasa por el punto único de salida, también por canal.
+orchestration:
+  turn:
+    waiting:
+      text: Déjame revisar tu póliza, un momento.
+      surface: voice
+    error:
+      text: Tuve un problema para responder eso. ¿Podemos intentarlo de nuevo?
+      surface: voice
+
+# El mismo runtime del turno (U12, paso 7), su mitad de texto: mismas frases
+# aprobadas que `orchestration.turn.*`, con `surface: chat` porque el chat no
+# comparte superficie con la voz (ver la nota de arriba).
+# La apertura del chat (U13, BR1.1, AC1.1.1). Va **antes** de cualquier texto del
+# visitante. Desde el 2026-10-07 es el texto exacto de Miguel: quién habla y que es
+# una inteligencia artificial, que es una demostración con pólizas de ejemplo, que
+# no escriba datos personales reales y qué sabe hacer. Ya no dice que la
+# conversación se guarda y se borra cada noche: decisión de Miguel que modifica
+# AC1.1.1 (`docs/propuesta-2026-10/03-propuesta-y-diseno.md`).
+#
+# Las capacidades van en dos claves porque cuáles se ofrecen depende de la
+# configuración de cada aseguradora (BR1.3): elegir una es lo que evita una rama
+# por aseguradora dentro del texto, que es lo que la convención 9 prohíbe.
+chat:
+  # El pensamiento de la agente sobre el caso, en su ventana (2026-10-09).
+  reasoning:
+    title:
+      text: "Pensamiento de {agent}"
+      surface: chat
+    # Toda la ventana se redacta en impersonal (2026-10-12): sin «yo» de la agente ni «tú»
+    # de quien lee.
+    empty:
+      text: "Aquí se verá cómo razona la agente cada mensaje."
+      surface: chat
+    step_understood:
+      text: "Qué se entendió"
+      surface: chat
+    wants_claim:
+      text: "Reportar un accidente."
+      surface: chat
+    wants_question:
+      text: "Resolver una duda sobre la póliza."
+      surface: chat
+    wants_quote:
+      text: "Pedir una cotización."
+      surface: chat
+    step_policy:
+      text: "La póliza"
+      surface: chat
+    policy_confirmed:
+      text: "Póliza {policy} confirmada: las cláusulas se buscan solo en ella."
+      surface: chat
+    policy_missing:
+      text: "Todavía no hay una póliza confirmada: sin ella no se buscan cláusulas."
+      surface: chat
+    step_checked:
+      text: "Qué se buscó en la póliza"
+      surface: chat
+    you_asked:
+      text: "Pregunta: «{question}»"
+      surface: chat
+    outcome_verified:
+      text: "Se encontraron cláusulas sobre el tema y se verificaron {count} contra el texto de la póliza antes de responder:"
+      surface: chat
+    outcome_no_clause:
+      text: "Se buscó en la póliza y no hay una cláusula sobre el tema, así que no se adivinó."
+      surface: chat
+    outcome_rejected:
+      text: "Las cláusulas encontradas no pasaron la verificación, así que no se usaron para responder."
+      surface: chat
+    outcome_unverifiable:
+      text: "No se pudo verificar la respuesta, así que no se afirmó nada sobre la cobertura."
+      surface: chat
+    clause_verified:
+      text: "(verificada)"
+      surface: chat
+    clause_not_verified:
+      text: "(sin verificar)"
+      surface: chat
+    step_noted:
+      text: "Qué se anotó"
+      surface: chat
+    noted:
+      text: "Anotado"
+      surface: chat
+    missing:
+      text: "Falta"
+      surface: chat
+    # Los datos que no cuentan para "5 de 5": se ofrecen al final (2026-10-11).
+    optional:
+      text: "Opcional"
+      surface: chat
+    step_next:
+      text: "En qué quedó"
+      surface: chat
+    state_derived:
+      text: "El caso pasó a un ajustador."
+      surface: chat
+    # «Cerrado» y no «tiene una decisión»: un cierre directo lo aplican las reglas y nadie
+    # decide (US1.17), y esta ventana no sabe cuál de los dos fue.
+    state_closed:
+      text: "El caso quedó cerrado."
+      surface: chat
+    state_open:
+      text: "El caso sigue abierto."
+      surface: chat
+    adjuster_decides:
+      text: "Si algo aplica al caso, y por cuánto, lo decide un ajustador, no la agente."
+      surface: chat
+  opening:
+    disclosure:
+      text: "Hola, soy {agent}, la asistente de inteligencia artificial de {insurer}. Esto es una demostración con pólizas de ejemplo, así que no escribas datos personales reales."
+      surface: chat
+    capabilities:
+      text: Puedo ayudarte a reportar un siniestro o a resolver dudas sobre tu póliza.
+      surface: chat
+    capabilities_with_quote:
+      text: Puedo ayudarte a reportar un siniestro, a resolver dudas sobre tu póliza o darte una cotización.
+      surface: chat
+  # Lo que la agente dice cuando todavía no hay caso: a un saludo, a una duda
+  # general o a algo que no es ninguna de las opciones (2026-10-07). Corto y con
+  # las opciones en una pregunta, para que nadie se quede sin saber qué hacer; no
+  # repite la apertura, que ya las dijo.
+  greeting:
+    hello:
+      text: ¡Hola!
+      surface: chat
+  # Lo que se contesta cuando alguien escribe en un caso ya decidido (B3, fase 1,
+  # 2026-10-08): antes un reporte decia que seguia con el ajustador y una consulta
+  # o una cotizacion daban error.
+  closed_case:
+    already_decided:
+      text: "Tu caso {case_number} ya tiene una decisión: la puedes ver con «Ver mi caso». Para reportar o preguntar algo nuevo, reinicia la conversación con el botón de arriba."
+      surface: chat
+  # Escribir en el chat el numero de un caso (US1.19, US1.20). Las dos primeras son para quien
+  # retoma su caso; las otras dos son la unica respuesta a un numero que no se retoma, y no dicen
+  # por que (AC1.20.2, AC1.20.3); la ultima es solo para el dueno de un caso que ya no esta en captura.
+  resume:
+    continued:
+      text: "Listo, retomé tu caso {case_number}. {question}"
+      surface: chat
+    continued_open:
+      text: "Listo, retomé tu caso {case_number}. ¿Qué quieres agregar?"
+      surface: chat
+    not_found:
+      text: "No encuentro un caso con ese número en este navegador. Un caso solo se retoma desde el navegador en el que se empezó. Si quieres, cuéntame qué necesitas y empezamos."
+      surface: chat
+    original_channel:
+      text: "Un caso se retoma por el mismo canal en el que se empezó y desde el mismo navegador: si fue por llamada, vuelve a llamar; si fue por chat, escríbeme aquí. Si prefieres, cuéntame qué necesitas y empezamos."
+      surface: chat
+    with_adjuster:
+      text: "Tu caso {case_number} ya lo tiene un ajustador, así que no puedo tomarle más datos aquí. Puedes verlo con «Ver mi caso»."
+      surface: chat
+    # Con el caso en revisión (US1.17): las reglas aún no dicen si lo cierra la agente o lo mira un ajustador.
+    in_review:
+      text: "Tu caso {case_number} se está revisando, así que no puedo tomarle más datos aquí. Puedes verlo con «Ver mi caso»."
+      surface: chat
+  offer:
+    options:
+      text: ¿Quieres reportar un accidente o resolver una duda sobre tu póliza?
+      surface: chat
+    options_with_quote:
+      text: ¿Quieres reportar un accidente, resolver una duda sobre tu póliza o pedir una cotización?
+      surface: chat
+  # Los botones de respuesta rápida (fase 0, 2026-10-07): respuestas cortas que la
+  # captura ya entiende por sus reglas. Los elige el código según la pregunta
+  # (`orchestration/nodes/intake/suggestions.py`); tocarlos manda su texto.
+  chip:
+    answer_yes:
+      text: "Sí"
+      surface: chat
+    answer_no:
+      text: "No"
+      surface: chat
+    adjuster_review:
+      text: "Que lo revise un ajustador"
+      surface: chat
+    another_question:
+      text: "Tengo otra pregunta"
+      surface: chat
+    add_more:
+      text: "Sí, agregar más datos"
+      surface: chat
+    leave_it:
+      text: "No, dejarlo así"
+      surface: chat
+    nobody_hurt:
+      text: "No, nadie se lastimó"
+      surface: chat
+    someone_hurt:
+      text: "Sí, hubo heridos"
+      surface: chat
+    example_policy:
+      text: "Mi póliza es {policy}"
+      surface: chat
+    example_holder:
+      text: "Soy {holder}, mi póliza es {policy}"
+      surface: chat
+    today:
+      text: "Hoy"
+      surface: chat
+    yesterday:
+      text: "Ayer"
+      surface: chat
+    use_personal:
+      text: "Personal"
+      surface: chat
+    use_commuting:
+      text: "Para ir al trabajo"
+      surface: chat
+    use_commercial:
+      text: "Comercial"
+      surface: chat
+    mileage_low:
+      text: "Poco"
+      surface: chat
+    mileage_medium:
+      text: "Normal"
+      surface: chat
+    mileage_high:
+      text: "Mucho"
+      surface: chat
+    report:
+      text: "Reportar un accidente"
+      surface: chat
+    policy_question:
+      text: "Preguntar por mi póliza"
+      surface: chat
+    quote:
+      text: "Pedir una cotización"
+      surface: chat
+  decision:
+    approved:
+      text: Un ajustador revisó tu caso {case_number} y lo aprobó. Tu nota fue «{comment}».
+      surface: chat
+    rejected:
+      text: Un ajustador revisó tu caso {case_number} y no lo aprobó. Tu nota fue «{comment}». Si quieres, puedes responder aquí y un ajustador lo mira de nuevo.
+      surface: chat
+    sent_to_insurer:
+      text: Tu caso {case_number} se envió a la aseguradora que emitió tu póliza, con la nota «{comment}».
+      surface: chat
+    pending:
+      text: Un ajustador está revisando tu caso. Te avisamos por aquí en cuanto haya una respuesta.
+      surface: chat
+  turn:
+    waiting:
+      text: Déjame revisar tu póliza, un momento.
+      surface: chat
+    error:
+      text: Tuve un problema para responder eso. ¿Podemos intentarlo de nuevo?
+      surface: chat
+  # Los limites del chat (BR3.1). La clave de cada uno sale de la tabla cerrada
+  # de `untangle/chat/limits.py`, junto a la definicion del enum. Las de sesion y
+  # dia reusan las frases de `spend.quota`, que ya estan escritas para el chat;
+  # estas tres son las que esa seccion no tiene, o tiene escritas para la voz.
+  limit:
+    site_day:
+      text: La demostración llegó a su cupo de mensajes de hoy. Vuelve mañana y seguimos.
+      surface: chat
+    rate:
+      text: Vas muy rápido para mí. Espera un momento y vuelve a enviarlo.
+      surface: chat
+    size:
+      text: Ese mensaje es más largo de lo que puedo leer de una vez. ¿Me lo cuentas en partes?
+      surface: chat
+  # La pantalla del chat (U13, tanda 4). Todo lo que se lee en ella sale de aqui.
+  page:
+    title:
+      text: Conversación con {insurer}
+      surface: chat
+    transcript_label:
+      text: Conversación
+      surface: chat
+    composer_label:
+      text: Tu mensaje
+      surface: chat
+    composer_hint:
+      text: "Es una demostración con pólizas de ejemplo: no escribas datos personales reales."
+      surface: chat
+    send:
+      text: Enviar
+      surface: chat
+    speaker_visitor:
+      text: Tú
+      surface: chat
+    # Lo que se lee mientras la agente responde y todavía no llegó nada. Ella
+    # firma con su nombre (`insurer.agent.name`), no con "la agente" (decisión de
+    # Miguel, 2026-10-06).
+    typing:
+      text: "{agent} está escribiendo…"
+      surface: chat
+    # Lo mismo mientras el fondo revisa la póliza y la respuesta todavía no llega
+    # (2026-10-12): los tres puntos de «escribiendo», con otro nombre accesible.
+    reviewing:
+      text: "{agent} está revisando tu póliza…"
+      surface: chat
+    answering_in:
+      text: Respondiendo en {language}
+      surface: chat
+    connecting:
+      text: Conectando…
+      surface: chat
+    # El idioma lo decide la pantalla (P2, decisión de Miguel, 2026-10-06): se dice
+    # bajo el título, para que nadie tenga que adivinar por qué contesta así. Sin el
+    # nombre del idioma ni la persona gramatical (2026-10-09): corto y descriptivo.
+    speaking_in:
+      text: La agente responde en el idioma que elijas arriba
+      surface: chat
+    # Al abrir la pantalla se recupera lo guardado (decisión de Miguel,
+    # 2026-10-06). La transcripción se guarda redactada, así que la nota dice
+    # por qué la persona ve etiquetas donde escribió su nombre o su póliza.
+    history_restored:
+      text: Retomamos tu conversación. Lo que escribiste antes se guarda con los datos personales tapados, por eso ves etiquetas en su lugar.
+      surface: chat
+    # La línea del caso (decisión de Miguel, 2026-10-11): primero qué es, en palabras
+    # de quien lo reportó; luego cuánto falta; y el número, al final y rotulado, como
+    # referencia. El enlace para abrirlo va entre las acciones del encabezado.
+    case_number:
+      text: "Número de tu caso: {case_number}"
+      surface: chat
+    case_kind_claim:
+      text: Reporte de accidente
+      surface: chat
+    case_kind_inquiry:
+      text: Consulta de póliza
+      surface: chat
+    case_kind_quote:
+      text: Cotización
+      surface: chat
+    case_kind_other:
+      text: Tu caso
+      surface: chat
+    case_complete:
+      text: Datos completos
+      surface: chat
+    case_missing_one:
+      text: Falta 1 dato
+      surface: chat
+    case_missing_many:
+      text: "Faltan {count} datos"
+      surface: chat
+    case_link:
+      text: Ver mi caso
+      surface: chat
+    # Encabezado del chat (2026-10-09): abre la traza de la ultima respuesta de la agente que la tiene.
+    # Debajo de la ultima respuesta queda solo decidir el caso, cuando espera esa decision.
+    see_reasoning:
+      text: "Pensamiento de {agent}"
+      surface: chat
+    decide_as_adjuster:
+      text: "Decidir este caso como ajustador"
+      surface: chat
+    # Empezar de cero (decisión de Miguel, 2026-10-06): botón de solo icono entre las
+    # acciones del encabezado, que abre una ventana (2026-10-11). El caso anterior
+    # queda guardado con su número, pero la pantalla ya no lo muestra.
+    reset:
+      text: Reiniciar conversación
+      surface: chat
+    reset_title:
+      text: "¿Reiniciar la conversación?"
+      surface: chat
+    reset_body:
+      text: "Esta conversación se cierra y empiezas otra desde cero."
+      surface: chat
+    reset_body_with_case:
+      text: "Esta conversación se cierra y empiezas otra desde cero; tu caso {case_number} queda guardado, pero ya no lo verás aquí."
+      surface: chat
+    reset_confirm:
+      text: Reiniciar
+      surface: chat
+    reset_cancel:
+      text: Cancelar
+      surface: chat
+  # La cita expandible (BR4.1, BR4.2). La clausula se muestra **literal y en su
+  # idioma**; lo que se traduce es la explicacion, y se dice cual es cual.
+  citation:
+    expand:
+      text: Ver la cláusula exacta
+      surface: chat
+    other_language:
+      text: Esta cláusula está escrita en {language}. Se muestra en su idioma, sin traducir, porque es lo que tu póliza dice.
+      surface: chat
+    # La traduccion de referencia y el original a un clic (decision de Miguel del
+    # 2026-10-08); el codigo y la version, solo con la tarjeta abierta.
+    translation_note:
+      text: "Traducción de referencia. El texto que rige es el original, en {language}."
+      surface: chat
+    show_original:
+      text: "Ver el texto original"
+      surface: chat
+    hide_original:
+      text: "Ocultar el texto original"
+      surface: chat
+    reference:
+      text: "Referencia: {clause_id} · versión {version}"
+      surface: chat
+    # El corpus no trae un titulo por clausula (2026-10-11), asi que el rotulo de la
+    # tarjeta se distingue por lo que si es verdad: una condicion especial se llama como
+    # en el panel de documentos, y dos clausulas de una misma parte se numeran.
+    special_condition:
+      text: "Condición especial {number}"
+      surface: chat
+    position:
+      text: "cláusula {index} de {total}"
+      surface: chat
+    # El nombre del idioma de la clausula en el de la conversacion: el selector de
+    # idioma usa el nombre propio de cada uno ("English"), que aqui sobraba.
+    language_es:
+      text: español
+      surface: chat
+    language_en:
+      text: inglés
+      surface: chat
+    amount_deferred:
+      text: Un cambio posterior en tu póliza afecta a esta cláusula, así que el monto lo confirma un ajustador.
+      surface: chat
+    trace_link:
+      text: Ver cómo se respondió
+      surface: chat
+
+# Por que el motor de reglas decidió lo que decidió, para quien abre el caso
+# (U9, BR2.4, BR2.5). Ninguna frase nombra un identificador de regla, una
+# aseguradora ni jerga técnica: el chequeo de formas prohibidas de FF-6 lo
+# comprueba. Cada clave la usan una o más reglas de
+# `app/config/tenants/<aseguradora>/rules/triage.yaml`.
+rules:
+  explain:
+    default:
+      text: Nada en particular saltó a la vista; de todas formas un ajustador revisa el caso antes de seguir.
+      surface: inbox
+    injuries_reported:
+      text: Hay personas heridas en lo reportado, así que un ajustador revisa el caso.
+      surface: inbox
+    third_party_pending:
+      text: Todavía faltan datos de los terceros involucrados, así que un ajustador revisa el caso.
+      surface: inbox
+    coverage_review:
+      text: Hay dudas sobre lo que cubre la póliza, y eso lo confirma un ajustador.
+      surface: inbox
+    amount_review:
+      text: El monto reportado necesita que un ajustador lo revise antes de seguir.
+      surface: inbox
+    high_value_review:
+      text: El monto reportado es alto y un ajustador lo revisa con más detalle.
+      surface: inbox
+    fraud_review:
+      text: Algo en lo reportado necesita una mirada más cercana antes de continuar.
+      surface: inbox
+    unlisted_driver_review:
+      text: El conductor mencionado no aparece en la póliza, y eso lo revisa un ajustador.
+      surface: inbox
+    amount_noted:
+      text: Se registró un monto; igual lo revisa alguien antes de continuar.
+      surface: inbox
+    # Stonecroft (CG-U9-1): varios detalles pendientes a la vez.
+    complex_case:
+      text: Este caso reúne varios detalles pendientes, así que lo revisa un ajustador.
+      surface: inbox
+    # Sunmeadow (CG-U9-1): el cierre directo del perfil flexible.
+    simple_claim:
+      text: Con lo registrado, el reporte queda cerrado sin necesitar más revisión.
+      surface: inbox
+    # Knotwell (BR2.6, FR6.4): la agencia deriva siempre a quien emitió la póliza.
+    agency_case:
+      text: Este reporte pasa a la aseguradora que emitió la póliza para que un ajustador lo revise.
+      surface: inbox
+    # U19: las razones de la elegibilidad de una cotizacion (BR2.3). Sin identificador de regla.
+    quote_commercial_use:
+      text: El uso comercial del vehículo queda fuera de lo que esta aseguradora asegura.
+      surface: inbox
+    quote_salvage_title:
+      text: El vehículo fue declarado pérdida total.
+      surface: inbox
+    quote_at_fault_losses:
+      text: Hubo dos o más siniestros con culpa en los últimos tres años, y eso lo revisa un suscriptor.
+      surface: inbox
+    quote_new_license:
+      text: La licencia tiene menos de un año, y eso lo revisa un suscriptor.
+      surface: inbox
+    quote_old_vehicle:
+      text: El vehículo tiene más de veinticinco años, y eso lo revisa un suscriptor.
+      surface: inbox
+    quote_standard_risk:
+      text: No tiene siniestros con culpa y lleva tres años o más con licencia.
+      surface: inbox
+    quote_elevated_risk:
+      text: Tu solicitud cumple lo básico, aunque con algún dato que eleva el riesgo frente a lo habitual.
+      surface: inbox
+
+# El nodo `policy_verification` (U8, tanda 3): las frases fijas de la respuesta
+# de cobertura, cuando no hay nada que citar (BR5.6, AC2.5.1), cuando la
+# recuperación falla tras su reintento (BR5.2, AC2.6.1) y cuando la cláusula
+# citada está en un idioma distinto del de la conversación (BR5.8). Pasan por
+# la guardia de salida como cualquier otro texto (BR5.7).
+policy_rag:
+  coverage:
+    # AC2.5.1: la frase es literal del criterio en su idioma original (inglés);
+    # esta es su equivalente en español, con el mismo sentido ("no voy a
+    # adivinar", "se lo dejo anotado para el ajustador").
+    no_clause_found:
+      text: No encuentro en tu póliza una cláusula que hable de eso, así que no voy a adivinar. Se lo dejo anotado para el ajustador.
+      surface: chat
+    # AC2.6.1, AC2.7.4: literal del criterio. Sale cuando la recuperación
+    # vuelve a fallar tras su único reintento (BR5.2) y el caso queda derivado.
+    unverifiable:
+      text: No puedo revisar tu póliza en este momento; le paso el caso a un ajustador.
+      surface: chat
+    # BR5.8, FD-U8-1: cuando el idioma de la cláusula citada no es el de la
+    # conversación. La cláusula no se traduce; esta frase solo avisa de la
+    # diferencia. {language} es el nombre del idioma de la cláusula, en el idioma
+    # de la conversación.
+    cross_language_notice:
+      text: La cláusula que respalda esto está escrita en {language}; te la muestro tal cual quedó, y sigue completa en tu caso.
+      surface: chat
+    # AC2.7.1: la forma de la cita por voz, una frase que nombra la parte y dice
+    # que queda en el caso. Nunca repite el texto de la cláusula: {part} es su
+    # nombre, tomado del corpus (por ejemplo "Part D — Coverage for Damage to
+    # Your Auto"), nunca su contenido.
+    voice_summary:
+      text: Encontré la cláusula dentro de {part}; queda resumida aquí y completa en tu caso.
+      surface: voice
+    # AC2.7.2: cuando un endoso vigente modifica la cláusula citada (los dos
+    # quedan adjuntos al caso, BR3.5), la respuesta nunca dice el monto que
+    # trae esa cláusula o su endoso; lo confirma un ajustador. Sustituye a
+    # `voice_summary` en ese caso, en los dos canales.
+    amount_deferred:
+      text: Esa cláusula trae un límite o un deducible, y eso lo confirma un ajustador. Dejo las dos cláusulas relacionadas adjuntas a tu caso.
+      surface: chat
+    # Fase 1 (2026-10-08): la respuesta de cobertura en el chat, la espera mientras
+    # se revisa la póliza, y lo que se dice cuando falta la pregunta o la póliza.
+    found_chat:
+      text: "En tu póliza, esto lo trata {part}. Abajo te dejo la cláusula exacta. Si aplica a tu caso, y por cuánto, lo confirma un ajustador."
+      surface: chat
+    # Con la explicacion de la IA sobre lo que dice la clausula, verificada contra ella
+    # (decision de Miguel del 2026-10-08: que se vea el RAG). Si la guardia la
+    # rechaza, sale `found_chat`.
+    found_chat_claim:
+      text: "En tu póliza, esto lo trata {part}: {claim} Abajo te dejo el texto exacto. Si aplica a tu caso, y por cuánto, lo confirma un ajustador."
+      surface: chat
+    # Las mismas dos, dichas en una llamada (2026-10-11): no hay "abajo".
+    found_voice:
+      text: "En tu póliza, esto lo trata {part}. La cláusula queda anotada en tu caso. Si aplica, y por cuánto, lo confirma un ajustador."
+      surface: voice
+    found_voice_claim:
+      text: "En tu póliza, esto lo trata {part}: {claim} Si aplica a tu caso, y por cuánto, lo confirma un ajustador."
+      surface: voice
+    # La parte de la poliza en el idioma de la conversacion, aunque la clausula este
+    # en otro (2026-10-08): antes salia «Endorsements» en una respuesta en espanol.
+    part:
+      a:
+        text: "la Parte A, responsabilidad civil"
+        surface: chat
+      b:
+        text: "la Parte B, gastos médicos"
+        surface: chat
+      c:
+        text: "la Parte C, conductores sin seguro"
+        surface: chat
+      d:
+        text: "la Parte D, daños al vehículo"
+        surface: chat
+      e:
+        text: "la Parte E, obligaciones después de un accidente"
+        surface: chat
+      f:
+        text: "la Parte F, disposiciones generales"
+        surface: chat
+      definitions:
+        text: "la sección de definiciones"
+        surface: chat
+      special:
+        text: "una condición especial"
+        surface: chat
+      territory:
+        text: "las reglas del territorio"
+        surface: chat
+      other:
+        text: "una de sus cláusulas"
+        surface: chat
+    checking:
+      text: "Déjame revisar tu póliza; te respondo en un momento."
+      surface: chat
+    ask_question:
+      text: "¿Qué quieres saber de tu póliza? Puedo revisarte, por ejemplo, si te cubre un robo, un choque con alguien sin seguro o un carro de alquiler mientras arreglan el tuyo."
+      surface: chat
+    need_policy:
+      text: "Para revisar eso necesito primero tu póliza."
+      surface: chat
+    back_to_report:
+      text: "Volviendo al reporte:"
+      surface: chat
+
+
+# La cotizacion de U19: la respuesta a la solicitud, la banda de riesgo, la negativa a dar
+# un precio y la respuesta donde la cotizacion esta apagada. **Ninguna frase de esta
+# seccion lleva una cifra de dinero, un simbolo o codigo de moneda, ni un porcentaje**
+# (BR3.1, compuerta dura): una prueba pasa cada una por la guardia de salida real, en los
+# dos idiomas. Tampoco nombran una regla ni una aseguradora (BR2.3).
+quote:
+  reply:
+    eligible:
+      text: Tu solicitud puede seguir adelante.
+      surface: chat
+    not_eligible:
+      text: Por ahora no puedo continuar con tu solicitud.
+      surface: chat
+    referred:
+      text: Un suscriptor revisa tu solicitud antes de seguir.
+      surface: chat
+    # AC6.2.4: la negativa es una frase fija y no una improvisacion del modelo,
+    # que es justo lo que los casos adversariales buscan hacer ceder. Sin banda
+    # todavia (la revision sigue en el fondo), y con ella una vez que existe.
+    price_refusal:
+      text: Esta demostración no calcula precios, así que no puedo darte ninguna cifra. Cuando termine de revisar tu solicitud te digo dónde queda tu riesgo.
+      surface: chat
+    price_refusal_with_band:
+      text: "Esta demostración no calcula precios, así que no puedo darte ninguna cifra. Lo que sí puedo decirte es dónde queda tu riesgo. {band}"
+      surface: chat
+    # AC6.1.3: donde la cotizacion esta apagada no se ofrece lo que no esta
+    # construido, y la peticion no se queda sin respuesta util (BR1.5).
+    unavailable:
+      text: Esta demostración no ofrece cotizaciones con esta aseguradora. Sí puedo ayudarte a reportar un accidente o a resolver una duda sobre tu póliza.
+      surface: chat
+  # La banda habla de riesgo y no de precio (Q1). Cuatro valores cerrados, una frase cada uno.
+  band:
+    standard_risk:
+      text: Tu riesgo entra en lo habitual.
+      surface: chat
+    elevated_risk:
+      text: Tu riesgo entra en lo que aseguramos, con un nivel mayor al habitual.
+      surface: chat
+    pending_review:
+      text: Todavía no sé dónde queda tu riesgo, porque lo decide un suscriptor.
+      surface: chat
+    outside_appetite:
+      text: Tu riesgo queda fuera de lo que esta aseguradora asegura.
+      surface: chat
+  # Los valores cerrados se escriben como enum en ingles, y lo que lee una persona
+  # sale de aqui, nunca del valor.
+  value:
+    use_type:
+      personal:
+        text: personal
+        surface: chat
+      commuting:
+        text: para ir al trabajo
+        surface: chat
+      commercial:
+        text: comercial
+        surface: chat
+    mileage:
+      low:
+        text: bajo
+        surface: chat
+      medium:
+        text: normal
+        surface: chat
+      high:
+        text: alto
+        surface: chat
+    salvage_title:
+      "true":
+        text: declarado pérdida total
+        surface: chat
+      "false":
+        text: nunca declarado pérdida total
+        surface: chat
+    prior_coverage:
+      "true":
+        text: con seguro vigente
+        surface: chat
+      "false":
+        text: sin seguro vigente
+        surface: chat
+
+# El nodo `intake` (U11, tanda 2): las preguntas de cada bloque (BR3.2, BR3.3),
+# las lecturas de confirmación (BR3.1, FD-U11-8), el reconocimiento de emoción
+# (BR5.2) y el trato ante insultos (BR5.4). Todas cortas a propósito: el
+# reconocimiento y la pregunta se unen en un solo turno que sí cuenta para el
+# límite de veinticinco palabras de BR3.4.
+intake:
+  question:
+    # Fase 3 (2026-10-08): la solicitud se abre pidiendo todo de una vez, y lo que
+    # falta se pregunta despues, agrupado.
+    quote_all:
+      text: "Para cotizar, cuéntame en un mensaje lo que sepas: quién manejaría (nombre y fecha de nacimiento), cuántos años lleva con licencia y en qué ciudad la sacó; el carro (año, marca y modelo) y para qué lo usas; y si has tenido accidentes en los últimos tres años y si tienes seguro hoy. Lo que falte te lo pregunto después."
+      surface: chat
+    # BR1.1: es la pregunta de seguridad, primer campo del bloque `safety`.
+    safety:
+      text: ¿Hubo alguien herido?
+      surface: chat
+    identity_and_policy:
+      text: ¿Cuál es tu nombre completo y el número de tu póliza?
+      surface: chat
+    what_happened:
+      text: ¿Qué pasó?
+      surface: chat
+    # BR3.2, BR3.3: la del bloque "cuándo y dónde" cuando faltan los dos
+    # campos, y las dos formas de abajo cuando uno de los dos ya llegó
+    # adelantado y no se vuelve a pedir.
+    when_and_where:
+      text: ¿Cuándo y dónde ocurrió el accidente?
+      surface: chat
+    when_only:
+      text: ¿Cuándo ocurrió el accidente?
+      surface: chat
+    where_only:
+      text: ¿Dónde ocurrió el accidente?
+      surface: chat
+    vehicle_and_driver:
+      text: ¿Qué vehículo conducías?
+      surface: chat
+    other_parties:
+      text: ¿Hubo alguien más involucrado?
+      surface: chat
+    # U19: una pregunta por campo de la solicitud, en el orden del esquema (BR1.2).
+    quote_driver_name:
+      text: ¿Cuál es el nombre completo del conductor principal?
+      surface: chat
+    quote_driver_birth_date:
+      text: ¿Cuál es la fecha de nacimiento del conductor?
+      surface: chat
+    quote_license_years:
+      text: ¿Cuántos años lleva con licencia de conducción?
+      surface: chat
+    quote_license_jurisdiction:
+      text: ¿En qué ciudad sacó la licencia de conducción?
+      surface: chat
+    quote_vehicle_year:
+      text: ¿De qué año es el vehículo?
+      surface: chat
+    quote_vehicle_make:
+      text: ¿De qué marca es?
+      surface: chat
+    quote_vehicle_model:
+      text: ¿Y qué modelo es?
+      surface: chat
+    quote_vin:
+      text: ¿Cuál es el número VIN o de chasis? Aparece en la tarjeta de propiedad.
+      surface: chat
+    quote_salvage_title:
+      text: ¿El vehículo ha sido declarado alguna vez pérdida total?
+      surface: chat
+    quote_use_type:
+      text: "¿Para qué usa el vehículo: uso personal, ir al trabajo o uso comercial?"
+      surface: chat
+    quote_annual_mileage_band:
+      text: "¿Cuánto usa el vehículo al año: poco, normal o mucho?"
+      surface: chat
+    quote_garaging_jurisdiction:
+      text: ¿En qué ciudad se guarda el vehículo por las noches?
+      surface: chat
+    quote_at_fault_losses_3y:
+      text: ¿Cuántos siniestros con culpa tuviste en los últimos tres años?
+      surface: chat
+    quote_claims_3y:
+      text: ¿Cuántos siniestros reportaste en esos tres años, con o sin culpa?
+      surface: chat
+    quote_prior_coverage_active:
+      text: ¿Tienes hoy un seguro de auto vigente?
+      surface: chat
+    quote_lapse_months:
+      text: ¿Cuántos meses estuviste sin cobertura?
+      surface: chat
+  readback:
+    # Una sola confirmacion de toda la solicitud al final (2026-10-08).
+    quote_all:
+      text: "Anotado: {summary} ¿Es correcto todo?"
+      surface: chat
+    quote_driver_part:
+      text: "{name}, fecha de nacimiento {birth_date}, {license_years} años con licencia, expedida en {license_jurisdiction}."
+      surface: chat
+    quote_vehicle_part:
+      text: "Vehículo: {vehicle_year} {vehicle_make} {vehicle_model}, VIN {vin}, {salvage_title}."
+      surface: chat
+    quote_usage_part:
+      text: "Uso: {use_type}, recorrido anual {annual_mileage_band}, y se guarda en {garaging_jurisdiction}."
+      surface: chat
+    quote_history_part:
+      text: "Siniestros con culpa en tres años: {at_fault_losses_3y}; reportados: {claims_3y}; {prior_coverage_active}; meses sin cobertura: {lapse_months}."
+      surface: chat
+    # FD-U11-8: lesiones, conductor y lugar se nombran, nunca se resumen.
+    # {value} es lo que la persona dijo, ya normalizado cuando aplica.
+    safety:
+      text: "Anotado: {value}. ¿Es correcto?"
+      surface: chat
+    identity_and_policy:
+      text: "Confirmo: {value}. ¿Es correcto?"
+      surface: chat
+    what_happened:
+      text: Anotado lo que pasó. ¿Es correcto?
+      surface: chat
+    when_and_where:
+      text: "Anotado: {when}, en {where}. ¿Es correcto?"
+      surface: chat
+    vehicle_and_driver:
+      text: "Anotado: {value}. ¿Es correcto?"
+      surface: chat
+    other_parties:
+      text: Anotado sobre las otras partes. ¿Es correcto?
+      surface: chat
+    # U19: la lectura de cada bloque de la solicitud, nombrando lo dicho (BR1.2).
+    quote_driver:
+      text: "Anotado: {name}, fecha de nacimiento {birth_date}, {license_years} años con licencia, expedida en {license_jurisdiction}. ¿Es correcto?"
+      surface: chat
+    quote_vehicle:
+      text: "Anotado: {vehicle_year} {vehicle_make} {vehicle_model}, VIN {vin}, {salvage_title}. ¿Es correcto?"
+      surface: chat
+    quote_usage:
+      text: "Anotado: uso {use_type}, recorrido anual {annual_mileage_band}, y se guarda en {garaging_jurisdiction}. ¿Es correcto?"
+      surface: chat
+    quote_history:
+      text: "Anotado: {at_fault_losses_3y} siniestros con culpa y {claims_3y} reportados en tres años; {prior_coverage_active}; {lapse_months} meses sin cobertura. ¿Es correcto?"
+      surface: chat
+  ack:
+    # BR5.2: una sola frase, antes de la pregunta. `FEAR_OR_CRYING` manda sobre
+    # `ANGER` cuando el turno trae las dos senales (`tone.detect_emotion`).
+    fear_or_crying:
+      text: Lamento mucho que esto te esté pasando.
+      surface: chat
+    anger:
+      text: Entiendo tu molestia.
+      surface: chat
+  # Lo que la persona dice de paso, contestado antes de seguir con lo pendiente
+  # (decisión de Miguel, 2026-10-06: la agente no suena a contestadora). Las
+  # señales las reconoce `social.py` sin modelo; el texto va **delante** de la
+  # pregunta o la lectura que tocaba, salvo la despedida, que va sola.
+  social:
+    greeting:
+      text: Hola, con gusto te ayudo.
+      surface: chat
+    thanks:
+      text: Con gusto.
+      surface: chat
+    goodbye:
+      text: Hasta luego. Lo que llevamos queda guardado; cuando vuelvas, seguimos donde quedamos.
+      surface: chat
+    # {done} y {total} son datos del caso; {missing} son los nombres de los bloques
+    # que faltan, de `intake.block.*`, unidos por comas.
+    progress:
+      text: "Llevamos {done} de {total} datos; falta {missing}."
+      surface: chat
+  # El caso todavía no está completo y la respuesta del modelo lo dio por hecho (2026-10-13:
+  # «ya quedó anotado tu reporte» con el lugar sin decir). Sale en su lugar, por
+  # `turn._frase_base`: dice la verdad en una frase corta, qué falta, que lo que lleva queda
+  # guardado y se puede seguir después, y hace una sola pregunta. {missing} es el nombre del
+  # bloque que toca, de `intake.block.*`. Sin el número del caso: también se dice en voz alta.
+  unfinished:
+    text: "Todavía no está completo: aún necesito saber {missing}. Lo que llevamos queda guardado y puedes seguir después. ¿Seguimos ahora?"
+    surface: chat
+  # Lo que se dice al pasar de una lectura confirmada o corregida a lo siguiente,
+  # delante de la pregunta que toca. Sin esto, al "sí" le seguía la pregunta a
+  # secas, como si nadie hubiera contestado.
+  transition:
+    confirmed:
+      text: Gracias.
+      surface: chat
+    corrected:
+      text: Entendido, lo corrijo.
+      surface: chat
+  # La póliza que la persona dio, buscada en el corpus y confirmada en una frase
+  # (P3, decisión de Miguel, 2026-10-06). {policy}, {name} y {vehicle} salen de la
+  # póliza emitida; nada se inventa.
+  policy:
+    found:
+      text: "Encontré la póliza {policy} a nombre de {name}, con un {vehicle}. ¿Eres tú y conducías ese carro?"
+      surface: chat
+    found_no_vehicle:
+      text: "Encontré la póliza {policy} a nombre de {name}. ¿Eres tú?"
+      surface: chat
+    declined:
+      text: Entendido. ¿Cuál es tu nombre completo y el número de tu póliza?
+      surface: chat
+    # El número que se oyó no lleva a ninguna póliza (2026-10-13): no existe, llegó
+    # incompleto o el titular tiene más de una. Se pide una sola vez que lo repita, cifra
+    # por cifra, que es como mejor lo oye el reconocedor. Sin números dentro: no hay
+    # ninguno que leerle a quien no se le encontró.
+    not_found_repeat:
+      text: No encontré esa póliza. ¿Me la repites cifra por cifra, despacio?
+      surface: chat
+    # Lo que queda guardado en el caso al confirmar: la identidad y el vehículo.
+    confirmed_identity:
+      text: "{name}, póliza {policy}"
+      surface: system
+    confirmed_vehicle:
+      text: "{vehicle}, conducía el titular"
+      surface: system
+  # Cómo se nombra cada bloque cuando la agente dice qué falta (`intake.social.progress`).
+  block:
+    safety:
+      text: si hubo heridos
+      surface: chat
+    identity_and_policy:
+      text: tu nombre y tu póliza
+      surface: chat
+    what_happened:
+      text: qué pasó
+      surface: chat
+    when_and_where:
+      text: cuándo y dónde
+      surface: chat
+    vehicle_and_driver:
+      text: el vehículo y quién conducía
+      surface: chat
+    other_parties:
+      text: las otras personas involucradas
+      surface: chat
+    quote_driver:
+      text: los datos del conductor
+      surface: chat
+    quote_vehicle:
+      text: los datos del vehículo
+      surface: chat
+    quote_usage:
+      text: el uso del vehículo
+      surface: chat
+    quote_history:
+      text: el historial de siniestros
+      surface: chat
+  # Lo que dice la agente cuando el nodo de captura falla o se pasa de tiempo
+  # (la frase de degradación de `INTAKE_SPEC`). Hasta el 2026-10-06 era la frase
+  # de calma de BR5.4, que habla de insultos: ante un modelo lento la agente
+  # parecía reprochar algo y no decía qué hacer. Esta dice lo que pasó y pide
+  # repetir, que es lo único que la agente puede pedir sin haber entendido.
+  degraded:
+    text: Perdón, no alcancé a procesar lo que me dijiste. ¿Me lo repites, por favor?
+    surface: chat
+  # La corrección de un dato ya dicho (P4): se reemplaza y se dice, sin «¿es correcto?».
+  correction:
+    applied:
+      text: "Corregido: {value}."
+      surface: chat
+  tone:
+    # BR5.4: al llegar al primer umbral de insultos que fija la configuración
+    # de la aseguradora, la frase de calma, sin reproches.
+    calm:
+      text: Quiero ayudarte con calma. Si prefieres, un ajustador puede revisar tu caso.
+      surface: chat
+    # BR5.4: al llegar al segundo umbral, la sesión termina y el caso queda
+    # esperando al asegurado con ese motivo.
+    closing_abuse:
+      text: No puedo continuar así. Tu caso queda para que lo revise un ajustador.
+      surface: chat
+  emergency:
+    # BR4.1: se ofrece seguir después de la indicación de emergencia de U10.
+    continuation:
+      text: Podemos seguir con tu reporte después.
+      surface: chat
+  closing:
+    # AC1.5.2, último bloque del orden fijo: el resumen de cierre. Nombra lo
+    # dicho —lesiones, conductor y lugar entre ello (FD-U11-8)— y no lo resume.
+    # Es una de las cuatro excepciones que AC1.5.3 declara al límite de 25
+    # palabras, así que no pasa por `assert_question_shape`.
+    #
+    # Se llega aquí solo cuando todos los campos del caso están confirmados
+    # (`blocks.next_block`), así que ninguna variable puede venir vacía.
+    # Una consulta de cobertura tiene dos campos, no siete: su cierre confirma
+    # la póliza y la pregunta, y la respuesta la da U8.
+    # El cierre del recorrido rápido (P4, decisión de Miguel, 2026-10-06; US1.17,
+    # 2026-10-13): con los datos obligatorios la agente ya tiene lo necesario, revisa el
+    # reporte y confirma en un momento, y lo opcional se ofrece en una sola pregunta. Todavía
+    # no se sabe si el caso lo cierra la agente o lo mira un ajustador, así que ninguna de las
+    # dos primeras lo promete. {case_number} es el del caso; {missing} son los bloques
+    # opcionales que faltan, de `intake.block.*`. El siniestro ya no tiene resumen con
+    # «¿está todo correcto?».
+    fast_claim_offer:
+      text: "Listo: ya tengo lo necesario para tu caso {case_number}. ¿Quieres agregar {missing}, o lo dejamos así?"
+      surface: chat
+    fast_claim_done:
+      text: "Listo: ya tengo lo necesario para tu caso {case_number}. Reviso tu reporte y te confirmo en un momento."
+      surface: chat
+    # Con el caso en revisión: la oferta se contestó, o la persona sigue escribiendo mientras
+    # las reglas lo revisan.
+    fast_claim_review_after_extra:
+      text: "Anotado, gracias. Reviso tu reporte y te confirmo en un momento."
+      surface: chat
+    fast_claim_review_declined:
+      text: "De acuerdo. Reviso tu reporte y te confirmo en un momento."
+      surface: chat
+    fast_claim_review_already:
+      text: "Tu caso {case_number} está en revisión; te confirmo en un momento."
+      surface: chat
+    # Con el caso ya cerrado por las reglas (cierre directo, resolución `registered`).
+    fast_claim_registered:
+      text: "Tu caso {case_number} ya quedó registrado; puedes verlo con el enlace de arriba."
+      surface: chat
+    # Con el caso en manos de un ajustador (las reglas lo derivaron, o la persona lo pidió).
+    fast_claim_after_extra:
+      text: "Anotado, gracias. Tu caso {case_number} queda con un ajustador; puedes verlo con el enlace de arriba."
+      surface: chat
+    fast_claim_declined:
+      text: "De acuerdo. Tu caso {case_number} queda con un ajustador; puedes verlo con el enlace de arriba."
+      surface: chat
+    fast_claim_already:
+      text: "Tu caso {case_number} ya quedó con un ajustador; puedes verlo y seguirlo con el enlace de arriba."
+      surface: chat
+    # El cierre del siniestro por voz (2026-10-09): sin el enlace ni el numero, que la
+    # despedida de la llamada ya dice.
+    voice_fast_offer:
+      text: "Listo, ya tengo lo necesario. ¿Quieres agregar {missing}, o lo dejamos así?"
+      surface: voice
+    voice_fast_done:
+      text: "Listo, ya tengo lo necesario."
+      surface: voice
+    voice_fast_after_extra:
+      text: "Anotado, gracias."
+      surface: voice
+    voice_fast_declined:
+      text: "De acuerdo."
+      surface: voice
+    voice_fast_already:
+      text: "Ya tengo todo lo de tu caso."
+      surface: voice
+    voice_fast_registered:
+      text: "Tu caso ya quedó registrado."
+      surface: voice
+    summary_coverage:
+      text: "Para cerrar: {identity_and_policy}; tu pregunta es {question_asked}. ¿Es correcto?"
+      surface: chat
+    # U19: la solicitud no tiene un resumen que confirmar; este cierre es tambien la frase de
+    # espera mientras el ritmo de fondo evalua la elegibilidad (BR2.5).
+    summary_quote:
+      text: Con esto tengo lo que necesito. Reviso si tu solicitud puede seguir y te cuento en un momento.
+      surface: chat
+  identity:
+    # BR3.6: en inglés, antes de usar el nombre de pila. En español no aplica
+    # (la agente usa "usted"), y la clave existe aquí solo por la paridad de
+    # claves entre los dos idiomas (BR3.1 del catálogo).
+    name_permission:
+      text: "¿Te puedo decir {name}?"
+      surface: chat
+
+# --- La bandeja del ajustador y la pantalla del visitante (U14) ----------------
+#
+# Tres pantallas: la cola, la vista de caso con credencial y la pantalla propia
+# del visitante que abre su caso con un enlace. Las dos primeras hablan a quien
+# decide; la tercera, a quien reportó, y **sin una palabra de jerga del sistema**
+# (regla U-07: "bandeja" no significa nada para quien reporta). Por eso las frases
+# del visitante viven en su propia sección y no se reusan de arriba: sostener dos
+# registros sobre un solo juego de frases es la forma segura de que un día se
+# cruce uno.
+#
+# Las etiquetas de estado, resolución, tipo de registro, motivo de derivación,
+# campo y canal **no están aquí**: están en `case:`, que es donde vive el
+# vocabulario del caso, y las resuelve la misma correspondencia del servidor.
+inbox:
+  # Las paginas de personal dicen que lo son (fase 3, 2026-10-08): quien llega desde
+  # la demo sabe que esta viendo la herramienta del ajustador.
+  staff_note:
+    text: "Página para el personal de la aseguradora: aquí los ajustadores revisan y deciden los casos."
+    surface: inbox
+  queue:
+    title:
+      text: Casos de {insurer}
+      surface: inbox
+    table_label:
+      text: Casos en espera de decisión
+      surface: inbox
+    filters_label:
+      text: Filtros
+      surface: inbox
+    # La opción "sin filtrar" de cada selector. Una sola clave para los cuatro:
+    # dicen lo mismo y separarlas es como un día dejan de decirlo.
+    filter_any:
+      text: Todos
+      surface: inbox
+    filter_state:
+      text: Estado
+      surface: inbox
+    filter_channel:
+      text: Canal
+      surface: inbox
+    filter_language:
+      text: Idioma del caso
+      surface: inbox
+    filter_priority:
+      text: Prioridad
+      surface: inbox
+    filter_clear:
+      text: Quitar los filtros
+      surface: inbox
+    # Se anuncia al filtrar, para quien no ve la lista cambiar (BR7.5).
+    results:
+      text: "{count} casos"
+      surface: inbox
+    empty:
+      text: No hay ningún caso esperando decisión.
+      surface: inbox
+    # BR1.3: una lista vacía sin explicación se lee como una bandeja vacía, que es
+    # lo contrario de lo que pasó.
+    empty_filtered:
+      text: Ningún caso coincide con los filtros.
+      surface: inbox
+    column_case:
+      text: Caso
+      surface: inbox
+    column_completeness:
+      text: Completitud
+      surface: inbox
+    column_category:
+      text: Categoría
+      surface: inbox
+    column_channel:
+      text: Canal
+      surface: inbox
+    column_language:
+      text: Idioma
+      surface: inbox
+    column_priority:
+      text: Prioridad
+      surface: inbox
+    column_waiting:
+      text: Espera
+      surface: inbox
+    more:
+      text: Ver más casos
+      surface: inbox
+    open:
+      text: Abrir el caso {case_number}
+      surface: inbox
+  priority:
+    high:
+      text: Alta
+      surface: inbox
+    normal:
+      text: Normal
+      surface: inbox
+  completeness:
+    text: "{complete} de {total} campos"
+    surface: inbox
+  # Cuánto lleva esperando un caso, en la unidad que se lee de un vistazo.
+  waited:
+    just_now:
+      text: Hace un momento
+      surface: inbox
+    minutes:
+      text: Hace {value} min
+      surface: inbox
+    hours:
+      text: Hace {value} h
+      surface: inbox
+    days:
+      text: Hace {value} d
+      surface: inbox
+  case:
+    title:
+      text: Caso {case_number}
+      surface: inbox
+    back:
+      text: Volver a la cola
+      surface: inbox
+    # Las tres cosas del encabezado pegajoso (BR2.1).
+    reason:
+      text: Por qué llegó aquí
+      surface: inbox
+    category:
+      text: Categoría
+      surface: inbox
+    completeness:
+      text: Completitud
+      surface: inbox
+    no_reason:
+      text: Sin motivo de derivación registrado
+      surface: inbox
+    # El renglón «Por qué llegó aquí» de un caso que cerraron las reglas (US1.17): nunca llegó a
+    # un ajustador, y «sin motivo registrado» se leía como un dato que faltaba.
+    not_handed_off:
+      text: No pasó por un ajustador
+      surface: inbox
+    no_category:
+      text: Todavía no pasó por el motor de reglas
+      surface: inbox
+    resolution:
+      text: Resolución
+      surface: inbox
+    not_found:
+      text: No hay nada que mostrar aquí.
+      surface: inbox
+  # Los seis bloques de evidencia (BR2.2). Tres abiertos y tres plegados, y el
+  # titular de un plegado lleva su resultado: plegar oculta el detalle, no el dato.
+  block:
+    fields:
+      text: Completitud por campo
+      surface: inbox
+    transcript:
+      text: Conversación
+      surface: inbox
+    citations:
+      text: Cláusulas citadas
+      surface: inbox
+    rule:
+      text: Por qué pasó a un ajustador
+      surface: inbox
+    # El mismo bloque cuando las reglas cerraron el caso sin pasarlo a nadie.
+    rule_closed:
+      text: Por qué se cerró sin ajustador
+      surface: inbox
+    controls:
+      text: Controles de cumplimiento
+      surface: inbox
+    trace:
+      text: Cómo se respondió
+      surface: inbox
+  fields:
+    complete:
+      text: Completo
+      surface: inbox
+    incomplete:
+      text: Falta
+      surface: inbox
+    # Un dato que se ofrece al final y no cuenta para la completitud (2026-10-11).
+    optional:
+      text: Opcional
+      surface: inbox
+    # BR4.3: un caso que espera al asegurado dice por qué y qué falta.
+    awaiting:
+      text: Este caso espera al asegurado. Vuelve a la cola cuando retome la conversación y complete lo que falta.
+      surface: inbox
+  transcript:
+    speaker_insured:
+      text: La persona
+      surface: inbox
+    speaker_agent:
+      text: La agente
+      surface: inbox
+    # BR2.3: la transcripción llega redactada y la bandeja no la destapa. Cada
+    # dato personal aparece como etiqueta de su tipo, y el valor completo está en
+    # el campo del caso, que se ve arriba.
+    redacted_hint:
+      text: Los datos personales aparecen como una etiqueta de su tipo. El valor completo está en el campo del caso, arriba.
+      surface: inbox
+    empty:
+      text: Todavía no hay conversación registrada.
+      surface: inbox
+  # BR2.5: las cuatro salidas de una respuesta de cobertura, cada una con su
+  # etiqueta. Son etiquetas para quien decide, cortas y en su registro; las frases
+  # que la agente le dice al asegurado son otras y viven en `policy_rag.coverage`.
+  # Colapsar "sin cláusula" con "no pude verificar" contaminaría con fallos de
+  # infraestructura una respuesta que sí se verificó.
+  coverage:
+    verified:
+      text: Cubierto según la póliza
+      surface: inbox
+    rejected:
+      text: No cubierto según la póliza
+      surface: inbox
+    no_clause_found:
+      text: Sin cláusula que lo cubra
+      surface: inbox
+    unverifiable:
+      text: No se pudo verificar
+      surface: inbox
+    question:
+      text: Lo que se preguntó
+      surface: inbox
+    empty:
+      text: No se preguntó nada sobre cobertura.
+      surface: inbox
+    # BR2.6: en una agencia, quien emitió la póliza no es quien atiende el caso.
+    # Sin este dato a la vista, las cláusulas citadas parecen de la agencia.
+    issuer:
+      text: Emitida por {insurer}
+      surface: inbox
+  # Por qué pasó el caso a un ajustador, en una frase (2026-10-12): el servidor manda la
+  # categoría y los identificadores de las reglas, no su explicación, así que la frase
+  # sale de la categoría y el identificador queda al final, pequeño, como referencia.
+  rule:
+    reason:
+      referral:
+        text: Las reglas de la aseguradora mandan este caso a un ajustador, que decide cómo sigue.
+        surface: inbox
+      standard_review:
+        text: Las reglas piden que un ajustador revise este caso con el procedimiento habitual antes de seguir.
+        surface: inbox
+      direct_close:
+        text: Con lo registrado, las reglas permiten cerrar el caso sin que lo revise un ajustador.
+        surface: inbox
+      other:
+        text: Las reglas de la aseguradora decidieron cómo sigue este caso.
+        surface: inbox
+    # La categoría en una o dos palabras, para la etiqueta del encabezado (2026-10-13): las
+    # frases de arriba son largas para una etiqueta y el valor del enum no se imprime.
+    category:
+      referral:
+        text: Derivación
+        surface: inbox
+      standard_review:
+        text: Revisión habitual
+        surface: inbox
+      direct_close:
+        text: Cierre directo
+        surface: inbox
+      other:
+        text: Otra categoría
+        surface: inbox
+    reference:
+      text: "Referencia: {rules}"
+      surface: inbox
+  # Qué se revisó y qué se encontró, en frases (2026-10-12). Una frase por cada código de
+  # hallazgo del servidor (`FindingCode`); el que esta pantalla no conozca se dice sin
+  # pintar el código.
+  controls:
+    reviewed:
+      text: Se revisó que la conversación avisara que quien responde es una asistente de inteligencia artificial, que se pasara a un ajustador cuando se pidió, que no quedaran datos personales sin tapar y que el caso se pueda explicar.
+      surface: inbox
+    all_clear:
+      text: No se encontró nada que corregir.
+      surface: inbox
+    some_findings:
+      text: "Se encontró lo siguiente:"
+      surface: inbox
+    finding:
+      disclosure_missing:
+        text: No quedó registrado el aviso de que quien responde es una asistente de inteligencia artificial.
+        surface: inbox
+      human_route_missed:
+        text: Se pidió hablar con alguien y la respuesta que siguió no pasó el caso a un ajustador.
+        surface: inbox
+      pii_found:
+        text: Quedaron datos personales sin tapar en la conversación guardada.
+        surface: inbox
+      attachment_missing:
+        text: Al caso le falta información para explicar cómo se llegó a la respuesta.
+        surface: inbox
+      other:
+        text: Hay un hallazgo que revisa el ajustador.
+        surface: inbox
+  trace:
+    cost:
+      text: "{value} USD"
+      surface: inbox
+    # El enlace a la traza del caso en Langfuse (2026-10-14). Lo ve quien abre su caso, con el
+    # enlace de la demo o con credencial; el caso de ejemplo público no lo tiene. La nota dice
+    # la verdad de lo que se manda: nombres de pasos, modelo, tiempos y costo, y ningún texto
+    # de la conversación (la lista de atributos de un tramo es cerrada).
+    langfuse_link:
+      text: Ver en Langfuse cómo trabajó la agente
+      surface: inbox
+    langfuse_note:
+      text: "Langfuse es una herramienta externa para revisar, paso a paso, qué hizo la agente: qué modelo usó, cuánto tardó y cuánto costó. No muestra lo que se escribió en la conversación."
+      surface: inbox
+  # BR2.4: la explicación responde cinco preguntas y ninguna queda en blanco. Un
+  # hueco se lee como un dato que se perdió.
+  explanation:
+    title:
+      text: Quién decidió y cuándo
+      surface: inbox
+    pending:
+      text: Pendiente de decisión
+      surface: inbox
+    nobody:
+      text: Sin decisión registrada
+      surface: inbox
+    by_staff:
+      text: Decidido por {who}
+      surface: inbox
+    # BR5.5: la decisión tomada con el enlace de demostración se atribuye a un
+    # visitante, nunca a una persona de la aseguradora.
+    by_visitor:
+      text: Decidido por un visitante con enlace de demostración
+      surface: inbox
+    # El caso de ejemplo se lee sin credencial: no se nombra a nadie, pero si se dice que lo
+    # decidio un ajustador (aprobado o rechazado) o que la agencia lo envio a la aseguradora que
+    # emitio la poliza (la agencia no decide los casos). El identificador de la persona no viaja.
+    by_adjuster:
+      text: Decidido por un ajustador de la aseguradora
+      surface: inbox
+    by_agency:
+      text: Enviado a la aseguradora por la agencia
+      surface: inbox
+    # US1.17: el cierre directo lo aplican las reglas y nadie decide. Un actor «system»
+    # nunca se imprime: se dice que no hubo ajustador.
+    by_rules:
+      text: "Sin ajustador: lo cerraron las reglas de la aseguradora"
+      surface: inbox
+  # La corrección de un campo (BR3.1 a BR3.4).
+  correction:
+    edit:
+      text: Corregir {field}
+      surface: inbox
+    value_label:
+      text: Valor corregido
+      surface: inbox
+    save:
+      text: Guardar
+      surface: inbox
+    cancel:
+      text: Cancelar
+      surface: inbox
+    saved:
+      text: El campo quedó corregido.
+      surface: inbox
+    closed:
+      text: "Un caso cerrado no admite correcciones: su evidencia es la que se comprobó al cerrarlo."
+      surface: inbox
+  # Lo que el ajustador anota para las reglas (2026-10-13): el monto estimado, si la cobertura
+  # está en duda y si hay sospecha de fraude. Lo leen las reglas de la aseguradora y quien
+  # decide; no se le muestra a quien reportó el caso ni cambia lo que la agente le dice. «Sin
+  # anotar» y «No» son dos respuestas distintas: una regla no dispara con un dato sin anotar,
+  # y un «No» afirma que se comprobó. El monto se escribe en miles de pesos, que es como el
+  # proyecto guarda los montos, y debajo se lee en pesos para que un cero de más se note.
+  triage:
+    title:
+      text: Anotaciones para las reglas
+      surface: inbox
+    intro:
+      text: Lo que se anote aquí lo usan las reglas de la aseguradora para decidir cómo sigue el caso. No lo ve quien reportó el caso ni cambia lo que la agente le dice.
+      surface: inbox
+    amount_label:
+      text: Monto estimado (en miles de pesos)
+      surface: inbox
+    amount_preview:
+      text: "Equivale a {amount}."
+      surface: inbox
+    amount_invalid:
+      text: El monto debe ser un número entero, sin puntos, comas ni letras.
+      surface: inbox
+    coverage_label:
+      text: ¿La cobertura está en duda?
+      surface: inbox
+    fraud_label:
+      text: ¿Hay sospecha de fraude?
+      surface: inbox
+    unset:
+      text: Sin anotar
+      surface: inbox
+    answer_yes:
+      text: Sí
+      surface: inbox
+    answer_no:
+      text: "No"
+      surface: inbox
+    save:
+      text: Guardar y volver a evaluar
+      surface: inbox
+    saved:
+      text: Anotaciones guardadas. Las reglas volvieron a evaluar el caso.
+      surface: inbox
+    read_only:
+      text: Solo lectura. Estas anotaciones no se pueden cambiar ahora.
+      surface: inbox
+  # La decisión (BR4.1 a BR4.6).
+  decision:
+    title:
+      text: Decidir el caso
+      surface: inbox
+    approve:
+      text: Aprobar
+      surface: inbox
+    reject:
+      text: Rechazar
+      surface: inbox
+    # BR4.6: nada promete que la emisora llame.
+    mark_sent:
+      text: Marcar como enviado a la aseguradora que emitió la póliza
+      surface: inbox
+    comment_label:
+      text: Tu nota
+      surface: inbox
+    comment_hint:
+      text: Queda en el registro del caso y es lo que hace auditable la decisión.
+      surface: inbox
+    recorded:
+      text: La decisión quedó registrada.
+      surface: inbox
+    none_awaiting:
+      text: "Este caso no se decide todavía: espera al asegurado."
+      surface: inbox
+    none_closed:
+      text: Este caso ya está decidido.
+      surface: inbox
+    none_in_conversation:
+      text: "Este caso sigue en la conversación: todavía no está listo para decidir."
+      surface: inbox
+    # US1.17: un caso que cerraron las reglas no se decide, y «ya está decidido» diría
+    # que alguien lo decidió.
+    none_closed_by_rules:
+      text: "Las reglas de la aseguradora cerraron este caso sin ajustador: no hay nada que decidir."
+      surface: inbox
+    # Un caso que la agente aún evalúa lo puede tomar el personal; se dice qué se pierde.
+    takeover_note:
+      text: "La agente todavía está evaluando este caso. Si lo decides ahora, queda en tus manos y las reglas ya no lo cierran solas."
+      surface: inbox
+  # Lo que ve quien abre su caso cuando las reglas lo cerraron sin ajustador (US1.17,
+  # AC1.17.4). No afirma cobertura ni montos: dice que quedó registrado.
+  closed_by_rules:
+    intro:
+      text: "Tu caso quedó registrado y no necesitó la revisión de un ajustador. Aquí ves lo que contaste y la regla que lo permitió."
+      surface: inbox
+    note:
+      text: Que el caso quede registrado no confirma cobertura ni montos.
+      surface: inbox
+
+# La pantalla propia del visitante que abre su caso con un enlace (U14, F8.7).
+# **Sin jerga del sistema** (regla U-07): aquí no se dice bandeja, ni caso
+# derivado, ni cola. Quien lee esto es la persona que reportó.
+visitor:
+  # El título dice qué es el caso, en palabras, según su tipo; el código es un renglón
+  # pequeño que dice para qué sirve (2026-10-12, C10: «el tema del caso sigue con
+  # números que no se entienden»).
+  title_claim:
+    text: Tu reporte de accidente
+    surface: inbox
+  title_inquiry:
+    text: Tu consulta de póliza
+    surface: inbox
+  title_quote:
+    text: Tu solicitud de cotización
+    surface: inbox
+  number:
+    text: "Número de tu caso: {case_number}. Sirve para retomarlo o consultarlo."
+    surface: inbox
+  # Qué estás viendo y hasta cuándo vale el enlace (Flujo 3, paso 4).
+  intro:
+    text: "Esto es lo que quedó de tu caso: lo que contaste, lo que encontramos en tu póliza y qué decidiría un ajustador."
+    surface: inbox
+  valid_until:
+    text: Este enlace funciona hasta las {time} de hoy.
+    surface: inbox
+  decide_intro:
+    text: "En esta demo puedes hacer de ajustador: toma la decisión y mira cómo sigue la conversación."
+    surface: inbox
+  opening:
+    text: Abriendo tu caso…
+    surface: inbox
+  # Lo que se ve al confirmar: el caso quedó decidido, el aviso que recibe la
+  # persona y la vuelta a la conversación (Flujo 3, paso 6).
+  done_title:
+    text: Listo, tu caso ya tiene una decisión
+    surface: inbox
+  done_body:
+    text: El aviso con la decisión te llega en tu conversación.
+    surface: inbox
+  # BR5.4: si el enlace vence mientras se escribe, el texto se conserva para
+  # copiarlo. Perderlo convierte un vencimiento en trabajo perdido, y lo sufre
+  # justo quien estaba terminando.
+  expired_with_comment:
+    text: El enlace venció mientras escribías. Tu nota sigue aquí abajo para que la copies antes de salir.
+    surface: inbox
+  # El rechazo de la decisión con el enlace todavía vigente (2026-10-12): no venció,
+  # no se pudo guardar. Decir «venció» ahí es mentirle a quien aún puede reintentar.
+  decision_not_saved:
+    text: No pudimos guardar tu decisión. Inténtalo de nuevo; tu nota sigue aquí abajo.
+    surface: inbox
+  # Lo que el visitante anota haciendo de ajustador (2026-10-13): el monto, si hay dudas sobre
+  # la cobertura y si sospecha de fraude. Es opcional, se escribe en pesos y viene con ayuda
+  # (desde qué montos cambian las reglas, qué es cada pregunta), porque quien lo hace no sabe
+  # qué mira un ajustador. Sin jerga del sistema (U-07): aquí no se dice bandeja, cola ni triaje.
+  triage:
+    title:
+      text: "Antes de decidir: lo que revisaría un ajustador"
+      surface: inbox
+    intro:
+      text: Es opcional. La agente recoge lo que pasó; estas tres cosas solo las puede valorar un ajustador. Si las anotas, las reglas de la aseguradora vuelven a clasificar el caso y aquí mismo ves qué cambió.
+      surface: inbox
+    amount_label:
+      text: ¿Cuánto costaría reparar el daño? (en pesos)
+      surface: inbox
+    # Los montos salen del archivo de reglas de la aseguradora, nunca de la pantalla: tres
+    # frases según cuántos umbrales tenga (dos o más, uno, ninguno).
+    amount_help:
+      text: Un cálculo aproximado. Desde {first} las reglas piden que un ajustador revise el monto; desde {last}, una revisión más detallada.
+      surface: inbox
+    amount_help_one:
+      text: Un cálculo aproximado. Desde {first} las reglas piden que un ajustador revise el monto.
+      surface: inbox
+    amount_help_none:
+      text: Un cálculo aproximado.
+      surface: inbox
+    amount_examples:
+      text: "Prueba con:"
+      surface: inbox
+    amount_preview:
+      text: Se anota como {amount}.
+      surface: inbox
+    amount_invalid:
+      text: Escribe solo números, sin puntos, comas ni letras.
+      surface: inbox
+    coverage_label:
+      text: ¿Hay dudas sobre si la póliza cubre este daño?
+      surface: inbox
+    coverage_help:
+      text: Por ejemplo, si lo ocurrido podría caer en una exclusión de la póliza.
+      surface: inbox
+    fraud_label:
+      text: ¿Algo te hace sospechar de fraude?
+      surface: inbox
+    fraud_help:
+      text: Por ejemplo, versiones que no coinciden o un reporte hecho mucho después del hecho.
+      surface: inbox
+    unset:
+      text: No lo he revisado
+      surface: inbox
+    save:
+      text: Guardar y ver qué dicen las reglas
+      surface: inbox
+    result:
+      text: Las reglas volvieron a evaluar el caso.
+      surface: inbox
+    limit:
+      text: Ya no se pueden cambiar más estas anotaciones en este caso.
+      surface: inbox
+    expired:
+      text: El enlace venció antes de guardar estas anotaciones. Lo que escribiste sigue aquí, pero no quedó guardado.
+      surface: inbox
+
+# El panel de cifras (U22, AC4.16). Cada cifra dice de donde sale o por que no se
+# midio: "no medida" lleva siempre su causa y nunca un cero (BR1.2).
+metrics:
+  # Que mide cada cifra, en palabras llanas (D5, fase 3, 2026-10-08).
+  figure_help:
+    completeness:
+      text: "De los datos que necesita un reporte, cuántos dejó anotados la agente en las conversaciones de prueba."
+      surface: system
+    citation_precision:
+      text: "De las cláusulas que la agente citó en las preguntas de prueba, cuántas eran las que responden esa pregunta en esa póliza."
+      surface: system
+    latency:
+      text: "Cuánto tarda en empezar la respuesta, desde que terminas de hablar o de escribir."
+      surface: system
+    cost_per_case:
+      text: "Lo que cuesta atender un caso en modelos, voz y transcripción, a precio de lista."
+      surface: system
+    cases_by_tenant:
+      text: "Cuántos casos abrió la demostración en cada aseguradora."
+      surface: system
+  title:
+    text: "Qué tan bien funciona la agente"
+    surface: system
+  lead:
+    text: "Cada cifra sale de una corrida de prueba, con su fecha y su versión. Las que todavía no se miden lo dicen, con su causa."
+    surface: system
+  no_baseline:
+    text: Todavía no hay una línea base publicada, así que ninguna cifra de corrida está medida.
+    surface: system
+  loading:
+    text: Cargando las cifras
+    surface: system
+  figure:
+    completeness:
+      text: Completitud del caso
+      surface: system
+    citation_precision:
+      text: Precisión de citación
+      surface: system
+    latency:
+      text: Latencias
+      surface: system
+    cost_per_case:
+      text: Costo por caso
+      surface: system
+    cases_by_tenant:
+      text: Casos por aseguradora
+      surface: system
+  language:
+    es:
+      text: Español
+      surface: system
+    en:
+      text: Inglés
+      surface: system
+  not_measured:
+    text: No medida
+    surface: system
+  cause:
+    no_baseline:
+      text: Todavía no se ha publicado ninguna línea base.
+      surface: system
+    criterion_absent:
+      text: La línea base vigente no trae el criterio que produce esta cifra.
+      surface: system
+    criterion_not_built:
+      text: "Todavía no existe un criterio que mida esto: falta cablear su medición."
+      surface: system
+    measured_per_milestone:
+      text: Se mide por hito, contra proveedores reales, y todavía no hay una medición publicada.
+      surface: system
+    not_connected:
+      text: Esta cifra todavía no está conectada al panel.
+      surface: system
+    latency_not_in_baseline:
+      text: La línea base publicada no trae latencias.
+      surface: system
+    too_few_turns:
+      text: Se midieron muy pocos turnos para dar una cifra confiable.
+      surface: system
+  source:
+    date:
+      text: Fecha
+      surface: system
+    commit:
+      text: Commit
+      surface: system
+    run:
+      text: Corrida
+      surface: system
+  latency:
+    voice:
+      text: Voz
+      surface: system
+    chat:
+      text: Chat
+      surface: system
+    between:
+      text: Entre {start} y {end}
+      surface: system
+    dataset:
+      text: Sobre {dataset}
+      surface: system
+    percentiles:
+      text: La mitad y 95 de cada 100 (p50 y p95)
+      surface: system
+    half:
+      text: "La mitad de los turnos, en {time}"
+      surface: system
+    most:
+      text: "95 de cada 100 turnos, en {time}"
+      surface: system
+    turns:
+      text: "Turnos medidos: {count}"
+      surface: system
+    environment_chat:
+      text: "Se mide en la corrida de pruebas, desde que el servidor recibe el mensaje; no cuenta la red de quien escribe."
+      surface: system
+    event:
+      speech_end:
+        text: el fin del habla
+        surface: system
+      first_audio:
+        text: el primer audio
+        surface: system
+      message_sent:
+        text: el envío del mensaje
+        surface: system
+      first_word:
+        text: la primera palabra
+        surface: system
+
+# La pestana de polizas (fase 2, 2026-10-08): las polizas de ejemplo y que preguntar.
+policies:
+  # En la barra: vuelve al inicio para elegir otra aseguradora desde el chat o la
+  # llamada (D7, fase 3, 2026-10-08). "Pólizas" salió de la barra el 2026-10-11 y la
+  # reemplazó "Casos"; la página sigue en /policies, enlazada desde cada aseguradora.
+  nav_insurers:
+    text: Aseguradoras
+    surface: system
+  title:
+    text: "Pólizas de ejemplo"
+    surface: system
+  intro:
+    text: "Las pólizas de ejemplo de cada aseguradora. Elige una y pregunta por ella en el chat."
+    surface: system
+  loading:
+    text: "Cargando las pólizas…"
+    surface: system
+  example:
+    text: "Póliza de ejemplo"
+    surface: system
+  holder:
+    text: "Titular: {name}"
+    surface: system
+  issued_by:
+    text: "Emitida por {issuer}"
+    surface: system
+  period:
+    text: "Vigente del {start} al {end}"
+    surface: system
+  vehicles:
+    text: "Vehículos"
+    surface: system
+  coverage_title:
+    text: "Qué cubre"
+    surface: system
+  money_note:
+    text: "Montos en pesos colombianos."
+    surface: system
+  endorsements_title:
+    text: "Condiciones especiales de esta póliza"
+    surface: system
+  no_endorsements:
+    text: "Esta póliza no tiene condiciones especiales."
+    surface: system
+  questions_title:
+    text: "Preguntas para probar"
+    surface: system
+  questions_hint:
+    text: "Cada botón abre el chat con esta póliza y la pregunta ya enviada."
+    surface: system
+  ask_chat:
+    text: "Preguntar en el chat con esta póliza"
+    surface: system
+  ask_identity:
+    text: "Soy {name}, mi póliza es {policy}"
+    surface: system
+  ask_question:
+    text: "Soy {name}, mi póliza es {policy}. {question}"
+    surface: system
+  limit:
+    a_bodily_injury_per_person:
+      text: "Responsabilidad civil: lesiones, por persona"
+      surface: system
+    a_bodily_injury_per_accident:
+      text: "Responsabilidad civil: lesiones, por accidente"
+      surface: system
+    a_property_damage:
+      text: "Responsabilidad civil: daños a bienes"
+      surface: system
+    b_medical_payments_per_person:
+      text: "Gastos médicos, por persona"
+      surface: system
+    c_uninsured_per_person:
+      text: "Conductor sin seguro, por persona"
+      surface: system
+    c_uninsured_per_accident:
+      text: "Conductor sin seguro, por accidente"
+      surface: system
+    d_collision_deductible:
+      text: "Deducible del vehículo en un choque"
+      surface: system
+    d_other_than_collision_deductible:
+      text: "Deducible del vehículo en otros daños"
+      surface: system
+  endorsement:
+    def_family_member:
+      text: "Hijos menores de 25 años que estudian en otra ciudad cuentan como familiares"
+      surface: system
+    a_excl_a_5:
+      text: "Cubre la responsabilidad civil al manejar para una plataforma de viajes"
+      surface: system
+    d_excl_3:
+      text: "Cubre equipos electrónicos declarados con su factura"
+      surface: system
+    c_arbitration:
+      text: "El arbitraje de la Parte C lo decide un tribunal de tres árbitros"
+      surface: system
+    f_period_territory:
+      text: "Amplía el territorio a viajes de hasta 30 días por las jurisdicciones vecinas"
+      surface: system
+    def_covered_auto:
+      text: "45 días, en vez de 20, para avisar de un vehículo recién comprado"
+      surface: system
+    d_excl_5:
+      text: "Cubre llantas dañadas por un hueco en la vía, con tope por llanta"
+      surface: system
+    d_transport:
+      text: "Más dinero diario y total para transporte tras un robo o daño"
+      surface: system
+    b_ins:
+      text: "Los gastos médicos cubren también a peatones atropellados"
+      surface: system
+    f_termination:
+      text: "Al menos 45 días de aviso antes de cancelar la póliza"
+      surface: system
+  question:
+    hail:
+      text: "¿Me cubre el granizo?"
+      surface: system
+    rental_car:
+      text: "¿Me pagan un carro de alquiler mientras arreglan el mío?"
+      surface: system
+    transport_expense_extension:
+      text: "¿Me pagan el transporte si me roban el carro?"
+      surface: system
+    ride_app_exclusion_reopened:
+      text: "¿Estoy cubierto si manejo para una plataforma de viajes?"
+      surface: system
+    temporary_substitute_definition:
+      text: "¿Me cubre si manejo un carro prestado mientras arreglan el mío?"
+      surface: system
+    tire_exclusion_reopened:
+      text: "¿Me cubren una llanta que se dañó en un hueco?"
+      surface: system
+    covered_auto_definition_changed:
+      text: "Acabo de comprar un carro, ¿cuántos días tengo para avisar?"
+      surface: system
+    uninsured_driver:
+      text: "¿Me cubren si me choca alguien que no tiene seguro?"
+      surface: system
+    lend_car:
+      text: "¿Estoy cubierto si le presto el carro a un amigo?"
+      surface: system
+    passengers_medical:
+      text: "¿Me pagan los gastos médicos de mis pasajeros?"
+      surface: system
+    theft:
+      text: "¿Qué me cubren si me roban el carro?"
+      surface: system
+    report_deadline:
+      text: "¿Cuánto tiempo tengo para avisar de un accidente?"
+      surface: system
+    abroad:
+      text: "¿Me cubre si manejo fuera del país?"
+      surface: system
+    towing:
+      text: "¿Me pagan la grúa si el carro se vara?"
+      surface: system
+
+# La página pública "Casos" (2026-10-11): el caso propio del visitante y los casos de
+# ejemplo de cada aseguradora. Solo esos dos: ningún caso de otro visitante se muestra.
+cases:
+  nav:
+    text: Casos
+    surface: system
+  title:
+    text: Casos
+    surface: system
+  intro:
+    text: "Un caso es lo que la agente arma con lo que le cuentas: tus datos, la conversación y lo que encontró en tu póliza, para que un ajustador lo revise y lo decida. Aquí ves el tuyo y casos de ejemplo de cada aseguradora."
+    surface: system
+  start:
+    text: Empezar un caso
+    surface: system
+  mine:
+    title:
+      text: Tus casos
+      surface: system
+    hint:
+      text: Los que abriste desde este navegador, uno por aseguradora.
+      surface: system
+    empty:
+      text: Todavía no tienes ningún caso. Cuéntale a la agente de una aseguradora qué te pasó y aquí aparece.
+      surface: system
+    chat:
+      text: Seguir en el chat
+      surface: system
+    chat_with:
+      text: "Seguir en el chat de {insurer}"
+      surface: system
+    view:
+      text: Ver el caso
+      surface: system
+    view_of:
+      text: "Ver el caso {case_number} de {insurer}"
+      surface: system
+    number:
+      text: "Número de tu caso: {case_number}. Sirve para retomarlo o consultarlo."
+      surface: system
+  examples:
+    title:
+      text: Casos de ejemplo
+      surface: system
+    hint:
+      text: Son casos inventados que ya trae cada aseguradora, tal como los ve un ajustador. Ábrelos para ver cómo queda un caso.
+      surface: system
+    insurer_label:
+      text: Elige una aseguradora
+      surface: system
+    empty:
+      text: Esta aseguradora no tiene casos de ejemplo por ahora.
+      surface: system
+  # Qué significa cada estado, en una línea bajo su título. Solo los que la lista ofrece:
+  # un caso recién abierto, sin nada dentro, no se muestra.
+  group:
+    capturing:
+      text: La agente todavía está preguntando los datos.
+      surface: system
+    verifying:
+      text: La agente está comprobando la póliza.
+      surface: system
+    deciding:
+      text: La agente está evaluando qué sigue.
+      surface: system
+    derived:
+      text: Ya pasó a un ajustador, que decide qué sigue.
+      surface: system
+    awaiting_insured:
+      text: El caso espera una respuesta del asegurado.
+      surface: system
+    closed:
+      text: El caso ya tiene una resolución.
+      surface: system
+  example:
+    title:
+      text: Caso de ejemplo {case_number}
+      surface: system
+    note:
+      text: "Este es un caso de ejemplo: se puede leer, pero no decidir. Para decidir un caso como ajustador, crea el tuyo en el chat."
+      surface: system
+    back:
+      text: Volver a Casos
+      surface: system
+
+# El panel de documentos que consulta la agente (fase 2, 2026-10-08).
+documents:
+  translation_note:
+    text: "Traducción de referencia al español. El texto que rige es el original."
+    surface: system
+  show_original:
+    text: "Ver en el idioma original"
+    surface: system
+  show_translation:
+    text: "Ver la traducción"
+    surface: system
+  open:
+    text: "Ver los documentos que consulta {agent}"
+    surface: system
+  title:
+    text: "Documentos que consulta {agent}"
+    surface: system
+  how:
+    text: "Cuando preguntas por tu póliza, {agent} busca en estos documentos las cláusulas más cercanas a tu pregunta, solo de tu póliza, y un verificador revisa cada cita. Si no hay una cláusula sobre el tema, no adivina."
+    surface: system
+  static:
+    text: "Los documentos no cambian con las conversaciones. Lo único que cambia es cuántas veces se citó cada cláusula."
+    surface: system
+  close:
+    text: "Cerrar"
+    surface: system
+  list_label:
+    text: "Documentos"
+    surface: system
+  kind_base:
+    text: "Póliza de autos {year}"
+    surface: system
+  kind_endorsement:
+    text: "Condición especial {number}"
+    surface: system
+  kind_jurisdiction:
+    text: "Reglas del territorio"
+    surface: system
+  clause_count:
+    text: "{count} cláusulas"
+    surface: system
+  not_in_force:
+    text: "No vigente"
+    surface: system
+  not_in_force_why:
+    text: "Ninguna póliza lo usa. Está aquí para comprobar que {agent} no cita documentos viejos."
+    surface: system
+  search_label:
+    text: "Buscar en este documento"
+    surface: system
+  no_match:
+    text: "Ninguna cláusula coincide con la búsqueda."
+    surface: system
+  amended_by:
+    text: "La modifica: {names}"
+    surface: system
+  cited:
+    text: "Citada {count} veces en los últimos 7 días"
+    surface: system
+  loading:
+    text: "Cargando el documento…"
+    surface: system

@@ -1,0 +1,460 @@
+# Escenarios de prueba del motor de reglas (U9, CG-U9-2), lado espanol.
+#
+# Los insumos son estructurados -- booleanos y numeros, nunca texto -- y el
+# motor no depende del idioma (BR2.1): las mismas filas viven en `es.yaml` y
+# `en.yaml`, valor por valor, para que la paridad EN<->ES sea real (P12). Solo
+# cambia el caso de golden set que las corre, uno por idioma.
+#
+# Una excepcion: las filas `injuries-*`, `closure-*` y `driver-*` dan campos del caso, que son
+# texto de la persona (heridos, terceros, vehiculo y conductor). Las mismas filas, con los
+# mismos identificadores y la misma categoria esperada, pero cada idioma con las frases suyas.
+#
+# Las tres aseguradoras son las reales de `app/config/tenants/` (C-25).
+language: es
+rows:
+  # Stonecroft es estricta (CG-U9-1): heridos deriva, sin que haga falta
+  # ninguna otra senal.
+  - id: category-expected/01
+    scenario: category-expected
+    tenant_id: stonecroft
+    inputs:
+      injuries_present: true
+    expected_category: referral
+
+  # Knotwell deriva siempre por su regla de agencia (BR2.6); este escenario
+  # ademas trae heridos, para probar la categoria esperada en un caso que de
+  # todos modos seria severo en cualquier aseguradora.
+  - id: category-expected/02
+    scenario: category-expected
+    tenant_id: knotwell
+    inputs:
+      injuries_present: true
+    expected_category: referral
+
+  # Un caso limpio de Stonecroft, sin ninguna de sus cinco senales: solo
+  # dispara la regla por defecto, y la categoria es la suya, revision estandar
+  # (BR1.3, BR2.2).
+  - id: category-expected/03
+    scenario: category-expected
+    tenant_id: stonecroft
+    inputs: {}
+    expected_category: standard_review
+
+  # Sin datos, ni siquiera Sunmeadow cierra directo: un campo ausente no
+  # dispara, y solo queda la regla por defecto (BR1.3, BR2.2).
+  - id: category-expected/04
+    scenario: category-expected
+    tenant_id: sunmeadow
+    inputs: {}
+    expected_category: standard_review
+
+  # Sunmeadow es flexible y cierra directo lo simple, sin terceros ni heridos
+  # (CG-U9-1): los dos datos tienen que estar capturados, y en falso.
+  - id: direct-close/01
+    scenario: direct-close
+    tenant_id: sunmeadow
+    inputs:
+      injuries_present: false
+      other_parties_data_pending: false
+    expected_category: direct_close
+
+  # La regla de dinero de Stonecroft fuerza la derivacion aunque ninguna otra
+  # senal este presente (BR2.3, compuerta dura AC1.17.3).
+  - id: money-forces-referral/01
+    scenario: money-forces-referral
+    tenant_id: stonecroft
+    inputs:
+      claim_amount: 50000
+    expected_category: referral
+
+  # Un caso completamente limpio de Knotwell -- el mismo perfil que cerraria
+  # directo en Sunmeadow -- para aislar que la derivacion es por la regla de
+  # la agencia y no por ninguna senal de severidad (FR6.4, BR2.6).
+  - id: agency-always-referral/01
+    scenario: agency-always-referral
+    tenant_id: knotwell
+    inputs: {}
+    expected_category: referral
+
+  # --- Del campo de heridos del caso a la categoria (2026-10-13) ---------------------------
+  # Estas filas no dan `injuries_present`: dan lo que el caso guarda en su campo `injuries`
+  # (el valor que anoto el modelo o, si fallo, las palabras de la persona) y la sonda lo
+  # deriva como lo hace el aplicativo. El motor es el real de cada aseguradora.
+
+  # Una negacion clara cierra directo en Sunmeadow, y solo ahi: Stonecroft no tiene regla de
+  # cierre y Knotwell deriva siempre.
+  - id: injuries-denied/01
+    scenario: injuries-denied
+    tenant_id: sunmeadow
+    injuries: { value: "No, nadie se lastimó." }
+    inputs: { other_parties_data_pending: false }
+    expected_category: direct_close
+
+  - id: injuries-denied/02
+    scenario: injuries-denied
+    tenant_id: sunmeadow
+    injuries: { value: "Nadie salió herido, gracias a Dios." }
+    inputs: { other_parties_data_pending: false }
+    expected_category: direct_close
+
+  - id: injuries-denied/03
+    scenario: injuries-denied
+    tenant_id: sunmeadow
+    injuries: { value: "no", status: confirmed }
+    inputs: { other_parties_data_pending: false }
+    expected_category: direct_close
+
+  # Sin heridos pero con un tercero al que le faltan datos: no cierra.
+  - id: injuries-denied/04
+    scenario: injuries-denied
+    tenant_id: sunmeadow
+    injuries: { value: "No, nadie se lastimó." }
+    inputs: { other_parties_data_pending: true }
+    expected_category: referral
+
+  - id: injuries-denied/05
+    scenario: injuries-denied
+    tenant_id: stonecroft
+    injuries: { value: "No, nadie se lastimó." }
+    inputs: { other_parties_data_pending: false }
+    expected_category: standard_review
+
+  - id: injuries-denied/06
+    scenario: injuries-denied
+    tenant_id: knotwell
+    injuries: { value: "No, nadie se lastimó." }
+    inputs: { other_parties_data_pending: false }
+    expected_category: referral
+
+  # Quien menciona a alguien herido deriva, y tambien quien dice "no" y sigue con un daño a
+  # una persona. Stonecroft nunca cierra, asi que ahi lo unico que puede llevar la categoria
+  # a `referral` es que el dato de heridos llegue al motor como verdadero.
+  - id: injuries-reported/01
+    scenario: injuries-reported
+    tenant_id: sunmeadow
+    injuries: { value: "Sí, mi esposa se golpeó la cabeza." }
+    inputs: { other_parties_data_pending: false }
+    expected_category: referral
+
+  - id: injuries-reported/02
+    scenario: injuries-reported
+    tenant_id: stonecroft
+    injuries: { value: "Sí, dos personas lesionadas." }
+    expected_category: referral
+
+  - id: injuries-reported/03
+    scenario: injuries-reported
+    tenant_id: stonecroft
+    injuries: { value: "No, pero mi hijo se golpeó la cabeza." }
+    expected_category: referral
+
+  - id: injuries-reported/04
+    scenario: injuries-reported
+    tenant_id: sunmeadow
+    injuries: { value: "Nadie salió herido pero el otro conductor dice que le duele el cuello." }
+    inputs: { other_parties_data_pending: false }
+    expected_category: referral
+
+  # Lo dudoso nunca llega como falso: sin el dato, Sunmeadow no cierra directo y el caso
+  # queda en revision estandar. Estar bien no es lo mismo que decir que nadie se lastimo.
+  - id: injuries-unclear/01
+    scenario: injuries-unclear
+    tenant_id: sunmeadow
+    injuries: { value: "No sé." }
+    inputs: { other_parties_data_pending: false }
+    expected_category: standard_review
+
+  - id: injuries-unclear/02
+    scenario: injuries-unclear
+    tenant_id: sunmeadow
+    injuries: { value: "Creo que no." }
+    inputs: { other_parties_data_pending: false }
+    expected_category: standard_review
+
+  - id: injuries-unclear/03
+    scenario: injuries-unclear
+    tenant_id: sunmeadow
+    injuries: { value: "Nada grave." }
+    inputs: { other_parties_data_pending: false }
+    expected_category: standard_review
+
+  - id: injuries-unclear/04
+    scenario: injuries-unclear
+    tenant_id: sunmeadow
+    injuries: { value: "Todos estamos bien." }
+    inputs: { other_parties_data_pending: false }
+    expected_category: standard_review
+
+  # Negar los heridos graves deja abiertos los leves.
+  - id: injuries-unclear/05
+    scenario: injuries-unclear
+    tenant_id: sunmeadow
+    injuries: { value: "No hubo heridos graves." }
+    inputs: { other_parties_data_pending: false }
+    expected_category: standard_review
+
+  # El campo nunca se dijo: no hay nada que derivar.
+  - id: injuries-unclear/06
+    scenario: injuries-unclear
+    tenant_id: sunmeadow
+    inputs: { other_parties_data_pending: false }
+    expected_category: standard_review
+
+  # --- Del campo de heridos y el de terceros al final del recorrido (2026-10-13) ----------
+  # Estas filas dan lo que el caso guarda en `injuries` y `other_parties` (sin filas de
+  # partes: el tercero que se nombra y nadie registra) y llegan hasta lo que el recorrido hace
+  # con el caso: `closure` es como termina, cerrado `registered` o con un ajustador.
+
+  # Sin heridos y con una negacion clara de terceros, Sunmeadow cierra el caso por su cuenta.
+  - id: closure-registers/01
+    scenario: closure-registers
+    tenant_id: sunmeadow
+    injuries: { value: "No, nadie se lastimó." }
+    other_parties: { value: "ninguno" }
+    expected_category: direct_close
+    closure: registered
+
+  - id: closure-registers/02
+    scenario: closure-registers
+    tenant_id: sunmeadow
+    injuries: { value: "Nadie salió herido, gracias a Dios." }
+    other_parties: { value: "No hubo nadie más." }
+    expected_category: direct_close
+    closure: registered
+
+  - id: closure-registers/03
+    scenario: closure-registers
+    tenant_id: sunmeadow
+    injuries: { value: "no", status: confirmed }
+    other_parties: { value: "Solo mi carro.", status: confirmed }
+    expected_category: direct_close
+    closure: registered
+
+  # Un tercero nombrado sin datos, una moto que se fue o una respuesta que no se puede leer
+  # como «nadie mas» nunca cierran solos: el caso queda con un ajustador.
+  - id: closure-refers/01
+    scenario: closure-refers
+    tenant_id: sunmeadow
+    injuries: { value: "No, nadie se lastimó." }
+    other_parties: { value: "Me chocó un taxi y se fue." }
+    expected_category: standard_review
+    closure: with_adjuster
+
+  - id: closure-refers/02
+    scenario: closure-refers
+    tenant_id: sunmeadow
+    injuries: { value: "No, nadie se lastimó." }
+    other_parties: { value: "Una moto, no alcancé a ver la placa." }
+    expected_category: standard_review
+    closure: with_adjuster
+
+  - id: closure-refers/03
+    scenario: closure-refers
+    tenant_id: sunmeadow
+    injuries: { value: "No, nadie se lastimó." }
+    other_parties: { value: "No sé si había alguien más." }
+    expected_category: standard_review
+    closure: with_adjuster
+
+  # Heridos: deriva aunque no haya terceros.
+  - id: closure-refers/04
+    scenario: closure-refers
+    tenant_id: sunmeadow
+    injuries: { value: "Sí, mi esposa se golpeó la cabeza." }
+    other_parties: { value: "ninguno" }
+    expected_category: referral
+    closure: with_adjuster
+
+  # Nadie dijo lo de terceros: el insumo queda ausente y no hay cierre directo.
+  - id: closure-refers/05
+    scenario: closure-refers
+    tenant_id: sunmeadow
+    injuries: { value: "No, nadie se lastimó." }
+    expected_category: standard_review
+    closure: with_adjuster
+
+  # Lo dudoso de heridos tampoco cierra, con los terceros bien dichos.
+  - id: closure-refers/06
+    scenario: closure-refers
+    tenant_id: sunmeadow
+    injuries: { value: "Creo que no." }
+    other_parties: { value: "ninguno" }
+    expected_category: standard_review
+    closure: with_adjuster
+
+  # Las otras dos aseguradoras no cierran directo aunque todo este limpio: Stonecroft no
+  # tiene la regla y Knotwell deriva siempre por ser agencia.
+  - id: closure-refers/07
+    scenario: closure-refers
+    tenant_id: stonecroft
+    injuries: { value: "No, nadie se lastimó." }
+    other_parties: { value: "ninguno" }
+    expected_category: standard_review
+    closure: with_adjuster
+
+  - id: closure-refers/08
+    scenario: closure-refers
+    tenant_id: knotwell
+    injuries: { value: "No, nadie se lastimó." }
+    other_parties: { value: "ninguno" }
+    expected_category: referral
+    closure: with_adjuster
+
+  # --- Del campo del vehiculo y el conductor a la categoria (2026-10-13) ------------------
+  # Estas filas dan lo que el caso guarda en `vehicle_and_driver` y los conductores que
+  # declara la poliza del caso (el titular primero), y la sonda deriva `unlisted_driver` como lo
+  # hace el aplicativo. `expected_driver` es lo que la derivacion debe dar: `listed` (figura, el
+  # insumo en falso), `unlisted` (no figura, en verdadero) o `unknown` (no se sabe: ausente).
+  # La categoria sola no distingue `listed` de `unknown`, porque ninguna regla pide el insumo en
+  # falso: por eso la fila lo declara.
+
+  # Conducia el titular, que la poliza declara: la regla del conductor no dispara.
+  - id: driver-listed/01
+    scenario: driver-listed
+    tenant_id: stonecroft
+    vehicle_and_driver:
+      value: "Renault Logan 2024, conducía el titular"
+      declared_drivers: ["Natalia Henao Rendón", "Mateo Henao Gómez"]
+    expected_driver: listed
+    expected_category: standard_review
+
+  # Que el conductor figure no frena el cierre directo de Sunmeadow.
+  - id: driver-listed/02
+    scenario: driver-listed
+    tenant_id: sunmeadow
+    inputs: { injuries_present: false, other_parties_data_pending: false }
+    vehicle_and_driver:
+      value: "Renault Logan 2024, conducía el titular"
+      declared_drivers: ["Natalia Henao Rendón", "Mateo Henao Gómez"]
+    expected_driver: listed
+    expected_category: direct_close
+
+  # Un conductor adicional que la poliza declara, nombrado completo por la persona.
+  - id: driver-listed/03
+    scenario: driver-listed
+    tenant_id: stonecroft
+    vehicle_and_driver:
+      value: "Renault Logan 2024. Lo manejaba Mateo Henao Gómez."
+      declared_drivers: ["Natalia Henao Rendón", "Mateo Henao Gómez"]
+    expected_driver: listed
+    expected_category: standard_review
+
+  # El mismo nombre con otro orden y sin tilde sigue siendo el mismo nombre.
+  - id: driver-listed/04
+    scenario: driver-listed
+    tenant_id: stonecroft
+    vehicle_and_driver:
+      value: "Mi Renault Logan lo conducía Henao Gomez Mateo"
+      declared_drivers: ["Natalia Henao Rendón", "Mateo Henao Gómez"]
+    expected_driver: listed
+    expected_category: standard_review
+
+  # Conducia alguien que la poliza no declara, dicho con nombre y apellidos: la regla del
+  # conductor dispara y el caso va a un ajustador.
+  - id: driver-unlisted/01
+    scenario: driver-unlisted
+    tenant_id: stonecroft
+    vehicle_and_driver:
+      value: "Renault Logan 2024. Manejaba su hijo Carlos Ruiz Mora."
+      declared_drivers: ["Natalia Henao Rendón", "Mateo Henao Gómez"]
+    expected_driver: unlisted
+    expected_category: referral
+
+  # Sunmeadow cerraria directo este caso si el conductor no se supiera ajeno a la poliza.
+  - id: driver-unlisted/02
+    scenario: driver-unlisted
+    tenant_id: sunmeadow
+    inputs: { injuries_present: false, other_parties_data_pending: false }
+    vehicle_and_driver:
+      value: "Renault Logan 2024. Iba manejando mi hermano Carlos Ruiz Mora."
+      declared_drivers: ["Natalia Henao Rendón", "Mateo Henao Gómez"]
+    expected_driver: unlisted
+    expected_category: referral
+
+  - id: driver-unlisted/03
+    scenario: driver-unlisted
+    tenant_id: stonecroft
+    vehicle_and_driver:
+      value: "Carlos Ruiz Mora iba manejando mi carro"
+      declared_drivers: ["Natalia Henao Rendón", "Mateo Henao Gómez"]
+    expected_driver: unlisted
+    expected_category: referral
+
+  # Compartir los apellidos del titular no vuelve declarado a un familiar: lo que decide es que
+  # su nombre de pila no sea el de ningun conductor de la poliza.
+  - id: driver-unlisted/04
+    scenario: driver-unlisted
+    tenant_id: stonecroft
+    vehicle_and_driver:
+      value: "Lo manejaba mi hijo Andrés Henao Rendón"
+      declared_drivers: ["Natalia Henao Rendón", "Mateo Henao Gómez"]
+    expected_driver: unlisted
+    expected_category: referral
+
+  # No se sabe con claridad quien conducia: el insumo queda ausente y la regla no dispara.
+  # Un familiar sin nombre, un solo nombre de pila, un nombre incompleto o una negacion no
+  # alcanzan para decir ni que figura ni que no.
+  - id: driver-unknown/01
+    scenario: driver-unknown
+    tenant_id: stonecroft
+    vehicle_and_driver:
+      value: "Renault Logan 2024. Manejaba su hijo."
+      declared_drivers: ["Natalia Henao Rendón", "Mateo Henao Gómez"]
+    expected_driver: unknown
+    expected_category: standard_review
+
+  - id: driver-unknown/02
+    scenario: driver-unknown
+    tenant_id: stonecroft
+    vehicle_and_driver:
+      value: "Lo manejaba Carlos."
+      declared_drivers: ["Natalia Henao Rendón", "Mateo Henao Gómez"]
+    expected_driver: unknown
+    expected_category: standard_review
+
+  # El nombre de pila de un conductor declarado puede ser el de otra persona: no es «figura».
+  - id: driver-unknown/03
+    scenario: driver-unknown
+    tenant_id: stonecroft
+    vehicle_and_driver:
+      value: "Lo manejaba Mateo."
+      declared_drivers: ["Natalia Henao Rendón", "Mateo Henao Gómez"]
+    expected_driver: unknown
+    expected_category: standard_review
+
+  - id: driver-unknown/04
+    scenario: driver-unknown
+    tenant_id: stonecroft
+    vehicle_and_driver:
+      value: "Lo manejaba Mateo Henao."
+      declared_drivers: ["Natalia Henao Rendón", "Mateo Henao Gómez"]
+    expected_driver: unknown
+    expected_category: standard_review
+
+  - id: driver-unknown/05
+    scenario: driver-unknown
+    tenant_id: stonecroft
+    vehicle_and_driver:
+      value: "No manejaba Carlos Ruiz Mora, era mi hijo."
+      declared_drivers: ["Natalia Henao Rendón", "Mateo Henao Gómez"]
+    expected_driver: unknown
+    expected_category: standard_review
+
+  # Una poliza que no declara conductores no permite decir si el conductor figura.
+  - id: driver-unknown/06
+    scenario: driver-unknown
+    tenant_id: stonecroft
+    vehicle_and_driver:
+      value: "Renault Logan 2024, conducía el titular"
+      declared_drivers: []
+    expected_driver: unknown
+    expected_category: standard_review
+
+  - id: driver-unknown/07
+    scenario: driver-unknown
+    tenant_id: stonecroft
+    vehicle_and_driver:
+      value: "No sé quién manejaba."
+      declared_drivers: ["Natalia Henao Rendón", "Mateo Henao Gómez"]
+    expected_driver: unknown
+    expected_category: standard_review

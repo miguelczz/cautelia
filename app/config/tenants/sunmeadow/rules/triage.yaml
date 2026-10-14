@@ -1,0 +1,145 @@
+# Reglas de triage de Autos Poblado (C-25, CG-U9-1, BR1.1 a BR1.4).
+#
+# Perfil flexible (US1.15, US1.17): cierra directo un caso simple, sin heridos
+# ni terceros con datos pendientes, y conserva las mismas reglas de severidad y
+# de dinero que Seguros Aburrá para todo lo demas.
+#
+# El vocabulario de `when` es el de `rules/fields.py`; las claves de
+# `then.explanation_key` viven en `app/config/copy/{es,en}.yaml` bajo
+# `rules.explain.*`, sin nombrar esta regla ni esta aseguradora (BR2.5).
+ruleset_version: v1
+rules:
+  # Cierra directo solo cuando los dos campos estan capturados y en falso
+  # (CG-U9-1): un campo ausente no dispara `equals`, asi que un caso sin datos
+  # nunca cierra solo (BR2.1).
+  - id: SUN-R-01
+    version: 1
+    when:
+      operator: all
+      conditions:
+        - { operator: equals, field: injuries_present, value: false }
+        - { operator: equals, field: other_parties_data_pending, value: false }
+    then:
+      category: direct_close
+      touches_money: false
+      explanation_key: rules.explain.simple_claim
+    tests:
+      - given: { injuries_present: false, other_parties_data_pending: false }
+        expect: true
+      - given: { injuries_present: true, other_parties_data_pending: false }
+        expect: false
+
+  - id: SUN-R-02
+    version: 1
+    when: { operator: equals, field: coverage_disputed, value: true }
+    then:
+      category: referral
+      touches_money: true
+      explanation_key: rules.explain.coverage_review
+    tests:
+      - given: { coverage_disputed: true }
+        expect: true
+      - given: { coverage_disputed: false }
+        expect: false
+
+  - id: SUN-R-03
+    version: 1
+    when: { operator: gte, field: claim_amount, value: 1000 }
+    then:
+      category: referral
+      touches_money: true
+      explanation_key: rules.explain.amount_review
+    tests:
+      - given: { claim_amount: 1000 }
+        expect: true
+      - given: { claim_amount: 500 }
+        expect: false
+
+  - id: SUN-R-04
+    version: 1
+    when: { operator: gte, field: claim_amount, value: 10000 }
+    then:
+      category: referral
+      touches_money: true
+      explanation_key: rules.explain.high_value_review
+    tests:
+      - given: { claim_amount: 10000 }
+        expect: true
+      - given: { claim_amount: 5000 }
+        expect: false
+
+  - id: SUN-R-05
+    version: 1
+    when: { operator: equals, field: injuries_present, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.injuries_reported
+    tests:
+      - given: { injuries_present: true }
+        expect: true
+      - given: { injuries_present: false }
+        expect: false
+
+  - id: SUN-R-06
+    version: 1
+    when: { operator: equals, field: other_parties_data_pending, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.third_party_pending
+    tests:
+      - given: { other_parties_data_pending: true }
+        expect: true
+      - given: {}
+        expect: false
+
+  - id: SUN-R-07
+    version: 1
+    when: { operator: equals, field: fraud_suspected, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.fraud_review
+    tests:
+      - given: { fraud_suspected: true }
+        expect: true
+      - given: { fraud_suspected: false }
+        expect: false
+
+  - id: SUN-R-08
+    version: 1
+    when: { operator: equals, field: unlisted_driver, value: true }
+    then:
+      category: referral
+      touches_money: false
+      explanation_key: rules.explain.unlisted_driver_review
+    tests:
+      - given: { unlisted_driver: true }
+        expect: true
+      - given: { unlisted_driver: false }
+        expect: false
+
+  - id: SUN-R-09
+    version: 1
+    when: { operator: lte, field: claim_amount, value: 999 }
+    then:
+      category: standard_review
+      touches_money: false
+      explanation_key: rules.explain.amount_noted
+    tests:
+      - given: { claim_amount: 999 }
+        expect: true
+      - given: { claim_amount: 1000 }
+        expect: false
+
+  - id: SUN-R-10
+    version: 1
+    when: { always: true }
+    then:
+      category: standard_review
+      touches_money: false
+      explanation_key: rules.explain.default
+    tests:
+      - given: {}
+        expect: true

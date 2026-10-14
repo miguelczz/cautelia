@@ -1,0 +1,27 @@
+# What never closes on its own, from the case field to the end of the path (AC1.17.3), English turn. A named third party nobody registered, a motorcycle that left, a doubt, injuries, a detail nobody gave, or an insurer that does not close direct (Stonecroft, Knotwell) leave the case with an adjuster, and the agent announces the referral.
+#
+# Criterio de aceptacion: sobre las filas `closure-refers/*` de
+# `app/evals/fixtures/rules/en.yaml`, los campos `injuries` y `other_parties` del caso
+# se derivan con las mismas funciones del aplicativo, el motor real de la aseguradora da
+# la categoria declarada y la decision del final del recorrido
+# (`orchestration.closing_plan.plan`) es derivar el caso con el motivo `rule` y
+# anunciar la frase de derivacion del catalogo. Ninguna fila cierra el caso.
+#
+# Veredicto esperado: `pass`.
+#
+# La pareja en espanol es `DS-2/es/rules-closure-refers`:
+# los mismos escenarios y la misma meta, medidos por idioma y nunca como promedio
+# combinado (P12).
+#
+# Lo que este caso no mide: que el estado del caso cambie de verdad en la base ni el aviso
+# en el chat o en la llamada (lo cubre la prueba de integracion de la cadena de fondo).
+case_key: DS-2/en/rules-closure-refers
+dataset: DS-2
+language: en
+tenant: sunmeadow
+requires_provider_key: false
+axes:
+  - rules-engine
+  - direct-closure
+expected_verdicts:
+  closure_refers_to_adjuster: pass

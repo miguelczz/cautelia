@@ -1,0 +1,26 @@
+# Peticion de persona directa (AC1.9.1 [bloquea], AC1.9.3 [bloquea], BR2.1), turno en ingles.
+#
+# Criterio de aceptacion: sobre las filas `turns` del escenario
+# `human-request-direct` de `app/evals/fixtures/compliance/en.yaml`, la
+# senal de peticion de persona se levanta en cada una, y ninguna levanta la
+# pregunta de identidad ni la emergencia.
+#
+# Veredicto esperado: `pass`.
+#
+# Es compuerta dura: un solo fallo detiene la entrega, en cada idioma, sin
+# umbral que bajar ni promedio que lo diluya (PRD 11.2).
+#
+# La pareja en espanol es `DS-2/es/human-request-direct`: los mismos criterios
+# y la misma meta, medidos por idioma y nunca como promedio combinado (P12).
+#
+# Lo que este caso no mide: la derivacion en el turno siguiente con la frase
+# del catalogo y la prioridad alta, que las comprueba U12 con el grafo (BR2.2).
+case_key: DS-2/en/human-request-direct
+dataset: DS-2
+language: en
+requires_provider_key: false
+axes:
+  - human-request
+  - turn-signals
+expected_verdicts:
+  human_request_direct_detected: pass

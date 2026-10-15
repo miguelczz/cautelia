@@ -117,7 +117,25 @@ export const EMPTY: Call = {
   counter: 0,
 };
 
+/** Dos trozos de lo que dijo la persona, como una sola frase. */
+function unir(antes: string, despues: string): string {
+  const resto = despues.trim();
+  return resto === "" ? antes : `${antes.trimEnd()} ${resto}`;
+}
+
 function conTurno(state: Call, speaker: Speaker, text: string): Call {
+  const ultimo = state.turns.at(-1);
+  // **La persona dicta de corrido** (pedido de Miguel, 2026-10-15): una pausa corta hace
+  // que el reconocedor cierre un final y empiece otro, y cada uno salia con su nombre
+  // encima como si fuera otro mensaje. Mientras la agente no hable en medio, es la misma
+  // intervencion. La agente no se junta: sus lineas seguidas son frases distintas.
+  if (speaker === "insured" && ultimo?.speaker === "insured") {
+    return {
+      ...state,
+      partial: null,
+      turns: [...state.turns.slice(0, -1), { ...ultimo, text: unir(ultimo.text, text) }],
+    };
+  }
   return {
     ...state,
     counter: state.counter + 1,

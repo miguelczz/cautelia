@@ -66,6 +66,46 @@ describe("la transcripcion", () => {
     expect(llamada.turns.map((turno) => turno.text)).toEqual(["me chocaron por detras"]);
   });
 
+  it("lo que la persona dice de corrido sale en una sola intervencion aunque haga pausas", () => {
+    // Pedido de Miguel (2026-10-15): cada pausa corta abria otra linea con su nombre.
+    const llamada = tras(
+      { type: "transcript", speaker: "agent", text: "¿En qué te ayudo?", final: true },
+      { type: "transcript", speaker: "insured", text: "Hola,", final: true },
+      { type: "transcript", speaker: "insured", text: "quería saber", final: false },
+      { type: "transcript", speaker: "insured", text: "quería saber si me cubren", final: true },
+      { type: "transcript", speaker: "insured", text: "  ", final: true },
+    );
+
+    expect(llamada.turns.map((turno) => [turno.speaker, turno.text])).toEqual([
+      ["agent", "¿En qué te ayudo?"],
+      ["insured", "Hola, quería saber si me cubren"],
+    ]);
+    expect(llamada.partial).toBeNull();
+  });
+
+  it("si la agente habla en medio, lo siguiente de la persona es otra intervencion", () => {
+    const llamada = tras(
+      { type: "transcript", speaker: "insured", text: "Me chocaron.", final: true },
+      { type: "transcript", speaker: "agent", text: "¿Hay heridos?", final: true },
+      { type: "transcript", speaker: "insured", text: "No.", final: true },
+    );
+
+    expect(llamada.turns.map((turno) => turno.text)).toEqual([
+      "Me chocaron.",
+      "¿Hay heridos?",
+      "No.",
+    ]);
+  });
+
+  it("las lineas seguidas de la agente no se juntan: son frases distintas", () => {
+    const llamada = tras(
+      { type: "transcript", speaker: "agent", text: "Tu póliza cubre la grúa.", final: true },
+      { type: "transcript", speaker: "agent", text: "Volviendo al reporte...", final: true },
+    );
+
+    expect(llamada.turns).toHaveLength(2);
+  });
+
   it("cada turno lleva identificador propio y ninguno se repite", () => {
     const llamada = tras(
       { type: "transcript", speaker: "agent", text: "uno", final: true },

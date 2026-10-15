@@ -1099,12 +1099,9 @@ class CallRunner:
             # descarta como el ruido que no interrumpe; la apertura sigue sonando y
             # termina de registrarse con su hora.
             return
-        # La apertura tampoco se corta por este camino, ya enviada y sonando (2026-10-14).
-        if (
-            self._escucha_pendiente
-            and not self.engine.opening_is_sounding(now=ahora)
-            and self.engine.interrupted_by(transcrito)
-        ):
+        # Lo dicho encima de la apertura ya no llega aqui: lo descarta la entrada
+        # (`_sin_la_voz_de_la_agente`, 2026-10-14). Lo que llega se dijo despues.
+        if self._escucha_pendiente and self.engine.interrupted_by(transcrito):
             await self.channel.send(StopAudio())
             self._sonando_hasta = ahora
             self._propia_voz.cut(ahora)

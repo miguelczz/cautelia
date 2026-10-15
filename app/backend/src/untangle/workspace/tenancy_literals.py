@@ -60,6 +60,12 @@ PERMITIDOS: tuple[tuple[str, str], ...] = (
         "set, y algunos llevan a su aseguradora en el nombre. Datos generados, no codigo",
     ),
     (
+        "app/evals/baselines",
+        "Las lineas base publicadas: el mismo resumen generado de una corrida completa que "
+        "`last-run.json`, con los modelos por aseguradora y los casos por nombre. Datos "
+        "generados, no codigo; la primera se publico el 2026-10-15 y la revision la encontro",
+    ),
+    (
         "app/evals/fixtures",
         "Escenarios de prueba: datos, no codigo. La mayoria arma sus frases con "
         "marcadores desde la configuracion cargada (U10), pero un escenario que "

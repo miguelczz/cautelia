@@ -563,6 +563,13 @@ run = "scripts/desplegar.sh"
 description = "Devuelve produccion a una revision anterior (los dos datos los imprime deploy antes de cambiar nada)"
 run = "scripts/volver-atras.sh"
 
+[tasks."site:deploy"]
+description = "Publica la landing (site/) en Cloudflare Pages, proyecto cautelia, a mano y aparte del aplicativo"
+# Version de wrangler fijada: sin ella `npx` resolveria la ultima publicada cada vez. Usa la
+# sesion de Cloudflare de quien lo corre (`wrangler login`); no lee ninguna clave del proyecto.
+dir = "site"
+run = "npx --yes wrangler@4.147.0 pages deploy . --project-name cautelia --branch main --commit-dirty=true"
+
 [tasks."ops:check"]
 description = "Lee la salud y el gasto del sitio publicado y falla si el reinicio nocturno esta vencido o el gasto cruzo su alerta (a mano: mise run ops:check [-- --base-url <url>] [--tolerar-agotado])"
 # Es el mismo archivo que corre cada dia `.github/workflows/chequeo-publico.yml`

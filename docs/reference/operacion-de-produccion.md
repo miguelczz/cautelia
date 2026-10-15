@@ -109,9 +109,12 @@ arrancar, antes de declararse listo.
   `app/evals/last-run.json`: la pestaña de calidad salía vacía en producción y
   bien en local. Después de publicar se prueba la ruta nueva en producción, no
   solo la portada.
-- **La landing** (`site/`) no viaja en la imagen. Su comando de publicación no
-  está escrito en ningún sitio del repositorio: queda pendiente anotarlo aquí la
-  próxima vez que se publique.
+- **La landing** (`site/`) no viaja en la imagen: es el proyecto `cautelia` de
+  Cloudflare Pages, sin conexión con GitHub, y se publica a mano con
+  `mise run site:deploy` (wrangler con la sesión de Cloudflare de quien lo corre).
+  Sube los archivos estáticos y la función que reenvía el resto al aplicativo
+  (`site/functions/[[path]].js`). Para volver atrás, en el panel de Cloudflare
+  Pages cada publicación anterior tiene «Rollback to this deployment».
 - **Las sondas contra el dominio** necesitan su propio `User-Agent`: Cloudflare
   responde 403 al cliente por omisión de Python.
 
@@ -218,4 +221,3 @@ Hay dos topes distintos y no se deben confundir:
   trabajo del reinicio** (`cautelia-reset`): el reinicio es otro proceso y es quien borra
   de Langfuse lo anterior al corte. `scripts/desplegar.sh` solo cambia la imagen; las
   variables se ponen una vez, a mano, al publicar. Sin ellas, producción no envía trazas.
-- **El comando de publicación de la landing**, que hoy no está escrito.

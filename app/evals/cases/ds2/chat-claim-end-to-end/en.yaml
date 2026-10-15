@@ -41,9 +41,13 @@ axes:
   - chat-channel
   - intake
   - language-adherence
+# Correction (2026-10-15): the first line says what the person wants, like RT-10 and the
+# chat attacks. With "I'm Marcus Reed, my policy is ..." alone, the model sometimes took it
+# as a policy question and the case never became a report: it passed in one run and failed
+# in the next with the same code. Only the opening changed; nothing else did.
 script:
   - field_key: identity_and_policy
-    text: "I'm Marcus Reed, my policy is POL-000001."
+    text: "I want to report a crash. I'm Marcus Reed, my policy is POL-000001."
   - field_key: injuries
     text: "No, nobody was hurt."
   - field_key: description

@@ -127,6 +127,15 @@ Not measured: no baseline has been published yet, so none of the five figures ha
   - not measured (not recorded in the baseline; the live panel shows it)
 <!-- generated:evaluation-report:end -->
 
+## Attributions
+
+- Icons: [Phosphor Icons](https://phosphoricons.com) (MIT) and [Lucide](https://lucide.dev) (ISC) on the landing page.
+- Fonts: IBM Plex Sans, Bricolage Grotesque and JetBrains Mono (SIL Open Font License), served from the site itself.
+- The license of every dependency is recorded and checked on every change: [third-party licenses](docs/reference/licencias-de-terceros.md).
+- Insurers, policies, people and clauses are original and synthetic. The policies follow the structure of a standard personal auto policy without copying its text.
+
+Created by [Miguel Zuluaga](https://www.linkedin.com/in/miguelzuluaga/).
+
 ## Run it
 
 You need [mise](https://mise.jdx.dev) and Docker.
@@ -172,12 +181,3 @@ Open the address it prints. To run the evaluation subset that needs no keys:
 ```bash
 mise run bootstrap
 ```
-
-## Attributions
-
-- Icons: [Phosphor Icons](https://phosphoricons.com) (MIT) and [Lucide](https://lucide.dev) (ISC) on the landing page.
-- Fonts: IBM Plex Sans, Bricolage Grotesque and JetBrains Mono (SIL Open Font License), served from the site itself.
-- The license of every dependency is recorded and checked on every change: [third-party licenses](docs/reference/licencias-de-terceros.md).
-- Insurers, policies, people and clauses are original and synthetic. The policies follow the structure of a standard personal auto policy without copying its text.
-
-Created by [Miguel Zuluaga](https://www.linkedin.com/in/miguelzuluaga/).

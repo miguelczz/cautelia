@@ -49,15 +49,14 @@ vuelvan a leer y se actualice la fecha. Es de Miguel: solo él entra a esas cons
 
 ### Falta, y depende de Miguel o de terceros
 
-- Probar en la demo lo del 13 y el 14 de octubre y decir «publica».
 - Volver a leer los topes en las consolas antes del 2026-11-13 (párrafo de arriba), si el proyecto sigue recibiendo cambios para entonces.
-- Decidir el juez (etiquetar unas 130 respuestas, cerca de una hora) y las 20 grabaciones de llamadas de la prueba de voz, o dejarlas fuera con su «no medida».
 - El README ya está escrito (2026-10-14, con capturas, una animación y el video). Falta cambiar sus cifras cuando se publique la línea base, después de «publica».
-- Decidir si el repositorio se hace público, con la revisión del 2026-10-14 a la vista (abajo).
+
+**Decidido el 2026-10-15:** «publica»; el juez y las 20 grabaciones de la prueba de voz quedan fuera y sus criterios siguen saliendo «no medida» (se pueden agregar después sin tocar nada más); el repositorio se publica con el historial limpio (abajo); la imagen de cada versión la construye Cloud Build y no la Mac.
 
 **Aprobado el 2026-10-14:** la frase del reporte incompleto (`intake.unfinished`), los textos de las anotaciones guiadas (`visitor.triage.*`) y la muletilla de la llamada («Okey…», «Listo…»), que se queda. **Descartado el 2026-10-14:** la validación con personas del sector («no es necesario»).
 
-**Revisión para hacerlo público (2026-10-14).** Ninguna clave en los 786 commits (`gitleaks`, historial completo) y ningún archivo de entorno ni de llaves subido nunca. Lo que sí queda a la vista si se publica: el correo de la universidad como autor de 779 commits (dato de cada commit, no de un archivo); los dos correos personales que nombraba `docs/PLAN-AIDLC.md` --ya quitados del archivo, siguen en el primer commit--; la dirección directa del servicio de Cloud Run en `site/functions/[[path]].js` (pública de todos modos, no es secreta); y la ruta de usuario de la Mac en tres documentos. Quitar los dos primeros del historial exige reescribirlo (cambian todos los identificadores de commit) o publicar un repositorio nuevo sin historial; es decisión de Miguel.
+**Revisión para hacerlo público (2026-10-14).** Ninguna clave en los 786 commits (`gitleaks`, historial completo) y ningún archivo de entorno ni de llaves subido nunca. Lo que sí queda a la vista si se publica: el correo de la universidad como autor de 779 commits (dato de cada commit, no de un archivo); los dos correos personales que nombraba `docs/PLAN-AIDLC.md` --ya quitados del archivo, siguen en el primer commit--; la dirección directa del servicio de Cloud Run en `site/functions/[[path]].js` (pública de todos modos, no es secreta); y la ruta de usuario de la Mac en tres documentos. Quitar los dos primeros del historial exige reescribirlo (cambian todos los identificadores de commit) o publicar un repositorio nuevo sin historial; es decisión de Miguel. **Resuelto el 2026-10-15** («limpiemos los commits por si las moscas»): los 728 commits se reescribieron con el correo privado de GitHub como autor y los dos correos del plan como «[correo retirado]», con el mismo contenido final y las mismas fechas; `gitleaks` volvió a pasar sin hallazgos. Se publica en un repositorio nuevo y el anterior queda privado y archivado, porque en el mismo repositorio el registro de actividad y las corridas viejas de GitHub Actions seguirían enlazando a los commits de antes. En la Mac quedan la rama `historial-original` y las ramas `respaldo-nube/*`, que nunca se suben.
 
 ### Ya está hecho, aunque más abajo diga lo contrario
 

@@ -17,7 +17,7 @@
 #      reinicio: es a lo que se vuelve si algo sale mal.
 #   3. Construye la imagen **desde `git archive`**, no desde el directorio: asi
 #      lleva exactamente lo que esta en el commit, sin archivos sueltos ni
-#      cambios sin guardar.
+#      cambios sin guardar. La construye Cloud Build, no esta maquina.
 #   4. Despliega el servicio y actualiza el trabajo de reinicio a la misma imagen.
 #   5. Prueba de humo contra la direccion directa del servicio.
 #   6. Corre el reinicio de la demostracion: es el ultimo paso de todo despliegue
@@ -64,7 +64,7 @@ hacer() {
   fi
 }
 
-for herramienta in git gh gcloud docker curl; do
+for herramienta in git gh gcloud curl tar; do
   command -v "$herramienta" >/dev/null 2>&1 || falla "falta '$herramienta' en esta maquina"
 done
 
@@ -91,12 +91,21 @@ echo "   revision que sirve ahora: $revision_anterior"
 echo "   imagen del reinicio ahora: $imagen_anterior"
 echo "   para volver atras: scripts/volver-atras.sh $revision_anterior $imagen_anterior"
 
-dice "3. La imagen, desde git archive ($imagen)"
-# linux/amd64 a proposito: Cloud Run no corre la arquitectura de una Mac con Apple Silicon.
+dice "3. La imagen, desde git archive, construida en Cloud Build ($imagen)"
+# En Cloud Build y no en esta maquina (decision de Miguel, 2026-10-15): Cloud Run corre
+# linux/amd64, y construirla en una Mac con Apple Silicon emula ese procesador durante
+# minutos y la calienta. El tramo gratis de Cloud Build (2.500 minutos al mes en la maquina
+# por omision, e2-standard-2) cubre de sobra una construccion por dia.
+fuente="$(mktemp -d)"
+trap 'rm -rf "$fuente"' EXIT
 if [ "$simular" -eq 1 ]; then
-  echo "   (simulado) git archive $commit | docker buildx build --platform linux/amd64 --push -t $imagen -"
+  echo "   (simulado) git archive $commit | tar -x -C <temporal>; gcloud builds submit <temporal> --tag $imagen"
 else
-  git archive --format=tar "$commit" | docker buildx build --platform linux/amd64 --push -t "$imagen" -
+  git archive --format=tar "$commit" | tar -x -C "$fuente"
+  # Con su propio .gcloudignore, vacio: sin el, gcloud aplicaria el .gitignore y podria
+  # dejar fuera archivos que si estan en el commit.
+  printf '# Todo lo que esta en el commit va a la construccion.\n' >"$fuente/.gcloudignore"
+  gcloud builds submit "$fuente" --tag "$imagen" --quiet
 fi
 
 dice "4. El servicio y el trabajo de reinicio"

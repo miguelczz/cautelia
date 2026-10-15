@@ -8,11 +8,12 @@
 # El flujo **invoca** `scripts/verify.sh`; no mantiene su propia lista de pasos.
 # Una unidad nueva no anade trabajos aqui: anade pasos al guion.
 
-# **Donde corre: en los servidores de GitHub.** El 2026-10-12 la cuenta iba en el 90 % de
-# los 3.000 minutos del mes: cada corrida tarda unos 37 y se habia subido varias veces
-# por noche. Se probo pasarla a la Mac de Miguel y se descarto ese mismo dia (la calienta
-# y tarda). La decision que quedo: **una subida a `main` al dia como mucho, en una sola
-# tanda**. Al agotarse los minutos GitHub deja de correr hasta el mes siguiente; no cobra.
+# **Donde corre: en los servidores de GitHub.** Desde el 2026-10-15 el repositorio es
+# publico, y en un repositorio publico los corredores estandar de GitHub (`ubuntu-latest`)
+# no gastan minutos del plan. Antes, privado, la cuenta llego al 90 % de los 3.000 minutos
+# del mes y la regla era una subida al dia; la que queda (decision de Miguel del mismo dia)
+# es subir cuando el avance lo amerita, en tandas, y no cada cambio. Un corredor mas
+# grande que los estandar si se cobra aunque el repositorio sea publico.
 #
 # La variable del repositorio `RUNS_ON` (Settings -> Secrets and variables -> Actions ->
 # Variables) permite mandar la corrida a otro corredor sin tocar el codigo, por ejemplo

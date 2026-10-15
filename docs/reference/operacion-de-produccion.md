@@ -55,9 +55,10 @@ el reinicio la usa.
 
 ## Publicar una versión
 
-Requisitos en la máquina: `git`, `gh` con la cuenta `miguelczz` activa, `gcloud`
-con el proyecto configurado, y Docker con permiso para subir imágenes
-(`gcloud auth configure-docker us-central1-docker.pkg.dev`, una sola vez).
+Requisitos en la máquina: `git`, `gh` con la cuenta `miguelczz` activa y `gcloud`
+con el proyecto configurado. No hace falta Docker: la imagen la construye Cloud
+Build (decisión de Miguel del 2026-10-15, para no calentar la Mac), dentro de su
+tramo gratis de 2.500 minutos al mes.
 
 ```bash
 mise run deploy -- --simular
@@ -77,8 +78,8 @@ Lo que hace `scripts/desplegar.sh`, en orden:
    o sin corrida no se publica.
 2. **Anota a qué se vuelve.** Imprime la revisión que sirve ahora y la imagen del
    reinicio, con el comando exacto de la vuelta atrás.
-3. **Construye la imagen desde `git archive`**, para la arquitectura de Cloud Run.
-   Lleva exactamente lo que hay en el commit.
+3. **Construye la imagen desde `git archive`** en Cloud Build, que ya corre la
+   arquitectura de Cloud Run. Lleva exactamente lo que hay en el commit.
 4. **Despliega** el servicio y pone el trabajo de reinicio en la misma imagen.
 5. **Prueba de humo** contra la dirección directa del servicio y contra el
    dominio: que esté listo, que responda la pestaña de calidad y que cargue la

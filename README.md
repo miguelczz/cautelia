@@ -181,7 +181,3 @@ mise run bootstrap
 - Insurers, policies, people and clauses are original and synthetic. The policies follow the structure of a standard personal auto policy without copying its text.
 
 Created by [Miguel Zuluaga](https://www.linkedin.com/in/miguelzuluaga/).
-
-## En español
-
-Cautelia es una agente de inteligencia artificial que toma el reporte de un accidente de carro y responde dudas de la póliza, por chat o por teléfono, en español y en inglés. Pregunta solo lo que falta, verifica la póliza, cita la cláusula exacta en la que se apoya y cierra sola los casos sencillos; todo lo que toca cobertura o dinero lo firma un ajustador. Es una demostración de portafolio: las aseguradoras, las pólizas y las personas son ficticias. Pruébala en [cautelia.app](https://cautelia.app).

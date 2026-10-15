@@ -5,11 +5,12 @@ vuelve atrás y qué queda fuera del repositorio. Escrito el 2026-10-13 leyendo 
 configuración viva (solo lectura, sin valores de claves); hasta ese día todo esto
 vivía en las consolas y en la memoria de quien desplegaba.
 
-**Estado de este documento:** los dos guiones se probaron en modo simulado contra
-la configuración real (comprueban el commit, la revisión de GitHub y lo que hay
-desplegado, e imprimen lo que cambiarían). **Ninguno se ha ejecutado de verdad
-todavía.** La primera publicación que los use tiene que incluir la prueba de la
-vuelta atrás, y este párrafo se cambia ese día por la fecha y el resultado.
+**Estado de este documento:** el 2026-10-15 se publicó de verdad con
+`mise run deploy` (versión `4ea0183`, imagen construida en Cloud Build, prueba de
+humo y reinicio en verde). La prueba de la vuelta atrás de ese día **falló y dejó
+el sitio unos dos minutos en error**: la versión anterior no arrancaba sobre la
+base que la nueva había migrado (abajo, en «Volver atrás»). Se arregló el
+arranque y el guion, y la vuelta atrás se volvió a probar con la versión siguiente.
 
 ## Qué hay desplegado
 
@@ -137,6 +138,13 @@ hoy todas son aditivas (columnas y tablas nuevas), y el código anterior funcion
 con ellas. Una migración que no lo sea necesita su propio paso de vuelta atrás,
 escrito aquí antes de publicar la versión que la trae.
 
+**Una versión anterior al 2026-10-15 no se puede usar para volver atrás** sobre una
+base que una versión más nueva migró: al arrancar intentaba subir sus migraciones,
+no encontraba en su historia la de la base y se caía. Desde ese día el arranque lo
+reconoce (`DatabaseAheadError`), lo avisa y arranca sin subir nada. Y si la revisión
+pedida no responde en un minuto, `volver-atras.sh` devuelve el tráfico a la que
+estaba sirviendo antes de terminar con error.
+
 ## El reinicio nocturno
 
 Corre solo a las 3:00 de Bogotá. Para correrlo a mano y esperar el resultado:
@@ -205,8 +213,6 @@ Hay dos topes distintos y no se deben confundir:
 
 ## Lo que falta
 
-- **Ejecutar de verdad los dos guiones** y probar la vuelta atrás en la próxima
-  publicación.
 - **Quién corta al llegar al tope de Google Cloud.** El presupuesto publica en
   `tope-de-gasto`; qué está suscrito a ese tema y si de verdad detiene la
   facturación solo se ve en la consola, y no se pudo leer desde aquí.

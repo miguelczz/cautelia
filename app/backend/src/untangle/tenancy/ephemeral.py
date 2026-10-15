@@ -31,6 +31,8 @@ from typing import TYPE_CHECKING
 from alembic import command
 from alembic.config import Config
 from alembic.script import ScriptDirectory
+from alembic.script.revision import ResolutionError
+from alembic.util import CommandError
 
 from untangle import observability, paths
 
@@ -171,10 +173,49 @@ def require_single_head(script_location: Path | None = None) -> str:
     return cabezas[0]
 
 
+class DatabaseAheadError(RuntimeError):
+    """La base ya tiene una migracion que este codigo no conoce: la subio una version mas nueva.
+
+    Es lo que pasa al **volver atras** (2026-10-15): la version nueva sube sus migraciones al
+    arrancar, y la anterior, al arrancar sobre esa base, no encuentra la revision en su
+    historia. Alembic lo trata como un error y el servidor no arrancaba: la prueba de la vuelta
+    atras dejo el sitio dos minutos en error. Quien arranca decide que hacer con esto.
+    """
+
+    def __init__(self, revision: str) -> None:
+        super().__init__(
+            f"la base esta en la migracion {revision!r}, que este codigo no conoce: "
+            "la subio una version mas nueva"
+        )
+        self.revision = revision
+
+
 def upgrade_to_head(database_url: str, script_location: Path | None = None) -> None:
-    """Sube hasta la cabeza, tras comprobar que hay una sola."""
+    """Sube hasta la cabeza, tras comprobar que hay una sola.
+
+    Si la base va por delante del codigo levanta `DatabaseAheadError` en vez del error
+    generico de alembic, para que una vuelta atras se distinga de una migracion rota.
+    """
     require_single_head(script_location)
-    command.upgrade(alembic_config(database_url, script_location), "head")
+    configuracion = alembic_config(database_url, script_location)
+    try:
+        command.upgrade(configuracion, "head")
+    except CommandError as error:
+        desconocida = unknown_revision(error, configuracion)
+        if desconocida is None:
+            raise
+        raise DatabaseAheadError(desconocida) from error
+
+
+def unknown_revision(error: CommandError, configuracion: Config) -> str | None:
+    """La revision de la base que este codigo no conoce, si ese fue el fallo; si no, `None`."""
+    causa = error.__cause__
+    if not isinstance(causa, ResolutionError):
+        return None
+    conocidas = {
+        script.revision for script in ScriptDirectory.from_config(configuracion).walk_revisions()
+    }
+    return None if causa.argument in conocidas else str(causa.argument)
 
 
 def downgrade_to_base(database_url: str, script_location: Path | None = None) -> None:

@@ -49,6 +49,13 @@ gcloud run revisions describe "$revision" --region "$REGION" --format='value(met
     exit 1
   }
 
+# Lo que sirve ahora, para regresar a ello si la revision pedida no arranca. El 2026-10-15
+# la primera prueba de la vuelta atras dejo el sitio dos minutos en error: la revision
+# anterior no arrancaba sobre la base que la nueva habia migrado, y este guion se limitaba a
+# avisarlo con el trafico ya movido.
+sirve_ahora="$(gcloud run services describe "$SERVICIO" --region "$REGION" --format='value(status.traffic[0].revisionName)')"
+imagen_ahora="$(gcloud run jobs describe "$TRABAJO_DE_REINICIO" --region "$REGION" --format='value(spec.template.spec.template.spec.containers[0].image)')"
+
 printf '\n== El trafico, a %s\n' "$revision"
 hacer gcloud run services update-traffic "$SERVICIO" --region "$REGION" --to-revisions "$revision=100" --quiet
 printf '\n== El trabajo de reinicio, a %s\n' "$imagen"
@@ -57,12 +64,21 @@ hacer gcloud run jobs update "$TRABAJO_DE_REINICIO" --region "$REGION" --image "
 printf '\n== Prueba de humo\n'
 direccion="$(gcloud run services describe "$SERVICIO" --region "$REGION" --format='value(status.url)')"
 if [ "$simular" -eq 1 ]; then
-  echo "   (simulado) se probaria $direccion/api/health/ready"
+  echo "   (simulado) se probaria $direccion/api/health/ready; si no responde, el trafico vuelve a $sirve_ahora"
 else
-  codigo="$(curl -s -o /dev/null -w '%{http_code}' -A "$AGENTE" --max-time 15 "$direccion/api/health/ready" || true)"
+  # Hasta un minuto: la revision anterior arranca en frio.
+  codigo=""
+  for _ in $(seq 1 12); do
+    codigo="$(curl -s -o /dev/null -w '%{http_code}' -A "$AGENTE" --max-time 10 "$direccion/api/health/ready" || true)"
+    [ "$codigo" = "200" ] && break
+    sleep 5
+  done
   echo "   $codigo  $direccion/api/health/ready"
   [ "$codigo" = "200" ] || {
-    echo "volver-atras: la revision anterior tampoco responde; mirar los registros del servicio" >&2
+    echo "volver-atras: $revision no responde; el trafico vuelve a $sirve_ahora" >&2
+    gcloud run services update-traffic "$SERVICIO" --region "$REGION" --to-revisions "$sirve_ahora=100" --quiet
+    gcloud run jobs update "$TRABAJO_DE_REINICIO" --region "$REGION" --image "$imagen_ahora" --quiet
+    echo "volver-atras: produccion sigue en $sirve_ahora; mirar los registros de $revision" >&2
     exit 1
   }
 fi

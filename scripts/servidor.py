@@ -62,7 +62,13 @@ def main() -> int:
         return 1
 
     if not argumentos.skip_migrate:
-        ephemeral.upgrade_to_head(settings.database_url)
+        try:
+            ephemeral.upgrade_to_head(settings.database_url)
+        except ephemeral.DatabaseAheadError as error:
+            # Una vuelta atras (2026-10-15): la base la subio una version mas nueva. Las
+            # migraciones son aditivas (docs/reference/operacion-de-produccion.md), asi que
+            # este codigo funciona con ella; no arrancar dejaria el sitio en error.
+            print(f"aviso: {error}; se arranca sin subir migraciones", file=sys.stderr)
 
     puerto = int(os.environ.get("PORT", PUERTO_POR_OMISION))
     # `0.0.0.0` y no `127.0.0.1`: dentro de un contenedor, escuchar solo en la

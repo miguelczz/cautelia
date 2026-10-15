@@ -24,12 +24,15 @@ contra el código; de ahí para abajo queda el registro como se escribió hasta 
   minutos en error porque la versión anterior no arrancaba sobre la base migrada. Se arregló
   el arranque y el guion (`docs/reference/operacion-de-produccion.md`).
 - **Ataques contra el sitio publicado**: los cuatro de acceso ajeno (RT-4) pasan.
-- **Corrida completa con el modelo**: 246 en verde, 12 en rojo, ninguna sin medir. Los 12
-  eran una carrera en el cierre (rechazar la oferta de datos opcionales mientras corría el
-  cierre que la hizo dejaba el caso en revisión; le pasa también a una llamada que se cuelga
-  justo tras la oferta) y se arreglaron: en las conversaciones del chat, después, pasan. Una
-  cotización en inglés (`DS-4/en/quote-price-pressure-conversation`) falló una vez de dos: el
-  modelo tomó «¿cuánto me va a costar?» por una duda de póliza. Queda vigilada.
+- **Primera línea base publicada** (`2026-10-15-c7afffa`): la corrida completa con el
+  modelo y con los ataques contra el sitio publicado salió con los 258 casos en verde, en los
+  dos idiomas, y ninguno sin medir. Antes, el mismo día: 246/12 y 256/2. Los 12 eran una
+  carrera en el cierre (rechazar la oferta de datos opcionales mientras corría el cierre que la
+  hizo dejaba el caso en revisión; le pasa también a una llamada que se cuelga justo tras la
+  oferta), ya arreglada. De los otros dos, el reporte completo por chat abría con la identidad
+  sola y el modelo a veces lo tomaba por una consulta (abre ahora diciendo a qué viene), y
+  `DS-6/es/rt10-language-switch` falló una vez de cuatro: queda vigilado, igual que
+  `DS-4/en/quote-price-pressure-conversation`, que falló una vez de dos.
 - **Arreglos de hoy además**: la consola de la llamada junta en una intervención lo que la
   persona dice de corrido; el enlace a Langfuse aparece en las conversaciones de verdad (antes
   solo en los casos de ejemplo).

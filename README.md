@@ -57,11 +57,9 @@ The 13 failures of the 2026-10-14 run were in the evaluation itself, not in the 
 <!-- generated:how-it-fails:begin -->
 _Generated from the current baseline and the last full run by `mise run readme:gen`. Do not edit by hand: `mise run readme:check` fails when this differs from what they produce._
 
-Last full run `run-3a5af591cb7c`, commit `a977ce22197eb5fd638de920e4ec4bf8c26afdb8`, recorded 2026-10-15.
+Last full run `run-20275e512642`, commit `c7afffaa8eb1b3a75e0034187705914488c3d810`, recorded 2026-10-15.
 
-2 of 258 cases failed, grouped by root cause:
-
-- **no root cause recorded** (2): `DS-2/en/chat-claim-end-to-end`, `DS-6/es/rt10-language-switch`
+No case failed in this run (258 cases recorded).
 <!-- generated:how-it-fails:end -->
 
 ## Architecture
@@ -103,7 +101,7 @@ In words: the person talks to the agent; a language model (Claude Haiku) reads e
 <!-- generated:evaluation-report:begin -->
 _Generated from the current baseline and the last full run by `mise run readme:gen`. Do not edit by hand: `mise run readme:check` fails when this differs from what they produce._
 
-Not measured: no baseline has been published yet, so none of the five figures has a date or a commit to cite.
+Baseline `2026-10-15-c7afffa`, commit `c7afffa`, published 2026-10-15.
 
 - **Case completeness**
   - Spanish: not measured (no criterion measures this yet)
@@ -113,7 +111,10 @@ Not measured: no baseline has been published yet, so none of the five figures ha
   - English: not measured (no criterion measures this yet)
 - **Latency**
   - voice: `speech_end` to `first_audio` on DS-5, p50 and p95: not measured (measured per milestone against real providers, not on every delivery)
-  - chat: `message_sent` to `first_word` on DS-2, p50 and p95: not measured (no baseline has been published yet)
+  - chat: `message_sent` to `first_word` on DS-2, DS-4, DS-6, p50 and p95: measured in the evaluation run, from the moment the server receives the message (the visitor's network is not included)
+    - Spanish: p50 1.6 s, p95 2.3 s, over 87 turns
+    - English: p50 1.5 s, p95 2.2 s, over 85 turns
+    - source: baseline `2026-10-15-c7afffa`, commit `c7afffa`, run `run-20275e512642`, 2026-10-15
 - **Cost per case**
   - not measured (not recorded in the baseline; the live panel shows it)
 - **Cases per insurer**

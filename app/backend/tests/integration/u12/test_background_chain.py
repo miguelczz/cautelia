@@ -1473,6 +1473,60 @@ async def test_la_red_de_seguridad_de_la_voz_da_la_oferta_por_rechazada_y_resuel
     assert guardado.written("intake_awaiting_confirmation") is None
 
 
+async def test_rechazar_la_oferta_mientras_corre_el_cierre_que_la_hizo_resuelve_igual(
+    app: FastAPI,
+) -> None:
+    """La corrida completa del 2026-10-15: doce conversaciones terminaron con la oferta abierta
+    y con el cierre que la hizo todavia corriendo. El rechazo llegaba a mitad; esa corrida
+    escribia al terminar su estado de antes, con la oferta abierta, encima del rechazo, y la
+    vuelta siguiente la volvia a ver abierta y no hacia nada: el caso se quedaba en revision.
+    Es lo que le pasa a una llamada que se cuelga justo tras la oferta."""
+    del app
+    caso = await _reporte_listo("case-rechazo-a-mitad")
+    await _oferta_abierta(caso, abierta=True)
+    base = orchestration_turn.get_runtime()
+    lenta = _DecisionConPuerta(base.background[NodeName.DECISION].node)
+    lanzadas: list[asyncio.Task[None]] = []
+
+    def _fabrica(coro: object) -> asyncio.Task[None]:
+        tarea: asyncio.Task[None] = asyncio.create_task(
+            coro,  # type: ignore[arg-type]
+            context=contextvars.Context(),
+        )
+        lanzadas.append(tarea)
+        return tarea
+
+    orchestration_turn.install_runtime(
+        dataclasses.replace(
+            base,
+            task_factory=_fabrica,
+            background={
+                **base.background,
+                NodeName.DECISION: orchestration_turn.BackgroundStep(
+                    node=lenta, build_input=base.background[NodeName.DECISION].build_input
+                ),
+            },
+        )
+    )
+    runtime = orchestration_turn.get_runtime()
+
+    # El cierre que empezo con la oferta abierta, detenido a mitad de la cadena.
+    primera = asyncio.create_task(
+        orchestration_turn._cerrar_en_el_fondo(runtime, CON_CIERRE_DIRECTO, caso)
+    )
+    await lenta.entro.wait()
+    # La persona se va sin contestar: la oferta se da por rechazada mientras corre.
+    await orchestration_turn.settle_review(caso, tenant_id=CON_CIERRE_DIRECTO)
+    lenta.puerta.set()
+    await primera
+    await asyncio.gather(*lanzadas)
+
+    vista = await _caso(caso)
+    assert vista.state is CaseState.CLOSED, "el caso se quedo en revision con la oferta rechazada"
+    assert vista.resolution is Resolution.REGISTERED
+    assert lenta.llamadas == 2, "la vuelta que pidio el rechazo corrio de nuevo la cadena"
+
+
 async def _sin_espera() -> None:
     """La espera del chat a la respuesta de la oferta, ya cumplida."""
 

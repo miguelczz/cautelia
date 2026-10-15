@@ -2381,6 +2381,14 @@ _ESCRITURAS_DE_LA_CADENA = frozenset(
 #: los datos de ahora** en vez de aplicar un desenlace que ya no es el de los datos.
 _CIERRES_EN_CURSO: dict[tuple[str, str], bool] = {}
 
+#: Los casos cuya oferta de datos opcionales se dio por rechazada y cuyo cierre no ha terminado.
+#: El punto de control no basta para recordarlo (2026-10-15): si al rechazarla seguia corriendo
+#: el cierre que empezo con la oferta, esa corrida escribia al terminar su estado de antes --con
+#: la oferta abierta-- encima del rechazo, y la vuelta siguiente la volvia a ver abierta y no
+#: hacia nada. El caso se quedaba en revision; lo vio la corrida completa del 15 de octubre en
+#: doce conversaciones, y es lo que le pasa a una llamada que se cuelga justo tras la oferta.
+_OFERTAS_RECHAZADAS: set[tuple[str, str]] = set()
+
 
 async def _cerrar_en_el_fondo(
     runtime: GraphRuntime, tenant_id: str, case_id: str, *, spoken: bool = False
@@ -2404,6 +2412,7 @@ async def _cerrar_en_el_fondo(
         await _cadena_y_desenlace(runtime, tenant_id, case_id, spoken=spoken)
     finally:
         _CIERRES_EN_CURSO.pop(llave, None)
+        _OFERTAS_RECHAZADAS.discard(llave)
 
 
 async def settle_review(case_id: str, *, tenant_id: TenantId) -> None:
@@ -2450,6 +2459,7 @@ async def _dar_la_oferta_por_rechazada(
     contexto = await case_context.read_case_context(tenant_id, case_id)
     if contexto.state not in closing_plan.REVIEW_STATES:
         return
+    _OFERTAS_RECHAZADAS.add((tenant_id, case_id))
     estado = await _current_state(runtime, tenant_id, case_id)
     if _bloque_en_espera(estado) is not None:
         await _write_checkpoint(
@@ -2484,10 +2494,12 @@ async def _estado_para_decidir(runtime: GraphRuntime, tenant_id: str, case_id: s
     sigue diciendo una categoria que se descarto es una decision que ya no es la del caso.
     """
     previo = await _current_state(runtime, tenant_id, case_id)
+    rechazada = (tenant_id, case_id) in _OFERTAS_RECHAZADAS
     vigentes = {
         clave: valor
         for clave, valor in previo.node_writes.items()
         if clave not in _ESCRITURAS_DE_LA_CADENA
+        and not (rechazada and clave == "intake_awaiting_confirmation")
     }
     estado = GraphState(
         tenant_id=tenant_id,

@@ -40,12 +40,11 @@ encontrado" siempre. Se midio antes de construir la pagina encima. La abre el ca
 porque el resumen se ata al **resumen de la clave del navegador**, y esa clave no la
 conoce nadie mas: ni el grafo, ni la telemetria.
 
-**Lo que todavia falta, dicho aqui y no escondido:** nadie llama a `record_trace`, que
-es quien pasa el resumen de `recording` a `ready` con los nodos, la latencia y el
-costo. Esos datos los tienen los tramos, que son de U5 y U12; esta unidad no puede
-inventarlos --un resumen marcado `ready` con los nodos vacios afirmaria una
-completitud que no tiene--. Mientras tanto la pagina dice **"se esta registrando"**,
-que es la conducta correcta de BR4.4 y no un relleno.
+**Y lo cierra en el mismo turno** (2026-10-15): `traces.settle_summary` lo completa
+con los tramos del turno --nodos, latencia y costo, que son de U5 y U12; esta unidad
+no los inventa-- y lo deja `ready`. Hasta ese dia nadie lo hacia y la pagina decia
+"se esta registrando" para siempre, sin enlace a la traza en Langfuse. Un turno sin
+nodos se queda en `recording`: un resumen listo sin nodos mentiria.
 
 **Cada turno lleva su canal** (BR6.4). Un caso empezado por voz y seguido por chat es
 un solo caso con una transcripcion en orden, y lo que distingue sus turnos es ese
@@ -934,6 +933,25 @@ async def _con_su_caso(
     return entrante
 
 
+async def _resumir_la_traza(
+    trace_id: str, *, tenant_id: str, case_id: str, visitor_key_hash: str, turn_id: str
+) -> None:
+    """Abre el resumen de la traza del turno y lo cierra con sus tramos (2026-10-15)."""
+    await traces.open_summary(
+        trace_id=trace_id,
+        tenant_id=tenant_id,
+        case_id=case_id,
+        visitor_key_hash=visitor_key_hash,
+        turn_ref=turn_id,
+    )
+    try:
+        await traces.settle_summary(trace_id, tenant_id=tenant_id)
+    except Exception as error:  # noqa: BLE001 -- el resumen es diagnostico: su fallo no tumba un turno que ya se entrego
+        observability.emit(
+            "traces.summary_settle_failed", trace_id=trace_id, error=type(error).__name__
+        )
+
+
 async def _entregar(  # noqa: PLR0913 -- los mismos cinco que `deliver`; el primer mensaje ya va en `_primer_mensaje`
     queue: Publisher,
     entrante: InboundTurn,
@@ -1019,12 +1037,12 @@ async def _entregar(  # noqa: PLR0913 -- los mismos cinco que `deliver`; el prim
                     )
 
     if trace_id is not None:
-        await traces.open_summary(
-            trace_id=trace_id,
+        await _resumir_la_traza(
+            trace_id,
             tenant_id=entrante.tenant_id,
             case_id=caso,
             visitor_key_hash=visitor_key_hash,
-            turn_ref=turn_id,
+            turn_id=turn_id,
         )
 
     return Delivered(events=publicados, closed=cerro, turn_id=turn_id, case_id=caso)

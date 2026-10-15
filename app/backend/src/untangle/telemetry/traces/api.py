@@ -114,6 +114,7 @@ from untangle.telemetry.spend.models import CostStatus, Money
 from untangle.telemetry.traces.models import (
     CaseMoment,
     NodeName,
+    NodeTiming,
     SpanLevel,
     TraceId,
     TraceOutcome,
@@ -422,18 +423,33 @@ class SpanRecorder(Protocol):
 RECORDER_CAPACITY = 2048
 
 
+#: De cuantas trazas recientes se guardan los tramos para armar su resumen.
+RECENT_TRACES = 64
+
+
 class BufferedRecorder:
     """El registrador propio: guarda lo que se emitiria, acotado."""
 
     def __init__(self, capacity: int = RECORDER_CAPACITY) -> None:
         self._spans: deque[FinishedSpan] = deque(maxlen=capacity)
         self._dropped = 0
+        #: Los tramos de las ultimas trazas, aparte del lote: la exportacion vacia el lote
+        #: cada quince segundos, y el resumen de un turno largo se arma con tramos que
+        #: pueden haber salido ya (2026-10-15).
+        self._recientes: dict[TraceId, list[FinishedSpan]] = {}
 
     def record(self, span: FinishedSpan) -> None:
         if len(self._spans) == self._spans.maxlen:
             self._dropped += 1
             observability.emit("traces.span_dropped", reason="buffer_full", span=span.name)
         self._spans.append(span)
+        if span.trace_id not in self._recientes and len(self._recientes) >= RECENT_TRACES:
+            del self._recientes[next(iter(self._recientes))]
+        self._recientes.setdefault(span.trace_id, []).append(span)
+
+    def finished(self, trace_id: TraceId) -> tuple[FinishedSpan, ...]:
+        """Los tramos cerrados de una traza reciente, hayan salido o no en un lote."""
+        return tuple(self._recientes.get(trace_id, ()))
 
     def drain(self) -> tuple[FinishedSpan, ...]:
         """Se lleva lo acumulado y deja el buffer vacio."""
@@ -955,6 +971,78 @@ async def record_trace(
     return listo
 
 
+def _costo(span: FinishedSpan) -> Money:
+    cantidad = span.attributes.get("untangle.cost_usd")
+    if span.attributes.get("untangle.cost_status") != CostStatus.MEASURED.value or cantidad is None:
+        return Money.not_measured()
+    return Money.measured(Decimal(str(cantidad)))
+
+
+def _sumar(costos: Sequence[Money]) -> Money:
+    """Medido solo si todo lo sumado se midio: un costo sin medir no entra como cero."""
+    if any(not costo.is_measured for costo in costos):
+        return Money.not_measured()
+    return Money.measured(sum((costo.amount_usd or Decimal(0) for costo in costos), Decimal(0)))
+
+
+def outcome_from_spans(spans: Sequence[FinishedSpan]) -> TraceOutcome | None:
+    """Lo que trajo el rastro de un turno, armado con sus tramos; `None` si no alcanza.
+
+    La latencia es la del tramo del turno; cada nodo trae su duracion y el costo de las
+    llamadas que colgaron de el; el costo total es el de todas las llamadas. `None` sin el
+    tramo del turno --no cerro, o sus tramos ya no estan-- o sin ningun nodo: un resumen
+    listo sin nodos mentiria (`TraceSummary`).
+    """
+    turno = next((s for s in spans if s.level is SpanLevel.TURN), None)
+    nodos = sorted((s for s in spans if s.level is SpanLevel.NODE), key=lambda s: s.started_at)
+    if turno is None or not nodos:
+        return None
+    padre = {s.span_id: s.parent_span_id for s in spans}
+    de_nodo = {n.span_id for n in nodos}
+
+    def nodo_de(span: FinishedSpan) -> str | None:
+        actual = span.parent_span_id
+        while actual is not None and actual not in de_nodo:
+            actual = padre.get(actual)
+        return actual
+
+    llamadas = [s for s in spans if s.level is SpanLevel.CALL]
+    por_nodo: dict[str, list[Money]] = {n.span_id: [] for n in nodos}
+    for llamada in llamadas:
+        nodo = nodo_de(llamada)
+        if nodo is not None:
+            por_nodo[nodo].append(_costo(llamada))
+    return TraceOutcome(
+        nodes=tuple(
+            NodeTiming(
+                node=NodeName(str(n.attributes.get("untangle.node", n.name))),
+                started_at=n.started_at,
+                duration_ms=n.duration_ms,
+                cost=_sumar(por_nodo[n.span_id]),
+            )
+            for n in nodos
+        ),
+        latency_ms=turno.duration_ms,
+        cost=_sumar([_costo(llamada) for llamada in llamadas]),
+    )
+
+
+async def settle_summary(trace_id: TraceId, *, tenant_id: str) -> TraceSummary | None:
+    """Completa el resumen de un turno con sus propios tramos y lo deja `ready`.
+
+    Hasta el 2026-10-15 nadie lo hacia: los resumenes de las conversaciones de verdad se
+    quedaban en `recording` y ni la pantalla del caso ni la de Telemetria podian enlazar su
+    traza en Langfuse, aunque la traza si llegaba. Sin tramos suficientes no toca nada.
+    """
+    registrador = current_recorder()
+    if not isinstance(registrador, BufferedRecorder):
+        return None
+    resultado = outcome_from_spans(registrador.finished(trace_id))
+    if resultado is None:
+        return None
+    return await record_trace(trace_id, resultado, tenant_id=tenant_id)
+
+
 async def mark_lost(trace_id: TraceId, *, tenant_id: str, reason: str) -> TraceSummary | None:
     """El rastro no va a llegar. `lost` es un valor, no un fallo (BR6.7).
 
@@ -1062,6 +1150,7 @@ async def _del_dueno(
 
 __all__ = [
     "ALLOWED_ATTRIBUTES",
+    "RECENT_TRACES",
     "RECORDER_CAPACITY",
     "SUMMARY_DEADLINE_SECONDS",
     "TURN_SPAN_NAME",
@@ -1088,9 +1177,11 @@ __all__ = [
     "mark_lost",
     "node_span",
     "open_summary",
+    "outcome_from_spans",
     "record_trace",
     "reset",
     "reset_summaries",
+    "settle_summary",
     "summary_by_trace",
     "trace_summaries_for_visitor",
     "trace_summary_for",

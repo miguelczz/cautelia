@@ -128,8 +128,8 @@ async def test_sin_cookie_no_hay_resumen_que_ver(
 async def test_una_traza_en_curso_se_dice_en_curso_y_nunca_no_encontrada(
     dos_aseguradoras: tuple[str, str],
 ) -> None:
-    """AC2.3.3, BR4.4. Es la conducta de hoy y no un provisional: nadie une todavia
-    el rastro con su resumen, asi que este es el estado que el visitante ve."""
+    """AC2.3.3, BR4.4. Mientras el rastro no se une con su resumen, el visitante ve esto.
+    Desde el 2026-10-15 lo une `settle_summary` al cerrar el turno del chat."""
     _, propia = dos_aseguradoras
     await _sembrar(trace_id="tr-1", tenant_id=propia, case_id="caso-1", visitor=MIA)
 

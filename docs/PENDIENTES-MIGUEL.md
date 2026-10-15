@@ -4,11 +4,35 @@ Lo que solo puedes hacer tú, ordenado por cuánto trabajo destraba. Cada entrad
 dice **qué destraba**, **por qué no puedo hacerlo yo** y **qué hacer**, en ese
 orden, para que no tengas que reconstruir el contexto.
 
-Última revisión: 2026-10-14. La sección que sigue es el estado de hoy, comprobado
+Última revisión: 2026-10-15. La sección que sigue es el estado de hoy, comprobado
 contra el código; de ahí para abajo queda el registro como se escribió hasta el
 2026-10-07, y varias de sus entradas ya no valen (se dice cuáles).
 
 ---
+
+## El 15 de octubre: publicado
+
+- **Repositorio público** en `github.com/miguelczz/cautelia`, recreado con tres versiones y
+  el historial limpio; el anterior quedó privado y archivado (`cautelia-archivo`). En un
+  repositorio público la revisión de GitHub no gasta minutos; se sube cuando el avance lo
+  amerita, en tandas.
+- **Publicado en producción** con `mise run deploy`, la imagen construida en Cloud Build.
+  Langfuse de producción recibe las trazas (claves puestas por Miguel en el servicio y en el
+  reinicio nocturno). Pólizas recargadas en la base de producción, sin llamadas pagadas.
+  Landing publicada con `mise run site:deploy`.
+- **La vuelta atrás se probó de verdad** y la primera prueba falló: dejó el sitio unos dos
+  minutos en error porque la versión anterior no arrancaba sobre la base migrada. Se arregló
+  el arranque y el guion (`docs/reference/operacion-de-produccion.md`).
+- **Ataques contra el sitio publicado**: los cuatro de acceso ajeno (RT-4) pasan.
+- **Corrida completa con el modelo**: 246 en verde, 12 en rojo, ninguna sin medir. Los 12
+  eran una carrera en el cierre (rechazar la oferta de datos opcionales mientras corría el
+  cierre que la hizo dejaba el caso en revisión; le pasa también a una llamada que se cuelga
+  justo tras la oferta) y se arreglaron: en las conversaciones del chat, después, pasan. Una
+  cotización en inglés (`DS-4/en/quote-price-pressure-conversation`) falló una vez de dos: el
+  modelo tomó «¿cuánto me va a costar?» por una duda de póliza. Queda vigilada.
+- **Arreglos de hoy además**: la consola de la llamada junta en una intervención lo que la
+  persona dice de corrido; el enlace a Langfuse aparece en las conversaciones de verdad (antes
+  solo en los casos de ejemplo).
 
 ## Estado al 2026-10-13: qué falta para dar el aplicativo por terminado
 

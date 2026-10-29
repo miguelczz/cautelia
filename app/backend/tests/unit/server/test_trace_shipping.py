@@ -51,10 +51,14 @@ def _ajustes(*, con_langfuse: bool = True) -> Settings:
 @pytest.fixture(scope="module", autouse=True)
 def _detector_cargado() -> Iterator[None]:
     deteccion.install(deteccion.load())
-    allow_public_terms(export.wire_vocabulary())
     yield
-    allow_public_terms(())
     deteccion.reset()
+
+
+@pytest.fixture(autouse=True)
+def _nombres_de_atributo() -> None:
+    """Por prueba y no por modulo: la raiz de las pruebas vacia la lista antes de cada una."""
+    allow_public_terms(export.wire_vocabulary())
 
 
 @pytest.fixture(autouse=True)

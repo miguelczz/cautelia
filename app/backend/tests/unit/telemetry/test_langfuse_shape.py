@@ -63,12 +63,19 @@ class TransporteDeLangfuse:
 
 @pytest.fixture(scope="module", autouse=True)
 def _detector_cargado() -> Iterator[None]:
-    """El detector de verdad, con los nombres de atributo como los instala la raiz de composicion."""
+    """El detector de verdad, cargado una vez por modulo porque tarda segundos."""
     deteccion.install(deteccion.load())
-    allow_public_terms(export.wire_vocabulary())
     yield
-    allow_public_terms(())
     deteccion.reset()
+
+
+@pytest.fixture(autouse=True)
+def _nombres_de_atributo() -> None:
+    """Los nombres de atributo como los instala la raiz de composicion.
+
+    Por prueba y no por modulo: la raiz de las pruebas vacia la lista antes de cada una.
+    """
+    allow_public_terms(export.wire_vocabulary())
 
 
 @pytest.fixture

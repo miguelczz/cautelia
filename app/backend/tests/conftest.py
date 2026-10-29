@@ -26,6 +26,7 @@ from collections.abc import AsyncIterator, Iterator
 
 import pytest
 
+from untangle.compliance.redaction import api as redaccion
 from untangle.tenancy import config, ephemeral, session
 
 #: Las tres variables de Langfuse. Ninguna prueba las hereda del entorno de quien la corre.
@@ -47,6 +48,20 @@ def _sin_langfuse_del_entorno(monkeypatch: pytest.MonkeyPatch) -> None:
     """
     for nombre in _VARIABLES_DE_LANGFUSE:
         monkeypatch.delenv(nombre, raising=False)
+
+
+@pytest.fixture(autouse=True)
+def _sin_nombres_publicos() -> Iterator[None]:
+    """Ninguna prueba hereda los nombres publicos que dejo instalados otra.
+
+    El arranque de `build_app` los instala para todo el proceso ("Catalina", las
+    aseguradoras, la marca) y nada los quitaba: una prueba de la redaccion que
+    corria despues de una del servidor veia un detector que ya no tapaba esos
+    nombres, y pasaba o fallaba segun el orden.
+    """
+    redaccion.allow_public_terms([])
+    yield
+    redaccion.allow_public_terms([])
 
 
 @pytest.fixture(scope="session")

@@ -61,11 +61,12 @@ reason: >
   sabe--: la derivacion de `unlisted_driver` es una funcion pura sobre el texto guardado y
   los conductores que declara la poliza, y el motor es el real; sin modelo y sin base.
 
-  Y otros cuatro --dos criterios de la poliza que el reconocedor entrega mal, uno por idioma:
-  proponer la del titular cuando el numero llega incompleto, y pedir repetirla cifra por cifra
-  una sola vez cuando no hay a quien proponer--: corren el nodo `intake` de verdad, con lo
-  entendido ya entregado y el corpus versionado de la aseguradora detras de sus puertos; sin
-  modelo y sin base.
+  Los cuatro casos de la poliza que el reconocedor entrega mal (2026-10-13) entraron aqui y
+  salieron el 2026-10-29: corren el nodo `intake` de verdad, que tapa lo que guarda, y por eso
+  necesitan los modelos de la redaccion. Rompian la regla de arriba sin que nada lo avisara,
+  porque `verify` instala los modelos; lo aviso `fresh-clone`, en rojo desde el 2026-10-19, y
+  tambien fallaba el `mise run bootstrap` de cualquiera que clonara el repositorio. Viven en
+  `captura-con-redaccion`, que la compuerta de cada entrega corre junto a este.
 requires_provider_key: false
 case_keys:
   - DS-8/es/copy-catalog-parity
@@ -168,10 +169,6 @@ case_keys:
   - DS-2/en/intake-social-other-language
   - DS-2/es/intake-policy-holder-confirmed
   - DS-2/en/intake-policy-holder-confirmed
-  - DS-2/es/intake-policy-heard-incomplete
-  - DS-2/en/intake-policy-heard-incomplete
-  - DS-2/es/intake-policy-not-found-repeat
-  - DS-2/en/intake-policy-not-found-repeat
   - DS-6/es/rt7-two-versions
   - DS-6/en/rt7-two-versions
   - DS-6/es/rt9-third-party-reporter

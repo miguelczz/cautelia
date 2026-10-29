@@ -1,0 +1,21 @@
+name: captura-con-redaccion
+reason: >
+  Los casos deterministas que necesitan los modelos de la redaccion: se resuelven sin clave de
+  proveedor y sin base de datos, pero corren el nodo `intake` de verdad, y ese nodo tapa lo que
+  guarda. Por eso no caben en `smoke`, cuya regla es correr sin esos modelos (el camino del clon
+  al reporte, NFR21, no descarga sus 72 MB), y por eso la compuerta de cada entrega corre este
+  subconjunto junto a `smoke` (`scripts/verify.sh`, paso 9), donde los modelos si estan.
+
+  Hoy son cuatro: los dos criterios de la poliza que el reconocedor entrega mal, uno por idioma
+  --proponer la del titular cuando el numero llega incompleto, y pedir repetirla cifra por cifra
+  una sola vez cuando no hay a quien proponer-- (2026-10-13). Corren con lo entendido ya
+  entregado y el corpus versionado de la aseguradora detras de sus puertos.
+
+  Tope escrito: solo casos deterministas que no corren sin los modelos. Uno que corre sin ellos
+  va a `smoke`; uno que pide clave, a su subconjunto con modelo.
+requires_provider_key: false
+case_keys:
+  - DS-2/es/intake-policy-heard-incomplete
+  - DS-2/en/intake-policy-heard-incomplete
+  - DS-2/es/intake-policy-not-found-repeat
+  - DS-2/en/intake-policy-not-found-repeat

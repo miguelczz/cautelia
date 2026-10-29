@@ -242,7 +242,10 @@ paso "8/9 auditoria de dependencias"  bash -c 'mise run audit && mise run licens
 # aparte -- corre aqui igual que cualquier otro, porque el filtro del flujo de
 # GitHub Actions nunca excluye estos nueve pasos (`verify.yml`, "la compuerta
 # de evaluaciones"). DS-5 no se invoca aqui: solo en el comando por hito.
-paso "9/9 golden sets de texto"       bash -c 'mise run evals:gate -- --subset smoke'
+# `captura-con-redaccion` va aparte de `smoke` porque necesita los modelos de la
+# redaccion, que el camino del clon al reporte no instala; aqui si estan (los
+# instala la preparacion del paso 5).
+paso "9/9 golden sets de texto"       bash -c 'mise run evals:gate -- --subset smoke && mise run evals:gate -- --subset captura-con-redaccion'
 
 # --- Una sola lista al final --------------------------------------------------
 

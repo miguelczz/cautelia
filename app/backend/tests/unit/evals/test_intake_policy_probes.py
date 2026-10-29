@@ -1,9 +1,9 @@
 """Los casos de DS-2 de la poliza que el reconocedor entrega mal (2026-10-13).
 
 Corren el nodo `intake` de verdad sobre el corpus versionado, sin modelo y sin base. Aqui se
-comprueba que cada caso exista en los dos idiomas, que el manifiesto cuente sus archivos, que el
-subconjunto de arranque los lleve, y que cada sonda pase por idioma y **falle cuando la conducta
-que mide falta**.
+comprueba que cada caso exista en los dos idiomas, que el manifiesto cuente sus archivos, que los
+corra el subconjunto que tiene los modelos de la redaccion, y que cada sonda pase por idioma y
+**falle cuando la conducta que mide falta**.
 """
 
 from __future__ import annotations
@@ -39,11 +39,16 @@ def test_el_manifiesto_cuenta_los_archivos_del_arbol() -> None:
     assert declaracion.count == 138
 
 
-def test_el_subconjunto_de_arranque_los_lleva_porque_se_resuelven_sin_clave() -> None:
+def test_corren_en_la_compuerta_pero_no_en_el_arranque_porque_necesitan_los_modelos() -> None:
+    """El nodo `intake` tapa lo que guarda: sin los modelos de la redaccion, que el camino
+    del clon al reporte no instala, estos casos salen en rojo. Por eso viven en
+    `captura-con-redaccion`, que `verify.sh` corre junto a `smoke` (2026-10-29)."""
     arranque = loading.load_subset("smoke", paths.subsets_dir())
+    con_redaccion = loading.load_subset("captura-con-redaccion", paths.subsets_dir())
     for nombre in CRITERIOS:
         for idioma in IDIOMAS:
-            assert f"DS-2/{idioma}/{nombre}" in arranque.case_keys
+            assert f"DS-2/{idioma}/{nombre}" in con_redaccion.case_keys
+            assert f"DS-2/{idioma}/{nombre}" not in arranque.case_keys
 
 
 def test_las_dos_sondas_y_sus_objetivos_quedan_registrados() -> None:

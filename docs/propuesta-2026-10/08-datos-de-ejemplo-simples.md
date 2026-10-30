@@ -9,49 +9,46 @@ ejemplo en Casos:
 > la empresa, por ejemplo AP-29 con un contador […] quite esa censura que solo hace
 > que se complique todo»
 
-## Las peticiones
+## Lo que queda (respuestas de Miguel del 2026-10-30)
 
 | # | Pedido | Hoy | Queda |
 | --- | --- | --- | --- |
-| 1 | Ninguna etiqueta en la conversación de un caso de ejemplo | «Soy [NOMBRE 1], póliza [PÓLIZA 1]» en Casos | La conversación tal como se escribió |
-| 2 | Número de caso con las iniciales de la empresa y un contador | `SUN-063911` (letras internas, seis cifras al azar) | `AP-29`: iniciales de la aseguradora y un contador por aseguradora |
-| 3 | Pólizas fáciles de decir | `POL-200117`, seis cifras | Un número de dos cifras: «póliza 23» |
-| 4 | Nombres fáciles de decir | «Marco Parker», «Natalia Henao Rendón» | Solo el nombre: «Marco», «Natalia» |
+| 1 | Ninguna etiqueta en la conversación | «Soy [NOMBRE 1], póliza [PÓLIZA 1]» | La conversación se **guarda** tal como se escribió («nadie va a poner ningún supuesto dato real, quita eso») |
+| 2 | Número de caso con las iniciales de la empresa y un contador | `SUN-063911` | `SA-1`, `AP-29`, `AC-7` |
+| 3 | Pólizas fáciles de decir, conservando `POL` | `POL-200117` | `POL-23` |
+| 4 | Nombres cómodos para cualquiera, según el idioma | «Natalia Henao Rendón» | Nombre y un apellido: «Natalia Henao» en español, «Marco Parker» en inglés |
 
 ## Valores elegidos
 
-- **Pólizas por decenas, una decena por aseguradora**, para que el número diga
-  de quién es: Seguros Aburrá 11 a 16, Autos Poblado 21 a 26, Agencia Castilla
-  31 a 36. La póliza que comparten a propósito Seguros Aburrá y Autos Poblado
-  (la prueba de que un inquilino no ve la del otro) pasa a ser la 50 en las dos.
-- **Prefijos de caso**: Seguros Aburrá `SA`, Autos Poblado `AP`, Agencia
-  Castilla `AC`. Distintos entre sí, como exige el arranque.
-- **El contador** empieza en 1 por aseguradora. Antes el número era al azar
-  para no revelar cuántos casos hay; ese dato no importa en una demostración, y
-  el número nunca fue credencial: el acceso lo da el navegador o el enlace
-  firmado, así que adivinar `AP-30` no abre nada.
+- **Pólizas por decenas, una decena por aseguradora** (Miguel lo dejó a criterio),
+  para que el número diga de quién es: Seguros Aburrá `POL-11` a `POL-16`, Autos
+  Poblado `POL-21` a `POL-26`, Agencia Castilla `POL-31` a `POL-36`. La de ejemplo
+  es la primera de cada decena. La póliza que comparten a propósito Seguros Aburrá
+  y Autos Poblado (la prueba de que un inquilino no ve la del otro) pasa a ser
+  `POL-50` en las dos.
+- **Nombres**: el español pierde el segundo apellido; el inglés ya tenía nombre y
+  apellido.
+- **Prefijos de caso**: Seguros Aburrá `SA`, Autos Poblado `AP`, Agencia Castilla
+  `AC`. **El contador** empieza en 1 por aseguradora y nunca repite un número,
+  ni después del borrado nocturno. El número nunca fue credencial: el acceso lo
+  da el navegador o el enlace firmado, así que adivinar `AP-30` no abre nada.
+- **Al publicar**, los casos que ya existen cambian de número una sola vez.
 
-## Por qué la base sigue guardando tapado
+## La redacción, después del cambio
 
-La regla de redactar antes de guardar existe porque el chat público recibe lo
-que escriba cualquiera, y eso puede ser real. No se toca. Lo que cambia es lo
-que se pinta:
-
-- **Casos de ejemplo**: su conversación es sintética y está en el repositorio
-  (`app/data/tenants/*/cases`). La pantalla la lee de ahí, sin etiquetas.
-- **El caso propio**: ya se repone desde lo que este navegador escribió (chat,
-  llamada, «Ver mi caso», Casos, vista de ajustador).
-- **El caso de otro visitante**, visto con credenciales de la aseguradora: sigue
-  con etiquetas. Es el único lugar donde deben verse.
+- **Se quita** de la conversación guardada del caso: todas las pantallas la
+  muestran como se escribió.
+- **Se conserva** en los logs, las trazas, las exportaciones y el reporte de
+  evaluaciones. Ahí es donde la miden las compuertas duras y los golden sets.
 
 ## Tandas
 
-1. Conversación de los casos de ejemplo sin etiquetas, y recorrido de todas las
-   pantallas buscando `[NOMBRE`, `[PÓLIZA`, `[PLACA`.
-2. Número de caso: prefijo de la empresa y contador.
-3. Pólizas y titulares: generador de datos sembrado, corpus, casos de ejemplo,
-   golden sets, reconocedores de la redacción y del número dictado, textos de
-   ayuda («¿Qué póliza digo?»).
+1. Conversación de los casos de ejemplo sin etiquetas en la vista del caso.
+2. Número de caso, pólizas y titulares: configuración, generador de datos
+   sembrado, corpus, casos de ejemplo, golden sets, reconocedores de la redacción
+   y del número dictado, migración que renumera los casos existentes.
+3. La conversación se guarda sin redactar; recorrido de todas las pantallas
+   buscando `[NOMBRE`, `[PÓLIZA`, `[PLACA`.
 
 Cada tanda se sube a GitHub cuando su revisión queda en verde; nada se publica a
 producción hasta que Miguel lo pruebe en la demo local.
@@ -61,17 +58,16 @@ producción hasta que Miguel lo pruebe en la demo local.
 | Tanda | Estado |
 | --- | --- |
 | 1 | Hecha en la rama `datos-de-ejemplo-simples` (sin subir) |
-| 2 | Esperando que Miguel confirme los valores elegidos |
-| 3 | Esperando que Miguel confirme los valores elegidos |
+| 2 | En curso |
+| 3 | Pendiente |
 
-## Excepción de gasto: servidor siempre encendido (2026-10-30)
+## Servidor siempre encendido (2026-10-30)
 
 Miguel encendió una instancia permanente del servidor (`--min-instances=1`,
 revisión `cautelia-00054-z2c`) después de ver que cada arranque en frío tardaba
 unos 40 segundos. Cuesta unos 45–50 USD al mes a precio de lista (estimación, no
-cotización), por encima del tope de 40 USD en 90 días. **Es una excepción escrita
-a ese tope**: lo cubre el crédito de prueba de Google, que vence el 2027-01-05 y no
-es dinero real. Antes de esa fecha se vuelve a `--min-instances=0` o se cambia de
+cotización). **No cuenta para el tope de 40 USD** (decisión de Miguel): lo cubre el
+crédito de prueba de Google, que vence el 2027-01-05 y no es dinero suyo. Antes de esa fecha se vuelve a `--min-instances=0` o se cambia de
 cuenta. Vuelta atrás:
 
     gcloud run services update cautelia --region us-east1 --project vocal-tempo-510815-c2 --min-instances=0

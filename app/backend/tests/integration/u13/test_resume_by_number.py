@@ -346,7 +346,7 @@ async def test_un_numero_de_otro_navegador_responde_igual_que_uno_que_no_existe(
     _, dueno = await _conversacion_nueva(propia)
     caso_ajeno, numero_ajeno = await _caso_de_llamada(propia, dueno, cipher=cifrador)
     turnos_del_ajeno = await casos.transcript_of(propia, caso_ajeno)
-    inventado = "SA-999999" if numero_ajeno.startswith("STO") else "AC-999999"
+    inventado = "SA-999999" if numero_ajeno.startswith("SA") else "AC-999999"
 
     resultados = []
     for numero in (numero_ajeno, inventado):
@@ -375,7 +375,7 @@ async def test_un_numero_de_otro_navegador_responde_igual_que_uno_que_no_existe(
     assert salio["kind"] == "turn.final" and salio["case_id"] is None
     assert base_igual, "no se abrio ni se escribio nada"
     assert (al_grafo, al_modelo) == (0, 0)
-    assert "STO-" not in salio["text"] and "KNO-" not in salio["text"], "no repite el numero"
+    assert "SA-" not in salio["text"] and "AC-" not in salio["text"], "no repite el numero"
     # Y el caso ajeno no se movio: ni un turno de mas.
     assert await casos.transcript_of(propia, caso_ajeno) == turnos_del_ajeno
 
@@ -391,7 +391,7 @@ async def test_un_numero_de_otra_aseguradora_responde_igual_que_uno_que_no_exist
     ajena, propia = dos_aseguradoras
     conversacion, clave = await _conversacion_nueva(propia)
     _, numero_de_la_otra = await _caso_de_llamada(ajena, clave, cipher=cifrador)
-    inventado = "AP-999999" if not numero_de_la_otra.startswith("SUN") else "SA-999999"
+    inventado = "AP-999999" if not numero_de_la_otra.startswith("AP") else "SA-999999"
 
     resultados = []
     for numero in (numero_de_la_otra, inventado):

@@ -17,7 +17,7 @@ import {
 function fila(caseId: string, extra: Partial<QueueItem> = {}): QueueItem {
   return {
     case_id: caseId,
-    case_number: `STO-${caseId}`,
+    case_number: `SA-${caseId}`,
     state: "derived",
     record_type: "claim",
     channel: "chat",

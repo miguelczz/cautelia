@@ -93,7 +93,7 @@ async def test_un_caso_nuevo_nace_con_su_numero_y_cero_de_cinco(
 ) -> None:
     vista = await _abrir()
 
-    assert vista.case_number.startswith("STO-")
+    assert vista.case_number.startswith("SA-")
     assert vista.state is CaseState.OPEN
     # Cinco obligatorios: los dos opcionales del siniestro no cuentan (P4, 2026-10-06).
     assert (vista.completeness.complete, vista.completeness.total) == (0, 5)

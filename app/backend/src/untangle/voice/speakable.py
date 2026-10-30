@@ -1,15 +1,14 @@
 """Lo que se manda a sintetizar: los codigos dichos como los diria una persona (2026-10-11).
 
-El sintetizador lee "POL-200341" como una palabra y un numero de seis cifras, "ABC123"
-como una palabra inventada y "STO-602938" como tres letras, un guion y un numero:
-nadie dicta asi. Una persona los dice **digito a digito, de a tres, con una pausa**:
-"póliza dos cero cero, tres cuatro uno". Es la forma de D2 para el numero de caso
-(`case_number.spell`) y este modulo la extiende a lo que faltaba.
+El sintetizador lee "POL-23" como una palabra y un numero, "ABC123" como una palabra
+inventada y "AP-29" como dos letras, un guion y un numero: nadie dicta asi. Una persona los
+dice **digito a digito, de a tres, con una pausa**: "póliza dos tres". Es la forma de D2 para
+el numero de caso (`case_number.spell`) y este modulo la extiende a lo que faltaba.
 
 | Escrito | Español | Ingles |
 | --- | --- | --- |
-| `POL-200341` | póliza dos cero cero, tres cuatro uno | policy two zero zero, three four one |
-| `STO-602938` | ese te o, seis cero dos, nueve tres ocho | S T O, six zero two, nine three eight |
+| `POL-23` | póliza dos tres | policy two three |
+| `AP-29` | a pe, dos nueve | A P, two nine |
 | `ABC123` | a be ce, uno dos tres | A B C, one two three |
 | `2015` | 2015 | 2015 |
 
@@ -20,7 +19,7 @@ digitos), nunca por ser digitos.
 
 **Un solo punto, justo antes de sintetizar**: `CallRunner._decir` pide a
 `CallEngine.spoken` el texto que suena. Lo que se muestra en pantalla y lo que se guarda en la
-transcripcion siguen con el formato escrito: la persona lee `POL-200341`, no cinco
+transcripcion siguen con el formato escrito: la persona lee `POL-23`, no dos
 palabras.
 
 **Reusa lo que ya existe.** Los digitos y el agrupado de tres son los de
@@ -29,7 +28,7 @@ deletreo de U11 (`spelling_alphabet.yaml`), la misma con la que se lee una placa
 vuelta. En ingles las letras van como mayusculas separadas, que es como los
 sintetizadores ingleses dicen una sigla.
 
-**La palabra "póliza" no se repite**: en "tu póliza POL-200341" el prefijo se queda
+**La palabra "póliza" no se repite**: en "tu póliza POL-23" el prefijo se queda
 mudo y suenan solo las cifras. La palabra sale del catalogo, como todo lo que se oye.
 """
 
@@ -47,7 +46,7 @@ from untangle.voice import case_number
 
 SPOKEN_POLICY = CopyKey("voice.spoken.policy")
 
-#: El prefijo de un numero de poliza. Un numero de caso lleva el de su aseguradora (tres
+#: El prefijo de un numero de poliza. Un numero de caso lleva el de su aseguradora (dos
 #: letras), asi que "POL" es la unica que se dice como palabra.
 POLICY_PREFIX = "POL"
 
@@ -59,15 +58,16 @@ _LETRAS_POR_SU_NOMBRE: Mapping[Locale, bool] = {"es": True, "en": False}
 #: Una pausa entre tramos, la misma coma que ya separa los grupos de cifras.
 _PAUSA = ", "
 
-#: `AAA-123456`: el numero de poliza o el de caso. Los seis digitos son el formato de
-#: los dos (`normalization._POLICY_NUMBER`, `CaseNumber`).
-_CODIGO = r"(?P<prefijo>[A-Z]{3})-(?P<cifras>\d{6})"
+#: `POL-23` o `AP-29`: el numero de poliza (tres letras, dos cifras) o el de caso (dos letras,
+#: de una a seis cifras sin cero a la izquierda). Si no se limita a la forma de cada uno,
+#: `ZNX-9706` (una placa) se leeria como un codigo.
+_CODIGO = r"(?:(?P<prefijo>POL)-(?P<cifras>\d{2})|(?P<prefijo_de_caso>[A-Z]{2})-(?P<cifras_de_caso>[1-9]\d{0,5}))"
 #: Las dos formas de placa que reconoce U11: colombiana o estadounidense.
 _PLACA = r"(?P<placa>[A-Z]{3}(?:\d{3}|\d{2}[A-Z]|\d{4})|\d[A-Z]{3}\d{3})"
 _PATRON = re.compile(rf"(?<![\w-])(?:{_CODIGO}|{_PLACA})(?![\w-])")
 
 #: Cuantas palabras hacia atras se mira si la frase ya dijo "póliza": "tu póliza es
-#: POL-200341" lo dijo tres palabras antes.
+#: POL-23" lo dijo tres palabras antes.
 _PALABRAS_HACIA_ATRAS = 5
 _PALABRAS_DE_POLIZA = frozenset({"poliza", "polizas", "policy", "policies"})
 
@@ -110,9 +110,16 @@ def for_speech(text: str, *, language: Locale) -> str:
     def reemplazo(coincidencia: re.Match[str]) -> str:
         if coincidencia["placa"] is not None:
             return _placa(coincidencia["placa"], language=language)
+        if coincidencia["prefijo"] is not None:
+            return _codigo(
+                coincidencia["prefijo"],
+                coincidencia["cifras"],
+                antes=text[: coincidencia.start()],
+                language=language,
+            )
         return _codigo(
-            coincidencia["prefijo"],
-            coincidencia["cifras"],
+            coincidencia["prefijo_de_caso"],
+            coincidencia["cifras_de_caso"],
             antes=text[: coincidencia.start()],
             language=language,
         )

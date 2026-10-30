@@ -95,13 +95,13 @@ def decode_spelled_code(text: str, *, language: Locale, root: Path | None = None
 # --- Poliza, placa y cedula: dictado letra por letra, o ya escrito ----------
 #
 # Dos candidatos, en este orden: el texto **tal cual**, sin nada que no sea
-# letra o digito (un numero ya escrito, "POL-480915"), y el texto **decodificado**
+# letra o digito (un numero ya escrito, "POL-23"), y el texto **decodificado**
 # de sus separadores dictados (BR2.4, "be de seis" -> "BD6"). El primero que
 # tenga la forma cerrada del campo gana; los dos pasan por la misma
 # comprobacion de forma, para que un numero ya escrito y uno deletreado se
 # validen exactamente igual.
 
-_POLICY_NUMBER = re.compile(r"^POL(\d{6})$")
+_POLICY_NUMBER = re.compile(r"^POL(\d{2})$")
 _PLATE = re.compile(r"^[A-Z]{3}(?:\d{3}|\d{2}[A-Z]|\d{4})$|^\d[A-Z]{3}\d{3}$")
 
 
@@ -115,7 +115,7 @@ def _candidatos(text: str, *, language: Locale, root: Path | None) -> tuple[str,
 
 
 def normalize_policy_number(text: str, *, language: Locale, root: Path | None = None) -> str | None:
-    """`POL-` y seis digitos, o `None` si lo dictado no completa un numero."""
+    """`POL-` y dos digitos, o `None` si lo dictado no completa un numero."""
     for candidato in _candidatos(text, language=language, root=root):
         coincidencia = _POLICY_NUMBER.match(candidato)
         if coincidencia is not None:

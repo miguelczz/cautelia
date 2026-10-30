@@ -37,8 +37,8 @@ from untangle.tenancy.models import TenantConfig
 
 #: Los seriales de los dos numeros de caso que las frases nombran. Son de la
 #: prueba y no de ninguna aseguradora: el prefijo lo pone la configuracion.
-CURRENT_CASE_SERIAL = "730915"
-OTHER_CASE_SERIAL = "048213"
+CURRENT_CASE_SERIAL = "73"
+OTHER_CASE_SERIAL = "48"
 
 #: La forma de un identificador de fila: `<escenario>/<nn>`, igual en los dos
 #: idiomas, porque la paridad es fila por fila (P12, NFR20.2).

@@ -3,9 +3,9 @@
 Cada dato con forma de dato personal se **compone desde la semilla** y lleva una
 forma que lo delata como ficticio, nunca se copia de un registro:
 
-- **Nombres**: nombre y apellidos elegidos de los repertorios escritos a mano
-  (`<prefijo>-POOL-GIVEN-NAMES` y `-FAMILY-NAMES`, CG-U7-2). En espanol, un nombre
-  y dos apellidos; en ingles, un nombre y un apellido.
+- **Nombres**: nombre y apellido elegidos de los repertorios escritos a mano
+  (`<prefijo>-POOL-GIVEN-NAMES` y `-FAMILY-NAMES`, CG-U7-2). Un nombre y un apellido en
+  los dos idiomas (desde el 2026-10-30; el espanol llevaba dos apellidos).
 - **Telefonos**: del rango 555-01XX, que no se asigna a nadie (ADR-016): un movil
   de Colombia (`310 555 0142`) o un numero de Estados Unidos (`212-555-0142`).
 - **Documentos**: una cedula de ocho digitos con puntos de millar (`43.218.907`), o
@@ -176,13 +176,14 @@ def _unico(
 
 
 def compose_name(chooser: SeededChooser, pools: Pools, language: Locale) -> str:
-    """Un nombre plausible en el idioma: nombre y uno o dos apellidos."""
+    """Un nombre plausible en el idioma: un nombre y un apellido.
+
+    Los dos idiomas llevan un solo apellido desde el 2026-10-30: «Natalia Henao», «Marco
+    Parker». Decision de Miguel, para que cualquiera pueda decir su nombre completo sin
+    pensarlo; el segundo apellido del espanol era una complicacion sin uso.
+    """
     nombre = chooser.choice(pools.get(language, GIVEN_NAMES))
-    apellidos = pools.get(language, FAMILY_NAMES)
-    if language == "es":
-        primero, segundo = chooser.sample(apellidos, 2)
-        return f"{nombre} {primero} {segundo}"
-    return f"{nombre} {chooser.choice(apellidos)}"
+    return f"{nombre} {chooser.choice(pools.get(language, FAMILY_NAMES))}"
 
 
 def compose_unique_name(chooser: SeededChooser, people: People, language: Locale) -> str:
@@ -205,16 +206,13 @@ def compose_relative_name(
 ) -> str:
     """El nombre de un familiar del titular: un nombre de pila nuevo y los apellidos de la casa.
 
-    En espanol el primer apellido del titular y un segundo de los repertorios; en ingles su
-    apellido. Es el conductor adicional que mas se ve en una poliza real --un hijo, una pareja--
-    y el que pone a prueba la comparacion de nombres: comparte apellido con el titular y solo
-    el nombre de pila lo distingue. El nombre de pila no repite ninguno de `taken_given_names`
+    El apellido del titular, en los dos idiomas. Es el conductor adicional que mas se ve en
+    una poliza real --un hijo, una pareja-- y el que pone a prueba la comparacion de nombres:
+    comparte apellido con el titular y solo el nombre de pila lo distingue. El nombre de pila no repite ninguno de `taken_given_names`
     (en minusculas) y el nombre completo no lo lleva ninguna otra persona del corpus.
     """
-    partes = holder_name.split()
-    # El primer apellido en espanol (despues del nombre), el unico apellido en ingles (el ultimo).
-    casa = partes[1] if language == "es" and len(partes) > 1 else partes[-1]
-    apellidos = people.pools.get(language, FAMILY_NAMES)
+    # El apellido del titular: todo lo que sigue a su nombre de pila.
+    casa = holder_name.split(maxsplit=1)[-1]
     nombres = people.pools.get(language, GIVEN_NAMES)
 
     def componer() -> str:
@@ -225,9 +223,6 @@ def compose_relative_name(
         else:
             msg = f"no quedan nombres de pila distintos en el flujo '{chooser.stream}'"
             raise PeopleError(msg)
-        if language == "es":
-            segundo = chooser.choice(tuple(a for a in apellidos if a != casa))
-            return f"{nombre} {casa} {segundo}"
         return f"{nombre} {casa}"
 
     return _unico(chooser, people.used, PersonalValueKind.NAME, componer)

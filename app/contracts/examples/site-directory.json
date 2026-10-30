@@ -5,7 +5,7 @@
       "display_name": "Agencia Castilla",
       "kind": "agency",
       "default_language": "en",
-      "example_policy": "POL-200341",
+      "example_policy": "POL-31",
       "example_policy_issuer": "Autos Poblado",
       "character_key": "insurer.character.agency",
       "brand": {
@@ -20,7 +20,7 @@
       "display_name": "Seguros Aburrá",
       "kind": "carrier",
       "default_language": "es",
-      "example_policy": "POL-100042",
+      "example_policy": "POL-11",
       "character_key": "insurer.character.conservative",
       "brand": {
         "accent": "#2C5F68",
@@ -34,7 +34,7 @@
       "display_name": "Autos Poblado",
       "kind": "carrier",
       "default_language": "en",
-      "example_policy": "POL-200117",
+      "example_policy": "POL-21",
       "character_key": "insurer.character.flexible",
       "brand": {
         "accent": "#3A6B2A",

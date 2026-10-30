@@ -576,7 +576,7 @@ async def _primer_mensaje(
 
 
 #: Lo que la persona dijo antes de elegir que quiere (2026-10-09). "Soy Marcela Rios,
-#: mi poliza es POL-000001" como primer mensaje no abria caso, y al elegir "reportar"
+#: mi poliza es POL-21" como primer mensaje no abria caso, y al elegir "reportar"
 #: la agente volvia a pedir nombre y poliza: la corrida de evaluaciones lo mostro como
 #: quince vueltas de la misma pregunta. **Solo en memoria del proceso y por sesion**,
 #: nunca en la base --sin caso no hay donde redactarlo antes de persistir-- y acotado:

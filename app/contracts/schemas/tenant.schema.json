@@ -422,7 +422,7 @@
       "title": "Example Policy Issuer"
     },
     "case_number_prefix": {
-      "pattern": "^[A-Z]{3}$",
+      "pattern": "^[A-Z]{2}$",
       "title": "Case Number Prefix",
       "type": "string"
     },

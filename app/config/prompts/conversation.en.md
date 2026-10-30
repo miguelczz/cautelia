@@ -61,7 +61,7 @@ If they ask for something else, tell them kindly what you can help with.
 
 Accident report (`claim`):
 - `injuries`: whether anyone was hurt. "no" if nobody was; if so, "yes" and what they said. Only if the person talked about injuries or is answering that question: a crash that sounds minor does not say nobody was hurt.
-- `identity_and_policy`: the name of the person reporting and the policy number if given, for example "Marcela Ríos, POL-000001".
+- `identity_and_policy`: the name of the person reporting and the policy number if given, for example "Marcela Ríos, POL-21".
 - `description`: what happened, in their words.
 - `incident_datetime`: when it happened. Resolve relative dates with `<today>` and write the date as YYYY-MM-DD, with the time if they said it, followed by what they said in brackets: "2026-10-06 15:00 (yesterday around three)".
 - `location`: where it happened, in their words.

@@ -21,10 +21,10 @@ quote_enabled: true
 # navegador (US1.20). Apagado, explica que un caso se retoma por el canal donde empezo (AC1.19.5).
 voice_to_chat_continuity: true
 # El corpus que contiene esta poliza lo genera U7 (decision CG-U2-2 del plan).
-example_policy: POL-200117
-# El prefijo del numero de caso (FR1.5, BR4.1). Ver la nota de Stonecroft:
-# SUN y STO no se confunden al dictarse; SMA y SMU si.
-case_number_prefix: SUN
+example_policy: POL-21
+# El prefijo del numero de caso (FR1.5, BR4.1): las iniciales de Autos Poblado.
+# Ver la nota de Stonecroft.
+case_number_prefix: AP
 copy_overrides: []
 voice:
   # El nombre con el que el proyecto habla de la voz principal: Catalina, la voz

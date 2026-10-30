@@ -22,7 +22,7 @@
 language: en
 
 # The minimum score for a finding to count. Patterns with structure of their own
-# -- `POL-######`, a US number written in groups -- clear it unaided; the ones
+# -- `POL-##`, a US number written in groups -- clear it unaided; the ones
 # that are a bare run of digits score below it and only pass if a context word
 # lifts them. That way "requires context" is a number in a file, not a branch in
 # the code.
@@ -125,9 +125,9 @@ recognizers:
     language: en
     mechanism: pattern
     source: >
-      Policy number of the three demo carriers: the POL prefix and six digits,
+      Policy number of the three demo carriers: the POL prefix and two digits,
       as `example_policy` declares in `app/config/tenants/*/tenant.yaml`
-      (POL-100042, POL-200117, POL-200341).
+      (POL-11, POL-21, POL-31). It had six digits until 2026-10-30.
     context:
       - policy
       - coverage
@@ -136,13 +136,20 @@ recognizers:
       - number
     patterns:
       - form: compact
-        regex: '\b(?i:POL)-\d{6}\b'
+        regex: '\b(?i:POL)-\d{2}\b'
         score: 0.85
       - form: separated
-        regex: '\b(?i:POL)[ ]\d{6}\b'
+        regex: '\b(?i:POL)[ ]\d{2}\b'
         score: 0.8
+      # Spoken digit by digit ("two three"). With two digits it is a weak signal, but
+      # it has to pass on its own: the same dictation in the other language ("dos tres"
+      # inside an English sentence) does not carry this set's context word, and
+      # without a score of its own the dictated policy would get out. It covers a bit
+      # too much now and then ("two three cars"), which costs nothing in a log. A
+      # number said as a word ("twenty-three", "thirty one") is NOT recognised: it
+      # does not fit one form without covering "eleven people" or "twelve months".
       - form: spoken
-        regex: '\b(?i:(?:(?:zero|oh|one|two|three|four|five|six|seven|eight|nine)[ \-]+){5}(?:zero|oh|one|two|three|four|five|six|seven|eight|nine))\b'
+        regex: '\b(?i:(?:zero|oh|one|two|three|four|five|six|seven|eight|nine)[ \-]+(?:zero|oh|one|two|three|four|five|six|seven|eight|nine))\b'
         score: 0.45
 
   # The VIN came in when U7 found it went out with only its trailing digits

@@ -1,35 +1,32 @@
-"""El numero de caso legible: tres letras de la aseguradora y seis digitos.
+"""El numero de caso legible: las dos iniciales de la aseguradora y un contador.
 
-Es lo que la persona anota al cerrar, lo que la agente le dicta digito a digito,
-y con lo que vuelve a retomar su caso. Por eso **no cambia nunca** una vez
-creado (BR4.3): cambiarlo deja a alguien sin forma de volver.
+Es lo que la persona anota al cerrar, lo que la agente le dicta y con lo que vuelve
+a retomar su caso: `SA-1`, `AP-29`, `AC-7`. Por eso **no cambia nunca** una vez
+creado (BR4.3): cambiarlo deja a alguien sin forma de volver. La unica vez que se
+rompio fue a proposito, por decision de Miguel del 2026-10-30, cuando la revision
+`u20_demo_0003_short_numbers` renumero los casos existentes con esta forma.
 
-Los tres prefijos de la demostracion son `STO`, `SUN` y `KNO`, elegidos para no
-confundirse entre si al dictarse (decision FD-U4-1 de Miguel). Las maquetas
-usaban `SMU` y `SMA`, que se diferencian en una sola letra y nombran
-aseguradoras distintas; dictados por telefono suenan casi igual, y el propio
-diseno de la voz reconoce ese riesgo obligando a deletrear con una palabra las
-letras que se confunden.
+Los tres prefijos de la demostracion son `SA` (Seguros Aburra), `AP` (Autos
+Poblado) y `AC` (Agencia Castilla): las iniciales de la empresa, para que el
+numero diga de quien es el caso. Antes eran `STO`, `SUN` y `KNO` seguidos de seis
+digitos al azar, y Miguel los encontro dificiles de dictar y de recordar.
 
 El prefijo sale de la configuracion de la aseguradora y **nunca de una tabla en
-este archivo** (BR4.1): una correspondencia escrita aqui seria la ramificacion
-por inquilino que el proyecto prohibe, y anadir una cuarta aseguradora dejaria
-de ser anadir una carpeta.
+este archivo** (BR4.1): una correspondencia escrita aqui seria la ramificacion por
+inquilino que el proyecto prohibe, y anadir una cuarta aseguradora dejaria de ser
+anadir una carpeta.
 """
 
 from __future__ import annotations
-
-import secrets
 
 from untangle.case_record.models import CaseNumber
 from untangle.tenancy import config
 from untangle.tenancy.models import TenantConfig
 
-#: Cuantos digitos lleva el numero. Seis, como fija FR1.5.
-DIGITS = 6
-
-#: El mayor numero representable con esos digitos, mas uno.
-_RANGO = 10**DIGITS
+#: Cuantos digitos admite el contador como maximo: el mayor serial es 999999. Lo impone
+#: `CaseNumber` y la restriccion de `case_number_issued`; aqui solo se usa para fallar
+#: diciendolo cuando una aseguradora lo agote.
+MAX_SERIAL = 999_999
 
 
 class PrefixCollisionError(RuntimeError):
@@ -66,39 +63,27 @@ def assert_prefixes_are_distinct(tenants: tuple[TenantConfig, ...] | None = None
         raise PrefixCollisionError(msg)
 
 
-def _serial() -> str:
-    """Seis digitos, con ceros a la izquierda.
-
-    Se eligen al azar y no de forma correlativa. Un numero correlativo publica
-    cuantos casos lleva la demostracion y deja adivinar el siguiente; el numero
-    no es credencial --el acceso lo decide el enlace firmado de U2 (SEC-U4.14)--
-    pero no hay razon para regalar lo uno ni lo otro.
-    """
-    return f"{secrets.randbelow(_RANGO):0{DIGITS}d}"
-
-
 def mint(tenant_id: str, *, taken: frozenset[str] = frozenset()) -> CaseNumber:
-    """Un numero nuevo para esa aseguradora, distinto de los que ya existen.
+    """El numero que sigue para esa aseguradora: el mayor ya emitido, mas uno.
 
-    `taken` son los seriales ya usados por esa aseguradora, que el repositorio
-    consulta. La unicidad es **dentro de la aseguradora** (BR4.3): dos
-    aseguradoras pueden tener el mismo serial porque su prefijo las separa.
+    `taken` son los seriales ya emitidos por esa aseguradora, que el repositorio lee de
+    `case_number_issued`. El libro **sobrevive al reinicio nocturno**, asi que el contador
+    no vuelve a empezar y ningun numero se repite (BR2.5 de U20). La unicidad es **dentro de
+    la aseguradora** (BR4.3): dos aseguradoras pueden tener el mismo serial porque su prefijo
+    las separa.
+
+    Es un contador y no un numero al azar porque el numero nunca fue una credencial: el
+    acceso al caso lo da la clave del navegador o el enlace firmado (`chat.resume`), asi que
+    adivinar `AP-30` no abre nada. Lo que el contador publica --cuantos casos lleva la
+    demostracion-- ya lo publica el panel de cifras. Decision de Miguel del 2026-10-30, para
+    que el numero sea facil de decir y de recordar.
     """
     tenant = config.require(tenant_id)
-
-    # El espacio es de un millon por aseguradora y la demostracion no se acerca,
-    # asi que reintentar es barato. El limite existe para que un espacio agotado
-    # falle diciendolo, en vez de girar para siempre.
-    for _ in range(100):
-        serial = _serial()
-        if serial not in taken:
-            return CaseNumber(prefix=tenant.case_number_prefix, serial=serial)
-
-    msg = (
-        f"no se encontro un numero libre para '{tenant_id}' en cien intentos: "
-        f"quedan muy pocos de los {_RANGO} posibles"
-    )
-    raise RuntimeError(msg)
+    siguiente = max((int(serial) for serial in taken), default=0) + 1
+    if siguiente > MAX_SERIAL:
+        msg = f"'{tenant_id}' agoto sus numeros de caso: el contador llego a {MAX_SERIAL}"
+        raise RuntimeError(msg)
+    return CaseNumber(prefix=tenant.case_number_prefix, serial=str(siguiente))
 
 
 def parse(value: str) -> CaseNumber:
@@ -110,6 +95,6 @@ def parse(value: str) -> CaseNumber:
     """
     partes = value.split("-")
     if len(partes) != 2:
-        msg = f"'{value}' no tiene la forma de un numero de caso: tres letras, guion, seis digitos"
+        msg = f"'{value}' no tiene la forma de un numero de caso: dos letras, guion, el contador"
         raise ValueError(msg)
     return CaseNumber(prefix=partes[0], serial=partes[1])

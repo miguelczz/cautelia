@@ -6,7 +6,7 @@ quedaba completa sin nombre; y el numero nunca se cotejaba con el corpus, asi qu
 el caso no sabia de que poliza hablaba y la pregunta de cobertura degradaba por
 "sin poliza identificada". Miguel pidio que la agente **sepa quien es**: con una
 poliza valida, busca al titular y los vehiculos y los confirma en una sola
-frase: «Encontre la poliza POL-100042 a nombre de Natalia Henao Rendon, con un
+frase: «Encontre la poliza POL-21 a nombre de Natalia Henao, con un
 Renault Logan 2024. ¿Es usted y conducia ese carro?». Un "si" confirma identidad
 y vehiculo a la vez; un "no" devuelve la identidad a "nadie lo dijo" y se pide de
 nuevo, con nombre.
@@ -31,7 +31,9 @@ numero; el corpus dice el titular y el vehiculo; la persona dijo que si. Los dos
 campos quedan con la evidencia del turno del si, que es donde la persona los
 hizo suyos.
 
-**Cuando el numero llega mal (2026-10-13).** Por voz, «POL-200117» llego como «Paul 201 17».
+**Cuando el numero llega mal (2026-10-13).** Por voz, «POL-200117» llego como «Paul 201 17»
+(cuando el numero tenia seis cifras; desde el 2026-10-30 tiene dos, «POL-23», y llega como
+«Paul 23», «pol 23» o «pol veintitres»).
 `heard_policy_number` reconoce el numero como lo entrega el reconocedor y devuelve lo oido sin
 completarlo; `digits_resemble` dice si se parece al de una poliza. Con ellos el nodo puede
 **proponer** la poliza del titular que la persona nombro, pero nunca atarla: solo el si lo hace.
@@ -53,14 +55,15 @@ from untangle.copy_catalog.api import CopyKey
 from untangle.orchestration.nodes.intake import spelling
 from untangle.tenancy.models import TenantId
 
-#: BR1.6: `POL-` y seis digitos, sin iniciales de aseguradora (la misma forma que
+#: BR1.6: `POL-` y dos digitos, sin iniciales de aseguradora (la misma forma que
 #: siembra el generador sintetico de U7, `synthetic_data.models.POLICY_NUMBER_PATTERN`;
 #: se repite aqui en vez de importarla porque esa forma es un formato del dominio del
 #: asegurado, no un detalle del generador de datos de prueba, y `orchestration` no
 #: importa `synthetic_data`). `identity` la toma de aqui: una sola definicion.
-POLICY_NUMBER_PATTERN = re.compile(r"^POL-\d{6}$")
-#: La misma forma, suelta dentro de una frase ("mi poliza es la POL-100042").
-_POLICY_NUMBER_IN_TEXT = re.compile(r"\bPOL-\d{6}\b")
+POLICY_NUMBER_PATTERN = re.compile(r"^POL-\d{2}$")
+#: La misma forma, suelta dentro de una frase ("mi poliza es la POL-23"). El limite de palabra
+#: tras las dos cifras deja fuera a los numeros de seis cifras que ya no existen.
+_POLICY_NUMBER_IN_TEXT = re.compile(r"\bPOL-\d{2}\b")
 
 POLICY_FOUND = CopyKey("intake.policy.found")
 POLICY_FOUND_NO_VEHICLE = CopyKey("intake.policy.found_no_vehicle")
@@ -84,8 +87,8 @@ def _palabras(texto: str) -> set[str]:
 def names_holder(text: str, holder_name: str) -> bool:
     """Si el texto nombra al titular: todas las palabras de su nombre, con dos al menos.
 
-    "Soy Natalia Henao Rendon, mi poliza es POL-100042" nombra a "Natalia Henao
-    Rendon"; "Soy Natalia, la de la POL-100042" no, y se pregunta (2026-10-09).
+    "Soy Natalia Henao, mi poliza es POL-21" nombra a "Natalia Henao"; "Soy Natalia,
+    la de la POL-21" no, y se pregunta (2026-10-09).
     """
     del_titular = _palabras(holder_name)
     return len(del_titular) >= 2 and del_titular <= _palabras(text)
@@ -117,24 +120,24 @@ PolicyByHolderPort = Callable[[TenantId, str], Awaitable[Sequence[PolicyMatch]]]
 # --- Como se reconoce un numero de poliza dicho en voz alta -------------------------------
 #
 # Lo que entrega el reconocedor de una llamada no se parece a lo que se teclea. Una poliza
-# dictada como «POL-200117» llego (2026-10-13) como «Paul 201 17», y en el chat llega con
+# dictada como «POL-200117» llego (2026-10-13) como «Paul 201 17» --cuando tenia seis cifras--, y en el chat llega con
 # guiones, puntos o espacios. Se reconoce **sin modelo y con las palabras como dato**: la
 # palabra que nombra el codigo (deformada), las cifras en grupos o en palabras, y la
 # distancia a lo que no es una poliza --un telefono, una cedula, una placa, una fecha--.
 
-#: Cuantas cifras tiene un numero de poliza.
-POLICY_DIGITS = 6
+#: Cuantas cifras tiene un numero de poliza. Dos desde el 2026-10-30 (antes seis): «POL-23».
+POLICY_DIGITS = 2
 
 #: Menos cifras que estas, pegadas a la palabra «poliza», no son un numero oido sino un
 #: numero cualquiera que sigue a la palabra: «tengo poliza. 2 carros fueron golpeados».
-MIN_HEARD_DIGITS = 3
+MIN_HEARD_DIGITS = 2
 
-#: Menos cifras oidas que estas no bastan para decir que «se parecen» a una poliza: con tres
-#: de seis, medio corpus se parece.
-MIN_RESEMBLING_DIGITS = 4
+#: Menos cifras oidas que estas no bastan para decir que «se parecen» a una poliza.
+MIN_RESEMBLING_DIGITS = 2
 
-#: Cuantas cifras pueden faltar, como mucho, para que lo oido se parezca a una poliza.
-MAX_MISSING_DIGITS = 2
+#: Cuantas cifras de mas puede traer lo oido, como mucho, para que se parezca a una poliza:
+#: «veinte uno» llega como «20 1» por «21».
+MAX_EXTRA_DIGITS = 1
 
 #: La palabra que nombra el numero de poliza, y como llega «POL» deformada por el
 #: reconocedor, que la oye como un nombre o como una palabra corriente.
@@ -179,7 +182,7 @@ _PIEZA = re.compile(r"(?P<n>\d+)|(?P<w>[a-z]+)|(?P<p>[.,])|(?P<b>[^a-z\d\s\-#'\"
 class HeardPolicyNumber(Frozen):
     """Lo que la persona dijo como numero de poliza, tal como lo entrego el reconocedor.
 
-    **Solo las cifras, sin completar ni corregir.** Con exactamente seis es un numero de
+    **Solo las cifras, sin completar ni corregir.** Con exactamente dos es un numero de
     poliza (`number`); con otra cantidad es un numero incompleto o de mas, y quien lo recibe
     decide que hacer, pero no se inventa nada: adivinar la cifra que falta podria acertar
     por casualidad y asociar el caso a la poliza de otra persona (BR1.6).
@@ -193,7 +196,7 @@ class HeardPolicyNumber(Frozen):
 
     @property
     def number(self) -> str | None:
-        """`POL-` y las seis cifras, o `None` si no son seis."""
+        """`POL-` y las dos cifras, o `None` si no son dos."""
         return f"POL-{self.digits}" if self.complete else None
 
 
@@ -228,8 +231,58 @@ def _palabras_de_cifra() -> dict[str, str]:
     return tabla
 
 
+#: Los numeros de dos cifras dichos en palabras, ya plegados (sin tildes), en los dos idiomas:
+#: «veintitres», «treinta y uno», «twenty-three». Un reconocedor de voz los entrega asi cuando la
+#: persona dice «mi poliza es la veintitres», y sin esto «veinte tres» se leeria como «20» y «3»
+#: sueltos, o sea 203. La tabla es cerrada: se amplia el dia que haga falta otra palabra.
+_DECENAS_DICHAS: dict[str, int] = {
+    "veinte": 20, "treinta": 30, "cuarenta": 40, "cincuenta": 50, "sesenta": 60,
+    "setenta": 70, "ochenta": 80, "noventa": 90,
+    "twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60,
+    "seventy": 70, "eighty": 80, "ninety": 90,
+}  # fmt: skip
+_UNIDADES_DICHAS: dict[str, int] = {
+    "un": 1, "uno": 1, "una": 1, "dos": 2, "tres": 3, "cuatro": 4, "cinco": 5, "seis": 6,
+    "siete": 7, "ocho": 8, "nueve": 9,
+    "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8,
+    "nine": 9,
+}  # fmt: skip
+_ESPECIALES_DICHOS: dict[str, int] = {
+    "diez": 10, "once": 11, "doce": 12, "trece": 13, "catorce": 14, "quince": 15,
+    "dieciseis": 16, "diecisiete": 17, "dieciocho": 18, "diecinueve": 19,
+    "veintiun": 21, "veintiuno": 21, "veintiuna": 21, "veintidos": 22, "veintitres": 23,
+    "veinticuatro": 24, "veinticinco": 25, "veintiseis": 26, "veintisiete": 27,
+    "veintiocho": 28, "veintinueve": 29,
+    "ten": 10, "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14, "fifteen": 15,
+    "sixteen": 16, "seventeen": 17, "eighteen": 18, "nineteen": 19,
+}  # fmt: skip
+
+
+def _alternativas(palabras: Sequence[str]) -> str:
+    return "|".join(sorted(palabras, key=len, reverse=True))
+
+
+#: Una decena y una unidad: «veinte tres», «treinta y uno», «twenty-three», «twenty three».
+_DECENA_Y_UNIDAD = re.compile(
+    rf"\b({_alternativas(list(_DECENAS_DICHAS))})(?:\s*-\s*|\s+y\s+|\s+)"
+    rf"({_alternativas(list(_UNIDADES_DICHAS))})\b"
+)
+_NUMERO_SUELTO = re.compile(rf"\b({_alternativas([*_ESPECIALES_DICHOS, *_DECENAS_DICHAS])})\b")
+
+
+def _numeros_dichos(plegado: str) -> str:
+    """Cambia por sus cifras los numeros de dos cifras dichos en palabras."""
+    compuestos = _DECENA_Y_UNIDAD.sub(
+        lambda m: f" {_DECENAS_DICHAS[m.group(1)] + _UNIDADES_DICHAS[m.group(2)]} ", plegado
+    )
+    return _NUMERO_SUELTO.sub(
+        lambda m: f" {_ESPECIALES_DICHOS.get(m.group(1)) or _DECENAS_DICHAS[m.group(1)]} ",
+        compuestos,
+    )
+
+
 def _piezas(texto: str) -> list[_Pieza]:
-    plegado = _FECHA.sub(" ; ", _plegar(texto))
+    plegado = _numeros_dichos(_FECHA.sub(" ; ", _plegar(texto)))
     piezas = [
         _Pieza(tipo=m.lastgroup or "b", texto=m.group(0), inicio=m.start(), fin=m.end())
         for m in _PIEZA.finditer(plegado)
@@ -291,8 +344,8 @@ def _anclada(piezas: list[_Pieza], primera: int) -> bool:
 
 def _corridas(piezas: list[_Pieza]) -> list[_Corrida]:
     """Las tiradas de cifras. Un punto o una coma entre dos grupos las une si van pegados
-    al siguiente (`200.117`) o si todavia no hay seis cifras (el final de un trozo y el
-    principio del siguiente); con seis ya reunidas, un punto cierra la tirada."""
+    al siguiente (`2.3`) o si todavia no hay dos cifras (el final de un trozo y el
+    principio del siguiente); con dos ya reunidas, un punto cierra la tirada."""
     corridas: list[_Corrida] = []
     i = 0
     while i < len(piezas):
@@ -346,17 +399,19 @@ def heard_policy_number(text: str) -> HeardPolicyNumber | None:
 
     Reconoce, por orden:
 
-    1. `POL-` y seis cifras (lo que se teclea).
+    1. `POL-` y dos cifras (lo que se teclea).
     2. Cifras pegadas a la palabra «poliza» o a la que nombra el codigo --«Paul», «Pol»,
-       «Poll», «Paula», «pool», «pole»--, en grupos («201 17», «2001 17»), sueltas
-       («2 0 0 1 1 7»), con guiones, puntos o comas, o dichas en palabras en espanol o en
-       ingles («dos cero cero uno uno siete»), mezcladas tambien, y con los rellenos de «la
-       poliza es la...» en medio. **De tres cifras en adelante**, completas o no.
-    3. Seis cifras sin palabra pegada, si el texto nombra la poliza en otro sitio o es solo el
-       numero --la respuesta a «¿cual es?»--, salvo que una palabra anuncie otro dato
-       (`telefono`, `cedula`, `placa`...) o que sean una fecha.
+       «Poll», «Paula», «pool», «pole»--, juntas («23»), en grupos («2 3»), con guiones,
+       puntos o comas, o dichas en palabras en espanol o en ingles («veintitres», «treinta y
+       uno», «dos tres», «twenty-three»), y con los rellenos de «la poliza es la...» en medio.
+       **De dos cifras en adelante**, completas o no.
+    3. Dos cifras sin palabra pegada, **solo si el mensaje es el numero y nada mas** --la
+       respuesta a «¿cual es?»--, con a lo sumo los rellenos de «es la...», y salvo que una
+       palabra anuncie otro dato (`telefono`, `cedula`, `placa`...) o que sean una fecha.
+       Con seis cifras bastaba que el texto nombrara la poliza en otro sitio; con dos, un
+       «a las 10» cualquiera pasaria por poliza, y por eso ya no.
 
-    **Con otra cantidad de cifras que seis no se inventa nada**: se devuelve lo oido, y
+    **Con otra cantidad de cifras que dos no se inventa nada**: se devuelve lo oido, y
     `complete` es falso. Las cifras de un telefono, una cedula, una placa o una fecha en la
     misma frase no se toman por la poliza.
     """
@@ -373,15 +428,13 @@ def heard_policy_number(text: str) -> HeardPolicyNumber | None:
     if ancladas:
         return HeardPolicyNumber(digits=ancladas[0].cifras)
 
-    # Seis cifras sin palabra pegada: el reconocimiento de 2026-10-09.
-    nombra_la_poliza = any(p.tipo == "w" and p.texto in _ANCLAS for p in piezas)
-    # O el numero solo, contestando la pregunta: cuando hace una pausa para pensarlo, el
-    # numero llega en su propio turno ("dos cero cero uno uno siete").
-    palabras = sum(1 for p in piezas if p.tipo == "w" and _cifras_de(p) is None)
-    for corrida in corridas:
-        if len(corrida.cifras) != POLICY_DIGITS or _va_con_otro_dato(piezas, corrida.primera):
-            continue
-        if nombra_la_poliza or palabras <= 1:
+    # El numero solo, contestando la pregunta: «veintitres», «es la 23».
+    solo_el_numero = all(
+        p.tipo != "w" or p.texto in _RELLENOS or _cifras_de(p) is not None for p in piezas
+    )
+    if solo_el_numero and len(corridas) == 1:
+        corrida = corridas[0]
+        if len(corrida.cifras) == POLICY_DIGITS and not _va_con_otro_dato(piezas, corrida.primera):
             return HeardPolicyNumber(digits=corrida.cifras)
     return None
 
@@ -390,7 +443,7 @@ def policy_number_in(text: str) -> str | None:
     """El numero de poliza que hay en lo que la persona dijo, o `None`.
 
     Por voz llega sin el prefijo (2026-10-09) y deformado (2026-10-13): ver
-    `heard_policy_number`. Aqui solo cuenta el que tiene **exactamente seis cifras**; uno
+    `heard_policy_number`. Aqui solo cuenta el que tiene **exactamente dos cifras**; uno
     incompleto no es una poliza, y quien quiera tratarlo pide `heard_policy_number`.
     """
     oido = heard_policy_number(text)
@@ -400,25 +453,25 @@ def policy_number_in(text: str) -> str | None:
 def digits_resemble(heard: str, policy_number: str) -> bool:
     """Si lo oido se parece al numero de una poliza: la regla **conservadora** de «se parecen».
 
-    Dos formas y no mas, con al menos cuatro cifras oidas (`MIN_RESEMBLING_DIGITS`):
+    Dos formas y no mas, con al menos dos cifras oidas (`MIN_RESEMBLING_DIGITS`):
 
-    - **Faltan como mucho dos cifras y las oidas van en orden**: son una subsecuencia de las
-      seis de la poliza (`20117` frente a `200117`: el reconocedor se comio un cero). Es el
-      fallo corriente de un numero dictado.
-    - **Con las seis oidas, una sola es distinta** (`200118` frente a `200117`).
+    - **Con las mismas cifras que la poliza, una sola es distinta** (`22` frente a `23`).
+    - **Con una cifra de mas y las de la poliza en orden** (`MAX_EXTRA_DIGITS`): son una
+      subsecuencia de lo oido (`201` frente a `21`: el reconocedor entendio «veinte uno» como
+      «20 1»).
 
-    No se parecen tres cifras de menos, dos distintas, cifras fuera de orden ni cifras de
-    mas. Que se parezca **no ata nada**: solo deja proponer la poliza, y la persona dice si.
+    No se parecen cifras de menos, dos distintas, cifras fuera de orden ni mas de una de
+    sobra. Que se parezca **no ata nada**: solo deja proponer la poliza, y la persona dice si.
     """
     cifras = policy_number.removeprefix("POL-")
-    if not heard.isdigit() or len(heard) < MIN_RESEMBLING_DIGITS or len(heard) > len(cifras):
+    if not heard.isdigit() or len(heard) < MIN_RESEMBLING_DIGITS or len(heard) < len(cifras):
         return False
     if len(heard) == len(cifras):
         return sum(1 for a, b in zip(heard, cifras, strict=True) if a != b) <= 1
-    if len(cifras) - len(heard) > MAX_MISSING_DIGITS:
+    if len(heard) - len(cifras) > MAX_EXTRA_DIGITS:
         return False
-    restantes = iter(cifras)
-    return all(cifra in restantes for cifra in heard)
+    restantes = iter(heard)
+    return all(cifra in restantes for cifra in cifras)
 
 
 async def look_up(tenant_id: TenantId, text: str, *, lookup: PolicyMatchPort) -> PolicyMatch | None:

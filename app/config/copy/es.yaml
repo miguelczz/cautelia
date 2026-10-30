@@ -1865,7 +1865,7 @@ voice:
     pending:
       text: Tu reporte quedó guardado. El resultado te aparece en esta pantalla.
       surface: voice
-    # `spoken` trae el nombre de la aseguradora y los seis digitos uno a uno,
+    # `spoken` trae el nombre de la aseguradora y las cifras del contador una a una,
     # con "cero" y nunca "o" (decision D2).
     case_number:
       text: "Tu número de caso con {insurer} es {spoken}."

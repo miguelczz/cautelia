@@ -118,11 +118,11 @@ __all__ = [
 
 # --- Las formas de los identificadores ----------------------------------------
 
-#: Un formulario: el prefijo de tres letras de la aseguradora (el de sus numeros
+#: Un formulario: el prefijo de dos letras de la aseguradora (el de sus numeros
 #: de caso, FD-U7-1), la familia (`PAP` la poliza, `JUR` el documento de
 #: jurisdiccion) y el ano de su edicion; un endoso anade `-END-<n>`.
-#: Por ejemplo `STO-PAP-2026`, `STO-PAP-2026-END-3` o `SUN-JUR-2026`.
-FORM_ID_PATTERN: Final = r"^[A-Z]{3}-[A-Z]{3}-\d{4}(?:-END-[1-9]\d*)?$"
+#: Por ejemplo `SA-PAP-2026`, `SA-PAP-2026-END-3` o `AP-JUR-2026`.
+FORM_ID_PATTERN: Final = r"^[A-Z]{2}-[A-Z]{3}-\d{4}(?:-END-[1-9]\d*)?$"
 
 #: La numeracion estructural de la referencia: `A.EXCL.A.3`, `D.INS.COLLISION`,
 #: `F.FRAUD`. Es estructura, no texto (P8).
@@ -130,21 +130,21 @@ CLAUSE_KEY_PATTERN: Final = r"^[A-Za-z0-9]+(?:\.[A-Za-z0-9_]+)*$"
 
 #: Una clausula: el formulario, un guion y su numeracion (BR3.2).
 CLAUSE_ID_PATTERN: Final = (
-    r"^[A-Z]{3}-[A-Z]{3}-\d{4}(?:-END-[1-9]\d*)?-[A-Za-z0-9]+(?:\.[A-Za-z0-9_]+)*$"
+    r"^[A-Z]{2}-[A-Z]{3}-\d{4}(?:-END-[1-9]\d*)?-[A-Za-z0-9]+(?:\.[A-Za-z0-9_]+)*$"
 )
 
 #: `AAAA.n`: el ano de la edicion y su numero dentro del ano (BR3.2).
 VERSION_PATTERN: Final = r"^\d{4}\.[1-9]\d*$"
 
-#: `POL-` y seis digitos, sin iniciales de la aseguradora (decision del
-#: 2026-09-20): dos aseguradoras pueden repetir numero a proposito (DS-8).
-POLICY_NUMBER_PATTERN: Final = r"^POL-\d{6}$"
+#: `POL-` y dos digitos, sin iniciales de la aseguradora (decision del
+#: 2026-09-20; dos digitos desde el 2026-10-30): dos aseguradoras pueden repetir numero a proposito (DS-8).
+POLICY_NUMBER_PATTERN: Final = r"^POL-\d{2}$"
 
 #: Un repertorio de datos ficticios: `<prefijo>-POOL-<nombre>`.
-POOL_SOURCE_ID_PATTERN: Final = r"^[A-Z]{3}-POOL-[A-Z0-9]+(?:-[A-Z0-9]+)*$"
+POOL_SOURCE_ID_PATTERN: Final = r"^[A-Z]{2}-POOL-[A-Z0-9]+(?:-[A-Z0-9]+)*$"
 
 #: Los turnos de un caso sembrado: `<prefijo>-CASE-<nombre>` (FD-U7-7).
-CASE_SOURCE_ID_PATTERN: Final = r"^[A-Z]{3}-CASE-[A-Z0-9]+(?:-[A-Z0-9]+)*$"
+CASE_SOURCE_ID_PATTERN: Final = r"^[A-Z]{2}-CASE-[A-Z0-9]+(?:-[A-Z0-9]+)*$"
 
 #: El nombre de un caso sembrado dentro de su aseguradora e idioma: la ultima
 #: parte de su `case_key` (BR6.2).
@@ -228,7 +228,7 @@ NonBlankText = Annotated[str, Field(min_length=1), AfterValidator(_texto_no_vaci
 def form_id_of(clause_id: str, clause_key: str) -> str:
     """El formulario de una clausula: su identificador sin `-<numeracion>`.
 
-    Se calcula desde la numeracion y no partiendo por guiones: `STO-PAP-2026-END-3`
+    Se calcula desde la numeracion y no partiendo por guiones: `SA-PAP-2026-END-3`
     tiene cuatro guiones y un corte por el ultimo daria un formulario inexistente.
     """
     sufijo = f"-{clause_key}"
@@ -540,7 +540,7 @@ class SourceEntry(Frozen):
         if not re.fullmatch(CASE_SOURCE_ID_PATTERN, self.source_id):
             msg = (
                 f"'{self.source_id}': los turnos de un caso se llaman <prefijo>-CASE-<nombre>, "
-                "por ejemplo STO-CASE-DERIVED"
+                "por ejemplo SA-CASE-DERIVED"
             )
             raise ValueError(msg)
         if self.case is None:
@@ -571,7 +571,7 @@ class SourceEntry(Frozen):
         if not re.fullmatch(POOL_SOURCE_ID_PATTERN, self.source_id):
             msg = (
                 f"'{self.source_id}': un repertorio se llama <prefijo>-POOL-<nombre>, "
-                "por ejemplo STO-POOL-GIVEN-NAMES"
+                "por ejemplo SA-POOL-GIVEN-NAMES"
             )
             raise ValueError(msg)
         if self.clause_key is not None:
@@ -591,7 +591,7 @@ class SourceEntry(Frozen):
             msg = (
                 f"'{self.source_id}': el identificador es <formulario>-<numeracion>, y "
                 f"'{formulario}' no tiene la forma de un formulario (por ejemplo "
-                "STO-PAP-2026 o STO-PAP-2026-END-3)"
+                "SA-PAP-2026 o SA-PAP-2026-END-3)"
             )
             raise ValueError(msg)
         if _ano(formulario) != self.version.split(".")[0]:

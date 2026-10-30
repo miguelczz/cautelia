@@ -21,7 +21,7 @@
 language: es
 
 # El puntaje minimo para que un hallazgo cuente. Los patrones con estructura
-# propia --`POL-######`, un movil de diez digitos que empieza por 3-- lo superan
+# propia --`POL-##`, un movil de diez digitos que empieza por 3-- lo superan
 # solos; los que son una tira de digitos a secas puntuan por debajo y solo pasan
 # si una palabra de contexto los sube. Asi "pedir contexto" es un numero en un
 # archivo y no una rama de codigo.
@@ -126,8 +126,9 @@ recognizers:
     mechanism: pattern
     source: >
       Numero de poliza de las tres aseguradoras de la demostracion: el prefijo
-      POL y seis digitos, como declaran `example_policy` en
-      `app/config/tenants/*/tenant.yaml` (POL-100042, POL-200117, POL-200341).
+      POL y dos digitos, como declaran `example_policy` en
+      `app/config/tenants/*/tenant.yaml` (POL-11, POL-21, POL-31). Eran seis
+      digitos hasta el 2026-10-30.
     context:
       - poliza
       - polizas
@@ -137,13 +138,20 @@ recognizers:
       - numero
     patterns:
       - form: compact
-        regex: '\b(?i:POL)-\d{6}\b'
+        regex: '\b(?i:POL)-\d{2}\b'
         score: 0.85
       - form: separated
-        regex: '\b(?i:POL)[ ]\d{6}\b'
+        regex: '\b(?i:POL)[ ]\d{2}\b'
         score: 0.8
+      # Dictado cifra por cifra («dos tres»). Con dos cifras es una señal debil, pero
+      # tiene que pasar sola: el mismo dictado en el otro idioma («two three» dentro de
+      # una frase en español) no trae la palabra de contexto de este juego, y sin
+      # puntaje propio la poliza dictada saldria. Tapa de mas alguna vez («dos tres
+      # carros»), que en un log no cuesta nada. El numero dicho como palabra
+      # («veintitres», «treinta y uno») NO se reconoce: no cabe en una sola forma
+      # sin tapar «once personas» o «doce meses» en cada frase.
       - form: spoken
-        regex: '\b(?i:(?:(?:cero|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve)[ \-]+){5}(?:cero|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve))\b'
+        regex: '\b(?i:(?:cero|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve)[ \-]+(?:cero|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve))\b'
         score: 0.45
 
   # El VIN entro cuando U7 encontro que salia con solo la cola de digitos tapada

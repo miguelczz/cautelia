@@ -9,7 +9,7 @@ proveedor" (CG-U11-4) es una regla mas dura que este presupuesto.
 
 **La direccion del error no es la que parece.** Contar palabras y puntuacion
 **no** es un limite superior: un tokenizador de subpalabras parte las palabras
-largas o raras en varias piezas --"POL-123456" son tres unidades para esta
+largas o raras en varias piezas --"POL-21" son tres unidades para esta
 regla y cinco o mas para el tokenizador-- y en espanol suele dar bastante mas
 de un token por palabra. Esta cuenta, entonces, **puede quedar por debajo de la
 real**, y un prompt que pase esta guardia todavia puede no caber. Por eso es

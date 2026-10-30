@@ -32,6 +32,7 @@ from __future__ import annotations
 import re
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
+from functools import lru_cache
 
 from untangle.base import Frozen, Locale
 from untangle.compliance.controls import phrases
@@ -52,16 +53,30 @@ OTHER_TENANT_ID_PATTERN = "guard.config.config_disclosure.other_tenant_id"
 OTHER_TENANT_NAME_PATTERN = "guard.config.config_disclosure.other_tenant_name"
 OTHER_CASE_NUMBER_PATTERN = "guard.config.config_disclosure.other_case_number"
 
-#: La forma de un numero de caso tal como se dicta: tres letras, guion, seis
-#: digitos (FR1.5), ya normalizado. Es una **forma**, no una lista: cualquier
-#: numero con esta forma que no sea el del caso en curso es de otro caso.
+#: La forma de un numero de caso tal como se dicta: las dos letras de la aseguradora,
+#: guion y el contador (`ap-29`, FR1.5), ya normalizado. Cualquier numero con esta
+#: forma que no sea el del caso en curso es de otro caso.
 #:
-#: **Salvo `POL-`**, que es la forma del numero de poliza (BR1.6 de U11) y no de
-#: un caso. Hasta el 2026-10-06 la guardia lo tomaba por un caso ajeno y tapaba
-#: toda frase en la que la agente nombrara una poliza --la lectura de la
-#: identidad, y la frase que confirma al titular (P3)-- con "no puedo compartir
-#: esa informacion". Lo vio la primera conversacion de P3 en produccion.
-CASE_NUMBER_SHAPE = re.compile(r"\b(?!pol-)[a-z]{3}-\d{6}\b")
+#: **Con dos letras la forma sola atrapa de mas**: `cx-5` es un Mazda, y la guardia
+#: taparia toda frase que nombrara el vehiculo. Por eso, cuando el contexto trae los
+#: prefijos de las aseguradoras cargadas (`GuardContext.case_prefixes`), solo cuentan
+#: esos; sin ellos --un contexto armado a mano-- se usa la forma general.
+#:
+#: **`POL-` no cae aqui por construccion**: la forma del numero de poliza (BR1.6 de U11)
+#: lleva tres letras, y `\b` no deja que `ol-23` se lea dentro de `pol-23`. Hasta el
+#: 2026-10-06 la guardia tomaba la poliza por un caso ajeno y tapaba toda frase en la
+#: que la agente la nombrara --la lectura de la identidad, y la frase que confirma al
+#: titular (P3)-- con "no puedo compartir esa informacion".
+_GENERAL_CASE_NUMBER_SHAPE = re.compile(r"\b[a-z]{2}-[1-9]\d{0,5}\b")
+
+
+@lru_cache(maxsize=8)
+def case_number_shape(prefixes: tuple[str, ...]) -> re.Pattern[str]:
+    """La forma de un numero de caso para esos prefijos, o la general si no hay ninguno."""
+    if not prefixes:
+        return _GENERAL_CASE_NUMBER_SHAPE
+    alternativas = "|".join(re.escape(p.lower()) for p in prefixes)
+    return re.compile(rf"\b(?:{alternativas})-[1-9]\d{{0,5}}\b")
 
 
 @dataclass
@@ -98,6 +113,9 @@ class GuardContext:
     #: El numero legible del caso en curso, si ya hay caso. Cualquier otro numero
     #: con forma de numero de caso es de otro caso.
     case_number: str | None = None
+    #: Los prefijos de numero de caso de **todas** las aseguradoras cargadas, la propia
+    #: incluida. Vacio solo en un contexto armado a mano.
+    case_prefixes: tuple[str, ...] = ()
     #: La clave del catalogo de la que salio la frase, cuando el aplicativo la
     #: compuso desde el catalogo. El modelo no puede traerla: es lo que hace
     #: segura la exencion de las plantillas aprobadas (BR1.8).
@@ -121,6 +139,7 @@ class GuardContext:
             language=language,
             other_tenants=otras,
             case_number=case_number,
+            case_prefixes=tuple(sorted({t.case_number_prefix for t in tenants})),
             source_key=source_key,
         )
 
@@ -158,7 +177,7 @@ def _revelacion_por_configuracion(texto: str, context: GuardContext) -> str | No
         if _palabra(otra.display_name).search(texto):
             return OTHER_TENANT_NAME_PATTERN
     actual = normalize(context.case_number) if context.case_number else None
-    for numero in CASE_NUMBER_SHAPE.findall(texto):
+    for numero in case_number_shape(context.case_prefixes).findall(texto):
         if numero != actual:
             return OTHER_CASE_NUMBER_PATTERN
     return None

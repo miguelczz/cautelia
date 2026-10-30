@@ -72,9 +72,9 @@ _ES_PATTERNS: tuple[_Pattern, ...] = (
     _Pattern(AuditEntityType.NATIONAL_ID, re.compile(r"(?<!\d)[0-24-9]\d{6,9}(?!\d)")),
     # Placa colombiana: carro (ABC123) o moto (ABC12D), con o sin guion.
     _Pattern(AuditEntityType.LICENSE_PLATE, re.compile(r"\b[A-Za-z]{3}-?\d{2}[A-Za-z0-9]\b")),
-    # Numero de poliza de las tres aseguradoras de la demo: prefijo POL y seis
-    # digitos.
-    _Pattern(AuditEntityType.POLICY_NUMBER, re.compile(r"\bPOL-?\d{6}\b", re.IGNORECASE)),
+    # Numero de poliza de las tres aseguradoras de la demo: prefijo POL y dos
+    # digitos (seis hasta el 2026-10-30). Con `-` o sin el: `POL-23` y `POL23`.
+    _Pattern(AuditEntityType.POLICY_NUMBER, re.compile(r"\bPOL-?\d{2}\b", re.IGNORECASE)),
 )
 
 _EN_PATTERNS: tuple[_Pattern, ...] = (
@@ -85,7 +85,7 @@ _EN_PATTERNS: tuple[_Pattern, ...] = (
     # U3 puntua bajo su forma compacta.
     _Pattern(AuditEntityType.NATIONAL_ID, re.compile(r"(?<!\d)\d{3}-\d{2}-\d{4}(?!\d)")),
     _Pattern(AuditEntityType.LICENSE_PLATE, re.compile(r"\b[A-Za-z]{3}-?\d{2}[A-Za-z0-9]\b")),
-    _Pattern(AuditEntityType.POLICY_NUMBER, re.compile(r"\bPOL-?\d{6}\b", re.IGNORECASE)),
+    _Pattern(AuditEntityType.POLICY_NUMBER, re.compile(r"\bPOL-?\d{2}\b", re.IGNORECASE)),
 )
 
 PATTERNS: dict[Locale, tuple[_Pattern, ...]] = {"es": _ES_PATTERNS, "en": _EN_PATTERNS}

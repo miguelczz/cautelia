@@ -30,7 +30,7 @@ sale en el idioma de la conversacion, que es lo que BR2.2 decide.
 llamada del plan gratuito para que devuelva una lista vacia tras varios segundos
 --el plan que esta saturado--. `is_only_social` lo decide: quitadas las frases
 sociales y el nombre de la agente, si no queda mas que una palabra suelta, no hay
-nada que extraer. "Hola, soy Marcus Reed y mi poliza es la POL-000001" si llama al
+nada que extraer. "Hola, soy Marcus Reed y mi poliza es la POL-21" si llama al
 modelo, y ademas recibe su saludo.
 """
 

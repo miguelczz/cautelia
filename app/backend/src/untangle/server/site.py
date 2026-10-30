@@ -58,7 +58,7 @@ class TenantPresentation(Frozen):
     display_name: str
     kind: tenancy.TenantKind
     default_language: Locale
-    #: Forma `POL-` y seis digitos (C-25). Se muestra entera (BR4.5).
+    #: Forma `POL-` y dos digitos (C-25). Se muestra entera (BR4.5).
     example_policy: str
     #: El **nombre visible** de quien emitio esa poliza, cuando no la emitio esta
     #: aseguradora (U23, BR1.2). Nulo en una emisora, que emite las suyas.

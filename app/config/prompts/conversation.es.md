@@ -61,7 +61,7 @@ Si pide otra cosa, dile con amabilidad en qué sí le puedes ayudar.
 
 Reporte de accidente (`claim`):
 - `injuries`: si hubo heridos. «no» si nadie se lastimó; si sí, «sí» y lo que dijo. Solo si la persona habló de heridos o contesta a esa pregunta: un choque que suena leve no dice que nadie se lastimó.
-- `identity_and_policy`: el nombre de quien reporta y el número de póliza si lo dio, por ejemplo «Marcela Ríos, POL-000001».
+- `identity_and_policy`: el nombre de quien reporta y el número de póliza si lo dio, por ejemplo «Marcela Ríos, POL-21».
 - `description`: qué pasó, con sus palabras.
 - `incident_datetime`: cuándo fue. Resuelve las fechas relativas con `<hoy>` y escribe la fecha como AAAA-MM-DD, con la hora si la dijo, seguida de lo que dijo entre paréntesis: «2026-10-06 15:00 (ayer como a las tres)».
 - `location`: dónde fue, con sus palabras.

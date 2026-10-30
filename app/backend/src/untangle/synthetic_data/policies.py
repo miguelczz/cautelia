@@ -1,13 +1,19 @@
 """Las polizas emitidas, con sus personas y sus vehiculos (F3.2, pasos 4 y 5; BR3.6, BR4.3).
 
-Cada aseguradora recibe `POLICIES_PER_TENANT` polizas, en este orden:
+Cada aseguradora recibe `POLICIES_PER_TENANT` polizas **de su decena**, en este orden:
 
 1. **Su `example_policy`**, la que muestra el chat publico (C-25), con todos los
-   endosos de su emisora para que la demostracion los tenga a mano.
+   endosos de su emisora para que la demostracion los tenga a mano. Es la primera de
+   su decena: `POL-11` para Seguros Aburra, `POL-21` para Autos Poblado, `POL-31` para
+   Agencia Castilla. Decision de Miguel del 2026-10-30: un numero que se dice en dos
+   cifras y que dice de quien es la poliza.
 2. **Las polizas de DS-8** que sean suyas, con el numero, el asegurado y la
    vigencia que DS-8 declara: la colision de numero entre dos emisoras existe
-   tambien en el corpus, que es donde U8 la ingiere.
-3. Las demas, con numero y datos sembrados.
+   tambien en el corpus, que es donde U8 la ingiere. Una de DS-8 que cae fuera de la
+   decena (la compartida, `POL-50`) se suma a las de la decena; una que cae dentro
+   ocupa uno de sus numeros.
+3. Las demas, con los numeros libres que siguen al de ejemplo dentro de la decena,
+   en orden, y datos sembrados. Si la decena no alcanza, falla diciendolo.
 
 **En una agencia, cada poliza dice quien la emitio** (BR4.3): `issuer_tenant` es
 una emisora y el formulario es el de esa emisora, que la agencia tiene copiado.
@@ -54,8 +60,9 @@ __all__ = [
     "policy_path",
 ]
 
-#: Cuantas polizas tiene cada aseguradora: suficientes para que los casos
-#: sembrados no compartan todos al mismo asegurado.
+#: Cuantas polizas de su decena tiene cada aseguradora: suficientes para que los casos
+#: sembrados no compartan todos al mismo asegurado. Una decena tiene diez numeros y la de
+#: ejemplo es la primera de seis, asi que el limite natural es el final de la decena.
 POLICIES_PER_TENANT: Final = 6
 
 #: El inicio mas temprano de una vigencia sembrada, y cuantos dias despues puede
@@ -138,11 +145,15 @@ class _Plan:
     fixed: FixedPolicy | None
 
 
+def _decena(numero: str) -> int:
+    """La decena de un numero de poliza: `POL-23` y `POL-21` son de la 2, `POL-50` de la 5."""
+    return int(numero.removeprefix("POL-")) // 10
+
+
 def _planes(
     tenant: TenantConfig,
     emisoras: list[TenantConfig],
     fijas: tuple[FixedPolicy, ...],
-    chooser: ChooserFactory,
     numeros_tomados: set[str],
 ) -> list[_Plan]:
     """Las polizas de una aseguradora: la de ejemplo, las de DS-8 y las generadas."""
@@ -158,10 +169,18 @@ def _planes(
         for fija in fijas
         if fija.tenant_id == tenant.tenant_id
     )
-    elegidor = chooser.for_output(f"tenants/{tenant.tenant_id}/issued_policies", purpose="numbers")
+    decena = _decena(tenant.example_policy)
     turno = 0
-    while len(planes) < POLICIES_PER_TENANT:
-        numero = f"POL-{elegidor.between(1, 9)}{elegidor.digits(5)}"
+    siguiente = int(tenant.example_policy.removeprefix("POL-")) + 1
+    while sum(1 for p in planes if _decena(p.number) == decena) < POLICIES_PER_TENANT:
+        numero = f"POL-{siguiente}"
+        if _decena(numero) != decena:
+            msg = (
+                f"la decena de '{tenant.tenant_id}' ({tenant.example_policy}) no alcanza para "
+                f"{POLICIES_PER_TENANT} polizas: se acabo en {numero}"
+            )
+            raise PolicyError(msg)
+        siguiente += 1
         # Un numero generado no repite ninguno del corpus: la unica colision de
         # numeros es la que DS-8 declara, y una segunda no la declararia nadie.
         if numero in numeros_tomados:
@@ -190,7 +209,7 @@ def compose_policies(
     resultado: dict[str, tuple[ComposedPolicy, ...]] = {}
     for tenant in ordenadas:
         compuestas: list[ComposedPolicy] = []
-        for plan in _planes(tenant, emisoras, fijas, chooser, tomados):
+        for plan in _planes(tenant, emisoras, fijas, tomados):
             corpus = issuers.get(plan.issuer.tenant_id)
             base = corpus.current_base if corpus is not None else None
             if corpus is None or base is None:

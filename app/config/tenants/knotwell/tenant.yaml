@@ -25,7 +25,7 @@ voice_to_chat_continuity: true
 # La poliza de ejemplo de una agencia la **emite otra aseguradora**: Knotwell la
 # coloco, no la expidio. Por eso el numero no lleva iniciales de nadie. Quien la
 # emitio es dato del corpus, y lo genera U7 (decision CG-U2-2 del plan).
-example_policy: POL-200341
+example_policy: POL-31
 # Quien emitio esa poliza (U23, Q2). Obligatorio porque esta es la agencia: coloca
 # polizas de quien las emite, y la vista de comparacion lo nombra. Se declara el
 # identificador y no el nombre: el nombre vive en la carpeta de esa aseguradora.
@@ -33,7 +33,7 @@ example_policy: POL-200341
 example_policy_issuer: sunmeadow
 # El prefijo del numero de caso (FR1.5, BR4.1). Una agencia tambien abre casos
 # propios, aunque siempre los derive al ajustador de quien emitio la poliza.
-case_number_prefix: KNO
+case_number_prefix: AC
 copy_overrides: []
 voice:
   # El nombre con el que el proyecto habla de la voz principal: Catalina, la voz

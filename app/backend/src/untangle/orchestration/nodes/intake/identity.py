@@ -73,7 +73,7 @@ from untangle.orchestration.nodes.intake.reporter import (
 from untangle.policy_rag.corpus.models import IssuedPolicy
 from untangle.tenancy.models import TenantId
 
-#: BR1.6: `POL-` y seis digitos. La definicion vive en `policy.py` --la hoja que el
+#: BR1.6: `POL-` y dos digitos. La definicion vive en `policy.py` --la hoja que el
 #: ritmo del turno puede importar-- y aqui se re-exporta para quien ya la tomaba
 #: de este modulo (2026-10-06, P3).
 POLICY_NUMBER_PATTERN = policy.POLICY_NUMBER_PATTERN

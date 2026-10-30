@@ -24,12 +24,11 @@ voice_to_chat_continuity: true
 # La poliza de ejemplo que muestra el chat publico. El corpus que la contiene lo
 # genera U7 `synthetic-data`; aqui solo vive su identificador, que es lo que la
 # configuracion tiene que declarar (decision CG-U2-2 del plan).
-example_policy: POL-100042
-# El prefijo del numero de caso (FR1.5, BR4.1). Tres letras que **no se
-# confunden al dictarse**: las maquetas usaban SMU y SMA, que se diferencian en
-# una letra y nombran aseguradoras distintas, y la agente lo dicta por telefono
-# (decision FD-U4-1 de Miguel).
-case_number_prefix: STO
+example_policy: POL-11
+# El prefijo del numero de caso (FR1.5, BR4.1): las dos iniciales de la empresa,
+# Seguros Aburra, y despues un contador por aseguradora (`SA-1`, `SA-29`). Decision
+# de Miguel del 2026-10-30; antes eran tres letras y seis digitos.
+case_number_prefix: SA
 copy_overrides: []
 voice:
   # El nombre con el que el proyecto habla de la voz principal: Catalina, la voz

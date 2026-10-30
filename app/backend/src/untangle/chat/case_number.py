@@ -1,13 +1,15 @@
 """El numero de caso escrito en el chat, y lo que se le contesta (US1.19, US1.20).
 
-**Lo reconoce el codigo, antes de cualquier modelo.** Escribir «STO-482913» no se le pregunta a
+**Lo reconoce el codigo, antes de cualquier modelo.** Escribir «AP-29» no se le pregunta a
 quien entiende el mensaje: es un patron, como la peticion de un ajustador o la emergencia, y la
 decision de atar la conversacion a ese caso es de las comprobaciones de dueno de
 `chat.resume`, no de una interpretacion.
 
 **Solo cuenta un prefijo que alguna aseguradora cargada use.** Un numero de poliza tiene la
-misma forma --tres letras, guion, seis digitos-- y la persona lo escribe mientras se identifica:
-tratar `POL-100042` como un numero de caso la dejaria sin atender. Y son los prefijos de **todas**
+forma parecida --letras, guion, cifras-- y la persona lo escribe mientras se identifica: tratar
+`POL-23` como un numero de caso la dejaria sin atender. No se confunden porque el prefijo de un
+caso es de dos letras y se reconoce solo si es el de una aseguradora cargada, y `\b` no deja
+leer `OL-23` dentro de `POL-23`. Y son los prefijos de **todas**
 las aseguradoras, no solo el de la que conversa: un numero de otra aseguradora tiene que recibir
 la misma respuesta que uno que no existe (AC1.20.3), y esa respuesta solo puede darse si el chat
 lo reconoce como numero de caso.
@@ -55,17 +57,21 @@ CONTINUABLE = frozenset({CaseState.OPEN, CaseState.CAPTURING})
 def _patron(prefijos: tuple[str, ...]) -> re.Pattern[str]:
     alternativas = "|".join(re.escape(prefijo) for prefijo in prefijos)
     return re.compile(
-        rf"(?<![A-Za-z0-9])({alternativas})[\s-]?(\d{{3}})[\s-]?(\d{{3}})(?![A-Za-z0-9])",
+        rf"(?<![A-Za-z0-9-])({alternativas})[\s-]?([1-9]\d{{0,5}})(?![A-Za-z0-9])",
         re.IGNORECASE,
     )
 
 
 def find(text: str) -> str | None:
-    """El numero de caso que trae el mensaje, con la forma `STO-482913`, o nada.
+    """El numero de caso que trae el mensaje, con la forma `AP-29`, o nada.
 
-    Acepta que lo escriban con guion, con espacios o pegado, en minusculas o con los digitos en
-    dos grupos, que es como se dicta. Devuelve el primero que encuentre: un mensaje con dos
-    numeros es un mensaje raro, y atender el primero es lo predecible.
+    Acepta que lo escriban con guion, con espacio o pegado, y en minusculas. Devuelve el primero
+    que encuentre: un mensaje con dos numeros es un mensaje raro, y atender el primero es lo
+    predecible.
+
+    **Con dos letras de prefijo el cuidado es mayor**: no puede ir precedido de una letra, un
+    digito ni un guion (`ZNX-9706` no contiene `NX-9706`, ni `SA-PAP-2026` a `AP-2026`), y el
+    contador no lleva ceros a la izquierda ni mas de seis cifras.
     """
     prefijos = tuple(
         sorted({tenant.case_number_prefix for tenant in tenancy_config.loaded().available})
@@ -75,8 +81,8 @@ def find(text: str) -> str | None:
     encontrado = _patron(prefijos).search(text)
     if encontrado is None:
         return None
-    prefijo, centenas, unidades = encontrado.groups()
-    return f"{prefijo.upper()}-{centenas}{unidades}"
+    prefijo, contador = encontrado.groups()
+    return f"{prefijo.upper()}-{contador}"
 
 
 def pending_question(vista: casos.CaseView, *, language: Locale) -> str | None:

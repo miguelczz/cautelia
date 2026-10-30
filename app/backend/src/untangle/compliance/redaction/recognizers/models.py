@@ -119,7 +119,7 @@ class RecognizerPattern(Frozen):
 
     El puntaje decide dos cosas: si el hallazgo supera el umbral del idioma sin
     ayuda del contexto, y quien gana un solape entre dos hallazgos del mismo
-    tamano. Un patron con estructura propia --`POL-######`-- puntua alto; uno
+    tamano. Un patron con estructura propia --`POL-##`-- puntua alto; uno
     que es una tira de digitos a secas puntua bajo y depende del contexto.
     """
 

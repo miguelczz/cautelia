@@ -245,7 +245,7 @@ CONTAR_CAMBIOS_DE = """
 #: libres, que es como un numero acaba nombrando dos casos distintos.
 #:
 #: Devuelve el **serial** y no la columna entera. Antes devolvia `case_number`
-#: --`STO-123456`-- y el acunador comparaba el serial --`123456`--, asi que la
+#: --`SA-12`-- y el acunador comparaba el serial --`12`--, asi que la
 #: comprobacion de unicidad no podia coincidir nunca: dos formas del mismo dato,
 #: una en cada lado de la frontera.
 SERIALES_EMITIDOS = "SELECT serial FROM case_number_issued"

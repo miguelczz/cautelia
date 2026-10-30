@@ -167,7 +167,7 @@
       "default": null
     },
     "policy_number": {
-      "pattern": "^POL-\\d{6}$",
+      "pattern": "^POL-\\d{2}$",
       "title": "Policy Number",
       "type": "string"
     },

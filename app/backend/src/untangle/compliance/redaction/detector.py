@@ -120,9 +120,10 @@ _VOCABULARIO_PROPIO: frozenset[str] = frozenset()
 #: una cedula, un telefono o un correo se tapan siempre.
 _TIPOS_DE_MODELO: frozenset[EntityType] = frozenset({EntityType.PERSON, EntityType.LOCATION})
 
-#: La forma de un numero de caso: el prefijo de la aseguradora y seis digitos. El
-#: de poliza (`POL-`) no entra: ese si es un dato, y lo tapa su propio reconocedor.
-_NUMERO_DE_CASO = regex.compile(r"(?!POL-)[A-Z]{3}-\d{6}")
+#: La forma de un numero de caso: las dos letras de la aseguradora y el contador
+#: (`AP-29`). El de poliza (`POL-23`) no entra: lleva tres letras, y es un dato que tapa su
+#: propio reconocedor.
+_NUMERO_DE_CASO = regex.compile(r"[A-Z]{2}-[1-9]\d{0,5}")
 
 _SEPARADORES_DE_PALABRA = regex.compile(r"[^\p{L}\p{M}\p{N}'\u2019\-]+")
 
@@ -137,11 +138,12 @@ def _es_solo_vocabulario_propio(text: str, hallazgo: DetectedEntity) -> bool:
         return False
     if _NUMERO_DE_CASO.fullmatch(text[hallazgo.start : hallazgo.end].strip()):
         # El numero del propio caso, que la agente dice en sus avisos: el
-        # reconocedor de nombres lo etiqueta como persona **segun que digitos
-        # traiga**, y el aviso de la decision se guardaba "tu caso [NOMBRE 1]".
-        # Salio en la revision de GitHub del 2026-10-11 y no en cuatro corridas
-        # locales: los numeros de caso son al azar. No es un dato personal, y que
-        # numero de caso puede salir lo decide la guardia de salida, no esto.
+        # reconocedor de nombres lo etiqueta como persona **segun que prefijo y
+        # que digitos traiga**, y el aviso de la decision se guardaba "tu caso
+        # [NOMBRE 1]". Salio en la revision de GitHub del 2026-10-11 y no en cuatro
+        # corridas locales: los numeros de caso eran al azar. No es un dato
+        # personal, y que numero de caso puede salir lo decide la guardia de
+        # salida, no esto.
         return True
     palabras = _palabras(text[hallazgo.start : hallazgo.end])
     conocidas = _VOCABULARIO_PROPIO | _TERMINOS_PUBLICOS
@@ -201,7 +203,7 @@ _TIRADA_DE_DIGITOS = regex.compile(r"\d+")
 
 #: Una palabra de un nombre: empieza por mayuscula, admite tildes y un apostrofo o
 #: un guion **dentro** ("O'Brien", "Ochoa-Henao"), y nunca digitos: asi
-#: "POL-173620" no se convierte en un apellido.
+#: "POL-32" no se convierte en un apellido.
 _PALABRA_DE_NOMBRE = r"\p{Lu}[\p{L}\p{M}]*(?:['\u2019\-]\p{L}[\p{L}\p{M}]*)*"
 
 #: Lo que separa las partes de una palabra de nombre: el apostrofo y el guion.

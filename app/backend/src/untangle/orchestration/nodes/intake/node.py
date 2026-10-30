@@ -625,7 +625,7 @@ class IntakeNode:
     ) -> IntakeNodeOutput | None:
         """Un numero de poliza que se oyo y no lleva a ninguna (2026-10-13).
 
-        El reconocedor de una llamada entrega «Paul 201 17» por «POL-200117»: el numero llega
+        El reconocedor de una llamada entrega «Paul 20 1» por «POL-21»: el numero llega
         incompleto, o con una cifra cambiada. `_buscar_poliza` solo encuentra una poliza con
         el numero exacto, y sin ella el caso seguia **sin poliza identificada** aunque la
         persona hubiera dicho su nombre entero. Aqui, para un numero que llego incompleto (en
@@ -1175,7 +1175,7 @@ class IntakeNode:
             return ()
         _, faltan = preguntado
         # Un numero de poliza es identidad diga lo que diga la pregunta pendiente:
-        # quien abre con "soy Marcela Rios, mi poliza es POL-000001" antes de
+        # quien abre con "soy Marcela Rios, mi poliza es POL-21" antes de
         # contestar si hubo heridos no esta hablando de heridos. Tambien el que llego
         # incompleto («poliza Paul 201 17»): es de la poliza aunque falten cifras. Y, tras
         # pedirle que repitiera la poliza, la repeticion es la identidad aunque esta ya tenga

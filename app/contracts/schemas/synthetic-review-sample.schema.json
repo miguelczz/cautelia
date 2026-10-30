@@ -25,7 +25,7 @@
     },
     "clause_ids": {
       "items": {
-        "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?-[A-Za-z0-9]+(?:\\.[A-Za-z0-9_]+)*$",
+        "pattern": "^[A-Z]{2}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?-[A-Za-z0-9]+(?:\\.[A-Za-z0-9_]+)*$",
         "type": "string"
       },
       "maxItems": 10,

@@ -85,7 +85,10 @@ _AVISO: Final = "Cien por ciento sintetica. Ninguna persona, poliza ni matricula
 
 # --- Los identificadores estables de U2 ----------------------------------------
 
-_POLIZA_COMPARTIDA: Final = "POL-480915"
+#: La poliza que dos emisoras comparten a proposito. Cae **fuera** de las decenas de las
+#: aseguradoras (11 a 16, 21 a 26, 31 a 36): es la prueba de que un inquilino no ve la del
+#: otro, y por eso no pertenece a ninguna. Decision de Miguel del 2026-10-30.
+_POLIZA_COMPARTIDA: Final = "POL-50"
 _ASEGURADO_COMPARTIDO: Final = "Alex Moreno"
 _CASO_COMPARTIDO: Final = "CASE-7F3A21"
 #: El caso de la segunda emisora. **Tiene su propio identificador y no repite el
@@ -96,7 +99,8 @@ _CASO_COMPARTIDO: Final = "CASE-7F3A21"
 _CASO_DE_LA_SEGUNDA_EMISORA: Final = "CASE-7F3A22"
 _NAVEGADOR_COMPARTIDO: Final = "6f4b2c1d9a8e7350c2b1a0f9e8d7c6b5a4938271605f4e3d2c1b0a9f8e7d6c5b"
 
-_POLIZA_DE_LA_AGENCIA: Final = "POL-173620"
+#: La de la agencia ocupa un numero de su decena (31 a 36), el segundo.
+_POLIZA_DE_LA_AGENCIA: Final = "POL-32"
 _ASEGURADO_DE_LA_AGENCIA: Final = "Rosa Iturbe"
 _CASO_DE_LA_AGENCIA: Final = "CASE-91BD04"
 _NAVEGADOR_DE_LA_AGENCIA: Final = "7a5c3d2e0b9f8461d3c2b1a0f9e8d7c6b5a4938271605f4e3d2c1b0a9f8e7d6c"

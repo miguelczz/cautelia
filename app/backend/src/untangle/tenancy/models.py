@@ -603,7 +603,7 @@ class TenantConfig(Frozen):
     #: la aseguradora**: escribirlo en el codigo seria la ramificacion por
     #: inquilino que el proyecto prohibe. Que dos no lo repitan lo comprueba U4
     #: al arrancar, porque es una propiedad del conjunto y no de una carpeta.
-    case_number_prefix: str = Field(pattern=r"^[A-Z]{3}$")
+    case_number_prefix: str = Field(pattern=r"^[A-Z]{2}$")
     copy_overrides: tuple[str, ...] = ()
     voice: VoiceConfig
     staff: tuple[StaffPrincipal, ...] = ()

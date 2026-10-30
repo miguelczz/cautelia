@@ -1,6 +1,6 @@
 """Las sondas de la poliza que el reconocedor entrego mal (2026-10-13).
 
-Nacen de una llamada real: «Soy Marco Parker, mi poliza es POL-200117» llego como «mi poliza
+Nacen de una llamada real: «Soy Marco Parker, mi poliza es POL-200117» (cuando las polizas tenian seis cifras) llego como «mi poliza
 es Paul 201 17», y el caso quedo **sin poliza identificada** aunque la persona dijo su nombre
 entero, mientras que en el chat la agente dice «Encontre la poliza ... ¿Eres tu?». Dos criterios,
 cada uno con su pareja por idioma:

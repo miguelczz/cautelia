@@ -181,7 +181,7 @@
     },
     "RecognizerPattern": {
       "additionalProperties": false,
-      "description": "Una forma de escritura de un tipo, con su expresion y su puntaje.\n\nEl puntaje decide dos cosas: si el hallazgo supera el umbral del idioma sin\nayuda del contexto, y quien gana un solape entre dos hallazgos del mismo\ntamano. Un patron con estructura propia --`POL-######`-- puntua alto; uno\nque es una tira de digitos a secas puntua bajo y depende del contexto.",
+      "description": "Una forma de escritura de un tipo, con su expresion y su puntaje.\n\nEl puntaje decide dos cosas: si el hallazgo supera el umbral del idioma sin\nayuda del contexto, y quien gana un solape entre dos hallazgos del mismo\ntamano. Un patron con estructura propia --`POL-##`-- puntua alto; uno\nque es una tira de digitos a secas puntua bajo y depende del contexto.",
       "properties": {
         "form": {
           "$ref": "#/$defs/WritingForm"

@@ -670,7 +670,7 @@ def _check_policy_holder_confirmed(*, language: Locale, root: Path) -> CheckOutc
     caso = _load("ds2", "intake-policy-holder-confirmed", language=language, root=root)
     si, no = (r.text for r in caso.answers_for("identity_and_policy"))
     titular = policy.PolicyMatch(
-        policy_number="POL-100042", holder_name="Natalia Henao Rendón", vehicle="Renault Logan 2024"
+        policy_number="POL-11", holder_name="Daniela Castaño", vehicle="Kia Picanto 2013"
     )
     clave, frase = policy.compose_found(titular, language=language)
     problemas = [
@@ -691,7 +691,7 @@ def _check_policy_holder_confirmed(*, language: Locale, root: Path) -> CheckOutc
         no, language=language
     ):
         problemas.append(f"'{no}' no se leyo como no")
-    if policy.policy_number_in("mi póliza es la pol-100042") != "POL-100042":
+    if policy.policy_number_in("mi póliza es la pol-11") != "POL-11":
         problemas.append("el numero de poliza no se reconoce dentro de una frase")
     if problemas:
         return CheckOutcome(passed=False, detail=f"'{caso.case_key}': " + "; ".join(problemas))

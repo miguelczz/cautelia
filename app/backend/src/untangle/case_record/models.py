@@ -274,20 +274,20 @@ class AttachmentKind(StrEnum):
 
 
 class CaseNumber(Frozen):
-    """El numero legible: tres letras de la aseguradora, guion, seis digitos.
+    """El numero legible: las dos iniciales de la aseguradora, guion y un contador.
 
-    Los tres prefijos de la demostracion son `STO`, `SUN` y `KNO`, elegidos para
-    **no confundirse entre si al dictarse** (decision FD-U4-1 de Miguel): las
-    maquetas usaban `SMU` y `SMA`, que se diferencian en una letra y nombran
-    aseguradoras distintas.
+    Los tres prefijos de la demostracion son `SA` (Seguros Aburra), `AP` (Autos
+    Poblado) y `AC` (Agencia Castilla), y el contador empieza en 1 por aseguradora
+    y no lleva ceros a la izquierda: `SA-1`, `AP-29`. Decision de Miguel del
+    2026-10-30, que reemplaza las tres letras y los seis digitos al azar.
 
     El prefijo sale de la configuracion de la aseguradora, nunca de una tabla en
     el codigo (BR4.1): escribirlo aqui seria la ramificacion por inquilino que el
     proyecto prohibe.
     """
 
-    prefix: str = Field(pattern=r"^[A-Z]{3}$")
-    serial: str = Field(pattern=r"^\d{6}$")
+    prefix: str = Field(pattern=r"^[A-Z]{2}$")
+    serial: str = Field(pattern=r"^[1-9]\d{0,5}$")
 
     def __str__(self) -> str:
         return f"{self.prefix}-{self.serial}"

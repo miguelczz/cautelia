@@ -5,12 +5,12 @@
       "description": "Una clausula, con la forma exacta de C-26.",
       "properties": {
         "clause_id": {
-          "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?-[A-Za-z0-9]+(?:\\.[A-Za-z0-9_]+)*$",
+          "pattern": "^[A-Z]{2}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?-[A-Za-z0-9]+(?:\\.[A-Za-z0-9_]+)*$",
           "title": "Clause Id",
           "type": "string"
         },
         "form_id": {
-          "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
+          "pattern": "^[A-Z]{2}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
           "title": "Form Id",
           "type": "string"
         },
@@ -71,7 +71,7 @@
   "description": "Las clausulas de un formulario (`clauses/<form_id>.json`).",
   "properties": {
     "form_id": {
-      "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
+      "pattern": "^[A-Z]{2}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
       "title": "Form Id",
       "type": "string"
     },

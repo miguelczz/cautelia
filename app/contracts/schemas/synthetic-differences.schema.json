@@ -21,7 +21,7 @@
         },
         "present_in": {
           "items": {
-            "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
+            "pattern": "^[A-Z]{2}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
             "type": "string"
           },
           "minItems": 1,
@@ -30,7 +30,7 @@
         },
         "absent_in": {
           "items": {
-            "pattern": "^[A-Z]{3}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
+            "pattern": "^[A-Z]{2}-[A-Z]{3}-\\d{4}(?:-END-[1-9]\\d*)?$",
             "type": "string"
           },
           "minItems": 1,

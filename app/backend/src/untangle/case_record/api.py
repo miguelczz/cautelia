@@ -247,36 +247,47 @@ class NewCase:
     continues_case_id: CaseId | None = None
 
 
+#: Cuantas veces se vuelve a pedir el numero cuando otro caso tomo el mismo a la vez.
+_INTENTOS_DE_NUMERO = 5
+
+
 async def create_case(tenant_id: TenantId, nuevo: NewCase, *, now: datetime) -> CaseView:
     """Abre un caso con su numero acunado y su completitud en cero.
 
-    El numero se acuna contra los ya **emitidos** por esa aseguradora --los del
-    libro que sobrevive al reinicio nocturno-- y no contra un contador: un numero
-    correlativo deja ver cuantos casos lleva la demostracion a cualquiera que
-    reciba uno.
+    El numero es el siguiente al mayor ya **emitido** por esa aseguradora --del libro
+    que sobrevive al reinicio nocturno--, asi que nunca repite uno (BR2.5 de U20).
 
     Falla si el tipo de registro no declara campos: un caso con completitud 0/0
     se podria cerrar sin haber capturado nada (BR1.6).
     """
     fields.definitions_for(nuevo.record_type)
-    # Los seriales del **libro de emitidos**, que sobrevive al reinicio nocturno
-    # (BR2.5 de U20): los casos de anoche ya no estan, y sin el libro sus numeros
-    # volverian a quedar libres.
-    tomados = await repository.issued_serials(tenant_id)
-    case = Case(
-        case_id=nuevo.case_id,
-        tenant_id=tenant_id,
-        case_number=numbering.mint(tenant_id, taken=tomados),
-        record_type=nuevo.record_type,
-        channel=nuevo.channel,
-        origin=nuevo.origin,
-        language=nuevo.language,
-        policy_ref=nuevo.policy_ref,
-        continues_case_id=nuevo.continues_case_id,
-        created_at=now,
-        updated_at=now,
-    )
-    await repository.insert_case(tenant_id, case)
+    # El contador sale del **libro de emitidos**, que sobrevive al reinicio nocturno (BR2.5
+    # de U20): los casos de anoche ya no estan, y sin el libro sus numeros volverian a
+    # quedar libres. Dos casos que se abren en el mismo instante leen el mismo "mayor" y
+    # piden el mismo numero: la unicidad de la base deja pasar a uno, y el otro vuelve a leer
+    # el libro y toma el siguiente.
+    for intento in range(_INTENTOS_DE_NUMERO):
+        tomados = await repository.issued_serials(tenant_id)
+        case = Case(
+            case_id=nuevo.case_id,
+            tenant_id=tenant_id,
+            case_number=numbering.mint(tenant_id, taken=tomados),
+            record_type=nuevo.record_type,
+            channel=nuevo.channel,
+            origin=nuevo.origin,
+            language=nuevo.language,
+            policy_ref=nuevo.policy_ref,
+            continues_case_id=nuevo.continues_case_id,
+            created_at=now,
+            updated_at=now,
+        )
+        try:
+            await repository.insert_case(tenant_id, case)
+        except session.UniqueViolation:
+            if intento == _INTENTOS_DE_NUMERO - 1:
+                raise
+            continue
+        break
     return _vista(case, fields.completeness_of(case.record_type, ()))
 
 

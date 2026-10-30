@@ -53,7 +53,6 @@ from untangle.case_record.models import (
     Resolution,
 )
 from untangle.case_record.rules import TransitionContext
-from untangle.compliance.redaction.api import redact
 from untangle.inbox import actions, case_view, events, receipts
 from untangle.tenancy.models import TenantConfig, TenantId
 
@@ -308,12 +307,9 @@ async def decide(  # noqa: PLR0913 -- la accion, el comentario, la clave, quien 
 
     # 1. Se registra. El caso queda cerrado con su resolucion, su hora, quien
     #    decidio y su comentario, en la transaccion de U4.
-    # El comentario se redacta **antes** de persistirlo, como todo lo que escribe
-    # una persona: la regla no tiene excepcion para quien lleva credencial, y por
-    # el enlace firmado este texto llega desde una superficie publica. Lo que el
-    # comentario aporta --el porque-- sobrevive a la redaccion; lo que no
-    # sobrevive es el dato personal que alguien copie de la conversacion.
-    comentario = str(redact(comment, language=detalle.language))
+    # El comentario se guarda como se escribio, igual que la conversacion desde el
+    # 2026-10-30 (decision de Miguel): lo lee el asegurado en su caso.
+    comentario = comment
     vista = await casos.close_case(
         tenant_id,
         case_id,

@@ -62,7 +62,6 @@ from untangle.case_record.models import (
     PartyRole,
     RecordType,
 )
-from untangle.compliance.redaction.api import redact
 from untangle.orchestration.nodes.intake import policy
 from untangle.orchestration.nodes.intake.reporter import (
     ThirdPartyReporter as ThirdPartyReporter,
@@ -214,19 +213,17 @@ async def register_reporter(  # noqa: PLR0913 -- seis datos del registro, ningun
 
     Se registra con `role=REPORTER` (`u11_intake_0001_reporter_party`,
     FD-U11-5 corregida) y solo con lo que el tercero aporto de si mismo. La
-    relacion pasa por el punto unico de redaccion de U3 antes de sellarse --
-    es texto que dicta la persona, y un dato personal suyo (un nombre, un
-    telefono) podria colarse dentro ("es mi vecina, se llama Ana Torres") --
-    y viaja sin cifrar en `CaseParty.relation`, igual que `injury_status` y
-    `vehicle_description` (`parties.py`).
+    relacion se guarda como se dijo, igual que la conversacion desde el
+    2026-10-30 (decision de Miguel), y viaja sin cifrar en `CaseParty.relation`,
+    igual que `injury_status` y `vehicle_description` (`parties.py`).
     """
-    relacion_redactada = str(redact(reporter.relation, language=language))
+    del language
     parte = parties.register_party(
         case_id=case_id,
         party_id=party_id,
         role=PartyRole.REPORTER,
         details=parties.PartyDetails(
-            name=reporter.name, contact=reporter.contact, relation=relacion_redactada
+            name=reporter.name, contact=reporter.contact, relation=reporter.relation
         ),
         cipher=cipher,
     )

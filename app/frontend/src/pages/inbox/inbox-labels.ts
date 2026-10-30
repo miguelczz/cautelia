@@ -330,8 +330,6 @@ export function findingLabel(code: string): Message {
       return (t) => t("inbox.controls.finding.disclosure_missing");
     case "human_route_missed":
       return (t) => t("inbox.controls.finding.human_route_missed");
-    case "pii_found":
-      return (t) => t("inbox.controls.finding.pii_found");
     case "attachment_missing":
       return (t) => t("inbox.controls.finding.attachment_missing");
     default:

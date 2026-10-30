@@ -1,4 +1,4 @@
-"""El registro de los seis puntos de salida (BR1.3, AC4.12.2).
+"""El registro de los cinco puntos de salida (BR1.3, AC4.12.2).
 
 **Solo los declara. No escribe en ninguno y no llama a la redaccion.** Por eso
 queda fuera de la escalera de capas del modulo, con su propio contrato: no
@@ -8,10 +8,12 @@ redaccion seria un septimo punto de salida encubierto.
 
 Cada unidad duena implementa el suyo **exigiendo `Redacted`**. Lo que vive aqui
 es la lista, en un solo sitio, que es lo que hace comprobable el criterio: un
-modulo que escriba hacia una de estas seis superficies y no este en esta lista
+modulo que escriba hacia una de estas cinco superficies y no este en esta lista
 hace fallar la regla de importacion nombrandolo.
 
-La lista es de seis y esta cerrada a proposito. Anadir un punto de salida es
+La lista es de cinco y esta cerrada a proposito. Eran seis hasta el 2026-10-30: la
+transcripcion del caso dejo de redactarse al guardarse por decision de Miguel y
+salio de la lista. Anadir un punto de salida es
 anadir una linea aqui, y esa linea es lo que se ve en una revision: sin ella, un
 punto de salida nuevo sin redaccion seria detectable al revisarlo, que es
 exactamente lo que la regla del proyecto no admite.
@@ -27,19 +29,17 @@ from untangle.copy_catalog import api as copy_api
 #: Lo que responde un punto de salida cuando la redaccion no se pudo ejecutar.
 #: **No sale el texto sin tapar: sale esto** (BR1.7, SEC-U3.10). La clave es
 #: literal para que el chequeo de claves sin consumidor la encuentre, y vive
-#: aqui, junto al registro, porque es la respuesta que los seis comparten.
+#: aqui, junto al registro, porque es la respuesta que los cinco comparten.
 DEGRADED_COPY_KEY = copy_api.CopyKey("redaction.degraded")
 
 
 class Surface(StrEnum):
-    """Las seis superficies por las que sale texto del aplicativo.
+    """Las cinco superficies por las que sale texto del aplicativo.
 
     La superficie no cambia **que** se tapa; cambia que se mide y como se
     reporta un fallo.
     """
 
-    #: La transcripcion del turno, guardada con el caso.
-    TRANSCRIPT = "transcript"
     #: El evento tecnico, a la salida estandar.
     LOG = "log"
     #: El tramo de traza del turno o del nodo.
@@ -65,19 +65,13 @@ class OutputSink(Frozen):
     writes: str
 
 
-#: Los seis. Cada unidad duena sale de `unit-of-work.md`, no de una suposicion:
-#: U4 guarda `TranscriptTurn`; el punto unico de eventos tecnicos es de U1 y su
+#: Los cinco. Cada unidad duena sale de `unit-of-work.md`, no de una suposicion:
+#: el punto unico de eventos tecnicos es de U1 y su
 #: propio codigo dice que el sitio donde encaja la redaccion lo dejo hecho para
 #: U3; U5 "corre ... la exportacion de trazas del proceso" y declara depender de
 #: U3 por eso mismo; el reporte por caso con sus turnos y su diferencia es de
 #: U21; y la consola de llamada es de U16.
 SINKS: tuple[OutputSink, ...] = (
-    OutputSink(
-        name="case_transcript",
-        surface=Surface.TRANSCRIPT,
-        owning_unit="U4 case-record",
-        writes="El turno del asegurado y de la agente, guardado con el caso",
-    ),
     OutputSink(
         name="technical_log",
         surface=Surface.LOG,

@@ -258,15 +258,11 @@ async def test_lo_que_sale_del_catalogo_conserva_los_nombres_propios(
     assert "[" not in guardado, guardado
 
 
-async def test_lo_que_compone_el_modelo_se_sigue_tapando_entero(
+async def test_lo_que_compone_el_modelo_se_guarda_como_lo_dijo(
     dos_aseguradoras: tuple[str, str],
 ) -> None:
-    """El control contrario, y es el que impide que esto sea un agujero.
-
-    Sin él, marcar `from_catalog` en el sitio equivocado --o quitarle la condición
-    a la puerta-- dejaría pasar sin tapar el nombre de una persona que el modelo
-    repitió. La diferencia entre las dos puertas tiene que seguir importando.
-    """
+    """Desde el 2026-10-30 la conversacion no se redacta al guardarse (decision de
+    Miguel): el nombre que repitio el modelo queda como la persona lo leyo."""
     _, propia = dos_aseguradoras
     caso = await nuevo_caso(propia)
     conversacion = await _conversacion(propia)
@@ -287,7 +283,7 @@ async def test_lo_que_compone_el_modelo_se_sigue_tapando_entero(
 
     turnos = await casos.transcript_of(propia, caso.case_id)
     guardado = next(t for t in turnos if t.speaker is Speaker.AGENT).text_redacted
-    assert "Warren" not in guardado, guardado
+    assert guardado == "Entendido, Derek Warren. Anoto lo que me cuenta.", guardado
 
 
 @pytest.mark.usefixtures("como_arranca_el_servidor")

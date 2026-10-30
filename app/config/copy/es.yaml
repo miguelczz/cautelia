@@ -1449,9 +1449,6 @@ compliance:
     human_route_missed:
       text: La persona pidió hablar con alguien y el caso no se derivó en el turno siguiente.
       surface: inbox
-    pii_found:
-      text: La transcripción tiene datos personales sin tapar.
-      surface: inbox
     attachment_missing:
       text: Faltan adjuntos del caso, entre la transcripción, las citas, las reglas disparadas y el identificador de la traza.
       surface: inbox
@@ -3306,9 +3303,6 @@ inbox:
         surface: inbox
       human_route_missed:
         text: Se pidió hablar con alguien y la respuesta que siguió no pasó el caso a un ajustador.
-        surface: inbox
-      pii_found:
-        text: Quedaron datos personales sin tapar en la conversación guardada.
         surface: inbox
       attachment_missing:
         text: Al caso le falta información para explicar cómo se llegó a la respuesta.

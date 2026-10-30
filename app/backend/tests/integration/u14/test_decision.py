@@ -150,13 +150,11 @@ async def test_sin_comentario_la_decision_se_rechaza(
     assert vista.state is CaseState.DERIVED, "el caso se movio sin comentario"
 
 
-async def test_el_comentario_queda_en_el_historial_y_redactado(app: FastAPI, emisora: str) -> None:
-    """Auditable, y sin el dato personal que alguien copie de la conversacion.
-
-    La regla de redactar antes de persistir no tiene excepcion para quien lleva
-    credencial, y por el enlace firmado este texto llega desde una superficie
-    publica.
-    """
+async def test_el_comentario_queda_en_el_historial_como_se_escribio(
+    app: FastAPI, emisora: str
+) -> None:
+    """Auditable, y tal como se escribio: desde el 2026-10-30 no se redacta al guardarse
+    (decision de Miguel), porque lo lee el asegurado en su caso."""
     from untangle.case_record import history as historial
 
     caso = await nuevo_caso(emisora)
@@ -165,9 +163,7 @@ async def test_el_comentario_queda_en_el_historial_y_redactado(app: FastAPI, emi
 
     entradas = await historial.of_case(emisora, caso)
     detalles = " ".join(e.detail or "" for e in entradas)
-    assert "Aprobado" in detalles, "el comentario no quedo en el historial"
-    assert "3001234567" not in detalles
-    assert "300 123 4567" not in detalles
+    assert "Aprobado, el telefono 300 123 4567 coincide." in detalles
 
 
 # --- BR4.5: las acciones las decide la configuracion --------------------------

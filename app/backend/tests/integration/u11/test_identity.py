@@ -209,16 +209,11 @@ async def test_un_tercero_sin_contacto_no_registra_contacto_inventado(
     assert partes[0].contact is None
 
 
-async def test_la_relacion_del_tercero_se_guarda_redactada(
+async def test_la_relacion_del_tercero_se_guarda_como_se_dijo(
     dos_aseguradoras: tuple[str, str], cifrador: crypto.Cipher
 ) -> None:
-    """PASO 0 de la tanda 2: un dato personal colado en la relacion no sobrevive.
-
-    "Se llama Ana Torres" trae un nombre propio dentro de la relacion misma --
-    la persona podia haberlo dicho asi -- y M6 exige que pase por el punto
-    unico de redaccion antes de persistirse, igual que cualquier otro texto
-    dictado (BR2.3).
-    """
+    """Desde el 2026-10-30 lo que dice la persona se guarda sin redactar (decision de
+    Miguel), y la relacion tambien: es lo que se muestra en el caso."""
     tenant_id = dos_aseguradoras[0]
     caso = await nuevo_caso(tenant_id)
     tercero = identity.ThirdPartyReporter(relation="es mi vecina, se llama Ana Torres")
@@ -232,8 +227,6 @@ async def test_la_relacion_del_tercero_se_guarda_redactada(
         cipher=cifrador,
     )
 
-    assert registrado.relation is not None
-    assert "Ana Torres" not in registrado.relation
+    assert registrado.relation == "es mi vecina, se llama Ana Torres"
     partes = await casos.parties_of(tenant_id, caso.case_id)
-    assert partes[0].relation is not None
-    assert "Ana Torres" not in partes[0].relation
+    assert partes[0].relation == "es mi vecina, se llama Ana Torres"

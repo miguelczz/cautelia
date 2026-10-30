@@ -47,10 +47,10 @@ INSERTAR_INTERVENCION = """
 
 INSERTAR_REVISION = """
     INSERT INTO compliance_review (review_id, tenant_id, case_id, disclosure_ok,
-                                   human_route_ok, pii_ok, explainability_ok, findings,
+                                   human_route_ok, explainability_ok, findings,
                                    reviewed_through_turn, reviewed_at)
     VALUES (:review_id, :tenant_id, :case_id, :disclosure_ok,
-            :human_route_ok, :pii_ok, :explainability_ok, CAST(:findings AS varchar[]),
+            :human_route_ok, :explainability_ok, CAST(:findings AS varchar[]),
             :reviewed_through_turn, :reviewed_at)
 """
 
@@ -98,7 +98,6 @@ def _revision(caso: CasoSembrado, **cambios: Any) -> dict[str, Any]:
         "case_id": caso.case_id,
         "disclosure_ok": True,
         "human_route_ok": True,
-        "pii_ok": True,
         "explainability_ok": True,
         "findings": [],
         "reviewed_through_turn": caso.turn_ids[-1],
@@ -218,7 +217,6 @@ async def test_ninguna_columna_es_texto_libre_ni_nombra_un_dato_personal() -> No
         ("compliance_review", "case_id"),
         ("compliance_review", "disclosure_ok"),
         ("compliance_review", "human_route_ok"),
-        ("compliance_review", "pii_ok"),
         ("compliance_review", "explainability_ok"),
         ("compliance_review", "findings"),
         ("compliance_review", "reviewed_through_turn"),
@@ -361,7 +359,7 @@ async def test_la_base_rechaza_una_intervencion_que_rompe_una_invariante(
     ("cambios", "restriccion"),
     [
         # BR5.1: un control en falso sin su codigo.
-        ({"pii_ok": False}, "compliance_review_datos_personales_concuerda"),
+        ({"human_route_ok": False}, "compliance_review_ruta_concuerda"),
         # BR5.1: un codigo con su control en verdadero.
         ({"findings": ["disclosure_missing"]}, "compliance_review_divulgacion_concuerda"),
         # BR8.2: un hallazgo fuera de la lista cerrada.

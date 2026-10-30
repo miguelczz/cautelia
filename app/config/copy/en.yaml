@@ -1398,9 +1398,6 @@ compliance:
     human_route_missed:
       text: The person asked to speak with someone and the case wasn't handed off on the next turn.
       surface: inbox
-    pii_found:
-      text: The transcript has personal data that wasn't masked.
-      surface: inbox
     attachment_missing:
       text: Case attachments are missing, among the transcript, the citations, the fired rules and the trace ID.
       surface: inbox
@@ -3159,9 +3156,6 @@ inbox:
         surface: inbox
       human_route_missed:
         text: Someone asked to talk to somebody, and the next reply did not pass the case to an adjuster.
-        surface: inbox
-      pii_found:
-        text: Personal data was left uncovered in the saved conversation.
         surface: inbox
       attachment_missing:
         text: The case lacks information to explain how the answer was reached.

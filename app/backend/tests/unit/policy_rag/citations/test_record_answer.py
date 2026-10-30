@@ -73,8 +73,11 @@ def _verificacion(
     )
 
 
-def test_la_pregunta_y_la_afirmacion_se_guardan_redactadas(monkeypatch: pytest.MonkeyPatch) -> None:
-    """BR4.3, SEC-U8.7: se persiste redactado, no solo se exporta redactado."""
+def test_la_pregunta_se_guarda_como_se_escribio_y_la_afirmacion_redactada(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """La pregunta es la que se muestra en el caso y se guarda como se escribio desde el
+    2026-10-30 (decision de Miguel). La afirmacion la escribe el modelo y sigue tapada."""
     almacen = AlmacenDePrueba()
     monkeypatch.setattr(citations, "repository", almacen)
 
@@ -90,7 +93,7 @@ def test_la_pregunta_y_la_afirmacion_se_guardan_redactadas(monkeypatch: pytest.M
         )
     )
 
-    assert "1002003000" not in respuesta.question_redacted
+    assert respuesta.question_redacted == "Mi cedula es 1002003000, ¿que cubre la parte A?"
     assert all("1002003000" not in c.claim_redacted for c in almacen.comprobaciones)
 
 

@@ -96,17 +96,16 @@ class FindingCode(StrEnum):
 
     DISCLOSURE_MISSING = "disclosure_missing"
     HUMAN_ROUTE_MISSED = "human_route_missed"
-    PII_FOUND = "pii_found"
     ATTACHMENT_MISSING = "attachment_missing"
 
 
-#: Que codigo corresponde a cada uno de los cuatro controles. Un control en
+#: Que codigo corresponde a cada uno de los tres controles. El de datos personales en
+#: la transcripcion se retiro el 2026-10-30 (ver `review.py`). Un control en
 #: falso lleva **exactamente** su codigo entre los hallazgos, y uno en verdadero
 #: no lo lleva: la marca y la lista no pueden decir cosas distintas.
 FINDING_OF_CONTROL: dict[str, FindingCode] = {
     "disclosure_ok": FindingCode.DISCLOSURE_MISSING,
     "human_route_ok": FindingCode.HUMAN_ROUTE_MISSED,
-    "pii_ok": FindingCode.PII_FOUND,
     "explainability_ok": FindingCode.ATTACHMENT_MISSING,
 }
 
@@ -244,7 +243,7 @@ class GuardIntervention(Frozen):
 
 
 class ComplianceReview(Frozen):
-    """La revision completa de los cuatro controles, al cierre o en la derivacion (FR7.7).
+    """La revision completa de los tres controles, al cierre o en la derivacion (FR7.7).
 
     Una por caso y turno revisado: repetir la revision del mismo punto no crea
     otra (BR6.3). `reviewed_through_turn` es el ultimo turno revisado, el de la
@@ -256,7 +255,6 @@ class ComplianceReview(Frozen):
     case_id: str = Field(min_length=1, max_length=ID_MAX_LENGTH)
     disclosure_ok: bool
     human_route_ok: bool
-    pii_ok: bool
     explainability_ok: bool
     #: Codigos cerrados, nunca texto libre; vacia si todo paso. Se guarda en un
     #: orden canonico para que dos revisiones iguales se escriban iguales.
@@ -291,5 +289,5 @@ class ComplianceReview(Frozen):
 
     @property
     def passed(self) -> bool:
-        """Los cuatro controles pasaron. Es la condicion de BR6.1 para cerrar."""
+        """Los tres controles pasaron. Es la condicion de BR6.1 para cerrar."""
         return not self.findings

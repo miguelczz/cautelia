@@ -239,7 +239,6 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["compliance.finding.attachment_missing", "Faltan adjuntos del caso, entre la transcripción, las citas, las reglas disparadas y el identificador de la traza."],
   ["compliance.finding.disclosure_missing", "Falta el registro de que la agente dijo que es una inteligencia artificial."],
   ["compliance.finding.human_route_missed", "La persona pidió hablar con alguien y el caso no se derivó en el turno siguiente."],
-  ["compliance.finding.pii_found", "La transcripción tiene datos personales sin tapar."],
   ["compliance.guard.amount", "No puedo darte montos ni cifras; un ajustador los define al revisar tu caso."],
   ["compliance.guard.config_disclosure", "No puedo compartir esa información. ¿Seguimos con tu reporte o con tu póliza?"],
   ["compliance.guard.coverage_promise", "No puedo confirmar la cobertura yo misma; la confirma un ajustador con la cláusula exacta."],
@@ -264,10 +263,10 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["documents.kind_endorsement", "Condición especial {number}"],
   ["documents.kind_jurisdiction", "Reglas del territorio"],
   ["documents.list_label", "Documentos"],
+  ["documents.loading", "Cargando el documento…"],
 ];
 
 const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
-  ["documents.loading", "Cargando el documento…"],
   ["documents.no_match", "Ninguna cláusula coincide con la búsqueda."],
   ["documents.not_in_force", "No vigente"],
   ["documents.not_in_force_why", "Ninguna póliza lo usa. Está aquí para comprobar que {agent} no cita documentos viejos."],
@@ -347,7 +346,6 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["inbox.controls.finding.disclosure_missing", "No quedó registrado el aviso de que quien responde es una asistente de inteligencia artificial."],
   ["inbox.controls.finding.human_route_missed", "Se pidió hablar con alguien y la respuesta que siguió no pasó el caso a un ajustador."],
   ["inbox.controls.finding.other", "Hay un hallazgo que revisa el ajustador."],
-  ["inbox.controls.finding.pii_found", "Quedaron datos personales sin tapar en la conversación guardada."],
   ["inbox.controls.reviewed", "Se revisó que la conversación avisara que quien responde es una asistente de inteligencia artificial, que se pasara a un ajustador cuando se pidió, que no quedaran datos personales sin tapar y que el caso se pueda explicar."],
   ["inbox.controls.some_findings", "Se encontró lo siguiente:"],
   ["inbox.correction.cancel", "Cancelar"],
@@ -517,11 +515,11 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.readback.identity_and_policy", "Confirmo: {value}. ¿Es correcto?"],
   ["intake.readback.other_parties", "Anotado sobre las otras partes. ¿Es correcto?"],
   ["intake.readback.quote_all", "Anotado: {summary} ¿Es correcto todo?"],
+  ["intake.readback.quote_driver", "Anotado: {name}, fecha de nacimiento {birth_date}, {license_years} años con licencia, expedida en {license_jurisdiction}. ¿Es correcto?"],
+  ["intake.readback.quote_driver_part", "{name}, fecha de nacimiento {birth_date}, {license_years} años con licencia, expedida en {license_jurisdiction}."],
 ];
 
 const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
-  ["intake.readback.quote_driver", "Anotado: {name}, fecha de nacimiento {birth_date}, {license_years} años con licencia, expedida en {license_jurisdiction}. ¿Es correcto?"],
-  ["intake.readback.quote_driver_part", "{name}, fecha de nacimiento {birth_date}, {license_years} años con licencia, expedida en {license_jurisdiction}."],
   ["intake.readback.quote_history", "Anotado: {at_fault_losses_3y} siniestros con culpa y {claims_3y} reportados en tres años; {prior_coverage_active}; {lapse_months} meses sin cobertura. ¿Es correcto?"],
   ["intake.readback.quote_history_part", "Siniestros con culpa en tres años: {at_fault_losses_3y}; reportados: {claims_3y}; {prior_coverage_active}; meses sin cobertura: {lapse_months}."],
   ["intake.readback.quote_usage", "Anotado: uso {use_type}, recorrido anual {annual_mileage_band}, y se guarda en {garaging_jurisdiction}. ¿Es correcto?"],
@@ -770,11 +768,11 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["redaction.spoken.license_plate", "esa placa"],
   ["redaction.spoken.location", "ese lugar"],
   ["redaction.spoken.national_id", "ese documento"],
+  ["redaction.spoken.person", "ese nombre"],
+  ["redaction.spoken.phone", "ese teléfono"],
 ];
 
 const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
-  ["redaction.spoken.person", "ese nombre"],
-  ["redaction.spoken.phone", "ese teléfono"],
   ["redaction.spoken.policy_number", "esa póliza"],
   ["redaction.spoken.unclassified", "ese dato"],
   ["redaction.spoken.vin", "ese número de serie"],
@@ -1023,11 +1021,11 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.decision.rejected", "Un ajustador revisó tu caso {case_number} y no lo aprobó. Si prefieres, un ajustador lo puede volver a mirar."],
   ["voice.decision.sent_to_insurer", "Tu caso {case_number} se envió a la aseguradora que emitió tu póliza."],
   ["voice.duration.minute", "un minuto"],
+  ["voice.duration.minutes", "{minutes} minutos"],
+  ["voice.ended.completed", "Tu reporte quedó completo."],
 ];
 
 const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
-  ["voice.duration.minutes", "{minutes} minutos"],
-  ["voice.ended.completed", "Tu reporte quedó completo."],
   ["voice.ended.dropped", "La llamada se cortó. Tu caso queda guardado."],
   ["voice.ended.error", "Algo falló en la llamada. Tu caso queda guardado."],
   ["voice.ended.handed_off", "Tu caso pasó a un ajustador."],

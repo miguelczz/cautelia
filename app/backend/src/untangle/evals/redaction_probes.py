@@ -17,7 +17,7 @@ Dos sondas y no una, porque miden dos cosas distintas:
   fue el otro juego.
 
 **Ningun detalle de fallo imprime el valor sembrado.** El reporte de
-evaluaciones es uno de los seis puntos de salida (BR4.4, SEC-U3.14): describe la
+evaluaciones es uno de los cinco puntos de salida (BR4.4, SEC-U3.14): describe la
 diferencia --que semilla, que tipo, que idioma-- sin mostrar lo que se escapo.
 Un mensaje de diagnostico que imprimiera el valor convertiria a la sonda en el
 punto de fuga que existe para detectar.

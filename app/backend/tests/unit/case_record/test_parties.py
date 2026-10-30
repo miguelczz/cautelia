@@ -19,7 +19,6 @@ from untangle.case_record.models import (
     PartyRole,
     Speaker,
 )
-from untangle.compliance.redaction.api import redact
 
 AHORA = datetime(2026, 9, 20, 15, 0, tzinfo=UTC)
 
@@ -159,47 +158,22 @@ def _borrador(**cambios: object) -> transcript.TurnDraft:
     return transcript.TurnDraft(**{**base.__dict__, **cambios})
 
 
-def test_el_turno_se_guarda_ya_redactado() -> None:
-    """El dato personal no llega al almacen, no es que llegue tapado despues."""
-    turno = transcript.redact_and_append(
-        _borrador(), "Me llamo Nayibe Quintero y mi telefono es 3001112233"
-    )
+def test_el_turno_se_guarda_tal_como_se_dijo() -> None:
+    """Desde el 2026-10-30 la conversacion no se redacta al guardarse (decision de
+    Miguel): ninguna pantalla vuelve a mostrar «[NOMBRE 1]»."""
+    turno = transcript.append(_borrador(), "Me llamo Nayibe Quintero y mi telefono es 3001112233")
 
-    assert "Nayibe" not in turno.text_redacted
-    assert "3001112233" not in turno.text_redacted
+    assert turno.text_redacted == "Me llamo Nayibe Quintero y mi telefono es 3001112233"
 
 
-def test_anexar_no_vuelve_a_redactar_lo_que_ya_paso() -> None:
-    """Redactar dos veces romperia la numeracion de etiquetas entre turnos."""
-    ya_redactado = redact("Me llamo Nayibe Quintero", language="es")
-
-    turno = transcript.append(_borrador(), ya_redactado)
-
-    assert turno.text_redacted == str(ya_redactado)
-
-
-def test_el_idioma_sale_del_borrador_y_no_se_adivina() -> None:
-    """Los reconocedores de placa, cedula y telefono son distintos en cada
-    idioma, y adivinarlo sobre cuatro palabras es como una cedula se queda sin
-    tapar."""
-    turno = transcript.redact_and_append(
-        _borrador(language="en"), "My name is Nayibe Quintero and my phone is 3001112233"
-    )
+def test_el_idioma_sale_del_borrador() -> None:
+    turno = transcript.append(_borrador(language="en"), "My name is Nayibe Quintero")
 
     assert turno.language == "en"
-    assert "3001112233" not in turno.text_redacted
-    # La etiqueta sale en ingles, y eso es lo que demuestra que se uso el
-    # reconocedor de ese idioma. Se comprueba sobre el telefono --un patron, no
-    # un nombre-- porque el reconocimiento de nombres depende del contexto y
-    # esta prueba no es el sitio donde se mide esa tasa: eso lo hace el reporte
-    # de redaccion por idioma y por tipo de entidad.
-    assert "[PHONE" in turno.text_redacted
 
 
 def test_el_turno_conserva_lo_que_no_es_texto() -> None:
-    turno = transcript.redact_and_append(
-        _borrador(interrupted=True, ended_at=AHORA), "Se me cruzo un carro"
-    )
+    turno = transcript.append(_borrador(interrupted=True, ended_at=AHORA), "Se me cruzo un carro")
 
     assert turno.interrupted is True
     assert turno.ended_at == AHORA

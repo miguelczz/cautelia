@@ -200,9 +200,11 @@ def test_el_punto_de_salida_tiene_su_clave_de_degradacion() -> None:
 # --- El registro de puntos de salida (BR1.3, AC4.12.2) ------------------------
 
 
-def test_los_seis_puntos_de_salida_estan_declarados_una_sola_vez() -> None:
-    assert len(sinks.SINKS) == 6
-    assert len(sinks.declared_names()) == 6
+def test_los_cinco_puntos_de_salida_estan_declarados_una_sola_vez() -> None:
+    """Eran seis hasta el 2026-10-30: la transcripcion del caso dejo de redactarse."""
+    assert len(sinks.SINKS) == 5
+    assert len(sinks.declared_names()) == 5
+    assert "case_transcript" not in sinks.declared_names()
 
 
 def test_cada_superficie_tiene_al_menos_un_punto_de_salida_declarado() -> None:

@@ -234,7 +234,6 @@ export type CopyKey =
   | "compliance.finding.attachment_missing"
   | "compliance.finding.disclosure_missing"
   | "compliance.finding.human_route_missed"
-  | "compliance.finding.pii_found"
   | "compliance.guard.amount"
   | "compliance.guard.config_disclosure"
   | "compliance.guard.coverage_promise"
@@ -339,7 +338,6 @@ export type CopyKey =
   | "inbox.controls.finding.disclosure_missing"
   | "inbox.controls.finding.human_route_missed"
   | "inbox.controls.finding.other"
-  | "inbox.controls.finding.pii_found"
   | "inbox.controls.reviewed"
   | "inbox.controls.some_findings"
   | "inbox.correction.cancel"
@@ -1290,7 +1288,6 @@ export const COPY_KEYS = [
   "compliance.finding.attachment_missing",
   "compliance.finding.disclosure_missing",
   "compliance.finding.human_route_missed",
-  "compliance.finding.pii_found",
   "compliance.guard.amount",
   "compliance.guard.config_disclosure",
   "compliance.guard.coverage_promise",
@@ -1395,7 +1392,6 @@ export const COPY_KEYS = [
   "inbox.controls.finding.disclosure_missing",
   "inbox.controls.finding.human_route_missed",
   "inbox.controls.finding.other",
-  "inbox.controls.finding.pii_found",
   "inbox.controls.reviewed",
   "inbox.controls.some_findings",
   "inbox.correction.cancel",

@@ -72,7 +72,6 @@ from untangle.case_record.models import (
 from untangle.case_record.models import (
     InvalidTransitionError as InvalidTransitionError,
 )
-from untangle.compliance.redaction.api import Redacted
 from untangle.tenancy import session
 from untangle.tenancy.models import TenantId
 
@@ -629,12 +628,11 @@ async def conversation_transcript(
     return await repository.load_conversation_turns(tenant_id, case_id, max_hops=max_hops)
 
 
-async def append_turn(tenant_id: TenantId, draft: transcript.TurnDraft, text: Redacted) -> TurnId:
-    """Guarda un turno **ya redactado**. No acepta texto sin redactar.
+async def append_turn(tenant_id: TenantId, draft: transcript.TurnDraft, text: str) -> TurnId:
+    """Guarda un turno tal como se dijo (decision de Miguel del 2026-10-30).
 
-    El tipo lo impide antes de ejecutar: `Redacted` solo lo fabrica el modulo de
-    redaccion de U3, y `mise run redaction:constructor` falla ante cualquier
-    otro sitio que lo intente (C-13, SEC-U4.6).
+    Antes exigia texto redactado; la conversacion del caso dejo de ser un punto de
+    salida con redaccion (ver `transcript.py`).
     """
     turno = transcript.append(draft, text)
     await repository.insert_turn(tenant_id, turno)

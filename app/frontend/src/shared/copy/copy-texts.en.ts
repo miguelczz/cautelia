@@ -239,7 +239,6 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["compliance.finding.attachment_missing", "Case attachments are missing, among the transcript, the citations, the fired rules and the trace ID."],
   ["compliance.finding.disclosure_missing", "The record that the agent said it is an AI is missing."],
   ["compliance.finding.human_route_missed", "The person asked to speak with someone and the case wasn't handed off on the next turn."],
-  ["compliance.finding.pii_found", "The transcript has personal data that wasn't masked."],
   ["compliance.guard.amount", "I can't give you amounts or figures; an adjuster sets them when reviewing your case."],
   ["compliance.guard.config_disclosure", "I can't share that information. Shall we continue with your claim or your policy?"],
   ["compliance.guard.coverage_promise", "I can't confirm coverage myself; an adjuster confirms it with the exact clause."],
@@ -264,10 +263,10 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["documents.kind_endorsement", "Special condition {number}"],
   ["documents.kind_jurisdiction", "Territory rules"],
   ["documents.list_label", "Documents"],
+  ["documents.loading", "Loading the document…"],
 ];
 
 const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
-  ["documents.loading", "Loading the document…"],
   ["documents.no_match", "No clause matches the search."],
   ["documents.not_in_force", "Not in force"],
   ["documents.not_in_force_why", "No policy uses it. It is here to check that {agent} does not cite old documents."],
@@ -347,7 +346,6 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["inbox.controls.finding.disclosure_missing", "The notice that the answers come from an artificial intelligence assistant was not recorded."],
   ["inbox.controls.finding.human_route_missed", "Someone asked to talk to somebody, and the next reply did not pass the case to an adjuster."],
   ["inbox.controls.finding.other", "There is a finding the adjuster will review."],
-  ["inbox.controls.finding.pii_found", "Personal data was left uncovered in the saved conversation."],
   ["inbox.controls.reviewed", "Checked that the conversation said the answers come from an artificial intelligence assistant, that the case went to an adjuster when one was requested, that no personal data was left uncovered, and that the case can be explained."],
   ["inbox.controls.some_findings", "The following was found:"],
   ["inbox.correction.cancel", "Cancel"],
@@ -517,11 +515,11 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.readback.identity_and_policy", "Confirming: {value}. Is that correct?"],
   ["intake.readback.other_parties", "Noted about the other parties. Is that correct?"],
   ["intake.readback.quote_all", "Noted: {summary} Is all of that correct?"],
+  ["intake.readback.quote_driver", "Noted: {name}, born {birth_date}, {license_years} years licensed, license issued in {license_jurisdiction}. Is that correct?"],
+  ["intake.readback.quote_driver_part", "{name}, born {birth_date}, licensed {license_years} years, issued in {license_jurisdiction}."],
 ];
 
 const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
-  ["intake.readback.quote_driver", "Noted: {name}, born {birth_date}, {license_years} years licensed, license issued in {license_jurisdiction}. Is that correct?"],
-  ["intake.readback.quote_driver_part", "{name}, born {birth_date}, licensed {license_years} years, issued in {license_jurisdiction}."],
   ["intake.readback.quote_history", "Noted: {at_fault_losses_3y} at-fault accidents and {claims_3y} claims in three years; {prior_coverage_active}; {lapse_months} months without coverage. Is that correct?"],
   ["intake.readback.quote_history_part", "At-fault losses in three years: {at_fault_losses_3y}; claims: {claims_3y}; {prior_coverage_active}; months without coverage: {lapse_months}."],
   ["intake.readback.quote_usage", "Noted: {use_type} use, {annual_mileage_band} annual mileage, kept overnight in {garaging_jurisdiction}. Is that correct?"],
@@ -770,11 +768,11 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["redaction.spoken.license_plate", "that plate"],
   ["redaction.spoken.location", "that place"],
   ["redaction.spoken.national_id", "that ID"],
+  ["redaction.spoken.person", "that name"],
+  ["redaction.spoken.phone", "that phone number"],
 ];
 
 const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
-  ["redaction.spoken.person", "that name"],
-  ["redaction.spoken.phone", "that phone number"],
   ["redaction.spoken.policy_number", "that policy"],
   ["redaction.spoken.unclassified", "that detail"],
   ["redaction.spoken.vin", "that serial number"],
@@ -1023,11 +1021,11 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.decision.rejected", "An adjuster reviewed your case {case_number} and did not approve it. If you'd like, an adjuster can look at it again."],
   ["voice.decision.sent_to_insurer", "Your case {case_number} was sent to the insurer that issued your policy."],
   ["voice.duration.minute", "one minute"],
+  ["voice.duration.minutes", "{minutes} minutes"],
+  ["voice.ended.completed", "Your report is complete."],
 ];
 
 const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
-  ["voice.duration.minutes", "{minutes} minutes"],
-  ["voice.ended.completed", "Your report is complete."],
   ["voice.ended.dropped", "The call dropped. Your case is saved."],
   ["voice.ended.error", "Something went wrong on the call. Your case is saved."],
   ["voice.ended.handed_off", "Your case went to an adjuster."],

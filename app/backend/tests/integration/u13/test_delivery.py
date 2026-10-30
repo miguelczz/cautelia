@@ -232,10 +232,11 @@ async def test_un_turno_sin_conversacion_viva_no_abre_ningun_caso(
     assert fila["n"] == 0, "se abrio un caso que ninguna conversacion puede reclamar"
 
 
-async def test_lo_que_se_persiste_va_redactado(dos_aseguradoras: tuple[str, str]) -> None:
-    """El tipo lo impone --`append_turn` exige `Redacted`-- y esta prueba lo mira
-    en la fila. La columna se llama `text_redacted`, que es U4 diciendo la misma
-    invariante por tercera vez: en el tipo, en el nombre y aqui."""
+async def test_lo_que_se_persiste_va_tal_como_se_escribio(
+    dos_aseguradoras: tuple[str, str],
+) -> None:
+    """Desde el 2026-10-30 la conversacion se guarda sin redactar (decision de Miguel):
+    lo mira en la fila. La columna conserva el nombre `text_redacted`."""
     _, propia = dos_aseguradoras
     caso = await nuevo_caso(propia)
     entregado = await delivery.deliver(
@@ -253,8 +254,7 @@ async def test_lo_que_se_persiste_va_redactado(dos_aseguradoras: tuple[str, str]
             id=entregado.turn_id,
         )
     assert fila is not None
-    assert "ABC123" not in fila["text_redacted"]
-    assert "3001234567" not in fila["text_redacted"]
+    assert fila["text_redacted"] == "Mi placa es ABC123 y mi telefono el 3001234567"
 
 
 # --- La pestana que se fue a mitad del turno ----------------------------------

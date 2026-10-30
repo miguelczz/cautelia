@@ -123,9 +123,8 @@ async def _sembrar_cumplimiento(tenant_id: str, case_id: str, turn_id: str) -> N
             case_id=case_id,
             disclosure_ok=True,
             human_route_ok=True,
-            pii_ok=False,
-            explainability_ok=True,
-            findings=(FindingCode.PII_FOUND,),
+            explainability_ok=False,
+            findings=(FindingCode.ATTACHMENT_MISSING,),
             reviewed_through_turn=turn_id,
             reviewed_at=AHORA,
         )
@@ -161,7 +160,7 @@ async def test_la_vista_reune_los_bloques_de_las_cinco_unidades(
     assert cuerpo["rule_category"] == "referral", "el bloque de reglas llego vacio"
     assert cuerpo["fired_rules"] == ["R-DINERO"]
     assert cuerpo["controls_ok"] is False, "el bloque de controles llego vacio"
-    assert cuerpo["control_findings"] == ["pii_found"]
+    assert cuerpo["control_findings"] == ["attachment_missing"]
 
 
 async def test_sin_revision_de_cumplimiento_no_se_inventan_cuatro_verdes(

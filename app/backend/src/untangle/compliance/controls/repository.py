@@ -58,10 +58,10 @@ INSERTAR_INTERVENCION = """
 
 INSERTAR_REVISION = """
     INSERT INTO compliance_review (review_id, tenant_id, case_id, disclosure_ok,
-                                   human_route_ok, pii_ok, explainability_ok, findings,
+                                   human_route_ok, explainability_ok, findings,
                                    reviewed_through_turn, reviewed_at)
     VALUES (:review_id, :tenant_id, :case_id, :disclosure_ok,
-            :human_route_ok, :pii_ok, :explainability_ok, CAST(:findings AS varchar[]),
+            :human_route_ok, :explainability_ok, CAST(:findings AS varchar[]),
             :reviewed_through_turn, :reviewed_at)
     ON CONFLICT (case_id, reviewed_through_turn) DO NOTHING
     RETURNING review_id
@@ -87,9 +87,9 @@ LEER_INTERVENCIONES = """
 #: La de abajo pide el turno hasta el que se reviso, que es lo que necesita quien
 #: **escribe** la revision --para no repetir la del mismo punto--. Quien la **lee**
 #: al abrir un caso no conoce ese turno: lo que quiere es el resultado vigente de
-#: los cuatro controles. Pedida por U14 para su sexto bloque.
+#: los controles. Pedida por U14 para su sexto bloque.
 LEER_ULTIMA_REVISION = """
-    SELECT review_id, tenant_id, case_id, disclosure_ok, human_route_ok, pii_ok,
+    SELECT review_id, tenant_id, case_id, disclosure_ok, human_route_ok,
            explainability_ok, findings, reviewed_through_turn, reviewed_at
     FROM compliance_review
     WHERE case_id = :case_id
@@ -98,7 +98,7 @@ LEER_ULTIMA_REVISION = """
 """
 
 LEER_REVISION = """
-    SELECT review_id, tenant_id, case_id, disclosure_ok, human_route_ok, pii_ok,
+    SELECT review_id, tenant_id, case_id, disclosure_ok, human_route_ok,
            explainability_ok, findings, reviewed_through_turn, reviewed_at
     FROM compliance_review
     WHERE case_id = :case_id AND reviewed_through_turn = :reviewed_through_turn

@@ -295,7 +295,7 @@ describe("los seis bloques de evidencia", () => {
       ok: true,
       value: caso({
         controls_ok: false,
-        control_findings: ["pii_found", "un_codigo_nuevo"],
+        control_findings: ["human_route_missed", "un_codigo_nuevo"],
       }),
     });
     dibujar();
@@ -307,10 +307,10 @@ describe("los seis bloques de evidencia", () => {
       .getAllByRole("listitem")
       .map((fila) => fila.textContent);
     expect(hallazgos).toEqual([
-      t("inbox.controls.finding.pii_found"),
+      t("inbox.controls.finding.human_route_missed"),
       t("inbox.controls.finding.other"),
     ]);
-    expect(bloque.textContent).not.toContain("pii_found");
+    expect(bloque.textContent).not.toContain("human_route_missed");
     expect(bloque.textContent).not.toContain("un_codigo_nuevo");
   });
 

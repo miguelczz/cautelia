@@ -43,7 +43,6 @@ from untangle.case_record.models import (
     Resolution,
     Speaker,
 )
-from untangle.compliance.redaction.api import redact
 from untangle.tenancy import ephemeral, session
 
 AHORA = datetime(2026, 9, 20, 15, 0, tzinfo=UTC)
@@ -390,7 +389,7 @@ async def test_cerrar_con_todo_guarda_la_evidencia_con_el_caso(
 # --- La transcripcion ---------------------------------------------------------
 
 
-async def test_el_turno_se_guarda_ya_redactado(
+async def test_el_turno_se_guarda_tal_como_se_dijo(
     sesiones: ephemeral.EphemeralDatabase,
 ) -> None:
     await _abrir()
@@ -405,7 +404,7 @@ async def test_el_turno_se_guarda_ya_redactado(
             language="es",
             started_at=AHORA,
         ),
-        redact("Me llamo Nayibe Quintero y mi telefono es 3001112233", language="es"),
+        "Me llamo Nayibe Quintero y mi telefono es 3001112233",
     )
 
     async with session.session_for("stonecroft") as sesion:
@@ -416,8 +415,8 @@ async def test_el_turno_se_guarda_ya_redactado(
         )
 
     assert fila is not None
-    assert "Nayibe" not in fila["text_redacted"]
-    assert "3001112233" not in fila["text_redacted"]
+    # Desde el 2026-10-30 la conversacion no se redacta al guardarse (decision de Miguel).
+    assert fila["text_redacted"] == "Me llamo Nayibe Quintero y mi telefono es 3001112233"
 
 
 # --- La superficie no ofrece lo que no debe ofrecer ---------------------------

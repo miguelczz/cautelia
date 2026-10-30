@@ -52,7 +52,6 @@ def _revision(request: ReviewRequest, *hallazgos: FindingCode) -> ComplianceRevi
         case_id=request.case_id,
         disclosure_ok=FindingCode.DISCLOSURE_MISSING not in hallazgos,
         human_route_ok=FindingCode.HUMAN_ROUTE_MISSED not in hallazgos,
-        pii_ok=FindingCode.PII_FOUND not in hallazgos,
         explainability_ok=FindingCode.ATTACHMENT_MISSING not in hallazgos,
         findings=hallazgos,
         reviewed_through_turn=request.through_turn,
@@ -157,7 +156,7 @@ async def test_la_reejecucion_con_el_mismo_estado_da_la_misma_decision(
     aseguradoras: tuple[TenantConfig, ...],
 ) -> None:
     """C-15, BR6.3: el nodo es puro. Lo que no se duplica al guardar lo prueba la integracion."""
-    nodo = ComplianceNode(review=_Revisor(FindingCode.PII_FOUND))
+    nodo = ComplianceNode(review=_Revisor(FindingCode.ATTACHMENT_MISSING))
     estado = _estado(aseguradoras[0].tenant_id)
 
     primera = await nodo.run(estado)

@@ -1,13 +1,9 @@
-"""La revision completa de los cuatro controles, sin modelo (BR5.1 a BR5.3).
+"""La revision completa de los tres controles, sin modelo (BR5.1 a BR5.3).
 
 Con los puertos de la raiz sustituidos por dobles en memoria: la transcripcion,
-las divulgaciones, el detector de datos personales y el guardado. Lo que se
-prueba es **que decide la revision** con lo que lee; que lea de verdad de la base
-y use el detector de U3 lo prueba la integracion (`tests/integration/u10`).
-
-El doble del detector no detecta por su cuenta: devuelve lo que la prueba le
-dijo de cada texto. Asi una prueba de `pii_ok` no depende de que un modelo de
-lenguaje reconozca un nombre.
+las divulgaciones y el guardado. Lo que se prueba es **que decide la revision** con
+lo que lee; que lea de verdad de la base lo prueba la integracion
+(`tests/integration/u10`).
 """
 
 from __future__ import annotations
@@ -59,12 +55,10 @@ class _Base:
         turnos: Sequence[TranscriptLine],
         *,
         divulgada: bool = True,
-        con_datos: frozenset[str] = frozenset(),
     ) -> None:
         self.tenant_id = tenant_id
         self.turnos = tuple(turnos)
         self.divulgada = divulgada
-        self.con_datos = con_datos
         self.guardadas: dict[tuple[str, str], ComplianceReview] = {}
 
     async def transcripcion(self, tenant_id: str, case_id: str) -> Sequence[TranscriptLine]:
@@ -85,9 +79,6 @@ class _Base:
             ),
         )
 
-    def datos_personales(self, text: str, /, *, language: str) -> int:
-        return 1 if text in self.con_datos else 0
-
     async def guardar(self, review: ComplianceReview, /) -> ComplianceReview:
         # Como la base: la primera de cada (caso, turno revisado) es la que queda.
         clave = (review.case_id, review.reviewed_through_turn)
@@ -98,7 +89,6 @@ class _Base:
         return ReviewPorts(
             transcript=self.transcripcion,
             disclosures=self.divulgaciones,
-            personal_data=self.datos_personales,
             store=self.guardar,
             library=lambda: biblioteca,
             clock=lambda: AHORA,
@@ -131,7 +121,7 @@ CONVERSACION_LIMPIA = (
 )
 
 
-async def test_una_conversacion_en_orden_pasa_los_cuatro_controles(
+async def test_una_conversacion_en_orden_pasa_los_tres_controles(
     biblioteca: patterns.PatternLibrary, aseguradoras: tuple[TenantConfig, ...]
 ) -> None:
     base = _Base(aseguradoras[0].tenant_id, CONVERSACION_LIMPIA)
@@ -143,27 +133,33 @@ async def test_una_conversacion_en_orden_pasa_los_cuatro_controles(
     assert revision.reviewed_through_turn == "t4"
 
 
-@pytest.mark.parametrize(
-    ("divulgada", "con_datos", "codigo"),
-    [
-        (False, frozenset(), FindingCode.DISCLOSURE_MISSING),
-        (True, frozenset({"Choqué en la esquina del parque."}), FindingCode.PII_FOUND),
-    ],
-)
-async def test_cada_control_que_no_pasa_deja_exactamente_su_codigo(
-    biblioteca: patterns.PatternLibrary,
-    aseguradoras: tuple[TenantConfig, ...],
-    divulgada: bool,
-    con_datos: frozenset[str],
-    codigo: FindingCode,
+async def test_sin_divulgacion_deja_exactamente_su_codigo(
+    biblioteca: patterns.PatternLibrary, aseguradoras: tuple[TenantConfig, ...]
 ) -> None:
-    base = _Base(
-        aseguradoras[0].tenant_id, CONVERSACION_LIMPIA, divulgada=divulgada, con_datos=con_datos
-    )
+    base = _Base(aseguradoras[0].tenant_id, CONVERSACION_LIMPIA, divulgada=False)
 
     revision = await final_review(_pedido(base.tenant_id, "t4"), ports=base.puertos(biblioteca))
 
-    assert revision.findings == (codigo,)
+    assert revision.findings == (FindingCode.DISCLOSURE_MISSING,)
+
+
+async def test_una_conversacion_con_el_nombre_y_la_poliza_pasa_la_revision(
+    biblioteca: patterns.PatternLibrary, aseguradoras: tuple[TenantConfig, ...]
+) -> None:
+    """Desde el 2026-10-30 la conversacion se guarda como se escribio (decision de
+    Miguel): que la persona diga su nombre y su poliza no es un hallazgo, y el caso
+    se puede cerrar."""
+    turnos = (
+        _linea("t1", "agent", "Hola, soy la asistente de inteligencia artificial."),
+        _linea("t2", "insured", "Soy Lina Diaz, mi póliza es POL-21. Choqué en el parque."),
+        _linea("t3", "agent", "Encontré la póliza POL-21 a nombre de Lina Diaz."),
+    )
+    base = _Base(aseguradoras[0].tenant_id, turnos)
+
+    revision = await final_review(_pedido(base.tenant_id, "t3"), ports=base.puertos(biblioteca))
+
+    assert revision.passed
+    assert revision.findings == ()
 
 
 async def test_un_adjunto_sin_evaluar_falla_la_explicabilidad(
@@ -217,10 +213,11 @@ async def test_el_caso_derivado_a_mitad_se_revisa_hasta_la_derivacion(
         _linea("t1", "agent", "Hola, soy la asistente de inteligencia artificial."),
         _linea("t2", "insured", "Mejor que me llame alguien de ustedes."),
         _linea("t3", "agent", "Con lo que me contó, este caso lo revisa un ajustador."),
-        # Despues de la derivacion: un dato sin tapar que ya no se revisa.
-        _linea("t4", "insured", "Mi telefono es otro, anotelo."),
+        # Despues de la derivacion: una peticion de persona sin respuesta, que habria
+        # fallado la ruta a persona si se revisara.
+        _linea("t4", "insured", "Quiero hablar con una persona."),
     )
-    base = _Base(aseguradoras[0].tenant_id, turnos, con_datos=frozenset({turnos[3].text}))
+    base = _Base(aseguradoras[0].tenant_id, turnos)
 
     revision = await final_review(
         _pedido(base.tenant_id, "t3", handoff_turn="t3"), ports=base.puertos(biblioteca)

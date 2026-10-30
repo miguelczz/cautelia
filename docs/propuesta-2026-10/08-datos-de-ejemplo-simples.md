@@ -57,9 +57,9 @@ producción hasta que Miguel lo pruebe en la demo local.
 
 | Tanda | Estado |
 | --- | --- |
-| 1 | Hecha en la rama `datos-de-ejemplo-simples` (sin subir) |
-| 2 | Hecha en la rama `datos-de-ejemplo-simples` (sin subir); falta la revisión y lo que solo confirma GitHub |
-| 3 | Pendiente |
+| 1 | Hecha |
+| 2 | Hecha |
+| 3 | Hecha. Además se retiró el control de cumplimiento `pii_ok` (que la conversación guardada no tuviera datos personales): con la conversación sin redactar, todo caso habría fallado la revisión y no se habría podido cerrar. La redacción sigue en logs, trazas, exportación y reporte de evaluaciones, y el golden set de trazas (`rt14`) pasa |
 
 ## Servidor siempre encendido (2026-10-30)
 

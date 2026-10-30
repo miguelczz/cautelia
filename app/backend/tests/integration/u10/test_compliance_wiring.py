@@ -25,7 +25,6 @@ from untangle.case_record.models import Channel, Origin, RecordType, Speaker
 from untangle.case_record.transcript import TurnDraft
 from untangle.compliance.controls import api as cumplimiento
 from untangle.compliance.controls import patterns, repository
-from untangle.compliance.redaction.api import redact
 from untangle.orchestration.nodes.compliance.node import ComplianceNodeInput
 from untangle.providers.adapters.gemini import api as gemini
 from untangle.server import composition
@@ -75,7 +74,7 @@ def modelo_espiado(monkeypatch: pytest.MonkeyPatch) -> list[str]:
 async def _caso(
     tenant_id: str, turnos: list[tuple[Speaker, str]], *, language: Locale = "es"
 ) -> tuple[str, list[str]]:
-    """Un caso con esos turnos, por la API de U4 y con el texto redactado antes."""
+    """Un caso con esos turnos, por la API de U4, guardados como se dijeron."""
     case_id = f"u10-cableado-{uuid.uuid4().hex[:12]}"
     await casos.create_case(
         tenant_id,
@@ -101,7 +100,7 @@ async def _caso(
                 language=language,
                 started_at=AHORA.replace(second=numero),
             ),
-            redact(texto, language=language),
+            texto,
         )
         ids.append(turn_id)
     return case_id, ids
@@ -144,10 +143,11 @@ CONVERSACION = [
 ]
 
 
-async def test_con_la_divulgacion_y_la_transcripcion_redactada_el_caso_cierra(
+async def test_con_la_divulgacion_el_caso_cierra_aunque_la_persona_diga_su_nombre(
     controles: composition.ComplianceControls, dos_aseguradoras: tuple[str, str]
 ) -> None:
-    """El nombre de la persona se redacto al guardarse: el detector de U3 no encuentra nada."""
+    """Desde el 2026-10-30 la conversacion se guarda sin redactar y la revision ya no
+    busca datos personales en ella (decision de Miguel): el caso cierra."""
     tenant, _ = dos_aseguradoras
     case_id, turnos = await _caso(tenant, CONVERSACION)
     await _divulgar(tenant, case_id)

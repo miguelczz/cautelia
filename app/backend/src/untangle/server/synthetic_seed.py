@@ -15,9 +15,8 @@ la API de U4 y la que construye el cifrador.
 
 Cuatro cosas que hace por cada caso, y las tres primeras son reglas de U4:
 
-1. **Redacta cada turno antes de anexarlo** (C-13, SEC-U4.6): `append_turn` solo
-   acepta texto redactado, y los datos personales sembrados son ficticios pero
-   tienen la forma real, que es justo lo que la redaccion tapa.
+1. **Anexa cada turno tal como esta escrito**: desde el 2026-10-30 la conversacion
+   del caso se guarda sin redactar (decision de Miguel).
 2. **Declara el motivo al derivar** (BR3.7): los derivados, los que esperan al
    asegurado y los cerrados por decision de una persona pasan por `derived` con
    su motivo, y quien pidio una persona queda con prioridad alta (BR3.8).
@@ -85,7 +84,6 @@ from untangle.case_record.models import (
 )
 from untangle.case_record.rules import TransitionContext
 from untangle.case_record.transcript import TurnDraft
-from untangle.compliance.redaction.api import redact
 from untangle.inbox import actions as inbox_actions
 from untangle.inbox import api as inbox_api
 from untangle.orchestration.nodes.decision import node as decision_node
@@ -288,7 +286,7 @@ class _Reloj:
 
 
 async def _anexar_turnos(record: SeededCaseRecord, case_id: str, reloj: _Reloj) -> str | None:
-    """Anexa cada turno ya redactado. Devuelve el ultimo turno del asegurado."""
+    """Anexa cada turno como esta escrito. Devuelve el ultimo turno del asegurado."""
     ultimo_del_asegurado: str | None = None
     for indice, turno in enumerate(record.transcript, start=1):
         turn_id = seeded_turn_id(case_id, indice)
@@ -300,10 +298,7 @@ async def _anexar_turnos(record: SeededCaseRecord, case_id: str, reloj: _Reloj) 
             language=record.language,
             started_at=reloj.tic(),
         )
-        # Antes de anexar, siempre: `append_turn` no acepta otra cosa (C-13).
-        await api.append_turn(
-            record.tenant_id, borrador, redact(turno.text, language=record.language)
-        )
+        await api.append_turn(record.tenant_id, borrador, turno.text)
         if turno.speaker is SeededSpeaker.INSURED:
             ultimo_del_asegurado = turn_id
     return ultimo_del_asegurado

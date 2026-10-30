@@ -116,7 +116,6 @@ def _cierre_de_la_fila(fila: fx.RulesFixtureRow, resultado: RuleEvaluationView) 
         case_id="caso-de-la-sonda",
         disclosure_ok=True,
         human_route_ok=True,
-        pii_ok=True,
         explainability_ok=True,
         findings=(),
         reviewed_through_turn="turno-de-la-sonda",

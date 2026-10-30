@@ -328,22 +328,15 @@ describe.each(IDIOMAS)(
     });
 
     it("cada codigo de hallazgo del servidor tiene su frase, y uno desconocido nunca se pinta crudo", () => {
-      const codigos = [
-        "disclosure_missing",
-        "human_route_missed",
-        "pii_found",
-        "attachment_missing",
-      ] as const;
+      const codigos = ["disclosure_missing", "human_route_missed", "attachment_missing"] as const;
       const frases = codigos.map((codigo) => findingLabel(codigo)(t));
       const generica = findingLabel("hallazgo_nuevo")(t);
 
-      expect(new Set([...frases, generica]).size).toBe(5);
+      expect(new Set([...frases, generica]).size).toBe(4);
       for (const frase of [...frases, generica]) {
         expect(frase).not.toMatch(/_/);
         expect(frase).not.toContain("hallazgo_nuevo");
       }
-      // El de datos personales no dice que se taparon: el detector los encontro sin tapar.
-      expect(findingLabel("pii_found")(createTranslate("es"))).toMatch(/sin tapar/);
     });
   },
 );

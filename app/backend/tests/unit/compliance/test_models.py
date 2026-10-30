@@ -53,7 +53,6 @@ def _revision(**cambios: Any) -> ComplianceReview:
         "case_id": "caso-1",
         "disclosure_ok": True,
         "human_route_ok": True,
-        "pii_ok": True,
         "explainability_ok": True,
         "findings": (),
         "reviewed_through_turn": "caso-1-turno-2",
@@ -129,12 +128,12 @@ def test_una_revision_con_todo_en_verde_pasa_y_una_con_hallazgos_no() -> None:
 def test_los_hallazgos_se_guardan_en_orden_canonico() -> None:
     """Dos revisiones iguales se escriben iguales, las diga quien las diga."""
     revision = _revision(
-        pii_ok=False,
+        explainability_ok=False,
         disclosure_ok=False,
-        findings=(FindingCode.PII_FOUND, FindingCode.DISCLOSURE_MISSING),
+        findings=(FindingCode.ATTACHMENT_MISSING, FindingCode.DISCLOSURE_MISSING),
     )
 
-    assert revision.findings == (FindingCode.DISCLOSURE_MISSING, FindingCode.PII_FOUND)
+    assert revision.findings == (FindingCode.DISCLOSURE_MISSING, FindingCode.ATTACHMENT_MISSING)
 
 
 @pytest.mark.parametrize(
@@ -146,8 +145,8 @@ def test_los_hallazgos_se_guardan_en_orden_canonico() -> None:
         {"findings": (FindingCode.ATTACHMENT_MISSING,)},
         # El mismo hallazgo dos veces.
         {
-            "pii_ok": False,
-            "findings": (FindingCode.PII_FOUND, FindingCode.PII_FOUND),
+            "explainability_ok": False,
+            "findings": (FindingCode.ATTACHMENT_MISSING, FindingCode.ATTACHMENT_MISSING),
         },
     ],
 )

@@ -12,12 +12,10 @@ orden.
 from __future__ import annotations
 
 import asyncio
-import json
 from datetime import datetime
 
 import pytest
 
-from untangle import paths
 from untangle.case_record import api, repository
 from untangle.case_record import history as historial
 from untangle.case_record.crypto import Cipher
@@ -97,24 +95,16 @@ async def test_cada_caso_sembrado_llega_a_su_estado_por_la_api_de_u4(
             ), resultado.case_key
 
 
-async def test_los_turnos_se_guardan_redactados(
+async def test_los_turnos_se_guardan_como_estan_escritos(
     sembrar: Sembrar, casos_sembrados: dict[str, SeededCaseRecord]
 ) -> None:
-    """Ningun valor personal sembrado llega a la transcripcion (C-13, SEC-U4.6)."""
+    """Desde el 2026-10-30 la conversacion se guarda sin redactar (decision de Miguel)."""
     resultado = await sembrar(VERIFICANDO)
     caso = casos_sembrados[VERIFICANDO]
 
     turnos = await api.transcript_of(caso.tenant_id, resultado.case_id)
 
-    valores = [
-        v["value"]
-        for v in json.loads((paths.data_dir() / "personal_values.json").read_text("utf-8"))[
-            "values"
-        ]
-    ]
-    assert len(turnos) == len(caso.transcript)
-    assert [v for t in turnos for v in valores if v in t.text_redacted] == []
-    assert any("[" in t.text_redacted for t in turnos)
+    assert [t.text_redacted for t in turnos] == [t.text for t in caso.transcript]
 
 
 async def test_un_cerrado_lleva_la_evidencia_de_cierre_de_u4(

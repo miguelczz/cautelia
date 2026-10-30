@@ -72,7 +72,6 @@ def _revision(caso: CasoSembrado, *, sufijo: str, segundos: int = 0) -> Complian
         case_id=caso.case_id,
         disclosure_ok=False,
         human_route_ok=True,
-        pii_ok=True,
         explainability_ok=True,
         findings=(FindingCode.DISCLOSURE_MISSING,),
         reviewed_through_turn=caso.turn_ids[-1],

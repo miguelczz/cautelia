@@ -711,12 +711,7 @@ def _al_cable(  # noqa: PLR0913 -- el caso, la aseguradora y lo que cambia segun
         controls_ok=(
             None
             if revision is None
-            else (
-                revision.disclosure_ok
-                and revision.human_route_ok
-                and revision.pii_ok
-                and revision.explainability_ok
-            )
+            else (revision.disclosure_ok and revision.human_route_ok and revision.explainability_ok)
         ),
         control_findings=(() if revision is None else tuple(f.value for f in revision.findings)),
         trace_status=traza.status.value if traza is not None else None,

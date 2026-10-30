@@ -451,7 +451,7 @@ describe("los tres bloques del final dicen cada cosa en palabras (E3, 2026-10-12
         rule_category: "referral",
         fired_rules: ["KNO-R-01"],
         controls_ok: false,
-        control_findings: ["pii_found"],
+        control_findings: ["attachment_missing"],
       }),
     });
     dibujar();
@@ -464,8 +464,8 @@ describe("los tres bloques del final dicen cada cosa en palabras (E3, 2026-10-12
       t("inbox.rule.reference", { rules: "KNO-R-01" }),
     );
     const controles = screen.getByTestId("block-controls");
-    expect(controles.textContent).toContain(t("inbox.controls.finding.pii_found"));
-    expect(controles.textContent).not.toContain("pii_found");
+    expect(controles.textContent).toContain(t("inbox.controls.finding.attachment_missing"));
+    expect(controles.textContent).not.toContain("attachment_missing");
     expect(screen.getByTestId("block-trace").textContent).toContain(t("trace.page.latency"));
     // Ni la categoria cruda ni "No medido" aparecen en ningun bloque.
     const pantalla = screen.getByTestId("visitor-case").textContent;

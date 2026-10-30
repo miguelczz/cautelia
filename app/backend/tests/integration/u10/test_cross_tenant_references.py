@@ -136,8 +136,8 @@ LLAVES = (
     Llave(
         "compliance_review_del_caso",
         "INSERT INTO compliance_review (review_id, tenant_id, case_id, disclosure_ok, "
-        "human_route_ok, pii_ok, explainability_ok, reviewed_through_turn, reviewed_at) "
-        "VALUES (:review_id, :tenant_id, :case_id, true, true, true, true, :turn_id, :reviewed_at)",
+        "human_route_ok, explainability_ok, reviewed_through_turn, reviewed_at) "
+        "VALUES (:review_id, :tenant_id, :case_id, true, true, true, :turn_id, :reviewed_at)",
         lambda t, c: {
             "review_id": _id("revision"),
             "tenant_id": t,

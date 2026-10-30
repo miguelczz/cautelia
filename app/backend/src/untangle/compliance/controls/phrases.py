@@ -58,7 +58,6 @@ DIRECT_CLOSE = CopyKey("compliance.closure.direct")
 
 FINDING_DISCLOSURE_MISSING = CopyKey("compliance.finding.disclosure_missing")
 FINDING_HUMAN_ROUTE_MISSED = CopyKey("compliance.finding.human_route_missed")
-FINDING_PII_FOUND = CopyKey("compliance.finding.pii_found")
 FINDING_ATTACHMENT_MISSING = CopyKey("compliance.finding.attachment_missing")
 
 #: La frase que sale en lugar de cada categoria (BR1.4).
@@ -76,7 +75,6 @@ ALLOWED_KEYS: dict[GuardCategory, CopyKey] = {
 FINDING_KEYS: dict[FindingCode, CopyKey] = {
     FindingCode.DISCLOSURE_MISSING: FINDING_DISCLOSURE_MISSING,
     FindingCode.HUMAN_ROUTE_MISSED: FINDING_HUMAN_ROUTE_MISSED,
-    FindingCode.PII_FOUND: FINDING_PII_FOUND,
     FindingCode.ATTACHMENT_MISSING: FINDING_ATTACHMENT_MISSING,
 }
 

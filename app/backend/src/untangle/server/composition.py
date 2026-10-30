@@ -474,24 +474,16 @@ async def _transcripcion(tenant_id: str, case_id: str) -> tuple[cumplimiento.Tra
     )
 
 
-def _hallazgos_personales(text: str, /, *, language: Locale) -> int:
-    """Cuantos datos personales encuentra el detector de U3 en un texto (`pii_ok`)."""
-    informe = redaccion.redaction_report(text, language=language)
-    return sum(informe.counts_by_type.values())
-
-
 def build_compliance(settings: Settings) -> ComplianceControls:
     """Los puertos de la revision y el nodo `compliance`, cableados por closure (C-15).
 
     La revision lee la transcripcion por el registro del caso, las divulgaciones
-    por su propio repositorio, los datos personales con el detector de U3 y
-    guarda por su clave (caso, turno revisado), asi que la reejecucion del nodo
+    por su propio repositorio y guarda por su clave (caso, turno revisado), asi que la reejecucion del nodo
     al reanudar no la duplica (BR6.3).
     """
     puertos = cumplimiento.ReviewPorts(
         transcript=_transcripcion,
         disclosures=cumplimiento.disclosures,
-        personal_data=_hallazgos_personales,
         store=cumplimiento.save_review,
         library=cumplimiento.current_patterns,
         clock=lambda: datetime.now(UTC),

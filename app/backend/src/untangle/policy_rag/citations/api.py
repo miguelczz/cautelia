@@ -59,7 +59,10 @@ async def record_answer(  # noqa: PLR0913 -- siete datos de una respuesta, ningu
     answer_language: Locale,
     now: datetime,
 ) -> CoverageAnswer:
-    """Persiste la respuesta ya verificada, redactada, con clave idempotente (BR4.1 a BR4.3).
+    """Persiste la respuesta ya verificada, con clave idempotente (BR4.1 a BR4.3).
+
+    La pregunta se guarda como se escribio, igual que la conversacion desde el
+    2026-10-30 (decision de Miguel): es la que se muestra en el caso.
 
     Escribe el verificador, no el nodo: LangGraph reejecuta el nodo completo al
     reanudar tras `interrupt()`, así que el nodo no puede ser quien escribe
@@ -71,7 +74,6 @@ async def record_answer(  # noqa: PLR0913 -- siete datos de una respuesta, ningu
     if existente is not None:
         return existente
 
-    pregunta_redactada = str(redact(question, language=answer_language))
     checks: list[CitationCheck] = []
     for veredicto in verification.citations:
         checks.append(
@@ -91,7 +93,7 @@ async def record_answer(  # noqa: PLR0913 -- siete datos de una respuesta, ningu
         case_id=case_id,
         turn_id=turn_id,
         idempotency_key=clave,
-        question_redacted=pregunta_redactada,
+        question_redacted=question,
         outcome=verification.outcome,
         citation_check_ids=tuple(check.check_id for check in checks),
         answer_language=answer_language,

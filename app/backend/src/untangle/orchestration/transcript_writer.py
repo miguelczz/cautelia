@@ -12,9 +12,10 @@ Asi que la regla vive aqui una sola vez y los dos canales la llaman. Lo que **no
 se movio es cuando se llama: el chat lo hace al cerrar su flujo de eventos y la voz
 al cerrar su turno hablado, que son momentos distintos de dos ciclos distintos.
 
-**El texto se persiste redactado y el tipo lo impone**: `append_turn` exige
-`Redacted`, y ese tipo solo lo produce el punto unico de redaccion. No hay forma de
-escribir aqui un `str` cualquiera.
+**El texto se guarda tal como se dijo o se escribio** (decision de Miguel del
+2026-10-30). Hasta ese dia se guardaba redactado y las pantallas mostraban
+«[NOMBRE 1]» donde la persona habia escrito su nombre. La redaccion sigue en logs,
+trazas, exportacion y reporte de evaluaciones.
 """
 
 from __future__ import annotations
@@ -27,7 +28,6 @@ from untangle.base import Locale
 from untangle.case_record import api as casos
 from untangle.case_record.models import Channel, Speaker
 from untangle.case_record.transcript import TurnDraft
-from untangle.compliance.redaction import api as redaccion
 from untangle.orchestration.contracts import (
     CaseNotifier,
     FinalText,
@@ -125,18 +125,7 @@ async def _escribir(
         started_at=now,
         ended_at=now,
     )
-    # **Lo que dijo la agente se guarda por una sola puerta, venga de donde venga**
-    # (2026-10-10). Antes habia dos: la frase del catalogo pasaba sin mirarse y la
-    # del modelo se tapaba entera. La primera dejaba en claro el numero de poliza y
-    # el nombre que la frase llevaba dentro; la segunda guardaba "[NOMBRE 1]" donde
-    # la persona habia leido "Encontre". `redact_composed` tapa los datos y respeta
-    # nuestras palabras. Lo que dijo la persona sigue por `redact`, entero.
-    tapado = (
-        redaccion.redact(text, language=ambito.language)
-        if speaker is Speaker.INSURED
-        else redaccion.redact_composed(text, language=ambito.language)
-    )
-    await casos.append_turn(ambito.tenant_id, borrador, tapado)
+    await casos.append_turn(ambito.tenant_id, borrador, text)
     return turn_id
 
 
@@ -166,8 +155,8 @@ async def record_agent_turn(
     **siguiente** a la peticion de persona", asi que el orden es la regla que se
     comprueba.
     """
-    # `from_catalog` ya no decide como se guarda: todo lo que dice la agente pasa por
-    # la misma redaccion (ver `_escribir`). Se conserva en la firma porque quien
+    # `from_catalog` ya no decide como se guarda: todo se guarda como se dijo (ver
+    # `_escribir`). Se conserva en la firma porque quien
     # llama lo tiene a mano y es lo que la voz usa para decidir como lo **dice**.
     del from_catalog
     return await _escribir(ambito, speaker=Speaker.AGENT, text=text, now=now, turn_id=turn_id)

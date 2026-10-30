@@ -21,7 +21,7 @@ Tres decisiones que este archivo hace cumplir, y una que hace **imposible**:
 
 ## El punto unico de salida, no uno nuevo
 
-U3 declara los seis puntos de salida del aplicativo en un registro cerrado, y
+U3 declara los cinco puntos de salida del aplicativo en un registro cerrado, y
 **dos son de esta unidad**: `trace_span` y `trace_export`. Este modulo implementa
 el segundo y lo **busca por su nombre en ese registro** en vez de dar por hecho
 que esta: si alguien lo quitara de la lista, esto falla al importarse con su

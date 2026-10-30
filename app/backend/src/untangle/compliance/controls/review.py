@@ -1,16 +1,21 @@
-"""La revision completa de los cuatro controles, sin modelo (BR5.1 a BR5.3).
+"""La revision completa de los tres controles, sin modelo (BR5.1 a BR5.3).
 
-Corre en el ritmo de fondo, al cierre o en la derivacion, y comprueba cuatro
+Corre en el ritmo de fondo, al cierre o en la derivacion, y comprueba tres
 cosas **leyendo el caso**, nunca preguntandole a un modelo (BR5.3, FD-U10-3):
 
 - `disclosure_ok`: hay divulgacion registrada (BR4.1).
 - `human_route_ok`: si la persona pidio una persona, el turno de la agente que
   siguio a la peticion **es** el de la derivacion (BR2.2).
-- `pii_ok`: la transcripcion revisada no tiene hallazgos del detector de U3.
 - `explainability_ok`: estan la transcripcion, las citas --o la respuesta
   verificada sin clausula--, las reglas disparadas con sus insumos y el
   identificador de la traza (FR1.7, AC1.16.2). El quinto adjunto, el resultado
   de los controles, es esta misma revision.
+
+Hubo un cuarto, `pii_ok`: que la transcripcion guardada no tuviera datos
+personales. Se retiro el 2026-10-30, cuando la conversacion empezo a guardarse tal
+como se escribio por decision de Miguel; con el, todo caso en que la persona dijera
+su nombre habria fallado la revision y no se habria podido cerrar. Los datos
+personales se siguen tapando en logs, trazas, exportacion y reporte de evaluaciones.
 
 Revisa la conversacion **hasta el turno pedido**: el de la derivacion si la
 hubo, el ultimo si no (BR5.2). Lo que se dijo despues de derivar ya no es de la
@@ -20,8 +25,7 @@ conversacion que se revisa.
 
 Este modulo no importa el registro del caso: `compliance` y `case_record` se
 importarian en ciclo, y el contrato `sin-ciclos` lo prohibe. La transcripcion
-llega por un puerto que construye la raiz de composicion, igual que el detector
-de datos personales y el guardado; asi la revision se prueba sin base de datos y
+llega por un puerto que construye la raiz de composicion, igual que el guardado; asi la revision se prueba sin base de datos y
 sin modelos de lenguaje, y en produccion usa los de verdad.
 
 ## Idempotente al reanudar (BR6.3)
@@ -117,12 +121,6 @@ class DisclosureSource(Protocol):
     ) -> Awaitable[Sequence[DisclosureRecord]]: ...
 
 
-class PersonalDataCounter(Protocol):
-    """Cuantos hallazgos encuentra el detector de U3 en un texto (BR5.1, `pii_ok`)."""
-
-    def __call__(self, text: str, /, *, language: Locale) -> int: ...
-
-
 class ReviewStore(Protocol):
     """Guarda la revision por su clave y devuelve la que quedo (BR6.3)."""
 
@@ -135,7 +133,6 @@ class ReviewPorts:
 
     transcript: TranscriptSource
     disclosures: DisclosureSource
-    personal_data: PersonalDataCounter
     store: ReviewStore
     library: Callable[[], PatternLibrary]
     clock: Callable[[], datetime]
@@ -181,11 +178,10 @@ def human_route_ok(
 
 @dataclass(frozen=True)
 class ControlResults:
-    """Los cuatro controles de la revision, antes de guardarla."""
+    """Los tres controles de la revision, antes de guardarla."""
 
     disclosure_ok: bool
     human_route_ok: bool
-    pii_ok: bool
     explainability_ok: bool
 
     def findings(self) -> tuple[FindingCode, ...]:
@@ -195,7 +191,6 @@ class ControlResults:
             for paso, codigo in (
                 (self.disclosure_ok, FindingCode.DISCLOSURE_MISSING),
                 (self.human_route_ok, FindingCode.HUMAN_ROUTE_MISSED),
-                (self.pii_ok, FindingCode.PII_FOUND),
                 (self.explainability_ok, FindingCode.ATTACHMENT_MISSING),
             )
             if not paso
@@ -207,18 +202,14 @@ def assess(
     *,
     turns: Sequence[TranscriptLine],
     disclosures: Sequence[DisclosureRecord],
-    personal_data: PersonalDataCounter,
     library: PatternLibrary,
 ) -> ControlResults:
-    """Los cuatro controles, puros, sobre lo que ya se leyo (BR5.1)."""
+    """Los tres controles, puros, sobre lo que ya se leyo (BR5.1)."""
     revisados = _hasta(turns, request.through_turn)
     return ControlResults(
         disclosure_ok=bool(disclosures),
         human_route_ok=human_route_ok(
             revisados, handoff_turn=request.handoff_turn, library=library
-        ),
-        pii_ok=all(
-            personal_data(turno.text, language=request.language) == 0 for turno in revisados
         ),
         explainability_ok=bool(revisados) and request.evidence.complete,
     )
@@ -232,7 +223,6 @@ async def final_review(request: ReviewRequest, *, ports: ReviewPorts) -> Complia
         request,
         turns=turnos,
         disclosures=divulgaciones,
-        personal_data=ports.personal_data,
         library=ports.library(),
     )
     revision = ComplianceReview(
@@ -241,7 +231,6 @@ async def final_review(request: ReviewRequest, *, ports: ReviewPorts) -> Complia
         case_id=request.case_id,
         disclosure_ok=controles.disclosure_ok,
         human_route_ok=controles.human_route_ok,
-        pii_ok=controles.pii_ok,
         explainability_ok=controles.explainability_ok,
         findings=controles.findings(),
         reviewed_through_turn=request.through_turn,

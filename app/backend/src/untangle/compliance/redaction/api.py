@@ -2,7 +2,7 @@
 
 **Regla dura del proyecto:** una salida sin redaccion debe ser imposible por
 construccion, no detectable por disciplina. Aqui vive la mitad declarativa de ese
-mecanismo --el tipo que los seis puntos de salida exigen-- y este es el **unico**
+mecanismo --el tipo que los cinco puntos de salida exigen-- y este es el **unico**
 archivo que lo fabrica.
 
 El tipo por si solo **no garantiza nada**, y decirlo es la mitad del control.
@@ -38,7 +38,7 @@ from untangle.compliance.redaction.recognizers.models import (
     RedactionReport,
 )
 
-#: El texto ya tapado, y el tipo que los seis puntos de salida exigen. Un punto
+#: El texto ya tapado, y el tipo que los cinco puntos de salida exigen. Un punto
 #: de salida que acepte `str` es un punto de salida sin redaccion, y por eso no
 #: acepta `str`.
 Redacted = NewType("Redacted", str)
@@ -114,7 +114,7 @@ def redact(text: str, *, language: Locale) -> Redacted:
         etiquetas = labels.labels_for(text, hallazgos, locale=language)
         return Redacted(_sustituir(text, hallazgos, etiquetas))
     except Exception as error:
-        # Se traduce a un solo tipo para que los seis puntos de salida tengan una
+        # Se traduce a un solo tipo para que los cinco puntos de salida tengan una
         # sola cosa que atrapar, y se levanta: si la redaccion no se puede
         # ejecutar, no sale texto (BR1.7).
         observability.emit(

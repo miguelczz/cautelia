@@ -1,14 +1,12 @@
 """Lo que se guarda de cada turno, sin base: se sustituye la escritura (2026-10-10).
 
-La regla del proyecto es tapar los datos personales **antes de guardar**. Lo que dice
-la agente la incumplia cuando salia de una frase del catalogo con datos dentro: se
-guardaba tal cual.
+Desde el 2026-10-30 cada turno se guarda tal como se dijo, por decision de Miguel: la
+conversacion dejo de redactarse al guardarse y ninguna pantalla muestra etiquetas.
 """
 
 from __future__ import annotations
 
 import re
-from collections.abc import Iterator
 from datetime import UTC, datetime
 from typing import Any
 
@@ -17,7 +15,6 @@ import pytest
 from untangle import paths
 from untangle.case_record import api as casos
 from untangle.case_record.models import Channel
-from untangle.compliance.redaction import api as redaccion
 from untangle.orchestration import transcript_writer
 from untangle.orchestration.transcript_writer import TranscriptScope
 
@@ -28,13 +25,13 @@ AMBITO = TranscriptScope(
 )
 AHORA = datetime(2026, 10, 10, 12, 0, tzinfo=UTC)
 RESPUESTA = (
-    "Encontré la póliza POL-11 a nombre de Natalia Henao Rendón, "
+    "Encontré la póliza POL-11 a nombre de Natalia Henao, "
     "con un Renault Logan 2024. ¿Eres tú y conducías ese carro?"
 )
 
 
 @pytest.fixture
-def guardados(monkeypatch: pytest.MonkeyPatch) -> Iterator[list[str]]:
+def guardados(monkeypatch: pytest.MonkeyPatch) -> list[str]:
     textos: list[str] = []
 
     async def anotar(tenant_id: str, borrador: Any, texto: Any) -> str:
@@ -42,41 +39,27 @@ def guardados(monkeypatch: pytest.MonkeyPatch) -> Iterator[list[str]]:
         return str(borrador.turn_id)
 
     monkeypatch.setattr(casos, "append_turn", anotar)
-    redaccion.allow_own_vocabulary(
-        [
-            "Encontré la póliza {policy} a nombre de {holder}, con un {vehicle}. ¿Eres tú y conducías ese carro?"
-        ]
-    )
-    redaccion.allow_public_terms(["Renault Logan"])
-    yield textos
-    redaccion.allow_own_vocabulary([])
-    redaccion.allow_public_terms([])
+    return textos
 
 
 @pytest.mark.parametrize("del_catalogo", [True, False])
-async def test_lo_que_dice_la_agente_se_guarda_sin_la_poliza_ni_el_nombre(
+async def test_lo_que_dice_la_agente_se_guarda_tal_como_lo_dijo(
     guardados: list[str], del_catalogo: bool
 ) -> None:
-    """Venga del catalogo o de una reescritura del modelo: una sola puerta."""
+    """Venga del catalogo o de una reescritura del modelo: una sola puerta, sin etiquetas."""
     await transcript_writer.record_agent_turn(
         AMBITO, text=RESPUESTA, now=AHORA, from_catalog=del_catalogo
     )
 
-    (guardado,) = guardados
-    assert "POL-11" not in guardado
-    assert "Natalia" not in guardado
-    # Y la frase sigue siendo legible para quien revisa el caso.
-    assert guardado.startswith("Encontré la póliza [PÓLIZA 1] a nombre de [NOMBRE 1]")
+    assert guardados == [RESPUESTA]
 
 
-async def test_lo_que_dijo_la_persona_se_sigue_tapando_entero(guardados: list[str]) -> None:
+async def test_lo_que_dijo_la_persona_se_guarda_tal_como_lo_dijo(guardados: list[str]) -> None:
     await transcript_writer.record_person_turn(
-        AMBITO, text="Soy Natalia Henao Rendón, mi póliza es POL-11", now=AHORA
+        AMBITO, text="Soy Natalia Henao, mi póliza es POL-11", now=AHORA
     )
 
-    (guardado,) = guardados
-    assert "Natalia" not in guardado
-    assert "POL-11" not in guardado
+    assert guardados == ["Soy Natalia Henao, mi póliza es POL-11"]
 
 
 # --- Todo texto que se publica se guarda (2026-10-12) -----------------------------

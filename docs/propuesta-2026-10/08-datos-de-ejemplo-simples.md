@@ -60,6 +60,6 @@ producción hasta que Miguel lo pruebe en la demo local.
 
 | Tanda | Estado |
 | --- | --- |
-| 1 | En curso |
-| 2 | Pendiente |
-| 3 | Pendiente |
+| 1 | Hecha en la rama `datos-de-ejemplo-simples` (sin subir) |
+| 2 | Esperando que Miguel confirme los valores elegidos |
+| 3 | Esperando que Miguel confirme los valores elegidos |

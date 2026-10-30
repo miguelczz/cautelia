@@ -63,3 +63,15 @@ producción hasta que Miguel lo pruebe en la demo local.
 | 1 | Hecha en la rama `datos-de-ejemplo-simples` (sin subir) |
 | 2 | Esperando que Miguel confirme los valores elegidos |
 | 3 | Esperando que Miguel confirme los valores elegidos |
+
+## Excepción de gasto: servidor siempre encendido (2026-10-30)
+
+Miguel encendió una instancia permanente del servidor (`--min-instances=1`,
+revisión `cautelia-00054-z2c`) después de ver que cada arranque en frío tardaba
+unos 40 segundos. Cuesta unos 45–50 USD al mes a precio de lista (estimación, no
+cotización), por encima del tope de 40 USD en 90 días. **Es una excepción escrita
+a ese tope**: lo cubre el crédito de prueba de Google, que vence el 2027-01-05 y no
+es dinero real. Antes de esa fecha se vuelve a `--min-instances=0` o se cambia de
+cuenta. Vuelta atrás:
+
+    gcloud run services update cautelia --region us-east1 --project vocal-tempo-510815-c2 --min-instances=0

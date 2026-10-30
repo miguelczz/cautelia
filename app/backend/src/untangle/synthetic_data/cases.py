@@ -38,6 +38,7 @@ esta en esta lista detiene la generacion nombrando el caso.
 
 from __future__ import annotations
 
+import hashlib
 import string
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
@@ -84,6 +85,9 @@ __all__ = [
     "compose_cases",
     "direct_close_tenants",
     "load_seeded_cases",
+    "seeded_case_id",
+    "seeded_turn_id",
+    "seeded_turn_texts",
 ]
 
 #: Los marcadores de la persona y de la poliza del caso.
@@ -145,6 +149,37 @@ def load_seeded_cases(data_dir: Path) -> tuple[SeededCaseRecord, ...]:
             msg = f"el caso sembrado '{archivo}' no se pudo leer: {error}"
             raise SeededCaseLoadError(msg) from error
     return tuple(sorted(casos, key=lambda caso: caso.case_key))
+
+
+def seeded_case_id(case_key: str) -> str:
+    """El identificador del caso en la base: estable, y el mismo en cada siembra (BR6.2).
+
+    Sale de la clave del caso y no de un contador ni del azar, para que dos
+    siembras del mismo commit den el mismo caso y una prueba pueda nombrarlo. No
+    se deriva del numero legible, que acuna U4 (BR7.3 de U4).
+    """
+    return f"seed-{hashlib.sha256(case_key.encode('utf-8')).hexdigest()[:24]}"
+
+
+def seeded_turn_id(case_id: str, position: int) -> str:
+    """El identificador del turno numero `position` (desde 1) de un caso sembrado."""
+    return f"{case_id}-t{position:02d}"
+
+
+def seeded_turn_texts(data_dir: Path) -> dict[str, str]:
+    """El texto escrito de cada turno sembrado, por identificador de turno.
+
+    La base guarda cada turno redactado, como guarda todo (C-13). Estos turnos son
+    sinteticos y ya estan publicados en el repositorio, asi que la pantalla del caso
+    de ejemplo los muestra tal como se escribieron: las etiquetas solo estorban a
+    quien prueba la demostracion (decision de Miguel, 2026-10-30).
+    """
+    textos: dict[str, str] = {}
+    for caso in load_seeded_cases(data_dir):
+        case_id = seeded_case_id(caso.case_key)
+        for posicion, turno in enumerate(caso.transcript, start=1):
+            textos[seeded_turn_id(case_id, posicion)] = turno.text
+    return textos
 
 
 @dataclass(frozen=True)

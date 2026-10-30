@@ -22,15 +22,23 @@ si se verifico.
 Lo que sale son las etiquetas que U3 escribio en su momento; el valor completo vive
 en el campo del caso, que viaja al lado, y relacionarlos es trabajo de la pantalla.
 Ninguna funcion de aqui tiene forma de pedir el texto sin redactar.
+
+**Salvo los turnos de los casos de ejemplo** (decision de Miguel, 2026-10-30). Esos
+turnos son sinteticos y su texto ya esta publicado en el repositorio; la vista los
+lee de ahi, por el identificador de turno que fija la siembra, y no de la base. Un
+turno de visitante nunca tiene uno de esos identificadores, asi que sigue saliendo
+con sus etiquetas.
 """
 
 from __future__ import annotations
 
 import asyncio
+import functools
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 
+from untangle import paths
 from untangle.base import Locale
 from untangle.case_record import api as casos
 from untangle.case_record import history as historial
@@ -50,6 +58,7 @@ from untangle.compliance.controls.models import ComplianceReview
 from untangle.policy_rag.citations import api as u8
 from untangle.rules import repository as reglas
 from untangle.rules.models import RuleEvaluation
+from untangle.synthetic_data.cases import seeded_turn_texts
 from untangle.telemetry.traces import api as trazas
 from untangle.telemetry.traces.models import TraceSummary
 from untangle.tenancy.models import TenantId
@@ -157,6 +166,30 @@ async def _expandir(tenant_id: TenantId, respuestas: Any) -> tuple[CoverageAnswe
     return tuple(salida)
 
 
+@functools.cache
+def _textos_sembrados() -> dict[str, str]:
+    """El texto escrito de cada turno de ejemplo, leido una vez por proceso."""
+    return seeded_turn_texts(paths.data_dir())
+
+
+def con_texto_de_ejemplo(
+    transcripcion: tuple[TranscriptTurn, ...],
+    textos: dict[str, str] | None = None,
+) -> tuple[TranscriptTurn, ...]:
+    """Cambia cada turno de un caso de ejemplo por su texto escrito, sin etiquetas.
+
+    Los demas turnos salen como estan. `textos` existe para las pruebas; en vivo se
+    leen los del repositorio.
+    """
+    escritos = _textos_sembrados() if textos is None else textos
+    return tuple(
+        turno.model_copy(update={"text_redacted": escritos[turno.turn_id]})
+        if turno.turn_id in escritos
+        else turno
+        for turno in transcripcion
+    )
+
+
 async def detail_for(tenant_id: TenantId, case_id: str) -> CaseDetail | None:
     """El caso con toda su evidencia, o nada.
 
@@ -195,7 +228,7 @@ async def detail_for(tenant_id: TenantId, case_id: str) -> CaseDetail | None:
         completeness_per_field=dict(caso.completeness.per_field),
         completeness_optional=caso.completeness.optional,
         fields=campos,
-        transcript=transcripcion,
+        transcript=con_texto_de_ejemplo(transcripcion),
         history=cambios,
         coverage_answers=await _expandir(tenant_id, respuestas),
         # La ultima evaluacion es la vigente: las anteriores son de turnos previos,

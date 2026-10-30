@@ -58,7 +58,6 @@ from __future__ import annotations
 
 import argparse
 import asyncio
-import hashlib
 import sys
 from collections.abc import Sequence
 from dataclasses import dataclass
@@ -94,7 +93,12 @@ from untangle.rules import api as rules_api
 from untangle.rules.models import RuleNotConfiguredError
 from untangle.server import composition
 from untangle.settings import Settings
-from untangle.synthetic_data.cases import SeededCaseLoadError, load_seeded_cases
+from untangle.synthetic_data.cases import (
+    SeededCaseLoadError,
+    load_seeded_cases,
+    seeded_case_id,
+    seeded_turn_id,
+)
 from untangle.synthetic_data.models import SeededCaseRecord, SeededSpeaker
 from untangle.tenancy import api as tenancy
 from untangle.tenancy import session
@@ -145,16 +149,6 @@ class SeedOutcome:
     #: Cierto cuando **esta** llamada guardo la evaluacion: al crear el caso, o al
     #: completarle la que le faltaba a uno sembrado antes.
     evaluated_now: bool = False
-
-
-def seeded_case_id(case_key: str) -> str:
-    """El identificador del caso en la base: estable, y el mismo en cada siembra (BR6.2).
-
-    Sale de la clave del caso y no de un contador ni del azar, para que dos
-    siembras del mismo commit den el mismo caso y una prueba pueda nombrarlo. No
-    se deriva del numero legible, que acuna U4 (BR7.3 de U4).
-    """
-    return f"seed-{hashlib.sha256(case_key.encode('utf-8')).hexdigest()[:24]}"
 
 
 def closing_evidence_for(case_key: str, *, with_rules: bool = False) -> ClosingEvidence:
@@ -297,7 +291,7 @@ async def _anexar_turnos(record: SeededCaseRecord, case_id: str, reloj: _Reloj) 
     """Anexa cada turno ya redactado. Devuelve el ultimo turno del asegurado."""
     ultimo_del_asegurado: str | None = None
     for indice, turno in enumerate(record.transcript, start=1):
-        turn_id = f"{case_id}-t{indice:02d}"
+        turn_id = seeded_turn_id(case_id, indice)
         borrador = TurnDraft(
             turn_id=turn_id,
             case_id=case_id,

@@ -240,7 +240,7 @@ def test_load_rulesets_apaga_solo_la_aseguradora_con_el_archivo_roto(tmp_path: P
         carpeta = raiz / tenant_id
         (carpeta / "rules").mkdir(parents=True)
         (carpeta / "tenant.yaml").write_text(
-            CARPETA_TENANT.format(tenant_id=tenant_id, prefix=tenant_id[:3].upper()),
+            CARPETA_TENANT.format(tenant_id=tenant_id, prefix=tenant_id[:2].upper()),
             encoding="utf-8",
         )
         (carpeta / "rules" / "triage.yaml").write_text(ruleset_yaml, encoding="utf-8")

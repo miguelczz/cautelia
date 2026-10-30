@@ -712,8 +712,9 @@ async def test_un_caso_completo_cierra_con_su_numero_y_termina_la_llamada(
     dichos = case_number.spell(str(vista.case_number), language="en")
     assert dichos in str(cierre.text), "el numero no se dijo digito a digito"
     assert motor.config.display_name in str(cierre.text)
-    # Seis digitos, uno a uno, en dos grupos de tres (decision D2; grupos 2026-10-09).
-    assert len(dichos.replace(",", "").split()) == 6
+    # Cada cifra del contador, una a una (decision D2; contador desde el 2026-10-30).
+    cifras = sum(c.isdigit() for c in str(vista.case_number))
+    assert len(dichos.replace(",", "").split()) == cifras
 
 
 async def test_si_la_agente_acaba_de_preguntar_no_cuelga_hasta_la_respuesta(

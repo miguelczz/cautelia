@@ -326,8 +326,11 @@ async def test_el_cierre_dice_el_numero_digito_a_digito_en_espanol(
     assert vista is not None
     dicho = case_number.spell(str(vista.case_number), language="es")
     assert dicho in str(cierre.text), "el numero no se dijo digito a digito en espanol"
-    # Dos grupos de tres digitos (2026-10-09): una coma por digito lo hacia lento.
-    assert [len(grupo.split()) for grupo in dicho.split(",")] == [3, 3]
+    # Las cifras del contador una a una, en grupos de hasta tres (2026-10-09): una coma
+    # por digito lo hacia lento.
+    cifras = [c for c in str(vista.case_number) if c.isdigit()]
+    esperado = [len(cifras[i : i + 3]) for i in range(0, len(cifras), 3)]
+    assert [len(grupo.split()) for grupo in dicho.split(",")] == esperado
 
 
 # --- La apertura no se corta, tampoco en español (AC1.30.1, cambiado el 2026-10-14) ---

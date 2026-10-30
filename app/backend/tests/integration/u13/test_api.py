@@ -254,8 +254,8 @@ async def test_el_historial_devuelve_la_conversacion_guardada_de_este_navegador(
     app: FastAPI,
 ) -> None:
     """Quien sale y vuelve lee lo mismo que dejo: lo suyo, lo de la agente, y el
-    numero de su caso. **Lo suyo viene redactado**, porque asi se guardo (SEC-U4.6):
-    la prueba escribe un numero de poliza y comprueba que el historial no lo trae."""
+    numero de su caso. **Lo suyo viene tal como lo escribio**: desde el 2026-10-30 la
+    conversacion se guarda sin redactar (decision de Miguel)."""
     aseguradora = _aseguradora()
     cliente, clave = _navegador(app)
     async with cliente:
@@ -272,8 +272,7 @@ async def test_el_historial_devuelve_la_conversacion_guardada_de_este_navegador(
     cuerpo = respuesta.json()
     lados = [turno["speaker"] for turno in cuerpo["turns"]]
     assert lados == ["visitor", "agent"], cuerpo
-    assert "POL-11" not in cuerpo["turns"][0]["text"]
-    assert "me chocaron" in cuerpo["turns"][0]["text"]
+    assert cuerpo["turns"][0]["text"] == "Mi póliza es la POL-11 y me chocaron"
     assert cuerpo["turns"][1]["text"] == "Anotado."
     assert cuerpo["case_number"] is not None
     assert cuerpo["opening"] is not None

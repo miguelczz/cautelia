@@ -307,7 +307,12 @@ export function CasesQueuePage({
               {cola.items.map((fila) => (
                 <tr key={fila.case_id} className="border-b border-hairline align-middle">
                   <td className="py-2 pr-4">
-                    <a href={caseHref(fila.case_id)} className="underline">
+                    {/* 44 x 44 (BR7.3): con el numero corto (`AP-1`, 2026-10-30) el
+                        enlace ya no se partia en dos lineas y quedaba bajo el minimo. */}
+                    <a
+                      href={caseHref(fila.case_id)}
+                      className="inline-flex min-h-11 min-w-11 items-center underline"
+                    >
                       {t("inbox.queue.open", { case_number: fila.case_number })}
                     </a>
                   </td>

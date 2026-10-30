@@ -277,7 +277,8 @@ async def test_el_numero_escrito_de_otra_forma_tambien_se_retoma(
     _, propia = dos_aseguradoras
     conversacion, clave = await _conversacion_nueva(propia)
     caso, numero = await _caso_de_llamada(propia, clave, cipher=cifrador)
-    dictado = f"{numero[:3].lower()} {numero[4:7]} {numero[7:]}"
+    prefijo, contador = numero.split("-")
+    dictado = f"{prefijo.lower()} {contador}"
 
     entregado, *_ = await _escribir(propia, conversacion, clave, f"es el {dictado}")
 

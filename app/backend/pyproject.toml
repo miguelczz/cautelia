@@ -240,6 +240,9 @@ allow-direct-references = true
 # escrita es una version que corrige un aviso de seguridad conocido, que entra
 # sin esperar porque esperarla dejaria abierta la vulnerabilidad que cierra.
 exclude-newer = "3 days ago"
+# pypdf 6.21.4 (2026-10-28) corrige CVE-2026-119203, -119204 y -119205; entra antes
+# de cumplir los tres dias por la excepcion de arriba (2026-10-30).
+exclude-newer-package = { pypdf = "2026-10-29T00:00:00Z" }
 
 # --- Piso de cobertura --------------------------------------------------------
 # El umbral vive en el manifiesto y hace fallar el comando (NFR18.1). La lista de

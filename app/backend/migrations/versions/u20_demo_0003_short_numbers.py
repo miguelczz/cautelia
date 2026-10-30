@@ -20,9 +20,12 @@ nueva; esta revision pone la base de acuerdo con el, en cuatro pasos:
    agente haya dicho dentro de la transcripcion del caso se reemplaza por el nuevo.
 3. **El libro de emitidos se reconstruye** con los seriales ya renumerados. Los viejos
    no sirven: tienen ceros a la izquierda y no caben en la forma nueva.
-4. **Las filas se leen y se escriben con el aislamiento puesto**: las tablas llevan el
-   aislamiento forzado, asi que sin fijar `app.tenant_id` antes de cada aseguradora la
-   consulta no ve ninguna fila y la revision "termina" sin haber renumerado nada.
+4. **Las filas se leen y se escriben con el aislamiento puesto, y ademas filtradas**: las
+   tablas llevan el aislamiento forzado, asi que sin fijar `app.tenant_id` antes de cada
+   aseguradora la consulta no ve ninguna fila y la revision "termina" sin haber renumerado
+   nada. Y cada sentencia lleva su `WHERE tenant_id`, porque un rol que salta el
+   aislamiento (el superusuario) veria las filas de todas y renumeraria las de una
+   aseguradora con el prefijo de otra.
 
 ## Esto rompe BR4.3 una vez, a proposito
 
@@ -92,7 +95,11 @@ def upgrade() -> None:
     for tenant_id in aseguradoras:
         _fijar_aseguradora(conexion, tenant_id)
         viejo = conexion.execute(
-            sa.text("SELECT substr(case_number, 1, 2) FROM case_record ORDER BY created_at LIMIT 1")
+            sa.text(
+                "SELECT substr(case_number, 1, 2) FROM case_record "
+                "WHERE tenant_id = :t ORDER BY created_at LIMIT 1"
+            ),
+            {"t": tenant_id},
         ).scalar()
         prefijo = nuevos.get(tenant_id) or viejo
         if prefijo is not None:
@@ -105,9 +112,10 @@ def upgrade() -> None:
                            :prefijo || '-' || (row_number() OVER (ORDER BY created_at, case_id))::text
                                AS nuevo
                     FROM case_record
+                    WHERE tenant_id = :t
                     """
                 ),
-                {"prefijo": prefijo},
+                {"prefijo": prefijo, "t": tenant_id},
             )
             conexion.execute(
                 sa.text(
@@ -128,15 +136,19 @@ def upgrade() -> None:
                 )
             )
             conexion.execute(sa.text("DROP TABLE _renumeracion"))
-        conexion.execute(sa.text("DELETE FROM case_number_issued"))
+        conexion.execute(
+            sa.text("DELETE FROM case_number_issued WHERE tenant_id = :t"), {"t": tenant_id}
+        )
         conexion.execute(
             sa.text(
                 """
                 INSERT INTO case_number_issued (tenant_id, serial, issued_at)
-                SELECT tenant_id, split_part(case_number, '-', 2), created_at FROM case_record
+                SELECT tenant_id, split_part(case_number, '-', 2), created_at
+                FROM case_record WHERE tenant_id = :t
                 ON CONFLICT DO NOTHING
                 """
-            )
+            ),
+            {"t": tenant_id},
         )
 
     conexion.execute(sa.text("SELECT set_config('app.tenant_id', '', true)"))
@@ -165,10 +177,17 @@ def downgrade() -> None:
                 UPDATE case_record
                 SET case_number = split_part(case_number, '-', 1) || 'X-'
                     || lpad(split_part(case_number, '-', 2), 6, '0')
+                WHERE tenant_id = :t
                 """
-            )
+            ),
+            {"t": tenant_id},
         )
-        conexion.execute(sa.text("UPDATE case_number_issued SET serial = lpad(serial, 6, '0')"))
+        conexion.execute(
+            sa.text(
+                "UPDATE case_number_issued SET serial = lpad(serial, 6, '0') WHERE tenant_id = :t"
+            ),
+            {"t": tenant_id},
+        )
 
     conexion.execute(sa.text("SELECT set_config('app.tenant_id', '', true)"))
     op.create_check_constraint("case_record_numero_con_forma", "case_record", _FORMA_VIEJA_CASO)

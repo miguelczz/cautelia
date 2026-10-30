@@ -116,7 +116,7 @@ def test_citar_la_clausula_sin_explicacion_no_deja_texto_del_modelo_que_juzgar(
 
 @pytest.mark.parametrize("idioma", IDIOMAS)
 def test_citar_una_clausula_que_no_se_le_entrego_falla(idioma: Locale) -> None:
-    inventada = "STO-PAP-2026-A.INS" if idioma == "es" else "SUN-PAP-2026-A.INS"
+    inventada = "SA-PAP-2026-A.INS" if idioma == "es" else "AP-PAP-2026-A.INS"
 
     resultado = _medir(idioma, Proponedor((_cita(idioma, COMO_DATO[idioma], inventada),)))
 

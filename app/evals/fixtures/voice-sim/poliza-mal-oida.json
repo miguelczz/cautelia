@@ -1,5 +1,5 @@
 {
-  "descripcion": "Autos Poblado, en español: el número de póliza llega mal oído, como en la llamada real del 2026-10-13 («Paul 201 17» por POL-200117), junto al nombre completo del titular (Marco Parker, del corpus sintético). La agente debe proponer la póliza de ese titular y esperar el sí, no darla por recibida. La frase entra con decir_con_datos, ya transcrita, porque así llegó del reconocedor. El relato nombra un modelo de carro de la lista de términos clave, para ver cómo lo transcribe el reconocedor; un municipio no se puede probar aquí, porque la voz sintetizada de quien llama pasa por la redacción y el lugar sale tapado.",
+  "descripcion": "Autos Poblado, en español: el número de póliza llega mal oído, como en la llamada real del 2026-10-13 («Paul 20 1» por POL-21), junto al nombre completo del titular (Lina Diaz, del corpus sintético). La agente debe proponer la póliza de ese titular y esperar el sí, no darla por recibida. La frase entra con decir_con_datos, ya transcrita, porque así llegó del reconocedor. El relato nombra un modelo de carro de la lista de términos clave, para ver cómo lo transcribe el reconocedor; un municipio no se puede probar aquí, porque la voz sintetizada de quien llama pasa por la redacción y el lugar sale tapado.",
   "cola": 25,
   "pasos": [
     { "esperar_agente": true },
@@ -7,7 +7,7 @@
       "decir": "Hola, quiero reportar un choque. Fue esta mañana, me estrellé contra un poste con una Luv D-Max. Nadie salió herido y no hubo ningún otro carro ni otra persona involucrada."
     },
     { "esperar_agente": true, "y": 1.0 },
-    { "decir_con_datos": "Claro, mi nombre completo es Marco Parker y mi póliza es Paul 201 17." },
+    { "decir_con_datos": "Claro, mi nombre completo es Lina Diaz y mi póliza es Paul 20 1." },
     { "esperar_agente": true, "y": 1.5 },
     { "decir": "Sí, soy yo y yo iba manejando." },
     { "esperar_agente": true, "y": 1.0 },

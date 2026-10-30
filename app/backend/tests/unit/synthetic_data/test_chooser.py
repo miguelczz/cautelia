@@ -14,8 +14,8 @@ def _secuencia(elegidor: SeededChooser, n: int = 20) -> list[int]:
 
 
 def test_la_misma_semilla_y_la_misma_salida_dan_las_mismas_elecciones() -> None:
-    uno = ChooserFactory(SEMILLA).for_output("tenants/stonecroft/issued_policies/POL-100042.json")
-    otro = ChooserFactory(SEMILLA).for_output("tenants/stonecroft/issued_policies/POL-100042.json")
+    uno = ChooserFactory(SEMILLA).for_output("tenants/stonecroft/issued_policies/POL-11.json")
+    otro = ChooserFactory(SEMILLA).for_output("tenants/stonecroft/issued_policies/POL-11.json")
 
     assert _secuencia(uno) == _secuencia(otro)
 

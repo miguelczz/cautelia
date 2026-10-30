@@ -117,8 +117,8 @@ def _cliente(app: FastAPI) -> httpx2.AsyncClient:
 
 async def test_la_poliza_viaja_con_lo_que_la_pestana_muestra_y_nada_mas(app: FastAPI) -> None:
     propia, ajena = tenancy.available_ids()[:2]
-    await _sembrar(propia, "POL-913001")
-    await _sembrar(ajena, "POL-913002")
+    await _sembrar(propia, "POL-91")
+    await _sembrar(ajena, "POL-92")
 
     async with _cliente(app) as cliente:
         respuesta = await cliente.get(f"/api/policies/{propia}")
@@ -126,9 +126,9 @@ async def test_la_poliza_viaja_con_lo_que_la_pestana_muestra_y_nada_mas(app: Fas
     assert respuesta.status_code == 200
     cuerpo = respuesta.json()
     numeros = [p["policy_number"] for p in cuerpo["policies"]]
-    assert "POL-913001" in numeros
-    assert "POL-913002" not in numeros, "la poliza de otra aseguradora no se lista"
-    [poliza] = [p for p in cuerpo["policies"] if p["policy_number"] == "POL-913001"]
+    assert "POL-91" in numeros
+    assert "POL-92" not in numeros, "la poliza de otra aseguradora no se lista"
+    [poliza] = [p for p in cuerpo["policies"] if p["policy_number"] == "POL-91"]
     assert poliza["holder_name"] == "Natalia Henao Rendón"
     assert poliza["vehicles"] == ["Renault Logan 2024"]
     assert poliza["limits"] == {"d.collision_deductible": 250}
@@ -149,7 +149,7 @@ async def test_los_documentos_dicen_cual_rige_y_que_endoso_modifica_cada_clausul
     app: FastAPI,
 ) -> None:
     propia = tenancy.available_ids()[0]
-    await _sembrar(propia, "POL-913001")
+    await _sembrar(propia, "POL-91")
     base = f"form-u13-{propia}"
     viejo = _formulario(propia, "form-u13-2025", FormKind.BASE, "viejo-D.1")
     await upsert_reference_data(

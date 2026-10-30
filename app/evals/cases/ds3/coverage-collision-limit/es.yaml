@@ -14,8 +14,8 @@ axes:
 - corriente
 - citation-verification
 citation:
-  policy_number: POL-245782
-  clause_id: STO-PAP-2026-D.LIMIT
+  policy_number: POL-14
+  clause_id: SA-PAP-2026-D.LIMIT
   expected_outcome: verified
   question: ¿Cuánto pagan como máximo por daños a mi vehículo?
 expected_verdicts:

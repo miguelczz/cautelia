@@ -14,12 +14,12 @@ axes:
 - distractor
 - citation-verification
 citation:
-  policy_number: POL-200117
-  clause_id: SUN-PAP-2026-DEF.YOU
+  policy_number: POL-21
+  clause_id: AP-PAP-2026-DEF.YOU
   expected_outcome: verified
   question: Who counts as 'you' under this policy?
   forbidden_clause_ids:
-  - SUN-PAP-2025-DEF.YOU.ALT
+  - AP-PAP-2025-DEF.YOU.ALT
 expected_verdicts:
   citation_distractor_def_you: pass
   citation_exists_distractor_def_you: pass

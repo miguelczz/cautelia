@@ -91,7 +91,7 @@ AHORA = datetime(2026, 9, 21, 10, 0, tzinfo=UTC)
 TELEFONO = "3005551234"
 CEDULA = "1032456789"
 PLACA = "ABC123"
-POLIZA = "POL-100042"
+POLIZA = "POL-11"
 SEMBRADOS = (TELEFONO, CEDULA, PLACA, POLIZA)
 
 #: El turno que un asegurado escribiria con los cuatro dentro. Es lo que viaja en
@@ -234,7 +234,7 @@ def _fragmentos(valor: str, *, minimo: int = 6) -> list[str]:
     """El valor entero y cada trozo contiguo suyo de `minimo` caracteres o mas.
 
     Buscar solo el valor entero dejaria pasar la fuga mas probable: una plantilla
-    que lo recorta. `POL-100042` truncado a `100042` sigue siendo el numero de
+    que lo recorta. `POL-11` truncado a `100042` sigue siendo el numero de
     poliza de alguien.
     """
     trozos = []

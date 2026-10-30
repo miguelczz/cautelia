@@ -17,11 +17,10 @@ jurisdiction: corvane
 quote_enabled: false
 # Su poliza de ejemplo esta en el corpus de esta misma fixture, y la validacion
 # de la carpeta comprueba que el archivo existe y que declara este numero.
-example_policy: POL-777001
-# Tres letras que no se confunden con STO, SUN ni KNO al dictarse: dos prefijos
-# iguales harian que dos casos distintos compartieran numero, y el arranque falla
-# ante eso (BR4.2).
-case_number_prefix: TST
+example_policy: POL-71
+# Dos letras distintas de SA, AP y AC: dos prefijos iguales harian que dos casos
+# distintos compartieran numero, y el arranque falla ante eso (BR4.2).
+case_number_prefix: TH
 copy_overrides: []
 voice:
   primary_voice: catalina

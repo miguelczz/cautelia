@@ -34,7 +34,7 @@ const UNA = primera.tenant_id;
 
 function propio(extra: Partial<ChatCaseStatus> = {}): ChatCaseStatus {
   return {
-    case_number: "AAA-000007",
+    case_number: "AA-7",
     state: "derived",
     complete: 5,
     total: 7,
@@ -49,7 +49,7 @@ const EJEMPLOS: Record<string, ExampleCaseList> = {
     items: [
       {
         case_id: "caso-captura",
-        case_number: "AAA-000003",
+        case_number: "AA-3",
         record_type: "claim",
         state: "capturing",
         channel: "chat",
@@ -59,7 +59,7 @@ const EJEMPLOS: Record<string, ExampleCaseList> = {
       },
       {
         case_id: "caso-uno",
-        case_number: "AAA-000001",
+        case_number: "AA-1",
         record_type: "claim",
         state: "derived",
         channel: "chat",
@@ -69,7 +69,7 @@ const EJEMPLOS: Record<string, ExampleCaseList> = {
       },
       {
         case_id: "caso-dos",
-        case_number: "AAA-000002",
+        case_number: "AA-2",
         record_type: "coverage_inquiry",
         state: "derived",
         channel: "voice",
@@ -83,7 +83,7 @@ const EJEMPLOS: Record<string, ExampleCaseList> = {
     items: [
       {
         case_id: "caso-cerrado",
-        case_number: "BBB-000009",
+        case_number: "BB-9",
         record_type: "quote_request",
         state: "closed",
         channel: "chat",
@@ -178,11 +178,9 @@ describe("la pagina de casos", () => {
       // (C10, 2026-10-12): ya no es una etiqueta suelta junto al nombre.
       expect(within(fila).getByText(t("chat.page.case_kind_claim"))).toBeDefined();
       expect(within(fila).getByTestId("own-case-number").textContent).toBe(
-        t("cases.mine.number", { case_number: "AAA-000007" }),
+        t("cases.mine.number", { case_number: "AA-7" }),
       );
-      expect(
-        within(fila).queryByText(t("inbox.case.title", { case_number: "AAA-000007" })),
-      ).toBeNull();
+      expect(within(fila).queryByText(t("inbox.case.title", { case_number: "AA-7" }))).toBeNull();
       // Como va, en palabras: el estado y cuanto falta.
       expect(within(fila).getByTestId("own-case-progress").textContent).toBe(
         `${t("case.state.derived")} · ${t("chat.page.case_missing_many", { count: "2" })}`,
@@ -193,7 +191,7 @@ describe("la pagina de casos", () => {
       });
       expect(chat.getAttribute("href")).toBe(`/t/${primera.tenant_id}/chat`);
       const ver = within(fila).getByRole("link", {
-        name: t("cases.mine.view_of", { case_number: "AAA-000007", insurer: primera.display_name }),
+        name: t("cases.mine.view_of", { case_number: "AA-7", insurer: primera.display_name }),
       });
       expect(ver.getAttribute("href")).toBe("/c#un-token-firmado");
       expect(ver.textContent).toBe(t("cases.mine.view"));
@@ -206,7 +204,7 @@ describe("la pagina de casos", () => {
         propios: {
           [primera.tenant_id]: propio(),
           [segunda.tenant_id]: propio({
-            case_number: "BBB-000002",
+            case_number: "BB-2",
             state: "capturing",
             complete: 1,
           }),
@@ -270,8 +268,8 @@ describe("la pagina de casos", () => {
       expect(
         within(en(grupos, 1))
           .getAllByTestId("example-case")
-          .map((fila) => fila.textContent.slice(0, 10)),
-      ).toEqual(["AAA-000001", "AAA-000002"]);
+          .map((fila) => /^AA-\d+/.exec(fila.textContent)?.[0]),
+      ).toEqual(["AA-1", "AA-2"]);
     });
 
     it("cada fila dice el tipo, el canal, el idioma y los datos, y abre el caso", async () => {
@@ -306,9 +304,9 @@ describe("la pagina de casos", () => {
       );
 
       await waitFor(() => {
-        expect(screen.getByText("BBB-000009")).toBeDefined();
+        expect(screen.getByText("BB-9")).toBeDefined();
       });
-      expect(screen.queryByText("AAA-000001")).toBeNull();
+      expect(screen.queryByText("AA-1")).toBeNull();
       expect(screen.getByText(t("case.state.closed"))).toBeDefined();
       expect(screen.getByTestId("example-case").getAttribute("href")).toBe(
         `/cases/${segunda.tenant_id}/caso-cerrado`,
@@ -320,9 +318,9 @@ describe("la pagina de casos", () => {
       renderWithProviders(<CasesPage initialTenantId={segunda.tenant_id} />, "es");
 
       await waitFor(() => {
-        expect(screen.getByText("BBB-000009")).toBeDefined();
+        expect(screen.getByText("BB-9")).toBeDefined();
       });
-      expect(screen.queryByText("AAA-000001")).toBeNull();
+      expect(screen.queryByText("AA-1")).toBeNull();
     });
 
     it("una aseguradora sin casos de ejemplo lo dice", async () => {
@@ -373,7 +371,7 @@ describe("la pagina de casos", () => {
 function ejemplo(extra: Partial<CaseDetailOut> = {}): CaseDetailOut {
   return {
     case_id: "caso-uno",
-    case_number: "AAA-000001",
+    case_number: "AA-1",
     state: "derived",
     record_type: "claim",
     channel: "chat",
@@ -452,7 +450,7 @@ describe("un caso de ejemplo", () => {
 
     const pagina = await screen.findByTestId("example-case");
     expect(within(pagina).getByRole("heading", { level: 1 }).textContent).toBe(
-      t("cases.example.title", { case_number: "AAA-000001" }),
+      t("cases.example.title", { case_number: "AA-1" }),
     );
     await waitFor(() => {
       expect(within(pagina).getByTestId("example-insurer").textContent).toContain(

@@ -225,7 +225,7 @@ def test_en_la_voz_sale_la_respuesta_si_el_redactor_no_la_cambia() -> None:
 
 @pytest.mark.parametrize(
     "reply",
-    ["Gracias, Marcela Ríos. ¿Cuándo fue?", "Tengo la póliza POL-000001. ¿Cuándo fue?"],
+    ["Gracias, Marcela Ríos. ¿Cuándo fue?", "Tengo la póliza POL-01. ¿Cuándo fue?"],
     ids=["un-nombre", "una-poliza"],
 )
 def test_en_la_voz_si_el_redactor_cambia_algo_sale_la_frase_del_catalogo(reply: str) -> None:
@@ -238,7 +238,7 @@ def test_en_la_voz_si_el_redactor_cambia_algo_sale_la_frase_del_catalogo(reply: 
 
 
 def test_en_el_chat_el_mismo_texto_no_pasa_por_el_redactor_de_la_voz() -> None:
-    reply = "Tengo la póliza POL-000001. ¿Cuándo fue?"
+    reply = "Tengo la póliza POL-01. ¿Cuándo fue?"
 
     assert _elegir(entendido=_entendido(reply)) == (reply, None)
 

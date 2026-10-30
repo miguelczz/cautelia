@@ -134,18 +134,18 @@ function posicionesDe(citas: readonly WireCitation[]) {
 describe("el rotulo de cada tarjeta", () => {
   const PARTE_D: WireCitation = {
     ...EN_ESPANOL,
-    clause_id: "STO-PAP-2026-D.EXCL.3",
+    clause_id: "SA-PAP-2026-D.EXCL.3",
     part: "Parte D — Daños a su vehículo",
   };
-  const OTRA_PARTE_D: WireCitation = { ...PARTE_D, clause_id: "STO-PAP-2026-D.EXCL.4" };
+  const OTRA_PARTE_D: WireCitation = { ...PARTE_D, clause_id: "SA-PAP-2026-D.EXCL.4" };
   const PARTE_F: WireCitation = {
     ...PARTE_D,
-    clause_id: "STO-PAP-2026-F.TERMINATION",
+    clause_id: "SA-PAP-2026-F.TERMINATION",
     part: "Parte F — Disposiciones generales",
   };
   const CONDICION_5: WireCitation = {
     ...PARTE_D,
-    clause_id: "STO-PAP-2026-END-5-F.TERMINATION",
+    clause_id: "SA-PAP-2026-END-5-F.TERMINATION",
     part: "Endosos",
     special_condition_number: 5,
   };

@@ -21,7 +21,7 @@ axes:
   - advanced-field
 script:
   - field_key: identity_and_policy
-    text: "Soy Marta Diaz, poliza POL-556677. No hubo ningun herido, todo pasó en la calle 45 con carrera 10."
+    text: "Soy Marta Diaz, poliza POL-62. No hubo ningun herido, todo pasó en la calle 45 con carrera 10."
   - field_key: description
     text: "Un carro se paso el semaforo en rojo y me golpeo de lado."
   - field_key: incident_datetime

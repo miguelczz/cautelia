@@ -100,17 +100,17 @@ def test_cada_campo_lleva_el_turno_del_que_salio_y_lo_dicho_redactado() -> None:
 
 def test_el_campo_de_poliza_se_normaliza_tras_extraerse() -> None:
     respuesta = ExtractionResponse(
-        items=(ExtractedItem(field_key="policy_number", value="POL-480915"),)
+        items=(ExtractedItem(field_key="policy_number", value="POL-50"),)
     )
     campos = extract_fields(
         respuesta,
         turn_id="turno-1",
-        turn_text="mi poliza es POL-480915",
+        turn_text="mi poliza es POL-50",
         language="es",
         now=HOY,
     )
-    assert campos[0].value == "POL-480915"
-    assert campos[0].normalized == "POL-480915"
+    assert campos[0].value == "POL-50"
+    assert campos[0].normalized == "POL-50"
 
 
 def test_un_campo_sin_regla_de_normalizacion_no_se_normaliza() -> None:

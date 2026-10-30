@@ -198,11 +198,11 @@ describe("la pantalla del chat", () => {
       language: "es",
       case_id: "caso-1",
       citations: [
-        { ...clausula, clause_id: "STO-PAP-2026-D.EXCL.3" },
-        { ...clausula, clause_id: "STO-PAP-2026-D.EXCL.4" },
+        { ...clausula, clause_id: "SA-PAP-2026-D.EXCL.3" },
+        { ...clausula, clause_id: "SA-PAP-2026-D.EXCL.4" },
         {
           ...clausula,
-          clause_id: "STO-PAP-2026-END-5-F.TERMINATION",
+          clause_id: "SA-PAP-2026-END-5-F.TERMINATION",
           part: "Endosos",
           special_condition_number: 5,
         },
@@ -337,7 +337,7 @@ describe("la pantalla del chat", () => {
           at: "2026-10-06T21:00:04+00:00",
         },
       ],
-      case_number: "STO-000007",
+      case_number: "SA-7",
       language: "es",
     });
     const cable = flujoDeMentira();
@@ -391,10 +391,10 @@ describe("la pantalla del chat", () => {
 
   it("muestra donde va el caso en cuanto nace: que es, cuanto falta y, al final, su numero", async () => {
     // Decision de Miguel (2026-10-06): ver el caso mientras avanza, no al final. Y
-    // (2026-10-11) en palabras que cualquiera entienda: antes "Caso STO-000123 · 1 de 7
+    // (2026-10-11) en palabras que cualquiera entienda: antes "Caso SA-123 · 1 de 7
     // datos" no decia que era ni cuanto faltaba.
     estadoDelCaso.mockResolvedValue({
-      case_number: "STO-000123",
+      case_number: "SA-123",
       record_type: "claim",
       state: "capturing",
       complete: 5,
@@ -422,9 +422,9 @@ describe("la pantalla del chat", () => {
     const linea = await screen.findByTestId("chat-case");
     expect(linea.textContent).toContain("Reporte de accidente");
     expect(linea.textContent).toContain("Faltan 2 datos");
-    expect(linea.textContent).toContain("Número de tu caso: STO-000123");
+    expect(linea.textContent).toContain("Número de tu caso: SA-123");
     // El numero va al final, como referencia, y dice que es (C10, 2026-10-12).
-    expect(linea.lastElementChild?.textContent).toBe("Número de tu caso: STO-000123");
+    expect(linea.lastElementChild?.textContent).toBe("Número de tu caso: SA-123");
     // Ya no se lee "5 de 7": cuanto falta se dice, no se calcula.
     expect(linea.textContent).not.toContain("de 7");
   });
@@ -438,7 +438,7 @@ describe("la pantalla del chat", () => {
     "dice que es el caso y cuanto falta: $tipo con $complete de $total",
     async ({ tipo, total, complete, dice }) => {
       estadoDelCaso.mockResolvedValue({
-        case_number: "STO-000130",
+        case_number: "SA-130",
         ...(tipo === undefined ? {} : { record_type: tipo }),
         state: "capturing",
         complete,
@@ -469,7 +469,7 @@ describe("la pantalla del chat", () => {
   it("en una consulta de poliza no cuenta datos: nadie los esta dando", async () => {
     // Decision del 2026-10-08, que la linea sin caja habia perdido.
     estadoDelCaso.mockResolvedValue({
-      case_number: "STO-000131",
+      case_number: "SA-131",
       record_type: "coverage_inquiry",
       state: "capturing",
       complete: 2,
@@ -492,13 +492,13 @@ describe("la pantalla del chat", () => {
 
     const linea = await screen.findByTestId("chat-case");
     expect(linea.textContent).toContain("Consulta de póliza");
-    expect(linea.textContent).toContain("Número de tu caso: STO-000131");
+    expect(linea.textContent).toContain("Número de tu caso: SA-131");
     expect(linea.textContent).not.toMatch(/datos|Datos/);
   });
 
   it("ver el caso es una accion del encabezado, junto a las demas y no suelta en otra fila", async () => {
     estadoDelCaso.mockResolvedValue({
-      case_number: "STO-000123",
+      case_number: "SA-123",
       record_type: "claim",
       state: "capturing",
       complete: 1,
@@ -531,7 +531,7 @@ describe("la pantalla del chat", () => {
   it("bajo la ultima respuesta, con el caso derivado, ofrece decidirlo; la traza va en el encabezado", async () => {
     // 2026-10-09: las dos puertas a lo que pasa por dentro, sin salir a buscarlas.
     estadoDelCaso.mockResolvedValue({
-      case_number: "STO-000124",
+      case_number: "SA-124",
       state: "derived",
       complete: 7,
       total: 7,
@@ -574,7 +574,7 @@ describe("la pantalla del chat", () => {
       // (cierre directo): ninguno de esos estados es «derivado», y el boton de decidir como
       // ajustador es solo del derivado.
       estadoDelCaso.mockResolvedValue({
-        case_number: "STO-000124",
+        case_number: "SA-124",
         state: estado,
         complete: 7,
         total: 7,
@@ -610,14 +610,14 @@ describe("la pantalla del chat", () => {
   it("el aviso de fondo con el resultado relee el estado del caso: aparece el boton de decidir", async () => {
     estadoDelCaso
       .mockResolvedValueOnce({
-        case_number: "STO-000124",
+        case_number: "SA-124",
         state: "deciding",
         complete: 7,
         total: 7,
         case_link: "/c#token",
       })
       .mockResolvedValue({
-        case_number: "STO-000124",
+        case_number: "SA-124",
         state: "derived",
         complete: 7,
         total: 7,
@@ -663,14 +663,14 @@ describe("la pantalla del chat", () => {
   it("el aviso de fondo de un cierre directo deja el enlace al caso y ningun boton de decidir", async () => {
     estadoDelCaso
       .mockResolvedValueOnce({
-        case_number: "STO-000124",
+        case_number: "SA-124",
         state: "deciding",
         complete: 7,
         total: 7,
         case_link: "/c#token",
       })
       .mockResolvedValue({
-        case_number: "STO-000124",
+        case_number: "SA-124",
         state: "closed",
         complete: 7,
         total: 7,
@@ -720,7 +720,7 @@ describe("la pantalla del chat", () => {
           }),
       )
       .mockResolvedValue({
-        case_number: "STO-000124",
+        case_number: "SA-124",
         state: "derived",
         complete: 7,
         total: 7,
@@ -751,7 +751,7 @@ describe("la pantalla del chat", () => {
 
     await act(async () => {
       resolverLaVieja({
-        case_number: "STO-000124",
+        case_number: "SA-124",
         state: "deciding",
         complete: 7,
         total: 7,
@@ -772,14 +772,14 @@ describe("la pantalla del chat", () => {
     // oculto tras el cuadro de escribir hasta que la persona desplazaba.
     estadoDelCaso
       .mockResolvedValueOnce({
-        case_number: "STO-000124",
+        case_number: "SA-124",
         state: "capturing",
         complete: 6,
         total: 7,
         case_link: "/c#token",
       })
       .mockResolvedValue({
-        case_number: "STO-000124",
+        case_number: "SA-124",
         state: "derived",
         complete: 7,
         total: 7,
@@ -824,10 +824,10 @@ describe("la pantalla del chat", () => {
   it("el boton del encabezado abre el pensamiento de la agente sobre el caso", async () => {
     // 2026-10-09: antes abria la traza tecnica, que en una consulta salia vacia.
     pensamiento.mockResolvedValue({
-      case_number: "STO-000127",
+      case_number: "SA-127",
       record_type: "coverage_inquiry",
       state: "capturing",
-      policy_ref: "POL-100042",
+      policy_ref: "POL-11",
       derivation_reason: null,
       fields: [
         {
@@ -881,7 +881,7 @@ describe("la pantalla del chat", () => {
 
     const ventana = screen.getByTestId("reasoning-dialog");
     expect(await within(ventana).findByText(es("chat.reasoning.wants_question"))).toBeTruthy();
-    expect(within(ventana).getByText(/POL-100042/)).toBeTruthy();
+    expect(within(ventana).getByText(/POL-11/)).toBeTruthy();
     expect(within(ventana).getByTestId("reasoning-clauses").textContent).toContain(
       "Parte D: paga los daños por granizo",
     );
@@ -896,7 +896,7 @@ describe("la pantalla del chat", () => {
 
   it("las acciones del encabezado comparten un solo estilo, con el icono y el titulo en el acento", async () => {
     estadoDelCaso.mockResolvedValue({
-      case_number: "STO-000140",
+      case_number: "SA-140",
       record_type: "claim",
       state: "capturing",
       complete: 1,
@@ -1015,7 +1015,7 @@ describe("la pantalla del chat", () => {
 
   it("sin caso derivado no ofrece decidirlo, y sin traza no ofrece nada", async () => {
     estadoDelCaso.mockResolvedValue({
-      case_number: "STO-000125",
+      case_number: "SA-125",
       state: "capturing",
       complete: 1,
       total: 7,
@@ -1091,7 +1091,7 @@ describe("la pantalla del chat", () => {
 
   it("al confirmar, deja solo la apertura nueva y se olvida del caso", async () => {
     conUnTurno({
-      case_number: "STO-000150",
+      case_number: "SA-150",
       record_type: "claim",
       state: "capturing",
       complete: 2,
@@ -1103,9 +1103,7 @@ describe("la pantalla del chat", () => {
     await userEvent.click(screen.getByRole("button", { name: "Reiniciar conversación" }));
     const ventana = screen.getByTestId("chat-reset-confirm");
     // Con caso, la ventana dice la verdad sobre el: queda guardado, pero ya no se ve aqui.
-    expect(
-      within(ventana).getByText(/STO-000150.*queda guardado.*ya no lo verás aquí/),
-    ).toBeTruthy();
+    expect(within(ventana).getByText(/SA-150.*queda guardado.*ya no lo verás aquí/)).toBeTruthy();
     await userEvent.click(within(ventana).getByRole("button", { name: "Reiniciar" }));
 
     expect(reinicio).toHaveBeenCalledWith("una-aseguradora", "es");
@@ -1169,19 +1167,17 @@ describe("la pantalla del chat", () => {
       language: "es",
       case_id: "caso-1",
       citations: [],
-      suggestions: ["Usar la póliza de ejemplo POL-100042"],
+      suggestions: ["Usar la póliza de ejemplo POL-11"],
     });
 
     const fila = await screen.findByTestId("chat-suggestions");
     await userEvent.click(
-      within(fila).getByRole("button", { name: "Usar la póliza de ejemplo POL-100042" }),
+      within(fila).getByRole("button", { name: "Usar la póliza de ejemplo POL-11" }),
     );
 
-    expect(enviado).toHaveBeenCalledWith(
-      "una-aseguradora",
-      "Usar la póliza de ejemplo POL-100042",
-      { locale: "es" },
-    );
+    expect(enviado).toHaveBeenCalledWith("una-aseguradora", "Usar la póliza de ejemplo POL-11", {
+      locale: "es",
+    });
     // Con el turno en vuelo no se ofrece nada mas: un turno a la vez.
     expect(screen.queryByTestId("chat-suggestions")).toBeNull();
   });
@@ -1210,7 +1206,7 @@ describe("la pantalla del chat", () => {
     // E6 (2026-10-07): la base guarda tapado; la burbuja muestra lo escrito.
     window.localStorage.setItem(
       "cautelia.own-text.una-aseguradora",
-      JSON.stringify(["Hola", "Soy Natalia Henao, póliza POL-100042"]),
+      JSON.stringify(["Hola", "Soy Natalia Henao, póliza POL-11"]),
     );
     historial.mockResolvedValue({
       opening: { message_id: "opening-chat-3", text: "Hola, soy Catalina.", language: "es" },
@@ -1224,7 +1220,7 @@ describe("la pantalla del chat", () => {
           at: "2026-10-07T21:00:01+00:00",
         },
       ],
-      case_number: "STO-000008",
+      case_number: "SA-8",
       language: "es",
     });
     const cable = flujoDeMentira();
@@ -1234,7 +1230,7 @@ describe("la pantalla del chat", () => {
     cable.conectar();
 
     const conversacion = within(screen.getByTestId("chat-transcript"));
-    expect(await conversacion.findByText("Soy Natalia Henao, póliza POL-100042")).toBeTruthy();
+    expect(await conversacion.findByText("Soy Natalia Henao, póliza POL-11")).toBeTruthy();
     expect(conversacion.queryByText("Soy [NOMBRE 1], póliza [PÓLIZA 1]")).toBeNull();
     // Ya no queda nada tapado, asi que el aviso de las etiquetas sobra.
     expect(screen.queryByTestId("chat-history-note")).toBeNull();
@@ -1254,7 +1250,7 @@ describe("el mensaje que llega desde la pestana de polizas", () => {
         tenantId="una-aseguradora"
         insurerLabel="Stonecroft"
         openStream={cable.abrir}
-        initialMessage="Soy Natalia, mi póliza es POL-100042. ¿Me cubre el granizo?"
+        initialMessage="Soy Natalia, mi póliza es POL-11. ¿Me cubre el granizo?"
         onInitialMessageSent={quitado}
       />,
     );
@@ -1266,7 +1262,7 @@ describe("el mensaje que llega desde la pestana de polizas", () => {
       expect(enviado).toHaveBeenCalledTimes(1);
     });
     expect(enviado.mock.calls[0]?.[1]).toBe(
-      "Soy Natalia, mi póliza es POL-100042. ¿Me cubre el granizo?",
+      "Soy Natalia, mi póliza es POL-11. ¿Me cubre el granizo?",
     );
     expect(quitado).toHaveBeenCalledTimes(1);
     // Otro dibujo --llega la respuesta-- no lo vuelve a enviar.
@@ -1423,7 +1419,7 @@ describe("el borrador del cuadro de escribir (2026-10-12)", () => {
     const primera = renderWithProviders(
       <ChatPage tenantId="una-aseguradora" insurerLabel="Stonecroft" openStream={cable.abrir} />,
     );
-    await userEvent.type(screen.getByLabelText("Tu mensaje"), "Mi póliza es la POL-100042");
+    await userEvent.type(screen.getByLabelText("Tu mensaje"), "Mi póliza es la POL-11");
     primera.unmount();
 
     const otraVez = flujoDeMentira();
@@ -1432,7 +1428,7 @@ describe("el borrador del cuadro de escribir (2026-10-12)", () => {
     );
 
     expect(screen.getByLabelText<HTMLTextAreaElement>("Tu mensaje").value).toBe(
-      "Mi póliza es la POL-100042",
+      "Mi póliza es la POL-11",
     );
   });
 

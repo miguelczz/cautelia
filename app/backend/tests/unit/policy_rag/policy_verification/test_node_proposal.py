@@ -36,8 +36,8 @@ from .test_node import (
     _reloj,
 )
 
-ENDOSO = _clausula("STO-PAP-2026-END-3-D.EXCL.3", part="Endoso 3")
-BASE = _clausula("STO-PAP-2026-D.EXCL.3", part="Parte D")
+ENDOSO = _clausula("SA-PAP-2026-END-3-D.EXCL.3", part="Endoso 3")
+BASE = _clausula("SA-PAP-2026-D.EXCL.3", part="Parte D")
 
 
 def _recuperadas() -> RetrievalResult:
@@ -177,7 +177,7 @@ def test_con_citas_en_la_entrada_no_se_le_pregunta_al_modelo(
 
 # --- El endoso que el modelo olvido (2026-10-11) -------------------------------
 
-FORMULARIO_DEL_ENDOSO = "STO-PAP-2026-END-3"
+FORMULARIO_DEL_ENDOSO = "SA-PAP-2026-END-3"
 ENDOSO_VIGENTE = ENDOSO.model_copy(update={"form_id": FORMULARIO_DEL_ENDOSO})
 
 

@@ -1,6 +1,6 @@
 """Lo que dice la agente, tapado para guardarse: `redact_composed` (2026-10-10).
 
-Visto en el chat: la respuesta "Encontre la poliza POL-100042 a nombre de Natalia
+Visto en el chat: la respuesta "Encontre la poliza POL-11 a nombre de Natalia
 Henao Rendon" se guardaba en claro, porque salia de una frase del catalogo y esa
 puerta no miraba lo que la frase llevaba dentro. La otra puerta, `redact`, guardaba
 "[NOMBRE 1] la poliza": tapaba nuestra palabra. Esta tapa los datos y respeta las
@@ -39,11 +39,11 @@ def _guardado(texto: str) -> str:
 
 def test_tapa_lo_que_la_frase_lleva_dentro_y_respeta_las_palabras_nuestras() -> None:
     guardado = _guardado(
-        "Encontré la póliza POL-100042 a nombre de Natalia Henao Rendón, "
+        "Encontré la póliza POL-11 a nombre de Natalia Henao Rendón, "
         "con un Renault Logan 2024. ¿Eres tú?"
     )
 
-    assert "POL-100042" not in guardado
+    assert "POL-11" not in guardado
     assert "Natalia" not in guardado
     assert "Rendón" not in guardado
     # Nuestras palabras siguen ahi: el ajustador lee la frase que la persona leyo.
@@ -81,7 +81,7 @@ def test_lo_que_dijo_la_persona_no_cambia_de_puerta() -> None:
 def test_sin_vocabulario_instalado_tapa_como_redact() -> None:
     """Falla hacia tapar: un despliegue que no instalo el vocabulario no guarda de mas."""
     redaccion.allow_own_vocabulary([])
-    texto = "Confirmo: Natalia Henao Rendón, póliza POL-200341."
+    texto = "Confirmo: Natalia Henao Rendón, póliza POL-31."
 
     assert _guardado(texto) == str(redaccion.redact(texto, language="es"))
 
@@ -100,16 +100,18 @@ def _de_persona(texto: str, trozo: str) -> DetectedEntity:
     )
 
 
-def test_el_numero_del_caso_no_se_tapa_como_si_fuera_un_nombre() -> None:
-    """El reconocedor de nombres lo etiqueta como persona **segun que digitos
-    traiga**: el aviso de la decision se guardaba "tu caso [NOMBRE 1]". Fallo en la
-    revision de GitHub y no en cuatro corridas locales, porque el numero es al azar.
-    Se prueba la regla y no el modelo, para que no dependa de la suerte."""
+@pytest.mark.parametrize("numero", ["SA-1", "AP-29", "AC-602938"])
+def test_el_numero_del_caso_no_se_tapa_como_si_fuera_un_nombre(numero: str) -> None:
+    """El reconocedor de nombres lo etiqueta como persona **segun que prefijo y que
+    digitos traiga**: el aviso de la decision se guardaba "tu caso [NOMBRE 1]". Fallo en
+    la revision de GitHub y no en cuatro corridas locales, porque el numero era al azar.
+    Se prueba la regla y no el modelo, para que no dependa de la suerte. Los de dos
+    letras y contador corto (`SA-1`, `AP-29`) incluidos."""
     from untangle.compliance.redaction import detector
 
-    texto = "Un ajustador revisó tu caso STO-602938 y lo aprobó."
+    texto = f"Un ajustador revisó tu caso {numero} y lo aprobó."
 
-    assert detector._es_solo_vocabulario_propio(texto, _de_persona(texto, "STO-602938"))
+    assert detector._es_solo_vocabulario_propio(texto, _de_persona(texto, numero))
 
 
 def test_un_numero_de_poliza_no_se_perdona_por_parecerse() -> None:
@@ -117,15 +119,13 @@ def test_un_numero_de_poliza_no_se_perdona_por_parecerse() -> None:
     regla no lo excusa."""
     from untangle.compliance.redaction import detector
 
-    texto = "Encontré la póliza POL-245782 a tu nombre."
+    texto = "Encontré la póliza POL-14 a tu nombre."
 
-    assert not detector._es_solo_vocabulario_propio(texto, _de_persona(texto, "POL-245782"))
+    assert not detector._es_solo_vocabulario_propio(texto, _de_persona(texto, "POL-14"))
 
 
 def test_el_aviso_que_fallo_en_github_se_guarda_con_su_numero() -> None:
     """El texto exacto de esa corrida, con el numero que el modelo tomo por nombre."""
-    aviso = (
-        "Un ajustador revisó tu caso STO-602938 y lo aprobó. Tu nota fue «Revisamos las fotos.»."
-    )
+    aviso = "Un ajustador revisó tu caso SA-602938 y lo aprobó. Tu nota fue «Revisamos las fotos.»."
 
-    assert "STO-602938" in str(redaccion.redact_composed(aviso, language="es"))
+    assert "SA-602938" in str(redaccion.redact_composed(aviso, language="es"))

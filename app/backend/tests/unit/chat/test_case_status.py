@@ -10,7 +10,7 @@ from untangle.chat import case_status
 def _vista(*, complete: int, total: int, state: CaseState = CaseState.CAPTURING) -> CaseView:
     return CaseView(
         case_id="caso-1",
-        case_number="STO-000123",
+        case_number="SA-123",
         record_type=RecordType.CLAIM,
         state=state,
         resolution=None,
@@ -66,7 +66,7 @@ def test_el_estado_dice_que_bloque_esta_preguntando_la_agente() -> None:
 def test_el_estado_lleva_numero_avance_y_enlace_tal_cual() -> None:
     estado = case_status.view_of(_vista(complete=2, total=7), case_link="/c#token")
 
-    assert estado.case_number == "STO-000123"
+    assert estado.case_number == "SA-123"
     assert estado.state == "capturing"
     assert (estado.complete, estado.total) == (2, 7)
     assert estado.case_link == "/c#token"

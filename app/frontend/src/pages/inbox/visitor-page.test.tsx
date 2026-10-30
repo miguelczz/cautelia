@@ -71,7 +71,7 @@ const SESION: RedeemOut = {
 function caso(extra: Partial<CaseDetailOut> = {}): CaseDetailOut {
   return {
     case_id: "case-1",
-    case_number: "CAS-000001",
+    case_number: "CA-1",
     state: "derived",
     record_type: "claim",
     channel: "chat",
@@ -209,14 +209,14 @@ describe("el caso se nombra por lo que es, no por su codigo (C10, 2026-10-12)", 
     const titulo = (await screen.findByRole("heading", { level: 1 })).textContent;
     expect(titulo).toBe(titulo_esperado(t));
     // El codigo ya no es el titulo: no aparece en el.
-    expect(titulo).not.toContain("CAS-000001");
+    expect(titulo).not.toContain("CA-1");
   });
 
   it("el codigo va en un renglon pequeno que dice para que sirve", async () => {
     dibujar();
 
     const renglon = await screen.findByTestId("visitor-case-number");
-    expect(renglon.textContent).toBe(t("visitor.number", { case_number: "CAS-000001" }));
+    expect(renglon.textContent).toBe(t("visitor.number", { case_number: "CA-1" }));
     expect(renglon.textContent).toMatch(/retomarlo o consultarlo/);
   });
 
@@ -245,7 +245,7 @@ describe("el caso se nombra por lo que es, no por su codigo (C10, 2026-10-12)", 
 
 describe("lo que la persona escribio, sin tapar en su propia pantalla (C5, 2026-10-12)", () => {
   const TAPADA = "Soy [NOMBRE 1], mi póliza es [PÓLIZA 1]";
-  const ESCRITA = "Soy Natalia Henao, mi póliza es POL-100042";
+  const ESCRITA = "Soy Natalia Henao, mi póliza es POL-11";
 
   function conversacion(extra: Partial<CaseDetailOut> = {}): CaseDetailOut {
     return caso({
@@ -272,14 +272,14 @@ describe("lo que la persona escribio, sin tapar en su propia pantalla (C5, 2026-
     window.localStorage.setItem("cautelia.own-text.una-aseguradora", JSON.stringify([ESCRITA]));
     window.localStorage.setItem(
       "cautelia.agent-text.una-aseguradora",
-      JSON.stringify(["Gracias Natalia, ya tengo la póliza POL-100042."]),
+      JSON.stringify(["Gracias Natalia, ya tengo la póliza POL-11."]),
     );
     pedido.mockResolvedValue({ ok: true, value: conversacion() });
     dibujar();
 
     const bloque = await screen.findByTestId("block-transcript");
     expect(bloque.textContent).toContain(ESCRITA);
-    expect(bloque.textContent).toContain("Gracias Natalia, ya tengo la póliza POL-100042.");
+    expect(bloque.textContent).toContain("Gracias Natalia, ya tengo la póliza POL-11.");
     expect(bloque.textContent).not.toMatch(/\[[^\]]+ \d+\]/);
     // Sin etiquetas a la vista, la nota que las explica sobra.
     expect(within(bloque).queryByTestId("transcript-redacted-hint")).toBeNull();
@@ -300,7 +300,7 @@ describe("lo que la persona escribio, sin tapar en su propia pantalla (C5, 2026-
   it("una copia que no encaja con la forma del mensaje no se usa", async () => {
     window.localStorage.setItem(
       "cautelia.own-text.una-aseguradora",
-      JSON.stringify(["Me llamo Natalia y mi póliza es POL-100042"]),
+      JSON.stringify(["Me llamo Natalia y mi póliza es POL-11"]),
     );
     pedido.mockResolvedValue({ ok: true, value: conversacion() });
     dibujar();
@@ -316,7 +316,7 @@ describe("lo que la persona escribio, sin tapar en su propia pantalla (C5, 2026-
     window.localStorage.setItem("cautelia.agent-text.una-aseguradora", JSON.stringify([ESCRITA]));
     window.localStorage.setItem(
       "cautelia.own-text.una-aseguradora",
-      JSON.stringify(["Gracias Natalia, ya tengo la póliza POL-100042."]),
+      JSON.stringify(["Gracias Natalia, ya tengo la póliza POL-11."]),
     );
     pedido.mockResolvedValue({ ok: true, value: conversacion() });
     dibujar();
@@ -328,7 +328,7 @@ describe("lo que la persona escribio, sin tapar en su propia pantalla (C5, 2026-
   it("la pregunta de cobertura tambien se lee como se escribio", async () => {
     window.localStorage.setItem(
       "cautelia.own-text.una-aseguradora",
-      JSON.stringify(["¿Mi póliza POL-100042 cubre el granizo?"]),
+      JSON.stringify(["¿Mi póliza POL-11 cubre el granizo?"]),
     );
     pedido.mockResolvedValue({
       ok: true,
@@ -346,7 +346,7 @@ describe("lo que la persona escribio, sin tapar en su propia pantalla (C5, 2026-
     dibujar();
 
     const bloque = await screen.findByTestId("block-citations");
-    expect(bloque.textContent).toContain("¿Mi póliza POL-100042 cubre el granizo?");
+    expect(bloque.textContent).toContain("¿Mi póliza POL-11 cubre el granizo?");
     expect(bloque.textContent).not.toContain("[PÓLIZA 1]");
   });
 });
@@ -366,8 +366,8 @@ describe("lo que se dijo en la llamada, sin tapar en 'Ver mi caso' (2026-10-13)"
     const recordar = callMemory("una-aseguradora");
     recordar(dicho("agent", "Hola, ¿en qué te ayudo?"));
     recordar(dicho("insured", "Soy Natalia Henao,"));
-    recordar(dicho("insured", "mi póliza es POL-100042"));
-    recordar(dicho("agent", "Gracias Natalia, tengo tu póliza POL-100042."));
+    recordar(dicho("insured", "mi póliza es POL-11"));
+    recordar(dicho("agent", "Gracias Natalia, tengo tu póliza POL-11."));
     // La respuesta de cobertura llega en dos lineas: la que la base guarda, y la vuelta al
     // reporte con su pregunta, que es de un turno anterior.
     recordar(dicho("agent", "En tu póliza, esto lo trata la parte A: cubre daños en Colombia."));
@@ -406,8 +406,8 @@ describe("lo que se dijo en la llamada, sin tapar en 'Ver mi caso' (2026-10-13)"
     dibujar();
 
     const bloque = await screen.findByTestId("block-transcript");
-    expect(bloque.textContent).toContain("Soy Natalia Henao, mi póliza es POL-100042");
-    expect(bloque.textContent).toContain("Gracias Natalia, tengo tu póliza POL-100042.");
+    expect(bloque.textContent).toContain("Soy Natalia Henao, mi póliza es POL-11");
+    expect(bloque.textContent).toContain("Gracias Natalia, tengo tu póliza POL-11.");
     expect(bloque.textContent).toContain("cubre daños en Colombia.");
     expect(bloque.textContent).not.toMatch(/\[[^\]]+ \d+\]/);
     expect(within(bloque).queryByTestId("transcript-redacted-hint")).toBeNull();

@@ -1,7 +1,7 @@
 """Lo que se le pide al reconocedor ademas del audio: la variante del idioma y los terminos clave.
 
 Origen (2026-10-13, llamada real en espanol de Colombia): «Itagui» llego como «Nitahui»,
-«Luv D-Max» como «Lub Dimas» y «POL-200117» como «Paul 201 17». Deepgram `nova-3` admite
+«Luv D-Max» como «Lub Dimas» y «POL-21» como «Paul 201 17». Deepgram `nova-3` admite
 en espanol la variante de Latinoamerica (`es-419`) y el parametro `keyterm`, repetido una
 vez por termino. Las dos cosas son **dato de configuracion** de la aseguradora
 (`voice.stt.language_codes` y `voice.stt.keyterms`), no codigo: el aplicativo sigue

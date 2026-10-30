@@ -135,7 +135,7 @@ async def test_el_mismo_navegador_con_la_misma_poliza_no_basta(
     aun asi no ve el caso que no abrio. Lo que ata el caso no es la poliza.
     """
     _, propia = dos_aseguradoras
-    poliza = "POL-000001"
+    poliza = "POL-01"
     ajeno = await nuevo_caso(propia, policy_ref=poliza)
     vista_ajena = await casos.get_case(propia, ajeno.case_id)
     assert vista_ajena is not None

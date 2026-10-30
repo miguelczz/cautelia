@@ -14,14 +14,14 @@ def test_lee_la_traduccion_de_una_clausula_y_de_su_parte(tmp_path: Path) -> None
             {
                 "language": "es",
                 "parts": {"Endorsements": "Endosos"},
-                "clauses": {"SUN-PAP-2026-END-2-D.EXCL.5": "La exclusión de llantas no aplica."},
+                "clauses": {"AP-PAP-2026-END-2-D.EXCL.5": "La exclusión de llantas no aplica."},
             }
         ),
         encoding="utf-8",
     )
 
     assert (
-        translations.clause_text("SUN-PAP-2026-END-2-D.EXCL.5", "es", root=tmp_path)
+        translations.clause_text("AP-PAP-2026-END-2-D.EXCL.5", "es", root=tmp_path)
         == "La exclusión de llantas no aplica."
     )
     assert translations.part_text("Endorsements", "es", root=tmp_path) == "Endosos"

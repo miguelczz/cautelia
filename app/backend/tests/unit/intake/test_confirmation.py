@@ -123,7 +123,7 @@ VALORES = {
     "location": "la autopista salida 12",
     "vehicle_and_driver": "yo conducía mi Mazda",
     "injuries": "nadie resultó herido",
-    "identity_and_policy": "la póliza POL-123456",
+    "identity_and_policy": "la póliza POL-63",
     "question_asked": "si el vidrio está cubierto",
 }
 
@@ -144,7 +144,7 @@ def test_el_cierre_de_una_consulta_de_cobertura_tiene_su_propia_forma() -> None:
         RecordType.COVERAGE_INQUIRY, VALORES, language="en"
     )
 
-    assert "POL-123456" in resumen
+    assert "POL-63" in resumen
     assert "nadie resultó herido" not in resumen
 
 

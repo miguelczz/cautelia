@@ -14,8 +14,8 @@ axes:
 - knotwell
 - citation-verification
 citation:
-  policy_number: POL-650485
-  clause_id: STO-PAP-2026-B.LIMIT
+  policy_number: POL-33
+  clause_id: SA-PAP-2026-B.LIMIT
   expected_outcome: verified
   issuer_tenant: stonecroft
   question: ¿Cuál es el límite de gastos médicos de mi póliza?

@@ -54,7 +54,7 @@ def _escribir(raiz: Path, tenant_id: str, contenido: str | None = None) -> Path:
             # Se deriva del identificador para que dos carpetas de una misma
             # prueba no compartan prefijo: compartirlo es lo que U4 prohibe al
             # arrancar (BR4.2), y una fixture no deberia modelar lo prohibido.
-            prefix=tenant_id[:3].upper().ljust(3, "X"),
+            prefix=tenant_id[:2].upper().ljust(2, "X"),
         )
     )
     (carpeta / "tenant.yaml").write_text(texto, encoding="utf-8")
@@ -163,7 +163,7 @@ def test_una_carpeta_cuyo_identificador_no_coincide_con_su_nombre_no_carga(
     _escribir(
         tmp_path,
         "una",
-        contenido=CARPETA_VALIDA.format(tenant_id="otra", display_name="Otra", prefix="OTR"),
+        contenido=CARPETA_VALIDA.format(tenant_id="otra", display_name="Otra", prefix="OT"),
     )
 
     cargadas = config.load(tmp_path)
@@ -263,7 +263,7 @@ def test_una_agencia_sin_emisor_de_su_poliza_de_ejemplo_no_carga(tmp_path: Path)
     _escribir(
         raiz,
         "agencia",
-        CARPETA_DE_AGENCIA.format(tenant_id="agencia", display_name="Agencia", prefix="AGE"),
+        CARPETA_DE_AGENCIA.format(tenant_id="agencia", display_name="Agencia", prefix="AG"),
     )
 
     cargadas = config.load(raiz)
@@ -280,7 +280,7 @@ def test_una_emisora_no_declara_que_su_poliza_la_emitio_alguien_mas(tmp_path: Pa
     mostraria en la vista que su propia poliza de ejemplo la emitio otra.
     """
     raiz = tmp_path / "tenants"
-    texto = CARPETA_VALIDA.format(tenant_id="emisora", display_name="Emisora", prefix="EMI")
+    texto = CARPETA_VALIDA.format(tenant_id="emisora", display_name="Emisora", prefix="EM")
     _escribir(raiz, "emisora", texto + "example_policy_issuer: otra\n")
 
     cargadas = config.load(raiz)
@@ -293,7 +293,7 @@ def test_una_emisora_no_declara_que_su_poliza_la_emitio_alguien_mas(tmp_path: Pa
 def test_una_agencia_con_su_emisor_declarado_carga(tmp_path: Path) -> None:
     """El control positivo: sin el, las dos de arriba pasarian con un campo roto."""
     raiz = tmp_path / "tenants"
-    texto = CARPETA_DE_AGENCIA.format(tenant_id="agencia", display_name="Agencia", prefix="AGE")
+    texto = CARPETA_DE_AGENCIA.format(tenant_id="agencia", display_name="Agencia", prefix="AG")
     _escribir(raiz, "agencia", texto + "example_policy_issuer: emisora\n")
 
     cargadas = config.load(raiz)

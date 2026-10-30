@@ -20,7 +20,7 @@ understanding:
   record_type: claim
   captured:
   - injuries
-  last_agent_text: I found policy POL-100042 under Natalia Henao Rendón, with a Renault Logan. Is that
+  last_agent_text: I found policy POL-11 under Daniela Castaño, with a Kia Picanto. Is that
     you, and were you driving that car?
   message: It's me, but my son was driving
   wants:
@@ -29,8 +29,8 @@ understanding:
   items:
     vehicle_and_driver: son
   declared_drivers:
-  - Natalia Henao Rendón
-  - Mateo Henao Gómez
+  - Daniela Castaño
+  - Hernán Castaño
   driver_reading: unknown
   reply_asks_for_any:
   - name

@@ -74,7 +74,7 @@ export interface VisitableRoute {
  */
 const CASO_DE_EJEMPLO = {
   case_id: "case-a11y",
-  case_number: "STO-000001",
+  case_number: "SA-1",
   state: "derived",
   record_type: "claim",
   channel: "chat",
@@ -445,7 +445,7 @@ const DIRECTORIO_DE_EJEMPLO: SiteDirectory = {
       display_name: "Autos Poblado",
       kind: "carrier",
       default_language: "en",
-      example_policy: "POL-200117",
+      example_policy: "POL-21",
       agent_name: "Catalina",
     },
     {
@@ -453,7 +453,7 @@ const DIRECTORIO_DE_EJEMPLO: SiteDirectory = {
       display_name: "Seguros Aburrá",
       kind: "carrier",
       default_language: "es",
-      example_policy: "POL-100042",
+      example_policy: "POL-11",
       agent_name: "Catalina",
     },
     {
@@ -461,7 +461,7 @@ const DIRECTORIO_DE_EJEMPLO: SiteDirectory = {
       display_name: "Agencia Castilla",
       kind: "agency",
       default_language: "en",
-      example_policy: "POL-200341",
+      example_policy: "POL-31",
       agent_name: "Catalina",
       // La agencia nombra a quien emitio su poliza (U23, BR1.2). Con esto el arnes
       // mide **la vista llena** y no el estado "divulgacion incompleta", que era lo
@@ -483,7 +483,7 @@ const CASOS_DE_EJEMPLO_DE_UNA_ASEGURADORA: ExampleCaseList = {
   items: [
     {
       case_id: "case-a11y-capturando",
-      case_number: "STO-000003",
+      case_number: "SA-3",
       record_type: "claim",
       state: "capturing",
       channel: "chat",
@@ -493,7 +493,7 @@ const CASOS_DE_EJEMPLO_DE_UNA_ASEGURADORA: ExampleCaseList = {
     },
     {
       case_id: "case-a11y",
-      case_number: "STO-000001",
+      case_number: "SA-1",
       record_type: "claim",
       state: "derived",
       channel: "chat",
@@ -503,7 +503,7 @@ const CASOS_DE_EJEMPLO_DE_UNA_ASEGURADORA: ExampleCaseList = {
     },
     {
       case_id: "case-a11y-consulta",
-      case_number: "STO-000002",
+      case_number: "SA-2",
       record_type: "coverage_inquiry",
       state: "derived",
       channel: "voice",
@@ -513,7 +513,7 @@ const CASOS_DE_EJEMPLO_DE_UNA_ASEGURADORA: ExampleCaseList = {
     },
     {
       case_id: "case-a11y-cerrado",
-      case_number: "STO-000004",
+      case_number: "SA-4",
       record_type: "claim",
       state: "closed",
       channel: "chat",
@@ -718,7 +718,7 @@ export const VISITABLE_ROUTES: readonly VisitableRoute[] = [
           items: [
             {
               case_id: "case-a11y",
-              case_number: "STO-000001",
+              case_number: "SA-1",
               state: "derived",
               record_type: "claim",
               channel: "chat",

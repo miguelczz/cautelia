@@ -45,17 +45,21 @@ def test_una_palabra_ajena_a_la_tabla_se_descarta_sin_romper_el_codigo() -> None
 
 
 def test_normaliza_poliza_dictada_letra_por_letra() -> None:
-    dictado = "pe o ele guion cuatro ocho cero nueve uno cinco"
-    assert normalization.normalize_policy_number(dictado, language="es") == "POL-480915"
+    dictado = "pe o ele guion dos tres"
+    assert normalization.normalize_policy_number(dictado, language="es") == "POL-23"
 
 
 def test_normaliza_poliza_ya_escrita() -> None:
-    assert normalization.normalize_policy_number("POL-480915", language="es") == "POL-480915"
+    assert normalization.normalize_policy_number("POL-50", language="es") == "POL-50"
 
 
 def test_poliza_incompleta_no_normaliza() -> None:
     """BR1.6: un numero incompleto no se completa adivinando -- ni aqui ni en `identity.py`."""
+    assert normalization.normalize_policy_number("POL-4", language="es") is None
+    assert normalization.normalize_policy_number("pe o ele guion dos", language="es") is None
+    # Ni uno con cifras de mas: los seis digitos de antes ya no son una poliza.
     assert normalization.normalize_policy_number("POL-4809", language="es") is None
+    assert normalization.normalize_policy_number("POL-480915", language="es") is None
 
 
 @pytest.mark.parametrize(

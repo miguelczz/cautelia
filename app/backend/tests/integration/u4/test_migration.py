@@ -41,7 +41,7 @@ async def test_el_historial_no_se_puede_editar(
     rastro de quien lo cambio, que es justo lo que el historial existe para
     guardar.
     """
-    await _crear_caso("CASO-1", "STO-000001")
+    await _crear_caso("CASO-1", "SA-1")
     async with session.session_for("stonecroft") as sesion:
         await session.execute_sql(
             sesion,
@@ -72,7 +72,7 @@ async def test_el_historial_si_se_puede_borrar_con_su_caso(
     acotada se cumpla. Un historial que tampoco se pudiera borrar convertiria la
     marca de dato de visitante en una promesa imposible.
     """
-    await _crear_caso("CASO-1", "STO-000001")
+    await _crear_caso("CASO-1", "SA-1")
     async with session.session_for("stonecroft") as sesion:
         await session.execute_sql(
             sesion,
@@ -102,7 +102,7 @@ async def test_un_caso_no_llega_a_cerrado_sin_su_evidencia(
     la tabla sin pasar por ella, la base la para.
     """
     with pytest.raises(sqlalchemy.exc.IntegrityError):
-        await _crear_caso("CASO-2", "STO-000002", estado="closed")
+        await _crear_caso("CASO-2", "SA-2", estado="closed")
 
 
 async def test_un_numero_de_caso_con_otra_forma_no_entra(

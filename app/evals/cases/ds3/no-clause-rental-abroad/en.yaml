@@ -21,8 +21,8 @@ axes:
 - corriente
 - citation-verification
 citation:
-  policy_number: POL-200117
-  clause_id: SUN-PAP-2026-F.PERIOD_TERRITORY
+  policy_number: POL-21
+  clause_id: AP-PAP-2026-F.PERIOD_TERRITORY
   expected_outcome: verified
   question: Does this policy cover a rental car I picked up in another country?
 expected_verdicts:

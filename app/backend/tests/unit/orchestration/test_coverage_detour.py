@@ -71,7 +71,7 @@ def test_la_vista_admite_una_pregunta_aunque_no_diga_cobertura(
     ("texto", "language"),
     [
         ("Ayer me chocaron por detrás en la avenida 80.", "es"),
-        ("Soy Natalia Henao, mi póliza es POL-100042", "es"),
+        ("Soy Natalia Henao, mi póliza es POL-11", "es"),
         ("A truck hit me from behind yesterday.", "en"),
         ("hola", "es"),
     ],

@@ -479,7 +479,7 @@ describe("lo que se oye tambien se lee", () => {
     cable.estado.empujar({
       type: "transcript",
       speaker: "insured",
-      text: "Soy Natalia Henao, mi póliza es POL-100042",
+      text: "Soy Natalia Henao, mi póliza es POL-11",
       final: true,
     });
     // Un parcial no se guarda: se sustituye por su final.
@@ -487,7 +487,7 @@ describe("lo que se oye tambien se lee", () => {
 
     expect(
       JSON.parse(window.localStorage.getItem("cautelia.own-text.una-aseguradora") ?? "[]"),
-    ).toEqual(["Soy Natalia Henao, mi póliza es POL-100042"]);
+    ).toEqual(["Soy Natalia Henao, mi póliza es POL-11"]);
     expect(
       JSON.parse(window.localStorage.getItem("cautelia.agent-text.una-aseguradora") ?? "[]"),
     ).toEqual(["Hola."]);
@@ -947,7 +947,7 @@ describe("antes de pedir el microfono", () => {
 
   it("la ayuda de la poliza da el nombre y el numero para decirlos, solo al tocarla", async () => {
     disponibilidad.mockResolvedValue(CON_LIMITES);
-    renderizar({ examplePolicy: "POL-100042", exampleHolder: "Natalia Henao Rendón" });
+    renderizar({ examplePolicy: "POL-11", exampleHolder: "Natalia Henao Rendón" });
 
     const ayuda = await screen.findByRole("button", { name: tEs("voice.console.sample_button") });
     // Cerrada: ni el numero ni el nombre estan a la vista.
@@ -958,26 +958,26 @@ describe("antes de pedir el microfono", () => {
 
     expect(ayuda.getAttribute("aria-expanded")).toBe("true");
     expect(screen.getByTestId("sample-policy-say").textContent).toBe(
-      tEs("voice.console.sample_say", { name: "Natalia Henao Rendón", policy: "POL-100042" }),
+      tEs("voice.console.sample_say", { name: "Natalia Henao Rendón", policy: "POL-11" }),
     );
   });
 
   it("sin titular conocido da solo el numero, sin inventar un nombre", async () => {
     disponibilidad.mockResolvedValue(CON_LIMITES);
-    renderizar({ examplePolicy: "POL-100042" });
+    renderizar({ examplePolicy: "POL-11" });
 
     await userEvent.click(
       await screen.findByRole("button", { name: tEs("voice.console.sample_button") }),
     );
 
     expect(screen.getByTestId("sample-policy-say").textContent).toBe(
-      tEs("voice.console.sample_say_number", { policy: "POL-100042" }),
+      tEs("voice.console.sample_say_number", { policy: "POL-11" }),
     );
   });
 
   it("ya no explica que probar ni repite el aviso sobre la poliza de ejemplo", async () => {
     disponibilidad.mockResolvedValue(CON_LIMITES);
-    renderizar({ examplePolicy: "POL-100042" });
+    renderizar({ examplePolicy: "POL-11" });
 
     const antes = await screen.findByTestId("voice-before-call");
 
@@ -996,7 +996,7 @@ describe("antes de pedir el microfono", () => {
 
   it("la ayuda sigue a mano durante la llamada, que es cuando la agente pide la poliza", async () => {
     disponibilidad.mockResolvedValue(CON_LIMITES);
-    renderizar({ examplePolicy: "POL-100042" });
+    renderizar({ examplePolicy: "POL-11" });
     await userEvent.click(await screen.findByRole("button", { name: "Llamar" }));
 
     expect(screen.getByTestId("sample-policy-helper")).toBeTruthy();

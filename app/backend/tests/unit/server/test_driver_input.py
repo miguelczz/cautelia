@@ -49,7 +49,7 @@ def _caso(policy_ref: str | None) -> Case:
     return Case(
         case_id=CASO,
         tenant_id=ASEGURADORA,
-        case_number=CaseNumber(prefix="STO", serial="000001"),
+        case_number=CaseNumber(prefix="SA", serial="1"),
         record_type=RecordType.CLAIM,
         channel=Channel.CHAT,
         origin=Origin.PUBLIC_CHAT,
@@ -63,9 +63,9 @@ def _caso(policy_ref: str | None) -> Case:
 def _poliza(*conductores: str) -> IssuedPolicy:
     return IssuedPolicy(
         tenant_id=ASEGURADORA,
-        policy_number="POL-100042",
+        policy_number="POL-11",
         issuer_tenant=ASEGURADORA,
-        form_id="STO-PAP-2026",
+        form_id="SA-PAP-2026",
         form_version="2026.1",
         named_insured={"full_name": "Natalia Henao Rendón"},
         drivers=tuple(DeclaredDriver(full_name=n) for n in conductores),
@@ -80,7 +80,7 @@ def lecturas(monkeypatch: pytest.MonkeyPatch) -> _Lecturas:
 
     async def casos(tenant_id: str, case_ids: list[str]) -> tuple[Case, ...]:
         registro.casos += 1
-        return (_caso("POL-100042"),)
+        return (_caso("POL-11"),)
 
     async def poliza(tenant_id: str, *, policy_number: str) -> IssuedPolicy | None:
         assert registro.polizas is not None
@@ -108,7 +108,7 @@ async def test_un_conductor_ajeno_a_la_poliza_del_caso_no_figura(lecturas: _Lect
     )
 
     assert resultado is True
-    assert lecturas.polizas == ["POL-100042"]
+    assert lecturas.polizas == ["POL-11"]
 
 
 async def test_el_titular_con_su_nombre_figura(lecturas: _Lecturas) -> None:
@@ -117,7 +117,7 @@ async def test_el_titular_con_su_nombre_figura(lecturas: _Lecturas) -> None:
     )
 
     assert resultado is False
-    assert lecturas.polizas == ["POL-100042"]
+    assert lecturas.polizas == ["POL-11"]
 
 
 async def test_sin_decir_nada_del_conductor_no_se_lee_ni_el_caso_ni_la_poliza(
@@ -160,7 +160,7 @@ async def test_una_poliza_sin_conductores_adicionales_declarados_solo_conoce_al_
     """Sin lista (`()`), nada que comparar: ausente. Con solo el titular, un ajeno no figura."""
 
     async def casos(tenant_id: str, case_ids: list[str]) -> tuple[Case, ...]:
-        return (_caso("POL-100042"),)
+        return (_caso("POL-11"),)
 
     async def poliza(tenant_id: str, *, policy_number: str) -> IssuedPolicy | None:
         return _poliza(*conductores)
@@ -179,7 +179,7 @@ async def test_la_traza_dice_por_que_queda_ausente_y_no_lleva_lo_que_dijo_la_per
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     async def casos(tenant_id: str, case_ids: list[str]) -> tuple[Case, ...]:
-        return (_caso("POL-100042"),)
+        return (_caso("POL-11"),)
 
     async def poliza(tenant_id: str, *, policy_number: str) -> IssuedPolicy | None:
         return _poliza()

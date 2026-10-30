@@ -718,7 +718,7 @@ async def test_un_numero_de_otra_aseguradora_responde_igual_que_uno_inexistente(
     abierto = await _abrir(tenant_id="stonecroft")
 
     ajeno = await api.get_case_by_number("sunmeadow", abierto.case_number)
-    inexistente = await api.get_case_by_number("sunmeadow", "SUN-999999")
+    inexistente = await api.get_case_by_number("sunmeadow", "AP-999999")
 
     assert ajeno is None
     assert ajeno == inexistente

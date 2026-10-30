@@ -39,8 +39,8 @@ MOMENTO = datetime(2026, 10, 13, 12, 0, tzinfo=UTC)
 DATOS_DE_LA_PERSONA = (
     "Me llamo Natalia Henao Rendón, mi teléfono es 3005551234 y la placa es ABC123."
 )
-DATOS_DE_LA_AGENTE = "Encontré la póliza POL-100042 a nombre de Natalia Henao Rendón. ¿Eres tú?"
-DATOS = ("3005551234", "ABC123", "POL-100042", "Natalia", "Henao")
+DATOS_DE_LA_AGENTE = "Encontré la póliza POL-11 a nombre de Natalia Henao Rendón. ¿Eres tú?"
+DATOS = ("3005551234", "ABC123", "POL-11", "Natalia", "Henao")
 
 
 @pytest.fixture(autouse=True)

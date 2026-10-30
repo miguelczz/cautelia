@@ -16,7 +16,7 @@ from untangle.policy_rag.corpus.models import Clause
 from untangle.policy_rag.corpus.retrieval import RetrievalProbe, RetrievalResult
 
 
-def _clausula(clause_id: str, form_id: str = "STO-PAP-2026") -> Clause:
+def _clausula(clause_id: str, form_id: str = "SA-PAP-2026") -> Clause:
     return Clause(
         tenant_id="stonecroft",
         clause_id=clause_id,
@@ -53,31 +53,31 @@ def _respuesta(
 
 RECUPERADAS = RetrievalResult(
     clauses=(
-        _clausula("STO-PAP-2026-D.EXCL.3"),
-        _clausula("STO-PAP-2026-END-3-D.EXCL.3", form_id="STO-PAP-2026-END-3"),
+        _clausula("SA-PAP-2026-D.EXCL.3"),
+        _clausula("SA-PAP-2026-END-3-D.EXCL.3", form_id="SA-PAP-2026-END-3"),
     ),
     probe=RetrievalProbe(clause_ids=(), sources={}, filtered_by={}),
 )
 
 ENDOSO = CitationExpectation(
-    policy_number="POL-784054",
+    policy_number="POL-12",
     question="¿Cubren el equipo de sonido?",
     expected_outcome="verified",
-    clause_id="STO-PAP-2026-D.EXCL.3",
-    amended_by="STO-PAP-2026-END-3",
+    clause_id="SA-PAP-2026-D.EXCL.3",
+    amended_by="SA-PAP-2026-END-3",
 )
 
 
 def test_citar_la_clausula_y_su_endoso_pasa() -> None:
-    respuesta = _respuesta("STO-PAP-2026-D.EXCL.3", "STO-PAP-2026-END-3-D.EXCL.3")
+    respuesta = _respuesta("SA-PAP-2026-D.EXCL.3", "SA-PAP-2026-END-3-D.EXCL.3")
 
     assert citation_probes.evaluate(ENDOSO, RECUPERADAS, respuesta) == []
 
 
 def test_sin_el_endoso_falla_aunque_cite_la_clausula() -> None:
-    fallos = citation_probes.evaluate(ENDOSO, RECUPERADAS, _respuesta("STO-PAP-2026-D.EXCL.3"))
+    fallos = citation_probes.evaluate(ENDOSO, RECUPERADAS, _respuesta("SA-PAP-2026-D.EXCL.3"))
 
-    assert fallos == ["no cito ninguna clausula del endoso 'STO-PAP-2026-END-3'"]
+    assert fallos == ["no cito ninguna clausula del endoso 'SA-PAP-2026-END-3'"]
 
 
 def test_citar_algo_cuando_no_hay_clausula_falla_y_lo_nombra() -> None:
@@ -85,16 +85,16 @@ def test_citar_algo_cuando_no_hay_clausula_falla_y_lo_nombra() -> None:
         policy_number="POL-1", question="¿Y el terremoto?", expected_outcome="no_clause_found"
     )
 
-    fallos = citation_probes.evaluate(esperado, RECUPERADAS, _respuesta("STO-PAP-2026-D.EXCL.3"))
+    fallos = citation_probes.evaluate(esperado, RECUPERADAS, _respuesta("SA-PAP-2026-D.EXCL.3"))
 
     assert len(fallos) == 1
-    assert "STO-PAP-2026-D.EXCL.3" in fallos[0]
+    assert "SA-PAP-2026-D.EXCL.3" in fallos[0]
 
 
 def test_la_clausula_prohibida_falla_aunque_solo_se_recupere() -> None:
-    esperado = ENDOSO.model_copy(update={"forbidden_clause_ids": ("STO-PAP-2026-END-3-D.EXCL.3",)})
+    esperado = ENDOSO.model_copy(update={"forbidden_clause_ids": ("SA-PAP-2026-END-3-D.EXCL.3",)})
 
-    fallos = citation_probes.evaluate(esperado, RECUPERADAS, _respuesta("STO-PAP-2026-D.EXCL.3"))
+    fallos = citation_probes.evaluate(esperado, RECUPERADAS, _respuesta("SA-PAP-2026-D.EXCL.3"))
 
     assert any("prohibida" in f for f in fallos)
 
@@ -127,17 +127,17 @@ async def test_sin_quien_responda_el_caso_queda_no_medido() -> None:
 
 
 def test_una_respuesta_verificada_que_cita_lo_recuperado_no_inventa_nada() -> None:
-    respuesta = _respuesta("STO-PAP-2026-D.EXCL.3")
+    respuesta = _respuesta("SA-PAP-2026-D.EXCL.3")
 
     assert citation_probes.invented(RECUPERADAS, respuesta) == []
 
 
 def test_citar_una_clausula_que_no_se_recupero_de_esa_poliza_es_inventarla() -> None:
-    respuesta = _respuesta("STO-PAP-2026-D.EXCL.3", "STO-PAP-2026-Z.NO.EXISTE")
+    respuesta = _respuesta("SA-PAP-2026-D.EXCL.3", "SA-PAP-2026-Z.NO.EXISTE")
 
     fallos = citation_probes.invented(RECUPERADAS, respuesta)
 
-    assert fallos == ["cito 'STO-PAP-2026-Z.NO.EXISTE', que no se recupero de esa poliza"]
+    assert fallos == ["cito 'SA-PAP-2026-Z.NO.EXISTE', que no se recupero de esa poliza"]
 
 
 def test_una_cita_sin_verificar_dentro_de_una_respuesta_verificada_tambien_cuenta() -> None:
@@ -145,7 +145,7 @@ def test_una_cita_sin_verificar_dentro_de_una_respuesta_verificada_tambien_cuent
         outcome=CoverageOutcome.VERIFIED,
         citations=(
             CitationVerdict(
-                clause_id="STO-PAP-2026-D.EXCL.3",
+                clause_id="SA-PAP-2026-D.EXCL.3",
                 claim="x",
                 outcome=CoverageOutcome.REJECTED,
                 reasons=(),
@@ -157,7 +157,7 @@ def test_una_cita_sin_verificar_dentro_de_una_respuesta_verificada_tambien_cuent
     )
 
     assert citation_probes.invented(RECUPERADAS, respuesta) == [
-        "cito 'STO-PAP-2026-D.EXCL.3' sin verificarla (rejected)"
+        "cito 'SA-PAP-2026-D.EXCL.3' sin verificarla (rejected)"
     ]
 
 
@@ -180,7 +180,7 @@ async def test_los_dos_criterios_de_un_caso_miran_la_misma_respuesta() -> None:
 
     async def responder(pregunta: citation_probes.CitationQuestion) -> tuple[object, object]:
         pedidas.append(pregunta.case_ref)
-        return RECUPERADAS, _respuesta("STO-PAP-2026-Z.NO.EXISTE")
+        return RECUPERADAS, _respuesta("SA-PAP-2026-Z.NO.EXISTE")
 
     citation_probes.install(responder)  # type: ignore[arg-type]
     citation_probes.register_citation_probes(paths.repo_root())

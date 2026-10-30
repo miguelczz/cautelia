@@ -132,7 +132,7 @@ async def test_el_resumen_sobrevive_al_reinicio_del_proceso(trazas: RelojFijo) -
     pasan por el mismo diccionario, y un reinicio se lo lleva entero sin que
     ninguna prueba lo note.
     """
-    await _sembrar_caso("CASO-VIVE", numero="STO-000910")
+    await _sembrar_caso("CASO-VIVE", numero="SA-910")
     await api.open_summary(
         trace_id="TRAZA-VIVE",
         tenant_id=PROPIA,
@@ -180,7 +180,7 @@ async def test_otra_clave_de_navegador_recibe_lo_mismo_que_un_caso_que_no_existe
     indistinguible de la de un caso que nunca existio. Un "prohibido" confirmaria
     que existe, que es la mitad de lo que el visitante de al lado querria saber.
     """
-    await _sembrar_caso("CASO-DUENO", numero="STO-000911")
+    await _sembrar_caso("CASO-DUENO", numero="SA-911")
     await api.open_summary(
         trace_id="TRAZA-DUENO",
         tenant_id=PROPIA,
@@ -217,7 +217,7 @@ async def test_desde_otra_aseguradora_el_resumen_no_se_alcanza_ni_con_su_identif
     aseguradora: la consulta devuelve cero filas, y este codigo no tendria forma
     de distinguirlo de un resumen que no existe aunque quisiera (BR7.4).
     """
-    await _sembrar_caso("CASO-AISLADO", numero="STO-000912")
+    await _sembrar_caso("CASO-AISLADO", numero="SA-912")
     await api.open_summary(
         trace_id="TRAZA-AISLADA",
         tenant_id=PROPIA,
@@ -250,7 +250,7 @@ async def test_el_estado_lost_se_guarda_como_valor_y_no_como_ausencia(
     superficie.
     """
     reloj = trazas
-    await _sembrar_caso("CASO-PERDIDO", numero="STO-000913")
+    await _sembrar_caso("CASO-PERDIDO", numero="SA-913")
     await api.open_summary(
         trace_id="TRAZA-PERDIDA",
         tenant_id=PROPIA,
@@ -299,7 +299,7 @@ async def test_el_purgador_nocturno_se_lleva_el_resumen_con_su_caso(trazas: Relo
     ocurre, y el dia que los dos discreparan no habria forma de saber cual manda.
     """
     viejo = AHORA - timedelta(days=2)
-    await _sembrar_caso("CASO-DE-ANOCHE", numero="STO-000914", creado=viejo)
+    await _sembrar_caso("CASO-DE-ANOCHE", numero="SA-914", creado=viejo)
     await api.open_summary(
         trace_id="TRAZA-DE-ANOCHE",
         tenant_id=PROPIA,

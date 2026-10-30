@@ -100,7 +100,7 @@ def test_un_conductor_adicional_es_un_familiar_con_otro_nombre_de_pila() -> None
             palabras = nombre.split()
             if _idioma_de_la_emisora(poliza) == "es":
                 assert palabras[1] == partes[1], f"{ruta}: {nombre} no lleva el apellido de la casa"
-                assert len(palabras) == 3, f"{ruta}: {nombre}"
+                assert len(palabras) == 2, f"{ruta}: {nombre}"
             else:
                 assert palabras[-1] == partes[-1], (
                     f"{ruta}: {nombre} no lleva el apellido de la casa"

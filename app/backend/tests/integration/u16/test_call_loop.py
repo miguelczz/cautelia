@@ -1710,7 +1710,7 @@ async def test_lo_dicho_antes_de_reabrir_la_escucha_no_se_pierde_ni_se_repite(
 async def test_la_sintesis_recibe_los_codigos_dichos_y_la_pantalla_los_escritos(
     catalogo: None,
 ) -> None:
-    """V17. "POL-200341", las placas y los numeros de caso llegaban crudos al sintetizador.
+    """V17. "POL-31", las placas y los numeros de caso llegaban crudos al sintetizador.
     El texto que suena se reescribe en un solo punto, justo antes de sintetizar; el de la
     pantalla, que es el que tambien se guarda, sigue con el formato escrito."""
     from untangle.compliance.redaction import api as redaccion
@@ -1719,13 +1719,13 @@ async def test_la_sintesis_recibe_los_codigos_dichos_y_la_pantalla_los_escritos(
     doble = VozDoble()
     canal = CanalFalso()
     ciclo = _correr(motor, canal, doble)
-    escrito = "Found policy POL-200341, plate ABC123, model year 2015, case STO-602938."
+    escrito = "Found policy POL-31, plate ABC123, model year 2015, case SA-602938."
 
     await ciclo._decir(voz.Utterance(text=redaccion.from_catalog(escrito, language="en")))
 
     assert doble.dicho == [
-        "Found policy two zero zero, three four one, plate A B C, one two three, "
-        "model year 2015, case S T O, six zero two, nine three eight."
+        "Found policy three one, plate A B C, one two three, "
+        "model year 2015, case S A, six zero two, nine three eight."
     ]
     en_pantalla = [c.text for c in canal.de_tipo(voz.Transcript) if c.speaker == "agent"]
     assert en_pantalla == [escrito]
@@ -1750,12 +1750,12 @@ async def test_el_texto_del_turno_que_se_guarda_no_es_el_que_suena(catalogo: Non
     from untangle.compliance.redaction import api as redaccion
 
     motor = await _motor()
-    frase = voz.Utterance(text=redaccion.from_catalog("Your policy is POL-200341.", language="en"))
+    frase = voz.Utterance(text=redaccion.from_catalog("Your policy is POL-31.", language="en"))
 
     suena = motor.spoken(frase)
 
-    assert str(suena) == "Your policy is two zero zero, three four one."
-    assert str(frase.text) == "Your policy is POL-200341."
+    assert str(suena) == "Your policy is three one."
+    assert str(frase.text) == "Your policy is POL-31."
     # Y sin nada que reescribir, el mismo objeto.
     llana = voz.Utterance(text=redaccion.from_catalog("Is anyone hurt?", language="en"))
     assert motor.spoken(llana) is llana.text

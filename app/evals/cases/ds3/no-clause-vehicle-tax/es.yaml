@@ -23,7 +23,7 @@ axes:
 - sin_clausula
 - citation-verification
 citation:
-  policy_number: POL-245782
+  policy_number: POL-14
   clause_id: null
   expected_outcome: no_clause_found
   question: ¿Esta póliza paga el impuesto anual de mi vehículo o su matrícula?

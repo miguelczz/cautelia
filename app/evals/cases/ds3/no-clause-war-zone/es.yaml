@@ -21,8 +21,8 @@ axes:
 - corriente
 - citation-verification
 citation:
-  policy_number: POL-245782
-  clause_id: STO-PAP-2026-D.EXCL.7
+  policy_number: POL-14
+  clause_id: SA-PAP-2026-D.EXCL.7
   expected_outcome: verified
   question: ¿Cubre esta póliza daños al auto ocurridos en una zona de guerra?
 expected_verdicts:

@@ -15,10 +15,12 @@ pytestmark = pytest.mark.usefixtures("catalogo_cargado")
 @pytest.mark.parametrize(
     ("language", "escrito", "suena"),
     [
-        ("es", "POL-200341", "póliza dos cero cero, tres cuatro uno"),
-        ("en", "POL-200341", "policy two zero zero, three four one"),
-        ("es", "STO-602938", "ese te o, seis cero dos, nueve tres ocho"),
-        ("en", "STO-602938", "S T O, six zero two, nine three eight"),
+        ("es", "POL-23", "póliza dos tres"),
+        ("en", "POL-23", "policy two three"),
+        ("es", "AP-29", "a pe, dos nueve"),
+        ("en", "AP-29", "A P, two nine"),
+        ("es", "SA-1", "ese a, uno"),
+        ("es", "AC-123456", "a ce, uno dos tres, cuatro cinco seis"),
         ("es", "ABC123", "a be ce, uno dos tres"),
         ("en", "ABC123", "A B C, one two three"),
         # Las otras formas de placa que reconoce U11, por tramos de letras y de digitos.
@@ -44,7 +46,10 @@ def test_los_codigos_se_dicen_como_se_dictan(language: Locale, escrito: str, sue
         # Cinco digitos o un prefijo pegado no son una placa ni un numero de caso.
         "ABC12345",
         "pre-ABC123",
-        "STO-60293",
+        "AP-029",
+        "AP-1234567",
+        "ZNX-9706",
+        "SA-PAP-2026-D.LIMIT",
     ],
 )
 def test_un_ano_y_lo_que_no_es_un_codigo_se_quedan_como_estan(language: Locale, texto: str) -> None:
@@ -54,10 +59,9 @@ def test_un_ano_y_lo_que_no_es_un_codigo_se_quedan_como_estan(language: Locale, 
 
 
 def test_en_una_frase_solo_cambia_el_codigo() -> None:
-    texto = "Encontré tu póliza POL-200341; el vehículo es de 2015, placa ABC123."
+    texto = "Encontré tu póliza POL-23; el vehículo es de 2015, placa ABC123."
     assert speakable.for_speech(texto, language="es") == (
-        "Encontré tu póliza dos cero cero, tres cuatro uno; el vehículo es de 2015, "
-        "placa a be ce, uno dos tres."
+        "Encontré tu póliza dos tres; el vehículo es de 2015, placa a be ce, uno dos tres."
     )
 
 
@@ -75,7 +79,7 @@ def test_en_una_frase_solo_cambia_el_codigo() -> None:
 )
 def test_la_palabra_poliza_no_se_dice_dos_veces(language: Locale, antes: str) -> None:
     """Si la frase ya dice "póliza", el prefijo del numero se queda mudo."""
-    dicho = speakable.for_speech(f"{antes} POL-200341.", language=language)
+    dicho = speakable.for_speech(f"{antes} POL-23.", language=language)
 
     palabra = "póliza" if language == "es" else "policy"
     assert dicho.lower().count(palabra) == 1, dicho
@@ -84,7 +88,7 @@ def test_la_palabra_poliza_no_se_dice_dos_veces(language: Locale, antes: str) ->
 
 def test_el_numero_de_caso_no_dice_poliza() -> None:
     """Solo el prefijo POL es de poliza; el de una aseguradora se deletrea."""
-    assert "póliza" not in speakable.for_speech("Caso KNO-482913", language="es")
+    assert "póliza" not in speakable.for_speech("Caso AC-29", language="es")
 
 
 def test_el_texto_sin_codigos_no_se_toca_en_absoluto() -> None:

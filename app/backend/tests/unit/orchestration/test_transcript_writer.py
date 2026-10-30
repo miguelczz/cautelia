@@ -28,7 +28,7 @@ AMBITO = TranscriptScope(
 )
 AHORA = datetime(2026, 10, 10, 12, 0, tzinfo=UTC)
 RESPUESTA = (
-    "Encontré la póliza POL-100042 a nombre de Natalia Henao Rendón, "
+    "Encontré la póliza POL-11 a nombre de Natalia Henao Rendón, "
     "con un Renault Logan 2024. ¿Eres tú y conducías ese carro?"
 )
 
@@ -63,7 +63,7 @@ async def test_lo_que_dice_la_agente_se_guarda_sin_la_poliza_ni_el_nombre(
     )
 
     (guardado,) = guardados
-    assert "POL-100042" not in guardado
+    assert "POL-11" not in guardado
     assert "Natalia" not in guardado
     # Y la frase sigue siendo legible para quien revisa el caso.
     assert guardado.startswith("Encontré la póliza [PÓLIZA 1] a nombre de [NOMBRE 1]")
@@ -71,12 +71,12 @@ async def test_lo_que_dice_la_agente_se_guarda_sin_la_poliza_ni_el_nombre(
 
 async def test_lo_que_dijo_la_persona_se_sigue_tapando_entero(guardados: list[str]) -> None:
     await transcript_writer.record_person_turn(
-        AMBITO, text="Soy Natalia Henao Rendón, mi póliza es POL-100042", now=AHORA
+        AMBITO, text="Soy Natalia Henao Rendón, mi póliza es POL-11", now=AHORA
     )
 
     (guardado,) = guardados
     assert "Natalia" not in guardado
-    assert "POL-100042" not in guardado
+    assert "POL-11" not in guardado
 
 
 # --- Todo texto que se publica se guarda (2026-10-12) -----------------------------

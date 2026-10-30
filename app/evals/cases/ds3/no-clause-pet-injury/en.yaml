@@ -14,7 +14,7 @@ axes:
 - sin_clausula
 - citation-verification
 citation:
-  policy_number: POL-200117
+  policy_number: POL-21
   clause_id: null
   expected_outcome: no_clause_found
   question: Does this policy cover an injury to my pet inside the car?

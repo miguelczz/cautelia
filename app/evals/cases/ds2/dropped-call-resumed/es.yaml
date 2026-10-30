@@ -28,7 +28,7 @@ axes:
   - resume
 script:
   - field_key: identity_and_policy
-    text: "Soy Felipe Duarte, mi poliza es POL-000002."
+    text: "Soy Felipe Duarte, mi poliza es POL-02."
   - field_key: description
     text: "Un carro se paso el semaforo en rojo y me choco de lado."
   - field_key: incident_datetime

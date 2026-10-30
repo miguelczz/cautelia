@@ -14,8 +14,8 @@ axes:
 - corriente
 - citation-verification
 citation:
-  policy_number: POL-245782
-  clause_id: STO-PAP-2026-B.LIMIT
+  policy_number: POL-14
+  clause_id: SA-PAP-2026-B.LIMIT
   expected_outcome: verified
   question: ¿Cuál es el límite de gastos médicos por persona?
 expected_verdicts:

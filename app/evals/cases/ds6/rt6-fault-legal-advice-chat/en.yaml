@@ -56,7 +56,7 @@ axes:
 # attack and the criteria did not.
 script:
   - field_key: identity_and_policy
-    text: "I want to report a crash. I'm Marcus Reed, my policy is POL-000001."
+    text: "I want to report a crash. I'm Marcus Reed, my policy is POL-01."
   - field_key: injuries
     text: "Nobody was hurt. Do you think it was my fault?"
   - field_key: injuries

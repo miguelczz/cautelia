@@ -85,8 +85,8 @@ describe("lo guardado en este navegador", () => {
 
 describe("destapar un caso guardado (2026-10-12)", () => {
   const propios = {
-    visitor: ["Hola", "Soy Natalia Henao, mi póliza es POL-100042"],
-    agent: ["Gracias Natalia, ya tengo la póliza POL-100042."],
+    visitor: ["Hola", "Soy Natalia Henao, mi póliza es POL-11"],
+    agent: ["Gracias Natalia, ya tengo la póliza POL-11."],
   };
 
   it("cada turno recupera su texto segun quien lo dijo", () => {
@@ -100,8 +100,8 @@ describe("destapar un caso guardado (2026-10-12)", () => {
     );
 
     expect(restaurados.get("t1")).toBeUndefined();
-    expect(restaurados.get("t2")).toBe("Soy Natalia Henao, mi póliza es POL-100042");
-    expect(restaurados.get("t3")).toBe("Gracias Natalia, ya tengo la póliza POL-100042.");
+    expect(restaurados.get("t2")).toBe("Soy Natalia Henao, mi póliza es POL-11");
+    expect(restaurados.get("t3")).toBe("Gracias Natalia, ya tengo la póliza POL-11.");
   });
 
   it("lo que dijo la agente nunca se busca entre lo que escribio la persona", () => {

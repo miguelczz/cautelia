@@ -1,7 +1,8 @@
 """Reconocer el numero de un caso escrito en el chat (US1.19, US1.20).
 
-Lo importante es lo que **no** se reconoce: un numero de poliza tiene la misma forma, y la persona lo
-escribe mientras se identifica. Y lo que si: el de cualquier aseguradora, para que uno ajeno reciba la
+Lo importante es lo que **no** se reconoce: un numero de poliza tiene una forma parecida, y la persona
+lo escribe mientras se identifica; y con solo dos letras de prefijo, una placa o un modelo de carro
+tambien se le parecen. Y lo que si: el de cualquier aseguradora, para que uno ajeno reciba la
 misma respuesta que uno inventado (AC1.20.3).
 """
 
@@ -23,15 +24,17 @@ def _estado_limpio() -> None:
 @pytest.mark.parametrize(
     ("texto", "esperado"),
     [
-        ("STO-482913", "STO-482913"),
-        ("mi caso es sto-482913", "STO-482913"),
-        ("es el STO 482 913", "STO-482913"),
-        ("STO482913", "STO-482913"),
-        ("seguimos con el caso STO-482913, por favor", "STO-482913"),
-        ("(STO-482913)", "STO-482913"),
+        ("SA-1", "SA-1"),
+        ("AP-29", "AP-29"),
+        ("mi caso es ap-29", "AP-29"),
+        ("es el AP 29", "AP-29"),
+        ("AP29", "AP-29"),
+        ("seguimos con el caso AP-29, por favor", "AP-29"),
+        ("(AP-29)", "AP-29"),
+        ("AP-482913", "AP-482913"),
         # El de cualquier aseguradora cargada: la respuesta a uno ajeno es la de uno inventado.
-        ("KNO-111222", "KNO-111222"),
-        ("SUN-333444", "SUN-333444"),
+        ("AC-7", "AC-7"),
+        ("SA-333", "SA-333"),
     ],
 )
 def test_reconoce_el_numero_de_caso_escrito_de_varias_formas(texto: str, esperado: str) -> None:
@@ -42,13 +45,24 @@ def test_reconoce_el_numero_de_caso_escrito_de_varias_formas(texto: str, esperad
     "texto",
     [
         "hola",
-        "mi póliza es POL-100042",
-        "POL-000001",
-        "XYZ-482913",
-        "STO-48291",
-        "STO-4829130",
-        "ASTO-482913",
-        "STO-482913A",
+        # Lo que tiene casi la forma de un numero de caso y es otra cosa: una poliza, una
+        # placa, un modelo de carro, el identificador de un formulario o de una clausula.
+        "mi póliza es POL-11",
+        "POL-23",
+        "mi placa es ZNX-9706",
+        "SA-PAP-2026",
+        "AP-PAP-2026-END-3",
+        "la clausula SA-PAP-2026-D.LIMIT",
+        "ZAP-29",
+        "un Mazda CX-5",
+        # Un prefijo que ninguna aseguradora cargada usa.
+        "XY-29",
+        # Un contador que no lo es: con cero a la izquierda, de mas de seis cifras o pegado
+        # a una letra.
+        "AP-029",
+        "AP-0",
+        "AP-1234567",
+        "AP-29A",
         "mi teléfono es 300 123 4567",
     ],
 )
@@ -57,14 +71,14 @@ def test_no_toma_por_numero_de_caso_lo_que_no_lo_es(texto: str) -> None:
 
 
 def test_un_mensaje_con_dos_numeros_atiende_el_primero() -> None:
-    assert case_number.find("STO-111111 o STO-222222") == "STO-111111"
+    assert case_number.find("SA-1 o SA-2") == "SA-1"
 
 
 def test_sin_aseguradoras_cargadas_no_reconoce_nada(monkeypatch: pytest.MonkeyPatch) -> None:
     sin_nada = tenancy_config.LoadedTenants(available=(), unavailable=())
     monkeypatch.setattr(tenancy_config, "loaded", lambda: sin_nada)
 
-    assert case_number.find("STO-482913") is None
+    assert case_number.find("SA-1") is None
 
 
 def test_las_dos_respuestas_a_un_numero_que_no_se_retoma_no_dicen_el_motivo() -> None:
@@ -73,7 +87,7 @@ def test_las_dos_respuestas_a_un_numero_que_no_se_retoma_no_dicen_el_motivo() ->
 
     assert encendida != apagada
     for frase in (encendida, apagada):
-        assert "STO" not in frase and "existe" not in frase.lower()
+        assert "SA" not in frase.split() and "existe" not in frase.lower()
     # AC1.19.5: apagada, no promete que el chat pueda retomarlo.
     assert "mismo canal" in apagada
     assert "seguir por chat" not in apagada.lower()
@@ -93,7 +107,7 @@ def test_los_estados_en_que_el_chat_sigue_tomando_datos_son_los_de_captura() -> 
 def _vista(estado: CaseState) -> CaseView:
     return CaseView(
         case_id="caso-1",
-        case_number="STO-482913",
+        case_number="SA-1",
         record_type=RecordType.CLAIM,
         state=estado,
         resolution=None,
@@ -115,7 +129,7 @@ def test_un_caso_en_revision_no_dice_que_ya_lo_tiene_un_ajustador(
     """US1.17: puede cerrarse solo, asi que todavia no se sabe que lo tendra uno."""
     frase = case_number.not_in_capture(_vista(estado), language=language)  # type: ignore[arg-type]
 
-    assert "STO-482913" in frase
+    assert "SA-1" in frase
     assert "ajustador" not in frase.lower()
     assert "adjuster" not in frase.lower()
 

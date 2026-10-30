@@ -263,9 +263,8 @@ async def test_la_cuarta_aseguradora_pasa_chat_bandeja_y_aislamiento(
     # del prefijo que declara su carpeta.
     pagina = await queue.page(CUARTA, filters=queue.QueueFilters(), role=Role.ADJUSTER)
     assert [item.case_id for item in pagina.items] == [sembrado.case_id]
-    # El prefijo sale de **su** carpeta: tres letras que no se confunden con las
-    # de las otras tres al dictarse.
-    assert pagina.items[0].case_number.startswith("TST-")
+    # El prefijo sale de **su** carpeta: dos letras distintas de las de las otras tres.
+    assert pagina.items[0].case_number.startswith("TH-")
 
     # Aislamiento: ninguna otra aseguradora lo ve, y no porque este codigo filtre.
     otra = next(t for t in tenancy_config.available_ids() if t != CUARTA)

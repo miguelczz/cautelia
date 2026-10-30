@@ -32,7 +32,7 @@ axes:
   - conversation
 script:
   - field_key: identity_and_policy
-    text: "Soy Laura Gomez, mi poliza es POL-480915."
+    text: "Soy Laura Gomez, mi poliza es POL-50."
   - field_key: description
     text: "Otro carro me choco por detras cuando estaba parada en un semaforo."
   - field_key: incident_datetime

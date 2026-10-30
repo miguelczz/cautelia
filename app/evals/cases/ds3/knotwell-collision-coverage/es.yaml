@@ -14,8 +14,8 @@ axes:
 - knotwell
 - citation-verification
 citation:
-  policy_number: POL-173620
-  clause_id: STO-PAP-2026-D.INS.COLLISION
+  policy_number: POL-32
+  clause_id: SA-PAP-2026-D.INS.COLLISION
   expected_outcome: verified
   issuer_tenant: stonecroft
   question: ¿Me cubren si choco?

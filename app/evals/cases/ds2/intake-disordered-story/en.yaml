@@ -11,7 +11,7 @@ script:
   - field_key: vehicle_and_driver
     text: "I was driving my white Toyota pickup truck, plate XYZ987."
   - field_key: identity_and_policy
-    text: "Oh, I forgot to say, I'm Carlos Ruiz, policy POL-102938."
+    text: "Oh, I forgot to say, I'm Carlos Ruiz, policy POL-61."
   - field_key: description
     text: "A motorcycle cut in front of me suddenly and I swerved into a pole."
   - field_key: incident_datetime

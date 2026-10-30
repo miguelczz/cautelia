@@ -14,8 +14,8 @@ axes:
 - idioma_cruzado
 - citation-verification
 citation:
-  policy_number: POL-245782
-  clause_id: STO-PAP-2026-B.OTHER
+  policy_number: POL-14
+  clause_id: SA-PAP-2026-B.OTHER
   expected_outcome: verified
   clause_language: es
   question: If I have another medical payments policy, how do you split the payment?

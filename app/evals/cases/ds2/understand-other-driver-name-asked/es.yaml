@@ -20,7 +20,7 @@ understanding:
   record_type: claim
   captured:
   - injuries
-  last_agent_text: Encontré la póliza POL-100042 a nombre de Natalia Henao Rendón, con un Renault Logan.
+  last_agent_text: Encontré la póliza POL-11 a nombre de Daniela Castaño, con un Kia Picanto.
     ¿Eres tú y conducías ese carro?
   message: Soy yo, pero manejaba mi hijo
   wants:
@@ -29,8 +29,8 @@ understanding:
   items:
     vehicle_and_driver: hij
   declared_drivers:
-  - Natalia Henao Rendón
-  - Mateo Henao Gómez
+  - Daniela Castaño
+  - Hernán Castaño
   driver_reading: unknown
   reply_asks_for_any:
   - nombre

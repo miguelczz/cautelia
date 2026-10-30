@@ -77,20 +77,20 @@ seeds:
   - id: policy_number/compact
     entity_type: policy_number
     form: compact
-    value: POL-200117
-    text: The policy POL-200117 is the one I hold with the carrier.
+    value: POL-21
+    text: The policy POL-21 is the one I hold with the carrier.
 
   - id: policy_number/separated
     entity_type: policy_number
     form: separated
-    value: POL 200117
-    text: My policy is POL 200117, I renewed it in March.
+    value: POL 21
+    text: My policy is POL 21, I renewed it in March.
 
   - id: policy_number/spoken
     entity_type: policy_number
     form: spoken
-    value: two zero zero one one seven
-    text: The policy is two zero zero one one seven.
+    value: two one
+    text: The policy is two one.
 
   # A fictitious VIN from the U7 generator: its check digit fails on purpose, so
   # it is not the serial number of any vehicle.
@@ -142,5 +142,5 @@ cross_language:
     form: spoken
     dictated_in: es
     found_by_language: es
-    value: dos cero cero tres cuatro uno
-    text: My policy is dos cero cero tres cuatro uno.
+    value: tres uno
+    text: My policy is tres uno.

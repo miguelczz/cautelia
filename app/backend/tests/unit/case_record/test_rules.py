@@ -59,7 +59,7 @@ def caso(**cambios: object) -> Case:
     base = Case(
         case_id="CASO-1",
         tenant_id="stonecroft",
-        case_number=CaseNumber(prefix="STO", serial="000001"),
+        case_number=CaseNumber(prefix="SA", serial="1"),
         record_type=RecordType.CLAIM,
         channel=Channel.CHAT,
         origin=Origin.PUBLIC_CHAT,

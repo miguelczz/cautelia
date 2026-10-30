@@ -66,7 +66,7 @@ def test_la_emergencia_es_un_hito_por_la_senal_aunque_la_clave_sea_una_pregunta(
         {"intake_awaiting_confirmation": Block.FINAL_CONFIRMATION},
         {
             "intake_policy_match": PolicyMatch(
-                policy_number="POL-000001", holder_name="Marcela Ríos", vehicle=None
+                policy_number="POL-01", holder_name="Marcela Ríos", vehicle=None
             )
         },
     ],

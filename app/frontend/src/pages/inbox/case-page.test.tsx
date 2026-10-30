@@ -48,7 +48,7 @@ const t = createTranslate("es");
 function caso(extra: Partial<CaseDetailOut> = {}): CaseDetailOut {
   return {
     case_id: "case-1",
-    case_number: "CAS-000001",
+    case_number: "CA-1",
     state: "derived",
     record_type: "claim",
     channel: "chat",

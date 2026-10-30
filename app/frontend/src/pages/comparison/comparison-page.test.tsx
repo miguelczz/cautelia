@@ -25,7 +25,7 @@ const ASEGURADORAS: readonly ComparisonInsurer[] = [
     tenantId: "una-aseguradora",
     displayName: "Una Aseguradora",
     kind: "carrier",
-    examplePolicy: "POL-200117",
+    examplePolicy: "POL-21",
     issuedBy: null,
     brand: marca(2),
   },
@@ -33,7 +33,7 @@ const ASEGURADORAS: readonly ComparisonInsurer[] = [
     tenantId: "otra-aseguradora",
     displayName: "Otra Aseguradora",
     kind: "carrier",
-    examplePolicy: "POL-100042",
+    examplePolicy: "POL-11",
     issuedBy: null,
     brand: marca(1),
   },
@@ -41,7 +41,7 @@ const ASEGURADORAS: readonly ComparisonInsurer[] = [
     tenantId: "una-agencia",
     displayName: "Una Agencia",
     kind: "agency",
-    examplePolicy: "POL-200341",
+    examplePolicy: "POL-31",
     issuedBy: "Una Aseguradora",
     brand: marca(0),
   },
@@ -216,8 +216,8 @@ describe("lo que la pantalla dice antes de preguntar (BR1.1, BR1.2)", () => {
     const cable = askControlado();
     dibujar(cable.ask);
     await preguntar();
-    await cable.resolver("otra-aseguradora", CITADA("Si cubre.", "STO-PAP-4.1"));
-    await cable.resolver("una-agencia", CITADA("Si cubre.", "KNO-PAP-4.1"));
+    await cable.resolver("otra-aseguradora", CITADA("Si cubre.", "SA-PAP-4.1"));
+    await cable.resolver("una-agencia", CITADA("Si cubre.", "AC-PAP-4.1"));
     await cable.resolver("una-aseguradora", {
       kind: "answered",
       answer: { kind: "no_clause", language: "es" },
@@ -225,12 +225,12 @@ describe("lo que la pantalla dice antes de preguntar (BR1.1, BR1.2)", () => {
 
     const otra = columna("otra-aseguradora");
     expect(within(otra).getByTestId("comparison-policy").textContent).toBe(
-      tEs("comparison.column.policy", { policy: "POL-100042" }),
+      tEs("comparison.column.policy", { policy: "POL-11" }),
     );
     const agencia = columna("una-agencia");
     expect(within(agencia).getByTestId("comparison-policy").textContent).toBe(
       tEs("comparison.column.policy_issued_by", {
-        policy: "POL-200341",
+        policy: "POL-31",
         issuer: "Una Aseguradora",
       }),
     );
@@ -493,7 +493,7 @@ describe("las tres respuestas (BR2.2)", () => {
     expect(cable.ask).toHaveBeenCalledWith("una-agencia", "¿Cubre el granizo?");
     expect(columna("una-agencia").dataset.state).toBe("loading");
     expect(columna("una-aseguradora").dataset.state).toBe("answered");
-    await cable.resolver("una-agencia", CITADA("Ahora si.", "SUN-PAP-4.1"));
+    await cable.resolver("una-agencia", CITADA("Ahora si.", "AP-PAP-4.1"));
     expect(within(columna("una-agencia")).getByText("Ahora si.")).toBeTruthy();
   });
 
@@ -501,7 +501,7 @@ describe("las tres respuestas (BR2.2)", () => {
     const respuestas = new Map<string, () => Promise<ColumnOutcome>>([
       ["una-aseguradora", () => Promise.resolve(CITADA("Respuesta.", "PAP-SUN-4.1"))],
       ["otra-aseguradora", () => Promise.reject(new Error("se cayo el proveedor"))],
-      ["una-agencia", () => Promise.resolve(CITADA("Otra respuesta.", "SUN-PAP-4.1"))],
+      ["una-agencia", () => Promise.resolve(CITADA("Otra respuesta.", "AP-PAP-4.1"))],
     ]);
     renderWithProviders(
       <ComparisonPage
@@ -600,8 +600,8 @@ describe("las tres respuestas (BR2.2)", () => {
     const cable = askControlado();
     dibujar(cable.ask);
     await preguntar();
-    await cable.resolver("una-aseguradora", CITADA("Una.", "SUN-PAP-4.1"));
-    await cable.resolver("otra-aseguradora", CITADA("Otra.", "STO-PAP-4.1"));
+    await cable.resolver("una-aseguradora", CITADA("Una.", "AP-PAP-4.1"));
+    await cable.resolver("otra-aseguradora", CITADA("Otra.", "SA-PAP-4.1"));
     // El codigo de la clausula se ve con la tarjeta abierta (2026-10-08).
     for (const id of ["una-aseguradora", "otra-aseguradora"]) {
       await userEvent.click(
@@ -609,9 +609,9 @@ describe("las tres respuestas (BR2.2)", () => {
       );
     }
 
-    expect(within(columna("una-aseguradora")).getByText(/SUN-PAP-4.1/)).toBeTruthy();
-    expect(within(columna("una-aseguradora")).queryByText(/STO-PAP-4.1/)).toBeNull();
-    expect(within(columna("otra-aseguradora")).getByText(/STO-PAP-4.1/)).toBeTruthy();
+    expect(within(columna("una-aseguradora")).getByText(/AP-PAP-4.1/)).toBeTruthy();
+    expect(within(columna("una-aseguradora")).queryByText(/SA-PAP-4.1/)).toBeNull();
+    expect(within(columna("otra-aseguradora")).getByText(/SA-PAP-4.1/)).toBeTruthy();
   });
 });
 
@@ -621,7 +621,7 @@ describe("lo que se recuerda en el navegador", () => {
     const cable = askControlado();
     const pagina = dibujar(cable.ask);
     await preguntar("¿Cubre el granizo?");
-    await cable.resolver("una-aseguradora", CITADA("Si cubre el granizo.", "SUN-PAP-4.1"));
+    await cable.resolver("una-aseguradora", CITADA("Si cubre el granizo.", "AP-PAP-4.1"));
     await cable.resolver("otra-aseguradora", {
       kind: "answered",
       answer: { kind: "no_clause", language: "es" },
@@ -648,7 +648,7 @@ describe("lo que se recuerda en el navegador", () => {
     await userEvent.click(
       within(columna("una-aseguradora")).getByRole("button", { name: /Ver la cláusula exacta/ }),
     );
-    expect(within(columna("una-aseguradora")).getByText(/SUN-PAP-4.1/)).toBeTruthy();
+    expect(within(columna("una-aseguradora")).getByText(/AP-PAP-4.1/)).toBeTruthy();
     expect(
       within(columna("otra-aseguradora")).getByText(tEs("policy_rag.coverage.no_clause_found")),
     ).toBeTruthy();
@@ -683,7 +683,7 @@ describe("lo que se recuerda en el navegador", () => {
     // Con la pagina desmontada, una de las tres termina.
     await cable.resolver(
       "otra-aseguradora",
-      CITADA("Respondio mientras no mirabas.", "STO-PAP-4.1"),
+      CITADA("Respondio mientras no mirabas.", "SA-PAP-4.1"),
     );
 
     dibujar(cable.ask);
@@ -692,7 +692,7 @@ describe("lo que se recuerda en el navegador", () => {
       within(columna("otra-aseguradora")).getByText("Respondio mientras no mirabas."),
     ).toBeTruthy();
     // Y las que seguian en vuelo se enganchan: no quedan esperando para siempre.
-    await cable.resolver("una-aseguradora", CITADA("Esta llego despues de volver.", "SUN-PAP-4.1"));
+    await cable.resolver("una-aseguradora", CITADA("Esta llego despues de volver.", "AP-PAP-4.1"));
     expect(
       within(columna("una-aseguradora")).getByText("Esta llego despues de volver."),
     ).toBeTruthy();
@@ -703,7 +703,7 @@ describe("lo que se recuerda en el navegador", () => {
     const cable = askControlado();
     const primera = dibujar(cable.ask);
     await preguntar("¿Cubre el granizo?");
-    await cable.resolver("una-aseguradora", CITADA("Esta si llego.", "SUN-PAP-4.1"));
+    await cable.resolver("una-aseguradora", CITADA("Esta si llego.", "AP-PAP-4.1"));
     primera.unmount();
     // Recargar: la pagina nueva no tiene nada en vuelo.
     forgetInFlight();
@@ -743,7 +743,7 @@ describe("lo que se recuerda en el navegador", () => {
     expect(otra.ask).toHaveBeenCalledTimes(1);
     expect(otra.ask).toHaveBeenCalledWith("otra-aseguradora", "¿Cubre el granizo?");
     expect(estados()).toEqual(["interrupted", "loading", "interrupted"]);
-    await otra.resolver("otra-aseguradora", CITADA("Ahora si llego.", "STO-PAP-4.1"));
+    await otra.resolver("otra-aseguradora", CITADA("Ahora si llego.", "SA-PAP-4.1"));
     expect(estados()).toEqual(["interrupted", "answered", "interrupted"]);
     // Y queda guardada: recargar de nuevo la trae.
     expect(loadComparison(Date.now(), IDS)?.columns.map((c) => c.state)).toEqual([
@@ -845,7 +845,7 @@ describe("lo que se recuerda en el navegador", () => {
     const primera = dibujar(cable.ask);
 
     await preguntar("¿Cubre el granizo?");
-    await cable.resolver("una-aseguradora", CITADA("Cubre.", "SUN-PAP-4.1"));
+    await cable.resolver("una-aseguradora", CITADA("Cubre.", "AP-PAP-4.1"));
 
     expect(columna("una-aseguradora").dataset.state).toBe("answered");
     expect(within(columna("una-aseguradora")).getByText("Cubre.")).toBeTruthy();
@@ -876,12 +876,12 @@ describe("lo que la vista no redacta (BR3.2)", () => {
     };
     const antes = propio();
 
-    await cable.resolver("una-aseguradora", CITADA("Si cubre el alquiler.", "SUN-PAP-4.1"));
+    await cable.resolver("una-aseguradora", CITADA("Si cubre el alquiler.", "AP-PAP-4.1"));
     await cable.resolver("otra-aseguradora", {
       kind: "answered",
       answer: { kind: "no_clause", language: "es" },
     });
-    await cable.resolver("una-agencia", CITADA("Si, segun la emisora.", "SUN-PAP-4.1"));
+    await cable.resolver("una-agencia", CITADA("Si, segun la emisora.", "AP-PAP-4.1"));
 
     expect(propio()).toBe(antes);
   });

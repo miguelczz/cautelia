@@ -14,10 +14,10 @@ axes:
 - endoso
 - citation-verification
 citation:
-  policy_number: POL-795628
-  clause_id: SUN-PAP-2026-F.TERMINATION
+  policy_number: POL-24
+  clause_id: AP-PAP-2026-F.TERMINATION
   expected_outcome: verified
-  amended_by: SUN-PAP-2026-END-5
+  amended_by: AP-PAP-2026-END-5
   question: How can I cancel this policy?
 expected_verdicts:
   citation_endorsement_electronics_exclusion: pass

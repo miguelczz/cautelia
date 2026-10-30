@@ -119,7 +119,7 @@ async def test_soy_el_titular_pero_manejaba_mi_hijo_confirma_y_anota_al_conducto
         )
     )
 
-    assert salida.intake_policy_confirmed == "POL-100042"
+    assert salida.intake_policy_confirmed == "POL-11"
     vehiculo = next(c for c in salida.intake_extracted if c.field_key == "vehicle_and_driver")
     assert "Renault Logan 2024" in vehiculo.value
     assert "manejaba su hijo" in vehiculo.value
@@ -210,7 +210,7 @@ async def test_confirmar_la_poliza_como_ultimo_dato_cierra_el_reporte_en_vez_de_
         )
     )
 
-    assert salida.intake_policy_confirmed == "POL-100042"
+    assert salida.intake_policy_confirmed == "POL-11"
     assert {c.field_key for c in salida.intake_extracted} >= {"identity_and_policy"}
     # El reporte se cierra en este mismo turno y la frase lo dice.
     assert salida.intake_capture_closed is True

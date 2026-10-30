@@ -15,7 +15,7 @@ const DOCUMENTOS: DocumentsCatalog = {
   tenant_id: "una-aseguradora",
   documents: [
     {
-      form_id: "STO-PAP-2025",
+      form_id: "SA-PAP-2025",
       form_version: "2025.1",
       kind: "base",
       language: "es",
@@ -23,7 +23,7 @@ const DOCUMENTOS: DocumentsCatalog = {
       in_force: false,
     },
     {
-      form_id: "STO-PAP-2026",
+      form_id: "SA-PAP-2026",
       form_version: "2026.1",
       kind: "base",
       language: "es",
@@ -31,7 +31,7 @@ const DOCUMENTOS: DocumentsCatalog = {
       in_force: true,
     },
     {
-      form_id: "STO-PAP-2026-END-3",
+      form_id: "SA-PAP-2026-END-3",
       form_version: "2026.1",
       kind: "endorsement",
       language: "es",
@@ -43,19 +43,19 @@ const DOCUMENTOS: DocumentsCatalog = {
 
 const DETALLE: DocumentDetail = {
   tenant_id: "una-aseguradora",
-  form_id: "STO-PAP-2026",
+  form_id: "SA-PAP-2026",
   clauses: [
     {
-      clause_id: "STO-PAP-2026-D.EXCL.3",
+      clause_id: "SA-PAP-2026-D.EXCL.3",
       clause_key: "D.EXCL.3",
       part: "Parte D — Daños a su vehículo",
       text: "No cubrimos equipos electrónicos no instalados de fábrica.",
-      amended_by: ["STO-PAP-2026-END-3"],
+      amended_by: ["SA-PAP-2026-END-3"],
       cited_last_week: 4,
       language: "es",
     },
     {
-      clause_id: "STO-PAP-2026-A.INS",
+      clause_id: "SA-PAP-2026-A.INS",
       clause_key: "A.INS",
       part: "Parte A — Responsabilidad civil",
       text: "Pagamos los daños que usted cause a otras personas.",
@@ -89,7 +89,7 @@ async function abrir() {
     if (ruta === "/api/policies/una-aseguradora/documents") {
       return jsonResponse(DOCUMENTOS);
     }
-    if (ruta === "/api/policies/una-aseguradora/documents/STO-PAP-2026") {
+    if (ruta === "/api/policies/una-aseguradora/documents/SA-PAP-2026") {
       return jsonResponse(DETALLE);
     }
     return jsonResponse({}, 404);
@@ -169,7 +169,7 @@ describe("el panel de documentos con traduccion", () => {
       if (ruta === "/api/policies/una-aseguradora/documents") {
         return jsonResponse(DOCUMENTOS);
       }
-      if (ruta === "/api/policies/una-aseguradora/documents/STO-PAP-2026") {
+      if (ruta === "/api/policies/una-aseguradora/documents/SA-PAP-2026") {
         return jsonResponse({
           ...DETALLE,
           clauses: [

@@ -187,11 +187,11 @@ def test_lo_que_suena_conserva_los_codigos_dichos_como_se_dictan(
     """Quitar las etiquetas no deshace lo de `speakable`: los dos pasan por `spoken`."""
     motor = _motor(aseguradoras[0], "en")
     dicha = Utterance(
-        text=redaccion.from_catalog("Your policy POL-200341 and [NAME 1].", language="en")
+        text=redaccion.from_catalog("Your policy POL-31 and [NAME 1].", language="en")
     )
 
     suena = str(motor.spoken(dicha))
 
-    assert "two zero zero" in suena
+    assert "three one" in suena
     assert "that name" in suena
     assert "[" not in suena

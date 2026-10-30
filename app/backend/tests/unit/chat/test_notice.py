@@ -24,7 +24,7 @@ def _aseguradora() -> str:
 def _decidido(resolution: Resolution) -> notice.Decision:
     return notice.Decision(
         case_id="caso-1",
-        case_number="STO-482-913",
+        case_number="SA-482",
         resolution=resolution,
         comment=COMENTARIO,
         ref="change-abc123",
@@ -41,7 +41,7 @@ def _decidido(resolution: Resolution) -> notice.Decision:
             "sin resolucion",
             notice.Decision(
                 case_id="caso-1",
-                case_number="STO-482-913",
+                case_number="SA-482",
                 resolution=None,
                 comment=COMENTARIO,
                 ref="change-abc123",
@@ -51,7 +51,7 @@ def _decidido(resolution: Resolution) -> notice.Decision:
             "sin referencia de la decision",
             notice.Decision(
                 case_id="caso-1",
-                case_number="STO-482-913",
+                case_number="SA-482",
                 resolution=Resolution.APPROVED,
                 comment=COMENTARIO,
                 ref=None,
@@ -104,7 +104,7 @@ async def test_con_decision_registrada_el_aviso_sale_con_su_comentario(
     )
 
     assert COMENTARIO in aviso.text
-    assert "STO-482-913" in aviso.text
+    assert "SA-482" in aviso.text
     assert aviso.decision_ref == "change-abc123"
 
 
@@ -122,7 +122,7 @@ async def test_un_comentario_que_afirma_cobertura_no_llega_al_asegurado() -> Non
     prometedor = "su póliza cubre el choque y le vamos a pagar 900 dólares"
     decision = notice.Decision(
         case_id="caso-1",
-        case_number="STO-482-913",
+        case_number="SA-482",
         resolution=Resolution.APPROVED,
         comment=prometedor,
         ref="change-abc123",
@@ -133,7 +133,7 @@ async def test_un_comentario_que_afirma_cobertura_no_llega_al_asegurado() -> Non
     assert "cubre el choque" not in aviso.text
     assert "900" not in aviso.text
     # Y el aviso sigue saliendo: lo que se sustituye es lo que sobra, no el aviso.
-    assert "STO-482-913" in aviso.text
+    assert "SA-482" in aviso.text
 
 
 async def test_el_aviso_de_la_agencia_no_promete_que_la_aseguradora_llame() -> None:

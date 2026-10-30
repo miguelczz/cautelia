@@ -159,11 +159,11 @@ async def test_br3_4_la_poliza_compartida_no_ofrece_el_caso_ajeno(
     que una que se declare a medias.
     """
     _, propia = dos_aseguradoras
-    poliza_publica = "POL-000001"
+    poliza_publica = "POL-01"
 
     con_historia = await nuevo_caso(propia, policy_ref=poliza_publica)
     misma_poliza_sin_historia = await nuevo_caso(propia, policy_ref=poliza_publica)
-    sin_relacion = await nuevo_caso(propia, policy_ref="POL-000002")
+    sin_relacion = await nuevo_caso(propia, policy_ref="POL-02")
 
     checkpointer = TenantCheckpointSaver(cipher=cifrador)
     pausas = DatabaseHumanReviewRequestStore()

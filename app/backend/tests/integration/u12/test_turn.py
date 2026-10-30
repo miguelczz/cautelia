@@ -494,16 +494,14 @@ async def test_un_turno_normal_termina_en_final_text(
     caso = await nuevo_caso(propia)
     tareas: list[asyncio.Task[object]] = []
     extractor = _ScriptedExtractor(
-        next_items=(
-            ExtractedItem(field_key="identity_and_policy", value="Marcela Rios, POL-000001"),
-        )
+        next_items=(ExtractedItem(field_key="identity_and_policy", value="Marcela Rios, POL-01"),)
     )
     runtime = _build_runtime(
         cipher=cifrador, extractor=extractor, coverage_node=_FakeCoverageNode(), tareas=tareas
     )
     install_runtime(runtime)
 
-    eventos = await _turno(caso.case_id, propia, "Soy Marcela Rios, mi poliza es POL-000001.")
+    eventos = await _turno(caso.case_id, propia, "Soy Marcela Rios, mi poliza es POL-01.")
 
     assert len(eventos) == 1
     assert isinstance(eventos[0], FinalText)
@@ -537,7 +535,7 @@ async def test_br2_5_un_fallo_sin_politica_termina_en_turnerror_por_la_guardia(
     eventos = await _turno(
         caso.case_id,
         propia,
-        "Soy Marcela Rios, mi poliza es POL-000001, y le cuento que el choque fue ayer "
+        "Soy Marcela Rios, mi poliza es POL-01, y le cuento que el choque fue ayer "
         "por la tarde saliendo del trabajo cuando un taxi se me atraveso",
     )
 
@@ -557,12 +555,12 @@ async def test_br3_4_dos_casos_frescos_con_la_misma_poliza_responden_igual(
     de un caso sin ninguna relación -- la mitad "en texto" de BR3.4 que
     `test_resume.py` (paso 6) dejó escrita como pendiente de este paso."""
     _, propia = dos_aseguradoras
-    poliza = "POL-000009"
+    poliza = "POL-03"
     con_historia = await nuevo_caso(propia, policy_ref=poliza)
     misma_poliza_sin_historia = await nuevo_caso(propia, policy_ref=poliza)
-    sin_relacion = await nuevo_caso(propia, policy_ref="POL-000010")
+    sin_relacion = await nuevo_caso(propia, policy_ref="POL-04")
 
-    texto_turno = "Soy Marcela Rios, mi poliza es POL-000001."
+    texto_turno = "Soy Marcela Rios, mi poliza es POL-01."
     tareas: list[asyncio.Task[object]] = []
     extractor = _ScriptedExtractor(
         next_items=(ExtractedItem(field_key="identity_and_policy", value="Marcela Rios"),)
@@ -593,7 +591,7 @@ async def test_br3_4_la_respuesta_de_cobertura_no_se_presta_al_que_comparte_poli
     de cobertura ya calculada. El segundo navegador, sin su propia identidad
     confirmada, no tiene nada de fondo que ofrecer -- nunca lo del primero."""
     _, propia = dos_aseguradoras
-    poliza = "POL-000011"
+    poliza = "POL-05"
     con_historia = await nuevo_caso(propia, policy_ref=poliza)
     misma_poliza_sin_historia = await nuevo_caso(propia, policy_ref=poliza)
 
@@ -609,7 +607,7 @@ async def test_br3_4_la_respuesta_de_cobertura_no_se_presta_al_que_comparte_poli
     install_runtime(replace(runtime, notifier=avisos))
 
     extractor.next_items = (ExtractedItem(field_key="identity_and_policy", value="Juan Perez"),)
-    await _turno(con_historia.case_id, propia, "Soy Juan Perez, mi poliza es POL-000011.")
+    await _turno(con_historia.case_id, propia, "Soy Juan Perez, mi poliza es POL-05.")
     await _turno(con_historia.case_id, propia, "¿Está cubierto mi choque?")
     await _drenar(tareas)  # con_historia ya tiene una respuesta de cobertura calculada
 
@@ -634,7 +632,7 @@ async def test_br3_4_la_respuesta_de_cobertura_no_se_presta_al_que_comparte_poli
     # inofensiva -- esa diferencia **es** la filtracion: le dice que por esa
     # poliza hay un caso abierto. Un tercer caso, sin ninguna relacion con la
     # poliza, hace la misma pregunta en las mismas condiciones.
-    sin_relacion = await nuevo_caso(propia, policy_ref="POL-000012")
+    sin_relacion = await nuevo_caso(propia, policy_ref="POL-06")
     extractor.next_items = ()
     eventos_sin_relacion = await _turno(sin_relacion.case_id, propia, "¿Está cubierto mi choque?")
     await _drenar(tareas)
@@ -657,7 +655,7 @@ async def test_br4_2_la_pregunta_de_cobertura_no_escribe_ningun_campo_de_la_capt
     dos_aseguradoras: tuple[str, str], cifrador: crypto.Cipher
 ) -> None:
     _, propia = dos_aseguradoras
-    caso = await nuevo_caso(propia, policy_ref="POL-000001")
+    caso = await nuevo_caso(propia, policy_ref="POL-01")
     tareas: list[asyncio.Task[object]] = []
     extractor = _ScriptedExtractor()
     coverage_node = _FakeCoverageNode(
@@ -670,9 +668,9 @@ async def test_br4_2_la_pregunta_de_cobertura_no_escribe_ningun_campo_de_la_capt
     install_runtime(replace(runtime, notifier=avisos))
 
     extractor.next_items = (
-        ExtractedItem(field_key="identity_and_policy", value="Marcela Rios, POL-000001"),
+        ExtractedItem(field_key="identity_and_policy", value="Marcela Rios, POL-01"),
     )
-    await _turno(caso.case_id, propia, "Soy Marcela Rios, mi poliza es POL-000001.")
+    await _turno(caso.case_id, propia, "Soy Marcela Rios, mi poliza es POL-01.")
     await _drenar(tareas)
 
     completitud_antes = await case_context.completeness_of(propia, caso.case_id)
@@ -716,7 +714,7 @@ async def test_en_una_llamada_la_pregunta_de_cobertura_se_espera_y_se_responde(
     poliza" y la respuesta no llegaba: quien la entregaba solo conocia el chat. Y la
     segunda pregunta recibia la respuesta de la primera, que seguia guardada."""
     _, propia = dos_aseguradoras
-    caso = await nuevo_caso(propia, policy_ref="POL-000001")
+    caso = await nuevo_caso(propia, policy_ref="POL-01")
     tareas: list[asyncio.Task[object]] = []
     extractor = _ScriptedExtractor()
     coverage_node = _FakeCoverageNode(response_text="La cláusula RC-04 trata este daño.")
@@ -793,7 +791,7 @@ async def test_la_pregunta_de_la_persona_llega_al_nodo_de_cobertura(
     correcto y dejaría esta prueba mirando una lista vacía.
     """
     _, propia = dos_aseguradoras
-    caso = await nuevo_caso(propia, policy_ref="POL-000001")
+    caso = await nuevo_caso(propia, policy_ref="POL-01")
     tareas: list[asyncio.Task[object]] = []
     coverage_node = _FakeCoverageNode()
     install_runtime(
@@ -834,7 +832,7 @@ async def test_sin_ritmo_de_fondo_el_desvio_no_promete_lo_que_no_puede_traer(
     que la convención 8 del equipo prohíbe colapsar.
     """
     _, propia = dos_aseguradoras
-    caso = await nuevo_caso(propia, policy_ref="POL-000001")
+    caso = await nuevo_caso(propia, policy_ref="POL-01")
     tareas: list[asyncio.Task[object]] = []
     extractor = _ScriptedExtractor()
     completo = _build_runtime(
@@ -845,9 +843,9 @@ async def test_sin_ritmo_de_fondo_el_desvio_no_promete_lo_que_no_puede_traer(
     # El caso tiene que estar capturando para que el desvío sea alcanzable: es la
     # misma preparación que el resto de esta sección.
     extractor.next_items = (
-        ExtractedItem(field_key="identity_and_policy", value="Marcela Rios, POL-000001"),
+        ExtractedItem(field_key="identity_and_policy", value="Marcela Rios, POL-01"),
     )
-    await _turno(caso.case_id, propia, "Soy Marcela Rios, mi poliza es POL-000001.")
+    await _turno(caso.case_id, propia, "Soy Marcela Rios, mi poliza es POL-01.")
 
     extractor.next_items = ()
     eventos = await _turno(caso.case_id, propia, "¿Está cubierto mi choque?")
@@ -900,8 +898,8 @@ async def test_br4_2_tras_el_desvio_la_captura_sigue_exactamente_donde_iba(
     """Control positivo del anterior: sin el desvío, el mismo turno de captura
     produce la misma respuesta que con dos preguntas de cobertura en medio."""
     _, propia = dos_aseguradoras
-    con_desvio = await nuevo_caso(propia, policy_ref="POL-000001")
-    sin_desvio = await nuevo_caso(propia, policy_ref="POL-000001")
+    con_desvio = await nuevo_caso(propia, policy_ref="POL-01")
+    sin_desvio = await nuevo_caso(propia, policy_ref="POL-01")
     tareas: list[asyncio.Task[object]] = []
     extractor = _ScriptedExtractor()
     coverage_node = _FakeCoverageNode(
@@ -912,14 +910,14 @@ async def test_br4_2_tras_el_desvio_la_captura_sigue_exactamente_donde_iba(
     )
     install_runtime(runtime)
 
-    identidad = ExtractedItem(field_key="identity_and_policy", value="Marcela Rios, POL-000001")
+    identidad = ExtractedItem(field_key="identity_and_policy", value="Marcela Rios, POL-01")
     siguiente_turno = "Un camion me choco por detras."
     siguiente_campo = ExtractedItem(field_key="description", value=siguiente_turno)
 
     for caso in (con_desvio, sin_desvio):
         case_context.forget_case(propia, caso.case_id)
         extractor.next_items = (identidad,)
-        await _turno(caso.case_id, propia, "Soy Marcela Rios, mi poliza es POL-000001.")
+        await _turno(caso.case_id, propia, "Soy Marcela Rios, mi poliza es POL-01.")
         await _drenar(tareas)
 
     extractor.next_items = ()
@@ -1022,7 +1020,7 @@ async def test_ds2_coverage_question_mid_report(language: Locale, cifrador: cryp
     """
     caso = _load_ds2("coverage-question-mid-report", language)
     tenant_id = caso.tenant or "knotwell"
-    case_id = await _nuevo_caso_en_idioma(tenant_id, language=language, policy_ref="POL-000001")
+    case_id = await _nuevo_caso_en_idioma(tenant_id, language=language, policy_ref="POL-01")
     await _seed_safety_confirmed(tenant_id, case_id, cipher=cifrador, language=language)
     case_context.forget_case(tenant_id, case_id)
 
@@ -1110,7 +1108,7 @@ async def test_ds2_dropped_call_resumed(language: Locale, cifrador: crypto.Ciphe
     """
     caso = _load_ds2("dropped-call-resumed", language)
     tenant_id = caso.tenant or "knotwell"
-    case_id = await _nuevo_caso_en_idioma(tenant_id, language=language, policy_ref="POL-000002")
+    case_id = await _nuevo_caso_en_idioma(tenant_id, language=language, policy_ref="POL-02")
     await _seed_safety_confirmed(tenant_id, case_id, cipher=cifrador, language=language)
     case_context.forget_case(tenant_id, case_id)
     responder = ScriptedInsured(caso)
@@ -1306,7 +1304,7 @@ async def test_con_los_obligatorios_dichos_el_caso_pasa_a_revision_en_ese_turno(
         propia,
         caso.case_id,
         cipher=cifrador,
-        identity_and_policy="Laura Gomez, POL-480915",
+        identity_and_policy="Laura Gomez, POL-50",
         description="me chocaron por detras",
         incident_datetime="ayer a las cinco",
         location="avenida Boyaca con calle 80",
@@ -1599,9 +1597,7 @@ async def test_una_consulta_con_poliza_responde_la_pregunta_y_sin_pregunta_la_pi
     """Fase 1 (2026-10-08): la consulta no se cierra con un resumen vacio; con la poliza
     identificada, cada pregunta se responde sola y ofrece seguir."""
     _, propia = dos_aseguradoras
-    caso = await nuevo_caso(
-        propia, policy_ref="POL-000001", record_type=RecordType.COVERAGE_INQUIRY
-    )
+    caso = await nuevo_caso(propia, policy_ref="POL-01", record_type=RecordType.COVERAGE_INQUIRY)
     tareas: list[asyncio.Task[object]] = []
     avisos = _Avisos()
     coverage_node = _FakeCoverageNode()
@@ -1709,7 +1705,7 @@ async def test_un_hito_lo_dice_siempre_el_codigo_con_su_frase_fija(
         _contesta("Perfecto, ya quedó todo. Un ajustador te escribirá pronto."),
         "no, nadie se lastimó",
         sembrar={
-            "identity_and_policy": "Laura Gomez, POL-480915",
+            "identity_and_policy": "Laura Gomez, POL-50",
             "description": "me chocaron por detras",
             "incident_datetime": "ayer a las cinco",
             "location": "avenida Boyaca con calle 80",
@@ -1967,7 +1963,7 @@ async def test_el_modelo_recibe_la_conversacion_el_estado_y_lo_anotado_con_su_va
         entendedor,
         "no, nadie se lastimó",
         dicho_antes=("Hola, ¿en qué te ayudo?", "¿Hubo alguien herido?"),
-        sembrar={"identity_and_policy": "Laura Gomez, POL-480915", "location": "la calle 80"},
+        sembrar={"identity_and_policy": "Laura Gomez, POL-50", "location": "la calle 80"},
     )
 
     [peticion] = entendedor.peticiones
@@ -2013,7 +2009,7 @@ async def test_en_la_voz_sale_la_respuesta_del_modelo_si_el_redactor_no_la_cambi
     "reply",
     [
         "Gracias, Marcela Ríos. ¿Dónde fue?",
-        "Tengo anotada la póliza POL-000001. ¿Dónde fue?",
+        "Tengo anotada la póliza POL-01. ¿Dónde fue?",
     ],
     ids=["un-nombre", "una-poliza"],
 )
@@ -2140,7 +2136,7 @@ async def test_en_la_voz_el_acuse_de_la_comprension_ya_no_se_antepone(
 
 
 async def _corpus_de_daniel(_tenant: str, numero: str) -> PolicyMatch | None:
-    if numero != "POL-200341":
+    if numero != "POL-31":
         return None
     return PolicyMatch(policy_number=numero, holder_name="Daniel Foster", vehicle=None)
 
@@ -2213,10 +2209,10 @@ async def test_la_consulta_que_entro_sin_pregunta_la_pide_y_no_promete_nada(
     dos_aseguradoras: tuple[str, str], cifrador: crypto.Cipher
 ) -> None:
     consulta = await _consulta_abierta(dos_aseguradoras, cifrador)
-    consulta.con_lo_que_entiende(_se_identifica("POL-200341"))
+    consulta.con_lo_que_entiende(_se_identifica("POL-31"))
 
     eventos = await _turno(
-        consulta.case_id, consulta.tenant_id, "Soy Daniel Foster, mi póliza es POL-200341"
+        consulta.case_id, consulta.tenant_id, "Soy Daniel Foster, mi póliza es POL-31"
     )
     await _drenar(consulta.tareas)
 
@@ -2231,7 +2227,7 @@ async def test_la_consulta_que_entro_sin_pregunta_la_pide_y_no_promete_nada(
     assert consulta.avisos.entregados == []
     vista = await casos_api.get_case(consulta.tenant_id, consulta.case_id)
     assert vista is not None
-    assert vista.policy_ref == "POL-200341"
+    assert vista.policy_ref == "POL-31"
 
 
 async def test_la_consulta_con_la_pregunta_hecha_lanza_la_revision_y_la_respuesta_queda_guardada(
@@ -2247,10 +2243,10 @@ async def test_la_consulta_con_la_pregunta_hecha_lanza_la_revision_y_la_respuest
         )
     )
     await _turno(consulta.case_id, consulta.tenant_id, "¿Me cubre el granizo?")
-    consulta.con_lo_que_entiende(_se_identifica("POL-200341"))
+    consulta.con_lo_que_entiende(_se_identifica("POL-31"))
 
     eventos = await _turno(
-        consulta.case_id, consulta.tenant_id, "Soy Daniel Foster, mi póliza es POL-200341"
+        consulta.case_id, consulta.tenant_id, "Soy Daniel Foster, mi póliza es POL-31"
     )
     await _drenar(consulta.tareas)
 
@@ -2276,7 +2272,7 @@ async def test_si_la_revision_no_se_puede_lanzar_no_se_dice_que_llegara_una_resp
             sin_fondo,
             understander=_Entendedor(
                 _se_identifica(
-                    "POL-200341", asks_about_coverage=True, person_question="¿Me cubre el granizo?"
+                    "POL-31", asks_about_coverage=True, person_question="¿Me cubre el granizo?"
                 )
             ),
         )
@@ -2285,7 +2281,7 @@ async def test_si_la_revision_no_se_puede_lanzar_no_se_dice_que_llegara_una_resp
     eventos = await _turno(
         consulta.case_id,
         consulta.tenant_id,
-        "Soy Daniel Foster, mi póliza es POL-200341. ¿Me cubre el granizo?",
+        "Soy Daniel Foster, mi póliza es POL-31. ¿Me cubre el granizo?",
     )
 
     [evento] = eventos
@@ -2299,15 +2295,13 @@ async def test_si_la_poliza_no_esta_en_el_corpus_se_dice_que_hace_falta_y_no_se_
 ) -> None:
     consulta = await _consulta_abierta(dos_aseguradoras, cifrador)
     consulta.con_lo_que_entiende(
-        _se_identifica(
-            "POL-999999", asks_about_coverage=True, person_question="¿Me cubre el granizo?"
-        )
+        _se_identifica("POL-99", asks_about_coverage=True, person_question="¿Me cubre el granizo?")
     )
 
     eventos = await _turno(
         consulta.case_id,
         consulta.tenant_id,
-        "Soy Daniel Foster, mi póliza es POL-999999. ¿Me cubre el granizo?",
+        "Soy Daniel Foster, mi póliza es POL-99. ¿Me cubre el granizo?",
     )
     await _drenar(consulta.tareas)
 
@@ -2327,8 +2321,8 @@ async def test_pedir_un_ajustador_en_una_consulta_deriva_con_su_frase_y_su_texto
     from untangle.chat import stream
 
     consulta = await _consulta_abierta(dos_aseguradoras, cifrador)
-    consulta.con_lo_que_entiende(_se_identifica("POL-200341"))
-    await _turno(consulta.case_id, consulta.tenant_id, "Soy Daniel Foster, mi póliza es POL-200341")
+    consulta.con_lo_que_entiende(_se_identifica("POL-31"))
+    await _turno(consulta.case_id, consulta.tenant_id, "Soy Daniel Foster, mi póliza es POL-31")
     consulta.con_lo_que_entiende(
         understanding.UnderstandingResponse(wants=understanding.Want.TALK_TO_PERSON)
     )

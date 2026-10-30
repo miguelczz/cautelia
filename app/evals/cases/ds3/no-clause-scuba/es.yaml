@@ -21,8 +21,8 @@ axes:
 - corriente
 - citation-verification
 citation:
-  policy_number: POL-245782
-  clause_id: STO-PAP-2026-D.EXCL.4
+  policy_number: POL-14
+  clause_id: SA-PAP-2026-D.EXCL.4
   expected_outcome: verified
   question: ¿Cubre esta póliza mi equipo de buceo si se daña en el auto?
 expected_verdicts:

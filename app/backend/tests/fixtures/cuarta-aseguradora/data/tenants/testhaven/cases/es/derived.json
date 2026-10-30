@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Tomas Herrera Nieto, poliza POL-777001"
+      "value": "Tomas Herrera, poliza POL-71"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -17,7 +17,7 @@
     }
   },
   "language": "es",
-  "policy_number": "POL-777001",
+  "policy_number": "POL-71",
   "record_type": "claim",
   "resolution": null,
   "state": "derived",
@@ -25,7 +25,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Buenos dias. Soy Tomas Herrera Nieto, mi poliza es POL-777001."
+      "text": "Buenos dias. Soy Tomas Herrera, mi poliza es POL-71."
     },
     {
       "speaker": "agent",

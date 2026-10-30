@@ -10,7 +10,7 @@ axes:
   - contradiction
 script:
   - field_key: identity_and_policy
-    text: "I'm Pedro Leon, policy POL-480915."
+    text: "I'm Pedro Leon, policy POL-50."
   - field_key: incident_datetime
     text: "The accident happened on December 15th last year."
   - field_key: incident_datetime

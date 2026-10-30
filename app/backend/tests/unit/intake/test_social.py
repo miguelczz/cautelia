@@ -68,7 +68,7 @@ def test_un_turno_solo_social_no_tiene_nada_que_extraer(texto: str, idioma: str)
 
 
 def test_un_saludo_con_datos_si_tiene_que_extraer() -> None:
-    texto = "Hola, soy Marcus Reed y mi póliza es la POL-000001."
+    texto = "Hola, soy Marcus Reed y mi póliza es la POL-01."
     assert social.detect(texto, language="es") is SocialIntent.GREETING
     assert not social.is_only_social(texto, language="es")
     assert "marcus" in social.leftover_words(texto, language="es")

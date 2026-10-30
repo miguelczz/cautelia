@@ -1,7 +1,7 @@
 """La poliza que se oyo mal, o que no esta: buscarla por el nombre y confirmarla (2026-10-13).
 
-En una llamada real, «Soy Marco Parker, mi poliza es POL-200117» llego como «Marco Parker y mi
-poliza es Paul 201 17». El caso quedo con «poliza Paul 201 17» y **sin poliza identificada**,
+En una llamada real, «Soy Marco Parker, mi poliza es POL-21» llego como «Marco Parker y mi
+poliza es Paul 20 1». El caso quedo con «poliza Paul 20 1» y **sin poliza identificada**,
 mientras que en el chat la agente dice «Encontre la poliza ... ¿Eres tu?». Estas pruebas fijan lo
 que el nodo hace ahora con un numero que no existe o que llego incompleto:
 
@@ -32,16 +32,12 @@ from .test_node import (
     _instruccion,
 )
 
-MARCO = PolicyMatch(
-    policy_number="POL-200117", holder_name="Marco Parker", vehicle="Ford Escape 2020"
-)
-ANA = PolicyMatch(
-    policy_number="POL-422088", holder_name="Ana Torres", vehicle="Subaru Outback 2014"
-)
+MARCO = PolicyMatch(policy_number="POL-21", holder_name="Marco Parker", vehicle="Ford Escape 2020")
+ANA = PolicyMatch(policy_number="POL-42", holder_name="Ana Torres", vehicle="Subaru Outback 2014")
 # Una segunda poliza del mismo titular: con ella, «el titular con ese nombre» ya no es uno.
-MARCO_OTRA = PolicyMatch(policy_number="POL-200999", holder_name="Marco Parker", vehicle=None)
+MARCO_OTRA = PolicyMatch(policy_number="POL-26", holder_name="Marco Parker", vehicle=None)
 
-LLAMADA_REAL = "Claro, mi nombre completo es Marco Parker y mi póliza es Paul 201 17."
+LLAMADA_REAL = "Claro, mi nombre completo es Marco Parker y mi póliza es Paul 20 1."
 
 
 class _Titulares:
@@ -106,7 +102,7 @@ def _pide_repetir(salida: IntakeNodeOutput) -> None:
 @pytest.mark.parametrize("por_voz", [True, False], ids=["llamada", "chat"])
 async def test_la_llamada_real_propone_la_poliza_del_titular_y_espera_el_si(por_voz: bool) -> None:
     titulares = _Titulares(MARCO, ANA)
-    nodo = _nodo(titulares, extractor=_identidad("Marco Parker, póliza Paul 201 17"))
+    nodo = _nodo(titulares, extractor=_identidad("Marco Parker, póliza Paul 20 1"))
 
     salida = await nodo.run(
         _estado(
@@ -119,7 +115,7 @@ async def test_la_llamada_real_propone_la_poliza_del_titular_y_espera_el_si(por_
 
     _propone(salida, MARCO)
     # Y la frase es la del chat, con los mismos datos y ninguno nuevo.
-    assert "POL-200117" in salida.intake_response_text
+    assert "POL-21" in salida.intake_response_text
     assert "Marco Parker" in salida.intake_response_text
     assert "Ford Escape 2020" in salida.intake_response_text
     assert salida.intake_response_text.count("?") == 1
@@ -128,19 +124,19 @@ async def test_la_llamada_real_propone_la_poliza_del_titular_y_espera_el_si(por_
 
 
 async def test_en_ingles_propone_con_la_frase_en_ingles() -> None:
-    nodo = _nodo(_Titulares(MARCO, ANA), extractor=_identidad("Marco Parker, policy Paul 201 17"))
+    nodo = _nodo(_Titulares(MARCO, ANA), extractor=_identidad("Marco Parker, policy Paul 20 1"))
 
     salida = await nodo.run(
         _estado(
             language="en",
-            turn_text="Sure, my full name is Marco Parker and my policy is Paul 201 17.",
+            turn_text="Sure, my full name is Marco Parker and my policy is Paul 20 1.",
             spoken=True,
             completeness=_completitud("injuries"),
         )
     )
 
     _propone(salida, MARCO, language="en")
-    assert salida.intake_response_text.startswith("I found policy POL-200117")
+    assert salida.intake_response_text.startswith("I found policy POL-21")
 
 
 async def test_lo_oido_tambien_vale_si_el_extractor_no_lo_guardo_en_la_identidad() -> None:
@@ -157,12 +153,12 @@ async def test_lo_oido_tambien_vale_si_el_extractor_no_lo_guardo_en_la_identidad
 async def test_un_numero_completo_que_no_existe_pero_se_parece_tambien_se_propone_en_la_llamada() -> (
     None
 ):
-    """«200 118» por «200 117»: el reconocedor cambio una cifra."""
-    nodo = _nodo(_Titulares(MARCO, ANA), extractor=_identidad("Marco Parker, póliza Paul 200 118"))
+    """«22» por «21»: el reconocedor cambio una cifra."""
+    nodo = _nodo(_Titulares(MARCO, ANA), extractor=_identidad("Marco Parker, póliza Paul 22"))
 
     salida = await nodo.run(
         _estado(
-            turn_text="Soy Marco Parker y mi póliza es Paul 200 118",
+            turn_text="Soy Marco Parker y mi póliza es Paul 22",
             spoken=True,
             completeness=_completitud("injuries"),
         )
@@ -175,7 +171,7 @@ async def test_un_numero_completo_que_no_existe_pero_se_parece_tambien_se_propon
 
 
 async def test_proponer_no_ata_y_el_si_de_la_persona_es_lo_unico_que_la_ata() -> None:
-    nodo = _nodo(_Titulares(MARCO, ANA), extractor=_identidad("Marco Parker, póliza Paul 201 17"))
+    nodo = _nodo(_Titulares(MARCO, ANA), extractor=_identidad("Marco Parker, póliza Paul 20 1"))
     propuesta = await nodo.run(
         _estado(turn_text=LLAMADA_REAL, spoken=True, completeness=_completitud("injuries"))
     )
@@ -192,10 +188,10 @@ async def test_proponer_no_ata_y_el_si_de_la_persona_es_lo_unico_que_la_ata() ->
         )
     )
 
-    assert asiente.intake_policy_confirmed == "POL-200117"
+    assert asiente.intake_policy_confirmed == "POL-21"
     escritos = {c.field_key: c.value for c in asiente.intake_extracted}
     assert "Marco Parker" in escritos["identity_and_policy"]
-    assert "POL-200117" in escritos["identity_and_policy"]
+    assert "POL-21" in escritos["identity_and_policy"]
 
 
 async def test_si_la_persona_dice_que_no_es_ella_no_se_ata_nada() -> None:
@@ -219,12 +215,12 @@ async def test_si_la_persona_dice_que_no_es_ella_no_se_ata_nada() -> None:
 
 async def test_sin_ninguna_poliza_con_ese_nombre_pide_repetirla_cifra_por_cifra() -> None:
     nodo = _nodo(
-        _Titulares(MARCO, ANA), extractor=_identidad("Camila Restrepo Vélez, póliza Paul 201 17")
+        _Titulares(MARCO, ANA), extractor=_identidad("Camila Restrepo Vélez, póliza Paul 20 1")
     )
 
     salida = await nodo.run(
         _estado(
-            turn_text="Me llamo Camila Restrepo Vélez y mi póliza es Paul 201 17.",
+            turn_text="Me llamo Camila Restrepo Vélez y mi póliza es Paul 20 1.",
             spoken=True,
             completeness=_completitud("injuries"),
         )
@@ -240,7 +236,7 @@ async def test_sin_ninguna_poliza_con_ese_nombre_pide_repetirla_cifra_por_cifra(
 async def test_con_mas_de_una_poliza_del_titular_no_adivina_cual_y_pide_repetir() -> None:
     nodo = _nodo(
         _Titulares(MARCO, MARCO_OTRA, ANA),
-        extractor=_identidad("Marco Parker, póliza Paul 201 17"),
+        extractor=_identidad("Marco Parker, póliza Paul 20 1"),
         corpus=(MARCO, MARCO_OTRA, ANA),
     )
 
@@ -254,9 +250,9 @@ async def test_con_mas_de_una_poliza_del_titular_no_adivina_cual_y_pide_repetir(
 @pytest.mark.parametrize(
     "dicho",
     [
-        "Marco Parker, póliza Paul 301 17",  # no son una subsecuencia: 30117
-        "Marco Parker, póliza Paul 201",  # faltan tres cifras
-        "Marco Parker, póliza Paul 200 228",  # dos cifras distintas
+        "Marco Parker, póliza Paul 120",  # no son una subsecuencia: 12 0 no trae 2 y 1 en orden
+        "Marco Parker, póliza Paul 2001",  # dos cifras de mas
+        "Marco Parker, póliza Paul 32",  # dos cifras distintas
     ],
 )
 async def test_cifras_que_no_se_parecen_no_proponen_la_poliza_del_titular(dicho: str) -> None:
@@ -271,11 +267,11 @@ async def test_cifras_que_no_se_parecen_no_proponen_la_poliza_del_titular(dicho:
 
 async def test_sin_el_nombre_completo_no_se_busca_por_nombre_y_se_pide_repetir() -> None:
     titulares = _Titulares(MARCO, ANA)
-    nodo = _nodo(titulares, extractor=_identidad("póliza Paul 201 17"))
+    nodo = _nodo(titulares, extractor=_identidad("póliza Paul 20 1"))
 
     salida = await nodo.run(
         _estado(
-            turn_text="Mi póliza es Paul 201 17.",
+            turn_text="Mi póliza es Paul 20 1.",
             spoken=True,
             completeness=_completitud("injuries"),
         )
@@ -291,12 +287,12 @@ async def test_sin_el_nombre_completo_no_se_busca_por_nombre_y_se_pide_repetir()
 async def test_la_repeticion_se_pide_una_sola_vez() -> None:
     """Si tampoco sale, la conversacion sigue sin poliza identificada, como hoy."""
     nodo = _nodo(
-        _Titulares(MARCO, ANA), extractor=_identidad("Camila Restrepo Vélez, póliza Paul 201 17")
+        _Titulares(MARCO, ANA), extractor=_identidad("Camila Restrepo Vélez, póliza Paul 20 1")
     )
 
     salida = await nodo.run(
         _estado(
-            turn_text="Camila Restrepo Vélez, mi póliza es Paul 201 17.",
+            turn_text="Camila Restrepo Vélez, mi póliza es Paul 20 1.",
             spoken=True,
             policy_repeat_asked=True,
             completeness=_completitud("injuries"),
@@ -313,11 +309,11 @@ async def test_la_repeticion_se_pide_una_sola_vez() -> None:
 
 async def test_la_repeticion_que_si_sale_se_propone_aunque_ya_se_haya_pedido() -> None:
     """Segundo intento: la persona repite y el numero ya existe."""
-    nodo = _nodo(_Titulares(MARCO, ANA), extractor=_identidad("dos cero cero uno uno siete"))
+    nodo = _nodo(_Titulares(MARCO, ANA), extractor=_identidad("dos uno"))
 
     salida = await nodo.run(
         _estado(
-            turn_text="dos cero cero uno uno siete",
+            turn_text="dos uno",
             spoken=True,
             policy_repeat_asked=True,
             previous_block=Block.IDENTITY_AND_POLICY,
@@ -336,7 +332,7 @@ async def test_la_repeticion_dicha_sola_llega_a_la_identidad_sin_pasar_por_el_mo
 
     salida = await nodo.run(
         _estado(
-            turn_text="dos cero cero uno uno siete",
+            turn_text="dos uno",
             spoken=True,
             policy_repeat_asked=True,
             previous_block=Block.IDENTITY_AND_POLICY,
@@ -354,7 +350,7 @@ async def test_la_repeticion_dicha_sola_llega_a_la_identidad_sin_pasar_por_el_mo
 async def test_un_numero_completo_que_no_existe_en_el_chat_sigue_la_captura_de_siempre() -> None:
     """Escrito con todas las cifras, en el chat no se pide repetir: es la conducta de antes."""
     buscador = _Buscador(coincidencia=None)
-    extractor = _identidad("POL-999999")
+    extractor = _identidad("POL-99")
     nodo = IntakeNode(
         extract=extractor,
         instruction=_instruccion,
@@ -363,7 +359,7 @@ async def test_un_numero_completo_que_no_existe_en_el_chat_sigue_la_captura_de_s
         holder_lookup=_Titulares(MARCO),
     )
 
-    salida = await nodo.run(_estado(turn_text="POL-999999", completeness=_completitud("injuries")))
+    salida = await nodo.run(_estado(turn_text="POL-99", completeness=_completitud("injuries")))
 
     assert salida.intake_policy_match is None
     assert salida.intake_policy_repeat_asked is False
@@ -389,10 +385,10 @@ async def test_sin_numero_de_poliza_no_se_pide_nada_ni_se_busca_por_nombre() -> 
 
 async def test_un_numero_exacto_se_confirma_como_siempre_sin_buscar_por_nombre() -> None:
     titulares = _Titulares(MARCO, ANA)
-    nodo = _nodo(titulares, extractor=_identidad("POL-422088"))
+    nodo = _nodo(titulares, extractor=_identidad("POL-42"))
 
     salida = await nodo.run(
-        _estado(turn_text="mi póliza es POL-422088", completeness=_completitud("injuries"))
+        _estado(turn_text="mi póliza es POL-42", completeness=_completitud("injuries"))
     )
 
     assert salida.intake_policy_match == ANA
@@ -400,7 +396,7 @@ async def test_un_numero_exacto_se_confirma_como_siempre_sin_buscar_por_nombre()
 
 
 async def test_sin_la_busqueda_por_nombre_cableada_se_pide_repetir_igual() -> None:
-    nodo = _nodo(None, extractor=_identidad("Marco Parker, póliza Paul 201 17"))
+    nodo = _nodo(None, extractor=_identidad("Marco Parker, póliza Paul 20 1"))
 
     salida = await nodo.run(
         _estado(turn_text=LLAMADA_REAL, spoken=True, completeness=_completitud("injuries"))

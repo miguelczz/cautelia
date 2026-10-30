@@ -2,7 +2,7 @@
 #
 # Comprension de un mensaje. Segunda mitad de `understand-other-driver-name-asked`: la agente ya
 # pidio el nombre y la persona lo da, sin repetir que alguien conducia («his name is Carlos
-# Ramirez Ospina, he's my brother»). `vehicle_and_driver` se **reemplaza** cada vez que se anota,
+# Ramirez, he's my brother»). `vehicle_and_driver` se **reemplaza** cada vez que se anota,
 # asi que el modelo tiene que escribir el valor completo --el carro que ya estaba mas quien
 # conducia, con su nombre-- y no solo el nombre: sin el verbo de conducir pegado al nombre,
 # `unlisted_driver` no lo lee (lectura `unlisted`: nombre y apellido que la poliza no declara), y
@@ -24,17 +24,17 @@ understanding:
   - identity_and_policy
   - vehicle_and_driver
   captured_values:
-    vehicle_and_driver: Renault Logan. Driven by her brother
+    vehicle_and_driver: Kia Picanto. Driven by her brother
   last_agent_text: Can you tell me the full name of whoever was driving?
-  message: His name is Carlos Ramírez Ospina, he's my brother
+  message: His name is Carlos Ramírez, he's my brother
   wants:
   - continue
   answer: 'none'
   items:
-    vehicle_and_driver: Renault Logan
+    vehicle_and_driver: Kia Picanto
   declared_drivers:
-  - Natalia Henao Rendón
-  - Mateo Henao Gómez
+  - Daniela Castaño
+  - Hernán Castaño
   driver_reading: unlisted
 expected_verdicts:
   understanding_other_driver_name_given: pass

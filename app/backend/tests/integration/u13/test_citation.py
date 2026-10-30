@@ -171,17 +171,17 @@ async def test_la_clausula_de_un_endoso_trae_el_numero_de_su_condicion_especial(
     _, propia = dos_aseguradoras
     await _sembrar_clausula(
         propia,
-        clause_id="STO-PAP-2026-END-5-F.TERMINATION",
-        form_id="STO-PAP-2026-END-5",
+        clause_id="SA-PAP-2026-END-5-F.TERMINATION",
+        form_id="SA-PAP-2026-END-5",
         form_kind=FormKind.ENDORSEMENT,
     )
-    await _sembrar_clausula(propia, clause_id="STO-PAP-2026-F.TERMINATION", form_id="STO-PAP-2026")
+    await _sembrar_clausula(propia, clause_id="SA-PAP-2026-F.TERMINATION", form_id="SA-PAP-2026")
 
     detalles = await citation.details_for(
         propia,
         (
-            _VistaDelGrafo(clause_id="STO-PAP-2026-END-5-F.TERMINATION"),
-            _VistaDelGrafo(clause_id="STO-PAP-2026-F.TERMINATION"),
+            _VistaDelGrafo(clause_id="SA-PAP-2026-END-5-F.TERMINATION"),
+            _VistaDelGrafo(clause_id="SA-PAP-2026-F.TERMINATION"),
         ),
     )
 

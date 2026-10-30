@@ -51,7 +51,7 @@ from .test_delivery import _conversacion_nueva
 
 pytestmark = pytest.mark.usefixtures("base_de_u13")
 
-_IDENTIDAD = "Marcela Rios, POL-000001"
+_IDENTIDAD = "Marcela Rios, POL-01"
 
 
 @pytest.fixture(autouse=True)
@@ -97,7 +97,7 @@ async def _consulta_con_identidad(
 ) -> tuple[Any, str, CasoSembrado]:
     """Una conversacion atada a un caso que ya tiene la identidad y la poliza."""
     conversacion, clave = await _conversacion_nueva(tenant_id)
-    caso = await nuevo_caso(tenant_id, record_type=record_type, policy_ref="POL-000001")
+    caso = await nuevo_caso(tenant_id, record_type=record_type, policy_ref="POL-01")
     await _sembrar_dichos(tenant_id, caso.case_id, cipher=cifrador, identity_and_policy=_IDENTIDAD)
     conversacion = await chat_session.attach_case(conversacion, case_id=caso.case_id)
     return conversacion, clave, caso
@@ -191,7 +191,7 @@ async def test_de_consulta_a_reporte_abre_un_caso_nuevo_con_la_identidad_ya_dada
     assert entrega.entregado is not None and entrega.entregado.case_id == nuevo
     # La identidad y la poliza viajaron: la persona no las repite.
     assert reporte.completeness.per_field["identity_and_policy"] is True
-    assert reporte.policy_ref == "POL-000001"
+    assert reporte.policy_ref == "POL-01"
     valores = await casos.open_field_values(
         propia, nuevo, ("identity_and_policy",), cipher=cifrador
     )

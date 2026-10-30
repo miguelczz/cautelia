@@ -8,14 +8,14 @@ from untangle.providers import prompts
 
 def test_contar_no_depende_de_llamar_al_proveedor() -> None:
     """Dos conteos del mismo texto dan el mismo numero, sin red ni proveedor."""
-    texto = "Soy Laura Gomez, mi poliza es POL-480915."
+    texto = "Soy Laura Gomez, mi poliza es POL-50."
     assert budget.count_tokens(texto) == budget.count_tokens(texto)
     assert budget.count_tokens(texto) > 0
 
 
 def test_el_prompt_real_de_extraccion_cabe_en_el_presupuesto_de_voz() -> None:
     instruccion = prompts.load_system_instruction("intake_extraction", "es")
-    turno = "Soy Laura Gomez, mi poliza es POL-480915." * 3
+    turno = "Soy Laura Gomez, mi poliza es POL-50." * 3
     prompt = extraction.build_extraction_prompt(instruccion, turno)
     assert budget.assert_within_voice_budget(prompt) == ()
 

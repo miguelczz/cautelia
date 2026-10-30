@@ -11,7 +11,7 @@ from untangle.policy_rag.corpus.models import IssuedPolicy
 
 _POLIZA = IssuedPolicy(
     tenant_id="stonecroft",
-    policy_number="POL-480915",
+    policy_number="POL-50",
     issuer_tenant="stonecroft",
     form_id="form-1",
     form_version="2026.1",
@@ -36,7 +36,7 @@ class _EspiaDeBusqueda:
 # --- BR1.6: numero incompleto, nunca se busca --------------------------------
 
 
-@pytest.mark.parametrize("numero", ["POL-4809", "48-0915", "POL480915", "", "POL-48091X"])
+@pytest.mark.parametrize("numero", ["POL-4809", "48-0915", "POL50", "", "POL-48091X"])
 async def test_numero_con_forma_invalida_nunca_llega_a_buscar(numero: str) -> None:
     espia = _EspiaDeBusqueda(respuesta=_POLIZA)
     resultado = await identity.identify_by_policy_number("stonecroft", numero, lookup=espia)
@@ -46,10 +46,10 @@ async def test_numero_con_forma_invalida_nunca_llega_a_buscar(numero: str) -> No
 
 async def test_numero_bien_formado_si_busca() -> None:
     espia = _EspiaDeBusqueda(respuesta=_POLIZA)
-    resultado = await identity.identify_by_policy_number("stonecroft", "POL-480915", lookup=espia)
+    resultado = await identity.identify_by_policy_number("stonecroft", "POL-50", lookup=espia)
     assert resultado.outcome is identity.IdentificationOutcome.IDENTIFIED
     assert resultado.policy is _POLIZA
-    assert espia.calls == [("stonecroft", "POL-480915")]
+    assert espia.calls == [("stonecroft", "POL-50")]
 
 
 # --- BR1.2: la compuerta dura. Ajena e inexistente, exactamente igual. ------
@@ -63,9 +63,9 @@ async def test_poliza_ajena_y_poliza_inexistente_dan_el_mismo_desenlace() -> Non
     espia_ajena = _EspiaDeBusqueda(respuesta=None)  # simula la poliza de otra aseguradora
     espia_inexistente = _EspiaDeBusqueda(respuesta=None)  # simula un numero que no existe
 
-    ajena = await identity.identify_by_policy_number("stonecroft", "POL-173620", lookup=espia_ajena)
+    ajena = await identity.identify_by_policy_number("stonecroft", "POL-32", lookup=espia_ajena)
     inexistente = await identity.identify_by_policy_number(
-        "stonecroft", "POL-999999", lookup=espia_inexistente
+        "stonecroft", "POL-99", lookup=espia_inexistente
     )
 
     assert ajena.outcome is identity.IdentificationOutcome.NOT_FOUND

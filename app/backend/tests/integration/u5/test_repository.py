@@ -326,7 +326,7 @@ async def test_borrar_el_caso_deja_la_columna_en_nulo_y_la_fila_viva_con_su_cost
     await sembrar_ventana()
     async with session.session_for("stonecroft") as sesion:
         await session.execute_sql(
-            sesion, CREAR_CASO, case_id="CASO-GASTO", numero="STO-000901", creado=AHORA
+            sesion, CREAR_CASO, case_id="CASO-GASTO", numero="SA-901", creado=AHORA
         )
     await repository.record_billable(
         _gasto("G-DEL-CASO", costo=Decimal("0.02"), case_ref="CASO-GASTO"), now=AHORA
@@ -491,7 +491,7 @@ async def test_las_cuatro_agregaciones_devuelven_el_par_medido_y_sin_medir(
     await sembrar_ventana()
     async with session.session_for("stonecroft") as sesion:
         await session.execute_sql(
-            sesion, CREAR_CASO, case_id="CASO-MIXTO", numero="STO-000902", creado=AHORA
+            sesion, CREAR_CASO, case_id="CASO-MIXTO", numero="SA-902", creado=AHORA
         )
 
     await repository.record_billable(
@@ -576,7 +576,7 @@ async def test_el_libro_mayor_acepta_todos_los_usos_del_enum(dinero: None) -> No
     await sembrar_ventana()
     async with session.session_for("stonecroft") as sesion:
         await session.execute_sql(
-            sesion, CREAR_CASO, case_id="CASO-USOS", numero="STO-000931", creado=AHORA
+            sesion, CREAR_CASO, case_id="CASO-USOS", numero="SA-931", creado=AHORA
         )
 
     for uso in Use:

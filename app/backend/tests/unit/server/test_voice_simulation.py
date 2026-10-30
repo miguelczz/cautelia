@@ -98,21 +98,21 @@ def test_una_frase_con_datos_se_lee_como_tal_y_no_cuenta_como_voz() -> None:
         _guion(
             {"esperar_agente": True},
             {"decir": "Hola"},
-            {"decir_con_datos": " Mi póliza es la POL-422088. "},
+            {"decir_con_datos": " Mi póliza es la POL-42. "},
         )
     )
 
     assert guion.steps == (
         WaitForAgent(extra_s=0.4, timeout_s=40.0),
         Say("Hola"),
-        SayWithData("Mi póliza es la POL-422088."),
+        SayWithData("Mi póliza es la POL-42."),
     )
     assert guion.say_chars == len("Hola"), "solo lo sintetizado cuesta voz"
     assert (guion.said_phrases, guion.typed_phrases) == (1, 1)
 
 
 def test_un_guion_de_solo_frases_con_datos_tiene_persona_y_no_gasta_voz() -> None:
-    guion = parse_script(_guion({"decir_con_datos": "Mi póliza es la POL-422088."}))
+    guion = parse_script(_guion({"decir_con_datos": "Mi póliza es la POL-42."}))
 
     assert guion.say_chars == 0
     assert guion.typed_phrases == 1
@@ -149,7 +149,7 @@ def test_la_cola_por_omision_deja_la_linea_abierta_unos_segundos() -> None:
         (_guion({"decir_con_datos": ""}), "paso 1: decir_con_datos lleva una frase"),
         (_guion({"decir_con_datos": "  "}), "decir_con_datos lleva una frase"),
         (_guion({"decir_con_datos": 7}), "decir_con_datos lleva una frase"),
-        (_guion({"decir_con_datos": ["POL-422088"]}), "decir_con_datos lleva una frase"),
+        (_guion({"decir_con_datos": ["POL-42"]}), "decir_con_datos lleva una frase"),
         (_guion({"decir": "hola"}, {"decir_con_datos": "x" * 401}), "paso 2: la frase pasa de 400"),
         (_guion({"decir_con_datos": "hola", "decir": "hola"}), "exactamente una"),
         (_guion({"decir_con_datos": "hola", "y": 1}), "no conoce y"),
@@ -236,12 +236,7 @@ def test_el_guion_del_cierre_directo_da_la_poliza_ya_transcrita() -> None:
     guion = load_script(GUIONES / "cierre-directo.json")
     poliza = json.loads(
         (
-            paths.app_dir()
-            / "data"
-            / "tenants"
-            / "sunmeadow"
-            / "issued_policies"
-            / "POL-422088.json"
+            paths.app_dir() / "data" / "tenants" / "sunmeadow" / "issued_policies" / "POL-26.json"
         ).read_text(encoding="utf-8")
     )
 
@@ -622,7 +617,7 @@ async def test_el_detalle_sobre_una_voz_sin_sesion_habla_por_la_voz_suelta() -> 
 
 # --- `decir_con_datos`: frases que llegan ya transcritas ----------------------------
 
-FRASE_CON_DATOS = "Me llamo Ana Torres y mi póliza es la POL-422088."
+FRASE_CON_DATOS = "Me llamo Ana Torres y mi póliza es la POL-42."
 
 
 @pytest.fixture
@@ -687,12 +682,12 @@ def test_la_duracion_de_una_frase_con_datos_crece_con_su_largo_y_tiene_piso() ->
     assert typed_duration_s(FRASE_CON_DATOS) == pytest.approx(
         len(FRASE_CON_DATOS) / voice_simulation.TYPED_CHARS_PER_S
     )
-    assert typed_duration_s(FRASE_CON_DATOS) > typed_duration_s("Mi póliza es la POL-422088.")
+    assert typed_duration_s(FRASE_CON_DATOS) > typed_duration_s("Mi póliza es la POL-42.")
 
 
 #: Una frase como la de la llamada simulada del 2026-10-13 (4,6 s a ritmo de `TYPED_CHARS_PER_S`):
 #: la agente pregunto «¿sigues ahi?» a los 4 s porque entre la senal y el final no llego nada.
-FRASE_LARGA = "Me llamo Ana Torres Gomez y mi póliza es la POL-422088, por favor."
+FRASE_LARGA = "Me llamo Ana Torres Gomez y mi póliza es la POL-42, por favor."
 
 
 def _momentos_oidos(frase: str) -> list[float]:

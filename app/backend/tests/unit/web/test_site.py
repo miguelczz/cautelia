@@ -54,7 +54,7 @@ def test_cada_aseguradora_sale_con_lo_que_su_carpeta_trae(
         assert presentada.display_name == configurada.display_name
         assert presentada.default_language == configurada.default_language
         # La poliza de ejemplo completa, con la forma de C-25 (BR4.5).
-        assert re.fullmatch(r"POL-\d{6}", presentada.example_policy)
+        assert re.fullmatch(r"POL-\d{2}", presentada.example_policy)
         assert presentada.example_policy == configurada.example_policy
         # La marca es la de su carpeta, sin tocar.
         assert configurada.brand is not None

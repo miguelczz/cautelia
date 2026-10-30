@@ -60,7 +60,7 @@ MODULO = composition.ModuleSpec(
 #: Marcas reconocibles: el identificador y el numero de un caso. Si alguno aparece
 #: en la respuesta, el tablero publico identifico a un visitante.
 CASO_ID = "case-secreto-7f3c91"
-CASO_NUMERO = "STO-482913"
+CASO_NUMERO = "SA-482913"
 
 
 @pytest.fixture(autouse=True)
@@ -209,7 +209,7 @@ class _Registro:
             Case(
                 case_id=CASO_ID,
                 tenant_id=tenant_id,
-                case_number=CaseNumber(prefix="STO", serial="482913"),
+                case_number=CaseNumber(prefix="SA", serial="482913"),
                 record_type=RecordType.CLAIM,
                 channel=Channel.VOICE,
                 origin=Origin.PUBLIC_VOICE_CONSOLE,
@@ -432,7 +432,7 @@ class _RegistroDeComparaciones(_Registro):
             Case(
                 case_id=case_id,
                 tenant_id=tenant_id,
-                case_number=CaseNumber(prefix="STO", serial="482913"),
+                case_number=CaseNumber(prefix="SA", serial="482913"),
                 record_type=RecordType.COVERAGE_INQUIRY,
                 channel=Channel.CHAT,
                 origin=Origin.PUBLIC_CHAT,

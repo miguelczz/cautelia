@@ -121,7 +121,7 @@ def test_un_saludo_sin_pedido_es_solo_un_saludo(texto: str) -> None:
         "Hola, ¿mi póliza cubre el granizo?",
         "buenas, quiero cotizar",
         "hi, someone hit my car",
-        "POL-100042",
+        "POL-11",
         "",
         "   ",
         # Todas las palabras parecen de saludo, pero ya no es un saludo suelto.

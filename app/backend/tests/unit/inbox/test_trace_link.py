@@ -65,7 +65,7 @@ def _traza(estado: TraceSummaryStatus) -> TraceSummary:
 def _caso(traza: TraceSummary | None) -> case_view.CaseDetail:
     return case_view.CaseDetail(
         case_id=CASO,
-        case_number="STO-000001",
+        case_number="SA-1",
         record_type=RecordType.CLAIM,
         state=CaseState.DERIVED,
         resolution=None,

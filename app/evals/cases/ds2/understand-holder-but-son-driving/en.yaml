@@ -15,7 +15,7 @@ understanding:
   record_type: claim
   captured:
   - injuries
-  last_agent_text: I found policy POL-100042 under Natalia Henao Rendón, with a Renault Logan. Is that
+  last_agent_text: I found policy POL-11 under Daniela Castaño, with a Kia Picanto. Is that
     you?
   message: Yes, that's me, but my son was the one driving
   wants:

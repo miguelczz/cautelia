@@ -150,14 +150,12 @@ def test_sin_personas_de_bandeja_falta_staff(arbol: _Arbol) -> None:
 def test_una_poliza_de_ejemplo_que_no_esta_en_el_corpus_se_nombra(arbol: _Arbol) -> None:
     texto = arbol.tenant_yaml.read_text(encoding="utf-8")
     actual = next(linea for linea in texto.splitlines() if linea.startswith("example_policy:"))
-    arbol.tenant_yaml.write_text(
-        texto.replace(actual, "example_policy: POL-000000"), encoding="utf-8"
-    )
+    arbol.tenant_yaml.write_text(texto.replace(actual, "example_policy: POL-00"), encoding="utf-8")
 
     reporte = arbol.validar()
 
     falta = next(f for f in reporte.missing if f.field == "example_policy")
-    assert "POL-000000" in falta.detail
+    assert "POL-00" in falta.detail
 
 
 def test_una_poliza_de_ejemplo_que_no_es_la_que_dice_ser_se_nombra(arbol: _Arbol) -> None:
@@ -174,7 +172,7 @@ def test_una_poliza_de_ejemplo_que_no_es_la_que_dice_ser_se_nombra(arbol: _Arbol
     destino = carpeta / f"{ejemplo}.json"
     assert destino.is_file()
     destino.write_text(
-        destino.read_text(encoding="utf-8").replace(f'"{ejemplo}"', '"POL-999999"'),
+        destino.read_text(encoding="utf-8").replace(f'"{ejemplo}"', '"POL-99"'),
         encoding="utf-8",
     )
 

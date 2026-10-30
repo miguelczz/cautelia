@@ -89,13 +89,11 @@ async def test_poliza_de_otra_aseguradora_responde_igual_que_una_inexistente(
     dos_aseguradoras: tuple[str, str],
 ) -> None:
     propia, ajena = dos_aseguradoras
-    await sembrar_poliza(ajena, policy_number="POL-173620")
+    await sembrar_poliza(ajena, policy_number="POL-32")
 
-    resultado_ajena = await identity.identify_by_policy_number(
-        propia, "POL-173620", lookup=_por_numero
-    )
+    resultado_ajena = await identity.identify_by_policy_number(propia, "POL-32", lookup=_por_numero)
     resultado_inexistente = await identity.identify_by_policy_number(
-        propia, "POL-999999", lookup=_por_numero
+        propia, "POL-99", lookup=_por_numero
     )
 
     assert resultado_ajena.outcome is identity.IdentificationOutcome.NOT_FOUND
@@ -104,31 +102,31 @@ async def test_poliza_de_otra_aseguradora_responde_igual_que_una_inexistente(
 
 async def test_poliza_propia_se_identifica(dos_aseguradoras: tuple[str, str]) -> None:
     propia = dos_aseguradoras[0]
-    await sembrar_poliza(propia, policy_number="POL-480915")
+    await sembrar_poliza(propia, policy_number="POL-50")
 
-    resultado = await identity.identify_by_policy_number(propia, "POL-480915", lookup=_por_numero)
+    resultado = await identity.identify_by_policy_number(propia, "POL-50", lookup=_por_numero)
     assert resultado.outcome is identity.IdentificationOutcome.IDENTIFIED
     assert resultado.policy is not None
-    assert resultado.policy.policy_number == "POL-480915"
+    assert resultado.policy.policy_number == "POL-50"
 
 
 async def test_identifica_por_cedula_del_titular_contra_la_poliza_real(
     dos_aseguradoras: tuple[str, str],
 ) -> None:
     propia = dos_aseguradoras[0]
-    await sembrar_poliza(propia, policy_number="POL-480915", national_id="43218907")
+    await sembrar_poliza(propia, policy_number="POL-50", national_id="43218907")
 
     resultado = await identity.identify_by_national_id(propia, "43218907", lookup=_por_cedula)
     assert resultado.outcome is identity.IdentificationOutcome.IDENTIFIED
     assert resultado.policy is not None
-    assert resultado.policy.policy_number == "POL-480915"
+    assert resultado.policy.policy_number == "POL-50"
 
 
 async def test_cedula_de_otra_aseguradora_responde_igual_que_una_inexistente(
     dos_aseguradoras: tuple[str, str],
 ) -> None:
     propia, ajena = dos_aseguradoras
-    await sembrar_poliza(ajena, policy_number="POL-173620", national_id="99887766")
+    await sembrar_poliza(ajena, policy_number="POL-32", national_id="99887766")
 
     resultado_ajena = await identity.identify_by_national_id(propia, "99887766", lookup=_por_cedula)
     resultado_inexistente = await identity.identify_by_national_id(

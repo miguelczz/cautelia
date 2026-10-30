@@ -139,9 +139,9 @@ describe("la interrupcion", () => {
 
 describe("el caso y los avisos", () => {
   it("el numero de caso se guarda para mostrarlo", () => {
-    const llamada = tras({ type: "case", case_id: "case-1", case_number: "SUN-123456" });
+    const llamada = tras({ type: "case", case_id: "case-1", case_number: "AP-123456" });
 
-    expect(llamada.caseNumber).toBe("SUN-123456");
+    expect(llamada.caseNumber).toBe("AP-123456");
   });
 
   it("el aviso llega como clave y **no** como texto", () => {

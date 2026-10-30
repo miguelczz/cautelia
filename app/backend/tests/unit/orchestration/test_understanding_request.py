@@ -122,7 +122,7 @@ def test_lo_anotado_lleva_su_valor_y_lo_de_identidad_va_sin_el() -> None:
     peticion = _peticion(
         contexto,
         noted_values={
-            "identity_and_policy": "Marcela Ríos, POL-000001",
+            "identity_and_policy": "Marcela Ríos, POL-01",
             "location": "la calle 80 con 30",
             "injuries": "no",
         },
@@ -205,9 +205,7 @@ def test_un_caso_que_ya_no_captura_no_tiene_nada_que_pedir() -> None:
 def test_la_poliza_identificada_y_la_respuesta_pendiente_salen_del_caso_y_del_estado() -> None:
     sin = _peticion(_contexto(RecordType.COVERAGE_INQUIRY, {"identity_and_policy": False}))
     con = _peticion(
-        _contexto(
-            RecordType.COVERAGE_INQUIRY, {"identity_and_policy": True}, policy_ref="POL-000001"
-        ),
+        _contexto(RecordType.COVERAGE_INQUIRY, {"identity_and_policy": True}, policy_ref="POL-01"),
         pendiente=True,
     )
 

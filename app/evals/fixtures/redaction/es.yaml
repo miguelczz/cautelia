@@ -77,20 +77,20 @@ seeds:
   - id: policy_number/compact
     entity_type: policy_number
     form: compact
-    value: POL-200341
-    text: La poliza POL-200341 es la que tengo con la agencia.
+    value: POL-31
+    text: La poliza POL-31 es la que tengo con la agencia.
 
   - id: policy_number/separated
     entity_type: policy_number
     form: separated
-    value: POL 200341
-    text: Mi poliza es POL 200341, la renove en marzo.
+    value: POL 31
+    text: Mi poliza es POL 31, la renove en marzo.
 
   - id: policy_number/spoken
     entity_type: policy_number
     form: spoken
-    value: dos cero cero tres cuatro uno
-    text: La poliza es dos cero cero tres cuatro uno.
+    value: tres uno
+    text: La poliza es tres uno.
 
   # VIN ficticio del generador de U7: su digito de control falla a proposito, asi
   # que no es el numero de serie de ningun vehiculo.
@@ -142,5 +142,5 @@ cross_language:
     form: spoken
     dictated_in: en
     found_by_language: en
-    value: two zero zero one one seven
-    text: Mi poliza es two zero zero one one seven.
+    value: two one
+    text: Mi poliza es two one.

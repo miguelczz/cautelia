@@ -14,12 +14,12 @@ axes:
 - distractor
 - citation-verification
 citation:
-  policy_number: POL-200117
-  clause_id: SUN-PAP-2026-E.DUTIES.A.1
+  policy_number: POL-21
+  clause_id: AP-PAP-2026-E.DUTIES.A.1
   expected_outcome: verified
   question: What do I have to do after an accident?
   forbidden_clause_ids:
-  - SUN-PAP-2025-E.DUTIES.A.1.ALT
+  - AP-PAP-2025-E.DUTIES.A.1.ALT
 expected_verdicts:
   citation_distractor_duties_after_loss: pass
   citation_exists_distractor_duties_after_loss: pass

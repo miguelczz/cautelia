@@ -53,10 +53,10 @@ def test_una_fuente_revisada_se_carga_con_la_aseguradora_y_el_idioma_de_su_archi
         [
             entrada(),
             entrada(
-                source_id="STO-PAP-2025-A.INS",
+                source_id="SA-PAP-2025-A.INS",
                 kind="distractor",
                 version="2025.1",
-                distractor_of="STO-PAP-2026-A.INS",
+                distractor_of="SA-PAP-2026-A.INS",
                 distractor_reason="superseded_version",
             ),
         ],
@@ -68,9 +68,9 @@ def test_una_fuente_revisada_se_carga_con_la_aseguradora_y_el_idioma_de_su_archi
     assert (clausula.tenant_id, clausula.language, clausula.form_id) == (
         "stonecroft",
         "es",
-        "STO-PAP-2026",
+        "SA-PAP-2026",
     )
-    assert distractor.form_id == "STO-PAP-2025"
+    assert distractor.form_id == "SA-PAP-2025"
     assert list(paquete.input_hashes()) == [PARTE_A]
 
 
@@ -86,13 +86,13 @@ def test_un_texto_sin_marca_de_revision_se_rechaza_nombrando_archivo_y_clave(
         raiz,
         [
             entrada(),
-            entrada(source_id="STO-PAP-2026-A.EXCL.3", clause_key="A.EXCL.3", **{marca: None}),
+            entrada(source_id="SA-PAP-2026-A.EXCL.3", clause_key="A.EXCL.3", **{marca: None}),
         ],
     )
 
     problemas = _problemas(raiz)
 
-    assert f"'{PARTE_A}': texts[1].{marca} (STO-PAP-2026-A.EXCL.3): falta '{marca}'" in problemas
+    assert f"'{PARTE_A}': texts[1].{marca} (SA-PAP-2026-A.EXCL.3): falta '{marca}'" in problemas
     assert "BR2.2" in problemas
 
 
@@ -100,7 +100,7 @@ def test_una_marca_de_revision_de_quien_no_revisa_se_rechaza(tmp_path: Path) -> 
     raiz = repo(tmp_path)
     escribir_fuente(raiz, [entrada(reviewed_by="gemini")])
 
-    assert f"'{PARTE_A}': texts[0].reviewed_by (STO-PAP-2026-A.INS)" in _problemas(raiz)
+    assert f"'{PARTE_A}': texts[0].reviewed_by (SA-PAP-2026-A.INS)" in _problemas(raiz)
 
 
 # --- BR3.2: identificador del formulario mas la numeracion, y version ----------
@@ -109,11 +109,11 @@ def test_una_marca_de_revision_de_quien_no_revisa_se_rechaza(tmp_path: Path) -> 
 @pytest.mark.parametrize(
     ("cambios", "esperado"),
     [
-        ({"source_id": "STO-PAP-2026-A.EXCL.3"}, "no termina en su numeracion 'A.INS'"),
+        ({"source_id": "SA-PAP-2026-A.EXCL.3"}, "no termina en su numeracion 'A.INS'"),
         ({"source_id": "STO-2026-A.INS"}, "no tiene la forma de un formulario"),
-        ({"version": "2026"}, "texts[0].version (STO-PAP-2026-A.INS)"),
+        ({"version": "2026"}, "texts[0].version (SA-PAP-2026-A.INS)"),
         ({"version": "2025.1"}, "el formulario es de 2026 y la version '2025.1' de otro ano"),
-        ({"source_id": "STO-PAP-2026-END-1-A.INS"}, "va en un formulario <prefijo>-PAP-<ano>"),
+        ({"source_id": "SA-PAP-2026-END-1-A.INS"}, "va en un formulario <prefijo>-PAP-<ano>"),
     ],
 )
 def test_un_identificador_o_una_version_mal_formados_se_rechazan(
@@ -136,14 +136,14 @@ def test_un_identificador_repetido_entre_dos_archivos_nombra_los_dos(tmp_path: P
     problemas = _problemas(raiz)
 
     assert (
-        f"'app/data/sources/stonecroft/es/part_b.yaml': 'STO-PAP-2026-A.INS' ya esta en '{PARTE_A}'"
+        f"'app/data/sources/stonecroft/es/part_b.yaml': 'SA-PAP-2026-A.INS' ya esta en '{PARTE_A}'"
     ) in problemas
 
 
 def test_una_clausula_repetida_en_una_salida_se_nombra() -> None:
     clausula = {
-        "clause_id": "STO-PAP-2026-A.INS",
-        "form_id": "STO-PAP-2026",
+        "clause_id": "SA-PAP-2026-A.INS",
+        "form_id": "SA-PAP-2026",
         "form_version": "2026.1",
         "clause_key": "A.INS",
         "part": "Parte A",
@@ -151,15 +151,15 @@ def test_una_clausula_repetida_en_una_salida_se_nombra() -> None:
         "text": "Relleno de prueba.",
         "issuer_label": "Seguros Aburrá",
     }
-    archivo = json.dumps({"form_id": "STO-PAP-2026", "clauses": [clausula, clausula]})
+    archivo = json.dumps({"form_id": "SA-PAP-2026", "clauses": [clausula, clausula]})
 
     problemas = manifest.verify_output(
-        "app/data/tenants/stonecroft/clauses/STO-PAP-2026.json", archivo.encode()
+        "app/data/tenants/stonecroft/clauses/SA-PAP-2026.json", archivo.encode()
     )
 
     assert problemas == [
-        "'app/data/tenants/stonecroft/clauses/STO-PAP-2026.json': (raiz): clause_id "
-        "repetidos: STO-PAP-2026-A.INS"
+        "'app/data/tenants/stonecroft/clauses/SA-PAP-2026.json': (raiz): clause_id "
+        "repetidos: SA-PAP-2026-A.INS"
     ]
 
 
@@ -172,7 +172,7 @@ def test_una_clausula_repetida_en_una_salida_se_nombra() -> None:
         (
             {
                 "kind": "distractor",
-                "source_id": "STO-PAP-2026-A.INS.ALT",
+                "source_id": "SA-PAP-2026-A.INS.ALT",
                 "clause_key": "A.INS.ALT",
             },
             "un distractor dice con que clausula se confunde (distractor_of) y por que",
@@ -180,7 +180,7 @@ def test_una_clausula_repetida_en_una_salida_se_nombra() -> None:
         (
             {
                 "kind": "distractor",
-                "distractor_of": "STO-PAP-2026-A.INS",
+                "distractor_of": "SA-PAP-2026-A.INS",
                 "distractor_reason": "near_duplicate",
             },
             "un distractor no se confunde consigo mismo",
@@ -192,12 +192,12 @@ def test_una_clausula_repetida_en_una_salida_se_nombra() -> None:
         (
             {
                 "kind": "distractor",
-                "source_id": "STO-PAP-2026-A.INS.ALT",
+                "source_id": "SA-PAP-2026-A.INS.ALT",
                 "clause_key": "A.INS.ALT",
-                "distractor_of": "STO-PAP-2026-A.INS",
+                "distractor_of": "SA-PAP-2026-A.INS",
                 "distractor_reason": "mas_o_menos_igual",
             },
-            "texts[0].distractor_reason (STO-PAP-2026-A.INS.ALT)",
+            "texts[0].distractor_reason (SA-PAP-2026-A.INS.ALT)",
         ),
     ],
 )
@@ -218,7 +218,7 @@ def test_un_distractor_sin_destino_o_sin_razon_se_rechaza(
 
 def test_una_agencia_no_tiene_textos_propios(tmp_path: Path) -> None:
     raiz = repo(tmp_path)
-    escribir_fuente(raiz, [entrada(source_id="KNO-PAP-2026-A.INS")], tenant="knotwell", idioma="en")
+    escribir_fuente(raiz, [entrada(source_id="AC-PAP-2026-A.INS")], tenant="knotwell", idioma="en")
 
     assert "'knotwell' es una agencia y no tiene textos propios" in _problemas(raiz)
 
@@ -236,14 +236,14 @@ def test_la_cabecera_y_la_ruta_tienen_que_decir_lo_mismo(tmp_path: Path) -> None
 
 def test_un_identificador_con_el_prefijo_de_otra_aseguradora_se_rechaza(tmp_path: Path) -> None:
     raiz = repo(tmp_path)
-    escribir_fuente(raiz, [entrada(source_id="SUN-PAP-2026-A.INS")])
+    escribir_fuente(raiz, [entrada(source_id="AP-PAP-2026-A.INS")])
 
-    assert "no empieza por el prefijo 'STO' de su aseguradora" in _problemas(raiz)
+    assert "no empieza por el prefijo 'SA' de su aseguradora" in _problemas(raiz)
 
 
 # --- BR3.6: la poliza emitida -------------------------------------------------
 
-POLIZA = "app/data/tenants/stonecroft/issued_policies/POL-100042.json"
+POLIZA = "app/data/tenants/stonecroft/issued_policies/POL-11.json"
 
 
 def _problemas_de_poliza(**cambios: Any) -> list[str]:
@@ -259,10 +259,10 @@ def test_una_poliza_valida_no_tiene_problemas() -> None:
     [
         ({"form_version": None}, f"'{POLIZA}': form_version: falta 'form_version'"),
         ({"policy_number": "POL-12345"}, f"'{POLIZA}': policy_number:"),
-        ({"policy_number": "STO-100042"}, f"'{POLIZA}': policy_number:"),
+        ({"policy_number": "SA-100042"}, f"'{POLIZA}': policy_number:"),
         (
-            {"endorsement_ids": ["SUN-PAP-2026-END-1"]},
-            "endorsement_ids trae endosos que no son de 'STO-PAP-2026'",
+            {"endorsement_ids": ["AP-PAP-2026-END-1"]},
+            "endorsement_ids trae endosos que no son de 'SA-PAP-2026'",
         ),
         ({"period_end": "2025-12-31"}, "el periodo termina antes de empezar"),
         ({"form_version": "2025.4"}, "form_version '2025.4' no es de su formulario"),
@@ -316,7 +316,7 @@ def test_los_telefonos_ficticios_de_los_dos_idiomas_validan() -> None:
 
 
 def test_un_veredicto_sin_fecha_ni_commit_no_valida() -> None:
-    ids = [f"STO-PAP-2026-A.EXCL.{n}" for n in range(1, 11)]
+    ids = [f"SA-PAP-2026-A.EXCL.{n}" for n in range(1, 11)]
     with pytest.raises(ValueError, match="un veredicto lleva la fecha"):
         models.ReviewSample.model_validate(
             {
@@ -334,21 +334,21 @@ def test_un_veredicto_sin_fecha_ni_commit_no_valida() -> None:
 
 def test_un_formulario_base_sin_jurisdiccion_no_valida() -> None:
     formulario = {
-        "form_id": "STO-PAP-2026",
+        "form_id": "SA-PAP-2026",
         "form_kind": "base",
         "form_version": "2026.1",
         "issuer_tenant": "stonecroft",
         "issuer_label": "Seguros Aburrá",
         "language": "es",
-        "clause_ids": ["STO-PAP-2026-A.INS"],
+        "clause_ids": ["SA-PAP-2026-A.INS"],
     }
 
     problemas = manifest.verify_output(
-        "app/data/tenants/stonecroft/forms/STO-PAP-2026.json", json.dumps(formulario).encode()
+        "app/data/tenants/stonecroft/forms/SA-PAP-2026.json", json.dumps(formulario).encode()
     )
 
     assert problemas == [
-        "'app/data/tenants/stonecroft/forms/STO-PAP-2026.json': (raiz): 'STO-PAP-2026': un "
+        "'app/data/tenants/stonecroft/forms/SA-PAP-2026.json': (raiz): 'SA-PAP-2026': un "
         "formulario base referencia su documento de jurisdiccion"
     ]
 

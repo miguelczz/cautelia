@@ -46,12 +46,12 @@ describe("lo que la llamada recuerda de lo que se dijo", () => {
     const recordar = callMemory("una-aseguradora");
 
     recordar(final("insured", "Soy Natalia Henao,"));
-    recordar(final("insured", "mi póliza es POL-100042"));
+    recordar(final("insured", "mi póliza es POL-11"));
 
     expect(recallAll("una-aseguradora").visitor).toEqual([
       "Soy Natalia Henao,",
-      "mi póliza es POL-100042",
-      "Soy Natalia Henao, mi póliza es POL-100042",
+      "mi póliza es POL-11",
+      "Soy Natalia Henao, mi póliza es POL-11",
     ]);
   });
 
@@ -69,7 +69,7 @@ describe("lo que la llamada recuerda de lo que se dijo", () => {
     const recordar = callMemory("una-aseguradora");
     recordar(final("agent", "Hola, ¿en qué te ayudo?"));
     recordar(final("insured", "Soy Natalia Henao,"));
-    recordar(final("insured", "mi póliza es POL-100042"));
+    recordar(final("insured", "mi póliza es POL-11"));
 
     const restaurados = restoreTurns(
       [
@@ -79,7 +79,7 @@ describe("lo que la llamada recuerda de lo que se dijo", () => {
       recallAll("una-aseguradora"),
     );
 
-    expect(restaurados.get("t2")).toBe("Soy Natalia Henao, mi póliza es POL-100042");
+    expect(restaurados.get("t2")).toBe("Soy Natalia Henao, mi póliza es POL-11");
   });
 
   it("lo que dijo la agente, ya sin tapar en el cable, destapa su turno de la base (2026-10-13)", () => {

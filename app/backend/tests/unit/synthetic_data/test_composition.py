@@ -35,6 +35,7 @@ from untangle.synthetic_data.models import (
 )
 from untangle.synthetic_data.sources import load_sources
 from untangle.tenancy import config as tenancy_config
+from untangle.tenancy.models import TenantKind
 
 from .apoyo import RAIZ_REAL, repo
 
@@ -55,7 +56,11 @@ AGENCIA = "knotwell"
 #: poliza y nombre del asegurado. La colision del identificador sigue declarada
 #: sobre los enlaces de caso, que es donde U2 la ejercita y donde si cabe. La razon
 #: entera esta en `synthetic_data/ds8.py`.
-CONTRATO_DS8_U2 = "c7d3c1aa51c8b7724a0e061e16baf8de2662dfdda382810332f794137f62b1ae"
+#:
+#: **Cambio intencional del 2026-10-30** (decision de Miguel): los numeros de poliza de DS-8
+#: pasan de seis cifras a dos --`POL-480915` es `POL-50` y `POL-173620` es `POL-32`--. Es lo
+#: unico que cambia en el contrato: las mismas filas y las mismas colisiones, con otro numero.
+CONTRATO_DS8_U2 = "86ae2e146c305a28054ce61175d496983335ce5b0b94e836ecdd863ae5f4dc4b"
 
 
 def _render(raiz: Path = RAIZ_REAL, destino: Path | None = None) -> generator.RenderedGeneration:
@@ -157,7 +162,7 @@ def test_una_parte_que_falta_detiene_la_generacion_nombrandola(tmp_path: Path) -
 
     problemas = _problemas(raiz)
 
-    assert "'STO-PAP-2026': le faltan partes de la referencia: part_f" in problemas
+    assert "'SA-PAP-2026': le faltan partes de la referencia: part_f" in problemas
     assert not (raiz / "app" / "data" / "tenants").exists()
 
 
@@ -178,11 +183,11 @@ def test_un_distractor_sin_clausula_vigente_se_nombra(tmp_path: Path) -> None:
     def apuntar_a_nada(datos: dict[str, Any]) -> None:
         for texto in datos["texts"]:
             if texto["kind"] == "distractor":
-                texto["distractor_of"] = "STO-PAP-2026-C.NO_EXISTE"
+                texto["distractor_of"] = "SA-PAP-2026-C.NO_EXISTE"
 
     _editar_yaml(parte, apuntar_a_nada)
 
-    assert "se confunde con 'STO-PAP-2026-C.NO_EXISTE'" in _problemas(raiz)
+    assert "se confunde con 'SA-PAP-2026-C.NO_EXISTE'" in _problemas(raiz)
 
 
 # --- BR3.5: las relaciones ------------------------------------------------------
@@ -208,11 +213,11 @@ def test_un_endoso_que_modifica_algo_inexistente_se_nombra(tmp_path: Path) -> No
     def huerfano(datos: dict[str, Any]) -> None:
         primero = datos["texts"][0]
         primero["clause_key"] = "Z.NADA"
-        primero["source_id"] = "STO-PAP-2026-END-1-Z.NADA"
+        primero["source_id"] = "SA-PAP-2026-END-1-Z.NADA"
 
     _editar_yaml(endosos, huerfano)
 
-    assert "modifica 'Z.NADA', que no esta en 'STO-PAP-2026' (BR3.5)" in _problemas(raiz)
+    assert "modifica 'Z.NADA', que no esta en 'SA-PAP-2026' (BR3.5)" in _problemas(raiz)
 
 
 # --- BR4.1 a BR4.3: la agencia --------------------------------------------------
@@ -235,14 +240,14 @@ def test_una_copia_alterada_de_la_agencia_falla_aunque_el_manifiesto_se_ajuste(
 ) -> None:
     datos = tmp_path / "data"
     generator.write(_render(RAIZ_REAL, datos), datos)
-    copia = datos / "tenants" / AGENCIA / "clauses" / "SUN-PAP-2026.json"
+    copia = datos / "tenants" / AGENCIA / "clauses" / "AP-PAP-2026.json"
     contenido = json.loads(copia.read_text(encoding="utf-8"))
     contenido["clauses"][0]["text"] = "Texto cambiado en la copia de la agencia."
     copia.write_text(json.dumps(contenido, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     # Quien altera la copia ajusta tambien el hash del manifiesto: ni asi pasa.
     ruta_manifiesto = datos / "manifest.json"
     registro = json.loads(ruta_manifiesto.read_text(encoding="utf-8"))
-    registro["outputs"][f"app/data/tenants/{AGENCIA}/clauses/SUN-PAP-2026.json"] = hashlib.sha256(
+    registro["outputs"][f"app/data/tenants/{AGENCIA}/clauses/AP-PAP-2026.json"] = hashlib.sha256(
         copia.read_bytes()
     ).hexdigest()
     ruta_manifiesto.write_text(json.dumps(registro, indent=2) + "\n", encoding="utf-8")
@@ -250,7 +255,7 @@ def test_una_copia_alterada_de_la_agencia_falla_aunque_el_manifiesto_se_ajuste(
     problemas = manifest.verify_tree(RAIZ_REAL, datos)
 
     assert problemas == [
-        f"'app/data/tenants/{AGENCIA}/clauses/SUN-PAP-2026.json': la copia no es identica a su "
+        f"'app/data/tenants/{AGENCIA}/clauses/AP-PAP-2026.json': la copia no es identica a su "
         "original de 'sunmeadow'; las copias salen del original en la misma generacion (BR4.2)"
     ]
 
@@ -268,11 +273,44 @@ def test_cada_poliza_de_la_agencia_declara_su_emisora_y_cada_ejemplo_existe() ->
             continue
         poliza = _json(generacion, ruta)
         assert poliza["issuer_tenant"] in EMISORAS
-        prefijo = {"stonecroft": "STO-", "sunmeadow": "SUN-"}[poliza["issuer_tenant"]]
+        prefijo = {"stonecroft": "SA-", "sunmeadow": "AP-"}[poliza["issuer_tenant"]]
         assert poliza["form_id"].startswith(prefijo)
         assert all(e.startswith(f"{poliza['form_id']}-END-") for e in poliza["endorsement_ids"])
         emisoras_de_la_agencia.add(poliza["issuer_tenant"])
     assert emisoras_de_la_agencia == set(EMISORAS)
+
+
+def test_cada_aseguradora_tiene_las_seis_polizas_de_su_decena_y_la_compartida_es_la_50() -> None:
+    """Decision de Miguel del 2026-10-30: el numero de poliza dice de quien es.
+
+    La de ejemplo es la primera de la decena, las otras cinco la siguen sin huecos, y la que
+    dos emisoras comparten a proposito (DS-8) cae fuera de todas las decenas.
+    """
+    generacion = _render()
+    tenants = tenancy_config.load(RAIZ_REAL / "app" / "config" / "tenants")
+    emisoras = {t.tenant_id for t in tenants.available if t.kind is TenantKind.CARRIER}
+    numeros_por_tenant: dict[str, list[int]] = {}
+    for ruta in generacion.files:
+        coincidencia = re.fullmatch(r"tenants/([^/]+)/issued_policies/POL-(\d{2})\.json", ruta)
+        assert coincidencia is not None or "/issued_policies/" not in ruta, ruta
+        if coincidencia is not None:
+            numeros_por_tenant.setdefault(coincidencia[1], []).append(int(coincidencia[2]))
+
+    decenas: set[int] = set()
+    for tenant in tenants.available:
+        ejemplo = int(tenant.example_policy.removeprefix("POL-"))
+        decenas.add(ejemplo // 10)
+        propios = sorted(
+            n for n in numeros_por_tenant[tenant.tenant_id] if n // 10 == ejemplo // 10
+        )
+        assert propios == list(range(ejemplo, ejemplo + 6)), tenant.tenant_id
+    assert len(decenas) == len(tenants.available), "dos aseguradoras comparten decena"
+
+    compartidas = [
+        t for t, numeros in numeros_por_tenant.items() if 50 in numeros and t in emisoras
+    ]
+    assert len(compartidas) == 2
+    assert 50 // 10 not in decenas
 
 
 # --- BR6.1 y BR6.2: los casos sembrados -----------------------------------------
@@ -417,8 +455,8 @@ def test_todo_valor_personal_sembrado_esta_en_su_rango_ficticio() -> None:
         ("email", "en"): r"[a-z0-9.]+@example\.(com|org)",
         ("plate", "es"): r"[A-Z]{3}\d{3}",
         ("plate", "en"): r"[A-Z]{3}-\d{4}",
-        ("policy_number", "es"): r"POL-\d{6}",
-        ("policy_number", "en"): r"POL-\d{6}",
+        ("policy_number", "es"): r"POL-\d{2}",
+        ("policy_number", "en"): r"POL-\d{2}",
     }
     for valor in _valores(_render()):
         clave = (valor["kind"], valor["language"])
@@ -486,10 +524,10 @@ def test_las_diferencias_declaradas_coinciden_con_el_corpus() -> None:
     declaradas = {d.difference_id: d for d in generacion.manifest.declared_differences}
     assert len(declaradas) == 5
     transporte = declaradas["transport-expense-extension"]
-    assert transporte.present_in == ("SUN-PAP-2026-END-3",)
-    assert all(f.startswith("STO-PAP-2026-END-") for f in transporte.absent_in)
+    assert transporte.present_in == ("AP-PAP-2026-END-3",)
+    assert all(f.startswith("SA-PAP-2026-END-") for f in transporte.absent_in)
 
-    clausulas = json.loads(generacion.files["tenants/sunmeadow/clauses/SUN-PAP-2026-END-3.json"])
+    clausulas = json.loads(generacion.files["tenants/sunmeadow/clauses/AP-PAP-2026-END-3.json"])
     assert [c["clause_key"] for c in clausulas["clauses"]] == ["D.TRANSPORT"]
     for form_id in transporte.absent_in:
         clausulas = json.loads(generacion.files[f"tenants/stonecroft/clauses/{form_id}.json"])
@@ -509,7 +547,7 @@ def test_una_diferencia_que_el_corpus_contradice_se_nombra(tmp_path: Path) -> No
     problemas = _problemas(raiz)
     assert (
         "diferencia 'transport-expense-extension': dice que 'D.TRANSPORT' esta en "
-        "'STO-PAP-2026-END-1', y el corpus dice lo contrario (BR3.7)"
+        "'SA-PAP-2026-END-1', y el corpus dice lo contrario (BR3.7)"
     ) in problemas
 
 
@@ -548,4 +586,4 @@ def test_la_composicion_pide_cada_flujo_de_azar_una_sola_vez() -> None:
 
     assert composicion.problems == ()
     with pytest.raises(ValueError, match="ya se entrego"):
-        fabrica.for_output("tenants/stonecroft/issued_policies/POL-100042.json")
+        fabrica.for_output("tenants/stonecroft/issued_policies/POL-11.json")

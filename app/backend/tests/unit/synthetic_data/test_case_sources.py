@@ -25,7 +25,7 @@ from .apoyo import RAIZ_REAL, REVISADO, entrada, escribir_fuente, repo
 def _turnos(**cambios: Any) -> dict[str, Any]:
     """Una fuente de turnos valida de un caso abierto; `cambios` la rompe."""
     base: dict[str, Any] = {
-        "source_id": "STO-CASE-ES-OPEN",
+        "source_id": "SA-CASE-ES-OPEN",
         "kind": "case_turns",
         "version": "2026.1",
         "text": "agent: Relleno de una pregunta de prueba.",
@@ -52,7 +52,7 @@ def test_una_agencia_si_tiene_los_turnos_de_sus_casos(tmp_path: Path) -> None:
     raiz = repo(tmp_path)
     escribir_fuente(
         raiz,
-        [_turnos(source_id="KNO-CASE-EN-OPEN")],
+        [_turnos(source_id="AC-CASE-EN-OPEN")],
         tenant="knotwell",
         idioma="en",
         parte="case_turns",
@@ -72,7 +72,7 @@ def test_una_agencia_si_tiene_los_turnos_de_sus_casos(tmp_path: Path) -> None:
     ("cambio", "mensaje"),
     [
         ({"case": None}, "los turnos de un caso llevan su caso (case)"),
-        ({"source_id": "STO-TURNOS-OPEN"}, "se llaman <prefijo>-CASE-<nombre>"),
+        ({"source_id": "SA-TURNOS-OPEN"}, "se llaman <prefijo>-CASE-<nombre>"),
         ({"text": "cliente: hola"}, "la linea 1 no es '<hablante>: <texto>'"),
         (
             {"case": {"name": "derivado", "state": "derived"}},
@@ -121,7 +121,7 @@ def test_un_repertorio_con_huecos_o_repetidos_se_nombra(
 ) -> None:
     raiz = repo(tmp_path)
     repertorio = entrada(
-        source_id="STO-POOL-GIVEN-NAMES",
+        source_id="SA-POOL-GIVEN-NAMES",
         kind="persona_pool",
         clause_key=None,
         part=None,
@@ -140,12 +140,12 @@ def test_solo_una_definicion_declara_terminos_y_solo_una_clausula_remite(tmp_pat
         [
             entrada(defines_terms=["termino"]),
             entrada(
-                source_id="STO-PAP-2025-A.INS",
+                source_id="SA-PAP-2025-A.INS",
                 kind="distractor",
                 version="2025.1",
-                distractor_of="STO-PAP-2026-A.INS",
+                distractor_of="SA-PAP-2026-A.INS",
                 distractor_reason="superseded_version",
-                refers_to=["STO-JUR-2026-J.1"],
+                refers_to=["SA-JUR-2026-J.1"],
             ),
         ],
     )
@@ -189,6 +189,6 @@ def test_un_marcador_desconocido_detiene_la_generacion_nombrando_el_caso(
         )
 
     assert any(
-        "'STO-CASE-ES-OPEN': marcadores desconocidos telefono_real" in p
+        "'SA-CASE-ES-OPEN': marcadores desconocidos telefono_real" in p
         for p in error.value.problems
     )

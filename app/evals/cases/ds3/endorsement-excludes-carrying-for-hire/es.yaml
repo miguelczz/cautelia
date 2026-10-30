@@ -14,10 +14,10 @@ axes:
 - endoso
 - citation-verification
 citation:
-  policy_number: POL-814225
-  clause_id: STO-PAP-2026-A.EXCL.A.5
+  policy_number: POL-12
+  clause_id: SA-PAP-2026-A.EXCL.A.5
   expected_outcome: verified
-  amended_by: STO-PAP-2026-END-2
+  amended_by: SA-PAP-2026-END-2
   question: ¿Estoy cubierto si uso el auto para llevar pasajeros por una app, como Uber?
 expected_verdicts:
   citation_endorsement_excludes_carrying_for_hire: pass

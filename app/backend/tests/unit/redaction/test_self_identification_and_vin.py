@@ -76,7 +76,7 @@ NOMBRES_TRAS_LA_FRASE = [
     pytest.param("My name is Lucía Ochoa Henao.", "Lucía Ochoa Henao", id="en-cue-es-name"),
     pytest.param("Me llamo Megan Hughes.", "Megan Hughes", id="es-cue-en-name"),
     pytest.param(
-        "Buenos días, quiero reportar un choque. Soy Rosa Iturbe, póliza POL-173620.",
+        "Buenos días, quiero reportar un choque. Soy Rosa Iturbe, póliza POL-32.",
         "Rosa Iturbe",
         id="es-soy-caso-sembrado",
     ),

@@ -14,10 +14,10 @@ axes:
 - endoso
 - citation-verification
 citation:
-  policy_number: POL-784054
-  clause_id: STO-PAP-2026-D.EXCL.3
+  policy_number: POL-12
+  clause_id: SA-PAP-2026-D.EXCL.3
   expected_outcome: verified
-  amended_by: STO-PAP-2026-END-3
+  amended_by: SA-PAP-2026-END-3
   question: ¿Cubren el equipo de sonido que le instalé al auto?
 expected_verdicts:
   citation_endorsement_electronics_exclusion: pass

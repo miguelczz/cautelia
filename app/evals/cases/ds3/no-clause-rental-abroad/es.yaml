@@ -21,8 +21,8 @@ axes:
 - corriente
 - citation-verification
 citation:
-  policy_number: POL-245782
-  clause_id: STO-PAP-2026-F.PERIOD_TERRITORY
+  policy_number: POL-14
+  clause_id: SA-PAP-2026-F.PERIOD_TERRITORY
   expected_outcome: verified
   question: ¿Cubre esta póliza un auto de alquiler que tomé en otro país?
 expected_verdicts:

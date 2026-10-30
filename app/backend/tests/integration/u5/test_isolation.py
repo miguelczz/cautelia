@@ -271,7 +271,7 @@ async def test_un_resumen_de_traza_no_se_ve_desde_otra_aseguradora(
             CREAR_CASO,
             case_id="CASO-TRAZA",
             tenant_id="stonecroft",
-            numero="STO-000900",
+            numero="SA-900",
             ahora=AHORA,
         )
         await session.execute_sql(

@@ -55,7 +55,7 @@ def test_scan_paths_junta_los_hallazgos_de_varios_archivos(tmp_path: Path) -> No
 
 
 def test_numero_de_poliza_se_detecta_en_los_dos_idiomas() -> None:
-    texto = "la poliza POL-100042 esta activa"
+    texto = "la poliza POL-11 esta activa"
     assert any(
         h.entity_type is AuditEntityType.POLICY_NUMBER
         for h in scan_text(texto, language="es", source="x")

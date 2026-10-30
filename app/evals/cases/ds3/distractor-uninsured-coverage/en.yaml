@@ -14,12 +14,12 @@ axes:
 - distractor
 - citation-verification
 citation:
-  policy_number: POL-200117
-  clause_id: SUN-PAP-2026-C.INS
+  policy_number: POL-21
+  clause_id: AP-PAP-2026-C.INS
   expected_outcome: verified
   question: What do you pay if an uninsured driver injures me?
   forbidden_clause_ids:
-  - SUN-PAP-2025-C.INS.ALT
+  - AP-PAP-2025-C.INS.ALT
 expected_verdicts:
   citation_distractor_uninsured_coverage: pass
   citation_exists_distractor_uninsured_coverage: pass

@@ -13,11 +13,11 @@ coincidencia, y las dos mitades se sostienen de maneras distintas:
   El libro de seriales emitidos es la memoria; que se consulte de verdad es lo
   que esta prueba comprueba.
 
-**Como se comprueba sin esperar una coincidencia.** El espacio es de un millon
-por aseguradora, asi que provocar un choque de verdad no es una prueba, es una
-loteria. Lo que se hace es fijar el azar --el acunador devuelve siempre el mismo
-serial-- y exigir que el libro lo rechace: si el libro no se consultara, ese
-serial se volveria a dar.
+**Como se comprueba.** Desde el 2026-10-30 el numero es un contador por aseguradora
+(`SA-1`, `SA-2`...): el siguiente es el mayor del libro mas uno. Si despues del reinicio
+el libro no se consultara, el primer caso del dia nuevo volveria a ser `SA-1`. La prueba
+exige que sea el que sigue al de anoche, y el control contrario --el libro vaciado a
+mano-- exige que entonces si vuelva a ser el primero.
 """
 
 from __future__ import annotations
@@ -55,39 +55,35 @@ async def _crear(tenant_id: str, case_id: str) -> casos.CaseView:
     )
 
 
-async def test_un_serial_emitido_no_se_vuelve_a_dar_despues_del_reinicio(
-    app: FastAPI, monkeypatch: pytest.MonkeyPatch
-) -> None:
+async def test_un_serial_emitido_no_se_vuelve_a_dar_despues_del_reinicio(app: FastAPI) -> None:
     """La memoria sobrevive al borrado del caso que la ocasiono.
 
-    Se crea un caso, el reinicio se lo lleva, y el acunador --fijado para devolver
-    ese mismo serial-- se queda sin numeros libres: el libro lo tiene apuntado. Sin
-    libro, o con un libro que el acunador no consultara, el caso nuevo naceria con
-    el numero del de anoche.
+    Se crean dos casos, el reinicio se los lleva, y el caso nuevo sigue la cuenta: el
+    libro tiene apuntados los dos seriales. Sin libro, o con un libro que el acunador no
+    consultara, el caso nuevo naceria con el numero del primero de anoche.
     """
     del app
     tenant_id = aseguradora()
     primero = await _crear(tenant_id, "case-de-anoche")
-    serial = numbering.parse(primero.case_number).serial
+    segundo = await _crear(tenant_id, "case-de-anoche-2")
+    seriales = [int(numbering.parse(c.case_number).serial) for c in (primero, segundo)]
+    assert seriales[1] == seriales[0] + 1
 
     corrida = await demo_reset.reset_now(composition.PURGADORES, now=datetime.now(UTC))
     assert corrida.outcome.value == "succeeded"
     assert await casos.get_case(tenant_id, "case-de-anoche") is None
 
-    monkeypatch.setattr(numbering, "_serial", lambda: serial)
+    nuevo = await _crear(tenant_id, "case-de-hoy")
 
-    with pytest.raises(RuntimeError, match="no se encontro un numero libre"):
-        await _crear(tenant_id, "case-de-hoy")
+    assert int(numbering.parse(nuevo.case_number).serial) == seriales[1] + 1
 
 
-async def test_el_libro_es_lo_que_lo_impide_y_no_otra_cosa(
-    app: FastAPI, monkeypatch: pytest.MonkeyPatch
-) -> None:
+async def test_el_libro_es_lo_que_lo_impide_y_no_otra_cosa(app: FastAPI) -> None:
     """El control contrario, que es el que da valor a la prueba de arriba.
 
-    Con el mismo azar fijado y **el libro vaciado a mano**, el serial se vuelve a
-    dar. Es lo que demuestra que lo que para la repeticion es el libro y no el
-    acunador, la base ni la casualidad.
+    Con **el libro vaciado a mano**, el contador vuelve a empezar y el serial se repite.
+    Es lo que demuestra que lo que para la repeticion es el libro y no el acunador, la
+    base ni la casualidad.
     """
     del app
     tenant_id = aseguradora()
@@ -97,7 +93,6 @@ async def test_el_libro_es_lo_que_lo_impide_y_no_otra_cosa(
 
     async with session.session_for(tenant_id) as sesion:
         await session.execute_sql(sesion, "DELETE FROM case_number_issued")
-    monkeypatch.setattr(numbering, "_serial", lambda: serial)
 
     segundo = await _crear(tenant_id, "case-de-hoy")
 

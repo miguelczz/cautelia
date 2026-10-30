@@ -44,7 +44,7 @@ axes:
   - coverage-detour
 script:
   - field_key: identity_and_policy
-    text: "I'm Marcus Reed, my policy is POL-000001."
+    text: "I'm Marcus Reed, my policy is POL-01."
   - field_key: description
     text: "A truck hit me from behind while I was stopped at a light."
   - field_key: incident_datetime

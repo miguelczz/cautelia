@@ -34,11 +34,11 @@ def test_reconoce_a_quien_habla_de_heridos_o_de_como_quedaron(texto: str) -> Non
     "texto",
     [
         "hola, ayer un taxi me choco por detras en la avenida 80 con la 33",
-        "Soy Natalia Henao Rendón, mi póliza es POL-100042",
+        "Soy Natalia Henao Rendón, mi póliza es POL-11",
         "me rayaron el carro en el parqueadero",
         "fue como a las siete de la noche",
         "yesterday a taxi rear-ended me at the light",
-        "my policy is POL-200117",
+        "my policy is POL-21",
     ],
 )
 def test_un_choque_contado_sin_hablar_de_las_personas_no_cuenta(texto: str) -> None:

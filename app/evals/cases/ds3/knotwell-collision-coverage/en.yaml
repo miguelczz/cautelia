@@ -14,8 +14,8 @@ axes:
 - knotwell
 - citation-verification
 citation:
-  policy_number: POL-200341
-  clause_id: SUN-PAP-2026-D.INS.COLLISION
+  policy_number: POL-31
+  clause_id: AP-PAP-2026-D.INS.COLLISION
   expected_outcome: verified
   issuer_tenant: sunmeadow
   question: Am I covered if I crash?

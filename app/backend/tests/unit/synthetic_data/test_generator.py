@@ -77,8 +77,8 @@ def test_dos_generaciones_en_directorios_distintos_escriben_los_mismos_bytes(
     assert uno == dos
     assert sorted(uno) == [
         "manifest.json",
-        "tenants/stonecroft/clauses/STO-PAP-2026.json",
-        "tenants/stonecroft/issued_policies/POL-100042.json",
+        "tenants/stonecroft/clauses/SA-PAP-2026.json",
+        "tenants/stonecroft/issued_policies/POL-11.json",
     ]
 
 
@@ -89,7 +89,7 @@ def test_la_forma_canonica_ordena_claves_no_escapa_y_termina_en_salto_de_linea(
     fuentes_minimas(raiz)
     _generar(raiz, tmp_path / "datos")
 
-    texto = (tmp_path / "datos" / "tenants/stonecroft/clauses/STO-PAP-2026.json").read_bytes()
+    texto = (tmp_path / "datos" / "tenants/stonecroft/clauses/SA-PAP-2026.json").read_bytes()
 
     assert texto.endswith(b"}\n")
     assert b"\r" not in texto
@@ -109,10 +109,10 @@ def test_anadir_una_salida_no_cambia_los_bytes_de_las_demas(tmp_path: Path) -> N
     _generar(raiz, tmp_path / "antes")
     # La nueva poliza consume su propio flujo de azar, y va primero a proposito:
     # si el azar fuera uno solo para toda la generacion, moveria el de la otra.
-    _generar(raiz, tmp_path / "despues", (poliza_con_azar("POL-100043"), *COMPOSITORES))
+    _generar(raiz, tmp_path / "despues", (poliza_con_azar("POL-17"), *COMPOSITORES))
 
     antes, despues = _foto(tmp_path / "antes"), _foto(tmp_path / "despues")
-    nueva = "tenants/stonecroft/issued_policies/POL-100043.json"
+    nueva = "tenants/stonecroft/issued_policies/POL-17.json"
     assert set(despues) - set(antes) == {nueva}
     for ruta in antes:
         if ruta != "manifest.json":
@@ -141,7 +141,7 @@ def test_el_manifiesto_registra_semilla_version_y_hashes_de_entradas_y_salidas(
         "app/config/tenants/stonecroft/tenant.yaml",
         "app/config/tenants/sunmeadow/tenant.yaml",
     }
-    salida = "app/data/tenants/stonecroft/clauses/STO-PAP-2026.json"
+    salida = "app/data/tenants/stonecroft/clauses/SA-PAP-2026.json"
     contenido = (raiz / salida).read_bytes()
     assert registrado.outputs[salida] == sha256_hex(contenido)
     assert b"generated_at" not in (raiz / "app/data/manifest.json").read_bytes()
@@ -154,18 +154,18 @@ def test_schema_check_nombra_una_salida_editada_a_mano_y_una_fuente_sin_regenera
     raiz = repo(tmp_path)
     fuentes_minimas(raiz)
     _generar(raiz, raiz / "app" / "data")
-    salida = raiz / "app/data/tenants/stonecroft/clauses/STO-PAP-2026.json"
+    salida = raiz / "app/data/tenants/stonecroft/clauses/SA-PAP-2026.json"
     salida.write_bytes(salida.read_bytes().replace(b"Relleno", b"Corregido"))
     escribir_fuente(
         raiz,
-        [entrada(part="Parte B", source_id="STO-PAP-2026-B.INS", clause_key="B.INS")],
+        [entrada(part="Parte B", source_id="SA-PAP-2026-B.INS", clause_key="B.INS")],
         parte="part_b",
     )
 
     problemas = "\n".join(manifest.verify_tree(raiz))
 
     assert (
-        "'app/data/tenants/stonecroft/clauses/STO-PAP-2026.json': su hash no es el del manifiesto"
+        "'app/data/tenants/stonecroft/clauses/SA-PAP-2026.json': su hash no es el del manifiesto"
     ) in problemas
     assert (
         "'app/data/sources/stonecroft/es/part_b.yaml': fuente que el manifiesto no cuenta"
@@ -186,7 +186,7 @@ def test_una_fuente_sin_marca_de_revision_detiene_todo_y_no_toca_lo_generado(
     antes = _foto(datos)
     escribir_fuente(
         raiz,
-        [entrada(source_id="STO-PAP-2026-C.INS", clause_key="C.INS", reviewed_by=None)],
+        [entrada(source_id="SA-PAP-2026-C.INS", clause_key="C.INS", reviewed_by=None)],
         parte="part_c",
     )
 
@@ -194,7 +194,7 @@ def test_una_fuente_sin_marca_de_revision_detiene_todo_y_no_toca_lo_generado(
         _generar(raiz, datos)
 
     assert (
-        "'app/data/sources/stonecroft/es/part_c.yaml': texts[0].reviewed_by (STO-PAP-2026-C.INS): "
+        "'app/data/sources/stonecroft/es/part_c.yaml': texts[0].reviewed_by (SA-PAP-2026-C.INS): "
         "falta 'reviewed_by'"
     ) in "\n".join(error.value.problems)
     assert _foto(datos) == antes
@@ -207,7 +207,7 @@ def test_un_problema_de_la_composicion_o_una_salida_invalida_no_escriben_nada(
     fuentes_minimas(raiz)
 
     def con_problema(_: CompositionContext) -> Composition:
-        return Composition(problems=("'STO-PAP-2026-END-9': el endoso no existe",))
+        return Composition(problems=("'SA-PAP-2026-END-9': el endoso no existe",))
 
     def con_salida_invalida(_: CompositionContext) -> Composition:
         return Composition(
@@ -246,12 +246,12 @@ def test_lo_que_ya_no_se_genera_se_borra_y_lo_ajeno_detiene_la_generacion(
     raiz = repo(tmp_path)
     fuentes_minimas(raiz)
     datos = raiz / "app" / "data"
-    _generar(raiz, datos, (*COMPOSITORES, poliza_con_azar("POL-100043")))
+    _generar(raiz, datos, (*COMPOSITORES, poliza_con_azar("POL-17")))
 
     informe = generator.generate(
         GenerationRequest(repo_root=raiz, data_dir=datos, composers=COMPOSITORES)
     )
-    assert informe.deleted == ("tenants/stonecroft/issued_policies/POL-100043.json",)
+    assert informe.deleted == ("tenants/stonecroft/issued_policies/POL-17.json",)
     assert manifest.verify_tree(raiz) == []
 
     ajeno = datos / "fixtures" / "escrita_a_mano.json"
@@ -305,16 +305,14 @@ def test_check_pasa_con_lo_generado_y_nombra_cada_archivo_que_difiere(
     _generar(raiz, datos)
     assert cli.run_check(raiz, datos, COMPOSITORES) == 0
 
-    (datos / "tenants/stonecroft/issued_policies/POL-100042.json").write_text(
-        "{}\n", encoding="utf-8"
-    )
+    (datos / "tenants/stonecroft/issued_policies/POL-11.json").write_text("{}\n", encoding="utf-8")
     shutil.rmtree(datos / "tenants/stonecroft/clauses")
 
     assert cli.run_check(raiz, datos, COMPOSITORES) == 1
     salida = capsys.readouterr()
-    assert "'app/data/tenants/stonecroft/issued_policies/POL-100042.json': difiere" in salida.err
+    assert "'app/data/tenants/stonecroft/issued_policies/POL-11.json': difiere" in salida.err
     assert (
-        "'app/data/tenants/stonecroft/clauses/STO-PAP-2026.json': el generador lo produce y no "
+        "'app/data/tenants/stonecroft/clauses/SA-PAP-2026.json': el generador lo produce y no "
         "esta versionado"
     ) in salida.err
     assert "synthetic:check: duracion" in salida.out
@@ -355,12 +353,12 @@ def test_un_manifiesto_ilegible_o_desalineado_se_nombra(tmp_path: Path) -> None:
     datos = raiz / "app" / "data"
     _generar(raiz, datos)
 
-    (datos / "tenants/stonecroft/issued_policies/POL-100042.json").unlink()
+    (datos / "tenants/stonecroft/issued_policies/POL-11.json").unlink()
     configuracion = raiz / "app/config/tenants/stonecroft/tenant.yaml"
     configuracion.write_text(configuracion.read_text(encoding="utf-8") + "\n", encoding="utf-8")
     problemas = "\n".join(manifest.verify_tree(raiz))
     assert (
-        "'app/data/tenants/stonecroft/issued_policies/POL-100042.json': el manifiesto la lista "
+        "'app/data/tenants/stonecroft/issued_policies/POL-11.json': el manifiesto la lista "
         "como salida y no existe"
     ) in problemas
     assert (

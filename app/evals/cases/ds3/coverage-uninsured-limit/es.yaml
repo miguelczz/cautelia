@@ -14,8 +14,8 @@ axes:
 - corriente
 - citation-verification
 citation:
-  policy_number: POL-245782
-  clause_id: STO-PAP-2026-C.LIMIT
+  policy_number: POL-14
+  clause_id: SA-PAP-2026-C.LIMIT
   expected_outcome: verified
   question: ¿Cuánto pagan si me choca un conductor sin seguro?
 expected_verdicts:

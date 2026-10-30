@@ -131,7 +131,7 @@ async def _caso_con_transcripcion(tenant_id: str, case_id: str = "case-del-fondo
             # La poliza identificada: sin ella `preload` no lanza nada --una
             # conversacion que todavia no dijo quien es-- y la cadena no llegaria a
             # correr. Es la de ejemplo de la aseguradora, la misma que el corpus trae.
-            policy_ref="POL-100042",
+            policy_ref="POL-11",
         ),
         now=AHORA,
     )
@@ -1763,7 +1763,7 @@ async def test_un_turno_que_llega_con_el_caso_ya_cerrado_no_escribe_ni_rompe(
 
 #: La regla de Sunmeadow que lee `unlisted_driver`, y la poliza que `_caso_con_transcripcion` ata.
 REGLA_DE_CONDUCTOR = "SUN-R-08"
-POLIZA_DEL_CASO = "POL-100042"
+POLIZA_DEL_CASO = "POL-11"
 TITULAR = "Natalia Henao Rendón"
 ADICIONAL = "Mateo Henao Gómez"
 

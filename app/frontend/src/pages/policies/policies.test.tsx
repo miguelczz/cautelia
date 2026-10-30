@@ -20,21 +20,21 @@ if (primera === undefined) {
 
 const CATALOGO: PolicyCatalog = {
   tenant_id: primera.tenant_id,
-  example_policy: "POL-100042",
+  example_policy: "POL-11",
   policies: [
     {
-      policy_number: "POL-100042",
+      policy_number: "POL-11",
       holder_name: "Natalia Henao Rendón",
       issuer_name: "Seguros Aburrá",
       vehicles: ["Renault Logan 2024"],
       period_start: "2026-01-02",
       period_end: "2027-01-02",
       limits: { "a.bodily_injury_per_person": 100000, "d.collision_deductible": 250 },
-      endorsements: [{ form_id: "STO-PAP-2026-END-3", clause_keys: ["D.EXCL.3"] }],
+      endorsements: [{ form_id: "SA-PAP-2026-END-3", clause_keys: ["D.EXCL.3"] }],
       questions: ["hail"],
     },
     {
-      policy_number: "POL-245782",
+      policy_number: "POL-14",
       holder_name: "Julián Posada Arango",
       issuer_name: "Seguros Aburrá",
       vehicles: ["Nissan Versa 2020"],
@@ -76,7 +76,7 @@ describe("la pestana de polizas", () => {
     const t = await dibujar();
 
     const detalle = screen.getByTestId("policy-detail");
-    expect(within(detalle).getByRole("heading", { level: 2 }).textContent).toBe("POL-100042");
+    expect(within(detalle).getByRole("heading", { level: 2 }).textContent).toBe("POL-11");
     const montos = within(screen.getByTestId("policy-limits"));
     expect(montos.getByText(t("policies.limit.a_bodily_injury_per_person"))).toBeDefined();
     expect(montos.getAllByRole("definition").map((celda) => celda.textContent)).toContain(
@@ -101,7 +101,7 @@ describe("la pestana de polizas", () => {
     expect(destino.searchParams.get("ask")).toBe(
       t("policies.ask_question", {
         name: "Natalia Henao Rendón",
-        policy: "POL-100042",
+        policy: "POL-11",
         question: t("policies.question.hail"),
       }),
     );
@@ -110,10 +110,10 @@ describe("la pestana de polizas", () => {
   it("elegir otra poliza cambia el detalle, y sin endosos lo dice", async () => {
     const t = await dibujar();
 
-    fireEvent.click(screen.getByRole("button", { name: /POL-245782/ }));
+    fireEvent.click(screen.getByRole("button", { name: /POL-14/ }));
 
     const detalle = screen.getByTestId("policy-detail");
-    expect(within(detalle).getByRole("heading", { level: 2 }).textContent).toBe("POL-245782");
+    expect(within(detalle).getByRole("heading", { level: 2 }).textContent).toBe("POL-14");
     expect(within(detalle).getByText(t("policies.no_endorsements"))).toBeDefined();
   });
 

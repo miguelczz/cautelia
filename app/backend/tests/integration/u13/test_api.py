@@ -263,7 +263,7 @@ async def test_el_historial_devuelve_la_conversacion_guardada_de_este_navegador(
         cola = _pestana(clave)
         enviado = await cliente.post(
             f"/api/chat/{aseguradora}/messages",
-            json={"text": "Mi póliza es la POL-100042 y me chocaron"},
+            json={"text": "Mi póliza es la POL-11 y me chocaron"},
         )
         assert enviado.status_code == 202
         await _esperar_la_entrega(cola)
@@ -272,7 +272,7 @@ async def test_el_historial_devuelve_la_conversacion_guardada_de_este_navegador(
     cuerpo = respuesta.json()
     lados = [turno["speaker"] for turno in cuerpo["turns"]]
     assert lados == ["visitor", "agent"], cuerpo
-    assert "POL-100042" not in cuerpo["turns"][0]["text"]
+    assert "POL-11" not in cuerpo["turns"][0]["text"]
     assert "me chocaron" in cuerpo["turns"][0]["text"]
     assert cuerpo["turns"][1]["text"] == "Anotado."
     assert cuerpo["case_number"] is not None
@@ -347,7 +347,7 @@ async def test_el_turno_del_chat_emite_los_dos_eventos_de_su_latencia(app: FastA
             cola = _pestana(clave)
             await cliente.post(
                 f"/api/chat/{aseguradora}/messages",
-                json={"text": "Mi póliza es la POL-100042 y me chocaron"},
+                json={"text": "Mi póliza es la POL-11 y me chocaron"},
             )
             await _esperar_la_entrega(cola)
     finally:
@@ -363,7 +363,7 @@ async def test_el_turno_del_chat_emite_los_dos_eventos_de_su_latencia(app: FastA
     assert isinstance(primera["elapsed_ms"], int)
     assert primera["elapsed_ms"] >= 0
     assert primera["output"] == "turn.final"
-    assert "POL-100042" not in salida.getvalue()
+    assert "POL-11" not in salida.getvalue()
     assert "Anotado." not in salida.getvalue()
 
 

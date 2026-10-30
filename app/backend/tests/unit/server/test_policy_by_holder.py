@@ -25,7 +25,7 @@ def _poliza(numero: str, titular: str, *vehiculos: str) -> IssuedPolicy:
         tenant_id=ASEGURADORA,
         policy_number=numero,
         issuer_tenant=ASEGURADORA,
-        form_id="SUN-PAP-2026",
+        form_id="AP-PAP-2026",
         form_version="2026.1",
         named_insured={"full_name": titular},
         vehicles=tuple({"make_model_year": v} for v in vehiculos),
@@ -35,9 +35,9 @@ def _poliza(numero: str, titular: str, *vehiculos: str) -> IssuedPolicy:
 
 
 CORPUS = (
-    _poliza("POL-200117", "Marco Parker", "Ford Escape 2020"),
-    _poliza("POL-422088", "Ana Torres", "Subaru Outback 2014", "Ford F-150 2018"),
-    _poliza("POL-398476", "Olivia Russo"),
+    _poliza("POL-21", "Marco Parker", "Ford Escape 2020"),
+    _poliza("POL-42", "Ana Torres", "Subaru Outback 2014", "Ford F-150 2018"),
+    _poliza("POL-43", "Olivia Russo"),
 )
 
 
@@ -63,7 +63,7 @@ async def test_devuelve_la_poliza_del_titular_nombrado_con_lo_que_el_nodo_necesi
 
     assert encontradas == (
         policy.PolicyMatch(
-            policy_number="POL-200117", holder_name="Marco Parker", vehicle="Ford Escape 2020"
+            policy_number="POL-21", holder_name="Marco Parker", vehicle="Ford Escape 2020"
         ),
     )
     # Solo se leyo el corpus de la aseguradora de la llamada.
@@ -100,4 +100,4 @@ async def test_si_el_texto_nombra_a_dos_titulares_salen_las_dos(leidas: list[str
     """Cuantas hay lo decide el nodo: con mas de una, no adivina cual."""
     encontradas = await composition._polizas_del_titular(ASEGURADORA, "Marco Parker y Ana Torres")
 
-    assert {p.policy_number for p in encontradas} == {"POL-200117", "POL-422088"}
+    assert {p.policy_number for p in encontradas} == {"POL-21", "POL-42"}

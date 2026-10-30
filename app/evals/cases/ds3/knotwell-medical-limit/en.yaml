@@ -14,8 +14,8 @@ axes:
 - knotwell
 - citation-verification
 citation:
-  policy_number: POL-943669
-  clause_id: SUN-PAP-2026-B.LIMIT
+  policy_number: POL-34
+  clause_id: AP-PAP-2026-B.LIMIT
   expected_outcome: verified
   issuer_tenant: sunmeadow
   question: What is the medical payments limit on my policy?

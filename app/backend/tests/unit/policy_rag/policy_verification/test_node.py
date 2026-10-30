@@ -68,7 +68,7 @@ def _clausula(clause_id: str, *, part: str = "Parte A", language: str = "es") ->
         tenant_id=TENANT_ID,
         clause_id=clause_id,
         clause_key=clause_id,
-        form_id="STO-PAP-2026",
+        form_id="SA-PAP-2026",
         form_version="2026.1",
         part=part,
         language=language,  # type: ignore[arg-type]
@@ -83,7 +83,7 @@ def _poliza(**cambios: Any) -> IssuedPolicy:
         "tenant_id": TENANT_ID,
         "policy_number": "POL-001",
         "issuer_tenant": TENANT_ID,
-        "form_id": "STO-PAP-2026",
+        "form_id": "SA-PAP-2026",
         "form_version": "2026.1",
         "endorsement_ids": (),
         "named_insured": {},
@@ -257,7 +257,7 @@ def test_la_recuperacion_que_falla_una_vez_y_pasa_al_reintentar_no_se_degrada(
     """Un solo fallo no basta para degradar (BR5.2: "se reintenta una sola vez")."""
     embebedor = _EmbedderFalso(fails=1)
     poliza = _poliza()
-    clausula = _clausula("STO-PAP-2026-A.1")
+    clausula = _clausula("SA-PAP-2026-A.1")
 
     async def _retrieve(*args: Any, **kwargs: Any) -> RetrievalResult:
         return _retrieval((clausula,))
@@ -324,7 +324,7 @@ def test_sin_clausulas_recuperadas_una_cita_propuesta_se_rechaza_sin_conocer_la_
         nodo.run(
             _estado(
                 draft_citations=(
-                    node.DraftCitation(clause_id="STO-PAP-2026-A.1", claim="Cubre todo."),
+                    node.DraftCitation(clause_id="SA-PAP-2026-A.1", claim="Cubre todo."),
                 )
             )
         )
@@ -342,7 +342,7 @@ def test_una_cita_verificada_trae_identificador_parte_e_idioma(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """AC2.7.1, BR5.4: el canal de texto recibe identificador y parte."""
-    clausula = _clausula("STO-PAP-2026-A.1", part="Parte A — Responsabilidad Civil")
+    clausula = _clausula("SA-PAP-2026-A.1", part="Parte A — Responsabilidad Civil")
     poliza = _poliza()
 
     async def _retrieve(*args: Any, **kwargs: Any) -> RetrievalResult:
@@ -387,8 +387,8 @@ def test_un_endoso_vigente_que_modifica_la_clausula_difiere_el_monto(
 ) -> None:
     """AC2.7.2: nunca dice el monto; la frase de "un ajustador lo confirma" sustituye
     al resumen normal, en los dos canales."""
-    clausula = _clausula("STO-PAP-2026-A.LIMIT")
-    poliza = _poliza(endorsement_ids=("STO-PAP-2026-END-1",))
+    clausula = _clausula("SA-PAP-2026-A.LIMIT")
+    poliza = _poliza(endorsement_ids=("SA-PAP-2026-END-1",))
 
     async def _retrieve(*args: Any, **kwargs: Any) -> RetrievalResult:
         return _retrieval((clausula,))
@@ -405,7 +405,7 @@ def test_un_endoso_vigente_que_modifica_la_clausula_difiere_el_monto(
                     claim="El limite es el que muestra la caratula.",
                     outcome=CoverageOutcome.VERIFIED,
                     reasons=(),
-                    amended_by=("STO-PAP-2026-END-1-A.LIMIT",),
+                    amended_by=("SA-PAP-2026-END-1-A.LIMIT",),
                     clause_version="2026.1",
                 ),
             ),
@@ -429,8 +429,8 @@ def test_idioma_cruzado_avisa_de_la_diferencia_sin_traducir_la_clausula(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """FD-U8-1, BR5.8: pregunta en español contra una cláusula redactada en inglés."""
-    clausula = _clausula("SUN-PAP-2026-A.1", language="en")
-    poliza = _poliza(tenant_id="sunmeadow", issuer_tenant="sunmeadow", form_id="SUN-PAP-2026")
+    clausula = _clausula("AP-PAP-2026-A.1", language="en")
+    poliza = _poliza(tenant_id="sunmeadow", issuer_tenant="sunmeadow", form_id="AP-PAP-2026")
 
     async def _retrieve(*args: Any, **kwargs: Any) -> RetrievalResult:
         return _retrieval((clausula,))
@@ -469,7 +469,7 @@ def test_idioma_cruzado_avisa_de_la_diferencia_sin_traducir_la_clausula(
 
 
 def test_sin_diferencia_de_idioma_no_hay_aviso(monkeypatch: pytest.MonkeyPatch) -> None:
-    clausula = _clausula("STO-PAP-2026-A.1", language="es")
+    clausula = _clausula("SA-PAP-2026-A.1", language="es")
     poliza = _poliza()
 
     async def _retrieve(*args: Any, **kwargs: Any) -> RetrievalResult:
@@ -507,7 +507,7 @@ def test_sin_diferencia_de_idioma_no_hay_aviso(monkeypatch: pytest.MonkeyPatch) 
 def test_rejected_por_el_verificador_se_deriva_con_la_frase_generica(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    clausula = _clausula("STO-PAP-2026-A.1")
+    clausula = _clausula("SA-PAP-2026-A.1")
     poliza = _poliza()
 
     async def _retrieve(*args: Any, **kwargs: Any) -> RetrievalResult:

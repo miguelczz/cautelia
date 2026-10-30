@@ -28,8 +28,8 @@ def test_la_condicion_especial_manda_y_la_parte_sale_en_espanol() -> None:
     copy_api.install(copy_api.load())
     salida = _Salida(
         citations=(
-            _Cita("SUN-PAP-2026-END-2-D.EXCL.5", "Endorsements", amount_deferred=True),
-            _Cita("SUN-PAP-2026-D.EXCL.5", "Part D — Coverage for Damage to Your Auto"),
+            _Cita("AP-PAP-2026-END-2-D.EXCL.5", "Endorsements", amount_deferred=True),
+            _Cita("AP-PAP-2026-D.EXCL.5", "Part D — Coverage for Damage to Your Auto"),
         )
     )
 
@@ -43,7 +43,7 @@ def test_la_condicion_especial_manda_y_la_parte_sale_en_espanol() -> None:
 
 def test_una_parte_de_la_poliza_se_nombra_por_su_letra() -> None:
     copy_api.install(copy_api.load())
-    salida = _Salida(citations=(_Cita("STO-PAP-2026-D.INS.OTC", "Parte D — Daños a su vehículo"),))
+    salida = _Salida(citations=(_Cita("SA-PAP-2026-D.INS.OTC", "Parte D — Daños a su vehículo"),))
 
     assert "la Parte D, daños al vehículo" in turn._texto_de_cobertura(salida, language="es")
     assert "Part D, damage to your auto" in turn._texto_de_cobertura(salida, language="en")
@@ -62,7 +62,7 @@ def test_con_la_explicacion_de_la_ia_la_respuesta_dice_que_trata_la_clausula() -
     salida = _Salida(
         citations=(
             _CitaConExplicacion(  # type: ignore[arg-type]
-                "SUN-PAP-2026-END-2-D.EXCL.5",
+                "AP-PAP-2026-END-2-D.EXCL.5",
                 "Endorsements",
                 "La exclusión de llantas no aplica a daños por un hueco en la vía",
             ),
@@ -78,6 +78,6 @@ def test_con_la_explicacion_de_la_ia_la_respuesta_dice_que_trata_la_clausula() -
 
 def test_sin_explicacion_no_hay_version_explicada() -> None:
     copy_api.install(copy_api.load())
-    salida = _Salida(citations=(_Cita("STO-PAP-2026-D.INS.OTC", "Parte D"),))
+    salida = _Salida(citations=(_Cita("SA-PAP-2026-D.INS.OTC", "Parte D"),))
 
     assert turn._texto_con_explicacion(salida, language="es") is None

@@ -251,12 +251,12 @@ def test_el_cierre_por_voz_no_habla_del_enlace_ni_repite_el_numero(
     numero de caso salia tres veces; la despedida de la llamada ya lo dice."""
     _, texto = composition.compose_fast_closing(
         kind,
-        case_number="SUN-103110",
+        case_number="AP-103110",
         language=language,
         missing=(Block.VEHICLE_AND_DRIVER,),
         spoken=True,
     )
-    assert "SUN-103110" not in texto
+    assert "AP-103110" not in texto
     assert "enlace" not in texto
     assert "link" not in texto
 
@@ -279,7 +279,7 @@ def test_antes_de_que_las_reglas_decidan_ninguna_frase_promete_un_ajustador(
 ) -> None:
     _, texto = composition.compose_fast_closing(
         kind,
-        case_number="SUN-103110",
+        case_number="AP-103110",
         language=language,
         missing=(Block.VEHICLE_AND_DRIVER,),
         phase=phase,
@@ -304,12 +304,12 @@ def test_con_un_ajustador_las_frases_siguen_nombrandolo(
 ) -> None:
     _, texto = composition.compose_fast_closing(
         kind,
-        case_number="SUN-103110",
+        case_number="AP-103110",
         language=language,
         phase=composition.ClosingPhase.WITH_ADJUSTER,
     )
 
-    assert "SUN-103110" in texto
+    assert "AP-103110" in texto
     assert "ajustador" in texto.lower() or "adjuster" in texto.lower()
 
 
@@ -320,13 +320,13 @@ def test_un_caso_cerrado_por_las_reglas_se_dice_registrado_en_cualquier_forma(
 ) -> None:
     clave, texto = composition.compose_fast_closing(
         kind,
-        case_number="SUN-103110",
+        case_number="AP-103110",
         language=language,
         phase=composition.ClosingPhase.REGISTERED,
     )
 
     assert clave == composition.CLOSING_FAST_REGISTERED
-    assert "SUN-103110" in texto
+    assert "AP-103110" in texto
     assert "regist" in texto.lower()
 
 
@@ -338,14 +338,14 @@ def test_el_cierre_por_voz_no_habla_del_enlace_ni_repite_el_numero_en_ninguna_fa
 ) -> None:
     _, texto = composition.compose_fast_closing(
         kind,
-        case_number="SUN-103110",
+        case_number="AP-103110",
         language=language,
         missing=(Block.VEHICLE_AND_DRIVER,),
         spoken=True,
         phase=phase,
     )
 
-    assert "SUN-103110" not in texto
+    assert "AP-103110" not in texto
     assert "enlace" not in texto
     assert "link" not in texto
     assert "ajustador" not in texto.lower()
@@ -355,7 +355,7 @@ def test_el_cierre_por_voz_no_habla_del_enlace_ni_repite_el_numero_en_ninguna_fa
 def test_la_oferta_pregunta_una_sola_cosa_y_nombra_lo_que_falta() -> None:
     _, texto = composition.compose_fast_closing(
         composition.FastClosing.OFFER,
-        case_number="SUN-103110",
+        case_number="AP-103110",
         language="es",
         missing=(Block.VEHICLE_AND_DRIVER, Block.OTHER_PARTIES),
         phase=composition.ClosingPhase.CAPTURING,

@@ -14,10 +14,10 @@ axes:
 - endoso
 - citation-verification
 citation:
-  policy_number: POL-679093
-  clause_id: SUN-PAP-2026-B.INS
+  policy_number: POL-23
+  clause_id: AP-PAP-2026-B.INS
   expected_outcome: verified
-  amended_by: SUN-PAP-2026-END-4
+  amended_by: AP-PAP-2026-END-4
   question: Am I covered for medical payments after an accident?
 expected_verdicts:
   citation_endorsement_excludes_carrying_for_hire: pass

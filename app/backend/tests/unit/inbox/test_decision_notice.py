@@ -15,7 +15,7 @@ from untangle.inbox import decision
 DECIDIDA = decision.DecisionMade(
     tenant_id="stonecroft",
     case_id="caso-1",
-    case_number="STO-000001",
+    case_number="SA-1",
     resolution="approved",
     comment="Aprobado.",
     ref="recibo-1",

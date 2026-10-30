@@ -60,7 +60,7 @@ def entrada(**cambios: Any) -> dict[str, Any]:
     Pasar un valor `None` **quita** la clave, que es como se simula olvidarla.
     """
     base: dict[str, Any] = {
-        "source_id": "STO-PAP-2026-A.INS",
+        "source_id": "SA-PAP-2026-A.INS",
         "kind": "clause",
         "clause_key": "A.INS",
         "part": "Parte A — Responsabilidad civil",
@@ -126,12 +126,12 @@ def vehiculo(**cambios: Any) -> dict[str, Any]:
 def poliza(**cambios: Any) -> dict[str, Any]:
     """Una poliza emitida valida de Stonecroft."""
     base: dict[str, Any] = {
-        "policy_number": "POL-100042",
+        "policy_number": "POL-11",
         "tenant_id": "stonecroft",
         "issuer_tenant": "stonecroft",
-        "form_id": "STO-PAP-2026",
+        "form_id": "SA-PAP-2026",
         "form_version": "2026.1",
-        "endorsement_ids": ["STO-PAP-2026-END-1"],
+        "endorsement_ids": ["SA-PAP-2026-END-1"],
         "period_start": "2026-01-01",
         "period_end": "2027-01-01",
         "named_insured": persona(),
@@ -197,7 +197,7 @@ def poliza_con_azar(numero: str) -> Composer:
     return componer
 
 
-COMPOSITORES: tuple[Composer, ...] = (_clausulas, poliza_con_azar("POL-100042"))
+COMPOSITORES: tuple[Composer, ...] = (_clausulas, poliza_con_azar("POL-11"))
 
 
 def fuentes_minimas(raiz: Path) -> Path:
@@ -207,7 +207,7 @@ def fuentes_minimas(raiz: Path) -> Path:
         [
             entrada(),
             entrada(
-                source_id="STO-PAP-2026-A.EXCL.3",
+                source_id="SA-PAP-2026-A.EXCL.3",
                 clause_key="A.EXCL.3",
                 text="Relleno de prueba con tilde y raya — para ver UTF-8 sin escapar.",
             ),

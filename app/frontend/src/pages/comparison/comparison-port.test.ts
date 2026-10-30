@@ -28,7 +28,7 @@ const KNOTWELL: TenantPresentation = {
   display_name: "Una Agencia",
   kind: "agency",
   default_language: "en",
-  example_policy: "POL-200341",
+  example_policy: "POL-31",
   agent_name: "Catalina",
 };
 

@@ -864,9 +864,7 @@ def _entendedor_en_orden(*respuestas: understanding.UnderstandingResponse) -> An
 _IDENTIDAD = understanding.UnderstandingResponse(
     wants=understanding.Want.GREETING,
     items=(
-        understanding.UnderstoodItem(
-            field_key="identity_and_policy", value="Marcela Rios, POL-000001"
-        ),
+        understanding.UnderstoodItem(field_key="identity_and_policy", value="Marcela Rios, POL-01"),
     ),
 )
 
@@ -885,7 +883,7 @@ async def _dos_mensajes(
     delivery.install_understanding(_entendedor_en_orden(_IDENTIDAD, segundo), None)
     primero = await delivery.deliver(
         cola,
-        _turno_de(conversacion, None, "Soy Marcela Ríos, mi póliza es POL-000001."),
+        _turno_de(conversacion, None, "Soy Marcela Ríos, mi póliza es POL-01."),
         handle_turn=_grafo_que_anota,
         visitor_key_hash=clave,
         origin=Origin.PUBLIC_CHAT,
@@ -926,7 +924,7 @@ async def test_quien_sigue_dando_datos_sin_elegir_abre_un_reporte(
 ) -> None:
     _, propia = dos_aseguradoras
     entregado, recibidos = await _dos_mensajes(
-        propia, _IDENTIDAD, "Soy Marcela Ríos, mi póliza es POL-000001."
+        propia, _IDENTIDAD, "Soy Marcela Ríos, mi póliza es POL-01."
     )
 
     assert entregado.case_id is not None

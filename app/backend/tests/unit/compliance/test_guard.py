@@ -186,7 +186,7 @@ def test_la_revelacion_se_detecta_por_forma_y_con_las_otras_aseguradoras_de_la_c
 ) -> None:
     """BR1.7: otra aseguradora y otro caso caen; la propia y el caso en curso, no."""
     propia, otra = aseguradoras[0], aseguradoras[1]
-    numero_propio = f"{propia.case_number_prefix}-000123"
+    numero_propio = f"{propia.case_number_prefix}-123"
     contexto = contexto_de(aseguradoras, "es", case_number=numero_propio)
 
     def cae(frase: str) -> bool:
@@ -195,14 +195,18 @@ def test_la_revelacion_se_detecta_por_forma_y_con_las_otras_aseguradoras_de_la_c
 
     assert cae(f"Eso lo lleva {otra.display_name}.")
     assert cae(f"En {otra.tenant_id} es distinto.")
-    assert cae(f"Mire el caso {otra.case_number_prefix}-555555.")
+    assert cae(f"Mire el caso {otra.case_number_prefix}-555.")
     # Un numero con el prefijo propio pero de **otro** caso tambien es otro caso.
-    assert cae(f"El caso {propia.case_number_prefix}-999999 se parece.")
+    assert cae(f"El caso {propia.case_number_prefix}-999 se parece.")
     assert not cae(f"Le habla la asistente de {propia.display_name}.")
     assert not cae(f"Su número de caso es {numero_propio}.")
     # Un numero de poliza tiene la misma forma y **no** es un caso ajeno: hasta el
     # 2026-10-06 la guardia tapaba toda frase que nombrara una poliza (P3).
-    assert not cae("Encontré la póliza POL-100042 a nombre de Natalia Henao Rendón.")
+    assert not cae("Encontré la póliza POL-11 a nombre de Daniela Castaño.")
+    # Con dos letras de prefijo, un modelo de carro o una placa con guion tampoco: solo cuentan
+    # los prefijos de las aseguradoras cargadas.
+    assert not cae("Su carro es un Mazda CX-5 con placa ZNX-9706.")
+    assert not cae("Eso lo dice la cláusula SA-PAP-2026-D.LIMIT.")
 
 
 def test_las_frases_de_u10_no_disparan_la_guardia(
@@ -274,7 +278,7 @@ def test_la_evaluacion_de_una_frase_se_cronometra(
         "Anoto los hechos tal como me los contó; lo de la responsabilidad lo revisa el ajustador.",
         "I can't confirm coverage myself; an adjuster confirms it with the exact clause.",
     ]
-    contexto = contexto_de(aseguradoras, "es", case_number="STO-000001")
+    contexto = contexto_de(aseguradoras, "es", case_number="SA-1")
     duraciones: list[float] = []
     for _ in range(20):
         for frase in frases:

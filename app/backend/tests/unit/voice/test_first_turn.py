@@ -29,7 +29,7 @@ def test_una_duda_de_la_poliza_no_es_un_reporte(dicho: str, idioma: str) -> None
         ("Iba por la autopista sur cuando una moto se me atravesó.", "es"),
         ("Tuve un choque esta mañana.", "es"),
         # Dar el numero de la poliza no es preguntar por ella.
-        ("Soy Natalia Henao y mi póliza es POL-100042.", "es"),
+        ("Soy Natalia Henao y mi póliza es POL-11.", "es"),
         ("I was rear-ended on the highway.", "en"),
     ],
 )

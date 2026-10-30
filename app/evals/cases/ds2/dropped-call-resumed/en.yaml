@@ -28,7 +28,7 @@ axes:
   - resume
 script:
   - field_key: identity_and_policy
-    text: "I'm Priya Nair, my policy is POL-000002."
+    text: "I'm Priya Nair, my policy is POL-02."
   - field_key: description
     text: "A car ran the red light and hit me on the side."
   - field_key: incident_datetime

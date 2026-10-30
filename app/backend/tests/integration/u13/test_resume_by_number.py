@@ -146,7 +146,7 @@ async def _caso_de_llamada(
             tenant_id,
             case_id,
             cipher=cipher,
-            identity_and_policy="Marcela Rios, POL-000001",
+            identity_and_policy="Marcela Rios, POL-01",
             incident_datetime="ayer a las 8 de la noche",
             location="la calle 10 con la carrera 43",
             injuries="nadie se lastimó",
@@ -329,7 +329,7 @@ async def test_un_numero_de_poliza_no_se_toma_por_un_numero_de_caso(
     caso = await nuevo_caso(propia)
     conversacion = await chat_session.attach_case(conversacion, case_id=caso.case_id)
 
-    _, _, grafo, _ = await _escribir(propia, conversacion, clave, "mi póliza es POL-100042")
+    _, _, grafo, _ = await _escribir(propia, conversacion, clave, "mi póliza es POL-11")
 
     assert len(grafo.turnos) == 1, "es un mensaje de la captura, no un intento de retomar"
 
@@ -346,14 +346,14 @@ async def test_un_numero_de_otro_navegador_responde_igual_que_uno_que_no_existe(
     _, dueno = await _conversacion_nueva(propia)
     caso_ajeno, numero_ajeno = await _caso_de_llamada(propia, dueno, cipher=cifrador)
     turnos_del_ajeno = await casos.transcript_of(propia, caso_ajeno)
-    inventado = "STO-999999" if numero_ajeno.startswith("STO") else "KNO-999999"
+    inventado = "SA-999999" if numero_ajeno.startswith("STO") else "AC-999999"
 
     resultados = []
     for numero in (numero_ajeno, inventado):
         conversacion, clave = await _conversacion_nueva(propia)
         antes = await _foto_de_la_base(propia)
         entregado, cola, grafo, entendedor = await _escribir(
-            propia, conversacion, clave, f"mi póliza es POL-000001 y mi caso es {numero}"
+            propia, conversacion, clave, f"mi póliza es POL-01 y mi caso es {numero}"
         )
         viva = await chat_session.find_live(tenant_id=propia, visitor_key_digest=clave)
         assert viva is not None
@@ -391,7 +391,7 @@ async def test_un_numero_de_otra_aseguradora_responde_igual_que_uno_que_no_exist
     ajena, propia = dos_aseguradoras
     conversacion, clave = await _conversacion_nueva(propia)
     _, numero_de_la_otra = await _caso_de_llamada(ajena, clave, cipher=cifrador)
-    inventado = "SUN-999999" if not numero_de_la_otra.startswith("SUN") else "STO-999999"
+    inventado = "AP-999999" if not numero_de_la_otra.startswith("SUN") else "SA-999999"
 
     resultados = []
     for numero in (numero_de_la_otra, inventado):
@@ -456,7 +456,7 @@ async def test_sin_continuidad_el_numero_ajeno_recibe_la_misma_explicacion(
     _, dueno = await _conversacion_nueva(propia)
     _, numero_ajeno = await _caso_de_llamada(propia, dueno, cipher=cifrador)
     salidas = []
-    for numero in (numero_ajeno, "STO-999999"):
+    for numero in (numero_ajeno, "SA-999999"):
         conversacion, clave = await _conversacion_nueva(propia)
         _, cola, _, _ = await _escribir(propia, conversacion, clave, numero)
         salidas.append(await _lo_que_salio(cola))

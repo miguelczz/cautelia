@@ -47,7 +47,7 @@ def test_los_pedidos_de_espera_se_reconocen_en_los_dos_idiomas(dicho: str) -> No
         "el momento del choque fue anoche",
         "no",
         "",
-        "mi póliza es POL-200341",
+        "mi póliza es POL-31",
         # Los verbos de cortesia solos no piden nada: hace falta una frase de la lista.
         "dame el número de caso",
         "give me the number",

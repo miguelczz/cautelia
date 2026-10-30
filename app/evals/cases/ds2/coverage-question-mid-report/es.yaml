@@ -46,7 +46,7 @@ axes:
   - coverage-detour
 script:
   - field_key: identity_and_policy
-    text: "Soy Marcela Rios, mi poliza es POL-000001."
+    text: "Soy Marcela Rios, mi poliza es POL-01."
   - field_key: description
     text: "Un camion me choco por detras cuando estaba detenida en un semaforo."
   - field_key: incident_datetime

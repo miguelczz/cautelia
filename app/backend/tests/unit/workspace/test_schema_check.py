@@ -66,7 +66,7 @@ def _escribir_aseguradora(raiz: Path, tenant_id: str, *, rota: bool) -> None:
     carpeta = raiz / tenant_id
     (carpeta / "rules").mkdir(parents=True)
     (carpeta / "tenant.yaml").write_text(
-        CARPETA_TENANT.format(tenant_id=tenant_id, prefix=tenant_id[:3].upper()),
+        CARPETA_TENANT.format(tenant_id=tenant_id, prefix=tenant_id[:2].upper()),
         encoding="utf-8",
     )
     prefijo = tenant_id[:3].upper()
@@ -132,7 +132,7 @@ def _agencia(raiz: Path, tenant_id: str, *, declara: str) -> Path:
     carpeta = raiz / "app" / "config" / "tenants" / tenant_id
     carpeta.mkdir(parents=True, exist_ok=True)
     (carpeta / "tenant.yaml").write_text(
-        AGENCIA_TENANT.format(tenant_id=tenant_id, prefix=tenant_id[:3].upper(), emisor=declara),
+        AGENCIA_TENANT.format(tenant_id=tenant_id, prefix=tenant_id[:2].upper(), emisor=declara),
         encoding="utf-8",
     )
     return carpeta

@@ -33,11 +33,11 @@ def test_las_preguntas_de_si_o_no_llevan_un_si_y_un_no_que_las_reglas_leen(
 @pytest.mark.parametrize("idioma", IDIOMAS)
 def test_la_poliza_de_ejemplo_se_reconoce_como_numero_de_poliza(idioma: Locale) -> None:
     [boton] = suggestions.for_question(
-        "intake.question.identity_and_policy", language=idioma, example_policy="POL-100042"
+        "intake.question.identity_and_policy", language=idioma, example_policy="POL-11"
     )
 
     assert policy.policy_number_in(boton)
-    assert "POL-100042" in boton
+    assert "POL-11" in boton
 
 
 @pytest.mark.parametrize("idioma", IDIOMAS)
@@ -105,12 +105,12 @@ def test_con_titular_el_boton_contesta_nombre_y_poliza(idioma: Locale) -> None:
     [boton] = suggestions.for_question(
         "intake.question.identity_and_policy",
         language=idioma,
-        example_policy="POL-100042",
+        example_policy="POL-11",
         example_holder="Natalia Henao Rendón",
     )
 
     assert "Natalia Henao Rendón" in boton
-    assert policy.policy_number_in(boton) == "POL-100042"
+    assert policy.policy_number_in(boton) == "POL-11"
 
 
 @pytest.mark.parametrize(

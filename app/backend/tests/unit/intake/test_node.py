@@ -106,7 +106,7 @@ def _nodo(extractor: _Extractor, *, lookup: _Buscador | None = None) -> IntakeNo
 
 
 TITULAR = PolicyMatch(
-    policy_number="POL-100042", holder_name="Natalia Henao Rendón", vehicle="Renault Logan 2024"
+    policy_number="POL-11", holder_name="Natalia Henao Rendón", vehicle="Renault Logan 2024"
 )
 
 
@@ -399,9 +399,7 @@ async def test_la_poliza_dicha_ante_la_pregunta_de_seguridad_es_identidad_y_no_h
     identidad; la regla la guarda ahi sin modelo, y la seguridad sigue pendiente."""
     extractor = _Extractor()
 
-    salida = await _nodo(extractor).run(
-        _estado(turn_text="Soy Marcela Rios, mi poliza es POL-000001.")
-    )
+    salida = await _nodo(extractor).run(_estado(turn_text="Soy Marcela Rios, mi poliza es POL-01."))
 
     assert extractor.llamadas == 0
     assert [c.field_key for c in salida.intake_extracted] == ["identity_and_policy"]
@@ -634,15 +632,15 @@ async def test_con_la_poliza_dada_la_agente_dice_de_quien_es_y_pregunta_si_es_el
     seguir con el bloque siguiente, la agente nombra al titular y al vehiculo y
     pregunta si es ella. La poliza queda a la espera en el conjunto de escritura."""
     buscador = _Buscador()
-    extractor = _Extractor(ExtractedItem(field_key="identity_and_policy", value="POL-100042"))
+    extractor = _Extractor(ExtractedItem(field_key="identity_and_policy", value="POL-11"))
 
     salida = await _nodo(extractor, lookup=buscador).run(
-        _estado(turn_text="mi póliza es la POL-100042", completeness=_completitud("injuries"))
+        _estado(turn_text="mi póliza es la POL-11", completeness=_completitud("injuries"))
     )
 
-    assert buscador.preguntas == ["POL-100042"]
+    assert buscador.preguntas == ["POL-11"]
     assert salida.intake_policy_match == TITULAR
-    assert "POL-100042" in salida.intake_response_text
+    assert "POL-11" in salida.intake_response_text
     assert "Natalia Henao Rendón" in salida.intake_response_text
     assert "Renault Logan 2024" in salida.intake_response_text
     assert salida.intake_response_text.count("?") == 1
@@ -654,11 +652,11 @@ async def test_con_la_poliza_dada_la_agente_dice_de_quien_es_y_pregunta_si_es_el
 async def test_en_una_consulta_solo_pregunta_si_es_ella_y_no_quien_manejaba() -> None:
     """Visto en produccion el 2026-10-08: a quien pregunto por el granizo se le pedia
     confirmar si "conducia ese carro". Eso solo se pregunta en un reporte de choque."""
-    extractor = _Extractor(ExtractedItem(field_key="identity_and_policy", value="POL-100042"))
+    extractor = _Extractor(ExtractedItem(field_key="identity_and_policy", value="POL-11"))
 
     salida = await _nodo(extractor, lookup=_Buscador()).run(
         _estado(
-            turn_text="soy Natalia, mi póliza es la POL-100042",
+            turn_text="soy Natalia, mi póliza es la POL-11",
             record_type=RecordType.COVERAGE_INQUIRY,
         )
     )
@@ -669,21 +667,21 @@ async def test_en_una_consulta_solo_pregunta_si_es_ella_y_no_quien_manejaba() ->
 
 
 async def test_en_una_consulta_con_el_nombre_del_titular_no_pregunta_si_es_ella() -> None:
-    """2026-10-09: «Soy Natalia Henao Rendon, mi poliza es POL-100042. ¿Que me cubren si
+    """2026-10-09: «Soy Natalia Henao Rendon, mi poliza es POL-11. ¿Que me cubren si
     me roban el carro?» recibia «¿Eres tu?» antes de la respuesta."""
     extractor = _Extractor(
-        ExtractedItem(field_key="identity_and_policy", value="POL-100042"),
+        ExtractedItem(field_key="identity_and_policy", value="POL-11"),
         ExtractedItem(field_key="question_asked", value="¿Qué me cubren?"),
     )
 
     salida = await _nodo(extractor, lookup=_Buscador()).run(
         _estado(
-            turn_text="Soy Natalia Henao Rendon, mi póliza es POL-100042. ¿Qué me cubren?",
+            turn_text="Soy Natalia Henao Rendon, mi póliza es POL-11. ¿Qué me cubren?",
             record_type=RecordType.COVERAGE_INQUIRY,
         )
     )
 
-    assert salida.intake_policy_confirmed == "POL-100042"
+    assert salida.intake_policy_confirmed == "POL-11"
     assert salida.intake_policy_match is None
     assert "¿Eres tú?" not in salida.intake_response_text
     # La pregunta del mismo mensaje se guarda: es la que se responde enseguida.
@@ -700,17 +698,17 @@ async def test_una_consulta_sin_pregunta_no_promete_revisar_sino_que_la_pide() -
     """2026-10-12: quien entra por «Preguntar por mi poliza» da su nombre y su poliza y no
     ha preguntado nada. La agente decia «te respondo en un momento» y no habia nada que
     revisar: la respuesta no llegaba nunca. Sin pregunta se pregunta que quiere saber."""
-    extractor = _Extractor(ExtractedItem(field_key="identity_and_policy", value="POL-100042"))
+    extractor = _Extractor(ExtractedItem(field_key="identity_and_policy", value="POL-11"))
 
     salida = await _nodo(extractor, lookup=_Buscador()).run(
         _estado(
-            turn_text="Soy Natalia Henao Rendón, mi póliza es POL-100042",
+            turn_text="Soy Natalia Henao Rendón, mi póliza es POL-11",
             record_type=RecordType.COVERAGE_INQUIRY,
             completeness=_completitud_de_consulta(),
         )
     )
 
-    assert salida.intake_policy_confirmed == "POL-100042"
+    assert salida.intake_policy_confirmed == "POL-11"
     assert salida.intake_response_key == str(composition.COVERAGE_ASK_QUESTION)
     assert salida.intake_response_text == copy_api.t(composition.COVERAGE_ASK_QUESTION, locale="es")
     assert "momento" not in salida.intake_response_text
@@ -728,11 +726,11 @@ async def test_una_consulta_con_pregunta_si_promete_revisar(
 ) -> None:
     """El control positivo de arriba: con la pregunta en el caso, la revision se lanza y
     la frase de espera es verdad."""
-    items = [ExtractedItem(field_key="identity_and_policy", value="POL-100042")]
+    items = [ExtractedItem(field_key="identity_and_policy", value="POL-11")]
     if dicha_ahora is not None:
         items.append(ExtractedItem(field_key="question_asked", value=dicha_ahora))
 
-    texto = "Soy Natalia Henao Rendón, mi póliza es POL-100042"
+    texto = "Soy Natalia Henao Rendón, mi póliza es POL-11"
     if dicha_ahora is not None:
         texto = f"{texto}. {dicha_ahora}"
 
@@ -744,12 +742,12 @@ async def test_una_consulta_con_pregunta_si_promete_revisar(
         )
     )
 
-    assert salida.intake_policy_confirmed == "POL-100042"
+    assert salida.intake_policy_confirmed == "POL-11"
     assert salida.intake_response_key == str(composition.COVERAGE_CHECKING)
 
 
 async def test_el_nombre_dicho_en_un_mensaje_anterior_tambien_evita_el_eres_tu() -> None:
-    """2026-10-09: «Soy Daniel Foster, mi poliza es POL-200341», despues «Preguntar por
+    """2026-10-09: «Soy Daniel Foster, mi poliza es POL-31», despues «Preguntar por
     mi poliza»: el nombre llega como dato entendido del mensaje anterior."""
     from untangle.orchestration.nodes.intake import understanding
 
@@ -757,7 +755,7 @@ async def test_el_nombre_dicho_en_un_mensaje_anterior_tambien_evita_el_eres_tu()
         wants=understanding.Want.POLICY_QUESTION,
         items=(
             understanding.UnderstoodItem(
-                field_key="identity_and_policy", value="Natalia Henao Rendón, POL-100042"
+                field_key="identity_and_policy", value="Natalia Henao Rendón, POL-11"
             ),
         ),
     )
@@ -770,15 +768,15 @@ async def test_el_nombre_dicho_en_un_mensaje_anterior_tambien_evita_el_eres_tu()
         )
     )
 
-    assert salida.intake_policy_confirmed == "POL-100042"
+    assert salida.intake_policy_confirmed == "POL-11"
 
 
 async def test_en_un_reporte_con_el_nombre_del_titular_igual_pregunta_quien_manejaba() -> None:
-    extractor = _Extractor(ExtractedItem(field_key="identity_and_policy", value="POL-100042"))
+    extractor = _Extractor(ExtractedItem(field_key="identity_and_policy", value="POL-11"))
 
     salida = await _nodo(extractor, lookup=_Buscador()).run(
         _estado(
-            turn_text="Soy Natalia Henao Rendón, mi póliza es POL-100042",
+            turn_text="Soy Natalia Henao Rendón, mi póliza es POL-11",
             completeness=_completitud("injuries"),
         )
     )
@@ -789,13 +787,13 @@ async def test_en_un_reporte_con_el_nombre_del_titular_igual_pregunta_quien_mane
 
 async def test_una_poliza_que_el_corpus_no_tiene_sigue_la_captura_de_siempre() -> None:
     buscador = _Buscador(coincidencia=None)
-    extractor = _Extractor(ExtractedItem(field_key="identity_and_policy", value="POL-999999"))
+    extractor = _Extractor(ExtractedItem(field_key="identity_and_policy", value="POL-99"))
 
     salida = await _nodo(extractor, lookup=buscador).run(
-        _estado(turn_text="POL-999999", completeness=_completitud("injuries"))
+        _estado(turn_text="POL-99", completeness=_completitud("injuries"))
     )
 
-    assert buscador.preguntas == ["POL-999999"]
+    assert buscador.preguntas == ["POL-99"]
     assert salida.intake_policy_match is None
     assert salida.intake_next_block is Block.WHAT_HAPPENED
 
@@ -825,11 +823,11 @@ async def test_el_si_al_titular_escribe_identidad_y_vehiculo_y_ata_la_poliza() -
     )
 
     assert extractor.llamadas == 0
-    assert salida.intake_policy_confirmed == "POL-100042"
+    assert salida.intake_policy_confirmed == "POL-11"
     escritos = {c.field_key: c for c in salida.intake_extracted}
     assert set(escritos) == {"identity_and_policy", "vehicle_and_driver"}
     assert "Natalia Henao Rendón" in escritos["identity_and_policy"].value
-    assert "POL-100042" in escritos["identity_and_policy"].value
+    assert "POL-11" in escritos["identity_and_policy"].value
     assert "Renault Logan 2024" in escritos["vehicle_and_driver"].value
     assert all(c.evidence_turn_id == "turno-1" for c in escritos.values())
     assert salida.intake_response_text.startswith(

@@ -45,22 +45,22 @@ def test_check_citation_backing_pregunta_por_cada_comprobacion_en_orden() -> Non
     """AC2.2.2: una comprobación por cita, en el orden recibido."""
     comprobaciones = (
         backing.BackingCheck(
-            clause_id="STO-PAP-2026-A.1",
+            clause_id="SA-PAP-2026-A.1",
             clause_text="Cubre danos a terceros hasta el limite de la caratula.",
             claim="La parte A cubre el siniestro.",
         ),
         backing.BackingCheck(
-            clause_id="STO-PAP-2026-A.2",
+            clause_id="SA-PAP-2026-A.2",
             clause_text="No cubre danos intencionales.",
             claim="La parte A cubre el siniestro.",
         ),
     )
     juez = _JuezGrabado(
         {
-            "STO-PAP-2026-A.1": backing.BackingVerdict(
+            "SA-PAP-2026-A.1": backing.BackingVerdict(
                 backed=True, rationale="El texto habla de danos a terceros."
             ),
-            "STO-PAP-2026-A.2": backing.BackingVerdict(
+            "SA-PAP-2026-A.2": backing.BackingVerdict(
                 backed=False, rationale="El texto excluye justo lo que la afirmacion cubre."
             ),
         }
@@ -68,10 +68,10 @@ def test_check_citation_backing_pregunta_por_cada_comprobacion_en_orden() -> Non
 
     resultados = _correr(backing.check_citation_backing(comprobaciones, judge=juez))
 
-    assert [r.clause_id for r in resultados] == ["STO-PAP-2026-A.1", "STO-PAP-2026-A.2"]
+    assert [r.clause_id for r in resultados] == ["SA-PAP-2026-A.1", "SA-PAP-2026-A.2"]
     assert resultados[0].verdict.backed is True
     assert resultados[1].verdict.backed is False
-    assert [c.clause_id for c in juez.llamadas] == ["STO-PAP-2026-A.1", "STO-PAP-2026-A.2"]
+    assert [c.clause_id for c in juez.llamadas] == ["SA-PAP-2026-A.1", "SA-PAP-2026-A.2"]
 
 
 def _fila(*, resultado: str, juicio: JudgmentKind) -> CaseRow:

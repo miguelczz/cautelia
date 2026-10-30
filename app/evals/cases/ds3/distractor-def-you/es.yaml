@@ -14,12 +14,12 @@ axes:
 - distractor
 - citation-verification
 citation:
-  policy_number: POL-245782
-  clause_id: STO-PAP-2026-DEF.YOU
+  policy_number: POL-14
+  clause_id: SA-PAP-2026-DEF.YOU
   expected_outcome: verified
   question: ¿Quién cuenta como 'usted' en esta póliza?
   forbidden_clause_ids:
-  - STO-PAP-2025-DEF.YOU.ALT
+  - SA-PAP-2025-DEF.YOU.ALT
 expected_verdicts:
   citation_distractor_def_you: pass
   citation_exists_distractor_def_you: pass

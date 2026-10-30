@@ -137,7 +137,7 @@ async def test_el_caso_de_un_visitante_desaparece_entero(
         cifrador,
         tenant_id="stonecroft",
         case_id="CASO-PUBLICO",
-        numero="STO-000001",
+        numero="SA-1",
         origin="public_chat",
     )
     for tabla in TABLAS:
@@ -162,7 +162,7 @@ async def test_el_caso_de_la_consola_de_voz_tambien_se_borra(
         cifrador,
         tenant_id="stonecroft",
         case_id="CASO-VOZ",
-        numero="STO-000002",
+        numero="SA-2",
         origin="public_voice_console",
     )
 
@@ -187,7 +187,7 @@ async def test_el_caso_del_despliegue_local_se_conserva(
         cifrador,
         tenant_id="stonecroft",
         case_id="CASO-LOCAL",
-        numero="STO-000003",
+        numero="SA-3",
         origin="local_deployment",
     )
 
@@ -208,7 +208,7 @@ async def test_el_caso_de_hoy_sobrevive_al_reinicio_de_hoy(
         cifrador,
         tenant_id="stonecroft",
         case_id="CASO-DE-HOY",
-        numero="STO-000004",
+        numero="SA-4",
         origin="public_chat",
     )
 
@@ -229,7 +229,7 @@ async def test_el_ensayo_cuenta_sin_borrar(
         cifrador,
         tenant_id="stonecroft",
         case_id="CASO-PUBLICO",
-        numero="STO-000001",
+        numero="SA-1",
         origin="public_chat",
     )
 
@@ -254,14 +254,14 @@ async def test_el_borrado_no_cruza_de_una_aseguradora_a_otra(
         cifrador,
         tenant_id="stonecroft",
         case_id="CASO-STO",
-        numero="STO-000001",
+        numero="SA-1",
         origin="public_chat",
     )
     await _sembrar_caso(
         cifrador,
         tenant_id="sunmeadow",
         case_id="CASO-SUN",
-        numero="SUN-000001",
+        numero="AP-1",
         origin="public_chat",
     )
 

@@ -103,7 +103,7 @@ def test_cada_turno_guardado_llega_con_su_lado_y_su_texto_redactado(
         _conversacion(config, divulgada=True, case_id="caso-1"),
         config=config,
         turns=turnos,
-        case_number="STO-000007",
+        case_number="SA-7",
     )
 
     assert [turno.speaker for turno in recuperado.turns] == ["visitor", "agent", "agent"]
@@ -111,7 +111,7 @@ def test_cada_turno_guardado_llega_con_su_lado_y_su_texto_redactado(
     assert recuperado.turns[0].turn_id == "turn-1"
     assert recuperado.turns[0].channel == "chat"
     assert recuperado.turns[0].at == AHORA.replace(second=1).isoformat()
-    assert recuperado.case_number == "STO-000007"
+    assert recuperado.case_number == "SA-7"
 
 
 @pytest.mark.parametrize(

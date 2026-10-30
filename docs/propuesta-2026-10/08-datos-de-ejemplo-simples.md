@@ -58,7 +58,7 @@ producción hasta que Miguel lo pruebe en la demo local.
 | Tanda | Estado |
 | --- | --- |
 | 1 | Hecha en la rama `datos-de-ejemplo-simples` (sin subir) |
-| 2 | En curso |
+| 2 | Hecha en la rama `datos-de-ejemplo-simples` (sin subir); falta la revisión y lo que solo confirma GitHub |
 | 3 | Pendiente |
 
 ## Servidor siempre encendido (2026-10-30)

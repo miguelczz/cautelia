@@ -319,7 +319,7 @@ def test_cada_caso_de_comprension_pide_la_clave_de_claude_para_evaluaciones() ->
 # --- Quien conducia: el nombre completo se pregunta, se anota junto al carro y se puede leer ---
 
 #: Los conductores que declara la poliza de los casos de abajo, el titular primero.
-CONDUCTORES = ("Natalia Henao Rendón", "Mateo Henao Gómez")
+CONDUCTORES = ("Daniela Castaño", "Hernán Castaño")
 
 
 def _del_conductor(valor: str) -> UnderstandingResponse:
@@ -332,7 +332,7 @@ def _del_conductor(valor: str) -> UnderstandingResponse:
 def _esperando_lectura(lectura: str | None) -> UnderstandingExpectation:
     return UnderstandingExpectation(
         record_type="claim",
-        message="Se llama Carlos Ramírez Ospina, es mi hermano",
+        message="Se llama Carlos Ramírez, es mi hermano",
         wants=("continue",),
         declared_drivers=CONDUCTORES if lectura is not None else (),
         driver_reading=lectura,  # type: ignore[arg-type]
@@ -343,13 +343,13 @@ def _esperando_lectura(lectura: str | None) -> UnderstandingExpectation:
     ("valor", "idioma", "lectura"),
     [
         # Nombre y apellido que la poliza no declara, pegados al verbo de conducir.
-        ("Renault Logan. Manejaba su hermano Carlos Ramírez Ospina", "es", "unlisted"),
-        ("Renault Logan. Driven by her brother Carlos Ramírez Ospina", "en", "unlisted"),
+        ("Kia Picanto. Manejaba su hermano Carlos Ramírez", "es", "unlisted"),
+        ("Kia Picanto. Driven by her brother Carlos Ramírez", "en", "unlisted"),
         # Otra persona sin nombre: la derivacion no lo puede leer, y no hay nombre inventado.
-        ("Renault Logan. Manejaba su hijo", "es", "unknown"),
-        ("Renault Logan. Driven by her son", "en", "unknown"),
+        ("Kia Picanto. Manejaba su hijo", "es", "unknown"),
+        ("Kia Picanto. Driven by her son", "en", "unknown"),
         # Un conductor que la poliza si declara.
-        ("Renault Logan. Manejaba Mateo Henao Gómez", "es", "listed"),
+        ("Kia Picanto. Manejaba Hernán Castaño", "es", "listed"),
     ],
 )
 def test_la_lectura_del_conductor_es_la_de_la_derivacion(
@@ -370,20 +370,17 @@ def test_la_lectura_del_conductor_es_la_de_la_derivacion(
 def test_el_nombre_a_secas_no_se_lee_porque_le_falta_el_verbo() -> None:
     """El error probable: el modelo reemplaza el campo con solo el nombre. Sin un verbo de
     conducir pegado, la derivacion no lo lee."""
-    respuesta = _del_conductor("Carlos Ramírez Ospina")
+    respuesta = _del_conductor("Carlos Ramírez")
 
     assert understanding_probes.evaluate(
         _esperando_lectura("unlisted"), respuesta, language="es"
-    ) == [
-        "'vehicle_and_driver' = 'Carlos Ramírez Ospina' se lee como 'unknown', "
-        "se esperaba 'unlisted'"
-    ]
+    ) == ["'vehicle_and_driver' = 'Carlos Ramírez' se lee como 'unknown', se esperaba 'unlisted'"]
 
 
 def test_un_nombre_inventado_donde_nadie_dijo_ninguno_no_pasa_por_desconocido() -> None:
     """Quien dijo «mi hijo» a secas y queda con nombre y apellido en el campo: el modelo lo
     invento, y la lectura ya no es `unknown`."""
-    respuesta = _del_conductor("Renault Logan. Manejaba su hijo Carlos Ruiz Mora")
+    respuesta = _del_conductor("Kia Picanto. Manejaba su hijo Carlos Ruiz Mora")
 
     fallos = understanding_probes.evaluate(_esperando_lectura("unknown"), respuesta, language="es")
 
@@ -400,7 +397,7 @@ def test_si_el_campo_del_conductor_no_quedo_anotado_falla_la_lectura() -> None:
 
 
 def test_sin_driver_reading_el_caso_no_mide_la_lectura_del_conductor() -> None:
-    respuesta = _del_conductor("Carlos Ramírez Ospina")
+    respuesta = _del_conductor("Carlos Ramírez")
 
     assert understanding_probes.evaluate(_esperando_lectura(None), respuesta, language="es") == []
 
@@ -472,7 +469,7 @@ def test_la_respuesta_nombra_lo_que_el_caso_espera_sea_pregunta_o_no(
     [
         {"driver_reading": "unlisted"},
         {"declared_drivers": CONDUCTORES},
-        {"captured": ("injuries",), "captured_values": {"vehicle_and_driver": "Renault Logan"}},
+        {"captured": ("injuries",), "captured_values": {"vehicle_and_driver": "Kia Picanto"}},
     ],
 )
 def test_una_expectativa_a_medias_no_se_acepta(cambios: dict[str, object]) -> None:
@@ -486,8 +483,8 @@ def test_la_peticion_lleva_el_valor_de_lo_anotado_solo_donde_el_caso_lo_trae() -
     esperado = UnderstandingExpectation(
         record_type="claim",
         captured=("injuries", "identity_and_policy", "vehicle_and_driver"),
-        captured_values={"vehicle_and_driver": "Renault Logan. Manejaba su hermano"},
-        message="Se llama Carlos Ramírez Ospina",
+        captured_values={"vehicle_and_driver": "Kia Picanto. Manejaba su hermano"},
+        message="Se llama Carlos Ramírez",
         wants=("continue",),
     )
 
@@ -496,7 +493,7 @@ def test_la_peticion_lleva_el_valor_de_lo_anotado_solo_donde_el_caso_lo_trae() -
     assert {d.field_key: d.value for d in peticion.noted} == {
         "injuries": None,
         "identity_and_policy": None,
-        "vehicle_and_driver": "Renault Logan. Manejaba su hermano",
+        "vehicle_and_driver": "Kia Picanto. Manejaba su hermano",
     }
     assert "vehicle_and_driver" not in peticion.missing
 
@@ -579,9 +576,9 @@ def test_el_caso_del_nombre_dicho_pasa_con_el_valor_completo_y_falla_sin_el_carr
 ) -> None:
     esperado = _caso("other-driver-name-given", idioma)
     completo = (
-        "Renault Logan. Manejaba su hermano Carlos Ramírez Ospina"
+        "Kia Picanto. Manejaba su hermano Carlos Ramírez"
         if idioma == "es"
-        else "Renault Logan. Driven by her brother Carlos Ramírez Ospina"
+        else "Kia Picanto. Driven by her brother Carlos Ramírez"
     )
 
     def _con(valor: str) -> UnderstandingResponse:
@@ -593,13 +590,13 @@ def test_el_caso_del_nombre_dicho_pasa_con_el_valor_completo_y_falla_sin_el_carr
     assert understanding_probes.evaluate(esperado, _con(completo), language=idioma) == []
     # Solo el nombre: pierde el carro y el verbo.
     solo_el_nombre = understanding_probes.evaluate(
-        esperado, _con("Carlos Ramírez Ospina"), language=idioma
+        esperado, _con("Carlos Ramírez"), language=idioma
     )
     assert len(solo_el_nombre) == 2
     # El nombre con el verbo pero sin el carro que ya estaba.
-    sin_carro = completo.removeprefix("Renault Logan. ")
+    sin_carro = completo.removeprefix("Kia Picanto. ")
     assert understanding_probes.evaluate(esperado, _con(sin_carro), language=idioma) == [
-        f"'vehicle_and_driver' = {sin_carro!r}, no contiene 'Renault Logan'"
+        f"'vehicle_and_driver' = {sin_carro!r}, no contiene 'Kia Picanto'"
     ]
 
 

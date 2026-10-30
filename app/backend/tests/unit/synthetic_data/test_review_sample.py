@@ -32,7 +32,7 @@ def _clausulas(raiz: Path, tenant_id: str, cuantas: int, distractoras: int = 0) 
     carpeta.mkdir(parents=True, exist_ok=True)
     clausulas = [
         {
-            "clause_id": f"EMI-PAP-2026-A.EXCL.{i:02d}",
+            "clause_id": f"EM-PAP-2026-A.EXCL.{i:02d}",
             "part": "Parte A",
             "is_distractor": i < distractoras,
         }
@@ -62,7 +62,7 @@ def test_ninguna_distractora_entra_en_la_muestra(tmp_path: Path) -> None:
     muestra = review_sample.draw("emisora", HOY, elegibles, seed=SEED)
 
     assert {c.clause_id for c in elegibles} == {
-        f"EMI-PAP-2026-A.EXCL.{i:02d}" for i in range(10, 20)
+        f"EM-PAP-2026-A.EXCL.{i:02d}" for i in range(10, 20)
     }
     assert set(muestra.clause_ids) == {c.clause_id for c in elegibles}
 

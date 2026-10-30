@@ -2,7 +2,7 @@
 # P3, BR1.6), turno en español.
 #
 # Criterio de aceptación: dado que en una llamada la persona dijo un nombre completo que no es
-# de ningún titular de la aseguradora y un número incompleto («Paul 201 17»), cuando no hay a
+# de ningún titular de la aseguradora y un número incompleto («Paul 20 1»), cuando no hay a
 # quién proponer, entonces la agente dice que no encontró la póliza y pide que la repita cifra
 # por cifra, con la frase del catálogo, sin proponer ni atar ninguna; y si tampoco sale en el
 # segundo intento, no lo pide otra vez y la captura sigue sin póliza identificada.
@@ -26,9 +26,9 @@ axes:
 script:
   - field_key: identity_and_policy
     sequence: 1
-    text: "Me llamo Camila Restrepo Vélez y mi póliza es Paul 201 17."
+    text: "Me llamo Camila Restrepo y mi póliza es Paul 20 1."
   - field_key: identity_and_policy
     sequence: 2
-    text: "Camila Restrepo Vélez, mi póliza es Paul 201 17."
+    text: "Camila Restrepo, mi póliza es Paul 20 1."
 expected_verdicts:
   intake_policy_not_found_repeat: pass

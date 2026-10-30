@@ -28,10 +28,10 @@ const es = createTranslate("es");
 
 function razonamiento(extra: Partial<ChatReasoning> = {}): ChatReasoning {
   return {
-    case_number: "STO-000140",
+    case_number: "SA-140",
     record_type: "coverage_inquiry",
     state: "capturing",
-    policy_ref: "POL-100042",
+    policy_ref: "POL-11",
     derivation_reason: null,
     fields: [],
     answers: [
@@ -204,13 +204,13 @@ describe("la pregunta, como la escribio quien la hizo (C5)", () => {
   it("con copia en este navegador no se ven etiquetas", async () => {
     window.localStorage.setItem(
       "cautelia.own-text.una-aseguradora",
-      JSON.stringify(["¿Mi póliza POL-100042 cubre el granizo?"]),
+      JSON.stringify(["¿Mi póliza POL-11 cubre el granizo?"]),
     );
     pensamiento.mockResolvedValue(razonamiento());
     const ventana = await abrir();
 
     const pregunta = await within(ventana).findByText(/Pregunta:/);
-    expect(pregunta.textContent).toBe("Pregunta: «¿Mi póliza POL-100042 cubre el granizo?»");
+    expect(pregunta.textContent).toBe("Pregunta: «¿Mi póliza POL-11 cubre el granizo?»");
     expect(ventana.textContent).not.toContain("[PÓLIZA 1]");
   });
 

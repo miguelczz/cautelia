@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Olivia Russo, policy POL-398476"
+      "value": "Ivan Moreno, policy POL-25"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -29,11 +29,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Toyota Camry 2023, plate ZNX-9706, driven by Olivia"
+      "value": "Honda Civic 2014, plate GRJ-5764, driven by Ivan"
     }
   },
   "language": "en",
-  "policy_number": "POL-398476",
+  "policy_number": "POL-25",
   "record_type": "claim",
   "resolution": null,
   "state": "verifying",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Good morning, I want to report a crash. I'm Olivia Russo, policy POL-398476."
+      "text": "Good morning, I want to report a crash. I'm Ivan Moreno, policy POL-25."
     },
     {
       "speaker": "agent",
@@ -73,7 +73,7 @@
     },
     {
       "speaker": "insured",
-      "text": "My Toyota Camry 2023, plate ZNX-9706. I was driving."
+      "text": "My Honda Civic 2014, plate GRJ-5764. I was driving."
     },
     {
       "speaker": "agent",

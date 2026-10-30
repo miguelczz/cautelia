@@ -5,7 +5,7 @@
   "fields": {
     "identity_and_policy": {
       "status": "stated",
-      "value": "Mario Ruiz, policy POL-679093"
+      "value": "Elena Delgado, policy POL-22"
     },
     "question_asked": {
       "status": "stated",
@@ -13,7 +13,7 @@
     }
   },
   "language": "en",
-  "policy_number": "POL-679093",
+  "policy_number": "POL-22",
   "record_type": "coverage_inquiry",
   "resolution": null,
   "state": "capturing",
@@ -21,7 +21,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "I'm Mario Ruiz, policy POL-679093. Does the policy cover getting around while the car is being repaired?"
+      "text": "I'm Elena Delgado, policy POL-22. Does the policy cover getting around while the car is being repaired?"
     }
   ],
   "used_by": [

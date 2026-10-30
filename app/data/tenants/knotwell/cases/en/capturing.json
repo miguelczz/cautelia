@@ -5,7 +5,7 @@
   "fields": {
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Camilo Muñoz Correa, policy POL-916742"
+      "value": "Rebecca Lewis, policy POL-34"
     },
     "incident_datetime": {
       "status": "stated",
@@ -17,7 +17,7 @@
     }
   },
   "language": "en",
-  "policy_number": "POL-916742",
+  "policy_number": "POL-34",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -29,7 +29,7 @@
     },
     {
       "speaker": "insured",
-      "text": "I'm Camilo Muñoz Correa, the policy is POL-916742."
+      "text": "I'm Rebecca Lewis, the policy is POL-34."
     },
     {
       "speaker": "agent",

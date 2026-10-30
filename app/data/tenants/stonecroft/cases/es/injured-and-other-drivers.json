@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "stated",
-      "value": "Alex Moreno, póliza POL-480915"
+      "value": "Mateo Muñoz, póliza POL-12"
     },
     "incident_datetime": {
       "status": "stated",
@@ -21,11 +21,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Nissan Versa 2013, placa PCN678, lo conducía Alex"
+      "value": "Hyundai Accent 2021, placa GHA461, lo conducía Mateo"
     }
   },
   "language": "es",
-  "policy_number": "POL-480915",
+  "policy_number": "POL-12",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -33,7 +33,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Soy Alex Moreno, póliza POL-480915. Me chocaron en la glorieta de Los Almendros."
+      "text": "Soy Mateo Muñoz, póliza POL-12. Me chocaron en la glorieta de Los Almendros."
     },
     {
       "speaker": "agent",
@@ -41,7 +41,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Mi Nissan Versa 2013, placa PCN678. Lo manejaba yo."
+      "text": "Mi Hyundai Accent 2021, placa GHA461. Lo manejaba yo."
     },
     {
       "speaker": "agent",
@@ -49,11 +49,11 @@
     },
     {
       "speaker": "insured",
-      "text": "Sí. Quedaron heridas Isabela Muñoz Londoño y Sebastián Mejía Londoño, que iban en uno de los otros carros."
+      "text": "Sí. Quedaron heridas Isabela Muñoz y Ricardo Giraldo, que iban en uno de los otros carros."
     },
     {
       "speaker": "insured",
-      "text": "Y había dos conductores más: Laura Duque Betancur, con placa XZR099, y Esteban Toro Gómez, con placa EYE409."
+      "text": "Y había dos conductores más: Óscar Salazar, con placa NEJ323, y Laura Duque, con placa RAW900."
     }
   ],
   "used_by": [

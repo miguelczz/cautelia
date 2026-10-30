@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Olivia Russo, póliza POL-398476"
+      "value": "Sofia Castro, póliza POL-26"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -29,11 +29,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Toyota Camry 2023, placa ZNX-9706, lo conducía Olivia"
+      "value": "Chevrolet Equinox 2020, placa KLL-3671, lo conducía Sofia"
     }
   },
   "language": "es",
-  "policy_number": "POL-398476",
+  "policy_number": "POL-26",
   "record_type": "claim",
   "resolution": "registered",
   "state": "closed",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Hola, soy Olivia Russo. Mi póliza es POL-398476."
+      "text": "Hola, soy Sofia Castro. Mi póliza es POL-26."
     },
     {
       "speaker": "agent",

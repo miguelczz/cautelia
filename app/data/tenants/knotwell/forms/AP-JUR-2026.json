@@ -1,0 +1,16 @@
+{
+  "clause_ids": [
+    "AP-JUR-2026-J.1",
+    "AP-JUR-2026-J.2",
+    "AP-JUR-2026-J.3",
+    "AP-JUR-2026-J.4",
+    "AP-JUR-2026-J.5"
+  ],
+  "form_id": "AP-JUR-2026",
+  "form_kind": "jurisdiction",
+  "form_version": "2026.1",
+  "issuer_label": "Autos Poblado",
+  "issuer_tenant": "sunmeadow",
+  "jurisdiction_ref": null,
+  "language": "en"
+}

@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Alex Moreno, póliza POL-480915"
+      "value": "Lina Diaz, póliza POL-21"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -25,15 +25,15 @@
     },
     "other_parties": {
       "status": "stated",
-      "value": "Un conductor, Tomás Jaramillo Agudelo, en un vehículo de placa PMB235"
+      "value": "Un conductor, Tomás Jaramillo, en un vehículo de placa APM023"
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Hyundai Elantra 2024, placa NKV-9219, lo conducía Alex"
+      "value": "Nissan Rogue 2012, placa BMX-6741, lo conducía Lina"
     }
   },
   "language": "es",
-  "policy_number": "POL-480915",
+  "policy_number": "POL-21",
   "record_type": "claim",
   "resolution": null,
   "state": "verifying",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Buenos días, quiero reportar un choque. Soy Alex Moreno, póliza POL-480915."
+      "text": "Buenos días, quiero reportar un choque. Soy Lina Diaz, póliza POL-21."
     },
     {
       "speaker": "agent",
@@ -73,7 +73,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Mi Hyundai Elantra 2024, placa NKV-9219. Lo manejaba yo."
+      "text": "Mi Nissan Rogue 2012, placa BMX-6741. Lo manejaba yo."
     },
     {
       "speaker": "agent",
@@ -81,7 +81,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Sí, se llama Tomás Jaramillo Agudelo y la placa de su carro es PMB235."
+      "text": "Sí, se llama Tomás Jaramillo y la placa de su carro es APM023."
     }
   ],
   "used_by": [

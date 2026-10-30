@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Natalia Londoño Agudelo, póliza POL-897598"
+      "value": "Alex Moreno, póliza POL-50"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -29,11 +29,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Mazda CX-30 2019, placa CEZ496, lo conducía Natalia"
+      "value": "Suzuki Swift 2017, placa ZFU936, lo conducía Alex"
     }
   },
   "language": "es",
-  "policy_number": "POL-897598",
+  "policy_number": "POL-50",
   "record_type": "claim",
   "resolution": null,
   "state": "deciding",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Hola, soy Natalia Londoño Agudelo. Mi póliza es POL-897598."
+      "text": "Hola, soy Alex Moreno. Mi póliza es POL-50."
     },
     {
       "speaker": "agent",

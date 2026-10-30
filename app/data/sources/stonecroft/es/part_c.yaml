@@ -6,7 +6,7 @@ tenant_id: stonecroft
 language: es
 part_key: part_c
 texts:
-- source_id: STO-PAP-2026-C.INS
+- source_id: SA-PAP-2026-C.INS
   kind: clause
   clause_key: C.INS
   part: Parte C — Conductores sin seguro
@@ -18,7 +18,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-C.EXCL.1
+- source_id: SA-PAP-2026-C.EXCL.1
   kind: clause
   clause_key: C.EXCL.1
   part: Parte C — Conductores sin seguro
@@ -28,7 +28,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-C.EXCL.2
+- source_id: SA-PAP-2026-C.EXCL.2
   kind: clause
   clause_key: C.EXCL.2
   part: Parte C — Conductores sin seguro
@@ -38,7 +38,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-C.EXCL.3
+- source_id: SA-PAP-2026-C.EXCL.3
   kind: clause
   clause_key: C.EXCL.3
   part: Parte C — Conductores sin seguro
@@ -47,7 +47,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-C.EXCL.4
+- source_id: SA-PAP-2026-C.EXCL.4
   kind: clause
   clause_key: C.EXCL.4
   part: Parte C — Conductores sin seguro
@@ -57,7 +57,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-C.LIMIT
+- source_id: SA-PAP-2026-C.LIMIT
   kind: clause
   clause_key: C.LIMIT
   part: Parte C — Conductores sin seguro
@@ -68,7 +68,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-C.OTHER
+- source_id: SA-PAP-2026-C.OTHER
   kind: clause
   clause_key: C.OTHER
   part: Parte C — Conductores sin seguro
@@ -78,7 +78,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-C.ARBITRATION
+- source_id: SA-PAP-2026-C.ARBITRATION
   kind: clause
   clause_key: C.ARBITRATION
   part: Parte C — Conductores sin seguro
@@ -89,7 +89,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2025-C.INS.ALT
+- source_id: SA-PAP-2025-C.INS.ALT
   kind: distractor
   clause_key: C.INS.ALT
   part: Parte C — Conductores sin seguro
@@ -97,7 +97,7 @@ texts:
   text: Seguros Aburrá paga la indemnización por lesiones corporales que usted o un familiar tengan
     derecho a reclamar al conductor de un vehículo sin seguro, siempre que ese conductor esté identificado.
     Los accidentes en que el responsable huye no quedan cubiertos.
-  distractor_of: STO-PAP-2026-C.INS
+  distractor_of: SA-PAP-2026-C.INS
   distractor_reason: near_duplicate
   reviewed_at: '2026-09-21'
   reviewed_by: conductor

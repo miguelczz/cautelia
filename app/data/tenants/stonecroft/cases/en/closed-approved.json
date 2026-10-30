@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Alex Moreno, policy POL-480915"
+      "value": "Laura Mejía, policy POL-13"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -25,15 +25,15 @@
     },
     "other_parties": {
       "status": "stated",
-      "value": "One driver, Sofia Castro, in a vehicle with plate EZJ-3684"
+      "value": "One driver, Marco Foster, in a vehicle with plate JUU-8477"
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Nissan Versa 2013, plate PCN678, driven by Alex"
+      "value": "Renault Logan 2012, plate MWV531, driven by Laura"
     }
   },
   "language": "en",
-  "policy_number": "POL-480915",
+  "policy_number": "POL-13",
   "record_type": "claim",
   "resolution": "approved",
   "state": "closed",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Good morning, I want to report a crash. I'm Alex Moreno, policy POL-480915."
+      "text": "Good morning, I want to report a crash. I'm Laura Mejía, policy POL-13."
     },
     {
       "speaker": "agent",
@@ -73,7 +73,7 @@
     },
     {
       "speaker": "insured",
-      "text": "My Nissan Versa 2013, plate PCN678. I was driving."
+      "text": "My Renault Logan 2012, plate MWV531. I was driving."
     },
     {
       "speaker": "agent",
@@ -81,7 +81,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Yes, the name is Sofia Castro and the car's plate is EZJ-3684."
+      "text": "Yes, the name is Marco Foster and the car's plate is JUU-8477."
     },
     {
       "speaker": "staff",

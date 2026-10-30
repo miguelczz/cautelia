@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Julián Posada Arango, póliza POL-245782"
+      "value": "Mateo Muñoz, póliza POL-12"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -29,11 +29,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Nissan Versa 2020, placa UBX737, lo conducía Julián"
+      "value": "Hyundai Accent 2021, placa GHA461, lo conducía Mateo"
     }
   },
   "language": "es",
-  "policy_number": "POL-245782",
+  "policy_number": "POL-12",
   "record_type": "claim",
   "resolution": "approved",
   "state": "closed",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Hola, soy Julián Posada Arango. Mi póliza es POL-245782."
+      "text": "Hola, soy Mateo Muñoz. Mi póliza es POL-12."
     },
     {
       "speaker": "agent",
@@ -73,7 +73,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Mi Nissan Versa 2020, placa UBX737. Lo manejaba yo."
+      "text": "Mi Hyundai Accent 2021, placa GHA461. Lo manejaba yo."
     },
     {
       "speaker": "staff",

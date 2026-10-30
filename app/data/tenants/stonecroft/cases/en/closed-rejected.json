@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Felipe Giraldo Villegas, policy POL-784054"
+      "value": "Manuela Giraldo, policy POL-14"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -29,11 +29,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Nissan Versa 2012, plate LKP139, driven by Felipe"
+      "value": "Volkswagen Gol 2022, plate TUM812, driven by Manuela"
     }
   },
   "language": "en",
-  "policy_number": "POL-784054",
+  "policy_number": "POL-14",
   "record_type": "claim",
   "resolution": "rejected",
   "state": "closed",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Hi, I'm Felipe Giraldo Villegas. My policy is POL-784054."
+      "text": "Hi, I'm Manuela Giraldo. My policy is POL-14."
     },
     {
       "speaker": "agent",

@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Lina Herrera, póliza POL-795628"
+      "value": "Sofia Castro, póliza POL-26"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -17,7 +17,7 @@
     }
   },
   "language": "es",
-  "policy_number": "POL-795628",
+  "policy_number": "POL-26",
   "record_type": "claim",
   "resolution": null,
   "state": "derived",
@@ -25,7 +25,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Buenas noches. Soy Lina Herrera, mi póliza es POL-795628."
+      "text": "Buenas noches. Soy Sofia Castro, mi póliza es POL-26."
     },
     {
       "speaker": "agent",

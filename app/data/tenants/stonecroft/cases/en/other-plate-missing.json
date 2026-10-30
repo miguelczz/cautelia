@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "stated",
-      "value": "Julián Posada Arango, policy POL-245782"
+      "value": "Daniela Castaño, policy POL-11"
     },
     "incident_datetime": {
       "status": "stated",
@@ -21,11 +21,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Nissan Versa 2020, plate UBX737, driven by Julián"
+      "value": "Kia Picanto 2013, plate JUH431, driven by Daniela"
     }
   },
   "language": "en",
-  "policy_number": "POL-245782",
+  "policy_number": "POL-11",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -33,7 +33,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "I'm Julián Posada Arango, policy POL-245782. I was hit at the Almond Grove roundabout."
+      "text": "I'm Daniela Castaño, policy POL-11. I was hit at the Almond Grove roundabout."
     },
     {
       "speaker": "agent",
@@ -41,7 +41,7 @@
     },
     {
       "speaker": "insured",
-      "text": "My Nissan Versa 2020, plate UBX737. I was driving."
+      "text": "My Kia Picanto 2013, plate JUH431. I was driving."
     },
     {
       "speaker": "agent",

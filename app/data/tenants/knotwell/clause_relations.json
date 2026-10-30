@@ -1,329 +1,329 @@
 {
   "relations": [
     {
-      "from_clause": "STO-PAP-2026-A.FIN_RESP",
+      "from_clause": "AP-PAP-2026-A.FIN_RESP",
       "relation": "refers_to",
-      "to_clause": "STO-JUR-2026-J.1"
+      "to_clause": "AP-JUR-2026-J.1"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.BODILY_INJURY",
+      "from_clause": "AP-PAP-2026-DEF.BODILY_INJURY",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-A.EXCL.A.4"
+      "to_clause": "AP-PAP-2026-A.INS"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.BODILY_INJURY",
+      "from_clause": "AP-PAP-2026-DEF.BODILY_INJURY",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-A.INS"
+      "to_clause": "AP-PAP-2026-A.LIMIT"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.BODILY_INJURY",
+      "from_clause": "AP-PAP-2026-DEF.BODILY_INJURY",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-A.LIMIT"
+      "to_clause": "AP-PAP-2026-C.INS"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.BODILY_INJURY",
+      "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-C.INS"
+      "to_clause": "AP-PAP-2026-A.EXCL.B.2"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.COVERED_AUTO",
+      "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-A.EXCL.B.2"
+      "to_clause": "AP-PAP-2026-A.INS"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.COVERED_AUTO",
+      "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-A.INS"
+      "to_clause": "AP-PAP-2026-B.INS"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.COVERED_AUTO",
+      "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-B.INS"
+      "to_clause": "AP-PAP-2026-D.INS.COLLISION"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.COVERED_AUTO",
+      "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-D.INS.COLLISION"
+      "to_clause": "AP-PAP-2026-D.INS.OTC"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.COVERED_AUTO",
+      "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-D.INS.OTC"
+      "to_clause": "AP-PAP-2026-D.TRANSPORT"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.COVERED_AUTO",
+      "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-D.TRANSPORT"
+      "to_clause": "AP-PAP-2026-END-1-DEF.COVERED_AUTO"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.COVERED_AUTO",
+      "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-DEF.TEMPORARY_SUBSTITUTE"
+      "to_clause": "AP-PAP-2026-END-4-B.INS"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.COVERED_AUTO",
+      "from_clause": "AP-PAP-2026-DEF.FAMILY_MEMBER",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-END-2-A.EXCL.A.5"
+      "to_clause": "AP-PAP-2026-A.EXCL.B.3"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.COVERED_AUTO",
+      "from_clause": "AP-PAP-2026-DEF.FAMILY_MEMBER",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-END-5-F.PERIOD_TERRITORY"
+      "to_clause": "AP-PAP-2026-B.INS"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.FAMILY_MEMBER",
+      "from_clause": "AP-PAP-2026-DEF.FAMILY_MEMBER",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-A.EXCL.B.3"
+      "to_clause": "AP-PAP-2026-C.EXCL.1"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.FAMILY_MEMBER",
+      "from_clause": "AP-PAP-2026-DEF.FAMILY_MEMBER",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-B.INS"
+      "to_clause": "AP-PAP-2026-C.INS"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.FAMILY_MEMBER",
+      "from_clause": "AP-PAP-2026-DEF.FAMILY_MEMBER",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-C.EXCL.1"
+      "to_clause": "AP-PAP-2026-D.EXCL.10"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.FAMILY_MEMBER",
+      "from_clause": "AP-PAP-2026-DEF.OCCUPYING",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-C.INS"
+      "to_clause": "AP-PAP-2026-B.INS"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.FAMILY_MEMBER",
+      "from_clause": "AP-PAP-2026-DEF.PROPERTY_DAMAGE",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-D.EXCL.10"
+      "to_clause": "AP-PAP-2026-A.INS"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.FAMILY_MEMBER",
+      "from_clause": "AP-PAP-2026-DEF.PROPERTY_DAMAGE",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-END-1-DEF.FAMILY_MEMBER"
+      "to_clause": "AP-PAP-2026-A.LIMIT"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.OCCUPYING",
+      "from_clause": "AP-PAP-2026-DEF.TRAILER",
       "relation": "defines",
-      "to_clause": "STO-PAP-2026-B.INS"
+      "to_clause": "AP-PAP-2026-DEF.COVERED_AUTO"
     },
     {
-      "from_clause": "STO-PAP-2026-DEF.PROPERTY_DAMAGE",
-      "relation": "defines",
-      "to_clause": "STO-PAP-2026-A.EXCL.A.2"
-    },
-    {
-      "from_clause": "STO-PAP-2026-DEF.PROPERTY_DAMAGE",
-      "relation": "defines",
-      "to_clause": "STO-PAP-2026-A.EXCL.A.3"
-    },
-    {
-      "from_clause": "STO-PAP-2026-DEF.PROPERTY_DAMAGE",
-      "relation": "defines",
-      "to_clause": "STO-PAP-2026-A.INS"
-    },
-    {
-      "from_clause": "STO-PAP-2026-DEF.PROPERTY_DAMAGE",
-      "relation": "defines",
-      "to_clause": "STO-PAP-2026-A.LIMIT"
-    },
-    {
-      "from_clause": "STO-PAP-2026-DEF.TEMPORARY_SUBSTITUTE",
-      "relation": "defines",
-      "to_clause": "STO-PAP-2026-A.INS"
-    },
-    {
-      "from_clause": "STO-PAP-2026-DEF.TRAILER",
-      "relation": "defines",
-      "to_clause": "STO-PAP-2026-DEF.COVERED_AUTO"
-    },
-    {
-      "from_clause": "STO-PAP-2026-E.DUTIES.A.1",
+      "from_clause": "AP-PAP-2026-E.DUTIES.A.1",
       "relation": "refers_to",
-      "to_clause": "STO-JUR-2026-J.3"
+      "to_clause": "AP-JUR-2026-J.3"
     },
     {
-      "from_clause": "STO-PAP-2026-END-1-DEF.FAMILY_MEMBER",
+      "from_clause": "AP-PAP-2026-END-1-DEF.COVERED_AUTO",
       "relation": "endorsement_modifies",
-      "to_clause": "STO-PAP-2026-DEF.FAMILY_MEMBER"
+      "to_clause": "AP-PAP-2026-DEF.COVERED_AUTO"
     },
     {
-      "from_clause": "STO-PAP-2026-END-2-A.EXCL.A.5",
+      "from_clause": "AP-PAP-2026-END-2-D.EXCL.5",
       "relation": "endorsement_modifies",
-      "to_clause": "STO-PAP-2026-A.EXCL.A.5"
+      "to_clause": "AP-PAP-2026-D.EXCL.5"
     },
     {
-      "from_clause": "STO-PAP-2026-END-3-D.EXCL.3",
+      "from_clause": "AP-PAP-2026-END-3-D.TRANSPORT",
       "relation": "endorsement_modifies",
-      "to_clause": "STO-PAP-2026-D.EXCL.3"
+      "to_clause": "AP-PAP-2026-D.TRANSPORT"
     },
     {
-      "from_clause": "STO-PAP-2026-END-4-C.ARBITRATION",
+      "from_clause": "AP-PAP-2026-END-4-B.INS",
       "relation": "endorsement_modifies",
-      "to_clause": "STO-PAP-2026-C.ARBITRATION"
+      "to_clause": "AP-PAP-2026-B.INS"
     },
     {
-      "from_clause": "STO-PAP-2026-END-5-F.PERIOD_TERRITORY",
+      "from_clause": "AP-PAP-2026-END-5-F.TERMINATION",
       "relation": "endorsement_modifies",
-      "to_clause": "STO-PAP-2026-F.PERIOD_TERRITORY"
+      "to_clause": "AP-PAP-2026-F.TERMINATION"
     },
     {
-      "from_clause": "STO-PAP-2026-F.LEGAL_ACTION",
+      "from_clause": "AP-PAP-2026-END-5-F.TERMINATION",
       "relation": "refers_to",
-      "to_clause": "STO-JUR-2026-J.5"
+      "to_clause": "AP-JUR-2026-J.2"
     },
     {
-      "from_clause": "STO-PAP-2026-F.TERMINATION",
+      "from_clause": "AP-PAP-2026-F.LEGAL_ACTION",
       "relation": "refers_to",
-      "to_clause": "STO-JUR-2026-J.2"
+      "to_clause": "AP-JUR-2026-J.5"
     },
     {
-      "from_clause": "SUN-PAP-2026-A.FIN_RESP",
+      "from_clause": "AP-PAP-2026-F.TERMINATION",
       "relation": "refers_to",
-      "to_clause": "SUN-JUR-2026-J.1"
+      "to_clause": "AP-JUR-2026-J.2"
     },
     {
-      "from_clause": "SUN-PAP-2026-DEF.BODILY_INJURY",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-A.INS"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.BODILY_INJURY",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-A.LIMIT"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.BODILY_INJURY",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-C.INS"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.COVERED_AUTO",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-A.EXCL.B.2"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.COVERED_AUTO",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-A.INS"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.COVERED_AUTO",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-B.INS"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.COVERED_AUTO",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-D.INS.COLLISION"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.COVERED_AUTO",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-D.INS.OTC"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.COVERED_AUTO",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-D.TRANSPORT"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.COVERED_AUTO",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-END-1-DEF.COVERED_AUTO"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.COVERED_AUTO",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-END-4-B.INS"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.FAMILY_MEMBER",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-A.EXCL.B.3"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.FAMILY_MEMBER",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-B.INS"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.FAMILY_MEMBER",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-C.EXCL.1"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.FAMILY_MEMBER",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-C.INS"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.FAMILY_MEMBER",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-D.EXCL.10"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.OCCUPYING",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-B.INS"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.PROPERTY_DAMAGE",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-A.INS"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.PROPERTY_DAMAGE",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-A.LIMIT"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-DEF.TRAILER",
-      "relation": "defines",
-      "to_clause": "SUN-PAP-2026-DEF.COVERED_AUTO"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-E.DUTIES.A.1",
+      "from_clause": "SA-PAP-2026-A.FIN_RESP",
       "relation": "refers_to",
-      "to_clause": "SUN-JUR-2026-J.3"
+      "to_clause": "SA-JUR-2026-J.1"
     },
     {
-      "from_clause": "SUN-PAP-2026-END-1-DEF.COVERED_AUTO",
+      "from_clause": "SA-PAP-2026-DEF.BODILY_INJURY",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-A.EXCL.A.4"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.BODILY_INJURY",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-A.INS"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.BODILY_INJURY",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-A.LIMIT"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.BODILY_INJURY",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-C.INS"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.COVERED_AUTO",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-A.EXCL.B.2"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.COVERED_AUTO",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-A.INS"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.COVERED_AUTO",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-B.INS"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.COVERED_AUTO",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-D.INS.COLLISION"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.COVERED_AUTO",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-D.INS.OTC"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.COVERED_AUTO",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-D.TRANSPORT"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.COVERED_AUTO",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-DEF.TEMPORARY_SUBSTITUTE"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.COVERED_AUTO",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-END-2-A.EXCL.A.5"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.COVERED_AUTO",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-END-5-F.PERIOD_TERRITORY"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.FAMILY_MEMBER",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-A.EXCL.B.3"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.FAMILY_MEMBER",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-B.INS"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.FAMILY_MEMBER",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-C.EXCL.1"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.FAMILY_MEMBER",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-C.INS"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.FAMILY_MEMBER",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-D.EXCL.10"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.FAMILY_MEMBER",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-END-1-DEF.FAMILY_MEMBER"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.OCCUPYING",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-B.INS"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.PROPERTY_DAMAGE",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-A.EXCL.A.2"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.PROPERTY_DAMAGE",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-A.EXCL.A.3"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.PROPERTY_DAMAGE",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-A.INS"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.PROPERTY_DAMAGE",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-A.LIMIT"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.TEMPORARY_SUBSTITUTE",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-A.INS"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.TRAILER",
+      "relation": "defines",
+      "to_clause": "SA-PAP-2026-DEF.COVERED_AUTO"
+    },
+    {
+      "from_clause": "SA-PAP-2026-E.DUTIES.A.1",
+      "relation": "refers_to",
+      "to_clause": "SA-JUR-2026-J.3"
+    },
+    {
+      "from_clause": "SA-PAP-2026-END-1-DEF.FAMILY_MEMBER",
       "relation": "endorsement_modifies",
-      "to_clause": "SUN-PAP-2026-DEF.COVERED_AUTO"
+      "to_clause": "SA-PAP-2026-DEF.FAMILY_MEMBER"
     },
     {
-      "from_clause": "SUN-PAP-2026-END-2-D.EXCL.5",
+      "from_clause": "SA-PAP-2026-END-2-A.EXCL.A.5",
       "relation": "endorsement_modifies",
-      "to_clause": "SUN-PAP-2026-D.EXCL.5"
+      "to_clause": "SA-PAP-2026-A.EXCL.A.5"
     },
     {
-      "from_clause": "SUN-PAP-2026-END-3-D.TRANSPORT",
+      "from_clause": "SA-PAP-2026-END-3-D.EXCL.3",
       "relation": "endorsement_modifies",
-      "to_clause": "SUN-PAP-2026-D.TRANSPORT"
+      "to_clause": "SA-PAP-2026-D.EXCL.3"
     },
     {
-      "from_clause": "SUN-PAP-2026-END-4-B.INS",
+      "from_clause": "SA-PAP-2026-END-4-C.ARBITRATION",
       "relation": "endorsement_modifies",
-      "to_clause": "SUN-PAP-2026-B.INS"
+      "to_clause": "SA-PAP-2026-C.ARBITRATION"
     },
     {
-      "from_clause": "SUN-PAP-2026-END-5-F.TERMINATION",
+      "from_clause": "SA-PAP-2026-END-5-F.PERIOD_TERRITORY",
       "relation": "endorsement_modifies",
-      "to_clause": "SUN-PAP-2026-F.TERMINATION"
+      "to_clause": "SA-PAP-2026-F.PERIOD_TERRITORY"
     },
     {
-      "from_clause": "SUN-PAP-2026-END-5-F.TERMINATION",
+      "from_clause": "SA-PAP-2026-F.LEGAL_ACTION",
       "relation": "refers_to",
-      "to_clause": "SUN-JUR-2026-J.2"
+      "to_clause": "SA-JUR-2026-J.5"
     },
     {
-      "from_clause": "SUN-PAP-2026-F.LEGAL_ACTION",
+      "from_clause": "SA-PAP-2026-F.TERMINATION",
       "relation": "refers_to",
-      "to_clause": "SUN-JUR-2026-J.5"
-    },
-    {
-      "from_clause": "SUN-PAP-2026-F.TERMINATION",
-      "relation": "refers_to",
-      "to_clause": "SUN-JUR-2026-J.2"
+      "to_clause": "SA-JUR-2026-J.2"
     }
   ],
   "tenant_id": "knotwell"

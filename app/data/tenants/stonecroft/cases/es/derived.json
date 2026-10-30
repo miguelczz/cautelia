@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Julián Posada Arango, póliza POL-245782"
+      "value": "Daniela Castaño, póliza POL-11"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -17,7 +17,7 @@
     }
   },
   "language": "es",
-  "policy_number": "POL-245782",
+  "policy_number": "POL-11",
   "record_type": "claim",
   "resolution": null,
   "state": "derived",
@@ -25,7 +25,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Buenas noches. Soy Julián Posada Arango, mi póliza es POL-245782."
+      "text": "Buenas noches. Soy Daniela Castaño, mi póliza es POL-11."
     },
     {
       "speaker": "agent",

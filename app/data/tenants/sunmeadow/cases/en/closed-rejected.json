@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Ana Torres, policy POL-422088"
+      "value": "Sofia Castro, policy POL-26"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -29,11 +29,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Subaru Outback 2014, plate BHR-9207, driven by Ana"
+      "value": "Chevrolet Equinox 2020, plate KLL-3671, driven by Sofia"
     }
   },
   "language": "en",
-  "policy_number": "POL-422088",
+  "policy_number": "POL-26",
   "record_type": "claim",
   "resolution": "rejected",
   "state": "closed",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Hi, I'm Ana Torres. My policy is POL-422088."
+      "text": "Hi, I'm Sofia Castro. My policy is POL-26."
     },
     {
       "speaker": "agent",

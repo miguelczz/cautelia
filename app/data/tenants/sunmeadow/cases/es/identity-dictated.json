@@ -5,11 +5,11 @@
   "fields": {
     "identity_and_policy": {
       "status": "stated",
-      "value": "Ana Torres, póliza POL-422088"
+      "value": "Victor Parker, póliza POL-23"
     }
   },
   "language": "es",
-  "policy_number": "POL-422088",
+  "policy_number": "POL-23",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -21,7 +21,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Mi cédula es 972-27-9135, mi celular 919-555-0116, la placa del carro BHR-9207 y la póliza POL-422088."
+      "text": "Mi cédula es 977-44-4159, mi celular 212-555-0159, la placa del carro HUL-5956 y la póliza POL-23."
     }
   ],
   "used_by": [

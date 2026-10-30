@@ -6,7 +6,7 @@ tenant_id: stonecroft
 language: es
 part_key: agreement
 texts:
-- source_id: STO-PAP-2026-AGREEMENT.1
+- source_id: SA-PAP-2026-AGREEMENT.1
   kind: clause
   clause_key: AGREEMENT.1
   part: Acuerdo
@@ -17,7 +17,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-AGREEMENT.2
+- source_id: SA-PAP-2026-AGREEMENT.2
   kind: clause
   clause_key: AGREEMENT.2
   part: Acuerdo

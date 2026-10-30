@@ -1,0 +1,16 @@
+{
+  "clause_ids": [
+    "SA-JUR-2026-J.1",
+    "SA-JUR-2026-J.2",
+    "SA-JUR-2026-J.3",
+    "SA-JUR-2026-J.4",
+    "SA-JUR-2026-J.5"
+  ],
+  "form_id": "SA-JUR-2026",
+  "form_kind": "jurisdiction",
+  "form_version": "2026.1",
+  "issuer_label": "Seguros Aburrá",
+  "issuer_tenant": "stonecroft",
+  "jurisdiction_ref": null,
+  "language": "es"
+}

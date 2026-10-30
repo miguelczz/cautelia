@@ -5,7 +5,7 @@
   "fields": {
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Felipe Giraldo Villegas, policy POL-784054"
+      "value": "Daniela Castaño, policy POL-11"
     },
     "incident_datetime": {
       "status": "stated",
@@ -17,7 +17,7 @@
     }
   },
   "language": "en",
-  "policy_number": "POL-784054",
+  "policy_number": "POL-11",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -29,7 +29,7 @@
     },
     {
       "speaker": "insured",
-      "text": "I'm Felipe Giraldo Villegas, the policy is POL-784054."
+      "text": "I'm Daniela Castaño, the policy is POL-11."
     },
     {
       "speaker": "agent",

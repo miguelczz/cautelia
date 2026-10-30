@@ -1,0 +1,16 @@
+{
+  "clauses": [
+    {
+      "clause_id": "AP-PAP-2026-END-1-DEF.COVERED_AUTO",
+      "clause_key": "DEF.COVERED_AUTO",
+      "form_id": "AP-PAP-2026-END-1",
+      "form_version": "2026.1",
+      "is_distractor": false,
+      "issuer_label": "Autos Poblado",
+      "language": "en",
+      "part": "Endorsements",
+      "text": "For this policy, a vehicle you buy during the policy period is a covered auto if you tell us about it within 45 days of taking delivery, instead of 20."
+    }
+  ],
+  "form_id": "AP-PAP-2026-END-1"
+}

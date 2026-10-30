@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Lina Herrera, póliza POL-795628"
+      "value": "Lina Diaz, póliza POL-21"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -29,11 +29,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Honda CR-V 2025, placa YWT-6641, lo conducía Lina"
+      "value": "Nissan Rogue 2012, placa BMX-6741, lo conducía Lina"
     }
   },
   "language": "es",
-  "policy_number": "POL-795628",
+  "policy_number": "POL-21",
   "record_type": "claim",
   "resolution": "rejected",
   "state": "closed",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Hola, soy Lina Herrera. Mi póliza es POL-795628."
+      "text": "Hola, soy Lina Diaz. Mi póliza es POL-21."
     },
     {
       "speaker": "agent",

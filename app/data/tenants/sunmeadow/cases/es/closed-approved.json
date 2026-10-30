@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Marco Parker, póliza POL-200117"
+      "value": "Ivan Moreno, póliza POL-25"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -25,15 +25,15 @@
     },
     "other_parties": {
       "status": "stated",
-      "value": "Un conductor, Andrés Betancur Salazar, en un vehículo de placa MNL849"
+      "value": "Un conductor, Andrés Betancur, en un vehículo de placa CMN084"
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Ford Escape 2020, placa NUH-3733, lo conducía Marco"
+      "value": "Honda Civic 2014, placa GRJ-5764, lo conducía Ivan"
     }
   },
   "language": "es",
-  "policy_number": "POL-200117",
+  "policy_number": "POL-25",
   "record_type": "claim",
   "resolution": "approved",
   "state": "closed",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Buenos días, quiero reportar un choque. Soy Marco Parker, póliza POL-200117."
+      "text": "Buenos días, quiero reportar un choque. Soy Ivan Moreno, póliza POL-25."
     },
     {
       "speaker": "agent",
@@ -73,7 +73,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Mi Ford Escape 2020, placa NUH-3733. Lo manejaba yo."
+      "text": "Mi Honda Civic 2014, placa GRJ-5764. Lo manejaba yo."
     },
     {
       "speaker": "agent",
@@ -81,7 +81,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Sí, se llama Andrés Betancur Salazar y la placa de su carro es MNL849."
+      "text": "Sí, se llama Andrés Betancur y la placa de su carro es CMN084."
     },
     {
       "speaker": "staff",

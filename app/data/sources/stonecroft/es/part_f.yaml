@@ -6,7 +6,7 @@ tenant_id: stonecroft
 language: es
 part_key: part_f
 texts:
-- source_id: STO-PAP-2026-F.BANKRUPTCY
+- source_id: SA-PAP-2026-F.BANKRUPTCY
   kind: clause
   clause_key: F.BANKRUPTCY
   part: Parte F — Disposiciones generales
@@ -16,7 +16,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-F.CHANGES
+- source_id: SA-PAP-2026-F.CHANGES
   kind: clause
   clause_key: F.CHANGES
   part: Parte F — Disposiciones generales
@@ -26,7 +26,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-F.FRAUD
+- source_id: SA-PAP-2026-F.FRAUD
   kind: clause
   clause_key: F.FRAUD
   part: Parte F — Disposiciones generales
@@ -36,7 +36,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-F.LEGAL_ACTION
+- source_id: SA-PAP-2026-F.LEGAL_ACTION
   kind: clause
   clause_key: F.LEGAL_ACTION
   part: Parte F — Disposiciones generales
@@ -44,11 +44,11 @@ texts:
   text: Nadie puede demandarnos por esta póliza sin haber atendido antes las obligaciones que ella impone,
     y la demanda debe presentarse dentro del plazo que fija el documento de jurisdicción de Corvane.
   refers_to:
-  - STO-JUR-2026-J.5
+  - SA-JUR-2026-J.5
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-F.RECOVERY
+- source_id: SA-PAP-2026-F.RECOVERY
   kind: clause
   clause_key: F.RECOVERY
   part: Parte F — Disposiciones generales
@@ -58,7 +58,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-F.PERIOD_TERRITORY
+- source_id: SA-PAP-2026-F.PERIOD_TERRITORY
   kind: clause
   clause_key: F.PERIOD_TERRITORY
   part: Parte F — Disposiciones generales
@@ -68,7 +68,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-F.TERMINATION
+- source_id: SA-PAP-2026-F.TERMINATION
   kind: clause
   clause_key: F.TERMINATION
   part: Parte F — Disposiciones generales
@@ -77,11 +77,11 @@ texts:
     cancelarla con el aviso previo que exige el documento de jurisdicción de Corvane, y le devolvemos
     la prima del tiempo que no alcanzó a correr.
   refers_to:
-  - STO-JUR-2026-J.2
+  - SA-JUR-2026-J.2
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-F.TRANSFER
+- source_id: SA-PAP-2026-F.TRANSFER
   kind: clause
   clause_key: F.TRANSFER
   part: Parte F — Disposiciones generales
@@ -90,7 +90,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-F.TWO_POLICIES
+- source_id: SA-PAP-2026-F.TWO_POLICIES
   kind: clause
   clause_key: F.TWO_POLICIES
   part: Parte F — Disposiciones generales

@@ -1,0 +1,19 @@
+{
+  "clause_ids": [
+    "AP-PAP-2025-DEF.YOU.ALT",
+    "AP-PAP-2025-DEF.BODILY_INJURY",
+    "AP-PAP-2025-A.EXCL.A.3.ALT",
+    "AP-PAP-2025-A.EXCL.B.3",
+    "AP-PAP-2025-C.INS.ALT",
+    "AP-PAP-2025-D.EXCL.1.ALT",
+    "AP-PAP-2025-D.EXCL.2",
+    "AP-PAP-2025-E.DUTIES.A.1.ALT"
+  ],
+  "form_id": "AP-PAP-2025",
+  "form_kind": "base",
+  "form_version": "2025.1",
+  "issuer_label": "Autos Poblado",
+  "issuer_tenant": "sunmeadow",
+  "jurisdiction_ref": "AP-JUR-2026",
+  "language": "en"
+}

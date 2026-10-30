@@ -6,7 +6,7 @@ tenant_id: stonecroft
 language: es
 part_key: definitions
 texts:
-- source_id: STO-PAP-2026-DEF.YOU
+- source_id: SA-PAP-2026-DEF.YOU
   kind: clause
   clause_key: DEF.YOU
   part: Definiciones
@@ -16,7 +16,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-DEF.WE
+- source_id: SA-PAP-2026-DEF.WE
   kind: clause
   clause_key: DEF.WE
   part: Definiciones
@@ -25,7 +25,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-DEF.BODILY_INJURY
+- source_id: SA-PAP-2026-DEF.BODILY_INJURY
   kind: clause
   clause_key: DEF.BODILY_INJURY
   part: Definiciones
@@ -38,7 +38,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-DEF.PROPERTY_DAMAGE
+- source_id: SA-PAP-2026-DEF.PROPERTY_DAMAGE
   kind: clause
   clause_key: DEF.PROPERTY_DAMAGE
   part: Definiciones
@@ -51,7 +51,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-DEF.COVERED_AUTO
+- source_id: SA-PAP-2026-DEF.COVERED_AUTO
   kind: clause
   clause_key: DEF.COVERED_AUTO
   part: Definiciones
@@ -65,7 +65,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-DEF.TEMPORARY_SUBSTITUTE
+- source_id: SA-PAP-2026-DEF.TEMPORARY_SUBSTITUTE
   kind: clause
   clause_key: DEF.TEMPORARY_SUBSTITUTE
   part: Definiciones
@@ -78,7 +78,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-DEF.TRAILER
+- source_id: SA-PAP-2026-DEF.TRAILER
   kind: clause
   clause_key: DEF.TRAILER
   part: Definiciones
@@ -91,7 +91,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-DEF.FAMILY_MEMBER
+- source_id: SA-PAP-2026-DEF.FAMILY_MEMBER
   kind: clause
   clause_key: DEF.FAMILY_MEMBER
   part: Definiciones
@@ -104,7 +104,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-DEF.OCCUPYING
+- source_id: SA-PAP-2026-DEF.OCCUPYING
   kind: clause
   clause_key: DEF.OCCUPYING
   part: Definiciones
@@ -117,26 +117,26 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2025-DEF.YOU.ALT
+- source_id: SA-PAP-2025-DEF.YOU.ALT
   kind: distractor
   clause_key: DEF.YOU.ALT
   part: Definiciones
   version: '2025.1'
   text: «Usted» es solamente la persona que aparece como asegurada principal en la carátula; su pareja
     no queda incluida aunque viva con ella.
-  distractor_of: STO-PAP-2026-DEF.YOU
+  distractor_of: SA-PAP-2026-DEF.YOU
   distractor_reason: near_duplicate
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2025-DEF.COVERED_AUTO
+- source_id: SA-PAP-2025-DEF.COVERED_AUTO
   kind: distractor
   clause_key: DEF.COVERED_AUTO
   part: Definiciones
   version: '2025.1'
   text: «Vehículo cubierto» es el vehículo que figura en la carátula. Un vehículo comprado durante la
     vigencia solo queda cubierto desde que se incluye en la carátula mediante un endoso.
-  distractor_of: STO-PAP-2026-DEF.COVERED_AUTO
+  distractor_of: SA-PAP-2026-DEF.COVERED_AUTO
   distractor_reason: superseded_version
   reviewed_at: '2026-09-21'
   reviewed_by: conductor

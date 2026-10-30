@@ -6,7 +6,7 @@ tenant_id: stonecroft
 language: es
 part_key: part_d
 texts:
-- source_id: STO-PAP-2026-D.INS.COLLISION
+- source_id: SA-PAP-2026-D.INS.COLLISION
   kind: clause
   clause_key: D.INS.COLLISION
   part: Parte D — Daños a su vehículo
@@ -17,7 +17,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.INS.OTC
+- source_id: SA-PAP-2026-D.INS.OTC
   kind: clause
   clause_key: D.INS.OTC
   part: Parte D — Daños a su vehículo
@@ -28,7 +28,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.TRANSPORT
+- source_id: SA-PAP-2026-D.TRANSPORT
   kind: clause
   clause_key: D.TRANSPORT
   part: Parte D — Daños a su vehículo
@@ -39,7 +39,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.EXCL.1
+- source_id: SA-PAP-2026-D.EXCL.1
   kind: clause
   clause_key: D.EXCL.1
   part: Parte D — Daños a su vehículo
@@ -49,7 +49,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.EXCL.2
+- source_id: SA-PAP-2026-D.EXCL.2
   kind: clause
   clause_key: D.EXCL.2
   part: Parte D — Daños a su vehículo
@@ -59,7 +59,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.EXCL.3
+- source_id: SA-PAP-2026-D.EXCL.3
   kind: clause
   clause_key: D.EXCL.3
   part: Parte D — Daños a su vehículo
@@ -69,7 +69,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.EXCL.4
+- source_id: SA-PAP-2026-D.EXCL.4
   kind: clause
   clause_key: D.EXCL.4
   part: Parte D — Daños a su vehículo
@@ -79,7 +79,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-D.EXCL.5
+- source_id: SA-PAP-2026-D.EXCL.5
   kind: clause
   clause_key: D.EXCL.5
   part: Parte D — Daños a su vehículo
@@ -89,7 +89,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.EXCL.6
+- source_id: SA-PAP-2026-D.EXCL.6
   kind: clause
   clause_key: D.EXCL.6
   part: Parte D — Daños a su vehículo
@@ -99,7 +99,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.EXCL.7
+- source_id: SA-PAP-2026-D.EXCL.7
   kind: clause
   clause_key: D.EXCL.7
   part: Parte D — Daños a su vehículo
@@ -108,7 +108,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.EXCL.8
+- source_id: SA-PAP-2026-D.EXCL.8
   kind: clause
   clause_key: D.EXCL.8
   part: Parte D — Daños a su vehículo
@@ -118,7 +118,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.EXCL.9
+- source_id: SA-PAP-2026-D.EXCL.9
   kind: clause
   clause_key: D.EXCL.9
   part: Parte D — Daños a su vehículo
@@ -128,7 +128,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.EXCL.10
+- source_id: SA-PAP-2026-D.EXCL.10
   kind: clause
   clause_key: D.EXCL.10
   part: Parte D — Daños a su vehículo
@@ -137,7 +137,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-D.EXCL.11
+- source_id: SA-PAP-2026-D.EXCL.11
   kind: clause
   clause_key: D.EXCL.11
   part: Parte D — Daños a su vehículo
@@ -146,7 +146,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.EXCL.12
+- source_id: SA-PAP-2026-D.EXCL.12
   kind: clause
   clause_key: D.EXCL.12
   part: Parte D — Daños a su vehículo
@@ -156,7 +156,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.EXCL.13
+- source_id: SA-PAP-2026-D.EXCL.13
   kind: clause
   clause_key: D.EXCL.13
   part: Parte D — Daños a su vehículo
@@ -166,7 +166,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.LIMIT
+- source_id: SA-PAP-2026-D.LIMIT
   kind: clause
   clause_key: D.LIMIT
   part: Parte D — Daños a su vehículo
@@ -176,7 +176,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.PAYMENT
+- source_id: SA-PAP-2026-D.PAYMENT
   kind: clause
   clause_key: D.PAYMENT
   part: Parte D — Daños a su vehículo
@@ -187,7 +187,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.NO_BAILEE
+- source_id: SA-PAP-2026-D.NO_BAILEE
   kind: clause
   clause_key: D.NO_BAILEE
   part: Parte D — Daños a su vehículo
@@ -197,7 +197,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.OTHER_SOURCES
+- source_id: SA-PAP-2026-D.OTHER_SOURCES
   kind: clause
   clause_key: D.OTHER_SOURCES
   part: Parte D — Daños a su vehículo
@@ -207,7 +207,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-D.APPRAISAL
+- source_id: SA-PAP-2026-D.APPRAISAL
   kind: clause
   clause_key: D.APPRAISAL
   part: Parte D — Daños a su vehículo
@@ -218,26 +218,26 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2025-D.INS.COLLISION.ALT
+- source_id: SA-PAP-2025-D.INS.COLLISION.ALT
   kind: distractor
   clause_key: D.INS.COLLISION.ALT
   part: Parte D — Daños a su vehículo
   version: '2025.1'
   text: Seguros Aburrá paga los daños directos que sufra su vehículo cubierto por chocar o volcarse,
     menos el deducible de colisión, solo si el choque lo causó otra persona.
-  distractor_of: STO-PAP-2026-D.INS.COLLISION
+  distractor_of: SA-PAP-2026-D.INS.COLLISION
   distractor_reason: near_duplicate
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2025-D.TRANSPORT
+- source_id: SA-PAP-2025-D.TRANSPORT
   kind: distractor
   clause_key: D.TRANSPORT
   part: Parte D — Daños a su vehículo
   version: '2025.1'
   text: Si su vehículo cubierto queda fuera de servicio por un robo o por un daño cubierto, le reembolsamos
     los gastos de transporte hasta $12 por día y $360 en total, a partir del tercer día.
-  distractor_of: STO-PAP-2026-D.TRANSPORT
+  distractor_of: SA-PAP-2026-D.TRANSPORT
   distractor_reason: superseded_version
   reviewed_at: '2026-09-21'
   reviewed_by: conductor

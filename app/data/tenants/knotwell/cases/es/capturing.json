@@ -5,7 +5,7 @@
   "fields": {
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Lucía Ochoa Henao, póliza POL-650485"
+      "value": "Felipe Londoño, póliza POL-33"
     },
     "incident_datetime": {
       "status": "stated",
@@ -17,7 +17,7 @@
     }
   },
   "language": "es",
-  "policy_number": "POL-650485",
+  "policy_number": "POL-33",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -29,7 +29,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Soy Lucía Ochoa Henao, la póliza es POL-650485."
+      "text": "Soy Felipe Londoño, la póliza es POL-33."
     },
     {
       "speaker": "agent",

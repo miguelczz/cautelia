@@ -14,16 +14,16 @@
 tenant_id: stonecroft
 sample_seed: 20260916
 clause_ids:
-  - STO-PAP-2026-A.EXCL.A.8  # Parte A — Responsabilidad civil, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
-  - STO-PAP-2026-C.EXCL.1  # Parte C — Conductores sin seguro, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
-  - STO-PAP-2026-C.EXCL.4  # Parte C — Conductores sin seguro, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
-  - STO-PAP-2026-C.LIMIT  # Parte C — Conductores sin seguro, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
-  - STO-PAP-2026-C.OTHER  # Parte C — Conductores sin seguro, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
-  - STO-PAP-2026-D.APPRAISAL  # Parte D — Daños a su vehículo, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
-  - STO-PAP-2026-D.INS.OTC  # Parte D — Daños a su vehículo, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
-  - STO-PAP-2026-E.DUTIES.A.3  # Parte E — Obligaciones después de un accidente o pérdida, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
-  - STO-PAP-2026-E.DUTIES.D.1  # Parte E — Obligaciones después de un accidente o pérdida, en app/data/tenants/stonecroft/clauses/STO-PAP-2026.json
-  - STO-PAP-2026-END-5-F.PERIOD_TERRITORY  # Endosos, en app/data/tenants/stonecroft/clauses/STO-PAP-2026-END-5.json
+  - SA-PAP-2026-A.EXCL.A.8  # Parte A — Responsabilidad civil, en app/data/tenants/stonecroft/clauses/SA-PAP-2026.json
+  - SA-PAP-2026-C.EXCL.1  # Parte C — Conductores sin seguro, en app/data/tenants/stonecroft/clauses/SA-PAP-2026.json
+  - SA-PAP-2026-C.EXCL.4  # Parte C — Conductores sin seguro, en app/data/tenants/stonecroft/clauses/SA-PAP-2026.json
+  - SA-PAP-2026-C.LIMIT  # Parte C — Conductores sin seguro, en app/data/tenants/stonecroft/clauses/SA-PAP-2026.json
+  - SA-PAP-2026-C.OTHER  # Parte C — Conductores sin seguro, en app/data/tenants/stonecroft/clauses/SA-PAP-2026.json
+  - SA-PAP-2026-D.APPRAISAL  # Parte D — Daños a su vehículo, en app/data/tenants/stonecroft/clauses/SA-PAP-2026.json
+  - SA-PAP-2026-D.INS.OTC  # Parte D — Daños a su vehículo, en app/data/tenants/stonecroft/clauses/SA-PAP-2026.json
+  - SA-PAP-2026-E.DUTIES.A.3  # Parte E — Obligaciones después de un accidente o pérdida, en app/data/tenants/stonecroft/clauses/SA-PAP-2026.json
+  - SA-PAP-2026-E.DUTIES.D.1  # Parte E — Obligaciones después de un accidente o pérdida, en app/data/tenants/stonecroft/clauses/SA-PAP-2026.json
+  - SA-PAP-2026-END-5-F.PERIOD_TERRITORY  # Endosos, en app/data/tenants/stonecroft/clauses/SA-PAP-2026-END-5.json
 reviewed_on: 2026-09-21
 commit: ae2062da61fcd1e8823a676096212ca9769630fc
 verdict: own_text_structure_ok

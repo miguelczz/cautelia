@@ -8,7 +8,7 @@ tenant_id: sunmeadow
 language: en
 part_key: part_e
 texts:
-- source_id: SUN-PAP-2026-E.DUTIES.A.1
+- source_id: AP-PAP-2026-E.DUTIES.A.1
   kind: clause
   clause_key: E.DUTIES.A.1
   part: Part E — Duties After an Accident or Loss
@@ -16,11 +16,11 @@ texts:
   text: Tell us about any accident or loss as soon as you can, and always within the deadline set in the
     Corvane jurisdiction document.
   refers_to:
-  - SUN-JUR-2026-J.3
+  - AP-JUR-2026-J.3
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-E.DUTIES.A.2
+- source_id: AP-PAP-2026-E.DUTIES.A.2
   kind: clause
   clause_key: E.DUTIES.A.2
   part: Part E — Duties After an Accident or Loss
@@ -29,7 +29,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-E.DUTIES.A.3
+- source_id: AP-PAP-2026-E.DUTIES.A.3
   kind: clause
   clause_key: E.DUTIES.A.3
   part: Part E — Duties After an Accident or Loss
@@ -38,7 +38,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-E.DUTIES.B.1
+- source_id: AP-PAP-2026-E.DUTIES.B.1
   kind: clause
   clause_key: E.DUTIES.B.1
   part: Part E — Duties After an Accident or Loss
@@ -47,7 +47,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-E.DUTIES.B.2
+- source_id: AP-PAP-2026-E.DUTIES.B.2
   kind: clause
   clause_key: E.DUTIES.B.2
   part: Part E — Duties After an Accident or Loss
@@ -56,7 +56,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-E.DUTIES.B.3
+- source_id: AP-PAP-2026-E.DUTIES.B.3
   kind: clause
   clause_key: E.DUTIES.B.3
   part: Part E — Duties After an Accident or Loss
@@ -66,7 +66,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-E.DUTIES.B.4
+- source_id: AP-PAP-2026-E.DUTIES.B.4
   kind: clause
   clause_key: E.DUTIES.B.4
   part: Part E — Duties After an Accident or Loss
@@ -76,7 +76,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-E.DUTIES.C.1
+- source_id: AP-PAP-2026-E.DUTIES.C.1
   kind: clause
   clause_key: E.DUTIES.C.1
   part: Part E — Duties After an Accident or Loss
@@ -86,7 +86,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-E.DUTIES.C.2
+- source_id: AP-PAP-2026-E.DUTIES.C.2
   kind: clause
   clause_key: E.DUTIES.C.2
   part: Part E — Duties After an Accident or Loss
@@ -96,7 +96,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-E.DUTIES.D.1
+- source_id: AP-PAP-2026-E.DUTIES.D.1
   kind: clause
   clause_key: E.DUTIES.D.1
   part: Part E — Duties After an Accident or Loss
@@ -106,7 +106,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-E.DUTIES.D.2
+- source_id: AP-PAP-2026-E.DUTIES.D.2
   kind: clause
   clause_key: E.DUTIES.D.2
   part: Part E — Duties After an Accident or Loss
@@ -115,7 +115,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-E.DUTIES.D.3
+- source_id: AP-PAP-2026-E.DUTIES.D.3
   kind: clause
   clause_key: E.DUTIES.D.3
   part: Part E — Duties After an Accident or Loss
@@ -124,13 +124,13 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2025-E.DUTIES.A.1.ALT
+- source_id: AP-PAP-2025-E.DUTIES.A.1.ALT
   kind: distractor
   clause_key: E.DUTIES.A.1.ALT
   part: Part E — Duties After an Accident or Loss
   version: '2025.1'
   text: Tell us about any accident or loss within 30 days; after that, the notice is no longer accepted.
-  distractor_of: SUN-PAP-2026-E.DUTIES.A.1
+  distractor_of: AP-PAP-2026-E.DUTIES.A.1
   distractor_reason: near_duplicate
   reviewed_at: '2026-09-21'
   reviewed_by: conductor

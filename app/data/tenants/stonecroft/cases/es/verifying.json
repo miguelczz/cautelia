@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Santiago Quintero Echeverri, póliza POL-814225"
+      "value": "Mateo Muñoz, póliza POL-12"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -25,15 +25,15 @@
     },
     "other_parties": {
       "status": "stated",
-      "value": "Un conductor, Ximena Villegas Correa, en un vehículo de placa HSM582"
+      "value": "Un conductor, Ximena Villegas, en un vehículo de placa DHS858"
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Renault Duster 2020, placa PMJ528, lo conducía Santiago"
+      "value": "Hyundai Accent 2021, placa GHA461, lo conducía Mateo"
     }
   },
   "language": "es",
-  "policy_number": "POL-814225",
+  "policy_number": "POL-12",
   "record_type": "claim",
   "resolution": null,
   "state": "verifying",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Buenos días, quiero reportar un choque. Soy Santiago Quintero Echeverri, póliza POL-814225."
+      "text": "Buenos días, quiero reportar un choque. Soy Mateo Muñoz, póliza POL-12."
     },
     {
       "speaker": "agent",
@@ -73,7 +73,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Mi Renault Duster 2020, placa PMJ528. Lo manejaba yo."
+      "text": "Mi Hyundai Accent 2021, placa GHA461. Lo manejaba yo."
     },
     {
       "speaker": "agent",
@@ -81,7 +81,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Sí, se llama Ximena Villegas Correa y la placa de su carro es HSM582."
+      "text": "Sí, se llama Ximena Villegas y la placa de su carro es DHS858."
     }
   ],
   "used_by": [

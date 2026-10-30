@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Lucía Ochoa Henao, policy POL-650485"
+      "value": "Felipe Londoño, policy POL-33"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -29,11 +29,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Kia Sportage 2013, plate JTS836, driven by Lucía"
+      "value": "Kia Picanto 2018, plate JAA434, driven by Felipe"
     }
   },
   "language": "en",
-  "policy_number": "POL-650485",
+  "policy_number": "POL-33",
   "record_type": "claim",
   "resolution": null,
   "state": "verifying",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Good morning, I want to report a crash. I'm Lucía Ochoa Henao, policy POL-650485."
+      "text": "Good morning, I want to report a crash. I'm Felipe Londoño, policy POL-33."
     },
     {
       "speaker": "agent",
@@ -73,7 +73,7 @@
     },
     {
       "speaker": "insured",
-      "text": "My Kia Sportage 2013, plate JTS836. I was driving."
+      "text": "My Kia Picanto 2018, plate JAA434. I was driving."
     },
     {
       "speaker": "agent",

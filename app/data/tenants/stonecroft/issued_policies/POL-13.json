@@ -1,0 +1,49 @@
+{
+  "drivers": [
+    {
+      "full_name": "Laura Mejía"
+    },
+    {
+      "full_name": "Juliana Mejía"
+    }
+  ],
+  "endorsement_ids": [
+    "SA-PAP-2026-END-5"
+  ],
+  "form_id": "SA-PAP-2026",
+  "form_version": "2026.1",
+  "issuer_tenant": "stonecroft",
+  "limits_and_deductibles": {
+    "a.bodily_injury_per_accident": 200000,
+    "a.bodily_injury_per_person": 100000,
+    "a.property_damage": 50000,
+    "b.medical_payments_per_person": 10000,
+    "c.uninsured_per_accident": 200000,
+    "c.uninsured_per_person": 100000,
+    "d.collision_deductible": 1000,
+    "d.other_than_collision_deductible": 100
+  },
+  "named_insured": {
+    "email": "laura.mejia@example.com",
+    "full_name": "Laura Mejía",
+    "national_id": "31.283.173",
+    "persona_id": "sa-per-13",
+    "phone": "311 555 0175"
+  },
+  "period_end": "2027-03-14",
+  "period_start": "2026-03-14",
+  "policy_number": "POL-13",
+  "tenant_id": "stonecroft",
+  "vehicles": [
+    {
+      "make_model_year": "Renault Logan 2012",
+      "plate": "MWV531",
+      "vin": "WD2SLP8E02M921764"
+    },
+    {
+      "make_model_year": "Volkswagen Gol 2012",
+      "plate": "EWD799",
+      "vin": "EA4HSE4G4YL562746"
+    }
+  ]
+}

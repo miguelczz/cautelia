@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Alex Moreno, policy POL-480915"
+      "value": "Sofia Castro, policy POL-26"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -29,11 +29,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Hyundai Elantra 2024, plate NKV-9219, driven by Alex"
+      "value": "Chevrolet Equinox 2020, plate KLL-3671, driven by Sofia"
     }
   },
   "language": "en",
-  "policy_number": "POL-480915",
+  "policy_number": "POL-26",
   "record_type": "claim",
   "resolution": "approved",
   "state": "closed",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Good morning, I want to report a crash. I'm Alex Moreno, policy POL-480915."
+      "text": "Good morning, I want to report a crash. I'm Sofia Castro, policy POL-26."
     },
     {
       "speaker": "agent",
@@ -73,7 +73,7 @@
     },
     {
       "speaker": "insured",
-      "text": "My Hyundai Elantra 2024, plate NKV-9219. I was driving."
+      "text": "My Chevrolet Equinox 2020, plate KLL-3671. I was driving."
     },
     {
       "speaker": "agent",

@@ -8,7 +8,7 @@ tenant_id: sunmeadow
 language: en
 part_key: part_a
 texts:
-- source_id: SUN-PAP-2026-A.INS
+- source_id: AP-PAP-2026-A.INS
   kind: clause
   clause_key: A.INS
   part: Part A — Liability Coverage
@@ -20,7 +20,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.SUPP
+- source_id: AP-PAP-2026-A.SUPP
   kind: clause
   clause_key: A.SUPP
   part: Part A — Liability Coverage
@@ -31,7 +31,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.EXCL.A.1
+- source_id: AP-PAP-2026-A.EXCL.A.1
   kind: clause
   clause_key: A.EXCL.A.1
   part: Part A — Liability Coverage
@@ -41,7 +41,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.EXCL.A.2
+- source_id: AP-PAP-2026-A.EXCL.A.2
   kind: clause
   clause_key: A.EXCL.A.2
   part: Part A — Liability Coverage
@@ -50,7 +50,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.EXCL.A.3
+- source_id: AP-PAP-2026-A.EXCL.A.3
   kind: clause
   clause_key: A.EXCL.A.3
   part: Part A — Liability Coverage
@@ -60,7 +60,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.EXCL.A.4
+- source_id: AP-PAP-2026-A.EXCL.A.4
   kind: clause
   clause_key: A.EXCL.A.4
   part: Part A — Liability Coverage
@@ -70,7 +70,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.EXCL.A.5
+- source_id: AP-PAP-2026-A.EXCL.A.5
   kind: clause
   clause_key: A.EXCL.A.5
   part: Part A — Liability Coverage
@@ -81,7 +81,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.EXCL.A.6
+- source_id: AP-PAP-2026-A.EXCL.A.6
   kind: clause
   clause_key: A.EXCL.A.6
   part: Part A — Liability Coverage
@@ -91,7 +91,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.EXCL.A.7
+- source_id: AP-PAP-2026-A.EXCL.A.7
   kind: clause
   clause_key: A.EXCL.A.7
   part: Part A — Liability Coverage
@@ -101,7 +101,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.EXCL.A.8
+- source_id: AP-PAP-2026-A.EXCL.A.8
   kind: clause
   clause_key: A.EXCL.A.8
   part: Part A — Liability Coverage
@@ -111,7 +111,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.EXCL.A.9
+- source_id: AP-PAP-2026-A.EXCL.A.9
   kind: clause
   clause_key: A.EXCL.A.9
   part: Part A — Liability Coverage
@@ -121,7 +121,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.EXCL.B.1
+- source_id: AP-PAP-2026-A.EXCL.B.1
   kind: clause
   clause_key: A.EXCL.B.1
   part: Part A — Liability Coverage
@@ -131,7 +131,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.EXCL.B.2
+- source_id: AP-PAP-2026-A.EXCL.B.2
   kind: clause
   clause_key: A.EXCL.B.2
   part: Part A — Liability Coverage
@@ -141,7 +141,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.EXCL.B.3
+- source_id: AP-PAP-2026-A.EXCL.B.3
   kind: clause
   clause_key: A.EXCL.B.3
   part: Part A — Liability Coverage
@@ -151,7 +151,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.LIMIT
+- source_id: AP-PAP-2026-A.LIMIT
   kind: clause
   clause_key: A.LIMIT
   part: Part A — Liability Coverage
@@ -163,7 +163,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.OUT_OF_STATE
+- source_id: AP-PAP-2026-A.OUT_OF_STATE
   kind: clause
   clause_key: A.OUT_OF_STATE
   part: Part A — Liability Coverage
@@ -174,7 +174,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.FIN_RESP
+- source_id: AP-PAP-2026-A.FIN_RESP
   kind: clause
   clause_key: A.FIN_RESP
   part: Part A — Liability Coverage
@@ -182,11 +182,11 @@ texts:
   text: When a Corvane authority asks for proof that a driver carries liability insurance, this policy
     serves as that proof, with at least the minimum limits set in the jurisdiction document.
   refers_to:
-  - SUN-JUR-2026-J.1
+  - AP-JUR-2026-J.1
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-A.OTHER
+- source_id: AP-PAP-2026-A.OTHER
   kind: clause
   clause_key: A.OTHER
   part: Part A — Liability Coverage
@@ -197,26 +197,26 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2025-A.EXCL.A.3.ALT
+- source_id: AP-PAP-2025-A.EXCL.A.3.ALT
   kind: distractor
   clause_key: A.EXCL.A.3.ALT
   part: Part A — Liability Coverage
   version: '2025.1'
   text: Part A does not cover damage to things the insured has rented or is looking after for someone
     else; things the insured borrowed are covered.
-  distractor_of: SUN-PAP-2026-A.EXCL.A.3
+  distractor_of: AP-PAP-2026-A.EXCL.A.3
   distractor_reason: near_duplicate
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: SUN-PAP-2025-A.EXCL.B.3
+- source_id: AP-PAP-2025-A.EXCL.B.3
   kind: distractor
   clause_key: A.EXCL.B.3
   part: Part A — Liability Coverage
   version: '2025.1'
   text: Part A does not cover using any vehicle that a family member owns, whether or not it is listed
     on the declarations page.
-  distractor_of: SUN-PAP-2026-A.EXCL.B.3
+  distractor_of: AP-PAP-2026-A.EXCL.B.3
   distractor_reason: superseded_version
   reviewed_at: '2026-09-21'
   reviewed_by: conductor

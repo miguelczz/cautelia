@@ -8,7 +8,7 @@ tenant_id: sunmeadow
 language: en
 part_key: endorsements
 texts:
-- source_id: SUN-PAP-2026-END-1-DEF.COVERED_AUTO
+- source_id: AP-PAP-2026-END-1-DEF.COVERED_AUTO
   kind: endorsement
   clause_key: DEF.COVERED_AUTO
   part: Endorsements
@@ -18,7 +18,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-END-2-D.EXCL.5
+- source_id: AP-PAP-2026-END-2-D.EXCL.5
   kind: endorsement
   clause_key: D.EXCL.5
   part: Endorsements
@@ -29,7 +29,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-END-3-D.TRANSPORT
+- source_id: AP-PAP-2026-END-3-D.TRANSPORT
   kind: endorsement
   clause_key: D.TRANSPORT
   part: Endorsements
@@ -39,7 +39,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: SUN-PAP-2026-END-4-B.INS
+- source_id: AP-PAP-2026-END-4-B.INS
   kind: endorsement
   clause_key: B.INS
   part: Endorsements
@@ -49,7 +49,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-END-5-F.TERMINATION
+- source_id: AP-PAP-2026-END-5-F.TERMINATION
   kind: endorsement
   clause_key: F.TERMINATION
   part: Endorsements
@@ -57,7 +57,7 @@ texts:
   text: When we cancel this policy for any reason other than unpaid premium, we give at least 45 days
     of written notice, more than the Corvane minimum.
   refers_to:
-  - SUN-JUR-2026-J.2
+  - AP-JUR-2026-J.2
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand

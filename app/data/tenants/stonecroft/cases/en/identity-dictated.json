@@ -5,11 +5,11 @@
   "fields": {
     "identity_and_policy": {
       "status": "stated",
-      "value": "Natalia Henao Rendón, policy POL-100042"
+      "value": "Mateo Muñoz, policy POL-12"
     }
   },
   "language": "en",
-  "policy_number": "POL-100042",
+  "policy_number": "POL-12",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -21,7 +21,7 @@
     },
     {
       "speaker": "insured",
-      "text": "My ID number is 45.819.323, my cell is 304 555 0160, the car's plate is WBR686 and the policy is POL-100042."
+      "text": "My ID number is 51.675.160, my cell is 310 555 0185, the car's plate is GHA461 and the policy is POL-12."
     }
   ],
   "used_by": [

@@ -5,7 +5,7 @@
   "fields": {
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Lina Herrera, póliza POL-795628"
+      "value": "Victor Parker, póliza POL-23"
     },
     "incident_datetime": {
       "status": "stated",
@@ -17,7 +17,7 @@
     }
   },
   "language": "es",
-  "policy_number": "POL-795628",
+  "policy_number": "POL-23",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -29,7 +29,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Soy Lina Herrera, la póliza es POL-795628."
+      "text": "Soy Victor Parker, la póliza es POL-23."
     },
     {
       "speaker": "agent",

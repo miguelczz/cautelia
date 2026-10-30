@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Camilo Muñoz Correa, policy POL-916742"
+      "value": "Rebecca Lewis, policy POL-34"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -29,11 +29,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Suzuki Swift 2015, plate VDY720, driven by Camilo"
+      "value": "Ford F-150 2013, plate USL-5923, driven by Rebecca"
     }
   },
   "language": "en",
-  "policy_number": "POL-916742",
+  "policy_number": "POL-34",
   "record_type": "claim",
   "resolution": null,
   "state": "deciding",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Hi, I'm Camilo Muñoz Correa. My policy is POL-916742."
+      "text": "Hi, I'm Rebecca Lewis. My policy is POL-34."
     },
     {
       "speaker": "agent",

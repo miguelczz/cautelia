@@ -8,7 +8,7 @@ tenant_id: sunmeadow
 language: en
 part_key: part_b
 texts:
-- source_id: SUN-PAP-2026-B.INS
+- source_id: AP-PAP-2026-B.INS
   kind: clause
   clause_key: B.INS
   part: Part B — Medical Payments Coverage
@@ -19,7 +19,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-B.EXCL.1
+- source_id: AP-PAP-2026-B.EXCL.1
   kind: clause
   clause_key: B.EXCL.1
   part: Part B — Medical Payments Coverage
@@ -28,7 +28,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-B.EXCL.2
+- source_id: AP-PAP-2026-B.EXCL.2
   kind: clause
   clause_key: B.EXCL.2
   part: Part B — Medical Payments Coverage
@@ -37,7 +37,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-B.EXCL.3
+- source_id: AP-PAP-2026-B.EXCL.3
   kind: clause
   clause_key: B.EXCL.3
   part: Part B — Medical Payments Coverage
@@ -47,7 +47,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-B.EXCL.4
+- source_id: AP-PAP-2026-B.EXCL.4
   kind: clause
   clause_key: B.EXCL.4
   part: Part B — Medical Payments Coverage
@@ -56,7 +56,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-B.LIMIT
+- source_id: AP-PAP-2026-B.LIMIT
   kind: clause
   clause_key: B.LIMIT
   part: Part B — Medical Payments Coverage
@@ -66,7 +66,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-B.OTHER
+- source_id: AP-PAP-2026-B.OTHER
   kind: clause
   clause_key: B.OTHER
   part: Part B — Medical Payments Coverage

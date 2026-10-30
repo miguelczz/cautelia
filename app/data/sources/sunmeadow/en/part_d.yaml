@@ -8,7 +8,7 @@ tenant_id: sunmeadow
 language: en
 part_key: part_d
 texts:
-- source_id: SUN-PAP-2026-D.INS.COLLISION
+- source_id: AP-PAP-2026-D.INS.COLLISION
   kind: clause
   clause_key: D.INS.COLLISION
   part: Part D — Coverage for Damage to Your Auto
@@ -19,7 +19,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.INS.OTC
+- source_id: AP-PAP-2026-D.INS.OTC
   kind: clause
   clause_key: D.INS.OTC
   part: Part D — Coverage for Damage to Your Auto
@@ -30,7 +30,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.TRANSPORT
+- source_id: AP-PAP-2026-D.TRANSPORT
   kind: clause
   clause_key: D.TRANSPORT
   part: Part D — Coverage for Damage to Your Auto
@@ -41,7 +41,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.EXCL.1
+- source_id: AP-PAP-2026-D.EXCL.1
   kind: clause
   clause_key: D.EXCL.1
   part: Part D — Coverage for Damage to Your Auto
@@ -50,7 +50,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.EXCL.2
+- source_id: AP-PAP-2026-D.EXCL.2
   kind: clause
   clause_key: D.EXCL.2
   part: Part D — Coverage for Damage to Your Auto
@@ -60,7 +60,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.EXCL.3
+- source_id: AP-PAP-2026-D.EXCL.3
   kind: clause
   clause_key: D.EXCL.3
   part: Part D — Coverage for Damage to Your Auto
@@ -70,7 +70,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.EXCL.4
+- source_id: AP-PAP-2026-D.EXCL.4
   kind: clause
   clause_key: D.EXCL.4
   part: Part D — Coverage for Damage to Your Auto
@@ -80,7 +80,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.EXCL.5
+- source_id: AP-PAP-2026-D.EXCL.5
   kind: clause
   clause_key: D.EXCL.5
   part: Part D — Coverage for Damage to Your Auto
@@ -90,7 +90,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.EXCL.6
+- source_id: AP-PAP-2026-D.EXCL.6
   kind: clause
   clause_key: D.EXCL.6
   part: Part D — Coverage for Damage to Your Auto
@@ -100,7 +100,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.EXCL.7
+- source_id: AP-PAP-2026-D.EXCL.7
   kind: clause
   clause_key: D.EXCL.7
   part: Part D — Coverage for Damage to Your Auto
@@ -109,7 +109,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.EXCL.8
+- source_id: AP-PAP-2026-D.EXCL.8
   kind: clause
   clause_key: D.EXCL.8
   part: Part D — Coverage for Damage to Your Auto
@@ -119,7 +119,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.EXCL.9
+- source_id: AP-PAP-2026-D.EXCL.9
   kind: clause
   clause_key: D.EXCL.9
   part: Part D — Coverage for Damage to Your Auto
@@ -129,7 +129,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.EXCL.10
+- source_id: AP-PAP-2026-D.EXCL.10
   kind: clause
   clause_key: D.EXCL.10
   part: Part D — Coverage for Damage to Your Auto
@@ -138,7 +138,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.EXCL.11
+- source_id: AP-PAP-2026-D.EXCL.11
   kind: clause
   clause_key: D.EXCL.11
   part: Part D — Coverage for Damage to Your Auto
@@ -148,7 +148,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.EXCL.12
+- source_id: AP-PAP-2026-D.EXCL.12
   kind: clause
   clause_key: D.EXCL.12
   part: Part D — Coverage for Damage to Your Auto
@@ -158,7 +158,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.EXCL.13
+- source_id: AP-PAP-2026-D.EXCL.13
   kind: clause
   clause_key: D.EXCL.13
   part: Part D — Coverage for Damage to Your Auto
@@ -168,7 +168,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.LIMIT
+- source_id: AP-PAP-2026-D.LIMIT
   kind: clause
   clause_key: D.LIMIT
   part: Part D — Coverage for Damage to Your Auto
@@ -178,7 +178,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.PAYMENT
+- source_id: AP-PAP-2026-D.PAYMENT
   kind: clause
   clause_key: D.PAYMENT
   part: Part D — Coverage for Damage to Your Auto
@@ -189,7 +189,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.NO_BAILEE
+- source_id: AP-PAP-2026-D.NO_BAILEE
   kind: clause
   clause_key: D.NO_BAILEE
   part: Part D — Coverage for Damage to Your Auto
@@ -200,7 +200,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.OTHER_SOURCES
+- source_id: AP-PAP-2026-D.OTHER_SOURCES
   kind: clause
   clause_key: D.OTHER_SOURCES
   part: Part D — Coverage for Damage to Your Auto
@@ -210,7 +210,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-D.APPRAISAL
+- source_id: AP-PAP-2026-D.APPRAISAL
   kind: clause
   clause_key: D.APPRAISAL
   part: Part D — Coverage for Damage to Your Auto
@@ -221,25 +221,25 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2025-D.EXCL.1.ALT
+- source_id: AP-PAP-2025-D.EXCL.1.ALT
   kind: distractor
   clause_key: D.EXCL.1.ALT
   part: Part D — Coverage for Damage to Your Auto
   version: '2025.1'
   text: Part D does not cover damage that happens while the vehicle is carrying people or goods, whether
     for pay or among friends splitting the cost of a trip.
-  distractor_of: SUN-PAP-2026-D.EXCL.1
+  distractor_of: AP-PAP-2026-D.EXCL.1
   distractor_reason: near_duplicate
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: SUN-PAP-2025-D.EXCL.2
+- source_id: AP-PAP-2025-D.EXCL.2
   kind: distractor
   clause_key: D.EXCL.2
   part: Part D — Coverage for Damage to Your Auto
   version: '2025.1'
   text: Part D does not cover wear from use, rust or mechanical failure; damage from freezing is covered.
-  distractor_of: SUN-PAP-2026-D.EXCL.2
+  distractor_of: AP-PAP-2026-D.EXCL.2
   distractor_reason: superseded_version
   reviewed_at: '2026-09-21'
   reviewed_by: conductor

@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Julián Posada Arango, policy POL-245782"
+      "value": "Mateo Muñoz, policy POL-12"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -17,7 +17,7 @@
     }
   },
   "language": "en",
-  "policy_number": "POL-245782",
+  "policy_number": "POL-12",
   "record_type": "claim",
   "resolution": null,
   "state": "derived",
@@ -25,7 +25,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Good evening. I'm Julián Posada Arango, my policy is POL-245782."
+      "text": "Good evening. I'm Mateo Muñoz, my policy is POL-12."
     },
     {
       "speaker": "agent",

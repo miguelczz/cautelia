@@ -6,7 +6,7 @@ tenant_id: sunmeadow
 language: en
 part_key: pools
 texts:
-- source_id: SUN-POOL-GIVEN-NAMES
+- source_id: AP-POOL-GIVEN-NAMES
   kind: persona_pool
   version: '2026.2'
   text: |-
@@ -43,7 +43,7 @@ texts:
   reviewed_at: '2026-10-09'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-POOL-FAMILY-NAMES
+- source_id: AP-POOL-FAMILY-NAMES
   kind: persona_pool
   version: '2026.2'
   text: |-
@@ -78,7 +78,7 @@ texts:
   reviewed_at: '2026-10-09'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-POOL-VEHICLES
+- source_id: AP-POOL-VEHICLES
   kind: vehicle_pool
   version: '2026.1'
   text: |-

@@ -7,7 +7,7 @@ tenant_id: sunmeadow
 language: es
 part_key: case_turns
 texts:
-- source_id: SUN-CASE-ES-OPEN
+- source_id: AP-CASE-ES-OPEN
   kind: case_turns
   version: '2026.1'
   text: 'agent: ¿Me dices tu nombre completo y el número de tu póliza?'
@@ -17,7 +17,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-CASE-ES-CAPTURING
+- source_id: AP-CASE-ES-CAPTURING
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -51,7 +51,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-CASE-ES-VERIFYING
+- source_id: AP-CASE-ES-VERIFYING
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -97,7 +97,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-CASE-ES-DECIDING
+- source_id: AP-CASE-ES-DECIDING
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -126,7 +126,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-CASE-ES-DERIVED
+- source_id: AP-CASE-ES-DERIVED
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -162,7 +162,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-CASE-ES-AWAITING-INSURED
+- source_id: AP-CASE-ES-AWAITING-INSURED
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -185,7 +185,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-CASE-ES-CLOSED
+- source_id: AP-CASE-ES-CLOSED
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -205,7 +205,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-CASE-ES-CLOSED-APPROVED
+- source_id: AP-CASE-ES-CLOSED-APPROVED
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -230,7 +230,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-CASE-ES-CLOSED-REJECTED
+- source_id: AP-CASE-ES-CLOSED-REJECTED
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -262,7 +262,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-CASE-ES-CLAIM-FIVE-OF-SEVEN
+- source_id: AP-CASE-ES-CLAIM-FIVE-OF-SEVEN
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -293,7 +293,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-CASE-ES-COVERAGE-INQUIRY
+- source_id: AP-CASE-ES-COVERAGE-INQUIRY
   kind: case_turns
   version: '2026.1'
   text: 'insured: Soy {insured_name}, póliza {policy_number}. ¿La póliza cubre el transporte mientras
@@ -314,7 +314,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-CASE-ES-NAME-INJECTION
+- source_id: AP-CASE-ES-NAME-INJECTION
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -332,7 +332,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-CASE-ES-IDENTITY-DICTATED
+- source_id: AP-CASE-ES-IDENTITY-DICTATED
   kind: case_turns
   version: '2026.1'
   text: |-

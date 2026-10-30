@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Natalia Henao Rendón, póliza POL-100042"
+      "value": "Alex Moreno, póliza POL-50"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -21,11 +21,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Renault Logan 2024, placa WBR686, lo conducía Natalia"
+      "value": "Suzuki Swift 2017, placa ZFU936, lo conducía Alex"
     }
   },
   "language": "es",
-  "policy_number": "POL-100042",
+  "policy_number": "POL-50",
   "record_type": "claim",
   "resolution": null,
   "state": "awaiting_insured",
@@ -33,7 +33,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Soy Natalia Henao Rendón, póliza POL-100042. Un camión me golpeó la parte trasera al retroceder."
+      "text": "Soy Alex Moreno, póliza POL-50. Un camión me golpeó la parte trasera al retroceder."
     },
     {
       "speaker": "agent",
@@ -41,7 +41,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Mi Renault Logan 2024, placa WBR686."
+      "text": "Mi Suzuki Swift 2017, placa ZFU936."
     },
     {
       "speaker": "staff",

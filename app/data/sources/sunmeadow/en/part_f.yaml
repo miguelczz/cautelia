@@ -8,7 +8,7 @@ tenant_id: sunmeadow
 language: en
 part_key: part_f
 texts:
-- source_id: SUN-PAP-2026-F.BANKRUPTCY
+- source_id: AP-PAP-2026-F.BANKRUPTCY
   kind: clause
   clause_key: F.BANKRUPTCY
   part: Part F — General Provisions
@@ -17,7 +17,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-F.CHANGES
+- source_id: AP-PAP-2026-F.CHANGES
   kind: clause
   clause_key: F.CHANGES
   part: Part F — General Provisions
@@ -27,7 +27,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-F.FRAUD
+- source_id: AP-PAP-2026-F.FRAUD
   kind: clause
   clause_key: F.FRAUD
   part: Part F — General Provisions
@@ -37,7 +37,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-F.LEGAL_ACTION
+- source_id: AP-PAP-2026-F.LEGAL_ACTION
   kind: clause
   clause_key: F.LEGAL_ACTION
   part: Part F — General Provisions
@@ -45,11 +45,11 @@ texts:
   text: No one may sue us over this policy without first meeting the duties it sets, and the suit must
     be filed within the deadline set in the Corvane jurisdiction document.
   refers_to:
-  - SUN-JUR-2026-J.5
+  - AP-JUR-2026-J.5
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-F.RECOVERY
+- source_id: AP-PAP-2026-F.RECOVERY
   kind: clause
   clause_key: F.RECOVERY
   part: Part F — General Provisions
@@ -59,7 +59,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-F.PERIOD_TERRITORY
+- source_id: AP-PAP-2026-F.PERIOD_TERRITORY
   kind: clause
   clause_key: F.PERIOD_TERRITORY
   part: Part F — General Provisions
@@ -69,7 +69,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-F.TERMINATION
+- source_id: AP-PAP-2026-F.TERMINATION
   kind: clause
   clause_key: F.TERMINATION
   part: Part F — General Provisions
@@ -78,11 +78,11 @@ texts:
     advance notice the Corvane jurisdiction document requires, and we refund the premium for the time
     that had not yet run.
   refers_to:
-  - SUN-JUR-2026-J.2
+  - AP-JUR-2026-J.2
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-F.TRANSFER
+- source_id: AP-PAP-2026-F.TRANSFER
   kind: clause
   clause_key: F.TRANSFER
   part: Part F — General Provisions
@@ -91,7 +91,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-F.TWO_POLICIES
+- source_id: AP-PAP-2026-F.TWO_POLICIES
   kind: clause
   clause_key: F.TWO_POLICIES
   part: Part F — General Provisions

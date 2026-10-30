@@ -6,7 +6,7 @@ tenant_id: stonecroft
 language: es
 part_key: jurisdiction
 texts:
-- source_id: STO-JUR-2026-J.1
+- source_id: SA-JUR-2026-J.1
   kind: jurisdiction
   clause_key: J.1
   part: Documento de jurisdicción de Corvane
@@ -17,7 +17,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-JUR-2026-J.2
+- source_id: SA-JUR-2026-J.2
   kind: jurisdiction
   clause_key: J.2
   part: Documento de jurisdicción de Corvane
@@ -27,7 +27,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-JUR-2026-J.3
+- source_id: SA-JUR-2026-J.3
   kind: jurisdiction
   clause_key: J.3
   part: Documento de jurisdicción de Corvane
@@ -37,7 +37,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-JUR-2026-J.4
+- source_id: SA-JUR-2026-J.4
   kind: jurisdiction
   clause_key: J.4
   part: Documento de jurisdicción de Corvane
@@ -47,7 +47,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-JUR-2026-J.5
+- source_id: SA-JUR-2026-J.5
   kind: jurisdiction
   clause_key: J.5
   part: Documento de jurisdicción de Corvane

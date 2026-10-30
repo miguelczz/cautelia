@@ -5,11 +5,11 @@
   "fields": {
     "identity_and_policy": {
       "status": "stated",
-      "value": "Camilo Muñoz Correa, policy POL-916742"
+      "value": "Rebecca Lewis, policy POL-34"
     }
   },
   "language": "en",
-  "policy_number": "POL-916742",
+  "policy_number": "POL-34",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -21,7 +21,7 @@
     },
     {
       "speaker": "insured",
-      "text": "My ID number is 70.000.003, my cell is 311 555 0175, the car's plate is VDY720 and the policy is POL-916742."
+      "text": "My ID number is 932-48-8567, my cell is 415-555-0136, the car's plate is USL-5923 and the policy is POL-34."
     }
   ],
   "used_by": [

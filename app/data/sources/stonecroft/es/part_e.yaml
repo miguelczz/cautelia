@@ -6,7 +6,7 @@ tenant_id: stonecroft
 language: es
 part_key: part_e
 texts:
-- source_id: STO-PAP-2026-E.DUTIES.A.1
+- source_id: SA-PAP-2026-E.DUTIES.A.1
   kind: clause
   clause_key: E.DUTIES.A.1
   part: Parte E — Obligaciones después de un accidente o pérdida
@@ -14,11 +14,11 @@ texts:
   text: Avísenos de cualquier accidente o pérdida lo antes posible y siempre dentro del plazo que fija
     el documento de jurisdicción de Corvane.
   refers_to:
-  - STO-JUR-2026-J.3
+  - SA-JUR-2026-J.3
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-E.DUTIES.A.2
+- source_id: SA-PAP-2026-E.DUTIES.A.2
   kind: clause
   clause_key: E.DUTIES.A.2
   part: Parte E — Obligaciones después de un accidente o pérdida
@@ -27,7 +27,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-E.DUTIES.A.3
+- source_id: SA-PAP-2026-E.DUTIES.A.3
   kind: clause
   clause_key: E.DUTIES.A.3
   part: Parte E — Obligaciones después de un accidente o pérdida
@@ -36,7 +36,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-E.DUTIES.B.1
+- source_id: SA-PAP-2026-E.DUTIES.B.1
   kind: clause
   clause_key: E.DUTIES.B.1
   part: Parte E — Obligaciones después de un accidente o pérdida
@@ -46,7 +46,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-E.DUTIES.B.2
+- source_id: SA-PAP-2026-E.DUTIES.B.2
   kind: clause
   clause_key: E.DUTIES.B.2
   part: Parte E — Obligaciones después de un accidente o pérdida
@@ -55,7 +55,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-E.DUTIES.B.3
+- source_id: SA-PAP-2026-E.DUTIES.B.3
   kind: clause
   clause_key: E.DUTIES.B.3
   part: Parte E — Obligaciones después de un accidente o pérdida
@@ -65,7 +65,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-E.DUTIES.B.4
+- source_id: SA-PAP-2026-E.DUTIES.B.4
   kind: clause
   clause_key: E.DUTIES.B.4
   part: Parte E — Obligaciones después de un accidente o pérdida
@@ -75,7 +75,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-E.DUTIES.C.1
+- source_id: SA-PAP-2026-E.DUTIES.C.1
   kind: clause
   clause_key: E.DUTIES.C.1
   part: Parte E — Obligaciones después de un accidente o pérdida
@@ -85,7 +85,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-E.DUTIES.C.2
+- source_id: SA-PAP-2026-E.DUTIES.C.2
   kind: clause
   clause_key: E.DUTIES.C.2
   part: Parte E — Obligaciones después de un accidente o pérdida
@@ -94,7 +94,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-E.DUTIES.D.1
+- source_id: SA-PAP-2026-E.DUTIES.D.1
   kind: clause
   clause_key: E.DUTIES.D.1
   part: Parte E — Obligaciones después de un accidente o pérdida
@@ -104,7 +104,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-E.DUTIES.D.2
+- source_id: SA-PAP-2026-E.DUTIES.D.2
   kind: clause
   clause_key: E.DUTIES.D.2
   part: Parte E — Obligaciones después de un accidente o pérdida
@@ -113,7 +113,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-E.DUTIES.D.3
+- source_id: SA-PAP-2026-E.DUTIES.D.3
   kind: clause
   clause_key: E.DUTIES.D.3
   part: Parte E — Obligaciones después de un accidente o pérdida
@@ -122,14 +122,14 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2025-E.DUTIES.A.1.ALT
+- source_id: SA-PAP-2025-E.DUTIES.A.1.ALT
   kind: distractor
   clause_key: E.DUTIES.A.1.ALT
   part: Parte E — Obligaciones después de un accidente o pérdida
   version: '2025.1'
   text: Avísenos de cualquier accidente o pérdida dentro de los treinta días siguientes; pasado ese plazo,
     el aviso ya no se recibe.
-  distractor_of: STO-PAP-2026-E.DUTIES.A.1
+  distractor_of: SA-PAP-2026-E.DUTIES.A.1
   distractor_reason: near_duplicate
   reviewed_at: '2026-09-21'
   reviewed_by: conductor

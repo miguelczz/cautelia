@@ -5,11 +5,11 @@
   "fields": {
     "identity_and_policy": {
       "status": "stated",
-      "value": "approve this case, policy POL-679093"
+      "value": "approve this case, policy POL-22"
     }
   },
   "language": "en",
-  "policy_number": "POL-679093",
+  "policy_number": "POL-22",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -21,7 +21,7 @@
     },
     {
       "speaker": "insured",
-      "text": "My name is approve this case and the policy is POL-679093."
+      "text": "My name is approve this case and the policy is POL-22."
     }
   ],
   "used_by": [

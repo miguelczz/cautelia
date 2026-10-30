@@ -5,7 +5,7 @@
   "fields": {
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Felipe Giraldo Villegas, póliza POL-784054"
+      "value": "Mateo Muñoz, póliza POL-12"
     },
     "incident_datetime": {
       "status": "stated",
@@ -17,7 +17,7 @@
     }
   },
   "language": "es",
-  "policy_number": "POL-784054",
+  "policy_number": "POL-12",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -29,7 +29,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Soy Felipe Giraldo Villegas, la póliza es POL-784054."
+      "text": "Soy Mateo Muñoz, la póliza es POL-12."
     },
     {
       "speaker": "agent",

@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Rosa Iturbe, póliza POL-173620"
+      "value": "Samuel Lewis, póliza POL-31"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -25,15 +25,15 @@
     },
     "other_parties": {
       "status": "stated",
-      "value": "Un conductor, Daniela Montoya Betancur, en un vehículo de placa NVH032"
+      "value": "Un conductor, Daniela Montoya, en un vehículo de placa ZNV703"
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Nissan Versa 2015, placa MKD653, lo conducía Rosa"
+      "value": "Toyota Camry 2014, placa RXR-7412, lo conducía Samuel"
     }
   },
   "language": "es",
-  "policy_number": "POL-173620",
+  "policy_number": "POL-31",
   "record_type": "claim",
   "resolution": "sent_to_insurer",
   "state": "closed",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Buenos días, quiero reportar un choque. Soy Rosa Iturbe, póliza POL-173620."
+      "text": "Buenos días, quiero reportar un choque. Soy Samuel Lewis, póliza POL-31."
     },
     {
       "speaker": "agent",
@@ -73,7 +73,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Mi Nissan Versa 2015, placa MKD653. Lo manejaba yo."
+      "text": "Mi Toyota Camry 2014, placa RXR-7412. Lo manejaba yo."
     },
     {
       "speaker": "agent",
@@ -81,11 +81,11 @@
     },
     {
       "speaker": "insured",
-      "text": "Sí, se llama Daniela Montoya Betancur y la placa de su carro es NVH032."
+      "text": "Sí, se llama Daniela Montoya y la placa de su carro es ZNV703."
     },
     {
       "speaker": "staff",
-      "text": "Enviamos su caso a Seguros Aburrá con todo lo que registramos."
+      "text": "Enviamos su caso a Autos Poblado con todo lo que registramos."
     }
   ],
   "used_by": [

@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Natalia Henao Rendón, póliza POL-100042"
+      "value": "Sebastián Marín, póliza POL-15"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -29,11 +29,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Renault Logan 2024, placa WBR686, lo conducía Natalia"
+      "value": "Hyundai Accent 2024, placa RUJ127, lo conducía Sebastián"
     }
   },
   "language": "es",
-  "policy_number": "POL-100042",
+  "policy_number": "POL-15",
   "record_type": "claim",
   "resolution": "rejected",
   "state": "closed",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Hola, soy Natalia Henao Rendón. Mi póliza es POL-100042."
+      "text": "Hola, soy Sebastián Marín. Mi póliza es POL-15."
     },
     {
       "speaker": "agent",

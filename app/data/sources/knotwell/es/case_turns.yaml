@@ -7,7 +7,7 @@ tenant_id: knotwell
 language: es
 part_key: case_turns
 texts:
-- source_id: KNO-CASE-ES-OPEN
+- source_id: AC-CASE-ES-OPEN
   kind: case_turns
   version: '2026.1'
   text: 'agent: ¿Me dices tu nombre completo y el número de tu póliza?'
@@ -17,7 +17,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: KNO-CASE-ES-CAPTURING
+- source_id: AC-CASE-ES-CAPTURING
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -51,7 +51,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: KNO-CASE-ES-VERIFYING
+- source_id: AC-CASE-ES-VERIFYING
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -97,7 +97,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: KNO-CASE-ES-DECIDING
+- source_id: AC-CASE-ES-DECIDING
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -126,7 +126,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: KNO-CASE-ES-DERIVED
+- source_id: AC-CASE-ES-DERIVED
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -162,7 +162,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: KNO-CASE-ES-AWAITING-INSURED
+- source_id: AC-CASE-ES-AWAITING-INSURED
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -185,7 +185,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: KNO-CASE-ES-CLOSED
+- source_id: AC-CASE-ES-CLOSED
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -213,7 +213,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: KNO-CASE-ES-IDENTITY-DICTATED
+- source_id: AC-CASE-ES-IDENTITY-DICTATED
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -232,7 +232,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: KNO-CASE-ES-ID-DICTATED-OTHER-LANGUAGE
+- source_id: AC-CASE-ES-ID-DICTATED-OTHER-LANGUAGE
   kind: case_turns
   version: '2026.1'
   text: |-

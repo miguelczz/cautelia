@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "stated",
-      "value": "Olivia Russo, póliza POL-398476"
+      "value": "Sofia Castro, póliza POL-26"
     },
     "incident_datetime": {
       "status": "stated",
@@ -21,11 +21,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Toyota Camry 2023, placa ZNX-9706, lo conducía Olivia"
+      "value": "Chevrolet Equinox 2020, placa KLL-3671, lo conducía Sofia"
     }
   },
   "language": "es",
-  "policy_number": "POL-398476",
+  "policy_number": "POL-26",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -33,7 +33,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Soy Olivia Russo, póliza POL-398476. Me chocaron en la glorieta de Los Almendros."
+      "text": "Soy Sofia Castro, póliza POL-26. Me chocaron en la glorieta de Los Almendros."
     },
     {
       "speaker": "agent",
@@ -41,7 +41,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Mi Toyota Camry 2023, placa ZNX-9706. Lo manejaba yo."
+      "text": "Mi Chevrolet Equinox 2020, placa KLL-3671. Lo manejaba yo."
     }
   ],
   "used_by": [

@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Lina Herrera, policy POL-795628"
+      "value": "Victor Parker, policy POL-23"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -17,7 +17,7 @@
     }
   },
   "language": "en",
-  "policy_number": "POL-795628",
+  "policy_number": "POL-23",
   "record_type": "claim",
   "resolution": null,
   "state": "derived",
@@ -25,7 +25,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Good evening. I'm Lina Herrera, my policy is POL-795628."
+      "text": "Good evening. I'm Victor Parker, my policy is POL-23."
     },
     {
       "speaker": "agent",

@@ -8,7 +8,7 @@ tenant_id: sunmeadow
 language: en
 part_key: part_c
 texts:
-- source_id: SUN-PAP-2026-C.INS
+- source_id: AP-PAP-2026-C.INS
   kind: clause
   clause_key: C.INS
   part: Part C — Uninsured Motorists Coverage
@@ -20,7 +20,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-C.EXCL.1
+- source_id: AP-PAP-2026-C.EXCL.1
   kind: clause
   clause_key: C.EXCL.1
   part: Part C — Uninsured Motorists Coverage
@@ -30,7 +30,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-C.EXCL.2
+- source_id: AP-PAP-2026-C.EXCL.2
   kind: clause
   clause_key: C.EXCL.2
   part: Part C — Uninsured Motorists Coverage
@@ -40,7 +40,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-C.EXCL.3
+- source_id: AP-PAP-2026-C.EXCL.3
   kind: clause
   clause_key: C.EXCL.3
   part: Part C — Uninsured Motorists Coverage
@@ -49,7 +49,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-C.EXCL.4
+- source_id: AP-PAP-2026-C.EXCL.4
   kind: clause
   clause_key: C.EXCL.4
   part: Part C — Uninsured Motorists Coverage
@@ -59,7 +59,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-C.LIMIT
+- source_id: AP-PAP-2026-C.LIMIT
   kind: clause
   clause_key: C.LIMIT
   part: Part C — Uninsured Motorists Coverage
@@ -70,7 +70,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-C.OTHER
+- source_id: AP-PAP-2026-C.OTHER
   kind: clause
   clause_key: C.OTHER
   part: Part C — Uninsured Motorists Coverage
@@ -80,7 +80,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2026-C.ARBITRATION
+- source_id: AP-PAP-2026-C.ARBITRATION
   kind: clause
   clause_key: C.ARBITRATION
   part: Part C — Uninsured Motorists Coverage
@@ -91,7 +91,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: SUN-PAP-2025-C.INS.ALT
+- source_id: AP-PAP-2025-C.INS.ALT
   kind: distractor
   clause_key: C.INS.ALT
   part: Part C — Uninsured Motorists Coverage
@@ -99,7 +99,7 @@ texts:
   text: Autos Poblado pays the damages for bodily injury that you or a family member are entitled to
     claim from the driver of an uninsured vehicle, but only when that driver is identified. Accidents
     where the vehicle at fault drives off are not covered.
-  distractor_of: SUN-PAP-2026-C.INS
+  distractor_of: AP-PAP-2026-C.INS
   distractor_reason: near_duplicate
   reviewed_at: '2026-09-21'
   reviewed_by: conductor

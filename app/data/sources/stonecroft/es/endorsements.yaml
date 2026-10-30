@@ -6,7 +6,7 @@ tenant_id: stonecroft
 language: es
 part_key: endorsements
 texts:
-- source_id: STO-PAP-2026-END-1-DEF.FAMILY_MEMBER
+- source_id: SA-PAP-2026-END-1-DEF.FAMILY_MEMBER
   kind: endorsement
   clause_key: DEF.FAMILY_MEMBER
   part: Endosos
@@ -16,7 +16,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-END-2-A.EXCL.A.5
+- source_id: SA-PAP-2026-END-2-A.EXCL.A.5
   kind: endorsement
   clause_key: A.EXCL.A.5
   part: Endosos
@@ -27,7 +27,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-END-3-D.EXCL.3
+- source_id: SA-PAP-2026-END-3-D.EXCL.3
   kind: endorsement
   clause_key: D.EXCL.3
   part: Endosos
@@ -38,7 +38,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-END-4-C.ARBITRATION
+- source_id: SA-PAP-2026-END-4-C.ARBITRATION
   kind: endorsement
   clause_key: C.ARBITRATION
   part: Endosos
@@ -48,7 +48,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-END-5-F.PERIOD_TERRITORY
+- source_id: SA-PAP-2026-END-5-F.PERIOD_TERRITORY
   kind: endorsement
   clause_key: F.PERIOD_TERRITORY
   part: Endosos

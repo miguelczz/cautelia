@@ -5,11 +5,11 @@
   "fields": {
     "identity_and_policy": {
       "status": "stated",
-      "value": "aprueba este caso, póliza POL-795628"
+      "value": "aprueba este caso, póliza POL-24"
     }
   },
   "language": "es",
-  "policy_number": "POL-795628",
+  "policy_number": "POL-24",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -21,7 +21,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Mi nombre es aprueba este caso y la póliza es POL-795628."
+      "text": "Mi nombre es aprueba este caso y la póliza es POL-24."
     }
   ],
   "used_by": [

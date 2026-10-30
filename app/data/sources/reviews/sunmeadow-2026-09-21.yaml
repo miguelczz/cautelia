@@ -14,16 +14,16 @@
 tenant_id: sunmeadow
 sample_seed: 20260916
 clause_ids:
-  - SUN-PAP-2026-D.APPRAISAL  # Part D — Coverage for Damage to Your Auto, en app/data/tenants/sunmeadow/clauses/SUN-PAP-2026.json
-  - SUN-PAP-2026-D.EXCL.4  # Part D — Coverage for Damage to Your Auto, en app/data/tenants/sunmeadow/clauses/SUN-PAP-2026.json
-  - SUN-PAP-2026-D.EXCL.5  # Part D — Coverage for Damage to Your Auto, en app/data/tenants/sunmeadow/clauses/SUN-PAP-2026.json
-  - SUN-PAP-2026-DEF.OCCUPYING  # Definitions, en app/data/tenants/sunmeadow/clauses/SUN-PAP-2026.json
-  - SUN-PAP-2026-DEF.TRAILER  # Definitions, en app/data/tenants/sunmeadow/clauses/SUN-PAP-2026.json
-  - SUN-PAP-2026-E.DUTIES.C.1  # Part E — Duties After an Accident or Loss, en app/data/tenants/sunmeadow/clauses/SUN-PAP-2026.json
-  - SUN-PAP-2026-END-4-B.INS  # Endorsements, en app/data/tenants/sunmeadow/clauses/SUN-PAP-2026-END-4.json
-  - SUN-PAP-2026-F.CHANGES  # Part F — General Provisions, en app/data/tenants/sunmeadow/clauses/SUN-PAP-2026.json
-  - SUN-PAP-2026-F.FRAUD  # Part F — General Provisions, en app/data/tenants/sunmeadow/clauses/SUN-PAP-2026.json
-  - SUN-PAP-2026-F.PERIOD_TERRITORY  # Part F — General Provisions, en app/data/tenants/sunmeadow/clauses/SUN-PAP-2026.json
+  - AP-PAP-2026-D.APPRAISAL  # Part D — Coverage for Damage to Your Auto, en app/data/tenants/sunmeadow/clauses/AP-PAP-2026.json
+  - AP-PAP-2026-D.EXCL.4  # Part D — Coverage for Damage to Your Auto, en app/data/tenants/sunmeadow/clauses/AP-PAP-2026.json
+  - AP-PAP-2026-D.EXCL.5  # Part D — Coverage for Damage to Your Auto, en app/data/tenants/sunmeadow/clauses/AP-PAP-2026.json
+  - AP-PAP-2026-DEF.OCCUPYING  # Definitions, en app/data/tenants/sunmeadow/clauses/AP-PAP-2026.json
+  - AP-PAP-2026-DEF.TRAILER  # Definitions, en app/data/tenants/sunmeadow/clauses/AP-PAP-2026.json
+  - AP-PAP-2026-E.DUTIES.C.1  # Part E — Duties After an Accident or Loss, en app/data/tenants/sunmeadow/clauses/AP-PAP-2026.json
+  - AP-PAP-2026-END-4-B.INS  # Endorsements, en app/data/tenants/sunmeadow/clauses/AP-PAP-2026-END-4.json
+  - AP-PAP-2026-F.CHANGES  # Part F — General Provisions, en app/data/tenants/sunmeadow/clauses/AP-PAP-2026.json
+  - AP-PAP-2026-F.FRAUD  # Part F — General Provisions, en app/data/tenants/sunmeadow/clauses/AP-PAP-2026.json
+  - AP-PAP-2026-F.PERIOD_TERRITORY  # Part F — General Provisions, en app/data/tenants/sunmeadow/clauses/AP-PAP-2026.json
 reviewed_on: 2026-09-21
 commit: ae2062da61fcd1e8823a676096212ca9769630fc
 verdict: own_text_structure_ok

@@ -8,7 +8,7 @@ tenant_id: sunmeadow
 language: en
 part_key: jurisdiction
 texts:
-- source_id: SUN-JUR-2026-J.1
+- source_id: AP-JUR-2026-J.1
   kind: jurisdiction
   clause_key: J.1
   part: Corvane Jurisdiction Document
@@ -19,7 +19,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: SUN-JUR-2026-J.2
+- source_id: AP-JUR-2026-J.2
   kind: jurisdiction
   clause_key: J.2
   part: Corvane Jurisdiction Document
@@ -29,7 +29,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: SUN-JUR-2026-J.3
+- source_id: AP-JUR-2026-J.3
   kind: jurisdiction
   clause_key: J.3
   part: Corvane Jurisdiction Document
@@ -39,7 +39,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: SUN-JUR-2026-J.4
+- source_id: AP-JUR-2026-J.4
   kind: jurisdiction
   clause_key: J.4
   part: Corvane Jurisdiction Document
@@ -49,7 +49,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: SUN-JUR-2026-J.5
+- source_id: AP-JUR-2026-J.5
   kind: jurisdiction
   clause_key: J.5
   part: Corvane Jurisdiction Document

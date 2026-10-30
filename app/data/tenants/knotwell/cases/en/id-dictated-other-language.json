@@ -5,11 +5,11 @@
   "fields": {
     "identity_and_policy": {
       "status": "stated",
-      "value": "Rosa Iturbe, policy POL-173620"
+      "value": "Rosa Iturbe, policy POL-32"
     }
   },
   "language": "en",
-  "policy_number": "POL-173620",
+  "policy_number": "POL-32",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -21,7 +21,7 @@
     },
     {
       "speaker": "insured",
-      "text": "My ID number is dos siete nueve seis uno seis uno seis."
+      "text": "My ID number is ocho tres cinco tres seis cero nueve tres."
     }
   ],
   "used_by": [

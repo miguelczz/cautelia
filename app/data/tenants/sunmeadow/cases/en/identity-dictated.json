@@ -5,11 +5,11 @@
   "fields": {
     "identity_and_policy": {
       "status": "stated",
-      "value": "Lina Herrera, policy POL-795628"
+      "value": "Ivan Moreno, policy POL-25"
     }
   },
   "language": "en",
-  "policy_number": "POL-795628",
+  "policy_number": "POL-25",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -21,7 +21,7 @@
     },
     {
       "speaker": "insured",
-      "text": "My ID number is 935-02-5270, my cell is 919-555-0136, the car's plate is YWT-6641 and the policy is POL-795628."
+      "text": "My ID number is 992-08-9759, my cell is 702-555-0130, the car's plate is GRJ-5764 and the policy is POL-25."
     }
   ],
   "used_by": [

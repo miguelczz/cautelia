@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Natalia Henao Rendón, policy POL-100042"
+      "value": "Laura Mejía, policy POL-13"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -29,11 +29,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Renault Logan 2024, plate WBR686, driven by Natalia"
+      "value": "Renault Logan 2012, plate MWV531, driven by Laura"
     }
   },
   "language": "en",
-  "policy_number": "POL-100042",
+  "policy_number": "POL-13",
   "record_type": "claim",
   "resolution": null,
   "state": "verifying",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Good morning, I want to report a crash. I'm Natalia Henao Rendón, policy POL-100042."
+      "text": "Good morning, I want to report a crash. I'm Laura Mejía, policy POL-13."
     },
     {
       "speaker": "agent",
@@ -73,7 +73,7 @@
     },
     {
       "speaker": "insured",
-      "text": "My Renault Logan 2024, plate WBR686. I was driving."
+      "text": "My Renault Logan 2012, plate MWV531. I was driving."
     },
     {
       "speaker": "agent",

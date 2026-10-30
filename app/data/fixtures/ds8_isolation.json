@@ -7,7 +7,7 @@
         "stonecroft",
         "sunmeadow"
       ],
-      "value": "POL-480915"
+      "value": "POL-50"
     },
     {
       "field": "insured_name",
@@ -82,19 +82,19 @@
       {
         "case_id": "CASE-7F3A21",
         "insured_name": "Alex Moreno",
-        "policy_number": "POL-480915",
+        "policy_number": "POL-50",
         "tenant_id": "stonecroft"
       },
       {
         "case_id": "CASE-7F3A22",
         "insured_name": "Alex Moreno",
-        "policy_number": "POL-480915",
+        "policy_number": "POL-50",
         "tenant_id": "sunmeadow"
       },
       {
         "case_id": "CASE-91BD04",
         "insured_name": "Rosa Iturbe",
-        "policy_number": "POL-173620",
+        "policy_number": "POL-32",
         "tenant_id": "knotwell"
       }
     ],
@@ -103,21 +103,21 @@
         "effective_from": "2026-01-01",
         "effective_to": "2027-01-01",
         "insured_name": "Alex Moreno",
-        "policy_number": "POL-480915",
+        "policy_number": "POL-50",
         "tenant_id": "stonecroft"
       },
       {
         "effective_from": "2026-03-15",
         "effective_to": "2027-03-15",
         "insured_name": "Alex Moreno",
-        "policy_number": "POL-480915",
+        "policy_number": "POL-50",
         "tenant_id": "sunmeadow"
       },
       {
         "effective_from": "2026-02-01",
         "effective_to": "2027-02-01",
         "insured_name": "Rosa Iturbe",
-        "policy_number": "POL-173620",
+        "policy_number": "POL-32",
         "tenant_id": "knotwell"
       }
     ],

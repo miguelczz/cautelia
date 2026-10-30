@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Camilo Muñoz Correa, policy POL-916742"
+      "value": "Rebecca Lewis, policy POL-34"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -21,11 +21,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Suzuki Swift 2015, plate VDY720, driven by Camilo"
+      "value": "Ford F-150 2013, plate USL-5923, driven by Rebecca"
     }
   },
   "language": "en",
-  "policy_number": "POL-916742",
+  "policy_number": "POL-34",
   "record_type": "claim",
   "resolution": null,
   "state": "awaiting_insured",
@@ -33,7 +33,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "I'm Camilo Muñoz Correa, policy POL-916742. A truck backed into the rear of my car."
+      "text": "I'm Rebecca Lewis, policy POL-34. A truck backed into the rear of my car."
     },
     {
       "speaker": "agent",
@@ -41,7 +41,7 @@
     },
     {
       "speaker": "insured",
-      "text": "My Suzuki Swift 2015, plate VDY720."
+      "text": "My Ford F-150 2013, plate USL-5923."
     },
     {
       "speaker": "staff",

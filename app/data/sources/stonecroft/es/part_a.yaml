@@ -6,7 +6,7 @@ tenant_id: stonecroft
 language: es
 part_key: part_a
 texts:
-- source_id: STO-PAP-2026-A.INS
+- source_id: SA-PAP-2026-A.INS
   kind: clause
   clause_key: A.INS
   part: Parte A — Responsabilidad civil
@@ -19,7 +19,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-A.SUPP
+- source_id: SA-PAP-2026-A.SUPP
   kind: clause
   clause_key: A.SUPP
   part: Parte A — Responsabilidad civil
@@ -30,7 +30,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-A.EXCL.A.1
+- source_id: SA-PAP-2026-A.EXCL.A.1
   kind: clause
   clause_key: A.EXCL.A.1
   part: Parte A — Responsabilidad civil
@@ -40,7 +40,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-A.EXCL.A.2
+- source_id: SA-PAP-2026-A.EXCL.A.2
   kind: clause
   clause_key: A.EXCL.A.2
   part: Parte A — Responsabilidad civil
@@ -49,7 +49,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-A.EXCL.A.3
+- source_id: SA-PAP-2026-A.EXCL.A.3
   kind: clause
   clause_key: A.EXCL.A.3
   part: Parte A — Responsabilidad civil
@@ -58,7 +58,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-A.EXCL.A.4
+- source_id: SA-PAP-2026-A.EXCL.A.4
   kind: clause
   clause_key: A.EXCL.A.4
   part: Parte A — Responsabilidad civil
@@ -68,7 +68,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-A.EXCL.A.5
+- source_id: SA-PAP-2026-A.EXCL.A.5
   kind: clause
   clause_key: A.EXCL.A.5
   part: Parte A — Responsabilidad civil
@@ -79,7 +79,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-A.EXCL.A.6
+- source_id: SA-PAP-2026-A.EXCL.A.6
   kind: clause
   clause_key: A.EXCL.A.6
   part: Parte A — Responsabilidad civil
@@ -89,7 +89,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-A.EXCL.A.7
+- source_id: SA-PAP-2026-A.EXCL.A.7
   kind: clause
   clause_key: A.EXCL.A.7
   part: Parte A — Responsabilidad civil
@@ -99,7 +99,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-A.EXCL.A.8
+- source_id: SA-PAP-2026-A.EXCL.A.8
   kind: clause
   clause_key: A.EXCL.A.8
   part: Parte A — Responsabilidad civil
@@ -109,7 +109,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-A.EXCL.A.9
+- source_id: SA-PAP-2026-A.EXCL.A.9
   kind: clause
   clause_key: A.EXCL.A.9
   part: Parte A — Responsabilidad civil
@@ -119,7 +119,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-A.EXCL.B.1
+- source_id: SA-PAP-2026-A.EXCL.B.1
   kind: clause
   clause_key: A.EXCL.B.1
   part: Parte A — Responsabilidad civil
@@ -129,7 +129,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-A.EXCL.B.2
+- source_id: SA-PAP-2026-A.EXCL.B.2
   kind: clause
   clause_key: A.EXCL.B.2
   part: Parte A — Responsabilidad civil
@@ -139,7 +139,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-A.EXCL.B.3
+- source_id: SA-PAP-2026-A.EXCL.B.3
   kind: clause
   clause_key: A.EXCL.B.3
   part: Parte A — Responsabilidad civil
@@ -149,7 +149,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-A.LIMIT
+- source_id: SA-PAP-2026-A.LIMIT
   kind: clause
   clause_key: A.LIMIT
   part: Parte A — Responsabilidad civil
@@ -161,7 +161,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-A.OUT_OF_STATE
+- source_id: SA-PAP-2026-A.OUT_OF_STATE
   kind: clause
   clause_key: A.OUT_OF_STATE
   part: Parte A — Responsabilidad civil
@@ -171,7 +171,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-A.FIN_RESP
+- source_id: SA-PAP-2026-A.FIN_RESP
   kind: clause
   clause_key: A.FIN_RESP
   part: Parte A — Responsabilidad civil
@@ -179,11 +179,11 @@ texts:
   text: Cuando una autoridad de Corvane pide prueba de que el conductor tiene seguro de responsabilidad
     civil, esta póliza sirve como esa prueba, con al menos los mínimos que fija el documento de jurisdicción.
   refers_to:
-  - STO-JUR-2026-J.1
+  - SA-JUR-2026-J.1
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-A.OTHER
+- source_id: SA-PAP-2026-A.OTHER
   kind: clause
   clause_key: A.OTHER
   part: Parte A — Responsabilidad civil
@@ -194,26 +194,26 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2025-A.INS
+- source_id: SA-PAP-2025-A.INS
   kind: distractor
   clause_key: A.INS
   part: Parte A — Responsabilidad civil
   version: '2025.1'
   text: 'Seguros Aburrá paga los daños que el asegurado cause con un vehículo cubierto, hasta el límite
     de esta parte, pero no asume su defensa: los honorarios de los abogados corren por cuenta del asegurado.'
-  distractor_of: STO-PAP-2026-A.INS
+  distractor_of: SA-PAP-2026-A.INS
   distractor_reason: superseded_version
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2025-A.EXCL.A.5.ALT
+- source_id: SA-PAP-2025-A.EXCL.A.5.ALT
   kind: distractor
   clause_key: A.EXCL.A.5.ALT
   part: Parte A — Responsabilidad civil
   version: '2025.1'
   text: No cubrimos la responsabilidad que surja mientras el vehículo transporta personas o mercancías,
     con pago o sin él, incluidos los viajes en que conocidos comparten los gastos.
-  distractor_of: STO-PAP-2026-A.EXCL.A.5
+  distractor_of: SA-PAP-2026-A.EXCL.A.5
   distractor_reason: near_duplicate
   reviewed_at: '2026-09-21'
   reviewed_by: conductor

@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Julián Posada Arango, policy POL-245782"
+      "value": "Sebastián Marín, policy POL-15"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -29,11 +29,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Nissan Versa 2020, plate UBX737, driven by Julián"
+      "value": "Hyundai Accent 2024, plate RUJ127, driven by Sebastián"
     }
   },
   "language": "en",
-  "policy_number": "POL-245782",
+  "policy_number": "POL-15",
   "record_type": "claim",
   "resolution": null,
   "state": "deciding",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Hi, I'm Julián Posada Arango. My policy is POL-245782."
+      "text": "Hi, I'm Sebastián Marín. My policy is POL-15."
     },
     {
       "speaker": "agent",

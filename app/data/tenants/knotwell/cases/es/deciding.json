@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Rebecca Miller, póliza POL-943669"
+      "value": "Juliana Correa, póliza POL-35"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -29,11 +29,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Honda CR-V 2017, placa GPZ-3317, lo conducía Rebecca"
+      "value": "Suzuki Swift 2012, placa CJW877, lo conducía Juliana"
     }
   },
   "language": "es",
-  "policy_number": "POL-943669",
+  "policy_number": "POL-35",
   "record_type": "claim",
   "resolution": null,
   "state": "deciding",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Hola, soy Rebecca Miller. Mi póliza es POL-943669."
+      "text": "Hola, soy Juliana Correa. Mi póliza es POL-35."
     },
     {
       "speaker": "agent",

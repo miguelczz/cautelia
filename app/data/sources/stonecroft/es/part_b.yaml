@@ -6,7 +6,7 @@ tenant_id: stonecroft
 language: es
 part_key: part_b
 texts:
-- source_id: STO-PAP-2026-B.INS
+- source_id: SA-PAP-2026-B.INS
   kind: clause
   clause_key: B.INS
   part: Parte B — Gastos médicos
@@ -18,7 +18,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-B.EXCL.1
+- source_id: SA-PAP-2026-B.EXCL.1
   kind: clause
   clause_key: B.EXCL.1
   part: Parte B — Gastos médicos
@@ -27,7 +27,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-B.EXCL.2
+- source_id: SA-PAP-2026-B.EXCL.2
   kind: clause
   clause_key: B.EXCL.2
   part: Parte B — Gastos médicos
@@ -37,7 +37,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-B.EXCL.3
+- source_id: SA-PAP-2026-B.EXCL.3
   kind: clause
   clause_key: B.EXCL.3
   part: Parte B — Gastos médicos
@@ -47,7 +47,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-PAP-2026-B.EXCL.4
+- source_id: SA-PAP-2026-B.EXCL.4
   kind: clause
   clause_key: B.EXCL.4
   part: Parte B — Gastos médicos
@@ -57,7 +57,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-B.LIMIT
+- source_id: SA-PAP-2026-B.LIMIT
   kind: clause
   clause_key: B.LIMIT
   part: Parte B — Gastos médicos
@@ -67,7 +67,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: gemini-3.1-flash-lite
-- source_id: STO-PAP-2026-B.OTHER
+- source_id: SA-PAP-2026-B.OTHER
   kind: clause
   clause_key: B.OTHER
   part: Parte B — Gastos médicos

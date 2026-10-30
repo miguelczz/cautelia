@@ -5,11 +5,11 @@
   "fields": {
     "identity_and_policy": {
       "status": "stated",
-      "value": "Mario Morales, póliza POL-979989"
+      "value": "Clara Navarro, póliza POL-36"
     }
   },
   "language": "es",
-  "policy_number": "POL-979989",
+  "policy_number": "POL-36",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -21,7 +21,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Mi número de documento es nine nine five three zero eight nine two three."
+      "text": "Mi número de documento es nine five four one three nine seven two one."
     }
   ],
   "used_by": [

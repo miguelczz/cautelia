@@ -1,0 +1,46 @@
+{
+  "drivers": [
+    {
+      "full_name": "Esteban Londoño"
+    }
+  ],
+  "endorsement_ids": [
+    "SA-PAP-2026-END-4"
+  ],
+  "form_id": "SA-PAP-2026",
+  "form_version": "2026.1",
+  "issuer_tenant": "stonecroft",
+  "limits_and_deductibles": {
+    "a.bodily_injury_per_accident": 50000,
+    "a.bodily_injury_per_person": 25000,
+    "a.property_damage": 20000,
+    "b.medical_payments_per_person": 10000,
+    "c.uninsured_per_accident": 50000,
+    "c.uninsured_per_person": 25000,
+    "d.collision_deductible": 1000,
+    "d.other_than_collision_deductible": 100
+  },
+  "named_insured": {
+    "email": "esteban.londono@example.com",
+    "full_name": "Esteban Londoño",
+    "national_id": "10.044.545",
+    "persona_id": "sa-per-16",
+    "phone": "304 555 0178"
+  },
+  "period_end": "2027-06-01",
+  "period_start": "2026-06-01",
+  "policy_number": "POL-16",
+  "tenant_id": "stonecroft",
+  "vehicles": [
+    {
+      "make_model_year": "Mazda CX-30 2021",
+      "plate": "JKV165",
+      "vin": "14AFTZY55UY135026"
+    },
+    {
+      "make_model_year": "Chevrolet Onix 2014",
+      "plate": "WJK417",
+      "vin": "5EENZ38XXJB366025"
+    }
+  ]
+}

@@ -7,7 +7,7 @@ tenant_id: stonecroft
 language: en
 part_key: case_turns
 texts:
-- source_id: STO-CASE-EN-OPEN
+- source_id: SA-CASE-EN-OPEN
   kind: case_turns
   version: '2026.1'
   text: 'agent: Could you tell me your full name and your policy number?'
@@ -17,7 +17,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-CASE-EN-CAPTURING
+- source_id: SA-CASE-EN-CAPTURING
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -51,7 +51,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-CASE-EN-VERIFYING
+- source_id: SA-CASE-EN-VERIFYING
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -97,7 +97,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-CASE-EN-DECIDING
+- source_id: SA-CASE-EN-DECIDING
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -126,7 +126,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-CASE-EN-DERIVED
+- source_id: SA-CASE-EN-DERIVED
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -162,7 +162,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-CASE-EN-AWAITING-INSURED
+- source_id: SA-CASE-EN-AWAITING-INSURED
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -185,7 +185,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-CASE-EN-CLOSED
+- source_id: SA-CASE-EN-CLOSED
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -228,7 +228,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-CASE-EN-CLOSED-APPROVED
+- source_id: SA-CASE-EN-CLOSED-APPROVED
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -253,7 +253,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-CASE-EN-CLOSED-REJECTED
+- source_id: SA-CASE-EN-CLOSED-REJECTED
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -272,7 +272,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-CASE-EN-INJURED-AND-OTHER-DRIVERS
+- source_id: SA-CASE-EN-INJURED-AND-OTHER-DRIVERS
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -306,7 +306,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-CASE-EN-OTHER-PLATE-MISSING
+- source_id: SA-CASE-EN-OTHER-PLATE-MISSING
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -324,7 +324,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-CASE-EN-OTHER-PARTIES-BLOCK
+- source_id: SA-CASE-EN-OTHER-PARTIES-BLOCK
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -341,7 +341,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-CASE-EN-VOICE-PHONE-DICTATED
+- source_id: SA-CASE-EN-VOICE-PHONE-DICTATED
   kind: case_turns
   version: '2026.1'
   text: |-
@@ -358,7 +358,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-CASE-EN-IDENTITY-DICTATED
+- source_id: SA-CASE-EN-IDENTITY-DICTATED
   kind: case_turns
   version: '2026.1'
   text: |-

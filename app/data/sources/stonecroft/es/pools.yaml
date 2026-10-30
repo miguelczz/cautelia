@@ -6,7 +6,7 @@ tenant_id: stonecroft
 language: es
 part_key: pools
 texts:
-- source_id: STO-POOL-GIVEN-NAMES
+- source_id: SA-POOL-GIVEN-NAMES
   kind: persona_pool
   version: '2026.1'
   text: |-
@@ -43,7 +43,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-POOL-FAMILY-NAMES
+- source_id: SA-POOL-FAMILY-NAMES
   kind: persona_pool
   version: '2026.1'
   text: |-
@@ -78,7 +78,7 @@ texts:
   reviewed_at: '2026-09-21'
   reviewed_by: conductor
   drafted_with: hand
-- source_id: STO-POOL-VEHICLES
+- source_id: SA-POOL-VEHICLES
   kind: vehicle_pool
   version: '2026.1'
   text: |-

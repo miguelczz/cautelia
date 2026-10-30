@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Lina Herrera, póliza POL-795628"
+      "value": "Elena Delgado, póliza POL-22"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -21,11 +21,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Honda CR-V 2025, placa YWT-6641, lo conducía Lina"
+      "value": "Jeep Cherokee 2019, placa CJR-0670, lo conducía Elena"
     }
   },
   "language": "es",
-  "policy_number": "POL-795628",
+  "policy_number": "POL-22",
   "record_type": "claim",
   "resolution": null,
   "state": "awaiting_insured",
@@ -33,7 +33,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Soy Lina Herrera, póliza POL-795628. Un camión me golpeó la parte trasera al retroceder."
+      "text": "Soy Elena Delgado, póliza POL-22. Un camión me golpeó la parte trasera al retroceder."
     },
     {
       "speaker": "agent",
@@ -41,7 +41,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Mi Honda CR-V 2025, placa YWT-6641."
+      "text": "Mi Jeep Cherokee 2019, placa CJR-0670."
     },
     {
       "speaker": "staff",

@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Alex Moreno, policy POL-480915"
+      "value": "Victor Parker, policy POL-23"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -21,11 +21,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Hyundai Elantra 2024, plate NKV-9219, driven by Alex"
+      "value": "Chevrolet Equinox 2017, plate HUL-5956, driven by Victor"
     }
   },
   "language": "en",
-  "policy_number": "POL-480915",
+  "policy_number": "POL-23",
   "record_type": "claim",
   "resolution": null,
   "state": "awaiting_insured",
@@ -33,7 +33,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "I'm Alex Moreno, policy POL-480915. A truck backed into the rear of my car."
+      "text": "I'm Victor Parker, policy POL-23. A truck backed into the rear of my car."
     },
     {
       "speaker": "agent",
@@ -41,7 +41,7 @@
     },
     {
       "speaker": "insured",
-      "text": "My Hyundai Elantra 2024, plate NKV-9219."
+      "text": "My Chevrolet Equinox 2017, plate HUL-5956."
     },
     {
       "speaker": "staff",

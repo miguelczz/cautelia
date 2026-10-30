@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "stated",
-      "value": "Santiago Quintero Echeverri, policy POL-814225"
+      "value": "Alex Moreno, policy POL-50"
     },
     "incident_datetime": {
       "status": "stated",
@@ -21,11 +21,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Renault Duster 2020, plate PMJ528, driven by Santiago"
+      "value": "Suzuki Swift 2017, plate ZFU936, driven by Alex"
     }
   },
   "language": "en",
-  "policy_number": "POL-814225",
+  "policy_number": "POL-50",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -33,7 +33,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "I'm Santiago Quintero Echeverri, policy POL-814225. I was hit at the Almond Grove roundabout."
+      "text": "I'm Alex Moreno, policy POL-50. I was hit at the Almond Grove roundabout."
     },
     {
       "speaker": "agent",
@@ -41,7 +41,7 @@
     },
     {
       "speaker": "insured",
-      "text": "My Renault Duster 2020, plate PMJ528. I was driving."
+      "text": "My Suzuki Swift 2017, plate ZFU936. I was driving."
     },
     {
       "speaker": "agent",

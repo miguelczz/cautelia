@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Julián Posada Arango, policy POL-245782"
+      "value": "Esteban Londoño, policy POL-16"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -21,11 +21,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Nissan Versa 2020, plate UBX737, driven by Julián"
+      "value": "Mazda CX-30 2021, plate JKV165, driven by Esteban"
     }
   },
   "language": "en",
-  "policy_number": "POL-245782",
+  "policy_number": "POL-16",
   "record_type": "claim",
   "resolution": null,
   "state": "awaiting_insured",
@@ -33,7 +33,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "I'm Julián Posada Arango, policy POL-245782. A truck backed into the rear of my car."
+      "text": "I'm Esteban Londoño, policy POL-16. A truck backed into the rear of my car."
     },
     {
       "speaker": "agent",
@@ -41,7 +41,7 @@
     },
     {
       "speaker": "insured",
-      "text": "My Nissan Versa 2020, plate UBX737."
+      "text": "My Mazda CX-30 2021, plate JKV165."
     },
     {
       "speaker": "staff",

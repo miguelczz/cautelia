@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Felipe Giraldo Villegas, policy POL-784054"
+      "value": "Esteban Londoño, policy POL-16"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -29,11 +29,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Nissan Versa 2012, plate LKP139, driven by Felipe"
+      "value": "Mazda CX-30 2021, plate JKV165, driven by Esteban"
     }
   },
   "language": "en",
-  "policy_number": "POL-784054",
+  "policy_number": "POL-16",
   "record_type": "claim",
   "resolution": "approved",
   "state": "closed",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Hi, I'm Felipe Giraldo Villegas. My policy is POL-784054."
+      "text": "Hi, I'm Esteban Londoño. My policy is POL-16."
     },
     {
       "speaker": "agent",
@@ -73,7 +73,7 @@
     },
     {
       "speaker": "insured",
-      "text": "My Nissan Versa 2012, plate LKP139. I was driving."
+      "text": "My Mazda CX-30 2021, plate JKV165. I was driving."
     },
     {
       "speaker": "staff",

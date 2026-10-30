@@ -1,0 +1,12 @@
+{
+  "clause_ids": [
+    "SA-PAP-2026-END-1-DEF.FAMILY_MEMBER"
+  ],
+  "form_id": "SA-PAP-2026-END-1",
+  "form_kind": "endorsement",
+  "form_version": "2026.1",
+  "issuer_label": "Seguros Aburrá",
+  "issuer_tenant": "stonecroft",
+  "jurisdiction_ref": null,
+  "language": "es"
+}

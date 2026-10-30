@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Mario Ruiz, policy POL-679093"
+      "value": "Alex Moreno, policy POL-50"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -29,11 +29,11 @@
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Hyundai Elantra 2018, plate XVN-3892, driven by Mario"
+      "value": "Jeep Cherokee 2013, plate KWN-1568, driven by Alex"
     }
   },
   "language": "en",
-  "policy_number": "POL-679093",
+  "policy_number": "POL-50",
   "record_type": "claim",
   "resolution": null,
   "state": "deciding",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Hi, I'm Mario Ruiz. My policy is POL-679093."
+      "text": "Hi, I'm Alex Moreno. My policy is POL-50."
     },
     {
       "speaker": "agent",

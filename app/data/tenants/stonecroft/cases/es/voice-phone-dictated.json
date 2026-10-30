@@ -5,7 +5,7 @@
   "fields": {
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Alex Moreno, póliza POL-480915"
+      "value": "Laura Mejía, póliza POL-13"
     },
     "incident_datetime": {
       "status": "stated",
@@ -17,7 +17,7 @@
     }
   },
   "language": "es",
-  "policy_number": "POL-480915",
+  "policy_number": "POL-13",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -25,7 +25,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Hola, soy Alex Moreno, quiero reportar un choque."
+      "text": "Hola, soy Laura Mejía, quiero reportar un choque."
     },
     {
       "speaker": "agent",
@@ -33,7 +33,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Mi celular es 301 555 0131."
+      "text": "Mi celular es 311 555 0175."
     }
   ],
   "used_by": [

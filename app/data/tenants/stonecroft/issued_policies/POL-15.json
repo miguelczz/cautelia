@@ -1,0 +1,39 @@
+{
+  "drivers": [
+    {
+      "full_name": "Sebastián Marín"
+    }
+  ],
+  "endorsement_ids": [],
+  "form_id": "SA-PAP-2026",
+  "form_version": "2026.1",
+  "issuer_tenant": "stonecroft",
+  "limits_and_deductibles": {
+    "a.bodily_injury_per_accident": 200000,
+    "a.bodily_injury_per_person": 100000,
+    "a.property_damage": 20000,
+    "b.medical_payments_per_person": 5000,
+    "c.uninsured_per_accident": 200000,
+    "c.uninsured_per_person": 100000,
+    "d.collision_deductible": 500,
+    "d.other_than_collision_deductible": 100
+  },
+  "named_insured": {
+    "email": "sebastian.marin@example.com",
+    "full_name": "Sebastián Marín",
+    "national_id": "97.479.443",
+    "persona_id": "sa-per-15",
+    "phone": "315 555 0186"
+  },
+  "period_end": "2027-01-20",
+  "period_start": "2026-01-20",
+  "policy_number": "POL-15",
+  "tenant_id": "stonecroft",
+  "vehicles": [
+    {
+      "make_model_year": "Hyundai Accent 2024",
+      "plate": "RUJ127",
+      "vin": "WX01JFDZ8VA139356"
+    }
+  ]
+}

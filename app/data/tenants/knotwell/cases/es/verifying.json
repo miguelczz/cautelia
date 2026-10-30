@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Camilo Muñoz Correa, póliza POL-916742"
+      "value": "Rebecca Lewis, póliza POL-34"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -25,15 +25,15 @@
     },
     "other_parties": {
       "status": "stated",
-      "value": "Un conductor, Camilo Henao Montoya, en un vehículo de placa DKC061"
+      "value": "Un conductor, Camilo Henao, en un vehículo de placa VDK206"
     },
     "vehicle_and_driver": {
       "status": "confirmed",
-      "value": "Suzuki Swift 2015, placa VDY720, lo conducía Camilo"
+      "value": "Ford F-150 2013, placa USL-5923, lo conducía Rebecca"
     }
   },
   "language": "es",
-  "policy_number": "POL-916742",
+  "policy_number": "POL-34",
   "record_type": "claim",
   "resolution": null,
   "state": "verifying",
@@ -41,7 +41,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Buenos días, quiero reportar un choque. Soy Camilo Muñoz Correa, póliza POL-916742."
+      "text": "Buenos días, quiero reportar un choque. Soy Rebecca Lewis, póliza POL-34."
     },
     {
       "speaker": "agent",
@@ -73,7 +73,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Mi Suzuki Swift 2015, placa VDY720. Lo manejaba yo."
+      "text": "Mi Ford F-150 2013, placa USL-5923. Lo manejaba yo."
     },
     {
       "speaker": "agent",
@@ -81,7 +81,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Sí, se llama Camilo Henao Montoya y la placa de su carro es DKC061."
+      "text": "Sí, se llama Camilo Henao y la placa de su carro es VDK206."
     }
   ],
   "used_by": [

@@ -9,7 +9,7 @@
     },
     "identity_and_policy": {
       "status": "confirmed",
-      "value": "Lucía Ochoa Henao, policy POL-650485"
+      "value": "Felipe Londoño, policy POL-33"
     },
     "incident_datetime": {
       "status": "confirmed",
@@ -17,7 +17,7 @@
     }
   },
   "language": "en",
-  "policy_number": "POL-650485",
+  "policy_number": "POL-33",
   "record_type": "claim",
   "resolution": null,
   "state": "derived",
@@ -25,7 +25,7 @@
   "transcript": [
     {
       "speaker": "insured",
-      "text": "Good evening. I'm Lucía Ochoa Henao, my policy is POL-650485."
+      "text": "Good evening. I'm Felipe Londoño, my policy is POL-33."
     },
     {
       "speaker": "agent",

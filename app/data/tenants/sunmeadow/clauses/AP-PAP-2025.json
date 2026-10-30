@@ -1,0 +1,93 @@
+{
+  "clauses": [
+    {
+      "clause_id": "AP-PAP-2025-DEF.YOU.ALT",
+      "clause_key": "DEF.YOU.ALT",
+      "form_id": "AP-PAP-2025",
+      "form_version": "2025.1",
+      "is_distractor": true,
+      "issuer_label": "Autos Poblado",
+      "language": "en",
+      "part": "Definitions",
+      "text": "\"You\" means only the policyholder listed on the declarations page; a spouse or partner is not included even when living in the same home."
+    },
+    {
+      "clause_id": "AP-PAP-2025-DEF.BODILY_INJURY",
+      "clause_key": "DEF.BODILY_INJURY",
+      "form_id": "AP-PAP-2025",
+      "form_version": "2025.1",
+      "is_distractor": true,
+      "issuer_label": "Autos Poblado",
+      "language": "en",
+      "part": "Definitions",
+      "text": "\"Bodily injury\" means harm to a person's health caused by an accident, such as wounds or illness; it does not include death."
+    },
+    {
+      "clause_id": "AP-PAP-2025-A.EXCL.A.3.ALT",
+      "clause_key": "A.EXCL.A.3.ALT",
+      "form_id": "AP-PAP-2025",
+      "form_version": "2025.1",
+      "is_distractor": true,
+      "issuer_label": "Autos Poblado",
+      "language": "en",
+      "part": "Part A — Liability Coverage",
+      "text": "Part A does not cover damage to things the insured has rented or is looking after for someone else; things the insured borrowed are covered."
+    },
+    {
+      "clause_id": "AP-PAP-2025-A.EXCL.B.3",
+      "clause_key": "A.EXCL.B.3",
+      "form_id": "AP-PAP-2025",
+      "form_version": "2025.1",
+      "is_distractor": true,
+      "issuer_label": "Autos Poblado",
+      "language": "en",
+      "part": "Part A — Liability Coverage",
+      "text": "Part A does not cover using any vehicle that a family member owns, whether or not it is listed on the declarations page."
+    },
+    {
+      "clause_id": "AP-PAP-2025-C.INS.ALT",
+      "clause_key": "C.INS.ALT",
+      "form_id": "AP-PAP-2025",
+      "form_version": "2025.1",
+      "is_distractor": true,
+      "issuer_label": "Autos Poblado",
+      "language": "en",
+      "part": "Part C — Uninsured Motorists Coverage",
+      "text": "Autos Poblado pays the damages for bodily injury that you or a family member are entitled to claim from the driver of an uninsured vehicle, but only when that driver is identified. Accidents where the vehicle at fault drives off are not covered."
+    },
+    {
+      "clause_id": "AP-PAP-2025-D.EXCL.1.ALT",
+      "clause_key": "D.EXCL.1.ALT",
+      "form_id": "AP-PAP-2025",
+      "form_version": "2025.1",
+      "is_distractor": true,
+      "issuer_label": "Autos Poblado",
+      "language": "en",
+      "part": "Part D — Coverage for Damage to Your Auto",
+      "text": "Part D does not cover damage that happens while the vehicle is carrying people or goods, whether for pay or among friends splitting the cost of a trip."
+    },
+    {
+      "clause_id": "AP-PAP-2025-D.EXCL.2",
+      "clause_key": "D.EXCL.2",
+      "form_id": "AP-PAP-2025",
+      "form_version": "2025.1",
+      "is_distractor": true,
+      "issuer_label": "Autos Poblado",
+      "language": "en",
+      "part": "Part D — Coverage for Damage to Your Auto",
+      "text": "Part D does not cover wear from use, rust or mechanical failure; damage from freezing is covered."
+    },
+    {
+      "clause_id": "AP-PAP-2025-E.DUTIES.A.1.ALT",
+      "clause_key": "E.DUTIES.A.1.ALT",
+      "form_id": "AP-PAP-2025",
+      "form_version": "2025.1",
+      "is_distractor": true,
+      "issuer_label": "Autos Poblado",
+      "language": "en",
+      "part": "Part E — Duties After an Accident or Loss",
+      "text": "Tell us about any accident or loss within 30 days; after that, the notice is no longer accepted."
+    }
+  ],
+  "form_id": "AP-PAP-2025"
+}

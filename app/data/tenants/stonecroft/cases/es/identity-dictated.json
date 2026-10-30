@@ -5,11 +5,11 @@
   "fields": {
     "identity_and_policy": {
       "status": "stated",
-      "value": "Natalia Londoño Agudelo, póliza POL-897598"
+      "value": "Esteban Londoño, póliza POL-16"
     }
   },
   "language": "es",
-  "policy_number": "POL-897598",
+  "policy_number": "POL-16",
   "record_type": "claim",
   "resolution": null,
   "state": "capturing",
@@ -21,7 +21,7 @@
     },
     {
       "speaker": "insured",
-      "text": "Mi cédula es 92.886.179, mi celular 313 555 0104, la placa del carro CEZ496 y la póliza POL-897598."
+      "text": "Mi cédula es 10.044.545, mi celular 304 555 0178, la placa del carro JKV165 y la póliza POL-16."
     }
   ],
   "used_by": [

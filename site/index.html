@@ -392,7 +392,7 @@ footer .brand{color:var(--text-primary);font-size:1rem}
         <ul class="chips part">
           <li data-i18n="s1.c1">Every citation verified</li>
           <li data-i18n="s1.c2">Insurers kept apart, tested</li>
-          <li data-i18n="s1.c3">Data redacted before saving</li>
+          <li data-i18n="s1.c3">Data redacted in logs and traces</li>
           <li data-i18n="s1.c4">An adjuster decides coverage</li>
         </ul>
       </div>
@@ -522,7 +522,7 @@ footer .brand{color:var(--text-primary);font-size:1rem}
           <li class="part"><span class="tick">✓</span><span data-i18n="s5.m2">Interruptions handled without losing state</span><span class="n">02</span></li>
           <li class="part"><span class="tick">✓</span><span data-i18n="s5.m3">Completeness of the FNOL record</span><span class="n">03</span></li>
           <li class="part"><span class="tick">✓</span><span data-i18n="s5.m4">Latency per turn, and stop time on interruption</span><span class="n">04</span></li>
-          <li class="part"><span class="tick">✓</span><span data-i18n="s5.m5">Zero personal data left unredacted</span><span class="n">05</span></li>
+          <li class="part"><span class="tick">✓</span><span data-i18n="s5.m5">Zero personal data in logs or traces</span><span class="n">05</span></li>
         </ul>
       </div>
     </div>
@@ -578,7 +578,7 @@ en:{
  's1.tr.a':'One case, step by step. Scripted example, not a recording.','s1.tr.h':'One case, step by step','s1.tr.1':'Takes the report','s1.tr.r1':'4 turns','s1.tr.2':'Reads the policy','s1.tr.r2':'2 clauses','s1.tr.3':'Checks the citation','s1.tr.r3':'verified','s1.tr.4':'Reviews the case','s1.tr.r4':'3 checks','s1.tr.5':'An adjuster decides','s1.tr.r5':'with the trace',
  's1.k':'Why this exists','s1.h':'Not another wrapper.',
  's1.p':'Calling a model is the easy part. Cautelia shows what most demos skip: what happens when the provider fails, where the state lives, where each figure comes from, and proof that it works.',
- 's1.c1':'Every citation verified','s1.c2':'Insurers kept apart, tested','s1.c3':'Data redacted before saving','s1.c4':'An adjuster decides coverage',
+ 's1.c1':'Every citation verified','s1.c2':'Insurers kept apart, tested','s1.c3':'Data redacted in logs and traces','s1.c4':'An adjuster decides coverage',
  's2.k':'How it works','s2.h':'One orchestrator. Four nodes. A small shared state.',
  's2.p':'Code, not the model, decides which node handles each turn. Nodes return structured results, never raw reasoning, so the context stays small and the trace reads top to bottom.',
  's2.diag':'Architecture: voice layer to orchestrator, orchestrator to four nodes, nodes to tools, orchestrator to adjuster handoff.',
@@ -611,7 +611,7 @@ en:{
  's5.p':'Scripted conversations with known answers run on every change. Pass or fail per case, Spanish and English apart, never averaged. A failing case stays visible: it is never removed to make a number go up.',
  's5.tr':'Every call leaves a nested trace, so a claim can be followed from the first word to the closed record.',
  's5.mk':'What gets measured',
- 's5.m1':'Zero citations that do not exist','s5.m2':'Zero turns claiming coverage, amounts or fault','s5.m3':'Zero leaks between insurers','s5.m4':'Latency per turn, and stop time on interruption','s5.m5':'Zero personal data left unredacted',
+ 's5.m1':'Zero citations that do not exist','s5.m2':'Zero turns claiming coverage, amounts or fault','s5.m3':'Zero leaks between insurers','s5.m4':'Latency per turn, and stop time on interruption','s5.m5':'Zero personal data in logs or traces',
  's8.h':'See it run.','s8.p':'Describe a made-up crash, by chat or by voice, and see what it does. Nothing to install.','s8.cta':'Try the demo',
  'ft.p':'A portfolio project. Not an insurance product and not affiliated with any carrier.','ft.by':'Created by Miguel Zuluaga','ft.in.a':'Miguel Zuluaga on LinkedIn (opens in a new tab)','ft.gh.a':'Miguel Zuluaga on GitHub (opens in a new tab)'
 },
@@ -630,7 +630,7 @@ es:{
  's1.tr.a':'Un caso, paso a paso. Ejemplo guionado, no una grabación.','s1.tr.h':'Un caso, paso a paso','s1.tr.1':'Toma el reporte','s1.tr.r1':'4 turnos','s1.tr.2':'Lee la póliza','s1.tr.r2':'2 cláusulas','s1.tr.3':'Comprueba la cita','s1.tr.r3':'verificada','s1.tr.4':'Revisa el caso','s1.tr.r4':'3 controles','s1.tr.5':'Un ajustador decide','s1.tr.r5':'con la traza',
  's1.k':'Por qué existe','s1.h':'No es otro envoltorio.',
  's1.p':'Llamar a un modelo es la parte fácil. Cautelia muestra lo que casi toda demo se salta: qué pasa cuando el proveedor falla, dónde vive el estado, de dónde sale cada cifra y la prueba de que funciona.',
- 's1.c1':'Cada cita, verificada','s1.c2':'Aseguradoras aisladas, con prueba','s1.c3':'Datos tapados antes de guardar','s1.c4':'La cobertura la decide un ajustador',
+ 's1.c1':'Cada cita, verificada','s1.c2':'Aseguradoras aisladas, con prueba','s1.c3':'Datos tapados en registros y trazas','s1.c4':'La cobertura la decide un ajustador',
  's2.k':'Cómo funciona','s2.h':'Un orquestador. Cuatro nodos. Estado compartido pequeño.',
  's2.p':'El código, no el modelo, decide qué nodo atiende cada turno. Los nodos devuelven resultados con forma, nunca razonamiento en bruto: el contexto queda pequeño y la traza se lee de arriba abajo.',
  's2.diag':'Arquitectura: capa de voz al orquestador, orquestador a cuatro nodos, nodos a herramientas, orquestador a la derivación al ajustador.',
@@ -663,7 +663,7 @@ es:{
  's5.p':'Conversaciones guionadas con respuestas conocidas corren con cada cambio. Pasa o falla por caso, español e inglés por separado, nunca promediados. Un caso que falla se queda a la vista: nunca se retira para que suba una cifra.',
  's5.tr':'Cada llamada deja una traza anidada: un siniestro se sigue desde la primera palabra hasta el expediente cerrado.',
  's5.mk':'Lo que se mide',
- 's5.m1':'Cero citas que no existen','s5.m2':'Cero turnos que afirmen cobertura, montos o culpa','s5.m3':'Cero fugas entre aseguradoras','s5.m4':'Latencia por turno, y la parada al interrumpir','s5.m5':'Cero datos personales sin tapar',
+ 's5.m1':'Cero citas que no existen','s5.m2':'Cero turnos que afirmen cobertura, montos o culpa','s5.m3':'Cero fugas entre aseguradoras','s5.m4':'Latencia por turno, y la parada al interrumpir','s5.m5':'Cero datos personales en registros y trazas',
  's8.h':'Véalo funcionando.','s8.p':'Cuenta un choque inventado, por chat o por voz, y mira qué hace. Sin instalar nada.','s8.cta':'Pruébalo',
  'ft.p':'Proyecto de portafolio. No es un producto de seguros ni está afiliado a ninguna aseguradora.','ft.by':'Creado por Miguel Zuluaga','ft.in.a':'Miguel Zuluaga en LinkedIn (se abre en una pestaña nueva)','ft.gh.a':'Miguel Zuluaga en GitHub (se abre en una pestaña nueva)'
 }};

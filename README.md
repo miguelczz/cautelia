@@ -43,7 +43,7 @@ It is a portfolio demonstration: the three insurers, their policies and every pe
 
 - **It never decides coverage or payments.** It does not say "you are covered", give amounts or assign fault. An adjuster signs those decisions.
 - **It is not connected to any real insurer.** No real policies, no real claims system, no payments.
-- **Do not type real personal data.** Everything you write is treated as if it were real anyway: personal data is masked before it is stored, and visitor data is deleted every night.
+- **Do not type real personal data.** The conversation is stored as you wrote it, and visitor data is deleted every night.
 - **Voice works in the browser only,** with a limit of calls per visitor and per day. There is no phone number.
 - **Quotes are by chat only.** By voice the agent says so and offers the chat.
 - **It is not legal or insurance advice,** and it does not claim to comply with any regulation: its controls are inspired by them.
@@ -90,7 +90,7 @@ In words: the person talks to the agent; a language model (Claude Haiku) reads e
 
 - **A person signs every decision on coverage and money.** The output guard checks every message, in both languages, for anything that asserts or denies coverage, gives amounts, assigns fault or gives legal advice, and replaces it.
 - **Citations come only from retrieved clauses**, and an exact verifier checks that each one exists, belongs to that insurer and that policy, and is in force.
-- **Personal data is masked before it is stored**, by two detectors that work differently, in Spanish and English. Your own screen shows your text as you wrote it.
+- **Personal data is masked in logs, traces and evaluation reports**, by two detectors that work differently, in Spanish and English. The conversation itself is stored and shown as it was written.
 - **Insurers are isolated in the database** with row-level security and a single entry point that sets the insurer before any query. A test fails if any table lacks it.
 - **The rules are files, not code branches.** Each insurer has its own versioned rules, each rule with its own test.
 - **Spending has hard limits:** prepaid provider balances with automatic top-up turned off, a spending ceiling in the application, and daily limits per visitor.

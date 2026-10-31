@@ -112,13 +112,18 @@ def _pendientes(corpus: LoadedCorpus, *, already_indexed: dict[str, str]) -> tup
     return tuple(pendientes)
 
 
-#: Cuantas veces se reintenta un lote que el proveedor rechazo por cuota, y
-#: cuanto se espera entre intentos. Un lote que devuelve `429` no esta roto:
-#: esta llegando demasiado rapido, y la ingesta de 414 clausulas son decenas de
-#: llamadas seguidas. Es la unica clase de fallo que se reintenta aqui: un
-#: `invalid_response` no mejora esperando, y repetirlo solo gasta cuota.
-REINTENTOS_POR_CUOTA = 3
-ESPERA_BASE_SEGUNDOS = 2.0
+#: Cuanto se espera antes de cada reintento de un lote que el proveedor rechazo por
+#: cuota. Un lote que devuelve `429` no esta roto: esta llegando demasiado rapido, y
+#: la ingesta de 414 clausulas son decenas de llamadas seguidas. Es la unica clase de
+#: fallo que se reintenta aqui: un `invalid_response` no mejora esperando, y
+#: repetirlo solo gasta cuota.
+#:
+#: **Las esperas suman mas de un minuto** (2026-10-31). El plan gratuito cuenta cada
+#: texto del lote contra un tope de 100 por minuto; con esperas de 2 y 4 segundos la
+#: ingesta se rendia antes de que la ventana se vaciara, y la recarga del corpus
+#: fallo dos dias seguidos en local y en produccion.
+ESPERAS_POR_CUOTA_SEGUNDOS: tuple[float, ...] = (10.0, 30.0, 65.0)
+REINTENTOS_POR_CUOTA = len(ESPERAS_POR_CUOTA_SEGUNDOS) + 1
 
 
 async def _embeber_lote(lote: list[str], *, client: EmbeddingClient) -> list[Vector]:
@@ -134,7 +139,7 @@ async def _embeber_lote(lote: list[str], *, client: EmbeddingClient) -> list[Vec
             observability.emit(
                 "policy_rag.ingest_rate_limited", attempt=intento, batch_size=len(lote)
             )
-            await asyncio.sleep(ESPERA_BASE_SEGUNDOS * intento)
+            await asyncio.sleep(ESPERAS_POR_CUOTA_SEGUNDOS[intento - 1])
     raise AssertionError  # pragma: no cover -- el bucle sale por return o por raise
 
 

@@ -13,6 +13,8 @@ un `429` no mata una corrida de decenas de llamadas seguidas.
 
 from __future__ import annotations
 
+import asyncio
+
 import pytest
 
 from untangle.base import ProviderName, Use
@@ -45,6 +47,31 @@ def _cliente(embedder: _EmbedderDeLotes, *, batch_size: int) -> EmbeddingClient:
         use=Use.CORPUS,
         batch_size=batch_size,
     )
+
+
+@pytest.fixture(autouse=True)
+def esperas(monkeypatch: pytest.MonkeyPatch) -> list[float]:
+    """Las esperas entre reintentos se anotan en vez de dormirse."""
+    anotadas: list[float] = []
+
+    async def anotar(segundos: float) -> None:
+        anotadas.append(segundos)
+
+    monkeypatch.setattr(asyncio, "sleep", anotar)
+    return anotadas
+
+
+async def test_tres_rechazos_seguidos_esperan_mas_de_un_minuto_y_el_lote_entra(
+    esperas: list[float],
+) -> None:
+    """El tope del plan gratuito es por minuto (2026-10-31): rendirse antes de que la
+    ventana se vacie dejaba la recarga del corpus sin terminar."""
+    embedder = _EmbedderDeLotes(fallos_de_cuota=3)
+
+    vectores = await _embeber_lote(["a", "b"], client=_cliente(embedder, batch_size=10))
+
+    assert len(vectores) == 2
+    assert sum(esperas) > 60
 
 
 async def test_un_rechazo_por_cuota_se_reintenta_y_la_corrida_sigue() -> None:

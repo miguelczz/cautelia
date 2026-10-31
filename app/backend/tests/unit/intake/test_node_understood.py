@@ -125,6 +125,27 @@ async def test_soy_el_titular_pero_manejaba_mi_hijo_confirma_y_anota_al_conducto
     assert "manejaba su hijo" in vehiculo.value
 
 
+async def test_si_lo_entendido_ya_nombra_el_vehiculo_no_se_repite() -> None:
+    """Se guardaba «Nissan Rogue 2012. Nissan Rogue 2012. Driven by the policyholder»
+    (caso AP-53, 2026-10-31): el vehiculo de la poliza delante de un texto que ya lo traia."""
+    salida = await _nodo(_Extractor(), lookup=_Buscador()).run(
+        _estado(
+            turn_text="Sí, soy yo y manejaba el Renault",
+            awaiting_policy_confirmation=TITULAR,
+            completeness=_completitud("injuries"),
+            understood=_entendido(
+                UnderstoodItem(
+                    field_key="vehicle_and_driver", value="Renault Logan 2024, manejaba el titular"
+                ),
+                answer=Answer.YES,
+            ),
+        )
+    )
+
+    vehiculo = next(c for c in salida.intake_extracted if c.field_key == "vehicle_and_driver")
+    assert vehiculo.value == "Renault Logan 2024, manejaba el titular"
+
+
 async def test_si_la_persona_dice_quien_manejaba_no_se_anota_que_conducia_el_titular() -> None:
     """La frase del catalogo afirma lo contrario de lo que la persona acaba de decir.
 

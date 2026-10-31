@@ -774,7 +774,12 @@ class IntakeNode:
             # afirma justo lo contrario de lo que la persona acaba de decir, y quien lee el
             # campo --el ajustador, y la derivacion del conductor-- no puede fiarse de un
             # texto que dice las dos cosas a la vez.
-            vehiculo = f"{pendiente.vehicle}. {dicho_al_volante}"
+            # Si lo que dijo ya nombra el vehiculo, no se repite: se guardaba «Nissan Rogue
+            # 2012. Nissan Rogue 2012. Driven by the policyholder» (2026-10-31).
+            ya_lo_nombra = pendiente.vehicle.casefold() in dicho_al_volante.casefold()
+            vehiculo = (
+                dicho_al_volante if ya_lo_nombra else f"{pendiente.vehicle}. {dicho_al_volante}"
+            )
         if vehiculo is not None and "vehicle_and_driver" in {
             d.key for d in fields.definitions_for(state.record_type)
         }:

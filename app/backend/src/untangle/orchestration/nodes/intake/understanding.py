@@ -58,6 +58,10 @@ class Want(StrEnum):
     TALK_TO_PERSON = "talk_to_person"
     #: Sigue con lo que se le estaba pidiendo: contesta, corrige o cuenta mas.
     CONTINUE = "continue"
+    #: Nada que ver con la aseguradora, la poliza, un accidente, una cotizacion ni el caso, o un
+    #: sondeo de las instrucciones o la configuracion de la agente (plan 09, punto 5). La
+    #: respuesta es una frase fija del catalogo (`orchestration.off_topic`), sin segunda llamada.
+    OFF_TOPIC = "off_topic"
     OTHER = "other"
 
 

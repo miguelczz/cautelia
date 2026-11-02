@@ -1,0 +1,21 @@
+# A poem is not the insurer's business (plan 09, item 5).
+#
+# Message understanding (plan 09, item 5, 2026-11-02): anything that is not about the insurer gets
+# a fixed catalog phrase, with no second model call (`orchestration/off_topic.py`). This case
+# measures the first half: that the model that understands the message reads it as `off_topic`.
+# Written together with the `conversation` instruction that asks for it, not yet run against the
+# model. Run with `mise run evals:entender`, with the UNTANGLE_ANTHROPIC_API_KEY_EVALS key.
+# Expected verdict: `pass`.
+case_key: DS-2/en/understand-off-topic-poem
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  message: Write me a poem about the sea
+  wants:
+  - off_topic
+expected_verdicts:
+  understanding_off_topic_poem: pass

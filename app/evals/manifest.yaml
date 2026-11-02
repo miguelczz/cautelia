@@ -15,7 +15,7 @@ datasets:
       Corpus de polizas de los tres tenants. Lo genera U7 `synthetic-data`.
 
   - dataset: DS-2
-    count: 138
+    count: 146
     reason: >
       Golden set de FNOL en texto. Los casos los escriben las unidades que miden
       cada conducta; U1 entrega el corredor, no los casos. El primer lote es de
@@ -162,6 +162,15 @@ datasets:
       sonda de comprension gana la expectativa `reply_claims_no_outcome`. Se escribieron antes del
       cambio que descarta esa respuesta y **no se han corrido contra el modelo**. Con ellas el
       conjunto tiene **138 archivos, 69 por idioma**.
+
+      El 2026-11-02 entran cuatro parejas de comprension mas (`understand-off-topic-poem`,
+      `understand-off-topic-internals`, `understand-off-topic-mid-report` y
+      `understand-off-topic-mixed-with-claim`), del plan 09 punto 5: lo que no es de la
+      aseguradora --un poema, la configuracion de la agente, una receta a mitad de un reporte--
+      se lee como la intencion `off_topic` y recibe una frase fija del catalogo; si el mensaje
+      mezcla un accidente con algo ajeno, gana el accidente. Se escribieron junto con la
+      instruccion `conversation` que lo pide y **no se han corrido contra el modelo**. Con
+      ellas el conjunto tiene **146 archivos, 73 por idioma**.
     runs_per_delivery: true
 
   - dataset: DS-3
@@ -222,7 +231,7 @@ datasets:
       grabaciones de terceros y el costo de voz esta topado.
 
   - dataset: DS-6
-    count: 44
+    count: 46
     reason: >
       Set adversarial. Su primer lote es RT-4 (acceso a un caso o poliza ajena),
       que trae U2 con el aislamiento por aseguradora; U3 anade RT-14 (fuga de
@@ -254,6 +263,10 @@ datasets:
       El mismo dia `rt2-policy-clause-injection` deja de ser una conversacion de chat
       (auditoria E8): se mide sin base, entregandole a mano la clausula del fixture al
       proponedor de citas de verdad (`injection_probes.py`), con `mise run evals:citas`.
+      El 2026-11-02 entra una pareja mas (`off-topic-chat`, plan 09 punto 5): tres pedidos
+      ajenos al seguro colados en las respuestas de un reporte, por el canal chat y con el
+      modelo de verdad (`mise run evals:conversaciones`); no se ha corrido todavia. Con ella el
+      conjunto tiene **46 archivos, 23 por idioma**.
     runs_per_delivery: true
 
   - dataset: DS-7

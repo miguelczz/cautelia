@@ -130,6 +130,8 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["chat.limit.rate", "Vas muy rápido para mí. Espera un momento y vuelve a enviarlo."],
   ["chat.limit.site_day", "La demostración llegó a su cupo de mensajes de hoy. Vuelve mañana y seguimos."],
   ["chat.limit.size", "Ese mensaje es más largo de lo que puedo leer de una vez. ¿Me lo cuentas en partes?"],
+  ["chat.off_topic.lead", "Con eso no te puedo ayudar; solo atiendo temas de seguros de esta aseguradora."],
+  ["chat.off_topic.resume", "¿Seguimos con tu caso?"],
   ["chat.offer.options", "¿Quieres reportar un accidente o resolver una duda sobre tu póliza?"],
   ["chat.offer.options_with_quote", "¿Quieres reportar un accidente, resolver una duda sobre tu póliza o pedir una cotización?"],
   ["chat.opening.capabilities", "Puedo ayudarte a reportar un siniestro o a resolver dudas sobre tu póliza."],
@@ -262,11 +264,11 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["documents.kind_base", "Póliza de autos {year}"],
   ["documents.kind_endorsement", "Condición especial {number}"],
   ["documents.kind_jurisdiction", "Reglas del territorio"],
-  ["documents.list_label", "Documentos"],
-  ["documents.loading", "Cargando el documento…"],
 ];
 
 const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
+  ["documents.list_label", "Documentos"],
+  ["documents.loading", "Cargando el documento…"],
   ["documents.no_match", "Ninguna cláusula coincide con la búsqueda."],
   ["documents.not_in_force", "No vigente"],
   ["documents.not_in_force_why", "Ninguna póliza lo usa. Está aquí para comprobar que {agent} no cita documentos viejos."],
@@ -515,11 +517,11 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.readback.identity_and_policy", "Confirmo: {value}. ¿Es correcto?"],
   ["intake.readback.other_parties", "Anotado sobre las otras partes. ¿Es correcto?"],
   ["intake.readback.quote_all", "Anotado: {summary} ¿Es correcto todo?"],
-  ["intake.readback.quote_driver", "Anotado: {name}, fecha de nacimiento {birth_date}, {license_years} años con licencia, expedida en {license_jurisdiction}. ¿Es correcto?"],
-  ["intake.readback.quote_driver_part", "{name}, fecha de nacimiento {birth_date}, {license_years} años con licencia, expedida en {license_jurisdiction}."],
 ];
 
 const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
+  ["intake.readback.quote_driver", "Anotado: {name}, fecha de nacimiento {birth_date}, {license_years} años con licencia, expedida en {license_jurisdiction}. ¿Es correcto?"],
+  ["intake.readback.quote_driver_part", "{name}, fecha de nacimiento {birth_date}, {license_years} años con licencia, expedida en {license_jurisdiction}."],
   ["intake.readback.quote_history", "Anotado: {at_fault_losses_3y} siniestros con culpa y {claims_3y} reportados en tres años; {prior_coverage_active}; {lapse_months} meses sin cobertura. ¿Es correcto?"],
   ["intake.readback.quote_history_part", "Siniestros con culpa en tres años: {at_fault_losses_3y}; reportados: {claims_3y}; {prior_coverage_active}; meses sin cobertura: {lapse_months}."],
   ["intake.readback.quote_usage", "Anotado: uso {use_type}, recorrido anual {annual_mileage_band}, y se guarda en {garaging_jurisdiction}. ¿Es correcto?"],
@@ -768,11 +770,11 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["redaction.spoken.license_plate", "esa placa"],
   ["redaction.spoken.location", "ese lugar"],
   ["redaction.spoken.national_id", "ese documento"],
-  ["redaction.spoken.person", "ese nombre"],
-  ["redaction.spoken.phone", "ese teléfono"],
 ];
 
 const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
+  ["redaction.spoken.person", "ese nombre"],
+  ["redaction.spoken.phone", "ese teléfono"],
   ["redaction.spoken.policy_number", "esa póliza"],
   ["redaction.spoken.unclassified", "ese dato"],
   ["redaction.spoken.vin", "ese número de serie"],
@@ -1021,11 +1023,11 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.duration.minute", "un minuto"],
   ["voice.duration.minutes", "{minutes} minutos"],
   ["voice.ended.completed", "Tu reporte quedó completo."],
-  ["voice.ended.dropped", "La llamada se cortó. Tu caso queda guardado."],
-  ["voice.ended.error", "Algo falló en la llamada. Tu caso queda guardado."],
 ];
 
 const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
+  ["voice.ended.dropped", "La llamada se cortó. Tu caso queda guardado."],
+  ["voice.ended.error", "Algo falló en la llamada. Tu caso queda guardado."],
   ["voice.ended.handed_off", "Tu caso pasó a un ajustador."],
   ["voice.ended.max_duration", "La llamada llegó a su límite de tiempo. Tu caso queda guardado."],
   ["voice.ended.resume_until", "Tienes hasta {time} para retomarlo."],

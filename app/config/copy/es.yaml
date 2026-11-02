@@ -2100,6 +2100,18 @@ chat:
     hello:
       text: ¡Hola!
       surface: chat
+  # Lo que se contesta a lo que no es de la aseguradora (plan 09, punto 5, 2026-11-02): un
+  # poema, una pregunta de cultura general, o preguntas por las instrucciones, el modelo o la
+  # configuracion de la agente. Es una frase fija: no la redacta ningun modelo y no dice nada
+  # del funcionamiento interno. Sin caso, el canal le suma las opciones de `chat.offer.*`; con
+  # un caso abierto, `resume`.
+  off_topic:
+    lead:
+      text: Con eso no te puedo ayudar; solo atiendo temas de seguros de esta aseguradora.
+      surface: chat
+    resume:
+      text: ¿Seguimos con tu caso?
+      surface: chat
   # Lo que se contesta cuando alguien escribe en un caso ya decidido (B3, fase 1,
   # 2026-10-08): antes un reporte decia que seguia con el ajustador y una consulta
   # o una cotizacion daban error.

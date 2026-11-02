@@ -73,6 +73,7 @@ from untangle.orchestration import (
     closing_outcome,
     closing_plan,
     coverage_detour,
+    off_topic,
     outcome_claim,
     quote_reply,
     rhythm,
@@ -1339,7 +1340,7 @@ async def _pedir_la_pregunta(
     )
 
 
-async def _dirigir_turno(  # noqa: C901 -- guardas en orden, cada una corta y devuelve
+async def _dirigir_turno(  # noqa: C901, PLR0911 -- guardas en orden, cada una corta y devuelve
     # Senales, cotizacion apagada o precio, solicitud ya capturada, desvio de cobertura,
     # y la captura. Son guardas en orden y cada una devuelve: la alternativa --un
     # despachador por tipo de turno-- esconderia el **orden**, que es lo unico que
@@ -1410,10 +1411,18 @@ async def _dirigir_turno(  # noqa: C901 -- guardas en orden, cada una corta y de
     entendido = turn.understood
     if entiende_aqui:
         empezo = time.monotonic()
-        entendido = await _entender_con_contexto(
-            runtime, turn, contexto, previo, ahora, history=historial
-        )
+        # El sondeo de instrucciones y configuracion va **antes** del modelo (plan 09, punto 5):
+        # un mensaje que lo dispara no llega a el. La emergencia y la peticion de una persona ya
+        # se atendieron arriba.
+        entendido = off_topic.probe_reading(turn.text)
+        if entendido is None:
+            entendido = await _entender_con_contexto(
+                runtime, turn, contexto, previo, ahora, history=historial
+            )
         tiempos["understand_ms"] = _ms_desde(empezo)
+    if entendido is not None and entendido.wants is understanding.Want.OFF_TOPIC:
+        yield await _fuera_de_tema(turn, case_id=case_id, turn_id=turn_id, gate=gate)
+        return
     if entendido is not None and entendido.wants is understanding.Want.TALK_TO_PERSON:
         # La misma derivacion que la senal por reglas: pedir una persona dicho de
         # otra forma («prefiero un asesor de carne y hueso») tambien la pide.
@@ -1632,6 +1641,27 @@ async def _capturar(  # noqa: PLR0913 -- lo que el turno ya resolvio arriba, por
         # se revisa. Sale de que la revision **de verdad se lanzo** y no de que el nodo
         # haya elegido esa frase.
         answer_pending=revision_lanzada,
+    )
+
+
+async def _fuera_de_tema(
+    turn: InboundTurn, *, case_id: str, turn_id: str, gate: ExitGate
+) -> FinalText:
+    """La frase fija de lo que no es de la aseguradora (plan 09, punto 5), con un caso abierto.
+
+    Lo que el modelo haya escrito en esa llamada se descarta sin mirarse: este turno no gasta
+    una segunda llamada y no deja que el modelo diga nada de si mismo. La guardia de salida la
+    revisa como a todo texto.
+    """
+    texto, _ = await gate.send(off_topic.with_case_text(language=turn.language))
+    record_outcome(turn.tenant_id, turn.channel, FallbackReason.OFF_TOPIC)
+    observability.emit("chat.off_topic", tenant_id=turn.tenant_id, channel=turn.channel)
+    return FinalText(
+        message_id=turn_id,
+        text=texto,
+        language=turn.language,
+        case_id=case_id,
+        from_catalog=True,
     )
 
 

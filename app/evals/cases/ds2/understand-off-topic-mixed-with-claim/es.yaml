@@ -1,0 +1,21 @@
+# Si el mensaje mezcla un accidente con algo ajeno, gana el accidente (plan 09, punto 5).
+#
+# Comprension de un mensaje (plan 09, punto 5, 2026-11-02): lo que no es de la aseguradora recibe
+# una frase fija del catalogo, sin segunda llamada al modelo (`orchestration/off_topic.py`).
+# Aqui se mide la primera mitad: que el modelo que entiende el mensaje lo lea como `off_topic`.
+# Escrito junto con la instruccion `conversation` que lo pide, sin correr todavia contra el modelo.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/understand-off-topic-mixed-with-claim
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  message: Me chocaron ayer, y de paso, ¿cuál es la capital de Francia?
+  wants:
+  - report_accident
+expected_verdicts:
+  understanding_off_topic_mixed_with_claim: pass

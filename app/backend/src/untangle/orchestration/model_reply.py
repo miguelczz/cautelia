@@ -65,6 +65,9 @@ class FallbackReason(StrEnum):
     GUARD = "guard"
     #: En una llamada, el redactor de datos personales cambia algo de la respuesta.
     REDACTED_VOICE = "redacted_voice"
+    #: El mensaje no es de la aseguradora (`understanding.Want.OFF_TOPIC`): la respuesta es la
+    #: frase fija del catalogo y lo que escribio el modelo se descarta, sin mirarlo.
+    OFF_TOPIC = "off_topic"
 
 
 def record_outcome(tenant_id: TenantId, channel: str, reason: FallbackReason | None) -> None:

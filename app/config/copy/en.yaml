@@ -1995,6 +1995,18 @@ chat:
     hello:
       text: Hi!
       surface: chat
+  # What is said to anything that is not about the insurer (plan 09, item 5, 2026-11-02): a poem,
+  # a general knowledge question, or questions about the agent's instructions, model or
+  # configuration. A fixed phrase: no model writes it and it says nothing about how the system
+  # works inside. Without a case the channel adds the `chat.offer.*` options; with an open case,
+  # `resume`.
+  off_topic:
+    lead:
+      text: I can't help with that; I only handle insurance topics for this insurer.
+      surface: chat
+    resume:
+      text: Shall we get back to your case?
+      surface: chat
   closed_case:
     already_decided:
       text: "Your case {case_number} already has a decision: you can see it with “See my case”. To report or ask something new, restart the conversation with the button at the top."

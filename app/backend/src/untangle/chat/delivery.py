@@ -77,7 +77,7 @@ from untangle.chat.wire import EventQueue, Publisher
 from untangle.compliance.redaction import api as redaccion
 from untangle.copy_catalog import api as copy_api
 from untangle.copy_catalog.api import CopyKey
-from untangle.orchestration import case_context, outcome_claim, quote_reply
+from untangle.orchestration import case_context, off_topic, outcome_claim, quote_reply
 from untangle.orchestration.contracts import (
     CaseTurnSupport,
     FinalText,
@@ -379,6 +379,10 @@ async def _entender_el_primero(entrante: InboundTurn) -> understanding.Understan
     La historia que ve el modelo es la apertura y lo que se haya hablado antes de abrir caso
     (`_HISTORIA_SIN_CASO`): sin lo segundo, quien decia «tengo una duda de mi poliza» y
     despues su nombre recibia «¿quieres reportar un siniestro o tienes una duda?»."""
+    # El sondeo de instrucciones y configuracion va antes del modelo (plan 09, punto 5).
+    sondeado = await off_topic.reading_before_model(entrante.text)
+    if sondeado is not None:
+        return sondeado
     config = tenancy_config.require(entrante.tenant_id)
     return await understanding.understand(
         _ENTENDEDOR,
@@ -444,6 +448,14 @@ def _frase_sin_caso(
     if entendido.wants is understanding.Want.QUOTE:
         frase = quote_reply.compose_unavailable(language=entrante.language)
         return opening.Opening(copy_key=CopyKey(frase.key), text=frase.text)
+    if entendido.wants is understanding.Want.OFF_TOPIC:
+        # Lo que no es de la aseguradora (plan 09, punto 5): la frase fija y, detras, lo que
+        # esta aseguradora si hace.
+        opciones = opening.options(config, language=entrante.language)
+        return opening.Opening(
+            copy_key=off_topic.LEAD,
+            text=f"{off_topic.lead_text(language=entrante.language)} {opciones.text}",
+        )
     return opening.options(config, language=entrante.language)
 
 
@@ -461,6 +473,9 @@ def _lo_que_dice_el_modelo_sin_caso(
     """
     if entendido is None:
         return None, FallbackReason.NO_MODEL
+    if entendido.wants is understanding.Want.OFF_TOPIC:
+        # Frase fija: lo que el modelo haya redactado en esta llamada no se mira.
+        return None, FallbackReason.OFF_TOPIC
     reply = usable_reply(
         entendido.reply,
         base=base,
@@ -557,7 +572,12 @@ async def _primer_mensaje(
     previos = _DATOS_SIN_CASO.pop(entrante.session_ref, ())
     if tipo is not None:
         _HISTORIA_SIN_CASO.pop(entrante.session_ref, None)
-    if tipo is None and entendido.items and previos:
+    if (
+        tipo is None
+        and entendido.wants is not understanding.Want.OFF_TOPIC
+        and entendido.items
+        and previos
+    ):
         # Segunda vez que da datos sin elegir: no responde la pregunta, sigue
         # contando. Es un reporte, que es lo que hacia la regla antes de la fase 0.
         tipo = RecordType.CLAIM
@@ -679,7 +699,10 @@ async def _con_el_tema_que_toca(
     soporte, caso = _SOPORTE_DEL_CASO, entrante.case_id
     if soporte is None or caso is None:
         return entrante
-    entendido = await soporte.understand(entrante)
+    # El sondeo de instrucciones y configuracion va antes del modelo (plan 09, punto 5).
+    entendido = await off_topic.reading_before_model(entrante.text)
+    if entendido is None:
+        entendido = await soporte.understand(entrante)
     entrante = replace(entrante, understood=entendido, understood_by_channel=True)
     if entendido is None:
         return entrante

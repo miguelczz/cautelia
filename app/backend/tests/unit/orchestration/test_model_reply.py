@@ -110,6 +110,7 @@ def test_los_motivos_son_la_lista_cerrada_de_la_traza() -> None:
         "report_not_done",
         "guard",
         "redacted_voice",
+        "off_topic",
     }
 
 

@@ -125,6 +125,8 @@ export type CopyKey =
   | "chat.limit.rate"
   | "chat.limit.site_day"
   | "chat.limit.size"
+  | "chat.off_topic.lead"
+  | "chat.off_topic.resume"
   | "chat.offer.options"
   | "chat.offer.options_with_quote"
   | "chat.opening.capabilities"
@@ -1177,6 +1179,8 @@ export const COPY_KEYS = [
   "chat.limit.rate",
   "chat.limit.site_day",
   "chat.limit.size",
+  "chat.off_topic.lead",
+  "chat.off_topic.resume",
   "chat.offer.options",
   "chat.offer.options_with_quote",
   "chat.opening.capabilities",

@@ -452,14 +452,6 @@ export type CopyKey =
   | "intake.block.vehicle_and_driver"
   | "intake.block.what_happened"
   | "intake.block.when_and_where"
-  | "intake.claim_item.identity_and_policy"
-  | "intake.claim_item.other_parties"
-  | "intake.claim_item.safety"
-  | "intake.claim_item.vehicle_and_driver"
-  | "intake.claim_item.what_happened"
-  | "intake.claim_item.when_and_where"
-  | "intake.claim_item.when_only"
-  | "intake.claim_item.where_only"
   | "intake.closing.fast_claim_after_extra"
   | "intake.closing.fast_claim_already"
   | "intake.closing.fast_claim_declined"
@@ -489,8 +481,6 @@ export type CopyKey =
   | "intake.policy.found"
   | "intake.policy.found_no_vehicle"
   | "intake.policy.not_found_repeat"
-  | "intake.question.claim_all"
-  | "intake.question.claim_rest"
   | "intake.question.identity_and_policy"
   | "intake.question.other_parties"
   | "intake.question.quote_all"
@@ -1516,14 +1506,6 @@ export const COPY_KEYS = [
   "intake.block.vehicle_and_driver",
   "intake.block.what_happened",
   "intake.block.when_and_where",
-  "intake.claim_item.identity_and_policy",
-  "intake.claim_item.other_parties",
-  "intake.claim_item.safety",
-  "intake.claim_item.vehicle_and_driver",
-  "intake.claim_item.what_happened",
-  "intake.claim_item.when_and_where",
-  "intake.claim_item.when_only",
-  "intake.claim_item.where_only",
   "intake.closing.fast_claim_after_extra",
   "intake.closing.fast_claim_already",
   "intake.closing.fast_claim_declined",
@@ -1553,8 +1535,6 @@ export const COPY_KEYS = [
   "intake.policy.found",
   "intake.policy.found_no_vehicle",
   "intake.policy.not_found_repeat",
-  "intake.question.claim_all",
-  "intake.question.claim_rest",
   "intake.question.identity_and_policy",
   "intake.question.other_parties",
   "intake.question.quote_all",

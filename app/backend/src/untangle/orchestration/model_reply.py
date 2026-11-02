@@ -68,9 +68,6 @@ class FallbackReason(StrEnum):
     #: El mensaje no es de la aseguradora (`understanding.Want.OFF_TOPIC`): la respuesta es la
     #: frase fija del catalogo y lo que escribio el modelo se descarta, sin mirarlo.
     OFF_TOPIC = "off_topic"
-    #: La captura pide en un solo mensaje todo lo que falta del accidente (plan 09, punto 2): la
-    #: lista sale del codigo y el modelo no la redacta ni la reordena.
-    GROUPED_ASK = "grouped_ask"
 
 
 def record_outcome(tenant_id: TenantId, channel: str, reason: FallbackReason | None) -> None:

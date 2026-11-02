@@ -2672,17 +2672,6 @@ intake:
     quote_all:
       text: "Para cotizar, cuéntame en un mensaje lo que sepas: quién manejaría (nombre y fecha de nacimiento), cuántos años lleva con licencia y en qué ciudad la sacó; el carro (año, marca y modelo) y para qué lo usas; y si has tenido accidentes en los últimos tres años y si tienes seguro hoy. Lo que falte te lo pregunto después."
       surface: chat
-    # Plan 09, punto 2 (2026-11-02): en el chat, el reporte de un siniestro se abre pidiendo todo lo que
-    # falta en un solo mensaje, como una lista corta, y se acepta en uno o en varios. La lista la
-    # arma el codigo con los bloques a los que todavia les falta algo (`intake.claim_item.*`); en la
-    # llamada se sigue preguntando de a una cosa. `claim_all` abre la lista cuando no hay ningun
-    # dato; `claim_rest`, cuando ya hay algo y falta el resto.
-    claim_all:
-      text: "Para tomar tu reporte, cuéntame lo que sepas de esto, todo junto o en varios mensajes:"
-      surface: chat
-    claim_rest:
-      text: "Para completar tu reporte me falta esto; puedes contestarlo todo junto o por partes:"
-      surface: chat
     # BR1.1: es la pregunta de seguridad, primer campo del bloque `safety`.
     safety:
       text: ¿Hubo alguien herido?
@@ -2891,33 +2880,6 @@ intake:
       text: "{vehicle}, conducía el titular"
       surface: system
   # Cómo se nombra cada bloque cuando la agente dice qué falta (`intake.social.progress`).
-  # Una linea de la lista de `intake.question.claim_all` y `claim_rest`, una por bloque del siniestro.
-  # Los dos ultimos son opcionales y solo salen en la lista que abre el reporte.
-  claim_item:
-    safety:
-      text: si alguien resultó herido
-      surface: chat
-    identity_and_policy:
-      text: tu nombre completo y el número de tu póliza
-      surface: chat
-    what_happened:
-      text: qué pasó
-      surface: chat
-    when_and_where:
-      text: cuándo y dónde ocurrió
-      surface: chat
-    when_only:
-      text: cuándo ocurrió
-      surface: chat
-    where_only:
-      text: dónde ocurrió
-      surface: chat
-    vehicle_and_driver:
-      text: qué carro conducías y quién lo manejaba (opcional)
-      surface: chat
-    other_parties:
-      text: si hubo otras personas o vehículos involucrados (opcional)
-      surface: chat
   block:
     safety:
       text: si hubo heridos

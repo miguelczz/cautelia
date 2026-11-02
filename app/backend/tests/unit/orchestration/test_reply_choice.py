@@ -123,16 +123,6 @@ def test_un_hito_manda_sobre_todo_lo_demas() -> None:
     assert _elegir(entendido=_entendido(), senales=emergencia) == (None, FallbackReason.MILESTONE)
 
 
-def test_la_lista_de_lo_que_falta_del_accidente_la_dice_el_codigo_y_no_el_modelo() -> None:
-    """Plan 09, punto 2: la lista sale de los bloques que el caso debe; lo que el modelo escriba en
-    ese turno no la reemplaza ni le agrega campos."""
-    for clave in (composition.QUESTION_CLAIM_ALL, composition.QUESTION_CLAIM_REST):
-        assert _elegir(entendido=_entendido(), salida=_salida(clave=str(clave))) == (
-            None,
-            FallbackReason.GROUPED_ASK,
-        )
-
-
 def test_sin_modelo_sale_la_frase_del_catalogo() -> None:
     assert _elegir(entendido=None) == (None, FallbackReason.NO_MODEL)
 

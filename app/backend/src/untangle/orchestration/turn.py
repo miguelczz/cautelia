@@ -1829,10 +1829,6 @@ def _motivo_de_la_frase_base(
     """Por que este turno no puede decir lo que escribio el modelo, o `None` si puede."""
     if _es_un_hito(signals, salida, revision_lanzada=revision_lanzada):
         return FallbackReason.MILESTONE
-    if salida.intake_response_key in intake_composition.CLAIM_LIST_KEYS:
-        # La lista de lo que falta del accidente (chat): la arma el codigo con los bloques que
-        # el caso debe y la dice tal cual; el modelo no inventa campos (plan 09, punto 2).
-        return FallbackReason.GROUPED_ASK
     if entendido is None:
         return FallbackReason.NO_MODEL
     if turn.understood_without_case:
@@ -1856,7 +1852,6 @@ def _texto_del_turno(
     En este orden, y la primera que aplica manda:
 
     1. un hito (`_es_un_hito`): la frase fija;
-    1b. la lista de lo que falta del accidente, en el chat (`CLAIM_LIST_KEYS`): la dice el codigo;
     2. sin modelo, o el primer mensaje que abrio el caso (su respuesta se escribio sin saber
        que datos faltan): la frase base;
     3. el codigo rechazo algun dato que el modelo anoto --la respuesta se escribio contando

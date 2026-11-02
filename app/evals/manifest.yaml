@@ -15,7 +15,7 @@ datasets:
       Corpus de polizas de los tres tenants. Lo genera U7 `synthetic-data`.
 
   - dataset: DS-2
-    count: 150
+    count: 146
     reason: >
       Golden set de FNOL en texto. Los casos los escriben las unidades que miden
       cada conducta; U1 entrega el corredor, no los casos. El primer lote es de
@@ -171,14 +171,6 @@ datasets:
       mezcla un accidente con algo ajeno, gana el accidente. Se escribieron junto con la
       instruccion `conversation` que lo pide y **no se han corrido contra el modelo**. Con
       ellas el conjunto tiene **146 archivos, 73 por idioma**.
-
-      El mismo 2026-11-02 entran dos parejas mas de captura (`intake-claim-all-at-once` e
-      `intake-claim-voice-one-at-a-time`), del plan 09 punto 2: en el chat la agente pide en un solo
-      mensaje todo lo que falta del accidente, como lista que sale del codigo (los bloques que
-      `blocks.missing_blocks` dice que faltan), y tras una respuesta parcial pide solo lo que falta;
-      en la llamada sigue de a una pregunta. Corren el nodo `intake` de verdad con lo entendido ya
-      entregado, sin modelo y sin base, y se escribieron antes del cambio del nodo. Con ellas el
-      conjunto tiene **150 archivos, 75 por idioma**.
     runs_per_delivery: true
 
   - dataset: DS-3

@@ -460,14 +460,6 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.block.vehicle_and_driver", "el vehículo y quién conducía"],
   ["intake.block.what_happened", "qué pasó"],
   ["intake.block.when_and_where", "cuándo y dónde"],
-  ["intake.claim_item.identity_and_policy", "tu nombre completo y el número de tu póliza"],
-  ["intake.claim_item.other_parties", "si hubo otras personas o vehículos involucrados (opcional)"],
-  ["intake.claim_item.safety", "si alguien resultó herido"],
-  ["intake.claim_item.vehicle_and_driver", "qué carro conducías y quién lo manejaba (opcional)"],
-  ["intake.claim_item.what_happened", "qué pasó"],
-  ["intake.claim_item.when_and_where", "cuándo y dónde ocurrió"],
-  ["intake.claim_item.when_only", "cuándo ocurrió"],
-  ["intake.claim_item.where_only", "dónde ocurrió"],
   ["intake.closing.fast_claim_after_extra", "Anotado, gracias. Tu caso {case_number} queda con un ajustador; puedes verlo con el enlace de arriba."],
   ["intake.closing.fast_claim_already", "Tu caso {case_number} ya quedó con un ajustador; puedes verlo y seguirlo con el enlace de arriba."],
   ["intake.closing.fast_claim_declined", "De acuerdo. Tu caso {case_number} queda con un ajustador; puedes verlo con el enlace de arriba."],
@@ -497,8 +489,6 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.policy.found", "Encontré la póliza {policy} a nombre de {name}, con un {vehicle}. ¿Eres tú y conducías ese carro?"],
   ["intake.policy.found_no_vehicle", "Encontré la póliza {policy} a nombre de {name}. ¿Eres tú?"],
   ["intake.policy.not_found_repeat", "No encontré esa póliza. ¿Me la repites cifra por cifra, despacio?"],
-  ["intake.question.claim_all", "Para tomar tu reporte, cuéntame lo que sepas de esto, todo junto o en varios mensajes:"],
-  ["intake.question.claim_rest", "Para completar tu reporte me falta esto; puedes contestarlo todo junto o por partes:"],
   ["intake.question.identity_and_policy", "¿Cuál es tu nombre completo y el número de tu póliza?"],
   ["intake.question.other_parties", "¿Hubo alguien más involucrado?"],
   ["intake.question.quote_all", "Para cotizar, cuéntame en un mensaje lo que sepas: quién manejaría (nombre y fecha de nacimiento), cuántos años lleva con licencia y en qué ciudad la sacó; el carro (año, marca y modelo) y para qué lo usas; y si has tenido accidentes en los últimos tres años y si tienes seguro hoy. Lo que falte te lo pregunto después."],
@@ -517,9 +507,6 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.question.quote_vehicle_make", "¿De qué marca es?"],
   ["intake.question.quote_vehicle_model", "¿Y qué modelo es?"],
   ["intake.question.quote_vehicle_year", "¿De qué año es el vehículo?"],
-];
-
-const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["intake.question.quote_vin", "¿Cuál es el número VIN o de chasis? Aparece en la tarjeta de propiedad."],
   ["intake.question.safety", "¿Hubo alguien herido?"],
   ["intake.question.vehicle_and_driver", "¿Qué vehículo conducías?"],
@@ -530,6 +517,9 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["intake.readback.identity_and_policy", "Confirmo: {value}. ¿Es correcto?"],
   ["intake.readback.other_parties", "Anotado sobre las otras partes. ¿Es correcto?"],
   ["intake.readback.quote_all", "Anotado: {summary} ¿Es correcto todo?"],
+];
+
+const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["intake.readback.quote_driver", "Anotado: {name}, fecha de nacimiento {birth_date}, {license_years} años con licencia, expedida en {license_jurisdiction}. ¿Es correcto?"],
   ["intake.readback.quote_driver_part", "{name}, fecha de nacimiento {birth_date}, {license_years} años con licencia, expedida en {license_jurisdiction}."],
   ["intake.readback.quote_history", "Anotado: {at_fault_losses_3y} siniestros con culpa y {claims_3y} reportados en tres años; {prior_coverage_active}; {lapse_months} meses sin cobertura. ¿Es correcto?"],
@@ -770,9 +760,6 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["redaction.label.email", "[CORREO {n}]"],
   ["redaction.label.license_plate", "[PLACA {n}]"],
   ["redaction.label.location", "[LUGAR {n}]"],
-];
-
-const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["redaction.label.national_id", "[CÉDULA {n}]"],
   ["redaction.label.person", "[NOMBRE {n}]"],
   ["redaction.label.phone", "[TELÉFONO {n}]"],
@@ -783,6 +770,9 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["redaction.spoken.license_plate", "esa placa"],
   ["redaction.spoken.location", "ese lugar"],
   ["redaction.spoken.national_id", "ese documento"],
+];
+
+const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["redaction.spoken.person", "ese nombre"],
   ["redaction.spoken.phone", "ese teléfono"],
   ["redaction.spoken.policy_number", "esa póliza"],
@@ -1023,9 +1013,6 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.console.time_left_label", "Tiempo que queda de la llamada"],
   ["voice.console.title", "Habla con {insurer}"],
   ["voice.console.transcript_label", "Transcripción en vivo de la llamada"],
-];
-
-const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
   ["voice.console.unavailable", "La voz está apagada ahora mismo"],
   ["voice.console.use_chat", "O repórtalo por chat"],
   ["voice.decision.approved", "Un ajustador revisó tu caso {case_number} y lo aprobó."],
@@ -1036,6 +1023,9 @@ const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
   ["voice.duration.minute", "un minuto"],
   ["voice.duration.minutes", "{minutes} minutos"],
   ["voice.ended.completed", "Tu reporte quedó completo."],
+];
+
+const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
   ["voice.ended.dropped", "La llamada se cortó. Tu caso queda guardado."],
   ["voice.ended.error", "Algo falló en la llamada. Tu caso queda guardado."],
   ["voice.ended.handed_off", "Tu caso pasó a un ajustador."],

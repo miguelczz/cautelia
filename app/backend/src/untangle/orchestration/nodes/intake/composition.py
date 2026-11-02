@@ -15,7 +15,7 @@ catalogo de reconocimiento se escriben cortas a proposito.
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
+from collections.abc import Mapping
 from enum import StrEnum
 
 from untangle.base import Frozen, Locale
@@ -290,83 +290,6 @@ def question_of(
             msg = f"el bloque '{block.value}' no tiene pregunta propia"
             raise ValueError(msg)
     return clave, frase
-
-
-# --- Los datos del accidente, en un solo mensaje por el chat (plan 09, punto 2, 2026-11-02) ----
-
-QUESTION_CLAIM_ALL = CopyKey("intake.question.claim_all")
-QUESTION_CLAIM_REST = CopyKey("intake.question.claim_rest")
-CLAIM_ITEM_SAFETY = CopyKey("intake.claim_item.safety")
-CLAIM_ITEM_IDENTITY_AND_POLICY = CopyKey("intake.claim_item.identity_and_policy")
-CLAIM_ITEM_WHAT_HAPPENED = CopyKey("intake.claim_item.what_happened")
-CLAIM_ITEM_WHEN_AND_WHERE = CopyKey("intake.claim_item.when_and_where")
-CLAIM_ITEM_WHEN_ONLY = CopyKey("intake.claim_item.when_only")
-CLAIM_ITEM_WHERE_ONLY = CopyKey("intake.claim_item.where_only")
-CLAIM_ITEM_VEHICLE_AND_DRIVER = CopyKey("intake.claim_item.vehicle_and_driver")
-CLAIM_ITEM_OTHER_PARTIES = CopyKey("intake.claim_item.other_parties")
-
-#: Las claves de las dos listas: quien compone el turno las reconoce para saber que el texto es
-#: del codigo y no se sustituye por el que redacto el modelo.
-CLAIM_LIST_KEYS: frozenset[str] = frozenset({str(QUESTION_CLAIM_ALL), str(QUESTION_CLAIM_REST)})
-
-#: El marcador de cada linea de la lista. Lo lee el navegador como texto: sus saltos de linea se
-#: conservan (`whitespace-pre-line`), sin necesitar marcado.
-CLAIM_LIST_MARKER = "- "
-
-
-def _claim_item(block: Block, missing_field_keys: tuple[str, ...], *, language: Locale) -> str:
-    """Una linea de la lista: lo que le falta a ese bloque del siniestro, dicho como dato."""
-    match block:
-        case Block.SAFETY:
-            frase = copy_api.t(CLAIM_ITEM_SAFETY, locale=language)
-        case Block.IDENTITY_AND_POLICY:
-            frase = copy_api.t(CLAIM_ITEM_IDENTITY_AND_POLICY, locale=language)
-        case Block.WHAT_HAPPENED:
-            frase = copy_api.t(CLAIM_ITEM_WHAT_HAPPENED, locale=language)
-        case Block.WHEN_AND_WHERE:
-            falta_cuando = "incident_datetime" in missing_field_keys
-            falta_donde = "location" in missing_field_keys
-            if falta_cuando and falta_donde:
-                frase = copy_api.t(CLAIM_ITEM_WHEN_AND_WHERE, locale=language)
-            elif falta_cuando:
-                frase = copy_api.t(CLAIM_ITEM_WHEN_ONLY, locale=language)
-            else:
-                frase = copy_api.t(CLAIM_ITEM_WHERE_ONLY, locale=language)
-        case Block.VEHICLE_AND_DRIVER:
-            frase = copy_api.t(CLAIM_ITEM_VEHICLE_AND_DRIVER, locale=language)
-        case Block.OTHER_PARTIES:
-            frase = copy_api.t(CLAIM_ITEM_OTHER_PARTIES, locale=language)
-        case _:
-            msg = f"el bloque '{block.value}' no es un dato del siniestro que se pida en la lista"
-            raise ValueError(msg)
-    return frase
-
-
-def compose_claim_list(
-    pending: Sequence[tuple[Block, tuple[str, ...]]], *, opening: bool, language: Locale
-) -> tuple[CopyKey, str]:
-    """La lista de lo que falta del siniestro, en un solo mensaje (plan 09, punto 2).
-
-    `pending` son los bloques a los que todavia les falta algo, en el orden que toca, cada uno con
-    sus campos pendientes: **sale del caso** (`blocks.missing_blocks` y `missing_fields_in_block`),
-    no de ningun texto libre. `opening` es la lista que abre el reporte, cuando no hay ningun dato:
-    la clave es otra y el llamador le suma los bloques opcionales. Sin bloques no hay lista que
-    componer.
-    """
-    if not pending:
-        msg = "una lista sin bloques pendientes no es una pregunta"
-        raise ValueError(msg)
-    clave = QUESTION_CLAIM_ALL if opening else QUESTION_CLAIM_REST
-    cabecera = (
-        copy_api.t(QUESTION_CLAIM_ALL, locale=language)
-        if opening
-        else copy_api.t(QUESTION_CLAIM_REST, locale=language)
-    )
-    lineas = [
-        f"{CLAIM_LIST_MARKER}{_claim_item(bloque, faltan, language=language)}"
-        for bloque, faltan in pending
-    ]
-    return clave, "\n".join([cabecera, *lineas])
 
 
 def compose_question(block: Block, missing_field_keys: tuple[str, ...], *, language: Locale) -> str:
@@ -831,8 +754,6 @@ def compose_turn(  # noqa: PLR0913 -- el turno se compone de estas siete cosas y
 
 
 __all__ = [
-    "CLAIM_LIST_KEYS",
-    "CLAIM_LIST_MARKER",
     "CLOSING_FAST_ALREADY",
     "COVERAGE_ASK_QUESTION",
     "COVERAGE_CHECKING",
@@ -847,7 +768,6 @@ __all__ = [
     "block_label",
     "compose_acknowledgement",
     "compose_calm",
-    "compose_claim_list",
     "compose_closing_by_abuse",
     "compose_correction",
     "compose_emergency_continuation",

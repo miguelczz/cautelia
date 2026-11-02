@@ -453,7 +453,7 @@ class IntakeNode:
         bloque = blocks.next_block(state.record_type, completitud, state.case_state)
         return self._componer_turno(state, extraidos, resolucion, completitud, bloque, senal)
 
-    def _componer_turno(  # noqa: PLR0913, PLR0917 -- el estado, lo extraido, la lectura resuelta, la completitud, el bloque y la senal: lo que hay que juntar
+    def _componer_turno(  # noqa: PLR0911, PLR0913, PLR0917 -- el estado, lo extraido, la lectura resuelta, la completitud, el bloque y la senal: lo que hay que juntar
         self,
         state: IntakeNodeInput,
         extraidos: tuple[ExtractedField, ...],
@@ -547,6 +547,12 @@ class IntakeNode:
         if blocks.readback_due(state.record_type, bloque, completitud):
             return self._leer_de_vuelta(state, bloque, extraidos, resolucion, lead_in=antesala)
 
+        lista = self._lista_del_siniestro(
+            state, extraidos, resolucion, completitud, bloque, antesala
+        )
+        if lista is not None:
+            return lista
+
         faltan = (
             blocks.missing_fields_in_block(state.record_type, bloque, completitud)
             if bloque in blocks.order_for(state.record_type)
@@ -578,6 +584,69 @@ class IntakeNode:
             intake_readback_resolved=resolucion,
             intake_response_key=turno.key,
             intake_response_text=composition.with_lead_in(antesala, turno.text),
+            intake_session_ended=None,
+        )
+
+    def _lista_del_siniestro(  # noqa: PLR0913, PLR0917 -- el estado, lo extraido, la lectura, la completitud, el bloque y la frase previa: lo que decide la lista
+        self,
+        state: IntakeNodeInput,
+        extraidos: tuple[ExtractedField, ...],
+        resolucion: ReadbackResolution | None,
+        completitud: Completeness,
+        bloque: Block,
+        antesala: str | None,
+    ) -> IntakeNodeOutput | None:
+        """Todo lo que falta del siniestro en un solo mensaje, solo en el chat (plan 09, punto 2).
+
+        Decision de Miguel del 2026-11-02: al empezar el reporte la agente pide de una vez los
+        datos que faltan --heridos, nombre y poliza, que paso, cuando y donde, y como opcionales el
+        carro y las otras personas--, como una lista corta, y acepta las respuestas en uno o en
+        varios mensajes; cada turno con avance pide la lista de lo que **todavia** falta. La lista
+        sale de los bloques a los que el caso les debe algo (`blocks.missing_blocks`), no de lo que
+        diga el modelo, y por eso el texto es siempre el del catalogo.
+
+        Devuelve `None` --y el turno pregunta un bloque a la vez, como siempre-- cuando:
+
+        - es una llamada: por voz una lista larga no se retiene de oido;
+        - ya se pregunto en el turno anterior y este no anoto nada: repetir la lista sin fin es lo
+          que la solicitud de cotizacion evita con la misma salvaguarda; se pide solo lo primero;
+        - falta un solo bloque: una lista de una linea es una pregunta.
+
+        Los bloques opcionales solo van en la lista que abre el reporte; despues se ofrecen al
+        cerrar, como decidio P4.
+        """
+        if state.record_type is not RecordType.CLAIM or state.spoken or resolucion is not None:
+            return None
+        if bloque not in blocks.order_for(RecordType.CLAIM):
+            return None
+        if state.previous_block is not None and not extraidos:
+            return None
+        pendientes = tuple(
+            (b, faltan)
+            for b in blocks.missing_blocks(RecordType.CLAIM, completitud)
+            if (faltan := blocks.missing_fields_in_block(RecordType.CLAIM, b, completitud))
+        )
+        if len(pendientes) < 2:  # con un solo bloque la lista es una pregunta
+            return None
+        apertura = not any(completitud.per_field.values()) and not completitud.awaiting_readback
+        if apertura:
+            pendientes += tuple(
+                (b, ()) for b in blocks.optional_blocks_missing(RecordType.CLAIM, completitud)
+            )
+        clave, texto = composition.compose_claim_list(
+            pendientes, opening=apertura, language=state.language
+        )
+        emocion = tone.detect_emotion(state.turn_text, language=state.language)
+        return IntakeNodeOutput(
+            intake_next_block=bloque,
+            intake_extracted=extraidos,
+            intake_awaiting_confirmation=None,
+            intake_readback_resolved=resolucion,
+            intake_response_key=str(clave),
+            intake_response_text=composition.with_lead_in(
+                antesala,
+                composition.compose_with_acknowledgement(emocion, texto, language=state.language),
+            ),
             intake_session_ended=None,
         )
 

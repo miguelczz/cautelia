@@ -2541,6 +2541,17 @@ intake:
     quote_all:
       text: "To quote, tell me in one message whatever you know: who would drive (name and date of birth), how many years they have been licensed and where; the car (year, make and model) and what it is used for; and whether there were accidents in the last three years and whether you are insured today. I will ask about anything missing afterwards."
       surface: chat
+    # Plan 09, item 2 (2026-11-02): in chat, an accident report opens by asking for everything still
+    # missing in a single message, as a short list, accepted in one or several messages. The code
+    # builds the list from the blocks that still lack something (`intake.claim_item.*`); on a call
+    # it keeps asking one thing at a time. `claim_all` opens the list when nothing is recorded;
+    # `claim_rest` when something is already recorded and the rest is missing.
+    claim_all:
+      text: "To take your report, tell me what you know about this, all at once or across a few messages:"
+      surface: chat
+    claim_rest:
+      text: "To finish your report I still need this; you can answer all at once or in parts:"
+      surface: chat
     # BR1.1: the safety question, first field of the `safety` block.
     safety:
       text: Was anyone injured?
@@ -2750,6 +2761,33 @@ intake:
       text: "{vehicle}, driven by the policyholder"
       surface: system
   # How each block is named when the agent says what is missing (`intake.social.progress`).
+  # One line of the list of `intake.question.claim_all` and `claim_rest`, one per accident block.
+  # The last two are optional and only appear in the list that opens the report.
+  claim_item:
+    safety:
+      text: whether anyone was hurt
+      surface: chat
+    identity_and_policy:
+      text: your full name and policy number
+      surface: chat
+    what_happened:
+      text: what happened
+      surface: chat
+    when_and_where:
+      text: when and where it happened
+      surface: chat
+    when_only:
+      text: when it happened
+      surface: chat
+    where_only:
+      text: where it happened
+      surface: chat
+    vehicle_and_driver:
+      text: which car you were driving and who was at the wheel (optional)
+      surface: chat
+    other_parties:
+      text: whether anyone else or another vehicle was involved (optional)
+      surface: chat
   block:
     safety:
       text: whether anyone was hurt

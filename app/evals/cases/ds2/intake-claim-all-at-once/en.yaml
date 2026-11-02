@@ -1,0 +1,26 @@
+# The accident details in a single message over chat (plan 09, item 2, 2026-11-02), English turn.
+# See `es.yaml` for the full rationale -- same criteria, same target, measured separately per
+# language and never as a combined average (P12).
+#
+# In chat, at the start of the report, the agent asks **in one message** for everything still
+# missing -- injuries, name and policy, what happened, when and where and, as optional, the car
+# and the other people -- as a short list, and accepts the answers in one or several messages.
+# The list comes from the code (`blocks.missing_blocks`), not from what the model imagines. On a
+# call it still asks one question at a time: `intake-claim-voice-one-at-a-time`.
+# Expected verdict: `pass`.
+case_key: DS-2/en/intake-claim-all-at-once
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - intake
+  - chat-channel
+  - grouped-ask
+script:
+  - field_key: description
+    text: "Someone rear-ended me at a light and the only damage was the bumper."
+  - field_key: location
+    text: "On 43rd Avenue at 10th Street, in Medellin."
+expected_verdicts:
+  intake_claim_all_at_once: pass

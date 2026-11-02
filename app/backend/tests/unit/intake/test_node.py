@@ -243,7 +243,11 @@ async def test_un_dato_dicho_en_este_turno_no_se_vuelve_a_preguntar_en_este_turn
     """
     extractor = _Extractor(ExtractedItem(field_key="injuries", value="nadie se lastimó"))
 
-    salida = await _nodo(extractor).run(_estado(turn_text="nadie se lastimó, fue solo el golpe"))
+    # Por voz: la pregunta del bloque siguiente es una sola. En el chat, desde el 2026-11-02, el
+    # turno pide la lista de lo que falta (`test_node_claim_list.py`).
+    salida = await _nodo(extractor).run(
+        _estado(turn_text="nadie se lastimó, fue solo el golpe", spoken=True)
+    )
 
     # Desde el 2026-10-07 una respuesta corta a una pregunta de un solo dato se
     # guarda por regla, sin modelo: el dato es el turno entero.
@@ -872,7 +876,8 @@ async def test_un_saludo_a_secas_no_llama_al_modelo_y_antepone_el_saludo() -> No
     pregunta de seguridad (BR1.1)."""
     extractor = _Extractor()
 
-    salida = await _nodo(extractor).run(_estado(turn_text="Hola"))
+    # Por voz (en el chat, desde el 2026-11-02, sigue la lista de lo que falta).
+    salida = await _nodo(extractor).run(_estado(turn_text="Hola", spoken=True))
 
     assert extractor.llamadas == 0
     assert salida.intake_extracted == ()

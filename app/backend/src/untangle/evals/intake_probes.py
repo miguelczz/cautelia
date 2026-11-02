@@ -34,7 +34,7 @@ from pathlib import Path
 from untangle.base import Locale
 from untangle.case_record import fields
 from untangle.case_record.models import CaseState, Completeness, RecordType
-from untangle.evals import intake_policy_probes, loading
+from untangle.evals import intake_claim_all_probes, intake_policy_probes, loading
 from untangle.evals.models import Dataset, GoldenCase
 from untangle.evals.runner.api import (
     CheckOutcome,
@@ -812,6 +812,9 @@ def register_intake_probes() -> None:
     register_targets(UNIT, TARGETS)
     # La poliza que el reconocedor entrego mal (2026-10-13): dos sondas que corren el nodo.
     intake_policy_probes.register_intake_policy_probes()
+    # Los datos del accidente en un solo mensaje por el chat (plan 09, punto 2, 2026-11-02): dos
+    # sondas que corren el nodo, una por canal.
+    intake_claim_all_probes.register_intake_claim_all_probes()
 
 
 __all__ = ["SONDAS", "TARGETS", "UNIT", "register_intake_probes"]

@@ -913,14 +913,8 @@ spend_panel:
   # dirección, y esta pantalla es pública. La nota que explica qué es Langfuse es la de
   # la bandeja (`inbox.trace.langfuse_note`), una sola.
   langfuse:
-    link:
-      text: "Ver tu última conversación en Langfuse"
-      surface: system
     case_link:
       text: "Ver en Langfuse"
-      surface: system
-    empty:
-      text: "Cuando converses con la agente, aquí podrás abrir tu conversación en Langfuse."
       surface: system
 
 # Los nombres de las superficies que el inicio y la barra enlazan cuando estan

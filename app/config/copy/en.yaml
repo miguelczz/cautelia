@@ -899,14 +899,8 @@ spend_panel:
   # screen is public. The note that explains what Langfuse is comes from the inbox
   # (`inbox.trace.langfuse_note`): there is only one.
   langfuse:
-    link:
-      text: "See your latest conversation in Langfuse"
-      surface: system
     case_link:
       text: "See in Langfuse"
-      surface: system
-    empty:
-      text: "Once you talk to the agent, you will be able to open your conversation in Langfuse here."
       surface: system
 
 surface:

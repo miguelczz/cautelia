@@ -849,8 +849,6 @@ export type CopyKey =
   | "spend_panel.kpi.total"
   | "spend_panel.kpi.total_hint"
   | "spend_panel.langfuse.case_link"
-  | "spend_panel.langfuse.empty"
-  | "spend_panel.langfuse.link"
   | "spend_panel.loading"
   | "spend_panel.not_measured"
   | "spend_panel.provider.anthropic"
@@ -1903,8 +1901,6 @@ export const COPY_KEYS = [
   "spend_panel.kpi.total",
   "spend_panel.kpi.total_hint",
   "spend_panel.langfuse.case_link",
-  "spend_panel.langfuse.empty",
-  "spend_panel.langfuse.link",
   "spend_panel.loading",
   "spend_panel.not_measured",
   "spend_panel.provider.anthropic",

@@ -863,8 +863,6 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["spend_panel.kpi.total", "Spent in total"],
   ["spend_panel.kpi.total_hint", "Since {date}: what this demo has recorded, at list price, plus the adjustments entered when comparing against what each provider charges."],
   ["spend_panel.langfuse.case_link", "See in Langfuse"],
-  ["spend_panel.langfuse.empty", "Once you talk to the agent, you will be able to open your conversation in Langfuse here."],
-  ["spend_panel.langfuse.link", "See your latest conversation in Langfuse"],
   ["spend_panel.loading", "Loading the spend"],
   ["spend_panel.not_measured", "No price"],
   ["spend_panel.provider.anthropic", "Anthropic"],
@@ -1023,11 +1021,11 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.duration.minute", "one minute"],
   ["voice.duration.minutes", "{minutes} minutes"],
   ["voice.ended.completed", "Your report is complete."],
+  ["voice.ended.dropped", "The call dropped. Your case is saved."],
+  ["voice.ended.error", "Something went wrong on the call. Your case is saved."],
 ];
 
 const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
-  ["voice.ended.dropped", "The call dropped. Your case is saved."],
-  ["voice.ended.error", "Something went wrong on the call. Your case is saved."],
   ["voice.ended.handed_off", "Your case went to an adjuster."],
   ["voice.ended.max_duration", "The call reached its time limit. Your case is saved."],
   ["voice.ended.resume_until", "You have until {time} to pick it up."],

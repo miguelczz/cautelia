@@ -863,8 +863,6 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["spend_panel.kpi.total", "Gastado en total"],
   ["spend_panel.kpi.total_hint", "Desde el {date}: lo registrado por esta demostración, a precio de lista, más los ajustes que se anotan al comparar con lo que cobra cada proveedor."],
   ["spend_panel.langfuse.case_link", "Ver en Langfuse"],
-  ["spend_panel.langfuse.empty", "Cuando converses con la agente, aquí podrás abrir tu conversación en Langfuse."],
-  ["spend_panel.langfuse.link", "Ver tu última conversación en Langfuse"],
   ["spend_panel.loading", "Cargando el gasto"],
   ["spend_panel.not_measured", "Sin precio"],
   ["spend_panel.provider.anthropic", "Anthropic"],
@@ -1023,11 +1021,11 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.duration.minute", "un minuto"],
   ["voice.duration.minutes", "{minutes} minutos"],
   ["voice.ended.completed", "Tu reporte quedó completo."],
+  ["voice.ended.dropped", "La llamada se cortó. Tu caso queda guardado."],
+  ["voice.ended.error", "Algo falló en la llamada. Tu caso queda guardado."],
 ];
 
 const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
-  ["voice.ended.dropped", "La llamada se cortó. Tu caso queda guardado."],
-  ["voice.ended.error", "Algo falló en la llamada. Tu caso queda guardado."],
   ["voice.ended.handed_off", "Tu caso pasó a un ajustador."],
   ["voice.ended.max_duration", "La llamada llegó a su límite de tiempo. Tu caso queda guardado."],
   ["voice.ended.resume_until", "Tienes hasta {time} para retomarlo."],

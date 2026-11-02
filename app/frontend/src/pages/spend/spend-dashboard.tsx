@@ -11,13 +11,14 @@
 // caso se identifica**: se describe por lo que fue, y el del propio navegador sale
 // como "Tuyo". Las consultas de un mismo clic en "Comparar" son una sola entrada.
 //
-// Arriba va el acceso a Langfuse (2026-10-14), y es solo de **este navegador**: Langfuse
-// pide iniciar sesion salvo para una traza que se abre por su direccion, y quien llega no
-// tiene cuenta. La direccion la manda el servidor (`langfuse_url`, y `trace_url` en el caso
-// propio) o no hay enlace: esta pantalla no la arma, y solo pinta una que empiece por https.
+// El caso propio lleva un enlace a su traza en Langfuse, que es solo de **este navegador**:
+// Langfuse pide iniciar sesion salvo para una traza que se abre por su direccion. La
+// direccion la manda el servidor (`trace_url`) o no hay enlace: esta pantalla no la arma, y
+// solo pinta una que empiece por https. El boton a la ultima conversacion se quito el
+// 2026-11-02 (correcciones de un revisor externo).
 
 import { useQuery } from "@tanstack/react-query";
-import { useId, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 import { toProblemView } from "../../shared/api-client/problems";
 import { siteQueryOptions } from "../../shared/api-client/site";
@@ -135,42 +136,6 @@ function AverageKpi({
       hint={hint}
       testId={testId}
     />
-  );
-}
-
-/**
- * El acceso a Langfuse para ver, paso a paso, como trabajo la agente en la ultima
- * conversacion de este navegador. Sin conversacion (o sin Langfuse) no hay boton: una
- * linea discreta dice cuando lo habra.
- */
-function LangfuseAccess({ url }: { readonly url: string | null | undefined }) {
-  const { t } = useLocale();
-  const notaId = useId();
-  const enlace = isSafeExternalLink(url) ? url : null;
-  if (enlace === null) {
-    return (
-      <p className="text-small text-fg-secondary" data-testid="spend-langfuse-empty">
-        {t("spend_panel.langfuse.empty")}
-      </p>
-    );
-  }
-  return (
-    <div className="flex flex-col items-start gap-2" data-testid="spend-langfuse">
-      <Button asChild variant="secondary">
-        <a
-          href={enlace}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-describedby={notaId}
-          data-testid="spend-langfuse-link"
-        >
-          {t("spend_panel.langfuse.link")}
-        </a>
-      </Button>
-      <p id={notaId} className="max-w-[46rem] text-small text-fg-secondary">
-        {t("inbox.trace.langfuse_note")}
-      </p>
-    </div>
   );
 }
 
@@ -486,7 +451,6 @@ function Dashboard({ panel }: { readonly panel: SpendPanel }) {
   const { t } = useLocale();
   return (
     <div className="flex flex-col gap-6" data-testid="spend-dashboard">
-      <LangfuseAccess url={panel.langfuse_url} />
       <Headline panel={panel} />
       <section className={SECCION} data-testid="spend-days">
         <SectionHeader title={t("spend_panel.daily.title")} lead={t("spend_panel.daily.lead")} />

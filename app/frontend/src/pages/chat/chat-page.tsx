@@ -78,6 +78,7 @@ import {
   type WireEvent,
 } from "./chat-events";
 import { clearDraft, recallDraft, saveDraft } from "./draft";
+import { ProgressiveText } from "./progressive-text";
 import { ReasoningButton } from "./reasoning-dialog";
 import { forget, isMasked, recall, recallAgent, remember, rememberAgent } from "./own-text";
 
@@ -242,6 +243,12 @@ export function ChatPage({
   const [confirmandoReinicio, setConfirmandoReinicio] = useState(false);
   const [reiniciando, setReiniciando] = useState(false);
   const transcripcion = useRef<HTMLOListElement>(null);
+  // Los mensajes de la agente que ya terminaron de mostrarse palabra por palabra (plan 09,
+  // punto 4): hasta entonces no aparecen los botones de respuesta ni el de decidir el caso.
+  const [reveladas, setReveladas] = useState<ReadonlySet<string>>(new Set());
+  const marcarRevelada = (id: string) => {
+    setReveladas((previas) => (previas.has(id) ? previas : new Set(previas).add(id)));
+  };
   const { announce } = useAnnouncer();
   const agente = useAgentName(tenantId);
   // El idioma de la pantalla **al abrir**, para pedir el historial en el sin que
@@ -331,11 +338,14 @@ export function ChatPage({
   // cada mensaje, y tambien con cada fragmento que alarga el ultimo. Tambien cuando
   // aparece la linea del caso, que le quita altura por arriba y taparia el final.
   const hayCaso = caso !== null;
-  useEffect(() => {
+  const bajarAlFinal = () => {
     const caja = transcripcion.current;
     if (caja !== null) {
       caja.scrollTop = caja.scrollHeight;
     }
+  };
+  useEffect(() => {
+    bajarAlFinal();
   }, [conversacion.messages, hayCaso]);
 
   // Lo ultimo que dijo la agente, anunciado una vez. Quien no ve la pantalla se
@@ -414,6 +424,7 @@ export function ChatPage({
     // La conversacion nueva, como la devuelve el servidor: solo la apertura.
     forget(tenantId);
     setConversacion(withHistory(EMPTY, nueva));
+    setReveladas(new Set());
     setRecuperado(null);
     setCaso(null);
     setLimite(null);
@@ -445,9 +456,12 @@ export function ChatPage({
     };
   }, [sigueRevisando]);
   // Los botones solo de la ultima respuesta, y solo cuando se puede contestar.
-  const botones = !enVuelo && ultimo?.speaker === "agent" ? ultimo.suggestions : [];
+  // Y solo cuando la respuesta ya se ve entera: los botones antes que el texto confunden.
+  const revelando = ultimo?.speaker === "agent" && ultimo.progressive && !reveladas.has(ultimo.id);
+  const botones = !enVuelo && !revelando && ultimo?.speaker === "agent" ? ultimo.suggestions : [];
   // Bajo la ultima respuesta, decidir el caso como ajustador cuando espera esa decision.
-  const ultimaDeLaAgente = !enVuelo && ultimo?.speaker === "agent" ? ultimo : undefined;
+  const ultimaDeLaAgente =
+    !enVuelo && !revelando && ultimo?.speaker === "agent" ? ultimo : undefined;
   const enlaceParaDecidir =
     caso !== null && caso.case_link !== null && caso.state === "derived" ? caso.case_link : null;
   // El boton aparece cuando llega el estado del caso, que se pide **despues** de la
@@ -635,7 +649,20 @@ export function ChatPage({
                   mensaje.transient && "text-fg-secondary italic",
                 )}
               >
-                {texto}
+                {/* Lo que la agente dice en vivo se revela de a poco **despues** de la guardia:
+                    el texto llega entero y revisado, y esto solo le pone ritmo de lectura. */}
+                <ProgressiveText
+                  text={texto}
+                  animate={mensaje.progressive}
+                  onGrow={bajarAlFinal}
+                  {...(mensaje.progressive
+                    ? {
+                        onDone: () => {
+                          marcarRevelada(mensaje.id);
+                        },
+                      }
+                    : {})}
+                />
               </div>
               {mensaje.citations.length === 0 ? null : (
                 <div className="flex max-w-xl flex-col gap-2">

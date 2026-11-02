@@ -304,3 +304,36 @@ describe("la conversacion recuperada del servidor", () => {
     expect(estado).toEqual(EMPTY);
   });
 });
+
+describe("lo que se muestra palabra por palabra (plan 09, punto 4)", () => {
+  it("la respuesta, la derivacion y nada mas se revelan de a poco", () => {
+    const respuesta = reduce(EMPTY, final());
+    expect(respuesta.messages.at(-1)?.progressive).toBe(true);
+
+    const derivacion = reduce(EMPTY, {
+      kind: "turn.handoff",
+      reason_code: "human_request",
+      copy_key: "chat.turn.waiting",
+      case_id: "caso-1",
+      case_link: null,
+    });
+    expect(derivacion.messages.at(-1)?.progressive).toBe(true);
+
+    const espera = reduce(EMPTY, { kind: "turn.waiting", copy_key: "chat.turn.waiting" });
+    expect(espera.messages.at(-1)?.progressive).toBe(false);
+    const error = reduce(EMPTY, { kind: "turn.error", code: "x", copy_key: "chat.turn.error" });
+    expect(error.messages.at(-1)?.progressive).toBe(false);
+    expect(withVisitorMessage(EMPTY, "v1", "hola").messages.at(-1)?.progressive).toBe(false);
+  });
+
+  it("la apertura que llega por el flujo y el historial aparecen de una vez", () => {
+    const apertura = reduce(EMPTY, final({ message_id: "opening-chat-1" }));
+    expect(apertura.messages.at(-1)?.progressive).toBe(false);
+
+    const recuperado = withHistory(EMPTY, {
+      opening: { message_id: "opening-chat-1", text: "Hola", language: "es" },
+      turns: [{ turn_id: "t1", speaker: "agent", text: "Su póliza lo cubre.", language: "es" }],
+    });
+    expect(recuperado.messages.every((mensaje) => !mensaje.progressive)).toBe(true);
+  });
+});

@@ -84,6 +84,13 @@ export type WireEvent =
 
 export type Speaker = "visitor" | "agent";
 
+/**
+ * Como empieza el identificador de la apertura que publica el servidor (`opening-<conversacion>`,
+ * `chat/history.py`). La apertura llega por el flujo como cualquier `turn.final`, pero no es una
+ * respuesta: aparece de una vez, como cuando vuelve por el historial.
+ */
+const OPENING_PREFIX = "opening-";
+
 /** Un mensaje de la conversacion, ya listo para dibujar. */
 export interface Message {
   readonly id: string;
@@ -98,6 +105,12 @@ export interface Message {
   readonly transient: boolean;
   /** Los botones de respuesta rapida de este mensaje; solo se ven en el ultimo. */
   readonly suggestions: readonly string[];
+  /**
+   * Si el texto se muestra palabra por palabra al dibujarlo (plan 09, punto 4): solo lo que la
+   * agente dice en vivo, ya revisado entero por la guardia. El historial recuperado, la apertura,
+   * lo de la persona y la espera aparecen de una vez.
+   */
+  readonly progressive: boolean;
 }
 
 export interface Conversation {
@@ -167,6 +180,7 @@ export function withHistory(
             traceRef: null,
             transient: false,
             suggestions: history.opening.suggestions ?? [],
+            progressive: false,
           },
         ]),
     ...history.turns.map((turno) => ({
@@ -179,6 +193,7 @@ export function withHistory(
       traceRef: null,
       transient: false,
       suggestions: [],
+      progressive: false,
     })),
   ];
   const vistos = new Set(recuperados.map((mensaje) => mensaje.id));
@@ -252,6 +267,7 @@ export function withVisitorMessage(state: Conversation, id: string, text: string
         traceRef: null,
         transient: false,
         suggestions: [],
+        progressive: false,
       },
     ],
   };
@@ -283,6 +299,7 @@ export function reduce(state: Conversation, event: WireEvent): Conversation {
               traceRef: null,
               transient: false,
               suggestions: [],
+              progressive: false,
             },
           ],
         };
@@ -317,6 +334,7 @@ export function reduce(state: Conversation, event: WireEvent): Conversation {
             traceRef: traceRef === "" ? null : traceRef,
             transient: false,
             suggestions: event.suggestions ?? [],
+            progressive: !event.message_id.startsWith(OPENING_PREFIX),
           },
         ],
       };
@@ -337,6 +355,7 @@ export function reduce(state: Conversation, event: WireEvent): Conversation {
             traceRef: null,
             transient: true,
             suggestions: [],
+            progressive: false,
           },
         ],
       };
@@ -356,6 +375,7 @@ export function reduce(state: Conversation, event: WireEvent): Conversation {
             traceRef: null,
             transient: false,
             suggestions: [],
+            progressive: event.kind === "turn.handoff",
           },
         ],
       };

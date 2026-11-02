@@ -1482,7 +1482,8 @@ describe("el borrador del cuadro de escribir (2026-10-12)", () => {
     });
     await userEvent.type(screen.getByLabelText("Tu mensaje"), "Estaba apuntando la placa");
 
-    await userEvent.click(screen.getByRole("button", { name: "Nadie salió herido" }));
+    // Los botones esperan a que el texto termine de mostrarse (plan 09, punto 4).
+    await userEvent.click(await screen.findByRole("button", { name: "Nadie salió herido" }));
 
     expect(enviado).toHaveBeenCalledWith("una-aseguradora", "Nadie salió herido", {
       locale: "es",
@@ -1534,5 +1535,157 @@ describe("el borrador del cuadro de escribir (2026-10-12)", () => {
 
     expect(enviado).toHaveBeenCalledWith("una-aseguradora", "Hola", { locale: "es" });
     vi.restoreAllMocks();
+  });
+});
+
+/** Devuelve `window.matchMedia` a como estaba (jsdom no lo trae, asi que a veces es quitarlo). */
+function restoreMatchMedia(original: PropertyDescriptor | undefined): void {
+  if (original === undefined) {
+    Reflect.deleteProperty(window, "matchMedia");
+  } else {
+    Object.defineProperty(window, "matchMedia", original);
+  }
+}
+
+describe("el mensaje de la agente, palabra por palabra tras la guardia (plan 09, punto 4)", () => {
+  const LARGO = "Gracias por contarme lo que pasó, ya anoté el lugar y la hora del choque.";
+
+  /** Lo que dice la conversacion, sin el anunciador en vivo, que repite el ultimo mensaje. */
+  const enLaConversacion = (texto: string) =>
+    within(screen.getByTestId("chat-transcript")).getByText(texto);
+
+  it("el texto llega entero para el lector de pantalla y se muestra de a poco", async () => {
+    const cable = flujoDeMentira();
+    renderWithProviders(
+      <ChatPage tenantId="una-aseguradora" insurerLabel="Stonecroft" openStream={cable.abrir} />,
+    );
+    await userEvent.type(screen.getByLabelText("Tu mensaje"), "Me chocaron");
+    await userEvent.click(screen.getByRole("button", { name: "Enviar" }));
+
+    cable.empujar({
+      kind: "turn.final",
+      message_id: "m1",
+      text: LARGO,
+      language: "es",
+      case_id: "caso-1",
+      citations: [],
+      suggestions: ["Nadie salió herido"],
+    });
+
+    // Mientras se revela: el texto entero esta (para el lector) y la parte visible va oculta de el.
+    expect(enLaConversacion(LARGO).className).toContain("sr-only");
+    expect(screen.getByTestId("chat-progressive").getAttribute("aria-hidden")).toBe("true");
+    // Los botones esperan a que se vea entero.
+    expect(screen.queryByTestId("chat-suggestions")).toBeNull();
+    // El anuncio en vivo lleva el mensaje completo, una sola vez, no cada palabra.
+    expect(within(screen.getByTestId("announcer-status")).getAllByText(LARGO)).toHaveLength(1);
+
+    // Y termina: texto plano y botones.
+    expect(await screen.findByTestId("chat-suggestions", {}, { timeout: 3000 })).toBeTruthy();
+    expect(screen.queryByTestId("chat-progressive")).toBeNull();
+    expect(
+      within(screen.getByTestId("chat-transcript"))
+        .getAllByText(LARGO)
+        .map((n) => n.className),
+    ).not.toContain("sr-only");
+  });
+
+  it("lo recuperado del historial aparece de una vez, sin animacion", async () => {
+    historial.mockResolvedValue({
+      opening: { message_id: "opening-chat-1", text: "Hola, soy Catalina.", language: "es" },
+      turns: [
+        {
+          turn_id: "t1",
+          speaker: "visitor",
+          text: "Me chocaron",
+          language: "es",
+          channel: "chat",
+          at: "2026-11-02T12:00:01+00:00",
+        },
+        {
+          turn_id: "t2",
+          speaker: "agent",
+          text: LARGO,
+          language: "es",
+          channel: "chat",
+          at: "2026-11-02T12:00:04+00:00",
+        },
+      ],
+      case_number: null,
+      language: "es",
+    });
+    const cable = flujoDeMentira();
+    renderWithProviders(
+      <ChatPage
+        tenantId="una-aseguradora"
+        insurerLabel="Stonecroft"
+        openStream={cable.abrir}
+        loadHistory={historial}
+      />,
+    );
+
+    cable.conectar();
+
+    await screen.findByTestId("chat-transcript");
+    await waitFor(() => {
+      expect(enLaConversacion(LARGO)).toBeTruthy();
+    });
+    expect(screen.queryByTestId("chat-progressive")).toBeNull();
+    expect(enLaConversacion(LARGO).className).not.toContain("sr-only");
+  });
+
+  it("la apertura que llega por el flujo aparece de una vez", () => {
+    const cable = flujoDeMentira();
+    renderWithProviders(
+      <ChatPage tenantId="una-aseguradora" insurerLabel="Stonecroft" openStream={cable.abrir} />,
+    );
+
+    cable.empujar({
+      kind: "turn.final",
+      message_id: "opening-chat-1",
+      text: "Hola, soy Catalina, la asistente de inteligencia artificial de Stonecroft.",
+      language: "es",
+      case_id: null,
+      citations: [],
+    });
+
+    expect(screen.queryByTestId("chat-progressive")).toBeNull();
+    expect(
+      enLaConversacion(
+        "Hola, soy Catalina, la asistente de inteligencia artificial de Stonecroft.",
+      ),
+    ).toBeTruthy();
+  });
+
+  it("con movimiento reducido el mensaje aparece entero", () => {
+    const original = Object.getOwnPropertyDescriptor(window, "matchMedia");
+    window.matchMedia = ((consulta: string) => ({
+      matches: consulta.includes("prefers-reduced-motion"),
+      media: consulta,
+      addEventListener: () => undefined,
+      removeEventListener: () => undefined,
+    })) as unknown as typeof window.matchMedia;
+    try {
+      const cable = flujoDeMentira();
+      renderWithProviders(
+        <ChatPage tenantId="una-aseguradora" insurerLabel="Stonecroft" openStream={cable.abrir} />,
+      );
+
+      cable.empujar({
+        kind: "turn.final",
+        message_id: "m1",
+        text: LARGO,
+        language: "es",
+        case_id: "caso-1",
+        citations: [],
+        suggestions: ["Nadie salió herido"],
+      });
+
+      expect(screen.queryByTestId("chat-progressive")).toBeNull();
+      expect(enLaConversacion(LARGO).className).not.toContain("sr-only");
+      expect(screen.getByTestId("chat-suggestions")).toBeTruthy();
+    } finally {
+      restoreMatchMedia(original);
+    }
   });
 });

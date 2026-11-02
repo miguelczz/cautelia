@@ -1,0 +1,24 @@
+# Una pregunta de cobertura no es un tema rígido: sigue por la recuperación con su cita (plan 09, punto 6).
+#
+# Plan 09, punto 6: «¿me cubre un carro de alquiler?» se interpreta con cláusulas, no se lee de un
+# campo. La lectura del modelo es `rigid_topic: none` y `asks_about_coverage: true`; el turno tiene
+# que seguir por la recuperación de siempre y **el puerto de datos rígidos no se toca**. Corre las
+# funciones reales del turno, sin modelo y sin base. Es el caso que impide que la ruta rígida se
+# coma las preguntas que necesitan una cita verificada.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/rigid-coverage-question-stays-rag
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - rigid-facts
+  - chat-channel
+rigid_facts:
+  policy_number: POL-11
+  message: "¿Me cubre un carro de alquiler mientras arreglan el mío?"
+  topic: none
+  asks_about_coverage: true
+  route: rag
+expected_verdicts:
+  rigid_facts_coverage_stays_rag: pass

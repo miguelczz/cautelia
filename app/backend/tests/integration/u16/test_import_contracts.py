@@ -98,6 +98,9 @@ ARBOL: dict[str, str] = {
     "untangle/server/understanding_cli.py": "from untangle.evals import cli\n",
     "untangle/evals/cli.py": "",
     "untangle/workspace/__init__.py": "",
+    # El servidor MCP (plan 09, punto 6): comparte fila con `workspace` en el contrato de capas, y el
+    # contrato de capas se niega a correr si una de sus capas no existe.
+    "untangle/policy_mcp/__init__.py": "",
     "untangle/demo_operations/__init__.py": "",
     "untangle/evals/__init__.py": "",
     "untangle/orchestration/__init__.py": "",

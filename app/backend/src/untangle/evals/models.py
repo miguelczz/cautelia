@@ -20,7 +20,7 @@ from typing import Literal, Self
 
 from pydantic import Field, model_validator
 
-from untangle.base import Frozen, Locale
+from untangle.base import Frozen, Locale, RigidTopic
 
 # Forma del identificador de caso: `<dataset>/<idioma>/<secuencia>`, por ejemplo
 # `DS-2/es/017`. Es la moneda de todo el sistema y nadie lo renombra en el
@@ -186,6 +186,10 @@ class UnderstandingExpectation(Frozen):
     answer: str | None = None
     asks_question: bool | None = None
     asks_about_coverage: bool | None = None
+    #: El tema rigido que el modelo tiene que leer (`deductible`, `limits`, `validity`,
+    #: `vehicles`, `drivers`, `endorsements`) o `none` cuando la pregunta es de interpretacion
+    #: --«¿me cubre un carro de alquiler?»-- o una duda general. `None`: el caso no mide esto.
+    rigid_topic: RigidTopic | None = None
     #: El valor que la agente ya tiene anotado de algunos de los datos de `captured`, tal como
     #: se lo cuentan al modelo (`<datos_anotados>`). Sin valor, el dato va «ya lo dio». Lo
     #: necesita el caso que mide un dato que **se reemplaza** al volver a anotarlo: el modelo
@@ -231,6 +235,38 @@ class UnderstandingExpectation(Frozen):
             msg = f"'captured_values' trae valores de datos que 'captured' no lista: {sobrantes}"
             raise ValueError(msg)
         return self
+
+
+class RigidFactsExpectation(Frozen):
+    """Una pregunta rigida por la poliza (plan 09, punto 6): sale del registro o sigue por la RAG.
+
+    El caso entrega ya hecha la lectura que el modelo haria del mensaje (`topic`, `wants`) y el
+    estado del caso (tipo y si la poliza esta identificada), y la sonda corre las funciones reales
+    de `orchestration.rigid_route` con la poliza del corpus versionado detras del puerto. Mide dos
+    cosas: **por donde va** el turno (`route`) y, cuando va por el registro, que el texto trae el
+    dato exacto de la poliza.
+    """
+
+    #: La poliza del corpus versionado de la aseguradora del caso.
+    policy_number: str = Field(min_length=1)
+    message: str = Field(min_length=1)
+    #: Lo que el modelo leyo: el tema rigido, `none` si no es uno.
+    topic: RigidTopic
+    wants: str = "policy_question"
+    asks_about_coverage: bool = False
+    record_type: Literal["claim", "coverage_inquiry"] = "coverage_inquiry"
+    #: Si la poliza de la persona ya esta identificada en el caso.
+    policy_identified: bool = True
+    #: `facts`: el turno contesta desde el registro, sin recuperacion ni citas ni modelo. `rag`: el
+    #: turno sigue por el camino de siempre y el puerto de datos rigidos ni se toca.
+    route: Literal["facts", "rag"]
+    #: Las claves del corpus (`d.collision_deductible`...) cuyo monto, en pesos del idioma del caso,
+    #: tiene que aparecer en el texto. La sonda los calcula del registro, no de la plantilla.
+    amounts: tuple[str, ...] = ()
+    #: Fragmentos que el texto tiene que traer (el numero de poliza, un vehiculo, un conductor).
+    mentions: tuple[str, ...] = ()
+    #: Fragmentos que **no** puede traer (la placa, el VIN, un monto de otro campo).
+    forbids: tuple[str, ...] = ()
 
 
 class CitationExpectation(Frozen):
@@ -287,6 +323,7 @@ class GoldenCase(Frozen):
     # del diseno de rendimiento).
     requires_provider_key: bool = False
     understanding: UnderstandingExpectation | None = None
+    rigid_facts: RigidFactsExpectation | None = None
     citation: CitationExpectation | None = None
     poisoned_clause: PoisonedClauseExpectation | None = None
 

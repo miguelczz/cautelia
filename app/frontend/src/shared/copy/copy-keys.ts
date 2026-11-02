@@ -193,6 +193,18 @@ export type CopyKey =
   | "chat.resume.not_found"
   | "chat.resume.original_channel"
   | "chat.resume.with_adjuster"
+  | "chat.rigid.deductible"
+  | "chat.rigid.drivers.listed"
+  | "chat.rigid.drivers.none"
+  | "chat.rigid.endorsements.count_only"
+  | "chat.rigid.endorsements.listed"
+  | "chat.rigid.endorsements.none"
+  | "chat.rigid.limits"
+  | "chat.rigid.validity.expired"
+  | "chat.rigid.validity.in_force"
+  | "chat.rigid.validity.not_yet"
+  | "chat.rigid.vehicles.listed"
+  | "chat.rigid.vehicles.none"
   | "chat.turn.error"
   | "chat.turn.waiting"
   | "comparison.asked.label"
@@ -1247,6 +1259,18 @@ export const COPY_KEYS = [
   "chat.resume.not_found",
   "chat.resume.original_channel",
   "chat.resume.with_adjuster",
+  "chat.rigid.deductible",
+  "chat.rigid.drivers.listed",
+  "chat.rigid.drivers.none",
+  "chat.rigid.endorsements.count_only",
+  "chat.rigid.endorsements.listed",
+  "chat.rigid.endorsements.none",
+  "chat.rigid.limits",
+  "chat.rigid.validity.expired",
+  "chat.rigid.validity.in_force",
+  "chat.rigid.validity.not_yet",
+  "chat.rigid.vehicles.listed",
+  "chat.rigid.vehicles.none",
   "chat.turn.error",
   "chat.turn.waiting",
   "comparison.asked.label",

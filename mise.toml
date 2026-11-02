@@ -431,6 +431,17 @@ description = "Un siniestro listo para hacer de ajustador en la demo local, con 
 # generador lo deshace el siguiente reinicio.
 run = "uv run --env-file .env --project app/backend python -m untangle.server.demo_adjuster_link"
 
+[tasks.mcp]
+description = "El servidor MCP de los datos rigidos de la poliza, por stdio: mise run mcp"
+# Plan 09, punto 6 (2026-11-02). Publica `untangle.policy_rag.facts` como herramientas MCP de
+# solo lectura --resumen y vigencia, limites, deducibles, vehiculos, conductores, endosos y una
+# clausula por su identificador-- para cualquier cliente MCP (Claude Desktop, otro agente). Lee las
+# polizas de ejemplo de la base local por el mismo punto unico de sesion que el aplicativo, asi que
+# necesita `mise run services:up` y los datos sembrados (`mise run synthetic:seed`). **La salida
+# estandar es el protocolo**: el proceso manda sus eventos tecnicos a la de errores. El fragmento de
+# configuracion para Claude Desktop esta en el README, seccion "MCP server".
+run = "uv run --env-file .env --project app/backend python -m untangle.policy_mcp"
+
 [tasks."tenancy:literals"]
 description = "Busca identificadores de aseguradora literales fuera del cargador y las fixtures"
 # Es una busqueda sobre el codigo: no necesita base de datos. Una rama por

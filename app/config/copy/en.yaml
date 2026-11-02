@@ -2007,6 +2007,53 @@ chat:
     resume:
       text: Shall we get back to your case?
       surface: chat
+  # What the issued policy declares, answered by code (plan 09, item 6, 2026-11-02): the
+  # deductible, the limits, the validity, the vehicles, the drivers and the endorsements come from
+  # the record, with no clause retrieval, no citation verifier and no model writing them
+  # (`policy_rag/facts/rigid.py`). They say what the policy **declares** --"according to your
+  # policy..."-- never that something is or is not covered. Lists are separated with a semicolon so
+  # no conjunction is written inline.
+  rigid:
+    deductible:
+      text: "According to your policy {policy_number}, the vehicle deductible is {collision} for a collision and {other} for other damage."
+      surface: chat
+    limits:
+      text: "According to your policy {policy_number}, the limits are: liability for injuries, {bodily_person} per person and {bodily_accident} per accident; liability for property damage, {property_damage}; medical payments, {medical_person} per person; and uninsured driver, {uninsured_person} per person and {uninsured_accident} per accident."
+      surface: chat
+    validity:
+      in_force:
+        text: "Your policy {policy_number} is in force from {start} to {end}."
+        surface: chat
+      expired:
+        text: "Your policy {policy_number} was in force from {start} to {end}, and it has now expired."
+        surface: chat
+      not_yet:
+        text: "Your policy {policy_number} starts on {start} and ends on {end}."
+        surface: chat
+    vehicles:
+      listed:
+        text: "The vehicles listed on your policy {policy_number} are: {vehicles}."
+        surface: chat
+      none:
+        text: "Your policy {policy_number} has no registered vehicles."
+        surface: chat
+    drivers:
+      listed:
+        text: "The drivers listed on your policy {policy_number} are: {drivers}."
+        surface: chat
+      none:
+        text: "I don't have any declared drivers on your policy {policy_number}."
+        surface: chat
+    endorsements:
+      listed:
+        text: "These are the special conditions of your policy {policy_number}: {endorsements}."
+        surface: chat
+      count_only:
+        text: "Your policy {policy_number} lists special conditions; in total: {count}."
+        surface: chat
+      none:
+        text: "Your policy {policy_number} has no special conditions."
+        surface: chat
   closed_case:
     already_decided:
       text: "Your case {case_number} already has a decision: you can see it with “See my case”. To report or ask something new, restart the conversation with the button at the top."

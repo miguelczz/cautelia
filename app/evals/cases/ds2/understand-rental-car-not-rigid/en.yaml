@@ -1,0 +1,29 @@
+# Asking whether a rental car is covered is interpretation, not a rigid topic (plan 09, item 6).
+#
+# Message understanding (plan 09, item 6, 2026-11-02): the model that understands the message also
+# classifies whether what is asked is a datum stored in the policy --deductible, limits, validity,
+# vehicles, drivers, endorsements-- with a closed field (`rigid_topic`). If it is and the policy is
+# identified, the answer comes from the record by code; if not, it keeps going through clause
+# retrieval with its citation. Written together with the `conversation` instruction that asks for it,
+# not yet run against the model. Run with `mise run evals:entender`, with the
+# UNTANGLE_ANTHROPIC_API_KEY_EVALS key. Expected verdict: `pass`.
+case_key: DS-2/en/understand-rental-car-not-rigid
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  record_type: coverage_inquiry
+  captured:
+  - identity_and_policy
+  last_agent_text: What would you like to know about your policy?
+  message: Does my policy cover a rental car while mine is being repaired?
+  wants:
+  - continue
+  - policy_question
+  asks_about_coverage: true
+  rigid_topic: none
+expected_verdicts:
+  understanding_rental_car_not_rigid: pass

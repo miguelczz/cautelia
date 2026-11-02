@@ -144,6 +144,103 @@
       "title": "PoisonedClauseExpectation",
       "type": "object"
     },
+    "RigidFactsExpectation": {
+      "additionalProperties": false,
+      "description": "Una pregunta rigida por la poliza (plan 09, punto 6): sale del registro o sigue por la RAG.\n\nEl caso entrega ya hecha la lectura que el modelo haria del mensaje (`topic`, `wants`) y el\nestado del caso (tipo y si la poliza esta identificada), y la sonda corre las funciones reales\nde `orchestration.rigid_route` con la poliza del corpus versionado detras del puerto. Mide dos\ncosas: **por donde va** el turno (`route`) y, cuando va por el registro, que el texto trae el\ndato exacto de la poliza.",
+      "properties": {
+        "policy_number": {
+          "minLength": 1,
+          "title": "Policy Number",
+          "type": "string"
+        },
+        "message": {
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "topic": {
+          "$ref": "#/$defs/RigidTopic"
+        },
+        "wants": {
+          "default": "policy_question",
+          "title": "Wants",
+          "type": "string"
+        },
+        "asks_about_coverage": {
+          "default": false,
+          "title": "Asks About Coverage",
+          "type": "boolean"
+        },
+        "record_type": {
+          "default": "coverage_inquiry",
+          "enum": [
+            "claim",
+            "coverage_inquiry"
+          ],
+          "title": "Record Type",
+          "type": "string"
+        },
+        "policy_identified": {
+          "default": true,
+          "title": "Policy Identified",
+          "type": "boolean"
+        },
+        "route": {
+          "enum": [
+            "facts",
+            "rag"
+          ],
+          "title": "Route",
+          "type": "string"
+        },
+        "amounts": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Amounts",
+          "type": "array"
+        },
+        "mentions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Mentions",
+          "type": "array"
+        },
+        "forbids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Forbids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "policy_number",
+        "message",
+        "topic",
+        "route"
+      ],
+      "title": "RigidFactsExpectation",
+      "type": "object"
+    },
+    "RigidTopic": {
+      "description": "Que dato de la poliza emitida pregunta la persona. `none` si no es un dato rigido.\n\nUna pregunta de interpretacion --«¿me cubre un carro de alquiler?»-- es `none` y sigue por\nla recuperacion de clausulas con su cita verificada.",
+      "enum": [
+        "deductible",
+        "limits",
+        "validity",
+        "vehicles",
+        "drivers",
+        "endorsements",
+        "none"
+      ],
+      "title": "RigidTopic",
+      "type": "string"
+    },
     "ScriptAnswer": {
       "additionalProperties": false,
       "description": "Una respuesta del asegurado simulado, atada al campo que la provoca.\n\nIndexada por campo y no por orden: emparejar por el orden del guion rompe el\ncaso en cuanto la agente pregunta en otro orden, que es la conducta normal\n(BR2.1, decision Q1 del diseno funcional).",
@@ -299,6 +396,17 @@
           "default": null,
           "title": "Asks About Coverage"
         },
+        "rigid_topic": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RigidTopic"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "captured_values": {
           "additionalProperties": {
             "type": "string"
@@ -440,6 +548,17 @@
       "anyOf": [
         {
           "$ref": "#/$defs/UnderstandingExpectation"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "rigid_facts": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/RigidFactsExpectation"
         },
         {
           "type": "null"

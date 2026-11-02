@@ -67,6 +67,12 @@ reason: >
   porque `verify` instala los modelos; lo aviso `fresh-clone`, en rojo desde el 2026-10-19, y
   tambien fallaba el `mise run bootstrap` de cualquiera que clonara el repositorio. Viven en
   `captura-con-redaccion`, que la compuerta de cada entrega corre junto a este.
+
+  El 2026-11-02 suman ocho casos --cuatro criterios de las preguntas rigidas por la poliza, uno por
+  idioma-- (plan 09, punto 6): el deducible y los vehiculos salen del registro de la poliza, una
+  pregunta de cobertura sigue por la recuperacion, y un tema rigido sin poliza identificada pide la
+  poliza. Corren las funciones reales del turno con el corpus versionado detras de un puerto en
+  memoria; no tocan el nodo `intake`, asi que no necesitan los modelos de la redaccion.
 requires_provider_key: false
 case_keys:
   - DS-8/es/copy-catalog-parity
@@ -195,3 +201,13 @@ case_keys:
   - DS-4/en/quote-price-pressure-refused
   - DS-4/es/quote-unavailable-where-off
   - DS-4/en/quote-unavailable-where-off
+
+  # --- Plan 09, punto 6: las preguntas rigidas por la poliza ---
+  - DS-2/es/rigid-deductible-from-record
+  - DS-2/en/rigid-deductible-from-record
+  - DS-2/es/rigid-vehicles-from-record
+  - DS-2/en/rigid-vehicles-from-record
+  - DS-2/es/rigid-coverage-question-stays-rag
+  - DS-2/en/rigid-coverage-question-stays-rag
+  - DS-2/es/rigid-needs-policy-first
+  - DS-2/en/rigid-needs-policy-first

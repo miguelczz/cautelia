@@ -1,0 +1,29 @@
+# Preguntar hasta cuándo rige la póliza es un tema rígido (plan 09, punto 6).
+#
+# Comprensión de un mensaje (plan 09, punto 6, 2026-11-02): el modelo que entiende el mensaje también
+# clasifica si lo que se pregunta es un dato guardado en la póliza --deducible, límites, vigencia,
+# vehículos, conductores, endosos-- con un campo cerrado (`rigid_topic`). Si lo es y la póliza está
+# identificada, la respuesta sale del registro con código; si no, sigue por la recuperación de
+# cláusulas con su cita. Escrito junto con la instrucción `conversation` que lo pide, sin correr
+# todavía contra el modelo. Lo corre `mise run evals:entender`, con la clave
+# UNTANGLE_ANTHROPIC_API_KEY_EVALS. Veredicto esperado: `pass`.
+case_key: DS-2/es/understand-rigid-validity
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  record_type: coverage_inquiry
+  captured:
+  - identity_and_policy
+  last_agent_text: ¿Qué quieres saber de tu póliza?
+  message: ¿Hasta cuándo está vigente mi póliza?
+  wants:
+  - continue
+  - policy_question
+  asks_about_coverage: false
+  rigid_topic: validity
+expected_verdicts:
+  understanding_rigid_validity: pass

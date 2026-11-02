@@ -1,0 +1,22 @@
+# Un tema rígido sin la póliza identificada no se contesta: se pide la póliza (plan 09, punto 6).
+#
+# Plan 09, punto 6: sin póliza identificada en el caso, el deducible no se contesta de memoria ni con la
+# póliza de otra persona. El turno sigue por el camino de siempre, que es pedir la póliza, y el puerto
+# de datos rígidos no se toca. Corre las funciones reales del turno, sin modelo y sin base.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/rigid-needs-policy-first
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - rigid-facts
+  - chat-channel
+rigid_facts:
+  policy_number: POL-11
+  message: "¿Cuánto es mi deducible?"
+  topic: deductible
+  policy_identified: false
+  route: rag
+expected_verdicts:
+  rigid_facts_needs_policy: pass

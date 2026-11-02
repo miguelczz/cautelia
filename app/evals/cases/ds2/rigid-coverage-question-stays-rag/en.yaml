@@ -1,0 +1,24 @@
+# A coverage question is not a rigid topic: it keeps going through retrieval with its citation (plan 09, item 6).
+#
+# Plan 09, item 6: "does my policy cover a rental car?" is interpreted with clauses, not read from a
+# field. The model's reading is `rigid_topic: none` and `asks_about_coverage: true`; the turn has to
+# keep going through the usual retrieval and **the rigid-facts port is never touched**. It runs the
+# turn's real functions, with no model and no database. It is the case that stops the rigid route from
+# eating the questions that need a verified citation.
+# Expected verdict: `pass`.
+case_key: DS-2/en/rigid-coverage-question-stays-rag
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - rigid-facts
+  - chat-channel
+rigid_facts:
+  policy_number: POL-11
+  message: "Does my policy cover a rental car while mine is being repaired?"
+  topic: none
+  asks_about_coverage: true
+  route: rag
+expected_verdicts:
+  rigid_facts_coverage_stays_rag: pass

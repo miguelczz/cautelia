@@ -68,6 +68,9 @@ class FallbackReason(StrEnum):
     #: El mensaje no es de la aseguradora (`understanding.Want.OFF_TOPIC`): la respuesta es la
     #: frase fija del catalogo y lo que escribio el modelo se descarta, sin mirarlo.
     OFF_TOPIC = "off_topic"
+    #: La pregunta es por un dato guardado en la poliza (plan 09, punto 6): la respuesta sale del
+    #: registro con una plantilla del catalogo, sin recuperacion, sin citas y sin modelo.
+    RIGID_FACTS = "rigid_facts"
 
 
 def record_outcome(tenant_id: TenantId, channel: str, reason: FallbackReason | None) -> None:

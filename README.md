@@ -27,6 +27,8 @@ It is a portfolio demonstration: the three insurers, their policies and every pe
 
 **4. You can ask about your policy.** "Does my policy cover a rental car?" The answer quotes the clause it comes from. If no clause covers it, the agent says so instead of guessing, and if it could not check, it says that too: those are two different answers.
 
+When the question is about a fact written in the policy itself (the validity dates, the insured vehicles, the listed drivers, the special conditions), the agent reads it straight from the policy record with plain code: no clause search and no model writing the answer, so it is exact and costs no tokens. Only a question that needs interpreting the clauses goes through the search with citations.
+
 **5. In this demo, you can also play the adjuster.** Note the estimated repair cost, a doubt about coverage or a suspicion of fraud, and watch the insurer's rules classify the case again. Then approve or reject it, and the conversation continues with your decision.
 
 ![Playing the adjuster: noting a repair estimate makes the rules send the case to an adjuster](docs/assets/readme/adjuster-rules.png)
@@ -120,6 +122,48 @@ Baseline `2026-10-15-c7afffa`, commit `c7afffa`, published 2026-10-15.
 - **Cases per insurer**
   - not measured (not recorded in the baseline; the live panel shows it)
 <!-- generated:evaluation-report:end -->
+
+## MCP server
+
+The same policy facts the agent reads for those questions are published as a read-only [Model Context Protocol](https://modelcontextprotocol.io) server, so any MCP client (Claude Desktop, another agent) can query the synthetic sample policies. It is built with the official Python SDK, speaks over stdio, goes through the same single database entry point as the rest of the application (the insurer is set before any query, and row-level security does the rest) and does not import anything about cases, visitors, the chat or the model providers: an import contract checks that.
+
+| Tool | What it returns |
+| --- | --- |
+| `get_policy_summary` | holder, issuer, period and whether the policy is in force on a date |
+| `get_limits` | the liability, medical and uninsured-driver limits, in Colombian pesos |
+| `get_deductibles` | the collision and other-damage deductibles |
+| `get_insured_vehicles` | make, model and year (no plate, no VIN) |
+| `get_listed_drivers` | the drivers the policy declares, holder first |
+| `get_endorsements` | the special conditions and which clauses each one changes |
+| `get_clause` | one clause by id, only if it belongs to that policy |
+
+Every tool takes a `tenant_id` (`stonecroft`, `sunmeadow` or `knotwell`) and a `policy_number` (the sample policies are listed on the Policies page). They return what the policy declares; none of them says whether something is covered.
+
+It needs the local database with the sample data loaded (`mise run services:up` and `mise run synthetic:seed`) and `UNTANGLE_DATABASE_URL` in `.env`. To run it in a terminal:
+
+```bash
+mise run mcp
+```
+
+To plug it into Claude Desktop, add this to `claude_desktop_config.json` (Settings, Developer, Edit config) with the absolute path of your clone, and restart the app:
+
+```json
+{
+  "mcpServers": {
+    "cautelia-policy-facts": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--env-file", "/ABSOLUTE/PATH/TO/cautelia/.env",
+        "--project", "/ABSOLUTE/PATH/TO/cautelia/app/backend",
+        "python", "-m", "untangle.policy_mcp"
+      ]
+    }
+  }
+}
+```
+
+Then ask, for example, "What is the deductible on policy POL-21 of sunmeadow?".
 
 ## Attributions
 

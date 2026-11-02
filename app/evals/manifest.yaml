@@ -15,7 +15,7 @@ datasets:
       Corpus de polizas de los tres tenants. Lo genera U7 `synthetic-data`.
 
   - dataset: DS-2
-    count: 146
+    count: 162
     reason: >
       Golden set de FNOL en texto. Los casos los escriben las unidades que miden
       cada conducta; U1 entrega el corredor, no los casos. El primer lote es de
@@ -171,6 +171,18 @@ datasets:
       mezcla un accidente con algo ajeno, gana el accidente. Se escribieron junto con la
       instruccion `conversation` que lo pide y **no se han corrido contra el modelo**. Con
       ellas el conjunto tiene **146 archivos, 73 por idioma**.
+
+      El mismo 2026-11-02 entran ocho parejas mas del plan 09 punto 6, las preguntas rigidas por la
+      poliza (el deducible, los limites, la vigencia, los vehiculos, los conductores y los
+      endosos se contestan con codigo desde el registro, sin recuperacion, sin citas y sin
+      modelo): cuatro deterministas (`rigid-deductible-from-record`, `rigid-vehicles-from-record`,
+      `rigid-coverage-question-stays-rag`, `rigid-needs-policy-first`), que corren las funciones
+      reales del turno con la poliza POL-11 del corpus versionado detras del puerto, sin modelo y
+      sin base, y se escribieron antes del codigo; y cuatro de comprension
+      (`understand-rigid-deductible`, `understand-rigid-validity`, `understand-rental-car-not-rigid`,
+      `understand-what-is-a-deductible-not-rigid`), que miden que el modelo clasifique el tema
+      rigido con el campo cerrado `rigid_topic` y **no se han corrido contra el modelo**. Con
+      ellas el conjunto tiene **162 archivos, 81 por idioma**.
     runs_per_delivery: true
 
   - dataset: DS-3

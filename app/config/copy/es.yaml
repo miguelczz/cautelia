@@ -2115,6 +2115,53 @@ chat:
   # Lo que se contesta cuando alguien escribe en un caso ya decidido (B3, fase 1,
   # 2026-10-08): antes un reporte decia que seguia con el ajustador y una consulta
   # o una cotizacion daban error.
+  # Lo que la poliza emitida declara, contestado con codigo (plan 09, punto 6, 2026-11-02): el
+  # deducible, los limites, la vigencia, los vehiculos, los conductores y los endosos salen del
+  # registro, sin recuperacion de clausulas, sin verificador de citas y sin que un modelo los
+  # redacte (`policy_rag/facts/rigid.py`). Son frases que dicen lo que la poliza **declara**
+  # --«segun tu poliza...»--, nunca que algo este o no cubierto. Las listas se separan con punto
+  # y coma para no escribir una conjuncion en linea.
+  rigid:
+    deductible:
+      text: "Según tu póliza {policy_number}, el deducible del vehículo es {collision} en un choque y {other} en otros daños."
+      surface: chat
+    limits:
+      text: "Según tu póliza {policy_number}, los límites son: responsabilidad civil por lesiones, {bodily_person} por persona y {bodily_accident} por accidente; responsabilidad civil por daños a bienes, {property_damage}; gastos médicos, {medical_person} por persona; y conductor sin seguro, {uninsured_person} por persona y {uninsured_accident} por accidente."
+      surface: chat
+    validity:
+      in_force:
+        text: "Tu póliza {policy_number} está vigente desde el {start} hasta el {end}."
+        surface: chat
+      expired:
+        text: "Tu póliza {policy_number} estuvo vigente desde el {start} hasta el {end}, y ya venció."
+        surface: chat
+      not_yet:
+        text: "Tu póliza {policy_number} empieza a regir el {start} y vence el {end}."
+        surface: chat
+    vehicles:
+      listed:
+        text: "Los vehículos que figuran en tu póliza {policy_number} son: {vehicles}."
+        surface: chat
+      none:
+        text: "Tu póliza {policy_number} no trae vehículos registrados."
+        surface: chat
+    drivers:
+      listed:
+        text: "Los conductores que figuran en tu póliza {policy_number} son: {drivers}."
+        surface: chat
+      none:
+        text: "No tengo conductores declarados en tu póliza {policy_number}."
+        surface: chat
+    endorsements:
+      listed:
+        text: "Estas son las condiciones especiales de tu póliza {policy_number}: {endorsements}."
+        surface: chat
+      count_only:
+        text: "En tu póliza {policy_number} figuran condiciones especiales; en total: {count}."
+        surface: chat
+      none:
+        text: "Tu póliza {policy_number} no tiene condiciones especiales."
+        surface: chat
   closed_case:
     already_decided:
       text: "Tu caso {case_number} ya tiene una decisión: la puedes ver con «Ver mi caso». Para reportar o preguntar algo nuevo, reinicia la conversación con el botón de arriba."

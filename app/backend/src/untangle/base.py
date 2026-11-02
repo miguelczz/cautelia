@@ -5,7 +5,7 @@ si `copy_catalog` fuera el dueno del idioma, `evals` tendria que importarlo para
 hablar de un caso en espanol, y esa dependencia no describe ninguna relacion
 real. Un modulo hoja sin dependencias es lo que evita esas aristas inventadas.
 
-Lo que hay aqui son tres cosas y solo tres:
+Lo que hay aqui son cuatro cosas y solo cuatro:
 
 1. **`Locale` y `Frozen`**, desde el primer commit.
 2. **Los cuatro enums cerrados que hablan los dos lados de una llamada a un
@@ -20,6 +20,8 @@ Lo que hay aqui son tres cosas y solo tres:
    El dinero en si --`UsdAmount`, `Money`, `SpendTotal`-- se queda en
    `telemetry/spend/models.py`, que es su dueno; lo que sube aqui es la regla
    que los dos comparten.
+4. **`RigidTopic`**, la lista cerrada de datos de la poliza que se contestan con codigo (plan 09,
+   punto 6): la propone quien entiende el mensaje y la lee quien arma la respuesta.
 
 **Por que subieron en el bloque F.** Estaban en `telemetry/spend/models.py` y en
 `telemetry/traces/models.py`, y `providers/ports.py` --lo que ven seis unidades--
@@ -178,6 +180,30 @@ class ProviderErrorKind(StrEnum):
     RATE_LIMITED = "rate_limited"
     UNAVAILABLE = "unavailable"
     INVALID_RESPONSE = "invalid_response"
+
+
+# --- Los temas rigidos de una pregunta por la poliza (plan 09, punto 6) -------
+# Una pregunta cuya respuesta es un dato guardado en la poliza emitida --no una
+# interpretacion de sus clausulas-- se contesta con codigo, sin recuperacion, sin
+# verificador de citas y sin que un modelo redacte. La lista es cerrada y la comparten
+# los dos lados: quien entiende el mensaje la propone (`orchestration`) y quien arma la
+# respuesta la lee (`policy_rag.facts`); tres modulos que no se importan entre si.
+
+
+class RigidTopic(StrEnum):
+    """Que dato de la poliza emitida pregunta la persona. `none` si no es un dato rigido.
+
+    Una pregunta de interpretacion --«¿me cubre un carro de alquiler?»-- es `none` y sigue por
+    la recuperacion de clausulas con su cita verificada.
+    """
+
+    DEDUCTIBLE = "deductible"
+    LIMITS = "limits"
+    VALIDITY = "validity"
+    VEHICLES = "vehicles"
+    DRIVERS = "drivers"
+    ENDORSEMENTS = "endorsements"
+    NONE = "none"
 
 
 # --- La regla de la coma flotante ---------------------------------------------

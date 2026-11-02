@@ -31,6 +31,7 @@ from untangle.evals import (
     loading,
     quote_probes,
     redaction_probes,
+    rigid_facts_probes,
     rules_probes,
     transcript_guard,
     transcript_prompts,
@@ -154,6 +155,10 @@ def register_all_probes() -> None:
     # (BR3.1 a BR5.4) llega en la tanda 2 de esa unidad, y por eso quedan
     # fuera del subconjunto de arranque hasta que esa tanda las vea pasar.
     intake_probes.register_intake_probes()
+    # Las cuatro sondas de las preguntas rigidas por la poliza (plan 09, punto 6): las funciones
+    # reales del turno con la poliza del corpus versionado detras de un puerto en memoria. Sin
+    # modelo, sin base y sin los modelos de la redaccion, y por eso sus casos entran a `smoke`.
+    rigid_facts_probes.register_rigid_facts_probes()
     # Las tres sondas de la bandeja (U14, tanda 4). Funciones puras sobre
     # escenarios estructurados, la configuracion de cada aseguradora y el catalogo
     # de textos: sin base de datos y sin modelo, igual que las de U9, U10 y U11, y

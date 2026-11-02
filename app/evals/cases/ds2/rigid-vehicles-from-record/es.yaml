@@ -1,0 +1,29 @@
+# Los vehículos asegurados salen del registro, sin placa ni VIN (plan 09, punto 6).
+#
+# Plan 09, punto 6: un tema rígido sin montos, que la guardia de salida deja pasar entero. Corre las
+# funciones reales del turno con la póliza POL-11 del corpus versionado detrás del puerto, sin modelo
+# y sin base. Escrito antes del código: falla mientras todo vaya a la recuperación. Mide que el
+# texto traiga el vehículo de la póliza y nunca su placa ni su VIN: la pestaña de pólizas tampoco los
+# muestra.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/rigid-vehicles-from-record
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - rigid-facts
+  - chat-channel
+rigid_facts:
+  policy_number: POL-11
+  message: "¿Qué carros figuran en mi póliza?"
+  topic: vehicles
+  route: facts
+  mentions:
+    - POL-11
+    - Kia Picanto 2013
+  forbids:
+    - JUH431
+    - B0UMB1VW2WD449075
+expected_verdicts:
+  rigid_facts_vehicles: pass

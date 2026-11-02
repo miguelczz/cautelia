@@ -159,6 +159,17 @@ dependencies = [
     # habla HTTP asincrono con reintentos y tiempos por llamada. Usa `httpx2`, que
     # ya estaba; trae `jiter` y `docstring-parser`. Licencia MIT.
     "anthropic>=1.11.0",
+    # --- El servidor MCP propio (plan 09, punto 6, 2026-11-02) ---------------
+    # El SDK oficial de Python del Model Context Protocol (`MCPServer` y su transporte
+    # stdio), para publicar los datos rigidos de la poliza como herramientas que cualquier
+    # cliente MCP --Claude Desktop, otro agente-- pueda usar. Lo importa solo
+    # `untangle.policy_mcp`. La biblioteca estandar no lo cubre: el protocolo (JSON-RPC por
+    # stdio, esquemas de las herramientas, negociacion de capacidades) es lo que este SDK
+    # implementa, y escribirlo a mano seria peor que depender del paquete oficial. Desde la
+    # 2.0 `FastMCP` se llama `MCPServer`; por eso el minimo es la 2.3. Trae `mcp-types`,
+    # `attrs`, `jsonschema`, `opentelemetry-api`, `python-multipart`, `sse-starlette` y
+    # sus transitivas; `starlette`, `pydantic` y `httpx` ya estaban. Licencia MIT.
+    "mcp>=2.3.0",
 ]
 
 # Los dos modelos de spaCy, **fijados por URL con su hash en el lockfile**

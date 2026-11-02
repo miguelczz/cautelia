@@ -173,6 +173,23 @@ def _sin_promesa_de_desenlace(vigilar: bool, respuesta: str | None) -> list[str]
     ]
 
 
+def _cobertura_y_tema_rigido(
+    esperado: UnderstandingExpectation, respuesta: UnderstandingResponse
+) -> list[str]:
+    """Si pregunta por cobertura, y si lo que pregunta es un dato rigido de la poliza (plan 09, 6)."""
+    fallos: list[str] = []
+    if (
+        esperado.asks_about_coverage is not None
+        and respuesta.asks_about_coverage != esperado.asks_about_coverage
+    ):
+        fallos.append(f"pregunta de cobertura: {respuesta.asks_about_coverage}")
+    if esperado.rigid_topic is not None and respuesta.rigid_topic != esperado.rigid_topic:
+        fallos.append(
+            f"tema rigido '{respuesta.rigid_topic.value}', se esperaba '{esperado.rigid_topic.value}'"
+        )
+    return fallos
+
+
 def evaluate(
     esperado: UnderstandingExpectation,
     respuesta: UnderstandingResponse,
@@ -190,11 +207,7 @@ def evaluate(
         and (respuesta.person_question is not None) != esperado.asks_question
     ):
         fallos.append(f"pregunta de la persona: {respuesta.person_question!r}")
-    if (
-        esperado.asks_about_coverage is not None
-        and respuesta.asks_about_coverage != esperado.asks_about_coverage
-    ):
-        fallos.append(f"pregunta de cobertura: {respuesta.asks_about_coverage}")
+    fallos.extend(_cobertura_y_tema_rigido(esperado, respuesta))
 
     tipo = _tipo_del_caso(esperado, respuesta)
     permitidos = (

@@ -313,7 +313,7 @@ def test_cada_caso_de_comprension_pide_la_clave_de_claude_para_evaluaciones() ->
 
     assert set(variables[EVALS_ANTHROPIC_API_KEY_VAR]) == {c.case_key for c in de_comprension}
     assert variables[EVALS_MODEL_API_KEY_VAR] == (otro.case_key,)
-    assert len(de_comprension) == 66
+    assert len(de_comprension) == 74
 
 
 # --- Quien conducia: el nombre completo se pregunta, se anota junto al carro y se puede leer ---

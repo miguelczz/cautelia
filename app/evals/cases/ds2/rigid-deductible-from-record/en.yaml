@@ -1,0 +1,35 @@
+# A deductible asked about with the policy identified comes from the record (plan 09, item 6).
+#
+# Miguel's decision of 2026-11-02, from an outside reviewer's feedback: what the person asks and
+# is a datum stored in their policy --the deductible, the limits, the validity, the vehicles, the
+# drivers, the endorsements-- is answered by code from the record, with no clause retrieval, no
+# citation verifier and no model writing it (`orchestration/rigid_route.py`, `policy_rag/facts/`).
+#
+# Written before the code: it fails while the turn keeps sending everything to retrieval. It hands
+# over the model's reading (topic `deductible`) already made and runs the turn's real functions with
+# policy POL-11 of the versioned corpus behind the port, with no model and no database. It measures
+# that the turn picks the facts path and that the text carries the exact amount of each deductible
+# in the record (computed here, not from the template) and the policy number.
+# Expected verdict: `pass`.
+case_key: DS-2/en/rigid-deductible-from-record
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - rigid-facts
+  - chat-channel
+rigid_facts:
+  policy_number: POL-11
+  message: "What is my deductible?"
+  topic: deductible
+  route: facts
+  amounts:
+    - d.collision_deductible
+    - d.other_than_collision_deductible
+  mentions:
+    - POL-11
+  forbids:
+    - JUH431
+expected_verdicts:
+  rigid_facts_deductible: pass

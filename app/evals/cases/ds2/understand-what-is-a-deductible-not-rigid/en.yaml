@@ -1,0 +1,24 @@
+# What a deductible is, in general, is not a datum of their policy (plan 09, item 6).
+#
+# Message understanding (plan 09, item 6, 2026-11-02): the model that understands the message also
+# classifies whether what is asked is a datum stored in the policy --deductible, limits, validity,
+# vehicles, drivers, endorsements-- with a closed field (`rigid_topic`). If it is and the policy is
+# identified, the answer comes from the record by code; if not, it keeps going through clause
+# retrieval with its citation. Written together with the `conversation` instruction that asks for it,
+# not yet run against the model. Run with `mise run evals:entender`, with the
+# UNTANGLE_ANTHROPIC_API_KEY_EVALS key. Expected verdict: `pass`.
+case_key: DS-2/en/understand-what-is-a-deductible-not-rigid
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  message: What is a deductible?
+  wants:
+  - general_question
+  asks_about_coverage: false
+  rigid_topic: none
+expected_verdicts:
+  understanding_what_is_a_deductible_not_rigid: pass

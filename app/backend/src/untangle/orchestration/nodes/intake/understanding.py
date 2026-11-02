@@ -40,7 +40,7 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict
 
 from untangle import observability
-from untangle.base import Locale
+from untangle.base import Locale, RigidTopic
 from untangle.case_record.models import RecordType
 from untangle.orchestration.nodes.intake.extraction import ExtractedItem, ExtractionResponse
 from untangle.providers.ports import BudgetExhausted, ProviderError
@@ -127,6 +127,13 @@ class UnderstandingResponse(BaseModel):
     person_question: str | None = None
     #: Si pregunta si algo esta cubierto por su poliza.
     asks_about_coverage: bool = False
+    #: Si lo que pregunta es un **dato guardado en su poliza** y no una interpretacion de sus
+    #: clausulas (plan 09, punto 6): el deducible, los limites, la vigencia, los vehiculos, los
+    #: conductores o los endosos. Lista cerrada; `none` en todo lo demas, incluida cualquier
+    #: pregunta de si algo esta cubierto. El codigo la valida y decide: con la poliza ya
+    #: identificada, la respuesta sale del registro de la poliza, sin recuperacion de clausulas,
+    #: sin verificador de citas y sin que el modelo la redacte (`orchestration.rigid_route`).
+    rigid_topic: RigidTopic = RigidTopic.NONE
     #: Ya no lo usa nadie: la instruccion `conversation` lo deja siempre en `null`. Se
     #: conserva en el esquema para que el formulario sea el mismo que ya valida el
     #: proveedor (2026-10-12: el acuse de la llamada pasó a ser parte de `reply`).
@@ -253,6 +260,7 @@ async def understand(
         answer=respuesta.answer.value,
         asked=respuesta.person_question is not None,
         coverage=respuesta.asks_about_coverage,
+        rigid_topic=respuesta.rigid_topic.value,
         ms=int((time.monotonic() - empezo) * 1000),
     )
     return respuesta
@@ -264,6 +272,10 @@ _TEMA_DEL_TIPO: dict[RecordType, Want] = {
     RecordType.COVERAGE_INQUIRY: Want.POLICY_QUESTION,
     RecordType.QUOTE_REQUEST: Want.QUOTE,
 }
+
+
+#: Las intenciones que, con un tema rigido, son en realidad una pregunta por la poliza.
+_SIN_TEMA_PROPIO = frozenset({Want.GENERAL_QUESTION, Want.OTHER})
 
 
 def canonical_reading(
@@ -278,6 +290,10 @@ def canonical_reading(
       dato en un reporte y decir que se quiere reportar son la misma lectura.
     """
     if respuesta.wants is Want.GENERAL_QUESTION and respuesta.asks_about_coverage:
+        respuesta = respuesta.model_copy(update={"wants": Want.POLICY_QUESTION})
+    if respuesta.rigid_topic is not RigidTopic.NONE and respuesta.wants in _SIN_TEMA_PROPIO:
+        # Preguntar por un dato de *su* poliza es preguntar por la poliza, la llame el modelo
+        # duda general u otra cosa: sin esto el primer mensaje no abriria la consulta.
         respuesta = respuesta.model_copy(update={"wants": Want.POLICY_QUESTION})
     if record_type is not None and respuesta.wants is _TEMA_DEL_TIPO[record_type]:
         respuesta = respuesta.model_copy(update={"wants": Want.CONTINUE})

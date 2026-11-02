@@ -27,7 +27,7 @@ name = Capas: superficie, entradas, grafo, dominio, plataforma
 type = layers
 layers =
     untangle.server
-    untangle.workspace
+    untangle.workspace : untangle.policy_mcp
     untangle.demo_operations
     untangle.evals
     untangle.inbox
@@ -115,6 +115,7 @@ unmatched_ignore_imports_alerting = none
 name = El codigo de produccion no importa untangle.evals
 type = forbidden
 source_modules =
+    untangle.policy_mcp
     untangle.server
     untangle.chat
     untangle.voice
@@ -136,6 +137,36 @@ ignore_imports =
     untangle.server.voice_cli -> untangle.evals.**
     untangle.server.evidence_routes -> untangle.evals.evidence.**
     untangle.server.understanding_cli -> untangle.evals.**
+
+; --- El servidor MCP solo lee la poliza emitida (plan 09, punto 6) --------------
+; `untangle.policy_mcp` publica `policy_rag.facts` como herramientas MCP de solo lectura sobre datos
+; sinteticos. Lo que **no** puede importar, directo: los casos y la conversacion (`case_record`, el
+; chat, la voz, la bandeja, el grafo), que son datos de visitantes y que un numero de caso no hace
+; publicos; los proveedores de modelo y de voz, que gastan; y el motor de reglas y el cumplimiento,
+; que no son datos de la poliza. Que tampoco lleguen por cadena no se pide: la lectura de la poliza
+; pasa por `policy_rag.corpus.repository`, que tipa un vector con `providers.ports`, y eso no es un
+; proveedor llamado. Lo que protege este contrato es que el servidor nunca **nombre** nada de eso.
+[importlinter:contract:servidor-mcp-solo-poliza]
+name = El servidor MCP no importa casos, canales, grafo ni proveedores
+type = forbidden
+source_modules =
+    untangle.policy_mcp
+forbidden_modules =
+    untangle.case_record
+    untangle.chat
+    untangle.voice
+    untangle.inbox
+    untangle.orchestration
+    untangle.providers
+    untangle.rules
+    untangle.compliance
+    untangle.telemetry
+    untangle.evals
+    untangle.demo_operations
+    untangle.synthetic_data
+    untangle.server
+allow_indirect_imports = true
+unmatched_ignore_imports_alerting = none
 
 ; --- Los controles de cumplimiento no llegan a ningun proveedor (U10) ---------
 ; BR5.3 y FD-U10-1: la guardia, las senales y la revision completa son de
@@ -217,6 +248,7 @@ unmatched_ignore_imports_alerting = none
 name = Los SDK de proveedor solo se importan dentro de untangle.providers
 type = forbidden
 source_modules =
+    untangle.policy_mcp
     untangle.server
     untangle.chat
     untangle.voice
@@ -386,6 +418,7 @@ unmatched_ignore_imports_alerting = none
 name = El SDK de trazas solo se importa dentro de untangle.telemetry.traces
 type = forbidden
 source_modules =
+    untangle.policy_mcp
     untangle.server
     untangle.workspace
     untangle.chat
@@ -509,6 +542,7 @@ layers =
 name = LangGraph solo dentro del runtime del grafo
 type = forbidden
 source_modules =
+    untangle.policy_mcp
     untangle.chat
     untangle.voice
     untangle.inbox
@@ -685,6 +719,7 @@ ignore_imports =
 name = Ningun modulo abre una conexion fuera del punto unico de sesion
 type = forbidden
 source_modules =
+    untangle.policy_mcp
     untangle.chat
     untangle.voice
     untangle.inbox

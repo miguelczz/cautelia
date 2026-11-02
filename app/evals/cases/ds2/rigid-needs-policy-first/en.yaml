@@ -1,0 +1,22 @@
+# A rigid topic with no identified policy is not answered: the policy is asked for (plan 09, item 6).
+#
+# Plan 09, item 6: with no policy identified in the case, the deductible is not answered from memory
+# or with someone else's policy. The turn keeps its usual path, which is asking for the policy, and the
+# rigid-facts port is never touched. It runs the turn's real functions, with no model and no database.
+# Expected verdict: `pass`.
+case_key: DS-2/en/rigid-needs-policy-first
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - rigid-facts
+  - chat-channel
+rigid_facts:
+  policy_number: POL-11
+  message: "What is my deductible?"
+  topic: deductible
+  policy_identified: false
+  route: rag
+expected_verdicts:
+  rigid_facts_needs_policy: pass

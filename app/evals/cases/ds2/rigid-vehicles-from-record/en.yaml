@@ -1,0 +1,29 @@
+# The insured vehicles come from the record, without plate or VIN (plan 09, item 6).
+#
+# Plan 09, item 6: a rigid topic with no amounts, which the output guard lets through whole. It runs
+# the turn's real functions with policy POL-11 of the versioned corpus behind the port, with no model
+# and no database. Written before the code: it fails while everything goes to retrieval. It measures
+# that the text carries the policy's vehicle and never its plate or VIN: the policies tab does not
+# show them either.
+# Expected verdict: `pass`.
+case_key: DS-2/en/rigid-vehicles-from-record
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - rigid-facts
+  - chat-channel
+rigid_facts:
+  policy_number: POL-11
+  message: "Which cars are listed on my policy?"
+  topic: vehicles
+  route: facts
+  mentions:
+    - POL-11
+    - Kia Picanto 2013
+  forbids:
+    - JUH431
+    - B0UMB1VW2WD449075
+expected_verdicts:
+  rigid_facts_vehicles: pass

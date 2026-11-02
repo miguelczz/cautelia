@@ -109,6 +109,7 @@ from untangle.server import (
     voice_routes,
     web,
 )
+from untangle.server.rigid_facts import PolicyFactsAdapter
 from untangle.settings import Settings
 from untangle.surface_spec import SurfaceId, SurfaceSpec
 from untangle.telemetry.activation import purge as activation_purge
@@ -1475,6 +1476,11 @@ def build_graph_wiring(
                 # escribir y la respuesta --calculada y guardada-- no le llega nunca.
                 notifier=CASE_NOTIFIER,
             ),
+            # **Los datos rigidos de la poliza** (plan 09, punto 6): el deducible, los limites, la
+            # vigencia, los vehiculos, los conductores y los endosos se leen del registro, sin
+            # recuperacion, sin citas y sin modelo. Por puerto, como la elegibilidad: el modulo del
+            # turno no puede llegar a `policy_rag`.
+            rigid_facts=PolicyFactsAdapter(),
             # El nodo de cobertura de U8, con el calculador de embeddings de U5 y el
             # único modelo de embeddings que declara la carpeta de proveedores. Corre
             # por el ejecutor directo, no dentro de un grafo compilado: ver el

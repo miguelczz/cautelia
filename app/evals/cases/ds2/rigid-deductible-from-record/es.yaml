@@ -1,0 +1,36 @@
+# Un deducible preguntado con la póliza identificada sale del registro (plan 09, punto 6).
+#
+# Decisión de Miguel del 2026-11-02, a partir de la revisión de una persona externa: lo que la persona
+# pregunta y es un dato guardado en su póliza --el deducible, los límites, la vigencia, los vehículos,
+# los conductores, los endosos-- se contesta con código desde el registro, sin recuperación de
+# cláusulas, sin verificador de citas y sin que un modelo lo redacte (`orchestration/rigid_route.py`,
+# `policy_rag/facts/`).
+#
+# Escrito antes del código: falla mientras el turno siga mandando todo a la recuperación. Entrega ya
+# hecha la lectura del modelo (tema `deductible`) y corre las funciones reales del turno con la
+# póliza POL-11 del corpus versionado detrás del puerto, sin modelo y sin base. Mide que el turno
+# elija el camino de los datos y que el texto traiga el monto exacto de cada deducible del registro
+# (calculado aquí, no de la plantilla) y el número de póliza.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/rigid-deductible-from-record
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - rigid-facts
+  - chat-channel
+rigid_facts:
+  policy_number: POL-11
+  message: "¿Cuánto es mi deducible?"
+  topic: deductible
+  route: facts
+  amounts:
+    - d.collision_deductible
+    - d.other_than_collision_deductible
+  mentions:
+    - POL-11
+  forbids:
+    - JUH431
+expected_verdicts:
+  rigid_facts_deductible: pass

@@ -77,6 +77,7 @@ from untangle.orchestration import (
     outcome_claim,
     quote_reply,
     rhythm,
+    rigid_route,
     stated_purpose,
     transcript_writer,
 )
@@ -115,6 +116,7 @@ from untangle.orchestration.pause import (
     PauseReason,
     open_pause,
 )
+from untangle.orchestration.rigid_route import RigidAnswerView, RigidFactsPort
 from untangle.orchestration.state import GraphState
 from untangle.orchestration.transition import transition
 from untangle.providers.ports import ProviderError
@@ -259,6 +261,12 @@ class GraphRuntime:
     #: la cadena de llamadas del turno: un contrato de capas lo prohibe, y la razon
     #: es que importarlo lo metria en el camino que BR2.5 quiere mantener fuera.
     eligibility: EligibilityPort | None = None
+    #: Quien contesta desde el registro de la poliza una pregunta por un dato suyo --el deducible,
+    #: los limites, la vigencia, los vehiculos, los conductores, los endosos-- sin recuperacion de
+    #: clausulas, sin verificador de citas y sin modelo (plan 09, punto 6). Por puerto y no por
+    #: importacion, igual que `eligibility`: el modulo del turno no puede llegar a `policy_rag`.
+    #: Opcional: sin el, toda pregunta por la poliza sigue por la recuperacion.
+    rigid_facts: RigidFactsPort | None = None
     #: BR2.2: lanza sin esperar. Por omisión, no el `asyncio.create_task` llano
     #: de `rhythm.py` -- ese copia el `contextvars.Context` de quien llama, y
     #: el turno que dispara `preload` todavía tiene su propio tramo de traza
@@ -1340,7 +1348,7 @@ async def _pedir_la_pregunta(
     )
 
 
-async def _dirigir_turno(  # noqa: C901, PLR0911 -- guardas en orden, cada una corta y devuelve
+async def _dirigir_turno(  # noqa: C901, PLR0911, PLR0912 -- guardas en orden, cada una corta y devuelve
     # Senales, cotizacion apagada o precio, solicitud ya capturada, desvio de cobertura,
     # y la captura. Son guardas en orden y cada una devuelve: la alternativa --un
     # despachador por tipo de turno-- esconderia el **orden**, que es lo unico que
@@ -1429,6 +1437,18 @@ async def _dirigir_turno(  # noqa: C901, PLR0911 -- guardas en orden, cada una c
         yield await _derivar_a_persona(
             runtime, turn, case_id=case_id, now=ahora, gate=gate, record_type=contexto.record_type
         )
+        return
+
+    # --- Plan 09, punto 6: un dato guardado en la poliza se lee del registro ----------------
+    # Va antes de la recuperacion de clausulas: el deducible, los limites, la vigencia, los
+    # vehiculos, los conductores y los endosos no se interpretan, se leen. El modelo propuso el
+    # tema (lista cerrada); aqui lo valida el codigo contra el estado del caso. Sin la poliza
+    # identificada, o si el registro no trae el dato, el turno sigue como siempre.
+    del_registro = await _contestar_del_registro(
+        runtime, turn, contexto, previo, entendido, turn_id=turn_id, gate=gate
+    )
+    if del_registro is not None:
+        yield del_registro
         return
 
     # --- U19, AC6.1.3 y AC6.2.4: una peticion de cotizar donde esta apagada, o de un
@@ -1662,6 +1682,82 @@ async def _fuera_de_tema(
         language=turn.language,
         case_id=case_id,
         from_catalog=True,
+    )
+
+
+async def _contestar_del_registro(  # noqa: PLR0913 -- lo que el turno ya resolvio arriba, por nombre
+    runtime: GraphRuntime,
+    turn: InboundTurn,
+    contexto: case_context.CaseContext,
+    previo: GraphState,
+    entendido: understanding.UnderstandingResponse | None,
+    *,
+    turn_id: str,
+    gate: ExitGate,
+) -> FinalText | None:
+    """La respuesta de un dato de la poliza leido del registro, o `None` si el turno sigue.
+
+    El modelo propuso el tema (lista cerrada); `rigid_route.topic_for` lo valida contra el estado
+    del caso. Sin la poliza identificada, sin puerto, o si el registro no trae el dato, `None` y el
+    turno sigue como siempre (pedir la poliza, o la recuperacion de clausulas).
+    """
+    tema = rigid_route.topic_for(
+        entendido,
+        record_type=contexto.record_type,
+        policy_identified=contexto.policy_ref is not None,
+    )
+    if tema is None or contexto.policy_ref is None:
+        return None
+    del_registro = await rigid_route.answer(
+        runtime.rigid_facts,
+        tenant_id=turn.tenant_id,
+        policy_number=contexto.policy_ref,
+        topic=tema,
+        language=turn.language,
+        on=runtime.clock().date(),
+        spoken=turn.channel == "voice",
+    )
+    if del_registro is None:
+        return None
+    return await _responder_desde_el_registro(
+        turn, contexto, previo, del_registro, turn_id=turn_id, gate=gate
+    )
+
+
+async def _responder_desde_el_registro(  # noqa: PLR0913 -- el turno, el caso y lo que ya resolvio
+    turn: InboundTurn,
+    contexto: case_context.CaseContext,
+    previo: GraphState,
+    respuesta: RigidAnswerView,
+    *,
+    turn_id: str,
+    gate: ExitGate,
+) -> FinalText:
+    """La respuesta de un dato de la poliza, leida del registro (plan 09, punto 6).
+
+    Pasa por la guardia de salida como todo texto hacia la persona, y **por su cuenta**: la
+    pregunta pendiente del reporte --si la hay-- se retoma detras en su propia frase, para que la
+    guardia, si interviene la respuesta (los montos son una categoria suya), no se lleve tambien la
+    pregunta que la persona tiene que contestar. En una consulta se ofrecen las preguntas de
+    ejemplo, igual que despues de una respuesta de cobertura.
+    """
+    texto, _ = await gate.send(respuesta.text)
+    sugerencias_del_turno: tuple[str, ...] = ()
+    if contexto.record_type is RecordType.CLAIM:
+        pendiente = _lo_pendiente(previo, contexto, language=turn.language)
+        if pendiente:
+            retomada, _ = await gate.send(pendiente)
+            texto = f"{texto} {retomada}".strip()
+    else:
+        sugerencias_del_turno = sugerencias.after_coverage(language=turn.language)
+    record_outcome(turn.tenant_id, turn.channel, FallbackReason.RIGID_FACTS)
+    return FinalText(
+        message_id=turn_id,
+        text=texto,
+        language=turn.language,
+        case_id=contexto.case_id,
+        from_catalog=True,
+        suggestions=sugerencias_del_turno,
     )
 
 

@@ -198,6 +198,18 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["chat.resume.not_found", "I can't find a case with that number in this browser. A case can only be picked back up from the browser where it was started. If you like, tell me what you need and we'll begin."],
   ["chat.resume.original_channel", "A case is picked back up through the same channel it started in, and from the same browser: if it was a call, call again; if it was chat, write to me here. If you prefer, tell me what you need and we'll begin."],
   ["chat.resume.with_adjuster", "Your case {case_number} is already with an adjuster, so I can't take more details here. You can see it with “See my case”."],
+  ["chat.rigid.deductible", "According to your policy {policy_number}, the vehicle deductible is {collision} for a collision and {other} for other damage."],
+  ["chat.rigid.drivers.listed", "The drivers listed on your policy {policy_number} are: {drivers}."],
+  ["chat.rigid.drivers.none", "I don't have any declared drivers on your policy {policy_number}."],
+  ["chat.rigid.endorsements.count_only", "Your policy {policy_number} lists special conditions; in total: {count}."],
+  ["chat.rigid.endorsements.listed", "These are the special conditions of your policy {policy_number}: {endorsements}."],
+  ["chat.rigid.endorsements.none", "Your policy {policy_number} has no special conditions."],
+  ["chat.rigid.limits", "According to your policy {policy_number}, the limits are: liability for injuries, {bodily_person} per person and {bodily_accident} per accident; liability for property damage, {property_damage}; medical payments, {medical_person} per person; and uninsured driver, {uninsured_person} per person and {uninsured_accident} per accident."],
+  ["chat.rigid.validity.expired", "Your policy {policy_number} was in force from {start} to {end}, and it has now expired."],
+  ["chat.rigid.validity.in_force", "Your policy {policy_number} is in force from {start} to {end}."],
+  ["chat.rigid.validity.not_yet", "Your policy {policy_number} starts on {start} and ends on {end}."],
+  ["chat.rigid.vehicles.listed", "The vehicles listed on your policy {policy_number} are: {vehicles}."],
+  ["chat.rigid.vehicles.none", "Your policy {policy_number} has no registered vehicles."],
   ["chat.turn.error", "I had trouble answering that. Can we try again?"],
   ["chat.turn.waiting", "Let me check your policy, one moment."],
   ["comparison.asked.label", "Your question"],
@@ -252,6 +264,9 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["compliance.handoff.adjuster_review_inquiry", "Done: an adjuster reviews your question with the clause we found. I am passing everything along so you do not have to repeat it."],
   ["compliance.identity.answer", "No, I'm an AI assistant. I'll help you with all of this, and if you'd rather, I'll pass your case to an adjuster."],
   ["demo.notice.label", "Demo notice"],
+];
+
+const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["demo.notice.less", "Less information"],
   ["demo.notice.more", "More information"],
   ["demo.reset.conversation_notice", "The demo was reset and your previous case no longer exists. Your next message opens a new case."],
@@ -264,9 +279,6 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["documents.kind_base", "Auto policy {year}"],
   ["documents.kind_endorsement", "Special condition {number}"],
   ["documents.kind_jurisdiction", "Territory rules"],
-];
-
-const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["documents.list_label", "Documents"],
   ["documents.loading", "Loading the document…"],
   ["documents.no_match", "No clause matches the search."],
@@ -505,6 +517,9 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.question.quote_salvage_title", "Has the vehicle ever been declared a total loss?"],
   ["intake.question.quote_use_type", "How do you use the vehicle: personal, commuting to work, or commercial?"],
   ["intake.question.quote_vehicle_make", "What is its make?"],
+];
+
+const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["intake.question.quote_vehicle_model", "And its model?"],
   ["intake.question.quote_vehicle_year", "What year is the vehicle?"],
   ["intake.question.quote_vin", "What is the VIN or chassis number? It is on the vehicle registration."],
@@ -517,9 +532,6 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.readback.identity_and_policy", "Confirming: {value}. Is that correct?"],
   ["intake.readback.other_parties", "Noted about the other parties. Is that correct?"],
   ["intake.readback.quote_all", "Noted: {summary} Is all of that correct?"],
-];
-
-const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["intake.readback.quote_driver", "Noted: {name}, born {birth_date}, {license_years} years licensed, license issued in {license_jurisdiction}. Is that correct?"],
   ["intake.readback.quote_driver_part", "{name}, born {birth_date}, licensed {license_years} years, issued in {license_jurisdiction}."],
   ["intake.readback.quote_history", "Noted: {at_fault_losses_3y} at-fault accidents and {claims_3y} claims in three years; {prior_coverage_active}; {lapse_months} months without coverage. Is that correct?"],
@@ -758,6 +770,9 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["quote.value.use_type.personal", "personal"],
   ["redaction.degraded", "I can't show this text right now."],
   ["redaction.label.email", "[EMAIL {n}]"],
+];
+
+const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["redaction.label.license_plate", "[PLATE {n}]"],
   ["redaction.label.location", "[LOCATION {n}]"],
   ["redaction.label.national_id", "[ID {n}]"],
@@ -770,9 +785,6 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["redaction.spoken.license_plate", "that plate"],
   ["redaction.spoken.location", "that place"],
   ["redaction.spoken.national_id", "that ID"],
-];
-
-const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["redaction.spoken.person", "that name"],
   ["redaction.spoken.phone", "that phone number"],
   ["redaction.spoken.policy_number", "that policy"],
@@ -1011,6 +1023,9 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.console.speaker_insured", "You"],
   ["voice.console.time_left", "{clock} left"],
   ["voice.console.time_left_label", "Time left in the call"],
+];
+
+const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
   ["voice.console.title", "Talk to {insurer}"],
   ["voice.console.transcript_label", "Live transcript of the call"],
   ["voice.console.unavailable", "Voice is off right now"],
@@ -1023,9 +1038,6 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.duration.minute", "one minute"],
   ["voice.duration.minutes", "{minutes} minutes"],
   ["voice.ended.completed", "Your report is complete."],
-];
-
-const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
   ["voice.ended.dropped", "The call dropped. Your case is saved."],
   ["voice.ended.error", "Something went wrong on the call. Your case is saved."],
   ["voice.ended.handed_off", "Your case went to an adjuster."],

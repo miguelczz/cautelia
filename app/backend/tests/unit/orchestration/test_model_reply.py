@@ -111,6 +111,7 @@ def test_los_motivos_son_la_lista_cerrada_de_la_traza() -> None:
         "guard",
         "redacted_voice",
         "off_topic",
+        "rigid_facts",
     }
 
 

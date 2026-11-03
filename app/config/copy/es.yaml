@@ -3855,16 +3855,16 @@ policies:
     surface: system
   limit:
     a_bodily_injury_per_person:
-      text: "Responsabilidad civil: lesiones, por persona"
+      text: "Responsabilidad civil: muerte o lesiones a una persona"
       surface: system
     a_bodily_injury_per_accident:
-      text: "Responsabilidad civil: lesiones, por accidente"
+      text: "Responsabilidad civil: muerte o lesiones a dos o más personas"
       surface: system
     a_property_damage:
-      text: "Responsabilidad civil: daños a bienes"
+      text: "Responsabilidad civil: daños a bienes de terceros"
       surface: system
     b_medical_payments_per_person:
-      text: "Gastos médicos, por persona"
+      text: "Gastos médicos de los ocupantes, por persona"
       surface: system
     c_driver_personal_accident:
       text: "Accidentes personales del conductor"

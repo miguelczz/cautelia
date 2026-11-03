@@ -3709,16 +3709,16 @@ policies:
     surface: system
   limit:
     a_bodily_injury_per_person:
-      text: "Liability: bodily injury, per person"
+      text: "Civil liability: death or injury, one person"
       surface: system
     a_bodily_injury_per_accident:
-      text: "Liability: bodily injury, per accident"
+      text: "Civil liability: death or injury, two or more people"
       surface: system
     a_property_damage:
-      text: "Liability: property damage"
+      text: "Civil liability: third-party property damage"
       surface: system
     b_medical_payments_per_person:
-      text: "Medical payments, per person"
+      text: "Occupants' medical expenses, per person"
       surface: system
     c_driver_personal_accident:
       text: "Driver personal accident cover"

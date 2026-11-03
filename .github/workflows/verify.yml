@@ -29,11 +29,18 @@ on:
     # corrida completa. Lo que estos filtros **nunca** apagan es la compuerta de
     # evaluaciones: un filtro que la desactive la convierte en una sugerencia, y
     # el fallo seria invisible porque las corridas seguirian saliendo verdes.
-    paths-ignore:
-      - "docs/**"
-      - "aidlc/**"
-      - "review/**"
-      - "**/*.md"
+    # Los prompts y las plantillas de borrador son `.md` pero son codigo: el
+    # aplicativo los lee. Se vuelven a incluir despues de excluir `**/*.md`
+    # (en `paths` el orden importa: gana el ultimo patron que coincide). Con
+    # `paths-ignore` un cambio solo de prompt no corria la compuerta.
+    paths:
+      - "**"
+      - "!docs/**"
+      - "!aidlc/**"
+      - "!review/**"
+      - "!**/*.md"
+      - "app/config/prompts/**"
+      - "app/backend/src/untangle/synthetic_data/draft_template/**"
   workflow_dispatch:
 
 # Permisos vacios por defecto, elevados por trabajo solo a lo que haga falta.

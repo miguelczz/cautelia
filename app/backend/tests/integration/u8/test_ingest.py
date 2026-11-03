@@ -170,6 +170,32 @@ async def test_una_clausula_cambiada_reindexa_solo_esa(tmp_path: Path) -> None:
     assert embebedor.calls[-1] == ("Texto de la clausula, ya modificado.",)
 
 
+async def test_una_clausula_que_sale_del_corpus_se_borra_con_su_entrada_del_indice(
+    tmp_path: Path,
+) -> None:
+    """Una clave renombrada no deja la vieja en la base: la recuperacion la seguiria devolviendo."""
+    embebedor = FakeEmbedder()
+    cliente = EmbeddingClient(embedder=embebedor, embedding_model=EMBEDDING_MODEL, use=Use.CORPUS)
+    _seed_corpus(tmp_path, clauses=3)
+    await corpus.ingest_tenant(TENANT_ID, client=cliente, sources=_sources(tmp_path))
+
+    _seed_corpus(tmp_path, clauses=2)
+    reporte = await corpus.ingest_tenant(TENANT_ID, client=cliente, sources=_sources(tmp_path))
+
+    async with tenancy.session_for(TENANT_ID) as sesion:
+        clausulas = await tenancy.fetch_all(
+            sesion, "SELECT clause_id FROM clauses WHERE tenant_id = :t", t=TENANT_ID
+        )
+        indice = await tenancy.fetch_all(
+            sesion, "SELECT clause_id FROM clause_index WHERE tenant_id = :t", t=TENANT_ID
+        )
+    esperadas = ["TCO-PAP-2026-A.1", "TCO-PAP-2026-A.2"]
+    assert sorted(fila["clause_id"] for fila in clausulas) == esperadas
+    assert sorted(fila["clause_id"] for fila in indice) == esperadas
+    # Las que siguen no se vuelven a pedir al proveedor.
+    assert reporte.embedder_calls == 0
+
+
 async def test_el_modelo_de_embeddings_es_parte_de_la_clave_del_indice(tmp_path: Path) -> None:
     """BR1.6: cambiar de modelo no encuentra nada indexado y reingesta todo."""
     _seed_corpus(tmp_path)

@@ -24,14 +24,15 @@ Lo que **si** se compara explicitamente antes de escribir es `clause_index`
 (BR1.5): ahi esta el costo real -- una llamada al proveedor por clausula -- y
 ahi es donde reingestar sin cambios tiene que costar cero.
 
-**Limite conocido, declarado y no escondido.** Esta version no borra una fila
-de `policy_forms`, `clauses`, `clause_relations` o `issued_policies` cuyo
-identificador desaparecio de `app/data/` entre dos corridas: ningun criterio
-de esta unidad ejercita ese camino (el corpus de U7 crece o se corrige, no se
-encoge), y anadirlo sin una prueba que lo pida seria codigo sin caso previo.
-Si algun dia hace falta, la comprobacion es la misma que BR1.2 ya hace al
-leer: comparar los identificadores del corpus contra los que ya hay en la
-base y borrar la diferencia.
+**Lo que desaparece del corpus se borra, y solo eso.** Una clausula o una
+relacion cuyo identificador ya no esta en `app/data/` se borra en la misma
+transaccion de la escritura, y su entrada de `clause_index` se va con ella por
+la cascada. Hizo falta el 2026-11-02, cuando las polizas pasaron a la estructura
+colombiana y cuatro claves cambiaron de nombre: las viejas seguian en la base y
+la recuperacion las devolvia. Es un borrado por diferencia, nunca masivo, y no
+corre si el corpus llego sin clausulas, para que una lectura vacia no deje a una
+aseguradora sin nada. Los formularios y las polizas emitidas no se borran: sus
+identificadores no cambiaron, y una poliza la puede citar un caso.
 """
 
 from __future__ import annotations
@@ -133,7 +134,8 @@ async def upsert_reference_data(
     por `ON CONFLICT` sobre su llave natural (BR1.3): reingestar sin cambios no
     toca ninguna fila que ya coincida, y una clausula editada llega con su
     texto nuevo sin arrastrar a `clause_index`, que cuelga de `clauses` y no de
-    esta transaccion.
+    esta transaccion. Al final borra las relaciones y las clausulas que ya no
+    estan en el corpus (ver el docstring del modulo).
     """
     async with tenancy.session_for(tenant_id) as sesion:
         for formulario in forms:
@@ -194,6 +196,36 @@ async def upsert_reference_data(
                 period_start=poliza.period_start,
                 period_end=poliza.period_end,
             )
+
+        if clauses:
+            vigentes = [clausula.clause_id for clausula in clauses]
+            await tenancy.execute_sql(
+                sesion,
+                _BORRAR_RELACIONES_SOBRANTES,
+                tenant_id=tenant_id,
+                relation_ids=[relacion.relation_id for relacion in relations],
+                clause_ids=vigentes,
+            )
+            await tenancy.execute_sql(
+                sesion, _BORRAR_CLAUSULAS_SOBRANTES, tenant_id=tenant_id, clause_ids=vigentes
+            )
+
+
+# Relaciones primero: sus dos llaves foraneas apuntan a `clauses`.
+_BORRAR_RELACIONES_SOBRANTES = """
+    DELETE FROM clause_relations
+    WHERE tenant_id = :tenant_id
+      AND (
+        NOT (relation_id = ANY(:relation_ids))
+        OR NOT (from_clause = ANY(:clause_ids))
+        OR NOT (to_clause = ANY(:clause_ids))
+      )
+"""
+
+_BORRAR_CLAUSULAS_SOBRANTES = """
+    DELETE FROM clauses
+    WHERE tenant_id = :tenant_id AND NOT (clause_id = ANY(:clause_ids))
+"""
 
 
 _LEER_INDICE = """

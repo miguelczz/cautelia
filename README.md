@@ -1,5 +1,7 @@
 # Cautelia
 
+**English** · [Español](README.es.md)
+
 ![Cautelia: two cars with copper and blue headlights approach on a wet road at night](docs/assets/banner.jpg)
 
 **Cautelia is an AI agent that takes car-accident reports and answers questions about your auto policy, by chat or by phone, in Spanish and English.** It asks only what is missing, checks your policy, cites the exact clause it relies on, and closes the simple cases on its own. Anything about coverage or money goes to a human adjuster, who signs the decision.

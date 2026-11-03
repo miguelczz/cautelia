@@ -60,9 +60,9 @@ estadounidense de ISO), sin copiar texto ni nombrar aseguradoras.
 
 | Fase | Contenido | Estado |
 | --- | --- | --- |
-| 1 | Quitar el enlace a Langfuse; guardrail fuera de contexto; respuesta progresiva tras la guardia | Hecho en código (enlace, guardrail y respuesta progresiva); falta la corrida barata de `evals:entender` y la revisión |
-| 2 | Datos del accidente en un solo mensaje (chat) | Hecho en código (lista que sale del código en el chat, una pregunta a la vez en la llamada); falta la revisión |
-| 3 | Herramientas para consultas rígidas y servidor MCP | Pendiente |
+| 1 | Quitar el enlace a Langfuse; guardrail fuera de contexto; respuesta progresiva tras la guardia | Hecho y en `main` |
+| 2 | Datos del accidente en un solo mensaje (chat) | Revertido (`173baac4`): la lista armada por el código reemplazaba la respuesta del modelo y tumbó unas 20 pruebas de la u12. Se rehace para que el modelo pida todo lo que falta y el código solo compruebe que no omitió nada |
+| 3 | Herramientas para consultas rígidas y servidor MCP | Hecho y en `main` (`06478984`). Pendiente de decisión: la guardia de salida bloquea los montos, así que deducible y límites salen hoy con la frase genérica |
 | 4 | Pólizas con estructura colombiana (va antes del ajustador, que razona sobre ellas) | Pendiente |
 | 5 | Ajustador de IA que decide y explica | Pendiente |
 

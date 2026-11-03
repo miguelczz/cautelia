@@ -459,6 +459,60 @@
           "default": false,
           "title": "Reply Claims No Outcome",
           "type": "boolean"
+        },
+        "channel": {
+          "default": "chat",
+          "enum": [
+            "chat",
+            "voice"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "reply_topics": {
+          "default": [],
+          "items": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "title": "Reply Topics",
+          "type": "array"
+        },
+        "reply_topics_min": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reply Topics Min"
+        },
+        "reply_topics_max": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reply Topics Max"
+        },
+        "reply_avoids_any": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Reply Avoids Any",
+          "type": "array"
         }
       },
       "required": [

@@ -157,6 +157,47 @@ def _nombra(palabras: tuple[str, ...], respuesta: str | None) -> list[str]:
     return [f"la respuesta no nombra ninguna de {list(palabras)}: {respuesta!r}"]
 
 
+def _temas_nombrados(esperado: UnderstandingExpectation, respuesta: str | None) -> list[str]:
+    """Cuantos de los temas del caso nombra la respuesta, contra el minimo y el maximo.
+
+    Un tema se nombra con alguna de las palabras de su grupo. Es lo que el juez por codigo puede
+    decir de «pide todo en un mensaje» (el chat) o «pide un solo dato» (la llamada): cuantos
+    temas aparecen, no que la redaccion sea buena. Dice cuales faltan o sobran.
+    """
+    if not esperado.reply_topics:
+        return []
+    texto = _plegar(respuesta or "")
+    nombrados = [
+        grupo
+        for grupo in esperado.reply_topics
+        if any(_plegar(palabra) in texto for palabra in grupo)
+    ]
+    fallos: list[str] = []
+    minimo = esperado.reply_topics_min
+    if minimo is not None and len(nombrados) < minimo:
+        faltan = [grupo[0] for grupo in esperado.reply_topics if grupo not in nombrados]
+        fallos.append(
+            f"la respuesta nombra {len(nombrados)} de los temas y se esperaban al menos {minimo}; "
+            f"no nombra {faltan}: {respuesta!r}"
+        )
+    maximo = esperado.reply_topics_max
+    if maximo is not None and len(nombrados) > maximo:
+        fallos.append(
+            f"la respuesta nombra {len(nombrados)} temas {[grupo[0] for grupo in nombrados]} "
+            f"y se esperaban como mucho {maximo}: {respuesta!r}"
+        )
+    return fallos
+
+
+def _sin_repetir(palabras: tuple[str, ...], respuesta: str | None) -> list[str]:
+    """Si la respuesta nombra alguna de las palabras que no puede nombrar (lo ya dado)."""
+    texto = _plegar(respuesta or "")
+    repetidas = [palabra for palabra in palabras if _plegar(palabra) in texto]
+    if not repetidas:
+        return []
+    return [f"la respuesta nombra {repetidas}, que no puede volver a pedir: {respuesta!r}"]
+
+
 def _sin_promesa_de_desenlace(vigilar: bool, respuesta: str | None) -> list[str]:
     """Si la respuesta afirma un desenlace del reporte que solo el codigo puede dar.
 
@@ -242,6 +283,8 @@ def evaluate(
     fallos.extend(_conductor(esperado, valores.get(triage_inputs.DRIVER_FIELD)))
     fallos.extend(_pregunta_por(esperado.reply_asks_for_any, respuesta.reply))
     fallos.extend(_nombra(esperado.reply_mentions_any, respuesta.reply))
+    fallos.extend(_temas_nombrados(esperado, respuesta.reply))
+    fallos.extend(_sin_repetir(esperado.reply_avoids_any, respuesta.reply))
     fallos.extend(_sin_promesa_de_desenlace(esperado.reply_claims_no_outcome, respuesta.reply))
     return fallos
 
@@ -268,6 +311,7 @@ def _peticion(
         today=esperado.today,
         record_type=tipo,
         quote_enabled=esperado.quote_enabled,
+        channel=esperado.channel,
         noted=tuple(
             NotedDetail(clave, esperado.captured_values.get(clave)) for clave in esperado.captured
         ),

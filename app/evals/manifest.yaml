@@ -15,7 +15,7 @@ datasets:
       Corpus de polizas de los tres tenants. Lo genera U7 `synthetic-data`.
 
   - dataset: DS-2
-    count: 162
+    count: 170
     reason: >
       Golden set de FNOL en texto. Los casos los escriben las unidades que miden
       cada conducta; U1 entrega el corredor, no los casos. El primer lote es de
@@ -183,6 +183,16 @@ datasets:
       `understand-what-is-a-deductible-not-rigid`), que miden que el modelo clasifique el tema
       rigido con el campo cerrado `rigid_topic` y **no se han corrido contra el modelo**. Con
       ellas el conjunto tiene **162 archivos, 81 por idioma**.
+
+      El 2026-11-03 entran cuatro parejas de comprension mas del plan 09 punto 2 (los datos del
+      accidente en un solo mensaje por el chat, de a uno por la llamada): `understand-claim-ask-all-at-once`
+      (reporte recien abierto, la respuesta nombra los cinco temas pendientes),
+      `understand-claim-ask-only-whats-missing` (solo faltan cuando y donde, y no vuelve a pedir lo dicho),
+      `understand-claim-answer-then-ask-all` (contesta una pregunta y pide todo en el mismo mensaje) y
+      `understand-claim-voice-one-at-a-time` (por voz, como mucho un tema). La sonda de comprension gana
+      `channel`, `reply_topics`, `reply_topics_min`, `reply_topics_max` y `reply_avoids_any`. Se
+      escribieron antes del cambio de la instruccion `conversation`. Con ellas el conjunto tiene
+      **170 archivos, 85 por idioma**.
     runs_per_delivery: true
 
   - dataset: DS-3

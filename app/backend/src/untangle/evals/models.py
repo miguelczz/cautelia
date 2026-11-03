@@ -221,6 +221,51 @@ class UnderstandingExpectation(Frozen):
     #: completo**: lo que le pasa a un reporte al terminar lo dice solo el codigo, cuando pasa.
     #: `False`: el caso no mide esto.
     reply_claims_no_outcome: bool = False
+    #: El canal del turno que se mide: `chat` o `voice`. Cambia lo que la instruccion
+    #: `conversation` le pide a la agente (en la llamada, un solo dato por turno).
+    channel: Literal["chat", "voice"] = "chat"
+    #: Los temas de una respuesta que pide datos: cada grupo es un tema y la respuesta lo
+    #: **nombra** si trae alguna de sus palabras (sin tildes ni mayusculas). Solo cuenta
+    #: cuantos temas nombra, no si lo pregunta bien; es lo unico que el juez por codigo puede
+    #: afirmar de un texto libre. Vacio: el caso no mide los temas.
+    reply_topics: tuple[tuple[str, ...], ...] = ()
+    #: Cuantos de `reply_topics` tiene que nombrar la respuesta, como minimo. Con tantos como
+    #: temas hay, los nombra todos: «pide todo lo que falta en un solo mensaje».
+    reply_topics_min: int | None = Field(default=None, ge=1)
+    #: Cuantos de `reply_topics` puede nombrar la respuesta, como maximo. Con 1, pide un solo
+    #: dato: «por voz una lista no se retiene».
+    reply_topics_max: int | None = Field(default=None, ge=1)
+    #: Palabras que la respuesta **no** puede nombrar: lo que ya se dio y no se vuelve a pedir.
+    reply_avoids_any: tuple[str, ...] = ()
+
+    @model_validator(mode="after")
+    def _los_limites_de_temas_se_leen_contra_sus_temas(self) -> Self:
+        limites = {
+            "reply_topics_min": self.reply_topics_min,
+            "reply_topics_max": self.reply_topics_max,
+        }
+        if any(limite is not None for limite in limites.values()) and not self.reply_topics:
+            msg = "'reply_topics_min' y 'reply_topics_max' se cuentan contra 'reply_topics', y el caso no declara ninguno"
+            raise ValueError(msg)
+        if self.reply_topics and all(limite is None for limite in limites.values()):
+            msg = "'reply_topics' sin 'reply_topics_min' ni 'reply_topics_max' no mide nada"
+            raise ValueError(msg)
+        if any(not grupo for grupo in self.reply_topics):
+            msg = "cada tema de 'reply_topics' trae al menos una palabra"
+            raise ValueError(msg)
+        total = len(self.reply_topics)
+        for nombre, limite in limites.items():
+            if limite is not None and limite > total:
+                msg = f"'{nombre}' ({limite}) pasa de los {total} temas de 'reply_topics'"
+                raise ValueError(msg)
+        if (
+            self.reply_topics_min is not None
+            and self.reply_topics_max is not None
+            and self.reply_topics_min > self.reply_topics_max
+        ):
+            msg = "'reply_topics_min' pasa de 'reply_topics_max'"
+            raise ValueError(msg)
+        return self
 
     @model_validator(mode="after")
     def _la_lectura_del_conductor_trae_sus_conductores(self) -> Self:

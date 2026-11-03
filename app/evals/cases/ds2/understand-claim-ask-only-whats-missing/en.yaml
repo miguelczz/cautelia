@@ -1,0 +1,51 @@
+# In chat, with most things already said, the agent asks only for what is still missing.
+#
+# Injuries, identity, description, car and other parties are already noted; only when and where are missing. The reply names
+# those two and does not ask again for injuries, name or policy.
+#
+# Message understanding (plan 09, item 2, 2026-11-03). See `es.yaml` for the full rationale -- same
+# criteria, same target, measured separately per language and never as a combined average (P12).
+# In chat the agent asks for **everything still missing in a single message**, in its own words, and
+# accepts the answers in one or several messages; every turn asks for what is **still** missing. On a
+# call it still asks one thing at a time. The model does it, not the code. The probe measures **how
+# many topics the reply names** (`reply_topics`, with `reply_topics_min` and `reply_topics_max`).
+# Written before the `conversation` instruction changed; fails until the instruction asks for it.
+# Run with `mise run evals:entender`, with the UNTANGLE_ANTHROPIC_API_KEY_EVALS key.
+# Expected verdict: `pass`.
+case_key: DS-2/en/understand-claim-ask-only-whats-missing
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  record_type: claim
+  captured:
+  - injuries
+  - identity_and_policy
+  - description
+  - vehicle_and_driver
+  - other_parties
+  last_agent_text: Thanks, I have the rest. I still need to know when and where it happened.
+  message: Okay, I told you what I know. What else do you need?
+  wants:
+  - continue
+  - other
+  absent_items:
+  - incident_datetime
+  - location
+  reply_topics:
+  - - when
+    - date
+  - - where
+    - location
+    - place
+  reply_topics_min: 2
+  reply_avoids_any:
+  - hurt
+  - injur
+  - policy
+  - name
+expected_verdicts:
+  understanding_claim_ask_only_whats_missing: pass

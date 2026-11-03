@@ -1,0 +1,53 @@
+# En el chat, si la persona pregunta algo y ademas falta todo, la agente contesta y pide lo que falta en el mismo mensaje.
+#
+# La respuesta nombra el deducible (contesta lo que preguntaron) y los cinco temas pendientes. El orden (contestar
+# primero) lo pide la instruccion pero el juez por codigo no lo mide.
+#
+# Comprension de un mensaje (plan 09, punto 2, 2026-11-03). Decision de Miguel a partir de la revision
+# de una persona externa: en el chat, la agente pide **todos los datos que faltan en un solo mensaje**,
+# con naturalidad y con sus palabras, y acepta las respuestas en uno o en varios mensajes; cada turno
+# pide lo que **todavia** falta. En la llamada sigue de a una pregunta, porque por voz una lista no se
+# retiene. Lo hace el modelo, no el codigo: el intento de armar la lista en el codigo se revirtio
+# (decision del 2026-10-12: la conversacion la lleva el modelo y el codigo solo valida). La sonda mide
+# **cuantos temas nombra la respuesta** (`reply_topics`, con `reply_topics_min` y `reply_topics_max`),
+# no que la redaccion sea buena.
+# Escrito antes del cambio de la instruccion `conversation`; falla hasta que la instruccion lo pida.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/understand-claim-answer-then-ask-all
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  record_type: claim
+  last_agent_text: ¿En qué te puedo ayudar?
+  message: Quiero reportar un choque. Por cierto, ¿qué es un deducible?
+  wants:
+  - report_accident
+  - general_question
+  - continue
+  asks_question: true
+  reply_mentions_any:
+  - deducible
+  reply_topics:
+  - - herid
+    - lastim
+    - lesion
+  - - nombre
+    - poliza
+  - - que paso
+    - como paso
+    - que ocurrio
+    - que sucedio
+    - cuentame
+  - - cuando
+    - fecha
+  - - donde
+    - lugar
+    - ubicacion
+  reply_topics_min: 5
+expected_verdicts:
+  understanding_claim_answer_then_ask_all: pass

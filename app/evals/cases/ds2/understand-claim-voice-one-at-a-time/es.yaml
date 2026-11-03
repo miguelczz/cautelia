@@ -1,0 +1,52 @@
+# En la llamada, con todo por pedir, la agente pide un solo dato.
+#
+# Los mismos datos pendientes que `understand-claim-ask-all-at-once`, pero por voz (`channel: voice`): la respuesta
+# nombra como mucho uno de los cinco temas. Es el contrapeso del caso del chat: una instruccion que pusiera la lista
+# tambien en la llamada lo rompe.
+#
+# Comprension de un mensaje (plan 09, punto 2, 2026-11-03). Decision de Miguel a partir de la revision
+# de una persona externa: en el chat, la agente pide **todos los datos que faltan en un solo mensaje**,
+# con naturalidad y con sus palabras, y acepta las respuestas en uno o en varios mensajes; cada turno
+# pide lo que **todavia** falta. En la llamada sigue de a una pregunta, porque por voz una lista no se
+# retiene. Lo hace el modelo, no el codigo: el intento de armar la lista en el codigo se revirtio
+# (decision del 2026-10-12: la conversacion la lleva el modelo y el codigo solo valida). La sonda mide
+# **cuantos temas nombra la respuesta** (`reply_topics`, con `reply_topics_min` y `reply_topics_max`),
+# no que la redaccion sea buena.
+# Escrito antes del cambio de la instruccion `conversation`; falla hasta que la instruccion lo pida.
+# Lo corre `mise run evals:entender`, con la clave UNTANGLE_ANTHROPIC_API_KEY_EVALS.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/understand-claim-voice-one-at-a-time
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  record_type: claim
+  channel: voice
+  last_agent_text: ¿En qué te puedo ayudar?
+  message: Quiero reportar un accidente de mi carro.
+  wants:
+  - report_accident
+  - continue
+  reply_topics:
+  - - herid
+    - lastim
+    - lesion
+  - - nombre
+    - poliza
+  - - que paso
+    - como paso
+    - que ocurrio
+    - que sucedio
+    - cuentame
+  - - cuando
+    - fecha
+  - - donde
+    - lugar
+    - ubicacion
+  reply_topics_min: 1
+  reply_topics_max: 1
+expected_verdicts:
+  understanding_claim_voice_one_at_a_time: pass

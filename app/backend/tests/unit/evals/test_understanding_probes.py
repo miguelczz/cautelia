@@ -313,7 +313,7 @@ def test_cada_caso_de_comprension_pide_la_clave_de_claude_para_evaluaciones() ->
 
     assert set(variables[EVALS_ANTHROPIC_API_KEY_VAR]) == {c.case_key for c in de_comprension}
     assert variables[EVALS_MODEL_API_KEY_VAR] == (otro.case_key,)
-    assert len(de_comprension) == 74
+    assert len(de_comprension) == 82
 
 
 # --- Quien conducia: el nombre completo se pregunta, se anota junto al carro y se puede leer ---
@@ -696,3 +696,153 @@ def test_el_detalle_de_la_promesa_nombra_la_oracion_tal_como_se_escribio() -> No
         "la respuesta da el reporte por hecho o dice que lo revisa un ajustador: "
         "'Ya quedó anotado tu reporte'"
     ]
+
+
+TEMAS = (
+    ("herid", "lastim"),
+    ("nombre", "póliza"),
+    ("qué pasó", "que paso"),
+    ("cuándo", "fecha"),
+    ("dónde", "lugar"),
+)
+
+
+def _con_temas(**cambios: object) -> UnderstandingExpectation:
+    return UnderstandingExpectation(
+        record_type="claim",
+        message="Quiero reportar un accidente de mi carro.",
+        wants=("report_accident", "continue"),
+        reply_topics=TEMAS,
+        **cambios,  # type: ignore[arg-type]
+    )
+
+
+@pytest.mark.parametrize(
+    ("respuesta", "pasa"),
+    [
+        (
+            "Cuéntame: ¿hubo heridos?, ¿tu nombre y póliza?, ¿qué pasó?, ¿cuándo y dónde?",
+            True,
+        ),
+        # Sin tildes ni mayusculas.
+        ("HERIDOS, NOMBRE, QUE PASO, FECHA, LUGAR", True),
+        # Falta el lugar.
+        ("¿Hubo heridos? ¿Tu nombre? ¿Qué pasó? ¿Cuándo?", False),
+        ("¿Cuándo y dónde pasó?", False),
+        ("", False),
+        (None, False),
+    ],
+)
+def test_la_respuesta_nombra_todos_los_temas_si_el_caso_lo_pide(
+    respuesta: str | None, pasa: bool
+) -> None:
+    esperado = _con_temas(reply_topics_min=5)
+
+    fallos = understanding_probes.evaluate(
+        esperado, UnderstandingResponse(wants=Want.CONTINUE, reply=respuesta), language="es"
+    )
+
+    assert (fallos == []) is pasa
+    if not pasa:
+        assert len(fallos) == 1
+        assert "se esperaban al menos 5" in fallos[0]
+
+
+def test_el_fallo_por_temas_dice_cuales_faltan() -> None:
+    fallos = understanding_probes.evaluate(
+        _con_temas(reply_topics_min=5),
+        UnderstandingResponse(wants=Want.CONTINUE, reply="¿Hubo heridos? ¿Qué pasó?"),
+        language="es",
+    )
+
+    assert "no nombra ['nombre', 'cuándo', 'dónde']" in fallos[0]
+
+
+@pytest.mark.parametrize(
+    ("respuesta", "pasa"),
+    [
+        ("¿Me dices dónde fue?", True),
+        ("Cuéntame, ¿hubo heridos?", True),
+        # Dos temas por voz: justo lo que el caso de la llamada vigila.
+        ("¿Hubo heridos y cuándo pasó?", False),
+        ("Hola, gracias por llamar.", False),
+    ],
+)
+def test_la_llamada_nombra_uno_solo(respuesta: str, pasa: bool) -> None:
+    esperado = _con_temas(channel="voice", reply_topics_min=1, reply_topics_max=1)
+
+    fallos = understanding_probes.evaluate(
+        esperado, UnderstandingResponse(wants=Want.CONTINUE, reply=respuesta), language="es"
+    )
+
+    assert (fallos == []) is pasa
+
+
+def test_el_maximo_dice_cuales_sobran() -> None:
+    fallos = understanding_probes.evaluate(
+        _con_temas(reply_topics_max=1),
+        UnderstandingResponse(wants=Want.CONTINUE, reply="¿Dónde y cuándo fue?"),
+        language="es",
+    )
+
+    assert fallos == [
+        "la respuesta nombra 2 temas ['cuándo', 'dónde'] y se esperaban como mucho 1: "
+        "'¿Dónde y cuándo fue?'"
+    ]
+
+
+def test_sin_temas_el_caso_no_mide_la_respuesta() -> None:
+    esperado = UnderstandingExpectation(message="hola", wants=("greeting",))
+
+    assert (
+        understanding_probes.evaluate(
+            esperado, UnderstandingResponse(wants=Want.GREETING, reply="Hola"), language="es"
+        )
+        == []
+    )
+
+
+@pytest.mark.parametrize(
+    ("respuesta", "pasa"),
+    [
+        ("¿Me dices cuándo y dónde pasó?", True),
+        ("Gracias. ¿Y cuándo y dónde? Con tu póliza ya está.", False),
+        ("¿Cuándo, dónde y si hubo heridos?", False),
+    ],
+)
+def test_la_respuesta_no_vuelve_a_pedir_lo_ya_dado(respuesta: str, pasa: bool) -> None:
+    esperado = UnderstandingExpectation(
+        message="Listo, ¿qué más necesitas?",
+        wants=("continue",),
+        reply_avoids_any=("herid", "póliza"),
+    )
+
+    fallos = understanding_probes.evaluate(
+        esperado, UnderstandingResponse(wants=Want.CONTINUE, reply=respuesta), language="es"
+    )
+
+    assert (fallos == []) is pasa
+
+
+def test_el_canal_del_caso_llega_a_la_peticion() -> None:
+    esperado = _con_temas(channel="voice", reply_topics_max=1)
+
+    peticion = understanding_probes._peticion(esperado, tenant="stonecroft", language="es")  # type: ignore[arg-type]
+
+    assert peticion.channel == "voice"
+    assert "incident_datetime" in peticion.missing
+
+
+@pytest.mark.parametrize(
+    "cambios",
+    [
+        {"reply_topics_min": 1},
+        {"reply_topics": (("a",),)},
+        {"reply_topics": (("a",), ()), "reply_topics_min": 1},
+        {"reply_topics": (("a",),), "reply_topics_min": 2},
+        {"reply_topics": (("a",), ("b",)), "reply_topics_min": 2, "reply_topics_max": 1},
+    ],
+)
+def test_una_expectativa_de_temas_a_medias_no_se_acepta(cambios: dict[str, object]) -> None:
+    with pytest.raises(ValueError, match=r"reply_topics"):
+        UnderstandingExpectation(message="hola", wants=("greeting",), **cambios)  # type: ignore[arg-type]

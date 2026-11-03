@@ -1,0 +1,48 @@
+# In chat, if the person asks something and everything is still missing, the agent answers and asks for the rest in the same message.
+#
+# The reply names the deductible (answers what was asked) and the five pending topics. The order (answer first) is
+# asked by the instruction but the code judge does not measure it.
+#
+# Message understanding (plan 09, item 2, 2026-11-03). See `es.yaml` for the full rationale -- same
+# criteria, same target, measured separately per language and never as a combined average (P12).
+# In chat the agent asks for **everything still missing in a single message**, in its own words, and
+# accepts the answers in one or several messages; every turn asks for what is **still** missing. On a
+# call it still asks one thing at a time. The model does it, not the code. The probe measures **how
+# many topics the reply names** (`reply_topics`, with `reply_topics_min` and `reply_topics_max`).
+# Written before the `conversation` instruction changed; fails until the instruction asks for it.
+# Run with `mise run evals:entender`, with the UNTANGLE_ANTHROPIC_API_KEY_EVALS key.
+# Expected verdict: `pass`.
+case_key: DS-2/en/understand-claim-answer-then-ask-all
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  record_type: claim
+  last_agent_text: How can I help you?
+  message: I want to report a crash. By the way, what is a deductible?
+  wants:
+  - report_accident
+  - general_question
+  - continue
+  asks_question: true
+  reply_mentions_any:
+  - deductible
+  reply_topics:
+  - - hurt
+    - injur
+  - - name
+    - policy
+  - - what happened
+    - how it happened
+    - tell me about
+  - - when
+    - date
+  - - where
+    - location
+    - place
+  reply_topics_min: 5
+expected_verdicts:
+  understanding_claim_answer_then_ask_all: pass

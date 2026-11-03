@@ -1,0 +1,46 @@
+# On a call, with everything still to ask, the agent asks for a single thing.
+#
+# The same pending details as `understand-claim-ask-all-at-once`, but by voice (`channel: voice`): the reply names at
+# most one of the five topics. It is the counterweight of the chat case.
+#
+# Message understanding (plan 09, item 2, 2026-11-03). See `es.yaml` for the full rationale -- same
+# criteria, same target, measured separately per language and never as a combined average (P12).
+# In chat the agent asks for **everything still missing in a single message**, in its own words, and
+# accepts the answers in one or several messages; every turn asks for what is **still** missing. On a
+# call it still asks one thing at a time. The model does it, not the code. The probe measures **how
+# many topics the reply names** (`reply_topics`, with `reply_topics_min` and `reply_topics_max`).
+# Written before the `conversation` instruction changed; fails until the instruction asks for it.
+# Run with `mise run evals:entender`, with the UNTANGLE_ANTHROPIC_API_KEY_EVALS key.
+# Expected verdict: `pass`.
+case_key: DS-2/en/understand-claim-voice-one-at-a-time
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  record_type: claim
+  channel: voice
+  last_agent_text: How can I help you?
+  message: I want to report an accident with my car.
+  wants:
+  - report_accident
+  - continue
+  reply_topics:
+  - - hurt
+    - injur
+  - - name
+    - policy
+  - - what happened
+    - how it happened
+    - tell me about
+  - - when
+    - date
+  - - where
+    - location
+    - place
+  reply_topics_min: 1
+  reply_topics_max: 1
+expected_verdicts:
+  understanding_claim_voice_one_at_a_time: pass

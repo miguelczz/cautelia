@@ -1,0 +1,47 @@
+# In chat, with the report just opened, the agent asks for everything missing in a single message.
+#
+# Nothing is noted yet: injuries, name and policy, what happened, when and where are missing. The reply names all five.
+#
+# Message understanding (plan 09, item 2, 2026-11-03). See `es.yaml` for the full rationale -- same
+# criteria, same target, measured separately per language and never as a combined average (P12).
+# In chat the agent asks for **everything still missing in a single message**, in its own words, and
+# accepts the answers in one or several messages; every turn asks for what is **still** missing. On a
+# call it still asks one thing at a time. The model does it, not the code. The probe measures **how
+# many topics the reply names** (`reply_topics`, with `reply_topics_min` and `reply_topics_max`).
+# Written before the `conversation` instruction changed; fails until the instruction asks for it.
+# Run with `mise run evals:entender`, with the UNTANGLE_ANTHROPIC_API_KEY_EVALS key.
+# Expected verdict: `pass`.
+case_key: DS-2/en/understand-claim-ask-all-at-once
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: true
+axes:
+- understanding
+understanding:
+  record_type: claim
+  last_agent_text: How can I help you?
+  message: I want to report an accident with my car.
+  wants:
+  - report_accident
+  - continue
+  absent_items:
+  - description
+  - incident_datetime
+  - location
+  reply_topics:
+  - - hurt
+    - injur
+  - - name
+    - policy
+  - - what happened
+    - how it happened
+    - tell me about
+  - - when
+    - date
+  - - where
+    - location
+    - place
+  reply_topics_min: 5
+expected_verdicts:
+  understanding_claim_ask_all_at_once: pass

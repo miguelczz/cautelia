@@ -1,0 +1,39 @@
+# Los datos del accidente, en un solo mensaje por el chat: la primera respuesta (plan 09, punto 2).
+#
+# Decisión de Miguel del 2026-11-02, a partir de la revisión de una persona externa: en el chat,
+# al empezar el reporte, la agente pide **en un solo mensaje** todo lo que falta --heridos,
+# nombre y póliza, qué pasó, cuándo y dónde, y, como opcionales, el carro y las otras personas--,
+# como una lista corta, y acepta las respuestas en uno o en varios mensajes. Esa lista es **solo la
+# primera respuesta**, que siempre dice el código: sale de los bloques a los que todavía les falta
+# algo (`blocks.missing_blocks`), ya leído lo que trajo el primer mensaje. De ahí en adelante manda
+# el modelo, que recibe todo lo pendiente y lo pide igual (casos `understand-claim-*`). En la
+# llamada sigue una pregunta a la vez: `intake-claim-voice-one-at-a-time`.
+#
+# Escrito antes del cambio del nodo `intake`: falla hasta que la primera respuesta sea la lista.
+#
+# Corre el nodo `intake` de verdad, sin modelo y sin base: lo entendido de cada mensaje se
+# entrega ya hecho (`understood`). Tres turnos, de los que el guion pone las respuestas:
+#   1. Un primer mensaje que solo anuncia el reporte, sin datos: sale la lista completa, con los
+#      cuatro bloques obligatorios y los dos opcionales.
+#   2. Un primer mensaje que ya trae datos (`description` y `location`): sale una lista **solo con
+#      lo que falta** (heridos, identidad y la hora), sin volver a pedir lo dicho y sin los
+#      opcionales.
+#   3. Después de esa primera respuesta, con o sin avance: sale **una sola pregunta**, nunca la
+#      lista otra vez. Quien pide lo que falta desde ahí es el modelo.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/intake-claim-all-at-once
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - intake
+  - chat-channel
+  - grouped-ask
+script:
+  - field_key: description
+    text: "Me chocaron por detrás en un semáforo y no hubo más daños que el bómper."
+  - field_key: location
+    text: "En la carrera 43 con calle 10, en Medellín."
+expected_verdicts:
+  intake_claim_all_at_once: pass

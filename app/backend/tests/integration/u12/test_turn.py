@@ -1907,7 +1907,9 @@ async def test_el_primer_mensaje_que_abrio_el_caso_dice_la_frase_del_catalogo(
 
     [final] = [e for e in eventos if isinstance(e, FinalText)]
     assert "Gracias por contármelo." not in final.text
-    assert "?" in final.text, "la pregunta que toca la hace el codigo"
+    # Plan 09, punto 2: la respuesta al mensaje que abre el reporte es la lista de lo que falta,
+    # y la arma el codigo (una linea por bloque), no el modelo.
+    assert final.text.count("\n- ") >= 4, "la lista de lo que falta la arma el codigo"
     assert entendedor.peticiones == [], "ya estaba entendido: no se vuelve a llamar"
     assert _lo_que_se_dijo(rastro) == [("chat.reply_fallback", "opening_turn")]
 

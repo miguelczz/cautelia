@@ -1564,6 +1564,7 @@ async def _capturar(  # noqa: PLR0913 -- lo que el turno ya resolvio arriba, por
         update={
             "spoken": turn.channel == "voice",
             "previous_block": _bloque_anterior(previo),
+            "opening": turn.understood_without_case,
             "policy_repeat_asked": _poliza_repetida(previo),
             "policy_confirm_reasked": _confirmacion_repetida(previo),
         }

@@ -1,0 +1,18 @@
+# On a call, the accident details are still asked one at a time (plan 09, item 2, 2026-11-02),
+# English turn. See `es.yaml` for the full rationale -- same criteria, same target, measured
+# separately per language and never as a combined average (P12).
+# Expected verdict: `pass`.
+case_key: DS-2/en/intake-claim-voice-one-at-a-time
+dataset: DS-2
+language: en
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - intake
+  - voice-channel
+  - grouped-ask
+script:
+  - field_key: description
+    text: "I want to report a crash."
+expected_verdicts:
+  intake_claim_voice_one_at_a_time: pass

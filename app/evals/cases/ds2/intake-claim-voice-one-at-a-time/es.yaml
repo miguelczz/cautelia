@@ -1,0 +1,22 @@
+# En la llamada, los datos del accidente se siguen pidiendo de a uno (plan 09, punto 2, 2026-11-02).
+#
+# Decisión de Miguel del 2026-11-02: el chat pide todo en un mensaje (`intake-claim-all-at-once`),
+# pero por voz una lista larga no se retiene de oído, así que la llamada sigue con una pregunta a la
+# vez. Corre el nodo `intake` de verdad con `spoken: true`, sin modelo y sin base: el primer
+# turno de un reporte sin datos tiene que ser **una sola pregunta del catálogo** y no una lista.
+# Es el contrapeso del caso del chat: un cambio que pusiera la lista también en la voz lo rompe.
+# Veredicto esperado: `pass`.
+case_key: DS-2/es/intake-claim-voice-one-at-a-time
+dataset: DS-2
+language: es
+tenant: stonecroft
+requires_provider_key: false
+axes:
+  - intake
+  - voice-channel
+  - grouped-ask
+script:
+  - field_key: description
+    text: "Quiero reportar un choque."
+expected_verdicts:
+  intake_claim_voice_one_at_a_time: pass

@@ -15,7 +15,7 @@ datasets:
       Corpus de polizas de los tres tenants. Lo genera U7 `synthetic-data`.
 
   - dataset: DS-2
-    count: 170
+    count: 174
     reason: >
       Golden set de FNOL en texto. Los casos los escriben las unidades que miden
       cada conducta; U1 entrega el corredor, no los casos. El primer lote es de
@@ -191,8 +191,15 @@ datasets:
       `understand-claim-answer-then-ask-all` (contesta una pregunta y pide todo en el mismo mensaje) y
       `understand-claim-voice-one-at-a-time` (por voz, como mucho un tema). La sonda de comprension gana
       `channel`, `reply_topics`, `reply_topics_min`, `reply_topics_max` y `reply_avoids_any`. Se
-      escribieron antes del cambio de la instruccion `conversation`. Con ellas el conjunto tiene
-      **170 archivos, 85 por idioma**.
+      escribieron antes del cambio de la instruccion `conversation`.
+
+      Y dos parejas mas de captura, del mismo punto (`intake-claim-all-at-once` e
+      `intake-claim-voice-one-at-a-time`): la **primera respuesta** del reporte por el chat es la
+      lista de todo lo que falta, que arma el codigo con los bloques que `blocks.missing_blocks`
+      dice que faltan (solo lo que falta si el primer mensaje ya traia datos); despues manda el
+      modelo, y por voz sigue de a una pregunta. Corren el nodo `intake` de verdad con lo entendido
+      ya entregado, sin modelo y sin base, y se escribieron antes del cambio del nodo. Con todas el
+      conjunto tiene **174 archivos, 87 por idioma**.
     runs_per_delivery: true
 
   - dataset: DS-3

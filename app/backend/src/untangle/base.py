@@ -104,6 +104,12 @@ class Use(StrEnum):
     #: corrida no gasta el saldo que atiende a los visitantes. Sin uso propio su
     #: gasto quedaba marcado como no facturable y no contaba contra el techo.
     EVALS_CHAT = "evals_chat"
+    #: El ajustador de IA (plan 09, fase 5, 2026-11-03): decide los casos derivados y
+    #: explica su decision con fuentes. Va aparte de `CHAT_REPLY` --misma cuenta de
+    #: Anthropic, otra clave-- porque su gasto es variable (busquedas web a un centavo
+    #: cada una) y una cuota o una clave agotada aqui no puede apagar el chat, ni al
+    #: reves. Es facturable: cuenta contra el techo de la ventana.
+    ADJUSTER = "adjuster"
 
 
 class ProviderName(StrEnum):
@@ -142,6 +148,9 @@ class UnitKind(StrEnum):
     EMBEDDING_TOKENS = "embedding_tokens"
     AUDIO_SECONDS = "audio_seconds"
     CHARACTERS = "characters"
+    #: Una busqueda web hecha por el servidor de Anthropic (herramienta
+    #: `web_search`), que se cobra por busqueda ademas de los tokens que consume.
+    WEB_SEARCHES = "web_searches"
 
 
 class SpendSource(StrEnum):

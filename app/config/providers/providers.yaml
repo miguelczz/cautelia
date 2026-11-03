@@ -212,6 +212,22 @@ uses:
     billable: true
     connect_timeout_ms: 2000
     read_timeout_ms: 3500
+  # El ajustador de IA (plan 09, fase 5, 2026-11-03): decide los casos derivados con dos
+  # llamadas --una de investigacion con busqueda web y una de decision-- y explica con
+  # fuentes. El mismo modelo y el mismo credito prepagado que el chat, con su propia clave
+  # para que una cuota o una clave agotada en uno no apague al otro, y facturable para que
+  # su gasto --tokens y busquedas a un centavo-- cuente contra el techo.
+  #
+  # Lectura de 60 s: corre en el fondo y nadie espera mirando la llamada; la investigacion
+  # con hasta tres busquedas tarda de 10 a 30 s. Lo que acota al caso no es este plazo sino
+  # el tope diario de casos de `app/config/adjuster/adjuster.yaml`.
+  - use: adjuster
+    provider: anthropic
+    model: claude-haiku-5-5
+    plan: paid
+    billable: true
+    connect_timeout_ms: 2000
+    read_timeout_ms: 60000
 
 # --- El cortacircuitos --------------------------------------------------------
 # Uno por pareja (proveedor, uso), dentro del adaptador. Los numeros son los del

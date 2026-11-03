@@ -137,12 +137,16 @@ class BudgetLane(StrEnum):
 
 
 class QuotaScope(StrEnum):
-    """Los cuatro alcances de cuota, y solo cuatro (BR5.1)."""
+    """Los alcances de cuota (BR5.1): los cuatro de la demo y el tope diario del ajustador."""
 
     CHAT_MESSAGES_SESSION = "chat_messages_session"
     CHAT_MESSAGES_DAY = "chat_messages_day"
     VOICE_CALLS_VISITOR_DAY = "voice_calls_visitor_day"
     VOICE_CALLS_SITE_DAY = "voice_calls_site_day"
+    #: Cuantos casos puede decidir hoy el ajustador de IA en toda la demo (plan 09, fase 5,
+    #: 2026-11-03). Es del sitio, como el de la voz, pero su limite lo declara
+    #: `app/config/adjuster/adjuster.yaml` y llega por argumento: no se deriva del presupuesto.
+    ADJUSTER_CASES_SITE_DAY = "adjuster_cases_site_day"
 
 
 #: Los alcances cuyo periodo es un dia natural. Se declara como conjunto y no
@@ -153,7 +157,15 @@ DAILY_SCOPES: frozenset[QuotaScope] = frozenset(
         QuotaScope.CHAT_MESSAGES_DAY,
         QuotaScope.VOICE_CALLS_VISITOR_DAY,
         QuotaScope.VOICE_CALLS_SITE_DAY,
+        QuotaScope.ADJUSTER_CASES_SITE_DAY,
     }
+)
+
+#: Los alcances que son del sitio entero y llevan el sujeto literal `site`. Una tabla y no
+#: una comparacion suelta, para que un tercer cupo del sitio obligue a decidirlo aqui: el
+#: validador del contador, la restriccion de la base y el reinicio nocturno la comparten.
+SITE_SCOPES: frozenset[QuotaScope] = frozenset(
+    {QuotaScope.VOICE_CALLS_SITE_DAY, QuotaScope.ADJUSTER_CASES_SITE_DAY}
 )
 
 
@@ -756,7 +768,7 @@ class QuotaCounter(Frozen):
 
     @model_validator(mode="after")
     def _el_cupo_del_sitio_no_es_de_nadie(self) -> Self:
-        es_del_sitio = self.scope is QuotaScope.VOICE_CALLS_SITE_DAY
+        es_del_sitio = self.scope in SITE_SCOPES
         if es_del_sitio and self.subject_key != SITE_SUBJECT:
             msg = (
                 f"el cupo del sitio lleva el sujeto literal '{SITE_SUBJECT}' y llego "

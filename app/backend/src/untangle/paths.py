@@ -59,6 +59,11 @@ def config_dir() -> Path:
     return app_dir() / "config"
 
 
+def adjuster_dir() -> Path:
+    """La configuracion del ajustador de IA: busquedas, dominios, tope diario e intentos."""
+    return config_dir() / "adjuster"
+
+
 def tenants_dir() -> Path:
     """Una carpeta por aseguradora (C-25).
 

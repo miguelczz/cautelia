@@ -222,6 +222,10 @@ class ActorType(StrEnum):
     AGENT = "agent"
     STAFF = "staff"
     SYSTEM = "system"
+    #: El ajustador de IA (plan 09, fase 5, 2026-11-03): decide los casos derivados y explica
+    #: su decision. Va aparte de `STAFF` --que apunta a una persona con credencial-- y de
+    #: `INSURED` para que «quien decidio» diga la verdad.
+    ADJUSTER_AI = "adjuster_ai"
 
 
 class ChangeKind(StrEnum):

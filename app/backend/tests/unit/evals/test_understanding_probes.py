@@ -827,7 +827,7 @@ def test_la_respuesta_no_vuelve_a_pedir_lo_ya_dado(respuesta: str, pasa: bool) -
 def test_el_canal_del_caso_llega_a_la_peticion() -> None:
     esperado = _con_temas(channel="voice", reply_topics_max=1)
 
-    peticion = understanding_probes._peticion(esperado, tenant="stonecroft", language="es")  # type: ignore[arg-type]
+    peticion = understanding_probes._peticion(esperado, tenant="stonecroft", language="es")
 
     assert peticion.channel == "voice"
     assert "incident_datetime" in peticion.missing

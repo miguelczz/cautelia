@@ -112,7 +112,8 @@
         "output_tokens",
         "embedding_tokens",
         "audio_seconds",
-        "characters"
+        "characters",
+        "web_searches"
       ],
       "title": "UnitKind",
       "type": "string"
@@ -126,7 +127,8 @@
         "operations",
         "corpus",
         "chat_reply",
-        "evals_chat"
+        "evals_chat",
+        "adjuster"
       ],
       "title": "Use",
       "type": "string"

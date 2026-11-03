@@ -14,6 +14,7 @@ from datetime import UTC, date, datetime
 from pathlib import Path
 
 from untangle import paths
+from untangle.adjuster import config as adjuster_config
 from untangle.base import UnitKind, Use
 from untangle.compliance.controls import patterns as compliance_patterns
 from untangle.compliance.redaction.recognizers import loading as recognizer_loading
@@ -87,9 +88,19 @@ def run_all(root: Path | None = None) -> list[str]:
     problemas.extend(_revisar_reconocedores())
     problemas.extend(revisar_patrones_de_cumplimiento(base / "app" / "config" / "compliance"))
     problemas.extend(revisar_proveedores(base / "app" / "config" / "providers"))
+    problemas.extend(revisar_ajustador(base / "app" / "config" / "adjuster"))
     problemas.extend(revisar_corpus(base))
 
     return problemas
+
+
+def revisar_ajustador(folder: Path) -> list[str]:
+    """La configuracion del ajustador de IA contra su modelo: el fallo nombra archivo y clave."""
+    try:
+        adjuster_config.load(folder / adjuster_config.CONFIG_FILE)
+    except adjuster_config.AdjusterConfigError as error:
+        return [str(error)]
+    return []
 
 
 def revisar_corpus(base: Path) -> list[str]:

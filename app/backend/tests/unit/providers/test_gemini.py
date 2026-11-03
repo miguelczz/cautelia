@@ -163,6 +163,13 @@ uses:
     billable: true
     connect_timeout_ms: 2000
     read_timeout_ms: 3000
+  - use: adjuster
+    provider: anthropic
+    model: claude-haiku-5-5
+    plan: paid
+    billable: true
+    connect_timeout_ms: 2000
+    read_timeout_ms: 3000
 circuit_breaker:
   failure_threshold: 5
   open_seconds: 30

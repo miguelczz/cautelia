@@ -18,6 +18,7 @@ from typing import Any
 from pydantic import BaseModel
 
 from untangle import paths
+from untangle.adjuster.config import AdjusterConfig
 from untangle.compliance.controls.patterns import PatternSet
 from untangle.compliance.redaction.recognizers.models import RecognizerSet
 from untangle.copy_catalog.keys_module import (
@@ -69,6 +70,9 @@ ESQUEMAS: tuple[tuple[str, type[BaseModel]], ...] = (
     # cambian sin que se toque nada de lo demas.
     ("providers.schema.json", ProvidersConfig),
     ("prices.schema.json", PricesConfig),
+    # La configuracion del ajustador de IA (fase 5 del plan 09): busquedas, dominios, tope
+    # diario e intentos. Un archivo, un esquema.
+    ("adjuster.schema.json", AdjusterConfig),
     # El corpus y su manifiesto (U7, C-26). Un esquema por **archivo** que existe,
     # no por modelo: la persona ficticia, el vehiculo y la clausula aparecen dentro
     # del esquema del archivo que los contiene. `manifest.schema.json` es el

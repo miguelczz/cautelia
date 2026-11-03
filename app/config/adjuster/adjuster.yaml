@@ -1,0 +1,40 @@
+# El ajustador de IA (plan 09, fase 5, 2026-11-03): lo que se decide aqui es cuanto puede
+# buscar, donde, cuantos casos por dia y cuantas veces reintenta.
+#
+# El modelo, la clave, el plan y los tiempos del ajustador viven en `providers/providers.yaml`
+# (uso `adjuster`) y su precio en `providers/prices.yaml`: este archivo no los repite, porque
+# una cifra escrita en dos sitios acaba diciendo cosas distintas.
+config_version: 1
+
+# Tres busquedas como mucho por caso. La busqueda web se cobra a un centavo cada una (mas los
+# tokens de lo que trae), asi que este numero es, con el tope diario, lo que acota el gasto
+# variable del ajustador.
+max_searches: 3
+
+# Los unicos sitios donde puede buscar. Dominios sin esquema ni ruta; cubren sus subdominios.
+#
+# - Guia de Valores de Fasecolda: el valor de referencia del vehiculo.
+# - Avisos de venta de carros usados en Colombia: el contraste con el mercado.
+#
+# Ampliar esta lista es abrir la busqueda a otro sitio, y se decide aqui, en un cambio de
+# codigo que queda en el historial.
+allowed_domains:
+  - fasecolda.com
+  - guiadevalores.fasecolda.com
+  - tucarro.com.co
+  - carroya.com
+  - mercadolibre.com.co
+
+# Cuantos casos puede decidir el ajustador hoy en toda la demo publica. Se cuenta en el cupo
+# diario que ya protege el chat y la voz, y a medianoche de `quota_timezone` se abre de nuevo.
+# Alcanzado, el caso espera y lo recoge el reintento al dia siguiente.
+daily_case_cap: 20
+
+# Cuantas veces intenta decidir un caso antes de dejarlo en `failed`. Un fallo del modelo, de
+# la busqueda o de una cita nunca inventa una decision: el caso sigue en revision.
+attempts: 3
+
+# El rango, en pesos colombianos, dentro del que un valor de referencia es plausible. Fuera
+# de el se descarta y la explicacion dice que no se pudo verificar el valor: una busqueda puede
+# traer un numero equivocado, y un precio de repuesto o de otra moneda no es el del vehiculo.
+vehicle_value_range_cop: [8000000, 800000000]

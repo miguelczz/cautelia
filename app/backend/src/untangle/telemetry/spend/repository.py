@@ -370,6 +370,11 @@ GASTO_POR_MES = """
 #: del chat, y sin esta regla el costo de una llamada apareceria repartido en el
 #: del chat. Es la unica consulta que decide la actividad: los totales por
 #: actividad salen de sumar estas filas, asi que no hay dos reglas que discrepen.
+#:
+#: **El ajustador de IA (`adjuster`, 2026-11-03) cae en `operations`**, y se nombra aunque el
+#: `ELSE` ya lo recogeria: ninguna de las otras cuatro actividades lo describe --no es el chat,
+#: ni una llamada, ni una prueba, ni la lectura de polizas-- y una actividad propia pide su
+#: etiqueta en el panel y en el catalogo, que es de la tanda de interfaz.
 GASTO_POR_DIA_Y_ACTIVIDAD = """
     SELECT (occurred_at AT TIME ZONE 'UTC')::date AS day,
            CASE
@@ -377,6 +382,7 @@ GASTO_POR_DIA_Y_ACTIVIDAD = """
              WHEN use IN ('chat', 'chat_reply') THEN 'chat'
              WHEN use IN ('evals', 'evals_chat') THEN 'quality_tests'
              WHEN use = 'corpus' THEN 'policy_reading'
+             WHEN use = 'adjuster' THEN 'operations'
              ELSE 'operations'
            END AS activity,
            COALESCE(SUM(cost_usd) FILTER (WHERE cost_status = 'measured'), 0) AS measured_usd,
@@ -453,6 +459,7 @@ SIN_PRECIO_POR_ACTIVIDAD = """
              WHEN use IN ('chat', 'chat_reply') THEN 'chat'
              WHEN use IN ('evals', 'evals_chat') THEN 'quality_tests'
              WHEN use = 'corpus' THEN 'policy_reading'
+             WHEN use = 'adjuster' THEN 'operations'
              ELSE 'operations'
            END AS activity,
            COALESCE(SUM(units) FILTER (

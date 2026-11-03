@@ -30,6 +30,7 @@ layers =
     untangle.workspace : untangle.policy_mcp
     untangle.demo_operations
     untangle.evals
+    untangle.adjuster
     untangle.inbox
     untangle.chat : untangle.voice
     untangle.orchestration
@@ -62,6 +63,22 @@ protected_modules =
     untangle.providers.adapters
 allowed_importers =
     untangle.server
+unmatched_ignore_imports_alerting = none
+
+; --- El ajustador de IA solo lo importa la raiz de composicion (fase 5 del plan 09) ---
+; `untangle.adjuster` decide los casos derivados y gasta (modelo y busqueda web). Lo enchufa
+; `untangle.server`, que le pasa los puertos que construyo con el adaptador; ningun canal, ni el
+; grafo, ni la bandeja lo conocen --`orchestration` dispara por un puerto propio y no sabe que
+; existe--. `untangle.workspace` es la segunda puerta, y solo para leer el modelo de su
+; configuracion al generar su JSON Schema y al comprobarlo (`contracts:gen`, `schema:check`).
+[importlinter:contract:ajustador-solo-desde-la-raiz]
+name = Solo la raiz de composicion y el espacio de trabajo importan el ajustador de IA
+type = protected
+protected_modules =
+    untangle.adjuster
+allowed_importers =
+    untangle.server
+    untangle.workspace
 unmatched_ignore_imports_alerting = none
 
 ; --- El codigo de produccion no importa el corredor de evaluaciones -----------
@@ -120,6 +137,7 @@ source_modules =
     untangle.chat
     untangle.voice
     untangle.inbox
+    untangle.adjuster
     untangle.orchestration
     untangle.case_record
     untangle.policy_rag
@@ -156,6 +174,7 @@ forbidden_modules =
     untangle.chat
     untangle.voice
     untangle.inbox
+    untangle.adjuster
     untangle.orchestration
     untangle.providers
     untangle.rules
@@ -211,6 +230,7 @@ forbidden_modules =
 name = Capacidades y plataforma no importan el framework web
 type = forbidden
 source_modules =
+    untangle.adjuster
     untangle.orchestration
     untangle.case_record
     untangle.policy_rag
@@ -253,6 +273,7 @@ source_modules =
     untangle.chat
     untangle.voice
     untangle.inbox
+    untangle.adjuster
     untangle.orchestration
     untangle.case_record
     untangle.policy_rag
@@ -350,6 +371,7 @@ source_modules =
     untangle.chat
     untangle.voice
     untangle.inbox
+    untangle.adjuster
     untangle.orchestration
     untangle.case_record
     untangle.policy_rag
@@ -424,6 +446,7 @@ source_modules =
     untangle.chat
     untangle.voice
     untangle.inbox
+    untangle.adjuster
     untangle.orchestration
     untangle.case_record
     untangle.policy_rag
@@ -546,6 +569,7 @@ source_modules =
     untangle.chat
     untangle.voice
     untangle.inbox
+    untangle.adjuster
     untangle.case_record
     untangle.policy_rag
     untangle.rules
@@ -723,6 +747,7 @@ source_modules =
     untangle.chat
     untangle.voice
     untangle.inbox
+    untangle.adjuster
     untangle.orchestration
     untangle.case_record
     untangle.policy_rag
@@ -953,6 +978,7 @@ forbidden_modules =
     untangle.demo_operations
     untangle.evals
     untangle.inbox
+    untangle.adjuster
     untangle.chat
     untangle.voice
     untangle.orchestration

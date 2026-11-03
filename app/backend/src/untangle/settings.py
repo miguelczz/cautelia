@@ -49,6 +49,11 @@ CHAT_REPLY_API_KEY_VAR = "UNTANGLE_ANTHROPIC_API_KEY_CHAT"
 #: atiende a los visitantes, ni una clave filtrada en una corrida lo agota.
 EVALS_ANTHROPIC_API_KEY_VAR = "UNTANGLE_ANTHROPIC_API_KEY_EVALS"
 
+#: La clave de Anthropic del ajustador de IA, uso `adjuster` (2026-11-03). Propia, de la
+#: misma cuenta que las dos de arriba: su gasto es variable --busquedas web a un centavo
+#: cada una-- y una clave o una cuota agotada aqui no puede apagar el chat, ni al reves.
+ADJUSTER_ANTHROPIC_API_KEY_VAR = "UNTANGLE_ANTHROPIC_API_KEY_ADJUSTER"
+
 #: Las **dos** claves de los proveedores de voz, que anade U15. Son del **uso
 #: `voice`** y de nadie mas: la fabrica construye con ellas los adaptadores de
 #: voz y nunca con la clave de otro uso (BR1.3, SEC-U15.2). Son dos y no una
@@ -125,6 +130,10 @@ class Settings(BaseSettings):
     #: La clave de Anthropic de las evaluaciones de la comprension (2026-10-07).
     #: Opcional: sin ella esos casos quedan no medidos con su causa.
     anthropic_api_key_evals: str | None = None
+
+    #: La clave de Anthropic del ajustador de IA (2026-11-03). Opcional: sin ella los
+    #: casos derivados esperan a una persona, como antes de la fase 5.
+    anthropic_api_key_adjuster: str | None = None
 
     #: Las dos claves de los proveedores de voz del uso `voice` (U15). Opcionales
     #: por la misma razon que las de modelo: el camino del clon al reporte no

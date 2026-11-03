@@ -50,7 +50,7 @@ from dataclasses import dataclass
 from datetime import datetime
 
 from untangle import observability
-from untangle.telemetry.spend.models import QuotaScope
+from untangle.telemetry.spend.models import SITE_SCOPES, QuotaScope
 from untangle.tenancy import session
 from untangle.tenancy.models import PurgeResult
 
@@ -59,7 +59,7 @@ from untangle.tenancy.models import PurgeResult
 #: aqui solo, mientras que una lista suelta se olvidaria y sus filas
 #: sobrevivirian a la noche sin que nada lo dijera.
 ALCANCES_DE_VISITANTE: tuple[str, ...] = tuple(
-    alcance.value for alcance in QuotaScope if alcance is not QuotaScope.VOICE_CALLS_SITE_DAY
+    alcance.value for alcance in QuotaScope if alcance not in SITE_SCOPES
 )
 
 BORRAR_CONTADORES = """
@@ -86,11 +86,11 @@ CONTAR_CIERRES = """
     WHERE decided_at < :older_than
 """
 
-#: Lo que se conserva a proposito, y que viaja en `kept`: el contador del sitio y
-#: las filas del libro mayor. Se cuenta en vez de callarse porque un purgador que
+#: Lo que se conserva a proposito, y que viaja en `kept`: los contadores del sitio
+#: --el cupo de la voz y el tope diario de casos del ajustador-- y las filas del libro mayor. Se cuenta en vez de callarse porque un purgador que
 #: solo dijera cuanto borro no dejaria ver el dia que empezara a borrar de mas.
 CONTAR_CONSERVADOS = """
-    SELECT (SELECT count(*) FROM quota_counter WHERE scope = 'voice_calls_site_day')
+    SELECT (SELECT count(*) FROM quota_counter WHERE scope = ANY(:scopes))
          + (SELECT count(*) FROM spend_entry) AS total
 """
 
@@ -117,7 +117,9 @@ class _SpendPurger:
                     sesion, BORRAR_CONTADORES, older_than=older_than, scopes=alcances
                 )
                 borrados += await session.execute_sql(sesion, BORRAR_CIERRES, older_than=older_than)
-            fila = await session.fetch_one(sesion, CONTAR_CONSERVADOS)
+            fila = await session.fetch_one(
+                sesion, CONTAR_CONSERVADOS, scopes=[alcance.value for alcance in SITE_SCOPES]
+            )
             conservados = int(fila["total"]) if fila is not None else 0
 
         observability.emit(

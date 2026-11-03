@@ -92,6 +92,9 @@ TABLAS = (
     # limpio algo que no acoto. Lo caza su prueba, y lo cazo.
     "quote_eligibility",
     "case_triage_note",
+    # La corrida del ajustador de IA (fase 5, 2026-11-03): sus pasos y su explicacion salen de lo
+    # que la persona conto. Cae por cascada con el caso, con la misma llave compuesta.
+    "adjuster_run",
     "citation_checks",
     "coverage_answers",
     "graph_checkpoint",

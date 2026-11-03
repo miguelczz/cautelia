@@ -94,6 +94,13 @@ uses:
     billable: true
     connect_timeout_ms: 2000
     read_timeout_ms: 3000
+  - use: adjuster
+    provider: anthropic
+    model: claude-haiku-5-5
+    plan: paid
+    billable: true
+    connect_timeout_ms: 2000
+    read_timeout_ms: 3000
 circuit_breaker:
   failure_threshold: 5
   open_seconds: 30
@@ -175,8 +182,8 @@ def _clave() -> str:
 def test_cada_uso_recibe_su_propia_clave(tmp_path: Path) -> None:
     """Una clave distinta por uso, un cliente por uso, ninguno compartido (BR1.3).
 
-    Este registro arma los transportes de Gemini. `chat_reply` y `evals_chat` son
-    de Anthropic y su cliente lo arma su propio adaptador (2026-10-07): aqui no
+    Este registro arma los transportes de Gemini. `chat_reply`, `evals_chat` y `adjuster`
+    son de Anthropic y su cliente lo arma su propio adaptador (2026-10-07): aqui no
     reciben transporte, y sus claves no aparecen en ningun cliente de Gemini.
     """
     claves = {uso: _clave() for uso in Use}
@@ -191,13 +198,14 @@ def test_cada_uso_recibe_su_propia_clave(tmp_path: Path) -> None:
             corpus_model_api_key=claves[Use.CORPUS],
             anthropic_api_key_chat=claves[Use.CHAT_REPLY],
             anthropic_api_key_evals=claves[Use.EVALS_CHAT],
+            anthropic_api_key_adjuster=claves[Use.ADJUSTER],
         ),
         config=_configuracion(tmp_path),
         transports=transportes,
     )
 
     recibidas = {uso: transporte.api_key for uso, transporte in transportes.creados.items()}
-    de_anthropic = {Use.CHAT_REPLY, Use.EVALS_CHAT}
+    de_anthropic = {Use.CHAT_REPLY, Use.EVALS_CHAT, Use.ADJUSTER}
     de_gemini = {uso: clave for uso, clave in claves.items() if uso not in de_anthropic}
     assert recibidas == de_gemini
     assert not {claves[uso] for uso in de_anthropic} & set(recibidas.values())

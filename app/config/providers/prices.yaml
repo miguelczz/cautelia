@@ -11,8 +11,8 @@
 # en un punto distinto segun el orden de las llamadas, y la cifra publicada
 # dejaria de ser reproducible desde el mismo commit.
 config_version: 1
-list_version: "4"
-effective_date: 2026-10-07
+list_version: "5"
+effective_date: 2026-11-03
 
 # --- Precios de lista ---------------------------------------------------------
 # Leidos de la pagina oficial de precios de la API de Gemini el **2026-09-21**:
@@ -134,6 +134,15 @@ entries:
     model: claude-haiku-5-5
     unit_kind: output_tokens
     unit_price_usd: "0.00000050"
+  # La herramienta de busqueda web del servidor de Anthropic (uso `adjuster`): 10 USD por
+  # 1.000 busquedas, o sea 0,01 USD por busqueda, ademas de los tokens que consume el
+  # resultado. Leido el 2026-11-03 en
+  # https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-search-tool
+  # ("Usage and pricing"). Una busqueda que falla con error no se cobra.
+  - provider: anthropic
+    model: claude-haiku-5-5
+    unit_kind: web_searches
+    unit_price_usd: "0.01"
 
 # --- Topes configurados en el proveedor (BR5.8, PA-9) -------------------------
 # Un limite que vive solo en la aplicacion falla abierto cuando lo que falla es
@@ -262,6 +271,15 @@ caps:
   # credito prepagado es de la organizacion, asi que comparten los mismos 5 USD.
   - provider: anthropic
     use: evals_chat
+    cap_kind: prepaid_balance
+    cap_value: "el mismo credito prepagado de la cuenta (4,05 USD restantes), recarga automatica apagada"
+    last_checked_at: 2026-10-13
+  # El ajustador de IA, con su propia clave de la misma cuenta: comparte el credito prepagado.
+  # La fecha es la de la ultima lectura real de ese credito. **Pendiente de Miguel antes de
+  # publicar**: crear la clave `UNTANGLE_ANTHROPIC_API_KEY_ADJUSTER` en la consola de Claude,
+  # con su propio limite de gasto, y actualizar esta fila con la cifra vista.
+  - provider: anthropic
+    use: adjuster
     cap_kind: prepaid_balance
     cap_value: "el mismo credito prepagado de la cuenta (4,05 USD restantes), recarga automatica apagada"
     last_checked_at: 2026-10-13

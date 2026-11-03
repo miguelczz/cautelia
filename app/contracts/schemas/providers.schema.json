@@ -272,7 +272,8 @@
         "operations",
         "corpus",
         "chat_reply",
-        "evals_chat"
+        "evals_chat",
+        "adjuster"
       ],
       "title": "Use",
       "type": "string"

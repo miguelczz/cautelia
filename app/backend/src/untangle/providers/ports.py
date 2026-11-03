@@ -89,6 +89,8 @@ __all__ = [
     "PromptRef",
     "ProviderError",
     "ProviderErrorKind",
+    "ResearchResult",
+    "ResearchSource",
     "SessionTextToSpeech",
     "SpeechStarted",
     "SpeechToText",
@@ -102,6 +104,7 @@ __all__ = [
     "UsageUnits",
     "Vector",
     "VoiceRef",
+    "WebResearcher",
     "WordHypothesis",
 ]
 
@@ -288,6 +291,39 @@ class GenerationResult:
             )
             raise TypeError(msg)
         return self.parsed
+
+
+# --- Lo que devuelve una investigacion con busqueda web -----------------------
+
+
+class ResearchSource(Frozen):
+    """Una pagina de la que salio lo que la investigacion dice (plan 09, fase 5).
+
+    `page_age` es lo que el buscador dice de la antiguedad de la pagina, tal cual: texto
+    libre del proveedor ("April 30, 2025"), nulo cuando no lo manda. No se interpreta como
+    fecha porque el formato no esta garantizado.
+    """
+
+    url: str = Field(min_length=1)
+    title: str
+    page_age: str | None = None
+
+
+class ResearchResult(Frozen):
+    """Lo que respondio una investigacion con busqueda web, con las paginas que la respaldan.
+
+    `sources` son las paginas que el texto **cita**; si el modelo no cito ninguna, son todas
+    las que la busqueda trajo. Vacio y `searches_used` en cero es una investigacion que no
+    busco nada --el modelo contesto de memoria--, y no es un error: quien lee decide si un
+    valor sin fuente vale.
+
+    Agotar `max_searches` tampoco es un error: el modelo contesta con lo que alcanzo a
+    encontrar.
+    """
+
+    text: str
+    sources: tuple[ResearchSource, ...] = ()
+    searches_used: int = Field(default=0, ge=0)
 
 
 # --- Los errores: cuatro, y una parada que no es ninguno de ellos -------------
@@ -505,6 +541,30 @@ class TextGenerator(Protocol):
     async def generate(
         self, prompt: Prompt, *, schema: type[BaseModel] | None, use: Use
     ) -> GenerationResult: ...
+
+
+@runtime_checkable
+class WebResearcher(Protocol):
+    """Investigar con busqueda web, acotada en cuantas busquedas y en que dominios.
+
+    Una llamada de **texto**: la busqueda y la salida estructurada no se combinan en la misma
+    llamada, asi que quien necesita las dos las pide en dos (la investigacion, y despues una
+    decision que recibe su texto como contenido delimitado). El texto de fuera --el caso, lo
+    que trajo la web-- viaja como `ExternalText`, igual que en `TextGenerator`.
+
+    `allowed_domains` no puede estar vacio: una busqueda sin dominios permitidos es abierta,
+    y abrirla es una decision que se escribe en la configuracion y no se hereda de un
+    argumento olvidado.
+    """
+
+    async def research(
+        self,
+        prompt: Prompt,
+        *,
+        use: Use,
+        max_searches: int,
+        allowed_domains: Sequence[str],
+    ) -> ResearchResult: ...
 
 
 @runtime_checkable

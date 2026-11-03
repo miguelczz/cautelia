@@ -84,6 +84,13 @@ uses:
     billable: true
     connect_timeout_ms: 2000
     read_timeout_ms: 3000
+  - use: adjuster
+    provider: anthropic
+    model: claude-haiku-5-5
+    plan: paid
+    billable: true
+    connect_timeout_ms: 2000
+    read_timeout_ms: 3000
 circuit_breaker:
   failure_threshold: 5
   open_seconds: 30
@@ -156,7 +163,7 @@ def test_la_carpeta_versionada_del_repositorio_carga() -> None:
     #: chat, que desde el 2026-10-07 va con saldo prepagado de Anthropic (ADR-006,
     #: BR3.6). Lo demas sigue en plan gratuito.
     facturables = {uso.use for uso in cargada.providers.uses if uso.billable}
-    assert facturables == {Use.VOICE, Use.CHAT_REPLY, Use.EVALS_CHAT}
+    assert facturables == {Use.VOICE, Use.CHAT_REPLY, Use.EVALS_CHAT, Use.ADJUSTER}
 
     #: Anclado por identificador exacto, con su dimension de vector.
     modelos = {m.id: m for entrada in cargada.providers.providers for m in entrada.models}

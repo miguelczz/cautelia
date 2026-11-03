@@ -81,6 +81,7 @@ _VARIABLE_POR_USO: dict[Use, str] = {
     Use.CORPUS: "UNTANGLE_CORPUS_MODEL_API_KEY",
     Use.CHAT_REPLY: "UNTANGLE_ANTHROPIC_API_KEY_CHAT",
     Use.EVALS_CHAT: "UNTANGLE_ANTHROPIC_API_KEY_EVALS",
+    Use.ADJUSTER: "UNTANGLE_ANTHROPIC_API_KEY_ADJUSTER",
 }
 
 
@@ -140,7 +141,7 @@ class ProviderClients:
 
         for uso in config.uses:
             # Este registro arma transportes de Gemini. Un uso de otro proveedor
-            # --`chat_reply`, de Anthropic-- tiene su cliente en su propio
+            # --`chat_reply` y `adjuster`, de Anthropic-- tiene su cliente en su propio
             # adaptador y no pasa por aqui.
             if uso.provider is not ProviderName.GEMINI:
                 continue
@@ -171,6 +172,7 @@ class ProviderClients:
             Use.CORPUS: settings.corpus_model_api_key,
             Use.CHAT_REPLY: settings.anthropic_api_key_chat,
             Use.EVALS_CHAT: settings.anthropic_api_key_evals,
+            Use.ADJUSTER: settings.anthropic_api_key_adjuster,
         }
         return claves[use]
 

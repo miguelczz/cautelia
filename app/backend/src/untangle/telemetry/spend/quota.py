@@ -47,6 +47,7 @@ _MOTIVO_POR_ALCANCE: dict[QuotaScope, QuotaReason] = {
     QuotaScope.CHAT_MESSAGES_DAY: QuotaReason.RATE_LIMITED_DAILY,
     QuotaScope.VOICE_CALLS_VISITOR_DAY: QuotaReason.RATE_LIMITED_DAILY,
     QuotaScope.VOICE_CALLS_SITE_DAY: QuotaReason.RATE_LIMITED_SITE,
+    QuotaScope.ADJUSTER_CASES_SITE_DAY: QuotaReason.RATE_LIMITED_SITE,
 }
 
 

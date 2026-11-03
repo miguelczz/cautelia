@@ -228,7 +228,11 @@ class SpendRuntime:
 #: consecuencias: quien consulta el presupuesto, hacia donde cae el fallo, y que
 #: limite rige. Anadir un alcance obliga a decidirlo aqui.
 _ALCANCES_DE_PAGO: frozenset[QuotaScope] = frozenset(
-    {QuotaScope.VOICE_CALLS_VISITOR_DAY, QuotaScope.VOICE_CALLS_SITE_DAY}
+    {
+        QuotaScope.VOICE_CALLS_VISITOR_DAY,
+        QuotaScope.VOICE_CALLS_SITE_DAY,
+        QuotaScope.ADJUSTER_CASES_SITE_DAY,
+    }
 )
 
 _runtime: SpendRuntime | None = None
@@ -824,6 +828,7 @@ async def check_quota(
     *,
     now: datetime | None = None,
     period_start: datetime | None = None,
+    limit: int | None = None,
 ) -> QuotaDecision:
     """Si este sujeto puede hacer una mas, **y la consume si puede** (BR5.1, BR5.4).
 
@@ -838,6 +843,9 @@ async def check_quota(
     `period_start` es obligatorio para el alcance de sesion --su periodo es la
     sesion, y solo quien la abrio sabe cuando empezo-- e ignorado en los tres
     diarios, cuyo periodo sale de la medianoche de la zona configurada.
+
+    `limit` es obligatorio para el tope del ajustador --su cifra la declara la configuracion
+    del ajustador y no `providers.yaml`-- e ignorado en los demas alcances.
     """
     runtime = current_runtime()
     momento = _ahora(now)
@@ -853,7 +861,7 @@ async def check_quota(
         if estado.status in (BudgetStatus.EXHAUSTED, BudgetStatus.UNMEASURED):
             return quota.budget_exhausted()
 
-    periodo = _periodo(scope, runtime, momento, period_start, estado)
+    periodo = _periodo(scope, runtime, momento, period_start, estado, limit=limit)
 
     try:
         contador = await repository.consume_quota(scope, subject_key, periodo, now=momento)
@@ -897,7 +905,11 @@ class QuotaState:
 
 
 async def quota_state(
-    scope: QuotaScope, subject_key: SubjectKey | None, *, now: datetime | None = None
+    scope: QuotaScope,
+    subject_key: SubjectKey | None,
+    *,
+    now: datetime | None = None,
+    limit: int | None = None,
 ) -> QuotaState:
     """Cuanto lleva contado ese sujeto y cuanto admite su periodo, sin consumir.
 
@@ -917,7 +929,7 @@ async def quota_state(
     if scope in _ALCANCES_DE_PAGO:
         estado = await budget_state(now=momento)
 
-    periodo = _periodo(scope, runtime, momento, None, estado)
+    periodo = _periodo(scope, runtime, momento, None, estado, limit=limit)
     if subject_key is None:
         return QuotaState(count=0, limit=periodo.limit)
 
@@ -926,12 +938,14 @@ async def quota_state(
     return QuotaState(count=0 if contador is None else contador.count, limit=periodo.limit)
 
 
-def _periodo(
+def _periodo(  # noqa: PLR0913 -- el alcance, lo instalado, el instante y tres datos opcionales
     scope: QuotaScope,
     runtime: SpendRuntime,
     now: datetime,
     period_start: datetime | None,
     estado: BudgetState | None,
+    *,
+    limit: int | None = None,
 ) -> QuotaPeriod:
     """El periodo abierto y **con que limite se abrio** (BR5.2, BR5.6, FD-U5-10).
 
@@ -949,6 +963,14 @@ def _periodo(
         return QuotaPeriod(period_start=period_start, limit=runtime.chat_messages_per_session)
 
     comienzo = quota.day_period_start(now, runtime.zone)
+    if scope is QuotaScope.ADJUSTER_CASES_SITE_DAY:
+        if limit is None:
+            msg = (
+                "el tope diario del ajustador lo declara app/config/adjuster/adjuster.yaml y "
+                "tiene que llegar por argumento: aqui no hay un valor por defecto que nadie eligio"
+            )
+            raise ValueError(msg)
+        return QuotaPeriod(period_start=comienzo, limit=limit)
     if scope is QuotaScope.CHAT_MESSAGES_DAY:
         return QuotaPeriod(period_start=comienzo, limit=runtime.chat_messages_per_day)
     if scope is QuotaScope.VOICE_CALLS_VISITOR_DAY:

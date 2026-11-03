@@ -1,0 +1,62 @@
+{
+  "additionalProperties": false,
+  "description": "El archivo `adjuster.yaml` entero, ya validado.",
+  "properties": {
+    "config_version": {
+      "const": 1,
+      "title": "Config Version",
+      "type": "integer"
+    },
+    "max_searches": {
+      "maximum": 10,
+      "minimum": 1,
+      "title": "Max Searches",
+      "type": "integer"
+    },
+    "allowed_domains": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Allowed Domains",
+      "type": "array"
+    },
+    "daily_case_cap": {
+      "minimum": 1,
+      "title": "Daily Case Cap",
+      "type": "integer"
+    },
+    "attempts": {
+      "maximum": 10,
+      "minimum": 1,
+      "title": "Attempts",
+      "type": "integer"
+    },
+    "vehicle_value_range_cop": {
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "integer"
+        }
+      ],
+      "title": "Vehicle Value Range Cop",
+      "type": "array"
+    }
+  },
+  "required": [
+    "config_version",
+    "max_searches",
+    "allowed_domains",
+    "daily_case_cap",
+    "attempts",
+    "vehicle_value_range_cop"
+  ],
+  "title": "AdjusterConfig",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://untangle.local/contracts/schemas/adjuster.schema.json"
+}

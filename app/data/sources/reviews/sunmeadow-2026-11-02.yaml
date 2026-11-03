@@ -24,6 +24,6 @@ clause_ids:
   - AP-PAP-2026-D.NO_BAILEE  # Loss of the vehicle by damage and by theft, en app/data/tenants/sunmeadow/clauses/AP-PAP-2026.json
   - AP-PAP-2026-DEF.PROPERTY_DAMAGE  # Definitions, en app/data/tenants/sunmeadow/clauses/AP-PAP-2026.json
   - AP-PAP-2026-E.DUTIES.A.3  # Duties after a loss event, en app/data/tenants/sunmeadow/clauses/AP-PAP-2026.json
-reviewed_on: null
-commit: null
-verdict: null
+reviewed_on: 2026-11-02
+commit: 42ad43930cbcfb7dac12e3dd688b2377a39476a3
+verdict: own_text_structure_ok

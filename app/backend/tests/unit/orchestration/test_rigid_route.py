@@ -142,8 +142,12 @@ class _Puerto:
         return self.respuesta
 
 
-def _vista(texto: str, tema: RigidTopic = RigidTopic.VEHICLES) -> RigidAnswerView:
-    return RigidAnswerView(topic=tema, copy_key=CopyKey("chat.rigid.vehicles.listed"), text=texto)
+def _vista(
+    texto: str,
+    tema: RigidTopic = RigidTopic.VEHICLES,
+    clave: str = "chat.rigid.vehicles.listed",
+) -> RigidAnswerView:
+    return RigidAnswerView(topic=tema, copy_key=CopyKey(clave), text=texto)
 
 
 async def test_el_puerto_recibe_el_tenant_la_poliza_el_tema_y_el_canal() -> None:
@@ -226,15 +230,21 @@ def _previo(texto: str) -> Any:
     return SimpleNamespace(node_writes={"intake_response_text": texto})
 
 
-async def _responder(
-    texto: str, tipo: RecordType, idioma: Locale, *, pendiente: str = ""
+async def _responder(  # noqa: PLR0913 -- el texto, el caso y la plantilla de la que salio
+    texto: str,
+    tipo: RecordType,
+    idioma: Locale,
+    *,
+    pendiente: str = "",
+    tema: RigidTopic = RigidTopic.VEHICLES,
+    clave: str = "chat.rigid.vehicles.listed",
 ) -> contracts.FinalText:
     mensaje = _mensaje(idioma)
     return await turn._responder_desde_el_registro(
         mensaje,
         cast(Any, _contexto(tipo, idioma)),
         cast(Any, _previo(pendiente)),
-        _vista(texto),
+        _vista(texto, tema, clave),
         turn_id="t1",
         gate=ExitGate(tenant_id=mensaje.tenant_id, language=idioma),
     )
@@ -263,9 +273,28 @@ async def test_en_un_reporte_se_retoma_la_pregunta_pendiente_detras_de_la_respue
     assert evento.suggestions == ()
 
 
+async def test_el_deducible_sale_con_su_cifra_porque_el_turno_entrega_la_clave_de_su_plantilla() -> (
+    None
+):
+    """Decision de Miguel, 2026-11-02: el deducible y los limites son cifras del registro."""
+    texto = "Según tu póliza POL-11, el deducible de pérdida parcial es $\xa0250.000 por hurto."
+
+    evento = await _responder(
+        texto,
+        RecordType.CLAIM,
+        "es",
+        pendiente="¿Cuándo y dónde ocurrió el accidente?",
+        tema=RigidTopic.DEDUCTIBLE,
+        clave="chat.rigid.deductible",
+    )
+
+    assert evento.text == f"{texto} ¿Cuándo y dónde ocurrió el accidente?"
+
+
 async def test_la_guardia_interviene_un_monto_sin_llevarse_la_pregunta_pendiente() -> None:
-    """Un monto es una categoria de la guardia por diseno: la respuesta se sustituye, la pregunta
-    que la persona tiene que contestar no se pierde (se gatea por su cuenta)."""
+    """Un monto de una plantilla que no es del deducible ni de los limites sigue siendo una
+    categoria de la guardia: la respuesta se sustituye, la pregunta que la persona tiene que
+    contestar no se pierde (se gatea por su cuenta)."""
     texto = "Según tu póliza POL-11, el deducible del vehículo es $\xa0250.000 en un choque."
 
     evento = await _responder(

@@ -42,7 +42,9 @@ class ExitGate:
     case_number: str | None = None
     _turn: GuardTurn = field(default_factory=GuardTurn)
 
-    async def send(self, text: str) -> tuple[str, tuple[CopyKey, ...]]:
+    async def send(
+        self, text: str, *, source_key: str | None = None
+    ) -> tuple[str, tuple[CopyKey, ...]]:
         """El texto seguro para emitir, y las claves de lo que la guardia sustituyó.
 
         Se llama para **cada** texto que un evento de este turno vaya a llevar,
@@ -50,6 +52,10 @@ class ExitGate:
         sale del catálogo. Si la guardia no puede evaluar, `guard_output` ya
         resuelve su propia frase de degradación (C-20, BR1.5); esta puerta no
         decide nada más, solo garantiza que nadie la esquive.
+
+        `source_key` es la clave del catálogo cuando el texto lo compuso el código con datos de
+        un registro (BR1.8): solo así la guardia puede eximirlo de lo que su lista declara. Un
+        texto del modelo no la trae.
         """
         resultado = await guard_output(
             text,
@@ -58,6 +64,7 @@ class ExitGate:
             case_id=self.case_id,
             case_number=self.case_number,
             turn=self._turn,
+            source_key=source_key,
         )
         texto = resultado.text_out if resultado.text_out is not None else ""
         return texto, tuple(CopyKey(clave) for clave in resultado.copy_keys)

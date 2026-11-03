@@ -144,6 +144,11 @@ class PatternSet(Frozen):
     #: reemplaza (BR1.8). Se exime una **clave**, no un texto: solo lo que el
     #: aplicativo compuso desde el catalogo puede traerla, y el modelo no.
     exempt_catalog_keys: tuple[str, ...] = ()
+    #: Solo en la guardia: las claves del catalogo cuyo texto compone el codigo con **cifras del
+    #: registro de la poliza**, y que la categoria de montos no reemplaza. Es una lista aparte de
+    #: `exempt_catalog_keys` a proposito: eximir una plantilla de los montos no la exime de
+    #: prometer cobertura, de culpar ni de dar consejo legal (decision de Miguel, 2026-11-02).
+    amount_exempt_catalog_keys: tuple[str, ...] = ()
 
     @model_validator(mode="after")
     def _cada_patron_en_su_sitio(self) -> Self:
@@ -175,13 +180,14 @@ class PatternSet(Frozen):
                 "emergencia las tiene (BR3.2)"
             )
             raise ValueError(msg)
-        if self.exempt_catalog_keys and self.family is not PatternFamily.GUARD:
+        exentas = (*self.exempt_catalog_keys, *self.amount_exempt_catalog_keys)
+        if exentas and self.family is not PatternFamily.GUARD:
             msg = f"la familia '{self.family.value}' declara exenciones; solo la guardia las tiene"
             raise ValueError(msg)
         forma = re.compile(CATALOG_KEY_PATTERN)
         malas = [
             clave
-            for clave in self.exempt_catalog_keys
+            for clave in exentas
             if not forma.match(clave) or len(clave) > CATALOG_KEY_MAX_LENGTH
         ]
         if malas:
@@ -229,6 +235,8 @@ class PatternLibrary:
     emergency: tuple[CompiledPattern, ...]
     emergency_negations: tuple[CompiledPattern, ...]
     exempt_catalog_keys: frozenset[str]
+    #: Las plantillas cuyo texto son cifras del registro de la poliza (ver `PatternSet`).
+    amount_exempt_catalog_keys: frozenset[str] = frozenset()
 
     def versions(self) -> dict[str, str]:
         """La version de cada archivo, por `<idioma>/<familia>`."""
@@ -298,14 +306,18 @@ def _exigir_las_siete_categorias(juegos: dict[tuple[Locale, PatternFamily], Patt
 
 def _exigir_las_mismas_exenciones(juegos: dict[tuple[Locale, PatternFamily], PatternSet]) -> None:
     """Las dos guardias eximen las mismas claves: una exencion es de la plantilla, no del idioma."""
-    por_idioma = {
-        idioma: frozenset(juegos[(idioma, PatternFamily.GUARD)].exempt_catalog_keys)
-        for idioma in LOCALES
-    }
-    if len(set(por_idioma.values())) > 1:
-        detalle = "; ".join(f"{i}: {sorted(c)}" for i, c in sorted(por_idioma.items()))
-        msg = f"las guardias de los dos idiomas eximen claves distintas: {detalle} (BR1.8)"
-        raise PatternLoadError(msg)
+    for nombre, atributo in (
+        ("claves", "exempt_catalog_keys"),
+        ("claves de montos", "amount_exempt_catalog_keys"),
+    ):
+        por_idioma = {
+            idioma: frozenset(getattr(juegos[(idioma, PatternFamily.GUARD)], atributo))
+            for idioma in LOCALES
+        }
+        if len(set(por_idioma.values())) > 1:
+            detalle = "; ".join(f"{i}: {sorted(c)}" for i, c in sorted(por_idioma.items()))
+            msg = f"las guardias de los dos idiomas eximen {nombre} distintas: {detalle} (BR1.8)"
+            raise PatternLoadError(msg)
 
 
 def load_library(root: Path | None = None) -> PatternLibrary:
@@ -334,6 +346,11 @@ def load_library(root: Path | None = None) -> PatternLibrary:
             clave
             for idioma in LOCALES
             for clave in juegos[(idioma, PatternFamily.GUARD)].exempt_catalog_keys
+        ),
+        amount_exempt_catalog_keys=frozenset(
+            clave
+            for idioma in LOCALES
+            for clave in juegos[(idioma, PatternFamily.GUARD)].amount_exempt_catalog_keys
         ),
     )
 

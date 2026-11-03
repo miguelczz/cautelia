@@ -21,7 +21,7 @@
 # cambio a la vista: sube `version`.
 language: es
 family: guard
-version: "2026-09-21.1"
+version: "2026-11-02.1"
 
 # BR1.8. Vacia hasta que U8 publique las plantillas de respuesta verificada:
 # son de U8 y todavia no existen, y eximir aqui una clave que nadie compone
@@ -41,6 +41,20 @@ exempt_catalog_keys: []
 # La firma de una persona autoriza **su decision**, no cualquier frase que
 # escriba. Por eso el comentario pasa por la guardia por su cuenta y la plantilla
 # se compone despues.
+
+# Los montos que la poliza declara (decision de Miguel, 2026-11-02, fase 3 del plan 09).
+# La categoria de montos no distingue «el deducible que figura en tu poliza» de «un monto que se
+# promete», asi que antes la respuesta a «¿cuanto es mi deducible?» salia como la frase generica.
+# Estas dos plantillas las compone el codigo con las cifras del registro de la poliza emitida
+# (`policy_rag/facts/rigid.py`); el modelo no escribe ni una palabra de ellas, y por eso se exime
+# la **clave**, no el texto. Solo se exime la categoria de montos: una plantilla eximida sigue
+# vigilada contra promesas de cobertura, culpa y consejo legal. Una clave nueva aqui es un cambio a
+# la vista, y su texto no puede llevar nada que no salga del registro. La misma lista va en
+# `en/guard.yaml`; el cargador falla si difieren.
+amount_exempt_catalog_keys:
+  - chat.rigid.deductible
+  - chat.rigid.limits
+
 patterns:
   # --- Promesa de cobertura: afirmarla o negarla (AC1.11.1, AC4.15.1) --------
   - id: guard.es.coverage_promise.001

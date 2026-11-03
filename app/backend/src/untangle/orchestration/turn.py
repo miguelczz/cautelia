@@ -1737,11 +1737,12 @@ async def _responder_desde_el_registro(  # noqa: PLR0913 -- el turno, el caso y 
 
     Pasa por la guardia de salida como todo texto hacia la persona, y **por su cuenta**: la
     pregunta pendiente del reporte --si la hay-- se retoma detras en su propia frase, para que la
-    guardia, si interviene la respuesta (los montos son una categoria suya), no se lleve tambien la
-    pregunta que la persona tiene que contestar. En una consulta se ofrecen las preguntas de
+    guardia, si interviene la respuesta, no se lleve tambien la pregunta que la persona tiene que
+    contestar. La respuesta lleva su clave del catalogo: el deducible y los limites son cifras del
+    registro y la guardia no las toma por un monto prometido (`amount_exempt_catalog_keys`). En una consulta se ofrecen las preguntas de
     ejemplo, igual que despues de una respuesta de cobertura.
     """
-    texto, _ = await gate.send(respuesta.text)
+    texto, _ = await gate.send(respuesta.text, source_key=str(respuesta.copy_key))
     sugerencias_del_turno: tuple[str, ...] = ()
     if contexto.record_type is RecordType.CLAIM:
         pendiente = _lo_pendiente(previo, contexto, language=turn.language)

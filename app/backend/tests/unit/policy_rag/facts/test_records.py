@@ -61,7 +61,7 @@ def test_los_limites_salen_del_registro_y_no_incluyen_los_deducibles(
     assert (por_persona.units, por_persona.pesos) == (100000, 100_000_000)
     assert por_persona.formatted == "$\xa0100.000.000"
     assert limites["a.property_damage"].amount.units == 50000
-    assert limites["a.property_damage"].label == "Responsabilidad civil: daños a bienes"
+    assert limites["a.property_damage"].label == "Responsabilidad civil: daños a bienes de terceros"
 
 
 def test_los_deducibles_son_solo_las_claves_de_deducible(poliza_de_ejemplo: IssuedPolicy) -> None:

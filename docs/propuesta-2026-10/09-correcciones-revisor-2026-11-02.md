@@ -61,9 +61,9 @@ estadounidense de ISO), sin copiar texto ni nombrar aseguradoras.
 | Fase | Contenido | Estado |
 | --- | --- | --- |
 | 1 | Quitar el enlace a Langfuse; guardrail fuera de contexto; respuesta progresiva tras la guardia | Hecho y en `main` |
-| 2 | Datos del accidente en un solo mensaje (chat) | Revertido (`173baac4`): la lista armada por el código reemplazaba la respuesta del modelo y tumbó unas 20 pruebas de la u12. Se rehace para que el modelo pida todo lo que falta y el código solo compruebe que no omitió nada |
-| 3 | Herramientas para consultas rígidas y servidor MCP | Hecho y en `main` (`06478984`). Pendiente de decisión: la guardia de salida bloquea los montos, así que deducible y límites salen hoy con la frase genérica |
-| 4 | Pólizas con estructura colombiana (va antes del ajustador, que razona sobre ellas) | Pendiente |
+| 2 | Datos del accidente en un solo mensaje (chat) | Revertido (`173baac4`): la lista armada por el código reemplazaba la respuesta del modelo y tumbó unas 20 pruebas de la u12. Pendiente de rehacer: el modelo pide todo lo que falta y el código solo comprueba que no omitió nada |
+| 3 | Herramientas para consultas rígidas y servidor MCP | Hecho y en `main` (`06478984`). El 2026-11-02 Miguel autorizó que el chat diga el deducible y los límites: la guardia exime los montos de esas dos plantillas por su clave, y solo los montos |
+| 4 | Pólizas con estructura colombiana | Hecho el 2026-11-02, ver `10-polizas-estructura-colombiana.md`. Muestras de revisión aprobadas por Miguel el mismo día |
 | 5 | Ajustador de IA que decide y explica | Pendiente |
 
 Cada fase se sube a GitHub cuando su revisión queda en verde. Nada se publica a

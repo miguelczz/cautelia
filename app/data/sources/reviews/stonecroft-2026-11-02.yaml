@@ -24,6 +24,6 @@ clause_ids:
   - SA-PAP-2026-E.DUTIES.B.1  # Obligaciones en caso de siniestro, en app/data/tenants/stonecroft/clauses/SA-PAP-2026.json
   - SA-PAP-2026-E.DUTIES.B.2  # Obligaciones en caso de siniestro, en app/data/tenants/stonecroft/clauses/SA-PAP-2026.json
   - SA-PAP-2026-E.DUTIES.D.3  # Obligaciones en caso de siniestro, en app/data/tenants/stonecroft/clauses/SA-PAP-2026.json
-reviewed_on: null
-commit: null
-verdict: null
+reviewed_on: 2026-11-02
+commit: 42ad43930cbcfb7dac12e3dd688b2377a39476a3
+verdict: own_text_structure_ok

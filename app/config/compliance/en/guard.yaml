@@ -10,7 +10,7 @@
 # tipograficos en rectos antes de que ningun patron mire la frase.
 language: en
 family: guard
-version: "2026-09-21.1"
+version: "2026-11-02.1"
 
 # BR1.8. La misma lista que `es/guard.yaml`; el cargador falla si difieren.
 exempt_catalog_keys: []
@@ -27,6 +27,13 @@ exempt_catalog_keys: []
 # La firma de una persona autoriza **su decision**, no cualquier frase que
 # escriba. Por eso el comentario pasa por la guardia por su cuenta y la plantilla
 # se compone despues.
+
+# Los montos que la poliza declara (decision de Miguel, 2026-11-02): la misma lista que
+# `es/guard.yaml`, donde esta la razon completa; el cargador falla si difieren.
+amount_exempt_catalog_keys:
+  - chat.rigid.deductible
+  - chat.rigid.limits
+
 patterns:
   # --- Promesa de cobertura (AC1.11.1, AC4.15.1) ------------------------------
   - id: guard.en.coverage_promise.001

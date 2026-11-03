@@ -76,9 +76,9 @@
     "app/data/sources/knotwell/en/case_turns.yaml": "54c33573e5c6a32eaae6dc1606a0027db26c33681949b0b39923488e932ef60b",
     "app/data/sources/knotwell/es/case_turns.yaml": "c5de0a1cac89edec233087f069f8f1dc139837e9ca85eef3baf1bfadfd7dda28",
     "app/data/sources/reviews/stonecroft-2026-09-21.yaml": "60ccb2299d4eda672c16d0f0af5956181c1598e207277451b761e83263518bc4",
-    "app/data/sources/reviews/stonecroft-2026-11-02.yaml": "dca0962ba1e09c38183fc39f7ee36547a25545202937fb5dea66dea7abb6b45e",
+    "app/data/sources/reviews/stonecroft-2026-11-02.yaml": "15051fa5a2fc396aa94763d0326a577a9798a36d276bf4ba36ff659b5e30bf5d",
     "app/data/sources/reviews/sunmeadow-2026-09-21.yaml": "d3c7764fd3f9f31352444c965dad7e87fbab18929ee94635c046480a757b0a94",
-    "app/data/sources/reviews/sunmeadow-2026-11-02.yaml": "52757581a30f6fa9f77028a407e9d6a39190579c82ca1569e130c76738b2194d",
+    "app/data/sources/reviews/sunmeadow-2026-11-02.yaml": "2c91385230ec8414b8597218c57469c7ad8c30a324d7ce289505a2c465cf8e18",
     "app/data/sources/seeded_criteria.yaml": "c1f53ad70a4d92d17d1f46a52066109cf3186f974b3ce2d55a6b16a77b14c9f6",
     "app/data/sources/stonecroft/en/case_turns.yaml": "b1915f596de39c2372484d3b065f7554ee172ec44df2366d4416772cb4873806",
     "app/data/sources/stonecroft/es/agreement.yaml": "36789162cf640a184b41108c6f0938723774e0cee9dccc0483d2610d7a0aa5b8",
@@ -304,11 +304,11 @@
         "SA-PAP-2026-E.DUTIES.B.2",
         "SA-PAP-2026-E.DUTIES.D.3"
       ],
-      "commit": null,
-      "reviewed_on": null,
+      "commit": "42ad43930cbcfb7dac12e3dd688b2377a39476a3",
+      "reviewed_on": "2026-11-02",
       "sample_seed": 20260916,
       "tenant_id": "stonecroft",
-      "verdict": null
+      "verdict": "own_text_structure_ok"
     },
     {
       "clause_ids": [
@@ -323,11 +323,11 @@
         "AP-PAP-2026-DEF.PROPERTY_DAMAGE",
         "AP-PAP-2026-E.DUTIES.A.3"
       ],
-      "commit": null,
-      "reviewed_on": null,
+      "commit": "42ad43930cbcfb7dac12e3dd688b2377a39476a3",
+      "reviewed_on": "2026-11-02",
       "sample_seed": 20260916,
       "tenant_id": "sunmeadow",
-      "verdict": null
+      "verdict": "own_text_structure_ok"
     },
     {
       "clause_ids": [

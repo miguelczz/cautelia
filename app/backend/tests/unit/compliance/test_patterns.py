@@ -156,6 +156,37 @@ def test_las_dos_guardias_tienen_que_eximir_las_mismas_claves(patrones_copiados:
         patterns.load_library(patrones_copiados)
 
 
+def test_las_dos_guardias_tienen_que_eximir_los_mismos_montos(patrones_copiados: Path) -> None:
+    """Una exencion de montos es de la plantilla, no del idioma."""
+
+    def eximir(datos: dict[str, list[str]]) -> None:
+        datos["amount_exempt_catalog_keys"] = ["chat.rigid.deductible"]
+
+    _reescribir(patrones_copiados, "es", "guard", eximir)
+
+    with pytest.raises(PatternLoadError, match="eximen claves de montos distintas"):
+        patterns.load_library(patrones_copiados)
+
+
+def test_una_exencion_de_montos_que_no_es_una_clave_del_catalogo_no_carga(
+    patrones_copiados: Path,
+) -> None:
+    def eximir(datos: dict[str, list[str]]) -> None:
+        datos["amount_exempt_catalog_keys"] = ["Esto no es una clave"]
+
+    for idioma in ("es", "en"):
+        _reescribir(patrones_copiados, idioma, "guard", eximir)
+
+    with pytest.raises(PatternLoadError, match="no tienen forma de clave del catalogo"):
+        patterns.load_library(patrones_copiados)
+
+
+def test_la_biblioteca_versionada_exime_de_los_montos_solo_el_deducible_y_los_limites(
+    biblioteca: patterns.PatternLibrary,
+) -> None:
+    assert biblioteca.amount_exempt_catalog_keys == {"chat.rigid.deductible", "chat.rigid.limits"}
+
+
 def test_la_biblioteca_del_proceso_se_carga_una_vez_y_se_puede_instalar(
     biblioteca: patterns.PatternLibrary,
 ) -> None:

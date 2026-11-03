@@ -181,6 +181,30 @@ def test_la_plantilla_aprobada_eximida_no_se_reemplaza_y_la_misma_frase_del_mode
     assert not desde_el_modelo.unchanged
 
 
+def test_la_exencion_de_montos_es_de_la_clave_y_solo_de_los_montos(
+    biblioteca: patterns.PatternLibrary, aseguradoras: tuple[TenantConfig, ...]
+) -> None:
+    """Decision de Miguel, 2026-11-02: eximir una plantilla de los montos no la exime de lo demas."""
+    clave = "chat.rigid.deductible"
+    assert clave in biblioteca.amount_exempt_catalog_keys
+    # Un monto y, en la misma frase, una promesa de cobertura: la clave libera lo primero.
+    frase = "Su deducible es $ 1.500.000 y el choque está cubierto."
+
+    def categorias(source_key: str | None) -> set[GuardCategory]:
+        resultado = guard.evaluate(
+            frase,
+            library=biblioteca,
+            context=contexto_de(aseguradoras, "es", source_key=source_key),
+            turn=GuardTurn(),
+        )
+        return {i.category for i in resultado.interventions if i.category is not None}
+
+    assert categorias(None) == {GuardCategory.AMOUNT, GuardCategory.COVERAGE_PROMISE}
+    assert categorias(clave) == {GuardCategory.COVERAGE_PROMISE}
+    # Una clave que no esta en la lista no libera nada.
+    assert GuardCategory.AMOUNT in categorias("chat.rigid.vehicles.listed")
+
+
 def test_la_revelacion_se_detecta_por_forma_y_con_las_otras_aseguradoras_de_la_configuracion(
     biblioteca: patterns.PatternLibrary, aseguradoras: tuple[TenantConfig, ...]
 ) -> None:

@@ -192,12 +192,17 @@ def detect_categories(
     nombren lo mismo en el mismo orden.
     """
     normalizado = normalize(text)
-    eximida = context.source_key is not None and context.source_key in library.exempt_catalog_keys
+    clave = context.source_key
+    eximida = clave is not None and clave in library.exempt_catalog_keys
+    montos_eximidos = clave is not None and clave in library.amount_exempt_catalog_keys
     halladas: dict[GuardCategory, str] = {}
     for patron in library.guard:
         if patron.category is None or patron.category in halladas:
             continue
         if eximida and patron.category is GuardCategory.COVERAGE_PROMISE:
+            continue
+        # Solo los montos: lo demas que la plantilla pudiera decir se sigue vigilando.
+        if montos_eximidos and patron.category is GuardCategory.AMOUNT:
             continue
         if patron.regex.search(normalizado):
             halladas[patron.category] = patron.id

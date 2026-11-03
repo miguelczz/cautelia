@@ -1,9 +1,9 @@
 """La respuesta de cada tema rigido, con el valor exacto del registro y la guardia de salida real.
 
 Lo que se comprueba: que el texto trae el dato del registro y no otro, que el tema que no es rigido
-no responde, y que ninguna plantilla afirma ni niega cobertura. De los montos, que la guardia de
-salida **si los interviene** (categoria `amount`) es una medicion, no una promesa: queda escrita
-aqui para que el dia que Miguel decida otra cosa la prueba se vea cambiar.
+no responde, y que ninguna plantilla afirma ni niega cobertura. De los montos: la guardia de salida
+los interviene (categoria `amount`), salvo en las dos plantillas que el codigo compone con cifras
+del registro --deducible y limites--, que Miguel autorizo el 2026-11-02 por su clave del catalogo.
 """
 
 from __future__ import annotations
@@ -189,12 +189,14 @@ def test_si_el_registro_no_trae_el_dato_no_hay_respuesta_y_se_sigue_por_el_camin
 # --- La guardia de salida real ----------------------------------------------
 
 
-def _intervenciones(texto: str, idioma: Locale) -> set[GuardCategory]:
+def _intervenciones(
+    texto: str, idioma: Locale, *, source_key: str | None = None
+) -> set[GuardCategory]:
     aseguradoras = tuple(sorted(tenancy_config.load().available, key=lambda t: t.tenant_id))
     resultado = guard.evaluate(
         texto,
         library=patterns.load_library(),
-        context=contexto_de(aseguradoras, idioma),
+        context=contexto_de(aseguradoras, idioma, source_key=source_key),
         turn=GuardTurn(),
     )
     return {i.category for i in resultado.interventions if i.category is not None}
@@ -224,15 +226,27 @@ def test_los_temas_sin_montos_pasan_la_guardia_sin_intervencion(
 
 @pytest.mark.parametrize("idioma", ["es", "en"])
 @pytest.mark.parametrize("tema", [RigidTopic.DEDUCTIBLE, RigidTopic.LIMITS])
-def test_la_guardia_interviene_los_montos_por_diseno_y_no_se_afloja(
+def test_el_deducible_y_los_limites_pasan_la_guardia_con_la_clave_de_su_plantilla(
     poliza_de_ejemplo: IssuedPolicy, tema: RigidTopic, idioma: Locale
 ) -> None:
-    """Medicion del 2026-11-02: la categoria `amount` toma el monto de la poliza como cualquier otro.
+    """Decision de Miguel, 2026-11-02: estas dos plantillas salen con sus cifras del registro.
 
-    La guardia no distingue «el monto que declara la poliza» de «un monto que se promete» (AC1.11.1):
-    la regla es que ninguna salida hacia el asegurado lleva un monto. Esta plantilla lo dice
-    honestamente y la guardia la sustituye; relajarla es una decision de Miguel, no de este modulo.
+    La guardia no distingue «el monto que declara la poliza» de «un monto que se promete»
+    (AC1.11.1), asi que antes la persona recibia la frase generica. Ahora el codigo, que es quien
+    compone el texto, entrega su clave y la categoria de montos no lo reemplaza.
     """
+    respuesta = rigid.render(tema, poliza_de_ejemplo, language=idioma, on=HOY)
+
+    assert respuesta is not None
+    assert _intervenciones(respuesta.text, idioma, source_key=str(respuesta.copy_key)) == set()
+
+
+@pytest.mark.parametrize("idioma", ["es", "en"])
+@pytest.mark.parametrize("tema", [RigidTopic.DEDUCTIBLE, RigidTopic.LIMITS])
+def test_el_mismo_texto_sin_su_clave_sigue_siendo_un_monto_para_la_guardia(
+    poliza_de_ejemplo: IssuedPolicy, tema: RigidTopic, idioma: Locale
+) -> None:
+    """La exencion es de la clave, no del texto: lo que escriba un modelo con esas cifras cae."""
     respuesta = rigid.render(tema, poliza_de_ejemplo, language=idioma, on=HOY)
 
     assert respuesta is not None

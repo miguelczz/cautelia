@@ -12,12 +12,11 @@ texts:
   clause_key: D.INS.COLLISION
   part: Loss of the vehicle by damage and by theft
   version: '2026.1'
-  text: 'Autos Poblado pays for sudden, accidental damage to the covered auto from a crash, rollover,
-    fire, flood, hail, falling objects, vandalism, broken glass or hitting an animal. If repairing the
-    vehicle costs less than 75% of the insured value, it is a partial loss: we pay the repair, minus the
-    partial-loss-by-damage deductible on the declarations page, which is the share of the loss you pay.
-    If it costs 75% or more, it is a total loss and we pay it under the limit of this section. We pay
-    even if you caused the crash.'
+  text: 'Autos Poblado pays for damage to the covered auto if you collide with another vehicle or an object,
+    or if the vehicle rolls over, even if you caused the crash. It also pays for damage from fire, flood,
+    hail, falling objects, vandalism, broken glass or hitting an animal. In a partial loss, you pay the
+    partial-loss-by-damage deductible on the declarations page: the deductible is the share of the loss
+    that you bear.'
   reviewed_at: '2026-11-02'
   reviewed_by: conductor
   drafted_with: claude-sonnet-5-5

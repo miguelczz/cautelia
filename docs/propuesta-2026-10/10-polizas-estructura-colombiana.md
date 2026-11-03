@@ -101,5 +101,24 @@ Casos que conservan el nombre y cambiaron la pregunta: `distractor-duties-after-
 
 | Paso | Estado |
 | --- | --- |
-| 1–3 | Hechos en código el 2026-11-02, sin subir. |
-| 4–5 | Pendiente: la corrida de citas contra el modelo (`evals:citas`) y la prueba de Miguel en local. |
+| 1–3 | Hechos el 2026-11-02. |
+| 4 | Hecho el 2026-11-02: corpus regenerado e ingerido en local, `evals:citas` 24 de 24 en español y 24 de 24 en inglés (corrida `run-b0ac5f5a1c8c`). |
+| 5 | Pendiente: la prueba de Miguel en local, su veredicto sobre las muestras de revisión del 2026-11-02 y después producción. |
+
+## Lo que encontró la corrida de citas
+
+La primera corrida dio cinco casos que en la línea base pasaban. Ninguno era un
+fallo del sistema; eran el texto nuevo frente a casos escritos para el viejo:
+
+| Caso | Causa | Arreglo |
+| --- | --- | --- |
+| Las cinco, en la primera corrida | La ingesta no borraba las cláusulas cuya clave cambió de nombre, y la recuperación las seguía devolviendo | La ingesta borra lo que salió del corpus (`repository.upsert_reference_data`) |
+| `DS-3/es/knotwell-collision-coverage` | `D.INS.COLLISION` se alargó (regla del 75 %, deducible) y perdió contra exclusiones cortas en la búsqueda por significado | La regla del 75 % queda solo en `D.LIMIT`; la cláusula empieza por «Si usted choca…» |
+| `DS-3/{es,en}/no-clause-rental-abroad` | `A.OUT_OF_COUNTRY` repetía la regla de territorio y se llevaba la cita | La regla queda en `F.PERIOD_TERRITORY`, explícita: «fuera de Colombia no hay cobertura salvo endoso» |
+| `DS-3/en/endorsement-excludes-carrying-for-hire` | `B.INS` decía solo «ocupantes», sin nombrar al asegurado | `B.INS` nombra a usted, al conductor autorizado y a los demás ocupantes |
+| `DS-3/{es,en}/coverage-agreement-scope` | La pregunta hablaba del «acuerdo general» de ISO, y `AGREEMENT.1` no decía qué cubre | Pregunta nueva («¿Qué cubre esta póliza según su objeto?») y `AGREEMENT.1` enumera los amparos |
+
+Queda una observación sobre la recuperación, sin arreglar aquí: la búsqueda por
+texto exige que todas las palabras de la pregunta estén en la cláusula, así que
+casi nunca aporta en preguntas cortas y todo lo carga la búsqueda por
+significado.

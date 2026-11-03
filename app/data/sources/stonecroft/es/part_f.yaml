@@ -70,8 +70,9 @@ texts:
   clause_key: F.PERIOD_TERRITORY
   part: Condiciones generales
   version: '2026.1'
-  text: La póliza cubre los siniestros ocurridos durante la vigencia que muestra la carátula y dentro
-    del territorio de Colombia.
+  text: La póliza cubre los siniestros ocurridos durante la vigencia que muestra la carátula y dentro del
+    territorio de Colombia. Fuera de Colombia no hay cobertura, salvo que un endoso de territorio la extienda
+    a otro país.
   reviewed_at: '2026-11-02'
   reviewed_by: conductor
   drafted_with: claude-sonnet-5-5

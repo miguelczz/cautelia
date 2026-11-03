@@ -173,10 +173,9 @@ texts:
   clause_key: A.OUT_OF_COUNTRY
   part: Responsabilidad civil extracontractual
   version: '2026.1'
-  text: Si el accidente ocurre fuera de Colombia, esta sección responde solo cuando un endoso de territorio
-    lo permite. En ese caso, si la ley del lugar exige un seguro obligatorio para circular, ese seguro
-    paga primero y nosotros pagamos el exceso, hasta el límite de la carátula. Nunca pagamos dos veces
-    por el mismo daño.
+  text: Cuando un endoso de territorio extiende la póliza a otro país y la ley de ese país exige un seguro
+    obligatorio para circular, ese seguro paga primero y esta sección paga el exceso, hasta el límite de
+    la carátula. Nunca pagamos dos veces por el mismo daño.
   reviewed_at: '2026-11-02'
   reviewed_by: conductor
   drafted_with: claude-sonnet-5-5

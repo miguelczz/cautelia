@@ -12,9 +12,9 @@ texts:
   clause_key: B.INS
   part: Medical expenses of occupants
   version: '2026.1'
-  text: Autos Poblado pays the reasonable medical, hospital and funeral costs of the occupants of the
-    covered auto when they suffer a traffic accident, as long as the costs arise within two years of it.
-    We pay in excess of what the SOAT covers.
+  text: If you, the authorized driver or another occupant of the covered auto is injured in a traffic accident,
+    Autos Poblado pays their reasonable medical, hospital and funeral expenses, in excess of what the SOAT
+    covers. The expenses must arise within two years of the accident.
   reviewed_at: '2026-11-02'
   reviewed_by: conductor
   drafted_with: claude-sonnet-5-5

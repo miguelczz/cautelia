@@ -103,6 +103,11 @@
     {
       "from_clause": "SA-PAP-2026-DEF.OCCUPYING",
       "relation": "defines",
+      "to_clause": "SA-PAP-2026-AGREEMENT.1"
+    },
+    {
+      "from_clause": "SA-PAP-2026-DEF.OCCUPYING",
+      "relation": "defines",
       "to_clause": "SA-PAP-2026-B.INS"
     },
     {

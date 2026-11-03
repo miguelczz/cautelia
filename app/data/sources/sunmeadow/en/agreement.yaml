@@ -12,10 +12,12 @@ texts:
   clause_key: AGREEMENT.1
   part: Purpose of the insurance and policy period
   version: '2026.1'
-  text: Once the premium is paid, Autos Poblado commits to pay, on the terms of this contract, the coverages
-    that the declarations page shows as contracted, when the loss event happens within the territory set
-    out in the general conditions. A loss event is the occurrence that causes the damage or the loss.
-    This insurance is voluntary and does not replace the SOAT.
+  text: 'The purpose of this insurance is to cover the coverages that the declarations page shows as contracted:
+    civil liability to third parties, loss of the vehicle by damage or theft, medical expenses of the occupants
+    and personal accident cover for the driver. Once the premium is paid, Autos Poblado pays them on the
+    terms of this contract, for loss events that happen within the territory set out in the general conditions.
+    A loss event is the occurrence that causes the damage or the loss. This insurance is voluntary and does
+    not replace the SOAT.'
   reviewed_at: '2026-11-02'
   reviewed_by: conductor
   drafted_with: claude-sonnet-5-5

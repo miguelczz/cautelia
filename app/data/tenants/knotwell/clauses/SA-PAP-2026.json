@@ -9,7 +9,7 @@
       "issuer_label": "Seguros Aburrá",
       "language": "es",
       "part": "Objeto del seguro y vigencia",
-      "text": "Seguros Aburrá se compromete a pagar, en los términos de este contrato, los amparos que la carátula muestra como contratados, cuando el siniestro ocurre dentro del territorio que fijan las condiciones generales. Un siniestro es el hecho que causa el daño o la pérdida. Este seguro es voluntario y no reemplaza el SOAT."
+      "text": "El objeto de este seguro es cubrir los amparos que la carátula muestra como contratados: la responsabilidad civil frente a terceros, la pérdida del vehículo por daños o por hurto, los gastos médicos de los ocupantes y los accidentes personales del conductor. Seguros Aburrá los paga en los términos de este contrato, por los siniestros ocurridos dentro del territorio que fijan las condiciones generales. Un siniestro es el hecho que causa el daño o la pérdida. Este seguro es voluntario y no reemplaza el SOAT."
     },
     {
       "clause_id": "SA-PAP-2026-AGREEMENT.2",
@@ -295,7 +295,7 @@
       "issuer_label": "Seguros Aburrá",
       "language": "es",
       "part": "Responsabilidad civil extracontractual",
-      "text": "Si el accidente ocurre fuera de Colombia, esta sección responde solo cuando un endoso de territorio lo permite. En ese caso, si la ley del lugar exige un seguro obligatorio para circular, ese seguro paga primero y nosotros pagamos el exceso, hasta el límite de la carátula. Nunca pagamos dos veces por el mismo daño."
+      "text": "Cuando un endoso de territorio extiende la póliza a otro país y la ley de ese país exige un seguro obligatorio para circular, ese seguro paga primero y esta sección paga el exceso, hasta el límite de la carátula. Nunca pagamos dos veces por el mismo daño."
     },
     {
       "clause_id": "SA-PAP-2026-A.SOAT",
@@ -328,7 +328,7 @@
       "issuer_label": "Seguros Aburrá",
       "language": "es",
       "part": "Gastos médicos de los ocupantes",
-      "text": "Seguros Aburrá paga los gastos médicos, de hospitalización y funerarios razonables de los ocupantes del vehículo asegurado cuando sufren un accidente de tránsito, siempre que se causen dentro de los dos años siguientes. Pagamos en exceso de lo que cubra el SOAT."
+      "text": "Si usted, el conductor autorizado u otro ocupante del vehículo asegurado resulta herido en un accidente de tránsito, Seguros Aburrá paga sus gastos médicos, de hospitalización y funerarios razonables, en exceso de lo que cubra el SOAT. Los gastos deben causarse dentro de los dos años siguientes al accidente."
     },
     {
       "clause_id": "SA-PAP-2026-B.EXCL.1",
@@ -493,7 +493,7 @@
       "issuer_label": "Seguros Aburrá",
       "language": "es",
       "part": "Pérdida del vehículo por daños y por hurto",
-      "text": "Seguros Aburrá paga los daños directos y accidentales que sufra el vehículo asegurado por choque, vuelco, incendio, inundación, granizo, caída de objetos, vandalismo, rotura de vidrios o golpes con animales. Si reparar el vehículo cuesta menos del 75 % del valor asegurado, es una pérdida parcial: pagamos la reparación, menos el deducible de pérdida parcial por daños que muestra la carátula, que es la parte de la pérdida que paga usted. Si cuesta el 75 % o más, es una pérdida total y la pagamos según el límite de esta sección. Pagamos aunque usted haya causado el choque."
+      "text": "Si usted choca con otro vehículo o con un objeto, o si el vehículo asegurado se vuelca, Seguros Aburrá paga los daños que sufra el vehículo, aunque usted haya causado el choque. También paga los daños por incendio, inundación, granizo, caída de objetos, vandalismo, rotura de vidrios o golpes con animales. En una pérdida parcial, usted paga el deducible de pérdida parcial por daños que muestra la carátula: el deducible es la parte de la pérdida que queda a su cargo."
     },
     {
       "clause_id": "SA-PAP-2026-D.INS.THEFT",
@@ -911,7 +911,7 @@
       "issuer_label": "Seguros Aburrá",
       "language": "es",
       "part": "Condiciones generales",
-      "text": "La póliza cubre los siniestros ocurridos durante la vigencia que muestra la carátula y dentro del territorio de Colombia."
+      "text": "La póliza cubre los siniestros ocurridos durante la vigencia que muestra la carátula y dentro del territorio de Colombia. Fuera de Colombia no hay cobertura, salvo que un endoso de territorio la extienda a otro país."
     },
     {
       "clause_id": "SA-PAP-2026-F.TERMINATION",

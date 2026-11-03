@@ -69,7 +69,8 @@ texts:
   part: General conditions
   version: '2026.1'
   text: The policy covers loss events that happen during the policy period shown on the declarations page
-    and within the territory of Colombia.
+    and within the territory of Colombia. There is no coverage outside Colombia unless a territory endorsement
+    extends it to another country.
   reviewed_at: '2026-11-02'
   reviewed_by: conductor
   drafted_with: claude-sonnet-5-5

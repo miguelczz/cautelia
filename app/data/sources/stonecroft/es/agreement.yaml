@@ -12,10 +12,11 @@ texts:
   clause_key: AGREEMENT.1
   part: Objeto del seguro y vigencia
   version: '2026.1'
-  text: Seguros Aburrá se compromete a pagar, en los términos de este contrato, los amparos que la carátula
-    muestra como contratados, cuando el siniestro ocurre dentro del territorio que fijan las condiciones
-    generales. Un siniestro es el hecho que causa el daño o la pérdida. Este seguro es voluntario y no
-    reemplaza el SOAT.
+  text: 'El objeto de este seguro es cubrir los amparos que la carátula muestra como contratados: la responsabilidad
+    civil frente a terceros, la pérdida del vehículo por daños o por hurto, los gastos médicos de los ocupantes
+    y los accidentes personales del conductor. Seguros Aburrá los paga en los términos de este contrato,
+    por los siniestros ocurridos dentro del territorio que fijan las condiciones generales. Un siniestro
+    es el hecho que causa el daño o la pérdida. Este seguro es voluntario y no reemplaza el SOAT.'
   reviewed_at: '2026-11-02'
   reviewed_by: conductor
   drafted_with: claude-sonnet-5-5

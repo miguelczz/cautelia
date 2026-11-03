@@ -12,12 +12,11 @@ texts:
   clause_key: D.INS.COLLISION
   part: Pérdida del vehículo por daños y por hurto
   version: '2026.1'
-  text: 'Seguros Aburrá paga los daños directos y accidentales que sufra el vehículo asegurado por choque,
-    vuelco, incendio, inundación, granizo, caída de objetos, vandalismo, rotura de vidrios o golpes con
-    animales. Si reparar el vehículo cuesta menos del 75 % del valor asegurado, es una pérdida parcial:
-    pagamos la reparación, menos el deducible de pérdida parcial por daños que muestra la carátula, que
-    es la parte de la pérdida que paga usted. Si cuesta el 75 % o más, es una pérdida total y la pagamos
-    según el límite de esta sección. Pagamos aunque usted haya causado el choque.'
+  text: 'Si usted choca con otro vehículo o con un objeto, o si el vehículo asegurado se vuelca, Seguros
+    Aburrá paga los daños que sufra el vehículo, aunque usted haya causado el choque. También paga los daños
+    por incendio, inundación, granizo, caída de objetos, vandalismo, rotura de vidrios o golpes con animales.
+    En una pérdida parcial, usted paga el deducible de pérdida parcial por daños que muestra la carátula:
+    el deducible es la parte de la pérdida que queda a su cargo.'
   reviewed_at: '2026-11-02'
   reviewed_by: conductor
   drafted_with: claude-sonnet-5-5

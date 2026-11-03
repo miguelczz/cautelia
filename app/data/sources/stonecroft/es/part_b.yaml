@@ -12,9 +12,9 @@ texts:
   clause_key: B.INS
   part: Gastos médicos de los ocupantes
   version: '2026.1'
-  text: Seguros Aburrá paga los gastos médicos, de hospitalización y funerarios razonables de los ocupantes
-    del vehículo asegurado cuando sufren un accidente de tránsito, siempre que se causen dentro de los
-    dos años siguientes. Pagamos en exceso de lo que cubra el SOAT.
+  text: Si usted, el conductor autorizado u otro ocupante del vehículo asegurado resulta herido en un accidente
+    de tránsito, Seguros Aburrá paga sus gastos médicos, de hospitalización y funerarios razonables, en
+    exceso de lo que cubra el SOAT. Los gastos deben causarse dentro de los dos años siguientes al accidente.
   reviewed_at: '2026-11-02'
   reviewed_by: conductor
   drafted_with: claude-sonnet-5-5

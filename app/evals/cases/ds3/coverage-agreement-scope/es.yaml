@@ -17,7 +17,7 @@ citation:
   policy_number: POL-14
   clause_id: SA-PAP-2026-AGREEMENT.1
   expected_outcome: verified
-  question: ¿Qué protección me da esta póliza según el acuerdo general?
+  question: ¿Qué cubre esta póliza según su objeto?
 expected_verdicts:
   citation_coverage_agreement_scope: pass
   citation_exists_coverage_agreement_scope: pass

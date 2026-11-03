@@ -173,10 +173,9 @@ texts:
   clause_key: A.OUT_OF_COUNTRY
   part: Third-party civil liability (responsabilidad civil extracontractual)
   version: '2026.1'
-  text: If an accident happens outside Colombia, this section responds only when a territory endorsement
-    allows it. In that case, if the law of the place requires compulsory insurance to drive, that insurance
-    pays first and we pay the excess, up to the limit on the declarations page. We never pay twice for
-    the same loss.
+  text: When a territory endorsement extends the policy to another country and the law there requires compulsory
+    insurance to drive, that insurance pays first and this section pays the excess, up to the limit on the
+    declarations page. We never pay twice for the same loss.
   reviewed_at: '2026-11-02'
   reviewed_by: conductor
   drafted_with: claude-sonnet-5-5

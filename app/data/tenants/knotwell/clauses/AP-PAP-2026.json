@@ -9,7 +9,7 @@
       "issuer_label": "Autos Poblado",
       "language": "en",
       "part": "Purpose of the insurance and policy period",
-      "text": "Once the premium is paid, Autos Poblado commits to pay, on the terms of this contract, the coverages that the declarations page shows as contracted, when the loss event happens within the territory set out in the general conditions. A loss event is the occurrence that causes the damage or the loss. This insurance is voluntary and does not replace the SOAT."
+      "text": "The purpose of this insurance is to cover the coverages that the declarations page shows as contracted: civil liability to third parties, loss of the vehicle by damage or theft, medical expenses of the occupants and personal accident cover for the driver. Once the premium is paid, Autos Poblado pays them on the terms of this contract, for loss events that happen within the territory set out in the general conditions. A loss event is the occurrence that causes the damage or the loss. This insurance is voluntary and does not replace the SOAT."
     },
     {
       "clause_id": "AP-PAP-2026-AGREEMENT.2",
@@ -284,7 +284,7 @@
       "issuer_label": "Autos Poblado",
       "language": "en",
       "part": "Third-party civil liability (responsabilidad civil extracontractual)",
-      "text": "If an accident happens outside Colombia, this section responds only when a territory endorsement allows it. In that case, if the law of the place requires compulsory insurance to drive, that insurance pays first and we pay the excess, up to the limit on the declarations page. We never pay twice for the same loss."
+      "text": "When a territory endorsement extends the policy to another country and the law there requires compulsory insurance to drive, that insurance pays first and this section pays the excess, up to the limit on the declarations page. We never pay twice for the same loss."
     },
     {
       "clause_id": "AP-PAP-2026-A.SOAT",
@@ -317,7 +317,7 @@
       "issuer_label": "Autos Poblado",
       "language": "en",
       "part": "Medical expenses of occupants",
-      "text": "Autos Poblado pays the reasonable medical, hospital and funeral costs of the occupants of the covered auto when they suffer a traffic accident, as long as the costs arise within two years of it. We pay in excess of what the SOAT covers."
+      "text": "If you, the authorized driver or another occupant of the covered auto is injured in a traffic accident, Autos Poblado pays their reasonable medical, hospital and funeral expenses, in excess of what the SOAT covers. The expenses must arise within two years of the accident."
     },
     {
       "clause_id": "AP-PAP-2026-B.EXCL.1",
@@ -482,7 +482,7 @@
       "issuer_label": "Autos Poblado",
       "language": "en",
       "part": "Loss of the vehicle by damage and by theft",
-      "text": "Autos Poblado pays for sudden, accidental damage to the covered auto from a crash, rollover, fire, flood, hail, falling objects, vandalism, broken glass or hitting an animal. If repairing the vehicle costs less than 75% of the insured value, it is a partial loss: we pay the repair, minus the partial-loss-by-damage deductible on the declarations page, which is the share of the loss you pay. If it costs 75% or more, it is a total loss and we pay it under the limit of this section. We pay even if you caused the crash."
+      "text": "Autos Poblado pays for damage to the covered auto if you collide with another vehicle or an object, or if the vehicle rolls over, even if you caused the crash. It also pays for damage from fire, flood, hail, falling objects, vandalism, broken glass or hitting an animal. In a partial loss, you pay the partial-loss-by-damage deductible on the declarations page: the deductible is the share of the loss that you bear."
     },
     {
       "clause_id": "AP-PAP-2026-D.INS.THEFT",
@@ -900,7 +900,7 @@
       "issuer_label": "Autos Poblado",
       "language": "en",
       "part": "General conditions",
-      "text": "The policy covers loss events that happen during the policy period shown on the declarations page and within the territory of Colombia."
+      "text": "The policy covers loss events that happen during the policy period shown on the declarations page and within the territory of Colombia. There is no coverage outside Colombia unless a territory endorsement extends it to another country."
     },
     {
       "clause_id": "AP-PAP-2026-F.TERMINATION",

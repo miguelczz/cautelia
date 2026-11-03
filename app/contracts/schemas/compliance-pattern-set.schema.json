@@ -103,6 +103,14 @@
       },
       "title": "Exempt Catalog Keys",
       "type": "array"
+    },
+    "amount_exempt_catalog_keys": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Amount Exempt Catalog Keys",
+      "type": "array"
     }
   },
   "required": [

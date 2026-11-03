@@ -5,7 +5,9 @@ El recorrido, en el orden de `code-generation-plan.md` (paso 3):
 1. **Manifiesto** (BR1.1) -- se compara antes de leer nada mas.
 2. **Carga y validacion** (BR1.2, BR1.3) -- el corpus entero o ningun cambio.
 3. **Escritura de referencia** -- formularios, clausulas, relaciones y polizas,
-   por `ON CONFLICT` (`repository.upsert_reference_data`).
+   por `ON CONFLICT` (`repository.upsert_reference_data`), y despues el borrado
+   de las clausulas y relaciones que ya no estan en el corpus
+   (`repository.delete_clauses_not_in`).
 4. **Diferencia contra el indice ya escrito** (BR1.5, BR1.6) -- solo las
    clausulas cuyo `content_hash` cambio, o que nunca se indexaron para este
    modelo, llegan al `Embedder`. Las demas no generan ninguna llamada.
@@ -166,6 +168,12 @@ async def ingest_tenant(
         clauses=corpus.clauses,
         relations=corpus.relations,
         policies=corpus.policies,
+    )
+    # Con el corpus entero en la mano, lo que ya no esta se borra (ver `repository`).
+    await repository.delete_clauses_not_in(
+        tenant_id,
+        clause_ids=[clausula.clause_id for clausula in corpus.clauses],
+        relation_ids=[relacion.relation_id for relacion in corpus.relations],
     )
 
     ya_indexado = await repository.existing_content_hashes(

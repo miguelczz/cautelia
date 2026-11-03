@@ -25,9 +25,9 @@ Lo que **si** se compara explicitamente antes de escribir es `clause_index`
 ahi es donde reingestar sin cambios tiene que costar cero.
 
 **Lo que desaparece del corpus se borra, y solo eso.** Una clausula o una
-relacion cuyo identificador ya no esta en `app/data/` se borra en la misma
-transaccion de la escritura, y su entrada de `clause_index` se va con ella por
-la cascada. Hizo falta el 2026-11-02, cuando las polizas pasaron a la estructura
+relacion cuyo identificador ya no esta en `app/data/` se borra justo despues de
+la escritura (`delete_clauses_not_in`, que solo llama la ingesta, con el corpus
+entero), y su entrada de `clause_index` se va con ella por la cascada. Hizo falta el 2026-11-02, cuando las polizas pasaron a la estructura
 colombiana y cuatro claves cambiaron de nombre: las viejas seguian en la base y
 la recuperacion las devolvia. Es un borrado por diferencia, nunca masivo, y no
 corre si el corpus llego sin clausulas, para que una lectura vacia no deje a una
@@ -134,8 +134,8 @@ async def upsert_reference_data(
     por `ON CONFLICT` sobre su llave natural (BR1.3): reingestar sin cambios no
     toca ninguna fila que ya coincida, y una clausula editada llega con su
     texto nuevo sin arrastrar a `clause_index`, que cuelga de `clauses` y no de
-    esta transaccion. Al final borra las relaciones y las clausulas que ya no
-    estan en el corpus (ver el docstring del modulo).
+    esta transaccion. Solo escribe: no borra nada, porque se puede llamar con una
+    parte del corpus. Lo que desaparecio lo borra `delete_clauses_not_in`.
     """
     async with tenancy.session_for(tenant_id) as sesion:
         for formulario in forms:
@@ -197,19 +197,6 @@ async def upsert_reference_data(
                 period_end=poliza.period_end,
             )
 
-        if clauses:
-            vigentes = [clausula.clause_id for clausula in clauses]
-            await tenancy.execute_sql(
-                sesion,
-                _BORRAR_RELACIONES_SOBRANTES,
-                tenant_id=tenant_id,
-                relation_ids=[relacion.relation_id for relacion in relations],
-                clause_ids=vigentes,
-            )
-            await tenancy.execute_sql(
-                sesion, _BORRAR_CLAUSULAS_SOBRANTES, tenant_id=tenant_id, clause_ids=vigentes
-            )
-
 
 # Relaciones primero: sus dos llaves foraneas apuntan a `clauses`.
 _BORRAR_RELACIONES_SOBRANTES = """
@@ -226,6 +213,32 @@ _BORRAR_CLAUSULAS_SOBRANTES = """
     DELETE FROM clauses
     WHERE tenant_id = :tenant_id AND NOT (clause_id = ANY(:clause_ids))
 """
+
+
+async def delete_clauses_not_in(
+    tenant_id: TenantId, *, clause_ids: Sequence[str], relation_ids: Sequence[str]
+) -> None:
+    """Borra las clausulas y relaciones de la aseguradora que **no** estan en esas listas.
+
+    Es el complemento de `upsert_reference_data` para quien tiene **el corpus entero** de la
+    aseguradora en la mano --la ingesta--: lo que ya no esta en `app/data/` se va, con su entrada
+    de `clause_index` por la cascada. Aparte del `upsert` a proposito, porque este se llama con
+    una parte del corpus y no debe borrar el resto. Sin clausulas no hace nada: una lectura vacia
+    no puede dejar a una aseguradora sin corpus.
+    """
+    if not clause_ids:
+        return
+    async with tenancy.session_for(tenant_id) as sesion:
+        await tenancy.execute_sql(
+            sesion,
+            _BORRAR_RELACIONES_SOBRANTES,
+            tenant_id=tenant_id,
+            relation_ids=list(relation_ids),
+            clause_ids=list(clause_ids),
+        )
+        await tenancy.execute_sql(
+            sesion, _BORRAR_CLAUSULAS_SOBRANTES, tenant_id=tenant_id, clause_ids=list(clause_ids)
+        )
 
 
 _LEER_INDICE = """

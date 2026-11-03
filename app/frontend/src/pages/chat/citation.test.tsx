@@ -45,7 +45,11 @@ describe("la cita expandible", () => {
   it("con traduccion muestra la traduccion y el original a un clic", async () => {
     renderWithProviders(
       <Citation
-        citation={{ ...EN_INGLES, translated_text: "Texto traducido.", translated_part: "Pérdida del vehículo por daños y por hurto" }}
+        citation={{
+          ...EN_INGLES,
+          translated_text: "Texto traducido.",
+          translated_part: "Pérdida del vehículo por daños y por hurto",
+        }}
         conversationLocale="es"
       />,
     );
@@ -198,8 +202,15 @@ describe("el rotulo de cada tarjeta", () => {
   });
 
   it("agrupa por la parte que se ve: la traducida, si la hay", () => {
-    const traducida = { ...EN_INGLES, translated_part: "Pérdida del vehículo por daños y por hurto" };
-    const otra = { ...EN_INGLES, clause_id: "LI-10", translated_part: "Pérdida del vehículo por daños y por hurto" };
+    const traducida = {
+      ...EN_INGLES,
+      translated_part: "Pérdida del vehículo por daños y por hurto",
+    };
+    const otra = {
+      ...EN_INGLES,
+      clause_id: "LI-10",
+      translated_part: "Pérdida del vehículo por daños y por hurto",
+    };
 
     expect(posicionesDe([traducida, otra])).toEqual([
       { index: 1, total: 2 },

@@ -142,3 +142,17 @@ propia del uso en el entorno y su tope en el proveedor.
   protege ese saldo.
 - `PERSON_REQUESTED` (la persona pidió hablar con alguien) también lo atiende el ajustador de IA:
   en esta demo el ajustador es el de IA y así se dice en todos los textos.
+
+## Estado (2026-11-03, pausa por límite de uso)
+
+| Tanda | Estado |
+| --- | --- |
+| 1 Cimientos | Hecha y subida (`91985498`). Las migraciones u24 aún no se han aplicado contra una base: la primera vez es la corrida de GitHub |
+| 2a Proceso que decide | **Sin empezar el código.** Hay seis archivos de pruebas escritos primero y sin commitear en `app/backend/tests/unit/adjuster/` (`conftest.py`, `support.py`, `test_pipeline.py`, `test_prompting.py`, `test_validation.py`, `test_vehicle_value.py`): fallan hasta que exista la implementación. Falta `gather.py`, `vehicle_value.py`, `schema.py`, `validation.py`, `pipeline.py`, los prompts `app/config/prompts/adjuster.{es,en}.md`, las claves `adjuster.step.*` del catálogo y la exención `adjuster.decision` en la guardia |
+| 2b Cableado | Pendiente: disparo al derivar (puerto en `orchestration`, patrón de `install_resume_handler`), `inbox.decision.decide` con el actor `adjuster_ai`, aviso del chat sin comentario, 403 al visitante en `decide_case` y `annotate_triage`, reintento al leer, bloque del ajustador en `CaseDetailOut`, enchufes en `server/composition.py`, retiro de `demo_adjuster_link.py` |
+| 2c Golden set | Pendiente: subconjunto `ajustador` de DS-2 y su corrida con el modelo real (puede usar temporalmente la clave de evaluaciones exportándola como `UNTANGLE_ANTHROPIC_API_KEY_ADJUSTER` solo en ese comando) |
+| 3 Interfaz y textos | Pendiente: panel «Cómo decidió el ajustador», sacar el panel de jugar a ser ajustador, README, landing, guía y catálogo |
+
+Lo subido hasta aquí es inerte: nada dispara el ajustador, así que el producto se comporta como antes y los textos públicos siguen siendo ciertos.
+
+Cómo seguir sin gastar de más: sesión nueva (esta carga unos 700.000 tokens de historial), un solo agente a la vez, sin informes largos, y subir 2b y 2c juntos y 3 aparte. Mapa del código y decisiones: este documento y `09-correcciones-revisor-2026-11-02.md`.

@@ -1,5 +1,7 @@
 # Estructura de la póliza de auto personal ISO (PP 00 01) — referencia para el corpus sintético
 
+> Antecedente: desde el 2026-11-02 las pólizas de ejemplo siguen la estructura de una póliza de automóviles colombiana, descrita en `estructura-poliza-autos-colombia.md`. Este documento queda como antecedente de la estructura de Partes A a F que aún usan los identificadores internos de cláusula.
+
 Fuente: specimen público de un regulador estatal (Maine Bureau of Insurance, formulario PP 00 01 06 94; también existe el PP 00 01 09 18 en el regulador de Virginia). Solo se registra la **estructura** (secciones y numeración). El texto del formulario es material con derechos de ISO y no se copia ni se incluye en el repositorio (ver `critica.md`, C14).
 
 ## Secciones del formulario

@@ -11,7 +11,7 @@ kind: carrier
 # Ingles, coherente con el recorrido 7.4 del PRD. Con Stonecroft en espanol, la
 # demostracion muestra las dos aperturas nativas y no una traducida.
 default_language: en
-jurisdiction: corvane
+jurisdiction: colombia
 # La unica aseguradora con la cotizacion activa (U19, AC6.1.2). Stonecroft y Knotwell
 # la dejan apagada, y AC6.1.3 comprueba que pasa cuando alguien la pide donde lo esta.
 # Una aseguradora con esto en `true` tiene que traer `rules/eligibility.yaml`: una

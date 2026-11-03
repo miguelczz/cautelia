@@ -52,7 +52,7 @@ def _clausula(tenant_id: str, form_id: str, clause_id: str, clave: str) -> Claus
         clause_key=clave,
         form_id=form_id,
         form_version="2026.1",
-        part="Parte D",
+        part="Pérdida del vehículo por daños y por hurto",
         language="es",
         text="Texto de la clausula.",
         is_distractor=False,
@@ -88,7 +88,7 @@ async def _sembrar(tenant_id: str, numero: str) -> None:
                     "email": "natalia.henao@example.org",
                 },
                 vehicles=({"make_model_year": "Renault Logan 2024", "plate": "WBR686"},),
-                limits_and_deductibles={"d.collision_deductible": 250},
+                limits_and_deductibles={"d.damage_deductible": 250},
                 period_start=date(2026, 1, 2),
                 period_end=date(2027, 1, 2),
             ),
@@ -131,7 +131,7 @@ async def test_la_poliza_viaja_con_lo_que_la_pestana_muestra_y_nada_mas(app: Fas
     [poliza] = [p for p in cuerpo["policies"] if p["policy_number"] == "POL-91"]
     assert poliza["holder_name"] == "Natalia Henao Rendón"
     assert poliza["vehicles"] == ["Renault Logan 2024"]
-    assert poliza["limits"] == {"d.collision_deductible": 250}
+    assert poliza["limits"] == {"d.damage_deductible": 250}
     assert poliza["endorsements"] == [{"form_id": "form-u13-END-1", "clause_keys": ["D.EXCL.5"]}]
     assert poliza["questions"] == [*policies.GENERAL_QUESTIONS, "tire_exclusion_reopened"]
     for dato in ("45.819.323", "304 555 0160", "example.org", "WBR686"):

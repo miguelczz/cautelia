@@ -959,9 +959,11 @@ async def test_la_respuesta_del_fondo_retoma_la_pregunta_que_quedo_en_el_aire(
     motor, _ = await _motor(a)
     motor.opening()
 
-    dicha = str(motor.background_answer("In your policy, Part D addresses this.").text)
+    dicha = str(
+        motor.background_answer("In your policy, the damage and theft section addresses this.").text
+    )
 
-    assert dicha.startswith("In your policy, Part D addresses this.")
+    assert dicha.startswith("In your policy, the damage and theft section addresses this.")
     assert copy_api.t(copy_api.CopyKey("voice.answer.back_to_report"), locale="en") in dicha
     assert dicha.endswith(copy_api.t(opening.FIRST_QUESTION, locale="en"))
 

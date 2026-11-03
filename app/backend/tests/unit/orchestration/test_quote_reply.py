@@ -78,7 +78,7 @@ def _frases_de_la_cotizacion(idioma: Locale) -> dict[str, str]:
         "name": "Marta Diaz",
         "birth_date": "12 de abril de 1990",
         "license_years": "8",
-        "license_jurisdiction": "Corvane",
+        "license_jurisdiction": "Colombia",
         "vehicle_year": "2014",
         "vehicle_make": "Mazda",
         "vehicle_model": "Tres",
@@ -86,7 +86,7 @@ def _frases_de_la_cotizacion(idioma: Locale) -> dict[str, str]:
         "salvage_title": "nunca declarado pérdida total",
         "use_type": "personal",
         "annual_mileage_band": "normal",
-        "garaging_jurisdiction": "Corvane",
+        "garaging_jurisdiction": "Colombia",
         "at_fault_losses_3y": "0",
         "claims_3y": "1",
         "prior_coverage_active": "con seguro vigente",
@@ -277,7 +277,7 @@ def test_la_negativa_ofrece_la_banda_cuando_ya_se_conoce(
 
 
 @pytest.mark.parametrize(
-    "texto", ["vivo en Corvane", "mi auto es un Mazda 2014", "no, es de uso personal", ""]
+    "texto", ["vivo en Colombia", "mi auto es un Mazda 2014", "no, es de uso personal", ""]
 )
 def test_lo_que_no_pregunta_por_el_precio_no_recibe_la_negativa(texto: str) -> None:
     for idioma in IDIOMAS:

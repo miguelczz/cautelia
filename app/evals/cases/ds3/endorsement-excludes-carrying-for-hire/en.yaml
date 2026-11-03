@@ -18,7 +18,7 @@ citation:
   clause_id: AP-PAP-2026-B.INS
   expected_outcome: verified
   amended_by: AP-PAP-2026-END-4
-  question: Am I covered for medical payments after an accident?
+  question: Are my medical expenses covered after an accident?
 expected_verdicts:
   citation_endorsement_excludes_carrying_for_hire: pass
   citation_exists_endorsement_excludes_carrying_for_hire: pass

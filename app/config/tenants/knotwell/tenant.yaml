@@ -17,7 +17,7 @@ tenant_id: knotwell
 display_name: Agencia Castilla
 kind: agency
 default_language: en
-jurisdiction: corvane
+jurisdiction: colombia
 quote_enabled: false
 # El chat sigue un caso que se empezo por llamada si la persona escribe su numero desde el mismo
 # navegador (US1.20). Apagado, explica que un caso se retoma por el canal donde empezo (AC1.19.5).

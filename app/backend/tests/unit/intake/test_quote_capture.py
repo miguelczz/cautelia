@@ -210,7 +210,7 @@ GUION: dict[Locale, list[tuple[str, str]]] = {
         ("driver_name", "Marta Diaz Lopez"),
         ("driver_birth_date", "12 de abril de 1990"),
         ("license_years", "hace ocho años"),
-        ("license_jurisdiction", "Corvane"),
+        ("license_jurisdiction", "Colombia"),
         ("vehicle_year", "es un 2014"),
         ("vehicle_make", "Mazda"),
         ("vehicle_model", "Tres"),
@@ -218,7 +218,7 @@ GUION: dict[Locale, list[tuple[str, str]]] = {
         ("salvage_title", "no, está limpio"),
         ("use_type", "para ir al trabajo"),
         ("annual_mileage_band", "moderado"),
-        ("garaging_jurisdiction", "Corvane"),
+        ("garaging_jurisdiction", "Colombia"),
         ("at_fault_losses_3y", "ninguno"),
         ("claims_3y", "uno"),
         ("prior_coverage_active", "sí, tengo"),
@@ -227,7 +227,7 @@ GUION: dict[Locale, list[tuple[str, str]]] = {
         ("driver_name", "Marta Diaz Lopez"),
         ("driver_birth_date", "April 12, 1990"),
         ("license_years", "about eight years"),
-        ("license_jurisdiction", "Corvane"),
+        ("license_jurisdiction", "Colombia"),
         ("vehicle_year", "it's a 2014"),
         ("vehicle_make", "Mazda"),
         ("vehicle_model", "Three"),
@@ -235,7 +235,7 @@ GUION: dict[Locale, list[tuple[str, str]]] = {
         ("salvage_title", "no, it's clean"),
         ("use_type", "commuting to work"),
         ("annual_mileage_band", "moderate"),
-        ("garaging_jurisdiction", "Corvane"),
+        ("garaging_jurisdiction", "Colombia"),
         ("at_fault_losses_3y", "none"),
         ("claims_3y", "one"),
         ("prior_coverage_active", "yes, I do"),
@@ -464,11 +464,11 @@ async def test_un_bloque_entero_adelantado_sigue_con_lo_que_falta() -> None:
     caso = _Caso("en")
 
     salida = await caso.decir(
-        "I'm Marta Diaz, born April 12 1990, licensed for eight years in Corvane",
+        "I'm Marta Diaz, born April 12 1990, licensed for eight years in Colombia",
         _item("driver_name", "Marta Diaz"),
         _item("driver_birth_date", "April 12, 1990"),
         _item("license_years", "eight years"),
-        _item("license_jurisdiction", "Corvane"),
+        _item("license_jurisdiction", "Colombia"),
     )
 
     assert salida.intake_response_key == "intake.question.quote_vehicle_year"
@@ -505,7 +505,7 @@ async def test_las_lecturas_nombran_todo_lo_dicho_y_con_etiqueta_no_con_enum(
 
     # Una sola lectura con todo lo dicho (2026-10-08).
     todo = lecturas["intake.readback.quote_all"]
-    for dicho in ("Marta Diaz Lopez", "Corvane", "8", "2014", "Mazda", "JM1BL1SF7A1234567"):
+    for dicho in ("Marta Diaz Lopez", "Colombia", "8", "2014", "Mazda", "JM1BL1SF7A1234567"):
         assert dicho in todo
     vehiculo = uso = historial = todo
     # Los valores cerrados salen por su etiqueta, nunca por el valor del enum.
@@ -609,7 +609,7 @@ def test_un_valor_que_no_se_puede_convertir_no_se_escribe(
 
 def test_los_campos_sin_regla_se_escriben_como_se_dijeron() -> None:
     assert _extraer("driver_name", "Marta Diaz Lopez") == ["driver_name=Marta Diaz Lopez"]
-    assert _extraer("garaging_jurisdiction", "Corvane") == ["garaging_jurisdiction=Corvane"]
+    assert _extraer("garaging_jurisdiction", "Colombia") == ["garaging_jurisdiction=Colombia"]
 
 
 def test_el_modelo_no_puede_escribir_un_campo_derivado() -> None:
@@ -826,7 +826,7 @@ def test_perf_u19_2_las_frases_fijas_de_la_cotizacion_caben_en_el_presupuesto_de
             record_type=RecordType.QUOTE_REQUEST,
             anything_captured=True,
             quote_enabled=True,
-            text=f"vivo en Corvane, mi auto es un Mazda {2000 + n % 20}",
+            text=f"vivo en Colombia, mi auto es un Mazda {2000 + n % 20}",
             language="es",
         )
         muestras.append((time.perf_counter() - empezo) * 1000)

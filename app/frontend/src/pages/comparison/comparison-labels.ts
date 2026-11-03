@@ -32,7 +32,7 @@ export function exampleQuestions(): readonly Message[] {
   return [
     (t) => t("comparison.examples.rental_car"),
     (t) => t("comparison.examples.hail"),
-    (t) => t("comparison.examples.uninsured_driver"),
+    (t) => t("comparison.examples.other_driver_no_insurance"),
     (t) => t("comparison.examples.stolen_keys"),
     (t) => t("comparison.examples.ride_app"),
     (t) => t("comparison.examples.blown_tire"),

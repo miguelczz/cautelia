@@ -849,13 +849,17 @@ async def test_la_respuesta_de_cobertura_se_dice_en_la_llamada(catalogo: None) -
     assert motor.call.case_id is not None
 
     entregada = await answers.CASE_NOTIFIER.notify(
-        motor.call.tenant_id, motor.call.case_id, text="In your policy, Part D addresses this."
+        motor.call.tenant_id,
+        motor.call.case_id,
+        text="In your policy, the damage and theft section addresses this.",
     )
     hubo, motivo = await ciclo._al_vencer(detector, callo_a, _reloj())
 
     assert entregada is True
     assert (hubo, motivo) == (True, None)
-    assert doble.dicho[-1].startswith("In your policy, Part D addresses this.")
+    assert doble.dicho[-1].startswith(
+        "In your policy, the damage and theft section addresses this."
+    )
     # Y retoma la pregunta que la persona todavia debe.
     assert doble.dicho[-1].endswith("How can I help you?")
     ciclo._dejar_de_escuchar_al_fondo()
@@ -869,7 +873,9 @@ async def test_la_respuesta_no_se_dice_encima_de_la_persona(catalogo: None) -> N
     ciclo = _correr(motor, CanalFalso(), doble)
     detector = motor.listening(since=_reloj())
     detector.observe(_final("and another thing about"), at=_reloj())
-    ciclo._llego_del_fondo(answers.BackgroundAnswer(text="In your policy, Part D."))
+    ciclo._llego_del_fondo(
+        answers.BackgroundAnswer(text="In your policy, the damage and theft section.")
+    )
 
     dijo = await ciclo._decir_lo_del_fondo(detector)
 
@@ -1436,13 +1442,17 @@ async def test_la_respuesta_que_llega_despues_de_sigo_revisando_se_dice(catalogo
     assert motor.call.case_id is not None
 
     await answers.CASE_NOTIFIER.notify(
-        motor.call.tenant_id, motor.call.case_id, text="In your policy, Part D addresses this."
+        motor.call.tenant_id,
+        motor.call.case_id,
+        text="In your policy, the damage and theft section addresses this.",
     )
     hubo, motivo = await ciclo._al_vencer(nuevo, desde, reloj())
     ciclo._dejar_de_escuchar_al_fondo()
 
     assert (hubo, motivo) == (True, None)
-    assert doble.dicho[-1].startswith("In your policy, Part D addresses this.")
+    assert doble.dicho[-1].startswith(
+        "In your policy, the damage and theft section addresses this."
+    )
     assert ciclo._respuesta_hasta is None
     assert ciclo._demora_dicha is False
 

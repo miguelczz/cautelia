@@ -302,7 +302,7 @@ def test_la_aseguradora_se_valida_igual_sin_los_campos_nuevos() -> None:
             "display_name": "Prueba",
             "kind": "carrier",
             "default_language": "es",
-            "jurisdiction": "corvane",
+            "jurisdiction": "colombia",
             "example_policy": "POL-01",
             "case_number_prefix": "PR",
             "voice": {"primary_voice": "catalina", "language_default": "es"},

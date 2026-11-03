@@ -19,10 +19,9 @@
     "a.bodily_injury_per_person": 50000,
     "a.property_damage": 50000,
     "b.medical_payments_per_person": 2000,
-    "c.uninsured_per_accident": 100000,
-    "c.uninsured_per_person": 50000,
-    "d.collision_deductible": 500,
-    "d.other_than_collision_deductible": 500
+    "c.driver_personal_accident": 50000,
+    "d.damage_deductible": 500,
+    "d.theft_deductible": 500
   },
   "named_insured": {
     "email": "victor.parker@example.org",

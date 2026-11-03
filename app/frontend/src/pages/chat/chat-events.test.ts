@@ -277,7 +277,7 @@ describe("la conversacion recuperada del servidor", () => {
         {
           turn_id: "turn-9",
           speaker: "agent",
-          text: "En tu póliza esto lo trata la Parte D. [LUGAR 1] te dejo el texto exacto.",
+          text: "En tu póliza esto lo trata la sección de pérdida del vehículo por daños y por hurto. [LUGAR 1] te dejo el texto exacto.",
           language: "es",
         },
       ],
@@ -289,12 +289,12 @@ describe("la conversacion recuperada del servidor", () => {
       [],
       [
         "Otra respuesta cualquiera.",
-        "En tu póliza esto lo trata la Parte D. Abajo te dejo el texto exacto.",
+        "En tu póliza esto lo trata la sección de pérdida del vehículo por daños y por hurto. Abajo te dejo el texto exacto.",
       ],
     );
 
     expect(estado.messages[0]?.text).toBe(
-      "En tu póliza esto lo trata la Parte D. Abajo te dejo el texto exacto.",
+      "En tu póliza esto lo trata la sección de pérdida del vehículo por daños y por hurto. Abajo te dejo el texto exacto.",
     );
   });
 

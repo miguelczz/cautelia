@@ -81,7 +81,7 @@ _CLAUSES_BASE: dict[str, object] = {
             "clause_key": "A.LIMIT",
             "form_id": "TCO-PAP-2026",
             "form_version": "2026.1",
-            "part": "Parte A",
+            "part": "Responsabilidad civil extracontractual",
             "language": "es",
             "text": "El limite por persona es el que muestra la caratula.",
             "is_distractor": False,

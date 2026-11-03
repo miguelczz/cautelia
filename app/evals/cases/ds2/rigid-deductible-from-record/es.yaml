@@ -26,8 +26,8 @@ rigid_facts:
   topic: deductible
   route: facts
   amounts:
-    - d.collision_deductible
-    - d.other_than_collision_deductible
+    - d.damage_deductible
+    - d.theft_deductible
   mentions:
     - POL-11
   forbids:

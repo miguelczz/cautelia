@@ -86,7 +86,7 @@ class FinalText:
     que escribio un modelo y **no** puede pasarle el detector a una frase nuestra:
     en espanol el detector etiqueta como nombre de persona el verbo con que
     arranca la frase, asi que la respuesta de cobertura salia diciendo "[LUGAR 1]
-    la clausula dentro de la Parte D" en vez de "Encontre la clausula...".
+    la clausula dentro de la seccion de danos y hurto" en vez de "Encontre la clausula...".
 
     Es un dato y no una adivinanza del canal: el canal no puede mirar un texto y
     saber de donde vino, y adivinarlo con "¿trae clave?" fallaria con las

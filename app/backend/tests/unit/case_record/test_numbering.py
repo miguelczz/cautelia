@@ -25,7 +25,7 @@ def _tenant(tenant_id: str, prefijo: str) -> TenantConfig:
         display_name=tenant_id.title(),
         kind=TenantKind.CARRIER,
         default_language="es",
-        jurisdiction="corvane",
+        jurisdiction="colombia",
         example_policy="POL-11",
         case_number_prefix=prefijo,
         voice=VoiceConfig(primary_voice="catalina", language_default="es"),
@@ -118,7 +118,7 @@ def test_una_aseguradora_sin_prefijo_no_carga() -> None:
         "display_name": "Seguros Aburrá",
         "kind": "carrier",
         "default_language": "es",
-        "jurisdiction": "corvane",
+        "jurisdiction": "colombia",
         "example_policy": "POL-11",
         "voice": {"primary_voice": "catalina", "language_default": "es"},
     }

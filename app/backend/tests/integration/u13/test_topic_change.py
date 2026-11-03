@@ -279,7 +279,7 @@ async def _hablar_antes(tenant_id: str, case_id: str) -> None:
     )
     await transcript_writer.record_agent_turn(
         ambito,
-        text="La grúa la trata la Parte D de tu póliza.",
+        text="La grúa la trata la sección de daños y hurto de tu póliza.",
         now=AHORA - timedelta(minutes=9),
         from_catalog=True,
     )
@@ -382,7 +382,7 @@ async def test_el_modelo_recibe_la_conversacion_de_los_dos_casos(
     # Lo de la consulta va primero, tal como se guardo, y despues lo del reporte.
     assert dicho[:2] == [
         ("person", "¿me cubre la grúa?"),
-        ("agent", "La grúa la trata la Parte D de tu póliza."),
+        ("agent", "La grúa la trata la sección de daños y hurto de tu póliza."),
     ]
     assert ("person", "quiero reportar eso como un accidente") in dicho
     assert dicho.index(("person", "quiero reportar eso como un accidente")) > 1
@@ -411,7 +411,10 @@ async def test_la_transcripcion_de_cada_caso_sigue_siendo_suya(
     assert nuevo is not None
     del_viejo = [t.text_redacted for t in await casos.transcript_of(propia, consulta.case_id)]
     del_nuevo = [t.text_redacted for t in await casos.transcript_of(propia, nuevo)]
-    assert del_viejo == ["¿me cubre la grúa?", "La grúa la trata la Parte D de tu póliza."]
+    assert del_viejo == [
+        "¿me cubre la grúa?",
+        "La grúa la trata la sección de daños y hurto de tu póliza.",
+    ]
     assert "¿me cubre la grúa?" not in del_nuevo
     conversacion_entera = [
         t.text_redacted for t in await casos.conversation_transcript(propia, nuevo)

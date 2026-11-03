@@ -1,6 +1,7 @@
-# Textos fuente revisados de Seguros Aburrá, en espanol (U7, F2).
-# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
-# Se edita a mano y se regenera con `mise run synthetic:generate`.
+# Textos fuente revisados de Seguros Aburrá, en español (U7, F2).
+# Redacción propia con la estructura de una póliza de automóviles colombiana
+# (docs/reference/estructura-poliza-autos-colombia.md); ningún texto de ISO, de ACORD
+# ni de una aseguradora real (P8). Se edita a mano y se regenera con `mise run synthetic:generate`.
 format_version: 1
 tenant_id: stonecroft
 language: es
@@ -13,48 +14,49 @@ texts:
   version: '2026.1'
   text: Para esta póliza, también es familiar su hijo o hija menor de 25 años que estudia en otra ciudad
     y vive allí durante el periodo de estudios, aunque no viva en su hogar.
-  reviewed_at: '2026-09-21'
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: hand
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-PAP-2026-END-2-A.EXCL.A.5
   kind: endorsement
   clause_key: A.EXCL.A.5
   part: Endosos
   version: '2026.1'
-  text: La exclusión de transporte a cambio de un pago no se aplica mientras el vehículo cubierto presta
-    servicio por una plataforma de viajes registrada en Corvane, desde que el conductor acepta el viaje
-    hasta que el pasajero se baja. Rigen los mismos límites de la Parte A.
-  reviewed_at: '2026-09-21'
+  text: La exclusión de transporte a cambio de un pago no se aplica mientras el vehículo asegurado presta
+    servicio por una plataforma de viajes registrada en Colombia, desde que el conductor acepta el viaje
+    hasta que el pasajero se baja. Rigen los mismos límites de la sección de responsabilidad civil.
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: gemini-3.1-flash-lite
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-PAP-2026-END-3-D.EXCL.3
   kind: endorsement
   clause_key: D.EXCL.3
   part: Endosos
   version: '2026.1'
   text: La exclusión de equipos electrónicos no instalados de fábrica no se aplica a los equipos que usted
-    haya declarado con su factura, hasta $1.500 por pérdida y con el deducible de los daños que no vienen
-    de un choque.
-  reviewed_at: '2026-09-21'
+    haya declarado con su factura, hasta $1.500.000 por pérdida y con el deducible de pérdida parcial
+    por hurto.
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: hand
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-PAP-2026-END-4-C.ARBITRATION
   kind: endorsement
   clause_key: C.ARBITRATION
   part: Endosos
   version: '2026.1'
-  text: 'El arbitraje de la Parte C lo decide un tribunal de tres árbitros: uno nombrado por cada parte
-    y el tercero elegido por los dos primeros. Cada parte paga su árbitro y la mitad del tercero.'
-  reviewed_at: '2026-09-21'
+  text: 'El arbitraje de la sección de accidentes personales lo decide un tribunal de tres árbitros: uno
+    nombrado por cada parte y el tercero elegido por los dos primeros. Cada parte paga su árbitro y la
+    mitad del tercero.'
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: gemini-3.1-flash-lite
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-PAP-2026-END-5-F.PERIOD_TERRITORY
   kind: endorsement
   clause_key: F.PERIOD_TERRITORY
   part: Endosos
   version: '2026.1'
-  text: El territorio de la póliza se amplía a los viajes de hasta 30 días seguidos por las jurisdicciones
-    vecinas de Corvane, siempre que el vehículo cubierto vuelva a Corvane al terminar el viaje.
-  reviewed_at: '2026-09-21'
+  text: El territorio de la póliza se amplía a los viajes de hasta 30 días seguidos por los países vecinos
+    de Colombia, siempre que el vehículo asegurado vuelva a Colombia al terminar el viaje.
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: gemini-3.1-flash-lite
+  drafted_with: claude-sonnet-5-5

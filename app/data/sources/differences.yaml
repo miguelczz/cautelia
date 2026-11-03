@@ -2,9 +2,9 @@
 # Las usan DS-3 y la vista de comparacion. Cada una se comprueba contra el corpus por
 # su numeracion: los formularios de present_in la tienen y los de absent_in no.
 format_version: 1
-reviewed_at: '2026-09-21'
+reviewed_at: '2026-11-02'
 reviewed_by: conductor
-drafted_with: hand
+drafted_with: claude-sonnet-5-5
 differences:
 - difference_id: transport-expense-extension
   description: 'Solo Autos Poblado tiene un endoso que amplía los gastos de transporte: sube el monto
@@ -20,7 +20,7 @@ differences:
   - SA-PAP-2026-END-4
   - SA-PAP-2026-END-5
 - difference_id: ride-app-exclusion-reopened
-  description: Solo Seguros Aburrá tiene un endoso que reabre la exclusión de la Parte A por transporte
+  description: Solo Seguros Aburrá tiene un endoso que reabre la exclusión de la responsabilidad civil por transporte
     a cambio de un pago, mientras el vehículo presta servicio por una plataforma de viajes registrada.
     En Autos Poblado esa exclusión sigue cerrada.
   clause_key: A.EXCL.A.5
@@ -33,15 +33,15 @@ differences:
   - AP-PAP-2026-END-4
   - AP-PAP-2026-END-5
 - difference_id: temporary-substitute-definition
-  description: Solo Seguros Aburrá define el vehículo sustituto temporal y le da la protección del
-    vehículo cubierto mientras este está fuera de servicio. Autos Poblado no tiene esa definición.
+  description: Solo Seguros Aburrá define el vehículo de reemplazo temporal y le da la protección del
+    vehículo asegurado mientras este está fuera de servicio. Autos Poblado no tiene esa definición.
   clause_key: DEF.TEMPORARY_SUBSTITUTE
   present_in:
   - SA-PAP-2026
   absent_in:
   - AP-PAP-2026
 - difference_id: tire-exclusion-reopened
-  description: Solo Autos Poblado tiene un endoso que reabre la exclusión de la Parte D para las llantas
+  description: Solo Autos Poblado tiene un endoso que reabre la exclusión de la pérdida por daños y hurto para las llantas
     dañadas por un hueco en la vía, con un tope por llanta. En Seguros Aburrá esa exclusión sigue cerrada.
   clause_key: D.EXCL.5
   present_in:
@@ -53,7 +53,7 @@ differences:
   - SA-PAP-2026-END-4
   - SA-PAP-2026-END-5
 - difference_id: covered-auto-definition-changed
-  description: 'Solo Autos Poblado tiene un endoso que cambia la definición de vehículo cubierto: amplía
+  description: 'Solo Autos Poblado tiene un endoso que cambia la definición de vehículo asegurado: amplía
     el plazo para avisar de un vehículo recién comprado. Además, el plazo base es distinto: diez días
     en Seguros Aburrá y veinte en Autos Poblado.'
   clause_key: DEF.COVERED_AUTO

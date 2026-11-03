@@ -8,8 +8,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Corvane Jurisdiction Document",
-      "text": "In Corvane, every vehicle on a public road must carry liability insurance with at least these limits: $25,000 for bodily injury to one person, $50,000 for all bodily injury in one accident and $20,000 for property damage."
+      "part": "Legal framework",
+      "text": "In Colombia, every vehicle on a public road must carry the SOAT. The civil liability insurance of this policy is voluntary and adds to the SOAT. Autos Poblado does not issue it with limits below these minimums: COP 25,000,000 for the death or injury of one person, COP 50,000,000 for all victims of one accident and COP 20,000,000 for third-party property damage."
     },
     {
       "clause_id": "AP-JUR-2026-J.2",
@@ -19,8 +19,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Corvane Jurisdiction Document",
-      "text": "An insurer that decides to cancel a policy must notify the policyholder at least 20 days in advance. When the reason is unpaid premium, 10 days' notice is enough."
+      "part": "Legal framework",
+      "text": "An insurer that decides to revoke a policy must notify the policyholder in writing at least ten days in advance and refund the unearned premium (Commercial Code, art. 1071). If the premium is not paid, the contract ends automatically (Commercial Code, art. 1068)."
     },
     {
       "clause_id": "AP-JUR-2026-J.3",
@@ -30,8 +30,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Corvane Jurisdiction Document",
-      "text": "Anyone who has an accident or a loss must report it to their insurer within 60 days, unless they show they could not do so sooner."
+      "part": "Legal framework",
+      "text": "Anyone who suffers a loss event must report it to their insurer within three business days of learning about it. The parties may extend that period but not shorten it (Commercial Code, arts. 1075 and 829)."
     },
     {
       "clause_id": "AP-JUR-2026-J.4",
@@ -41,8 +41,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Corvane Jurisdiction Document",
-      "text": "Drivers must carry current proof of insurance, on paper or in digital form, and show it when a traffic officer asks."
+      "part": "Legal framework",
+      "text": "Drivers must have a current SOAT, which traffic authorities check in the national registry. The law does not require the voluntary insurance of this policy to drive."
     },
     {
       "clause_id": "AP-JUR-2026-J.5",
@@ -52,8 +52,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Corvane Jurisdiction Document",
-      "text": "A lawsuit against an insurer over an auto policy must be filed within two years of the accident or loss."
+      "part": "Legal framework",
+      "text": "Actions arising from the insurance contract expire two years after the interested party learned, or should have learned, of the event that gives rise to them, and in any case five years after the right arises (Commercial Code, art. 1081)."
     }
   ],
   "form_id": "AP-JUR-2026"

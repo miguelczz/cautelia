@@ -158,7 +158,13 @@ def test_schema_check_nombra_una_salida_editada_a_mano_y_una_fuente_sin_regenera
     salida.write_bytes(salida.read_bytes().replace(b"Relleno", b"Corregido"))
     escribir_fuente(
         raiz,
-        [entrada(part="Parte B", source_id="SA-PAP-2026-B.INS", clause_key="B.INS")],
+        [
+            entrada(
+                part="Gastos médicos de los ocupantes",
+                source_id="SA-PAP-2026-B.INS",
+                clause_key="B.INS",
+            )
+        ],
         parte="part_b",
     )
 

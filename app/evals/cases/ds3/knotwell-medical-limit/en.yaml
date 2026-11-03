@@ -18,7 +18,7 @@ citation:
   clause_id: AP-PAP-2026-B.LIMIT
   expected_outcome: verified
   issuer_tenant: sunmeadow
-  question: What is the medical payments limit on my policy?
+  question: What is the medical expenses limit on my policy?
 expected_verdicts:
   citation_knotwell_medical_limit: pass
   citation_exists_knotwell_medical_limit: pass

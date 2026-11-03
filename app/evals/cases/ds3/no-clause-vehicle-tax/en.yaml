@@ -8,8 +8,8 @@
 # Por que no hay clausula (buscado el 2026-10-11 en todo el corpus de la poliza: formulario base, endosos,
 # documento de jurisdiccion y version anterior). Se busco impuesto, tributo, matricula y placas en espanol, y
 # tax, registration, fee y plates en ingles, y no aparece nada que la poliza pague de eso. Lo unico que sale
-# es 'fee' en el honorario del arbitro (C.ARBITRATION), que no tiene relacion. Lo mas cercano por tema es la
-# prueba de seguro obligatoria (J.1, J.4), que es del seguro y no del vehiculo. La poliza paga danos y gastos
+# es 'fee' en el honorario del arbitro (C.ARBITRATION), que no tiene relacion. Lo mas cercano por tema es el
+# SOAT obligatorio (J.1, J.4), que es del seguro y no del vehiculo. La poliza paga danos y gastos
 # medicos, no los costos de tener el auto.
 # Escrito el 2026-10-11 para reponer los 'sin clausula' que se perdieron al corregir tres casos que si tenian
 # respuesta (auditoria del 2026-10-10, E10), y aun sin correr contra un modelo. Si `evals:citas` encuentra una

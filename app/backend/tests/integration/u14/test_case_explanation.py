@@ -334,8 +334,16 @@ async def test_una_clausula_citada_dice_quien_la_emitio(app: FastAPI, emisora: s
 @pytest.mark.parametrize(
     ("idioma", "parte", "en_el_otro"),
     [
-        ("en", "Part D — Coverage for Damage to Your Auto", "Parte D — Daños a su vehículo"),
-        ("es", "Parte D — Daños a su vehículo", "Part D — Coverage for Damage to Your Auto"),
+        (
+            "en",
+            "Loss of the vehicle by damage and by theft",
+            "Pérdida del vehículo por daños y por hurto",
+        ),
+        (
+            "es",
+            "Pérdida del vehículo por daños y por hurto",
+            "Loss of the vehicle by damage and by theft",
+        ),
         # Una parte que el corpus no traduce no inventa nada: la pantalla usa la original.
         ("es", "Una parte sin traduccion", None),
     ],
@@ -414,7 +422,7 @@ async def _sembrar_clausula(
     clause_id: str,
     emisor: str,
     language: Locale = "es",
-    part: str = "Part D",
+    part: str = "Loss of the vehicle by damage and by theft",
 ) -> None:
     """Un formulario con una clausula en el corpus de esa aseguradora."""
     await upsert_reference_data(

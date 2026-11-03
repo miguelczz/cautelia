@@ -959,7 +959,7 @@ comparison:
     hail:
       text: "Does my policy cover hail damage?"
       surface: system
-    uninsured_driver:
+    other_driver_no_insurance:
       text: "What happens if I am hit by someone with no insurance?"
       surface: system
     stolen_keys:
@@ -2015,10 +2015,10 @@ chat:
   # no conjunction is written inline.
   rigid:
     deductible:
-      text: "According to your policy {policy_number}, the vehicle deductible is {collision} for a collision and {other} for other damage."
+      text: "According to your policy {policy_number}, the partial-loss deductible is {damage} for damage and {theft} for theft."
       surface: chat
     limits:
-      text: "According to your policy {policy_number}, the limits are: liability for injuries, {bodily_person} per person and {bodily_accident} per accident; liability for property damage, {property_damage}; medical payments, {medical_person} per person; and uninsured driver, {uninsured_person} per person and {uninsured_accident} per accident."
+      text: "According to your policy {policy_number}, the limits are: liability for injuries, {bodily_person} per person and {bodily_accident} per accident; liability for property damage, {property_damage}; medical payments, {medical_person} per person; and driver personal accident cover, {driver_personal_accident}."
       surface: chat
     validity:
       in_force:
@@ -2427,8 +2427,8 @@ policy_rag:
       surface: chat
     # AC2.7.1: the voice form of a citation, one sentence naming the part and
     # saying it stays in the case. Never repeats the clause's text: {part} is
-    # its name from the corpus (e.g. "Part D — Coverage for Damage to Your
-    # Auto"), never its content.
+    # its name from the corpus (e.g. "Loss of the vehicle by damage and by
+    # theft"), never its content.
     voice_summary:
       text: I found the clause under {part}; it's summarized here and stays complete in your case.
       surface: voice
@@ -2459,22 +2459,22 @@ policy_rag:
     # en otro (2026-10-08): antes salia «Endorsements» en una respuesta en espanol.
     part:
       a:
-        text: "Part A, liability"
+        text: "the third-party liability section"
         surface: chat
       b:
-        text: "Part B, medical payments"
+        text: "the medical expenses of occupants section"
         surface: chat
       c:
-        text: "Part C, uninsured motorists"
+        text: "the driver personal accident section"
         surface: chat
       d:
-        text: "Part D, damage to your auto"
+        text: "the loss of the vehicle by damage and theft section"
         surface: chat
       e:
-        text: "Part E, duties after an accident"
+        text: "the duties after a loss event section"
         surface: chat
       f:
-        text: "Part F, general provisions"
+        text: "the general conditions"
         surface: chat
       definitions:
         text: "the definitions section"
@@ -2492,7 +2492,7 @@ policy_rag:
       text: "Let me check your policy; I'll answer you in a moment."
       surface: chat
     ask_question:
-      text: "What would you like to know about your policy? I can check, for example, whether it covers a theft, a crash with an uninsured driver or a rental car while yours is repaired."
+      text: "What would you like to know about your policy? I can check, for example, whether it covers a theft, a crash with someone who has no insurance or a rental car while yours is repaired."
       surface: chat
     need_policy:
       text: "To check that, I first need your policy."
@@ -3720,17 +3720,14 @@ policies:
     b_medical_payments_per_person:
       text: "Medical payments, per person"
       surface: system
-    c_uninsured_per_person:
-      text: "Uninsured motorists, per person"
+    c_driver_personal_accident:
+      text: "Driver personal accident cover"
       surface: system
-    c_uninsured_per_accident:
-      text: "Uninsured motorists, per accident"
+    d_damage_deductible:
+      text: "Partial loss by damage deductible"
       surface: system
-    d_collision_deductible:
-      text: "Your vehicle's deductible in a collision"
-      surface: system
-    d_other_than_collision_deductible:
-      text: "Your vehicle's deductible for other damage"
+    d_theft_deductible:
+      text: "Partial loss by theft deductible"
       surface: system
   endorsement:
     def_family_member:
@@ -3743,10 +3740,10 @@ policies:
       text: "Covers electronic equipment declared with its invoice"
       surface: system
     c_arbitration:
-      text: "Part C arbitration is decided by a three-arbitrator panel"
+      text: "Driver personal accident arbitration is decided by a three-arbitrator panel"
       surface: system
     f_period_territory:
-      text: "Extends the territory to trips of up to 30 days in neighboring jurisdictions"
+      text: "Extends the territory to trips of up to 30 days in neighboring countries"
       surface: system
     def_covered_auto:
       text: "45 days, instead of 20, to report a newly bought vehicle"
@@ -3785,7 +3782,7 @@ policies:
     covered_auto_definition_changed:
       text: "I just bought a car. How many days do I have to report it?"
       surface: system
-    uninsured_driver:
+    other_driver_no_insurance:
       text: "Am I covered if I'm hit by someone with no insurance?"
       surface: system
     lend_car:

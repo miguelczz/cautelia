@@ -73,7 +73,7 @@ def _seed_corpus(
                         "clause_key": f"A.{i}",
                         "form_id": "TCO-PAP-2026",
                         "form_version": "2026.1",
-                        "part": "Parte A",
+                        "part": "Responsabilidad civil extracontractual",
                         "language": "es",
                         "text": clause_text if clauses == 1 else f"{clause_text} ({i})",
                         "is_distractor": False,

@@ -18,14 +18,14 @@ case_keys:
   - DS-3/en/coverage-agreement-period
   - DS-3/es/coverage-agreement-scope
   - DS-3/en/coverage-agreement-scope
-  - DS-3/es/coverage-collision-limit
-  - DS-3/en/coverage-collision-limit
+  - DS-3/es/coverage-total-loss-limit
+  - DS-3/en/coverage-total-loss-limit
   - DS-3/es/coverage-liability-limit
   - DS-3/en/coverage-liability-limit
   - DS-3/es/coverage-medical-limit
   - DS-3/en/coverage-medical-limit
-  - DS-3/es/coverage-uninsured-limit
-  - DS-3/en/coverage-uninsured-limit
+  - DS-3/es/coverage-driver-accident-limit
+  - DS-3/en/coverage-driver-accident-limit
   - DS-3/es/cross-language-other-insurance-liability
   - DS-3/en/cross-language-other-insurance-liability
   - DS-3/es/cross-language-other-insurance-medical
@@ -34,8 +34,8 @@ case_keys:
   - DS-3/en/distractor-def-you
   - DS-3/es/distractor-duties-after-loss
   - DS-3/en/distractor-duties-after-loss
-  - DS-3/es/distractor-uninsured-coverage
-  - DS-3/en/distractor-uninsured-coverage
+  - DS-3/es/distractor-driver-accident-coverage
+  - DS-3/en/distractor-driver-accident-coverage
   - DS-3/es/endorsement-electronics-exclusion
   - DS-3/en/endorsement-electronics-exclusion
   - DS-3/es/endorsement-excludes-carrying-for-hire

@@ -9,7 +9,7 @@
       "issuer_label": "Autos Poblado",
       "language": "en",
       "part": "Definitions",
-      "text": "\"You\" means only the policyholder listed on the declarations page; a spouse or partner is not included even when living in the same home."
+      "text": "\"You\" means only the policyholder listed on the declarations page; a spouse or permanent partner is not included even when living in the same home."
     },
     {
       "clause_id": "AP-PAP-2025-DEF.BODILY_INJURY",
@@ -20,7 +20,7 @@
       "issuer_label": "Autos Poblado",
       "language": "en",
       "part": "Definitions",
-      "text": "\"Bodily injury\" means harm to a person's health caused by an accident, such as wounds or illness; it does not include death."
+      "text": "\"Personal injury\" means harm to a person's health caused by an accident, such as wounds or illness; it does not include death."
     },
     {
       "clause_id": "AP-PAP-2025-A.EXCL.A.3.ALT",
@@ -30,8 +30,8 @@
       "is_distractor": true,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "Part A does not cover damage to things the insured has rented or is looking after for someone else; things the insured borrowed are covered."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "This section does not cover damage to things you have rented or are looking after for someone else; things you borrowed are covered."
     },
     {
       "clause_id": "AP-PAP-2025-A.EXCL.B.3",
@@ -41,8 +41,8 @@
       "is_distractor": true,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "Part A does not cover using any vehicle that a family member owns, whether or not it is listed on the declarations page."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "This section does not cover using any vehicle that a family member owns, whether or not it is listed on the declarations page."
     },
     {
       "clause_id": "AP-PAP-2025-C.INS.ALT",
@@ -52,8 +52,8 @@
       "is_distractor": true,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part C — Uninsured Motorists Coverage",
-      "text": "Autos Poblado pays the damages for bodily injury that you or a family member are entitled to claim from the driver of an uninsured vehicle, but only when that driver is identified. Accidents where the vehicle at fault drives off are not covered."
+      "part": "Personal accident cover for the driver",
+      "text": "Autos Poblado pays the personal accident insured value only if the authorized driver dies because of a traffic accident. Permanent disability is not covered."
     },
     {
       "clause_id": "AP-PAP-2025-D.EXCL.1.ALT",
@@ -63,8 +63,8 @@
       "is_distractor": true,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "Part D does not cover damage that happens while the vehicle is carrying people or goods, whether for pay or among friends splitting the cost of a trip."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "This section does not cover damage that happens while the vehicle is carrying people or goods, whether for pay or among friends splitting the cost of a trip."
     },
     {
       "clause_id": "AP-PAP-2025-D.EXCL.2",
@@ -74,8 +74,8 @@
       "is_distractor": true,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "Part D does not cover wear from use, rust or mechanical failure; damage from freezing is covered."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "This section does not cover wear from use, rust or lack of maintenance; mechanical and electrical failures are covered."
     },
     {
       "clause_id": "AP-PAP-2025-E.DUTIES.A.1.ALT",
@@ -85,8 +85,8 @@
       "is_distractor": true,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part E — Duties After an Accident or Loss",
-      "text": "Tell us about any accident or loss within 30 days; after that, the notice is no longer accepted."
+      "part": "Duties after a loss event",
+      "text": "Tell us about any loss event within 30 days; after that, the notice is no longer accepted."
     }
   ],
   "form_id": "AP-PAP-2025"

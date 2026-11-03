@@ -131,7 +131,7 @@ def test_un_identificador_o_una_version_mal_formados_se_rechazan(
 def test_un_identificador_repetido_entre_dos_archivos_nombra_los_dos(tmp_path: Path) -> None:
     raiz = repo(tmp_path)
     escribir_fuente(raiz, [entrada()])
-    escribir_fuente(raiz, [entrada(part="Parte B")], parte="part_b")
+    escribir_fuente(raiz, [entrada(part="Gastos médicos de los ocupantes")], parte="part_b")
 
     problemas = _problemas(raiz)
 
@@ -146,7 +146,7 @@ def test_una_clausula_repetida_en_una_salida_se_nombra() -> None:
         "form_id": "SA-PAP-2026",
         "form_version": "2026.1",
         "clause_key": "A.INS",
-        "part": "Parte A",
+        "part": "Responsabilidad civil extracontractual",
         "language": "es",
         "text": "Relleno de prueba.",
         "issuer_label": "Seguros Aburrá",

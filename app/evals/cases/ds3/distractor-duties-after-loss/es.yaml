@@ -17,7 +17,7 @@ citation:
   policy_number: POL-14
   clause_id: SA-PAP-2026-E.DUTIES.A.1
   expected_outcome: verified
-  question: ¿Qué tengo que hacer después de un accidente?
+  question: ¿En cuántos días tengo que avisar de un accidente?
   forbidden_clause_ids:
   - SA-PAP-2025-E.DUTIES.A.1.ALT
 expected_verdicts:

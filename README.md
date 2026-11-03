@@ -130,8 +130,8 @@ The same policy facts the agent reads for those questions are published as a rea
 | Tool | What it returns |
 | --- | --- |
 | `get_policy_summary` | holder, issuer, period and whether the policy is in force on a date |
-| `get_limits` | the liability, medical and uninsured-driver limits, in Colombian pesos |
-| `get_deductibles` | the collision and other-damage deductibles |
+| `get_limits` | the civil liability, occupant medical-expense and driver personal-accident limits, in Colombian pesos |
+| `get_deductibles` | the partial-loss-by-damage and partial-loss-by-theft deductibles |
 | `get_insured_vehicles` | make, model and year (no plate, no VIN) |
 | `get_listed_drivers` | the drivers the policy declares, holder first |
 | `get_endorsements` | the special conditions and which clauses each one changes |
@@ -170,7 +170,7 @@ Then ask, for example, "What is the deductible on policy POL-21 of sunmeadow?".
 - Icons: [Phosphor Icons](https://phosphoricons.com) (MIT) and [Lucide](https://lucide.dev) (ISC) on the landing page.
 - Fonts: IBM Plex Sans, Bricolage Grotesque and JetBrains Mono (SIL Open Font License), served from the site itself.
 - The license of every dependency is recorded and checked on every change: [third-party licenses](docs/reference/licencias-de-terceros.md).
-- Insurers, policies, people and clauses are original and synthetic. The policies follow the structure of a standard personal auto policy without copying its text.
+- Insurers, policies, people and clauses are original and synthetic. The policies follow the structure of a Colombian voluntary auto policy (civil liability, occupant medical expenses, driver personal accident, loss by damage and by theft, duties after a loss event, general conditions, with the SOAT and the Fasecolda Value Guide as reference) without copying the text of any insurer's wording. See `docs/reference/estructura-poliza-autos-colombia.md`.
 
 Created by [Miguel Zuluaga](https://www.linkedin.com/in/miguelzuluaga/).
 

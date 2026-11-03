@@ -72,8 +72,8 @@ forbidden_claims:
 # --- Texto de clausula de ISO o ACORD (P8, W6) --------------------------------
 # La distincion es la que manda: la **estructura** (nombres de seccion y
 # numeracion) esta permitida y documentada en
-# `docs/reference/estructura-poliza-iso-pap.md`; el **texto de clausula** es lo
-# prohibido.
+# `docs/reference/estructura-poliza-autos-colombia.md` (y, como antecedente,
+# `estructura-poliza-iso-pap.md`); el **texto de clausula** es lo prohibido.
 #
 # Lo que se busca no son numeros de formulario -- eso es estructura -- sino los
 # arranques de prosa de formulario: la senal de que alguien copio texto en vez de

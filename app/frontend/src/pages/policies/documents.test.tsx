@@ -48,7 +48,7 @@ const DETALLE: DocumentDetail = {
     {
       clause_id: "SA-PAP-2026-D.EXCL.3",
       clause_key: "D.EXCL.3",
-      part: "Parte D — Daños a su vehículo",
+      part: "Pérdida del vehículo por daños y por hurto",
       text: "No cubrimos equipos electrónicos no instalados de fábrica.",
       amended_by: ["SA-PAP-2026-END-3"],
       cited_last_week: 4,
@@ -57,7 +57,7 @@ const DETALLE: DocumentDetail = {
     {
       clause_id: "SA-PAP-2026-A.INS",
       clause_key: "A.INS",
-      part: "Parte A — Responsabilidad civil",
+      part: "Responsabilidad civil extracontractual",
       text: "Pagamos los daños que usted cause a otras personas.",
       amended_by: [],
       cited_last_week: 0,
@@ -178,7 +178,7 @@ describe("el panel de documentos con traduccion", () => {
               language: "en",
               text: "We do not cover electronic equipment.",
               translated_text: "No cubrimos equipos electrónicos.",
-              translated_part: "Parte D — Daños a su vehículo",
+              translated_part: "Pérdida del vehículo por daños y por hurto",
             },
           ],
         });

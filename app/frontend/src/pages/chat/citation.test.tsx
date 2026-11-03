@@ -45,11 +45,11 @@ describe("la cita expandible", () => {
   it("con traduccion muestra la traduccion y el original a un clic", async () => {
     renderWithProviders(
       <Citation
-        citation={{ ...EN_INGLES, translated_text: "Texto traducido.", translated_part: "Parte D" }}
+        citation={{ ...EN_INGLES, translated_text: "Texto traducido.", translated_part: "Pérdida del vehículo por daños y por hurto" }}
         conversationLocale="es"
       />,
     );
-    expect(screen.getByText("Parte D")).toBeTruthy();
+    expect(screen.getByText("Pérdida del vehículo por daños y por hurto")).toBeTruthy();
 
     const [primero] = screen.getAllByRole("button");
     if (primero === undefined) {
@@ -135,13 +135,13 @@ describe("el rotulo de cada tarjeta", () => {
   const PARTE_D: WireCitation = {
     ...EN_ESPANOL,
     clause_id: "SA-PAP-2026-D.EXCL.3",
-    part: "Parte D — Daños a su vehículo",
+    part: "Pérdida del vehículo por daños y por hurto",
   };
   const OTRA_PARTE_D: WireCitation = { ...PARTE_D, clause_id: "SA-PAP-2026-D.EXCL.4" };
   const PARTE_F: WireCitation = {
     ...PARTE_D,
     clause_id: "SA-PAP-2026-F.TERMINATION",
-    part: "Parte F — Disposiciones generales",
+    part: "Condiciones generales",
   };
   const CONDICION_5: WireCitation = {
     ...PARTE_D,
@@ -165,7 +165,7 @@ describe("el rotulo de cada tarjeta", () => {
     );
 
     const [primera, segunda] = screen.getAllByRole("button");
-    expect(primera?.textContent).toContain("Parte D — Daños a su vehículo");
+    expect(primera?.textContent).toContain("Pérdida del vehículo por daños y por hurto");
     expect(primera?.textContent).toContain("cláusula 1 de 2");
     expect(segunda?.textContent).toContain("cláusula 2 de 2");
     expect(primera?.textContent).not.toBe(segunda?.textContent);
@@ -198,8 +198,8 @@ describe("el rotulo de cada tarjeta", () => {
   });
 
   it("agrupa por la parte que se ve: la traducida, si la hay", () => {
-    const traducida = { ...EN_INGLES, translated_part: "Parte D" };
-    const otra = { ...EN_INGLES, clause_id: "LI-10", translated_part: "Parte D" };
+    const traducida = { ...EN_INGLES, translated_part: "Pérdida del vehículo por daños y por hurto" };
+    const otra = { ...EN_INGLES, clause_id: "LI-10", translated_part: "Pérdida del vehículo por daños y por hurto" };
 
     expect(posicionesDe([traducida, otra])).toEqual([
       { index: 1, total: 2 },

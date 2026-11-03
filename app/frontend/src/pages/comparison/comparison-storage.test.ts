@@ -20,7 +20,7 @@ const IDS = ["a", "b", "c"] as const;
 const CITA: WireCitation = {
   clause_id: "PAP-A-4.1",
   clause_version: "2026.1",
-  part: "Parte D",
+  part: "Pérdida del vehículo por daños y por hurto",
   text: "Texto literal.",
   clause_language: "es",
   amount_deferred: false,
@@ -70,7 +70,7 @@ describe("lo guardado de la comparacion", () => {
       ...CITA,
       clause_language: "en",
       translated_text: "Texto traducido.",
-      translated_part: "Parte D — Daños a tu vehículo",
+      translated_part: "Pérdida del vehículo por daños y por hurto",
       special_condition_number: 5,
     };
     const guardada = consulta({

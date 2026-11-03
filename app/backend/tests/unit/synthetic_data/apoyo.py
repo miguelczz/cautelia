@@ -63,7 +63,7 @@ def entrada(**cambios: Any) -> dict[str, Any]:
         "source_id": "SA-PAP-2026-A.INS",
         "kind": "clause",
         "clause_key": "A.INS",
-        "part": "Parte A — Responsabilidad civil",
+        "part": "Responsabilidad civil extracontractual",
         "version": "2026.1",
         "text": "Texto de relleno de una prueba, sin redaccion de poliza.",
         "reviewed_at": REVISADO,
@@ -237,7 +237,7 @@ def clausula_redactada(**cambios: Any) -> dict[str, Any]:
     base: dict[str, Any] = {
         "kind": "clause",
         "clause_key": "A.INS",
-        "part": "Parte A — Responsabilidad civil",
+        "part": "Responsabilidad civil extracontractual",
         "text": "Relleno de una respuesta de prueba, no redaccion de poliza.",
     }
     base.update(cambios)

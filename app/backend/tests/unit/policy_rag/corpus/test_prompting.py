@@ -19,7 +19,7 @@ def _clausula(clause_id: str, text: str) -> Clause:
         clause_key=clause_id,
         form_id="TCO-PAP-2026",
         form_version="2026.1",
-        part="Parte A",
+        part="Responsabilidad civil extracontractual",
         language="es",
         text=text,
         is_distractor=False,

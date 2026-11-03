@@ -50,8 +50,8 @@ def test_el_deducible_trae_los_dos_montos_del_registro_y_el_numero_de_poliza(
     assert respuesta is not None
     assert respuesta.topic is RigidTopic.DEDUCTIBLE
     assert respuesta.text == (
-        f"Según tu póliza POL-99, el deducible del vehículo es ${NBSP}1.500.000 en un choque "
-        f"y ${NBSP}250.000 en otros daños."
+        f"Según tu póliza POL-99, el deducible de pérdida parcial es ${NBSP}1.500.000 por daños "
+        f"y ${NBSP}250.000 por hurto."
     )
 
 
@@ -62,8 +62,8 @@ def test_el_deducible_en_ingles_usa_el_formato_de_la_pestana(
 
     assert respuesta is not None
     assert respuesta.text == (
-        f"According to your policy POL-99, the vehicle deductible is COP{NBSP}1,500,000 "
-        f"for a collision and COP{NBSP}250,000 for other damage."
+        f"According to your policy POL-99, the partial-loss deductible is COP{NBSP}1,500,000 "
+        f"for damage and COP{NBSP}250,000 for theft."
     )
 
 
@@ -85,7 +85,7 @@ def test_los_limites_ponen_cada_monto_en_su_lugar(poliza_de_ejemplo: IssuedPolic
     assert "lesiones, $ 100.000.000 por persona y $ 200.000.000 por accidente" in texto
     assert "daños a bienes, $ 50.000.000;" in texto
     assert "gastos médicos, $ 10.000.000 por persona" in texto
-    assert "conductor sin seguro, $ 100.000.000 por persona y $ 200.000.000 por accidente" in texto
+    assert "accidentes personales del conductor, $ 100.000.000." in texto
 
 
 @pytest.mark.parametrize(

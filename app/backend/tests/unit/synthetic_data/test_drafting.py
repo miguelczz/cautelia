@@ -150,10 +150,9 @@ async def test_el_prompt_sale_solo_de_la_plantilla_versionada_y_de_la_referencia
     assert cuerpo["systemInstruction"] == {"parts": [{"text": instruccion.decode("utf-8").strip()}]}
     (turno,) = cuerpo["contents"]
     pedido = turno["parts"][0]["text"]
-    # La raya de la referencia es una raya corta (U+2013), tal como esta escrita.
-    assert "**Part A \u2013 Liability Coverage**" in pedido
-    assert "**Part B" not in pedido
-    assert "Encabezado de la parte (campo part): Parte A — Responsabilidad civil" in pedido
+    assert "**Responsabilidad civil extracontractual**" in pedido
+    assert "**Gastos médicos de los ocupantes**" not in pedido
+    assert "Encabezado de la parte (campo part): Responsabilidad civil extracontractual" in pedido
     assert "Aseguradora ficticia: Seguros Aburrá" in pedido
     assert "Distractores de esta parte" in pedido
     assert cuerpo["generationConfig"]["temperature"] == 0
@@ -167,7 +166,7 @@ async def test_el_prompt_sale_solo_de_la_plantilla_versionada_y_de_la_referencia
 
 def test_la_referencia_nunca_se_lee_desde_tmp(tmp_path: Path) -> None:
     for carpeta in ("specimens", "synthetic-drafts"):
-        plantada = tmp_path / "tmp" / carpeta / "estructura-poliza-iso-pap.md"
+        plantada = tmp_path / "tmp" / carpeta / "estructura-poliza-autos-colombia.md"
         plantada.parent.mkdir(parents=True)
         plantada.write_text(CENTINELA, encoding="utf-8")
 
@@ -179,10 +178,10 @@ def _repo_para_el_comando(tmp_path: Path) -> Path:
     """Un repositorio con configuracion y referencia de verdad, y un specimen plantado."""
     raiz = repo(tmp_path)
     shutil.copytree(paths.repo_root() / "app/config/providers", raiz / "app/config/providers")
-    referencia = raiz / "docs/reference/estructura-poliza-iso-pap.md"
+    referencia = raiz / "docs/reference/estructura-poliza-autos-colombia.md"
     referencia.parent.mkdir(parents=True)
     shutil.copy(paths.policy_structure_reference_path(), referencia)
-    for nombre in ("pp-00-01.txt", "estructura-poliza-iso-pap.md"):
+    for nombre in ("pp-00-01.txt", "estructura-poliza-autos-colombia.md"):
         specimen = raiz / "tmp/specimens" / nombre
         specimen.parent.mkdir(parents=True, exist_ok=True)
         specimen.write_text(CENTINELA, encoding="utf-8")
@@ -370,7 +369,7 @@ def test_una_agencia_o_una_variante_mal_pedida_no_llegan_a_llamar() -> None:
     )
     pedido = prompt.parts[0].text
     assert "Ninguno de los cinco toca los gastos de transporte (D.TRANSPORT)." in pedido
-    assert "**Part F" in pedido  # los endosos llevan la lista entera de la referencia
+    assert "**Marco legal**" in pedido  # los endosos llevan la lista entera de la referencia
 
 
 def test_las_notas_de_revision_dicen_lo_que_no_cuadra_con_el_pedido() -> None:
@@ -383,7 +382,7 @@ def test_las_notas_de_revision_dicen_lo_que_no_cuadra_con_el_pedido() -> None:
             "model": "gemini-3.1-flash-lite",
             "prompt_version": "prueba",
             "clauses": [
-                clausula_redactada(part="Parte A"),
+                clausula_redactada(part="Responsabilidad civil"),
                 clausula_redactada(
                     kind="distractor",
                     clause_key="A.EXCL.A.3.ALT",
@@ -397,7 +396,7 @@ def test_las_notas_de_revision_dicen_lo_que_no_cuadra_con_el_pedido() -> None:
     notas = drafting.review_notes(borrador, pedido, drafting.load_template())
 
     assert notas == (
-        "A.INS: encabezado 'Parte A', se pidio 'Parte A — Responsabilidad civil'",
+        "A.INS: encabezado 'Responsabilidad civil', se pidio 'Responsabilidad civil extracontractual'",
         "1 distractor(es); se pidieron 2",
         "A.EXCL.A.3.ALT: se confunde con 'A.EXCL.A.3', que no esta en el borrador",
     )

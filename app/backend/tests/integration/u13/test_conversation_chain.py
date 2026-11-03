@@ -100,7 +100,11 @@ async def test_va_del_caso_mas_antiguo_al_propio_y_cada_turno_conserva_su_caso(
     reporte = await nuevo_caso(propia, continues_case_id=consulta.case_id)
     cotizacion = await nuevo_caso(propia, continues_case_id=reporte.case_id)
     await _decir(
-        propia, consulta.case_id, 1, persona="¿me cubre la grúa?", agente="Sí, la Parte D."
+        propia,
+        consulta.case_id,
+        1,
+        persona="¿me cubre la grúa?",
+        agente="Sí, la sección de daños y hurto.",
     )
     await _decir(propia, reporte.case_id, 3, persona="quiero reportar eso", agente="¿Qué pasó?")
     await _decir(propia, cotizacion.case_id, 5, persona="y una cotización")
@@ -110,7 +114,7 @@ async def test_va_del_caso_mas_antiguo_al_propio_y_cada_turno_conserva_su_caso(
 
     assert _textos(desde_el_ultimo) == [
         "¿me cubre la grúa?",
-        "Sí, la Parte D.",
+        "Sí, la sección de daños y hurto.",
         "quiero reportar eso",
         "¿Qué pasó?",
         "y una cotización",
@@ -284,7 +288,7 @@ async def test_recargar_dibuja_lo_hablado_antes_del_cambio_y_conserva_las_clausu
     )
     respuesta = await transcript_writer.record_agent_turn(
         ambito,
-        text="En su póliza, esto lo trata la Parte D.",
+        text="En su póliza, esto lo trata la sección de daños y hurto.",
         now=AHORA + timedelta(minutes=2),
         from_catalog=True,
         turn_id=f"{transcript_writer.COVERAGE_TURN_PREFIX}u13-cadena",
@@ -303,7 +307,7 @@ async def test_recargar_dibuja_lo_hablado_antes_del_cambio_y_conserva_las_clausu
 
     assert [t.text for t in cargado.turns] == [
         "¿Me cubren una llanta?",
-        "En su póliza, esto lo trata la Parte D.",
+        "En su póliza, esto lo trata la sección de daños y hurto.",
         "quiero reportar eso como un accidente",
     ]
     por_turno = {t.turn_id: t for t in cargado.turns}

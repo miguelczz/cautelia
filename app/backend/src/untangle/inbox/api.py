@@ -239,8 +239,8 @@ class CitationView(Frozen):
     special_condition_number: int | None = None
     #: El nombre de la parte en el idioma en que la clausula no esta escrita (2026-10-13).
     #: Esta pantalla no conversa, asi que no hay "idioma pedido": la pantalla rotula la
-    #: tarjeta con este nombre cuando su idioma es el otro, en vez de dejar «Part C —
-    #: Uninsured Motorists Coverage» en una pantalla en espanol. El texto de la clausula
+    #: tarjeta con este nombre cuando su idioma es el otro, en vez de dejar el nombre en ingles
+    #: en una pantalla en espanol. El texto de la clausula
     #: sigue en su idioma. Aditivo.
     part_in_other_language: str | None = None
 

@@ -67,7 +67,7 @@ async def test_las_funciones_devuelven_los_datos_del_registro(corpus: CorpusEnMe
     conductores = await facts.drivers("stonecroft", "POL-99")
 
     assert limites is not None
-    assert len(limites) == 6
+    assert len(limites) == 5
     assert deducibles is not None
     assert {d.amount.units for d in deducibles} == {1500, 250}
     assert vehiculos is not None

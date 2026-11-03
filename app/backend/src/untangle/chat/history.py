@@ -221,7 +221,7 @@ async def _citas_de_cobertura(
     **Cada tarjeta se rotula en el idioma en que se respondio** (2026-10-13), el que la
     respuesta dejo guardado, como cuando llego en vivo. Antes se usaba el idioma de la
     conversacion, que en una aseguradora que arranca en ingles no cambia aunque la persona
-    escriba en espanol: la respuesta llegaba con «Parte D» y al recargar volvia con «Part D».
+    escriba en espanol: la respuesta llegaba con el nombre de la parte en espanol y al recargar volvia con el original en ingles.
     """
     de_cobertura = [t.turn_id for t in turnos if t.turn_id.startswith(COVERAGE_TURN_PREFIX)]
     if not de_cobertura:

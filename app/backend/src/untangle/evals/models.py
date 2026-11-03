@@ -260,7 +260,7 @@ class RigidFactsExpectation(Frozen):
     #: `facts`: el turno contesta desde el registro, sin recuperacion ni citas ni modelo. `rag`: el
     #: turno sigue por el camino de siempre y el puerto de datos rigidos ni se toca.
     route: Literal["facts", "rag"]
-    #: Las claves del corpus (`d.collision_deductible`...) cuyo monto, en pesos del idioma del caso,
+    #: Las claves del corpus (`d.damage_deductible`...) cuyo monto, en pesos del idioma del caso,
     #: tiene que aparecer en el texto. La sonda los calcula del registro, no de la plantilla.
     amounts: tuple[str, ...] = ()
     #: Fragmentos que el texto tiene que traer (el numero de poliza, un vehiculo, un conductor).

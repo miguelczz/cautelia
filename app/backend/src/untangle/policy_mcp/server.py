@@ -176,13 +176,13 @@ def build_server(
         (
             get_limits,
             "Policy limits",
-            "The liability, medical-payments and uninsured-driver limits the policy declares. "
+            "The liability, occupant medical-expense and driver personal-accident limits the policy declares. "
             "Deductibles are a separate tool.",
         ),
         (
             get_deductibles,
             "Policy deductibles",
-            "The vehicle deductibles the policy declares (collision and other than collision).",
+            "The vehicle deductibles the policy declares (partial loss by damage and partial loss by theft).",
         ),
         (
             get_insured_vehicles,

@@ -29,7 +29,7 @@ def test_la_condicion_especial_manda_y_la_parte_sale_en_espanol() -> None:
     salida = _Salida(
         citations=(
             _Cita("AP-PAP-2026-END-2-D.EXCL.5", "Endorsements", amount_deferred=True),
-            _Cita("AP-PAP-2026-D.EXCL.5", "Part D — Coverage for Damage to Your Auto"),
+            _Cita("AP-PAP-2026-D.EXCL.5", "Loss of the vehicle by damage and by theft"),
         )
     )
 
@@ -41,12 +41,18 @@ def test_la_condicion_especial_manda_y_la_parte_sale_en_espanol() -> None:
     assert texto.count("ajustador") == 1
 
 
-def test_una_parte_de_la_poliza_se_nombra_por_su_letra() -> None:
+def test_una_parte_de_la_poliza_se_nombra_por_su_seccion() -> None:
     copy_api.install(copy_api.load())
-    salida = _Salida(citations=(_Cita("SA-PAP-2026-D.INS.OTC", "Parte D — Daños a su vehículo"),))
+    salida = _Salida(
+        citations=(_Cita("SA-PAP-2026-D.INS.THEFT", "Pérdida del vehículo por daños y por hurto"),)
+    )
 
-    assert "la Parte D, daños al vehículo" in turn._texto_de_cobertura(salida, language="es")
-    assert "Part D, damage to your auto" in turn._texto_de_cobertura(salida, language="en")
+    assert "la sección de pérdida del vehículo por daños y por hurto" in turn._texto_de_cobertura(
+        salida, language="es"
+    )
+    assert "the loss of the vehicle by damage and theft section" in turn._texto_de_cobertura(
+        salida, language="en"
+    )
 
 
 @dataclass(frozen=True)
@@ -78,6 +84,8 @@ def test_con_la_explicacion_de_la_ia_la_respuesta_dice_que_trata_la_clausula() -
 
 def test_sin_explicacion_no_hay_version_explicada() -> None:
     copy_api.install(copy_api.load())
-    salida = _Salida(citations=(_Cita("SA-PAP-2026-D.INS.OTC", "Parte D"),))
+    salida = _Salida(
+        citations=(_Cita("SA-PAP-2026-D.INS.THEFT", "Pérdida del vehículo por daños y por hurto"),)
+    )
 
     assert turn._texto_con_explicacion(salida, language="es") is None

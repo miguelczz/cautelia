@@ -105,7 +105,7 @@ async def test_los_limites_traen_el_monto_en_pesos_y_el_texto_del_idioma(
     )
 
     limites = {f["key"]: f for f in salida["result"]}
-    assert len(limites) == 6
+    assert len(limites) == 5
     por_persona = limites["a.bodily_injury_per_person"]["amount"]
     assert por_persona["units"] == 100000
     assert por_persona["pesos"] == 100_000_000
@@ -117,8 +117,8 @@ async def test_los_deducibles_salen_aparte_de_los_limites(servidor: MCPServer) -
 
     deducibles = {f["key"]: f["amount"]["pesos"] for f in salida["result"]}
     assert deducibles == {
-        "d.collision_deductible": 1_500_000,
-        "d.other_than_collision_deductible": 250_000,
+        "d.damage_deductible": 1_500_000,
+        "d.theft_deductible": 250_000,
     }
 
 

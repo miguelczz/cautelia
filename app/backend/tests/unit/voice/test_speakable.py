@@ -41,7 +41,7 @@ def test_los_codigos_se_dicen_como_se_dictan(language: Locale, escrito: str, sue
         "El vehículo es de 2015.",
         "Tu carro es un modelo 2015 y cuesta 20000.",
         "Llámame al 305 555 0147.",
-        "Part D addresses this in 2024.",
+        "The damage and theft section addresses this in 2024.",
         "Nada que cambiar aquí.",
         # Cinco digitos o un prefijo pegado no son una placa ni un numero de caso.
         "ABC12345",

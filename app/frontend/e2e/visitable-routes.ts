@@ -120,7 +120,7 @@ const CASO_DE_EJEMPLO = {
         {
           clause_id: "PAP-2026-STO-001-4.1",
           clause_version: "2026.1",
-          part: "Part D",
+          part: "Loss of the vehicle by damage and by theft",
           text: "La compania responde por los danos al vehiculo asegurado.",
           clause_language: "es",
           amount_deferred: false,

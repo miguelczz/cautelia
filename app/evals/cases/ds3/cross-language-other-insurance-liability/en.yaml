@@ -18,7 +18,7 @@ citation:
   clause_id: SA-PAP-2026-B.OTHER
   expected_outcome: verified
   clause_language: es
-  question: If I have another medical payments policy, how do you split the payment?
+  question: If I have another medical expenses insurance, how do you split the payment?
 expected_verdicts:
   citation_cross_language_other_insurance_liability: pass
   citation_exists_cross_language_other_insurance_liability: pass

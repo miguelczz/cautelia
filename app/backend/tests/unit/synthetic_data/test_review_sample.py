@@ -33,7 +33,7 @@ def _clausulas(raiz: Path, tenant_id: str, cuantas: int, distractoras: int = 0) 
     clausulas = [
         {
             "clause_id": f"EM-PAP-2026-A.EXCL.{i:02d}",
-            "part": "Parte A",
+            "part": "Responsabilidad civil extracontractual",
             "is_distractor": i < distractoras,
         }
         for i in range(cuantas)
@@ -84,20 +84,35 @@ def test_el_archivo_escrito_lo_lee_el_modelo_y_dice_donde_leer_cada_clausula(
     texto = review_sample.render(muestra, elegibles, HOY)
 
     assert ReviewSample.model_validate(yaml.safe_load(texto)) == muestra
-    assert all(f"{clave}  # Parte A, en app/data/" in texto for clave in muestra.clause_ids)
+    assert all(
+        f"{clave}  # Responsabilidad civil extracontractual, en app/data/" in texto
+        for clave in muestra.clause_ids
+    )
+
+
+def _fecha_de(archivo: Path, emisora: str) -> date:
+    return date.fromisoformat(archivo.stem.removeprefix(f"{emisora}-"))
 
 
 @pytest.mark.parametrize("emisora", ["stonecroft", "sunmeadow"])
-def test_las_muestras_versionadas_son_las_que_saca_el_comando(emisora: str) -> None:
-    """Cualquiera puede comprobar que las diez no se escogieron a mano."""
-    archivo = DATOS_REALES / "sources" / review_sample.review_path(emisora, HOY)
+def test_la_muestra_vigente_es_la_que_saca_el_comando(emisora: str) -> None:
+    """Cualquiera puede comprobar que las diez no se escogieron a mano.
+
+    Solo la muestra **mas reciente** se compara con lo que saca el comando: el corpus se
+    reescribio el 2026-11-02 (estructura colombiana) y las diez del 2026-09-21, con el veredicto
+    de Miguel sobre el texto anterior, citan clausulas que ya no existen. Se conservan como
+    registro historico y solo se exige que las lea el modelo.
+    """
+    archivos = sorted((DATOS_REALES / "sources" / "reviews").glob(f"{emisora}-*.yaml"))
+    vigente = max(archivos, key=lambda a: _fecha_de(a, emisora))
     elegibles = review_sample.candidates(DATOS_REALES, emisora)
 
-    versionada = ReviewSample.model_validate(yaml.safe_load(archivo.read_text(encoding="utf-8")))
+    versionada = ReviewSample.model_validate(yaml.safe_load(vigente.read_text(encoding="utf-8")))
 
     assert versionada.sample_seed == SEED
     assert (
-        versionada.clause_ids == review_sample.draw(emisora, HOY, elegibles, seed=SEED).clause_ids
+        versionada.clause_ids
+        == review_sample.draw(emisora, _fecha_de(vigente, emisora), elegibles, seed=SEED).clause_ids
     )
     # El veredicto es de Miguel (AC5.4.5, AC5.5.6): o la muestra espera su
     # revision, con los tres campos vacios, o la tiene completa, con fecha y el
@@ -111,11 +126,27 @@ def test_las_muestras_versionadas_son_las_que_saca_el_comando(emisora: str) -> N
         assert re.fullmatch(r"[0-9a-f]{40}", versionada.commit)
 
 
+@pytest.mark.parametrize("emisora", ["stonecroft", "sunmeadow"])
+def test_las_muestras_anteriores_se_conservan_como_registro_y_no_se_tocan(emisora: str) -> None:
+    anteriores = [
+        a
+        for a in (DATOS_REALES / "sources" / "reviews").glob(f"{emisora}-*.yaml")
+        if _fecha_de(a, emisora) < date(2026, 11, 2)
+    ]
+
+    assert [a.name for a in anteriores] == [f"{emisora}-2026-09-21.yaml"]
+    for archivo in anteriores:
+        anterior = ReviewSample.model_validate(yaml.safe_load(archivo.read_text(encoding="utf-8")))
+        assert anterior.verdict is not None, "el veredicto de Miguel sobre el texto anterior"
+
+
 def test_ninguna_agencia_tiene_muestra() -> None:
     """Una agencia no tiene texto propio: sus clausulas son copias (BR4.2)."""
     assert sorted(p.name for p in (DATOS_REALES / "sources" / "reviews").glob("*.yaml")) == [
         "stonecroft-2026-09-21.yaml",
+        "stonecroft-2026-11-02.yaml",
         "sunmeadow-2026-09-21.yaml",
+        "sunmeadow-2026-11-02.yaml",
     ]
 
 

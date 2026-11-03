@@ -36,7 +36,7 @@ async def _sembrar_clausula(
     clause_id: str,
     *,
     language: Locale = "es",
-    part: str = "Parte D",
+    part: str = "Pérdida del vehículo por daños y por hurto",
     text: str = "No cubrimos el dano limitado a las llantas.",
 ) -> None:
     formulario = PolicyForm(
@@ -102,7 +102,7 @@ async def test_la_respuesta_de_cobertura_vuelve_con_sus_clausulas(
     )
     respuesta = await transcript_writer.record_agent_turn(
         ambito,
-        text="En su póliza, esto lo trata la Parte D.",
+        text="En su póliza, esto lo trata la sección de daños y hurto.",
         now=AHORA,
         from_catalog=True,
         turn_id=f"{transcript_writer.COVERAGE_TURN_PREFIX}u13",
@@ -124,14 +124,14 @@ async def test_la_respuesta_de_cobertura_vuelve_con_sus_clausulas(
         (
             "en",
             "es",
-            "Part D — Coverage for Damage to Your Auto",
-            "Parte D — Daños a su vehículo",
+            "Loss of the vehicle by damage and by theft",
+            "Pérdida del vehículo por daños y por hurto",
         ),
         (
             "es",
             "en",
-            "Parte D — Daños a su vehículo",
-            "Part D — Coverage for Damage to Your Auto",
+            "Pérdida del vehículo por daños y por hurto",
+            "Loss of the vehicle by damage and by theft",
         ),
     ],
     ids=["poliza-en-ingles-respuesta-en-espanol", "poliza-en-espanol-respuesta-en-ingles"],

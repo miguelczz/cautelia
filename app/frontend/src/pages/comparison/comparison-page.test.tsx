@@ -95,7 +95,7 @@ const CITADA = (texto: string, clausula: string): ColumnOutcome => ({
       {
         clause_id: clausula,
         clause_version: "2026.1",
-        part: "Parte D",
+        part: "Pérdida del vehículo por daños y por hurto",
         text: "Texto literal de la clausula.",
         clause_language: "es",
         amount_deferred: false,

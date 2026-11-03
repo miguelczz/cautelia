@@ -979,7 +979,7 @@ comparison:
     hail:
       text: "¿Mi póliza responde por los daños del granizo?"
       surface: system
-    uninsured_driver:
+    other_driver_no_insurance:
       text: "¿Qué pasa si me choca alguien que no tiene seguro?"
       surface: system
     stolen_keys:
@@ -2123,10 +2123,10 @@ chat:
   # y coma para no escribir una conjuncion en linea.
   rigid:
     deductible:
-      text: "Según tu póliza {policy_number}, el deducible del vehículo es {collision} en un choque y {other} en otros daños."
+      text: "Según tu póliza {policy_number}, el deducible de pérdida parcial es {damage} por daños y {theft} por hurto."
       surface: chat
     limits:
-      text: "Según tu póliza {policy_number}, los límites son: responsabilidad civil por lesiones, {bodily_person} por persona y {bodily_accident} por accidente; responsabilidad civil por daños a bienes, {property_damage}; gastos médicos, {medical_person} por persona; y conductor sin seguro, {uninsured_person} por persona y {uninsured_accident} por accidente."
+      text: "Según tu póliza {policy_number}, los límites son: responsabilidad civil por lesiones, {bodily_person} por persona y {bodily_accident} por accidente; responsabilidad civil por daños a bienes, {property_damage}; gastos médicos, {medical_person} por persona; y accidentes personales del conductor, {driver_personal_accident}."
       surface: chat
     validity:
       in_force:
@@ -2548,8 +2548,8 @@ policy_rag:
       surface: chat
     # AC2.7.1: la forma de la cita por voz, una frase que nombra la parte y dice
     # que queda en el caso. Nunca repite el texto de la cláusula: {part} es su
-    # nombre, tomado del corpus (por ejemplo "Part D — Coverage for Damage to
-    # Your Auto"), nunca su contenido.
+    # nombre, tomado del corpus (por ejemplo "Pérdida del vehículo por daños y
+    # por hurto"), nunca su contenido.
     voice_summary:
       text: Encontré la cláusula dentro de {part}; queda resumida aquí y completa en tu caso.
       surface: voice
@@ -2582,22 +2582,22 @@ policy_rag:
     # en otro (2026-10-08): antes salia «Endorsements» en una respuesta en espanol.
     part:
       a:
-        text: "la Parte A, responsabilidad civil"
+        text: "la sección de responsabilidad civil extracontractual"
         surface: chat
       b:
-        text: "la Parte B, gastos médicos"
+        text: "la sección de gastos médicos de los ocupantes"
         surface: chat
       c:
-        text: "la Parte C, conductores sin seguro"
+        text: "la sección de accidentes personales del conductor"
         surface: chat
       d:
-        text: "la Parte D, daños al vehículo"
+        text: "la sección de pérdida del vehículo por daños y por hurto"
         surface: chat
       e:
-        text: "la Parte E, obligaciones después de un accidente"
+        text: "la sección de obligaciones en caso de siniestro"
         surface: chat
       f:
-        text: "la Parte F, disposiciones generales"
+        text: "las condiciones generales"
         surface: chat
       definitions:
         text: "la sección de definiciones"
@@ -2615,7 +2615,7 @@ policy_rag:
       text: "Déjame revisar tu póliza; te respondo en un momento."
       surface: chat
     ask_question:
-      text: "¿Qué quieres saber de tu póliza? Puedo revisarte, por ejemplo, si te cubre un robo, un choque con alguien sin seguro o un carro de alquiler mientras arreglan el tuyo."
+      text: "¿Qué quieres saber de tu póliza? Puedo revisarte, por ejemplo, si te cubre un robo, un choque con alguien que no tiene seguro o un carro de alquiler mientras arreglan el tuyo."
       surface: chat
     need_policy:
       text: "Para revisar eso necesito primero tu póliza."
@@ -3866,17 +3866,14 @@ policies:
     b_medical_payments_per_person:
       text: "Gastos médicos, por persona"
       surface: system
-    c_uninsured_per_person:
-      text: "Conductor sin seguro, por persona"
+    c_driver_personal_accident:
+      text: "Accidentes personales del conductor"
       surface: system
-    c_uninsured_per_accident:
-      text: "Conductor sin seguro, por accidente"
+    d_damage_deductible:
+      text: "Deducible pérdida parcial por daños"
       surface: system
-    d_collision_deductible:
-      text: "Deducible del vehículo en un choque"
-      surface: system
-    d_other_than_collision_deductible:
-      text: "Deducible del vehículo en otros daños"
+    d_theft_deductible:
+      text: "Deducible pérdida parcial por hurto"
       surface: system
   endorsement:
     def_family_member:
@@ -3889,10 +3886,10 @@ policies:
       text: "Cubre equipos electrónicos declarados con su factura"
       surface: system
     c_arbitration:
-      text: "El arbitraje de la Parte C lo decide un tribunal de tres árbitros"
+      text: "El arbitraje de accidentes personales lo decide un tribunal de tres árbitros"
       surface: system
     f_period_territory:
-      text: "Amplía el territorio a viajes de hasta 30 días por las jurisdicciones vecinas"
+      text: "Amplía el territorio a viajes de hasta 30 días por las países vecinos"
       surface: system
     def_covered_auto:
       text: "45 días, en vez de 20, para avisar de un vehículo recién comprado"
@@ -3931,7 +3928,7 @@ policies:
     covered_auto_definition_changed:
       text: "Acabo de comprar un carro, ¿cuántos días tengo para avisar?"
       surface: system
-    uninsured_driver:
+    other_driver_no_insurance:
       text: "¿Me cubren si me choca alguien que no tiene seguro?"
       surface: system
     lend_car:

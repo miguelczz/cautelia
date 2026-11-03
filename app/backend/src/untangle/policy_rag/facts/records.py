@@ -91,23 +91,20 @@ def _limit_labels(language: Locale) -> dict[str, str]:
         "b.medical_payments_per_person": copy_api.t(
             CopyKey("policies.limit.b_medical_payments_per_person"), locale=language
         ),
-        "c.uninsured_per_person": copy_api.t(
-            CopyKey("policies.limit.c_uninsured_per_person"), locale=language
+        "c.driver_personal_accident": copy_api.t(
+            CopyKey("policies.limit.c_driver_personal_accident"), locale=language
         ),
-        "c.uninsured_per_accident": copy_api.t(
-            CopyKey("policies.limit.c_uninsured_per_accident"), locale=language
+        "d.damage_deductible": copy_api.t(
+            CopyKey("policies.limit.d_damage_deductible"), locale=language
         ),
-        "d.collision_deductible": copy_api.t(
-            CopyKey("policies.limit.d_collision_deductible"), locale=language
-        ),
-        "d.other_than_collision_deductible": copy_api.t(
-            CopyKey("policies.limit.d_other_than_collision_deductible"), locale=language
+        "d.theft_deductible": copy_api.t(
+            CopyKey("policies.limit.d_theft_deductible"), locale=language
         ),
     }
 
 
 def limits_of(policy: IssuedPolicy, *, language: Locale) -> tuple[LimitFact, ...]:
-    """Los limites de la poliza, en el orden del corpus (de la Parte A a la D)."""
+    """Los limites de la poliza, en el orden del corpus (de la responsabilidad civil a los deducibles)."""
     rotulos = _limit_labels(language)
     return tuple(
         LimitFact(key=clave, label=rotulos.get(clave, clave), amount=_amount(valor, language))

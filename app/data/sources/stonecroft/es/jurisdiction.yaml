@@ -1,6 +1,7 @@
-# Textos fuente revisados de Seguros Aburrá, en espanol (U7, F2).
-# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
-# Se edita a mano y se regenera con `mise run synthetic:generate`.
+# Textos fuente revisados de Seguros Aburrá, en español (U7, F2).
+# Redacción propia con la estructura de una póliza de automóviles colombiana
+# (docs/reference/estructura-poliza-autos-colombia.md); ningún texto de ISO, de ACORD
+# ni de una aseguradora real (P8). Se edita a mano y se regenera con `mise run synthetic:generate`.
 format_version: 1
 tenant_id: stonecroft
 language: es
@@ -9,51 +10,55 @@ texts:
 - source_id: SA-JUR-2026-J.1
   kind: jurisdiction
   clause_key: J.1
-  part: Documento de jurisdicción de Corvane
+  part: Marco legal
   version: '2026.1'
-  text: 'En Corvane, todo vehículo que circule por vías públicas debe tener un seguro de responsabilidad
-    civil con estos mínimos: $25.000 por las lesiones corporales de una persona, $50.000 por todas las
-    lesiones de un mismo accidente y $20.000 por los daños a bienes.'
-  reviewed_at: '2026-09-21'
+  text: 'En Colombia, todo vehículo que circule por vías públicas debe tener el SOAT. El seguro de responsabilidad
+    civil de esta póliza es voluntario y se suma al SOAT. Seguros Aburrá no lo emite con límites menores
+    a estos mínimos: $25.000.000 por la muerte o las lesiones de una persona, $50.000.000 por todas las
+    víctimas de un mismo accidente y $20.000.000 por los daños a bienes de terceros.'
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: gemini-3.1-flash-lite
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-JUR-2026-J.2
   kind: jurisdiction
   clause_key: J.2
-  part: Documento de jurisdicción de Corvane
+  part: Marco legal
   version: '2026.1'
-  text: La aseguradora que decida cancelar una póliza debe avisarlo al asegurado con al menos veinte días
-    de anticipación. Si la causa es la falta de pago de la prima, el aviso puede ser de diez días.
-  reviewed_at: '2026-09-21'
+  text: La aseguradora que decida revocar una póliza debe avisarlo al asegurado por escrito, con al menos
+    diez días de anticipación, y devolverle la prima no devengada (Código de Comercio, art. 1071). Si
+    la prima no se paga, el contrato termina automáticamente (Código de Comercio, art. 1068).
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: gemini-3.1-flash-lite
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-JUR-2026-J.3
   kind: jurisdiction
   clause_key: J.3
-  part: Documento de jurisdicción de Corvane
+  part: Marco legal
   version: '2026.1'
-  text: Quien sufra un accidente o una pérdida debe avisarlo a su aseguradora dentro de los sesenta días
-    siguientes, salvo que demuestre que no pudo hacerlo antes.
-  reviewed_at: '2026-09-21'
+  text: Quien sufra un siniestro debe avisarlo a su aseguradora dentro de los tres días hábiles siguientes
+    a que lo conozca. Las partes pueden ampliar ese plazo, pero no reducirlo (Código de Comercio, arts.
+    1075 y 829).
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: gemini-3.1-flash-lite
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-JUR-2026-J.4
   kind: jurisdiction
   clause_key: J.4
-  part: Documento de jurisdicción de Corvane
+  part: Marco legal
   version: '2026.1'
-  text: El conductor debe llevar consigo la prueba vigente de su seguro, en papel o en formato digital,
-    y mostrarla cuando una autoridad de tránsito se la pida.
-  reviewed_at: '2026-09-21'
+  text: El conductor debe tener vigente el SOAT, que las autoridades de tránsito verifican en el registro
+    nacional. La ley no exige el seguro voluntario de esta póliza para circular.
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: gemini-3.1-flash-lite
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-JUR-2026-J.5
   kind: jurisdiction
   clause_key: J.5
-  part: Documento de jurisdicción de Corvane
+  part: Marco legal
   version: '2026.1'
-  text: La demanda contra una aseguradora por una póliza de automóvil debe presentarse dentro de los dos
-    años siguientes al accidente o a la pérdida.
-  reviewed_at: '2026-09-21'
+  text: Las acciones que nacen del contrato de seguro prescriben en dos años desde que el interesado conoció,
+    o debió conocer, el hecho que les da origen, y en todo caso en cinco años desde que nace el derecho
+    (Código de Comercio, art. 1081).
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: hand
+  drafted_with: claude-sonnet-5-5

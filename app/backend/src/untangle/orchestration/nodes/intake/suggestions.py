@@ -128,7 +128,7 @@ def options(*, language: Locale, quote_enabled: bool) -> tuple[str, ...]:
 #: Preguntas de ejemplo para quien pide preguntar por su poliza sin decir que
 #: (2026-10-09): sirven en cualquier poliza y su respuesta sale de las clausulas.
 SAMPLE_THEFT = CopyKey("policies.question.theft")
-SAMPLE_UNINSURED = CopyKey("policies.question.uninsured_driver")
+SAMPLE_NO_INSURANCE = CopyKey("policies.question.other_driver_no_insurance")
 SAMPLE_RENTAL = CopyKey("policies.question.rental_car")
 SAMPLE_LEND = CopyKey("policies.question.lend_car")
 
@@ -137,7 +137,7 @@ def sample_questions(*, language: Locale) -> tuple[str, ...]:
     """Cuatro preguntas de ejemplo, como botones: orientan una consulta sin pregunta."""
     return (
         copy_api.t(SAMPLE_THEFT, locale=language),
-        copy_api.t(SAMPLE_UNINSURED, locale=language),
+        copy_api.t(SAMPLE_NO_INSURANCE, locale=language),
         copy_api.t(SAMPLE_RENTAL, locale=language),
         copy_api.t(SAMPLE_LEND, locale=language),
     )

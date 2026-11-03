@@ -45,7 +45,7 @@ def test_una_clausula_sin_texto_no_valida() -> None:
                 "clause_key": "A.1",
                 "form_id": "TCO-PAP-2026",
                 "form_version": "2026.1",
-                "part": "Parte A",
+                "part": "Responsabilidad civil extracontractual",
                 "language": "es",
                 "text": "",
                 "is_distractor": False,

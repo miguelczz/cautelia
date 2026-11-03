@@ -29,7 +29,7 @@ const CATALOGO: PolicyCatalog = {
       vehicles: ["Renault Logan 2024"],
       period_start: "2026-01-02",
       period_end: "2027-01-02",
-      limits: { "a.bodily_injury_per_person": 100000, "d.collision_deductible": 250 },
+      limits: { "a.bodily_injury_per_person": 100000, "d.damage_deductible": 250 },
       endorsements: [{ form_id: "SA-PAP-2026-END-3", clause_keys: ["D.EXCL.3"] }],
       questions: ["hail"],
     },

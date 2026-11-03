@@ -1,7 +1,7 @@
 {
   "relations": [
     {
-      "from_clause": "AP-PAP-2026-A.FIN_RESP",
+      "from_clause": "AP-PAP-2026-A.SOAT",
       "relation": "refers_to",
       "to_clause": "AP-JUR-2026-J.1"
     },
@@ -16,9 +16,9 @@
       "to_clause": "AP-PAP-2026-A.LIMIT"
     },
     {
-      "from_clause": "AP-PAP-2026-DEF.BODILY_INJURY",
+      "from_clause": "AP-PAP-2026-DEF.COMMERCIAL_VALUE",
       "relation": "defines",
-      "to_clause": "AP-PAP-2026-C.INS"
+      "to_clause": "AP-PAP-2026-D.LIMIT"
     },
     {
       "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
@@ -38,17 +38,32 @@
     {
       "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
       "relation": "defines",
+      "to_clause": "AP-PAP-2026-C.EXCL.1"
+    },
+    {
+      "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
+      "relation": "defines",
+      "to_clause": "AP-PAP-2026-C.INS"
+    },
+    {
+      "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
+      "relation": "defines",
       "to_clause": "AP-PAP-2026-D.INS.COLLISION"
     },
     {
       "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
       "relation": "defines",
-      "to_clause": "AP-PAP-2026-D.INS.OTC"
+      "to_clause": "AP-PAP-2026-D.INS.THEFT"
     },
     {
       "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
       "relation": "defines",
       "to_clause": "AP-PAP-2026-D.TRANSPORT"
+    },
+    {
+      "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
+      "relation": "defines",
+      "to_clause": "AP-PAP-2026-DEF.COMMERCIAL_VALUE"
     },
     {
       "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
@@ -61,24 +76,14 @@
       "to_clause": "AP-PAP-2026-END-4-B.INS"
     },
     {
+      "from_clause": "AP-PAP-2026-DEF.COVERED_AUTO",
+      "relation": "defines",
+      "to_clause": "AP-PAP-2026-F.TRANSFER"
+    },
+    {
       "from_clause": "AP-PAP-2026-DEF.FAMILY_MEMBER",
       "relation": "defines",
       "to_clause": "AP-PAP-2026-A.EXCL.B.3"
-    },
-    {
-      "from_clause": "AP-PAP-2026-DEF.FAMILY_MEMBER",
-      "relation": "defines",
-      "to_clause": "AP-PAP-2026-B.INS"
-    },
-    {
-      "from_clause": "AP-PAP-2026-DEF.FAMILY_MEMBER",
-      "relation": "defines",
-      "to_clause": "AP-PAP-2026-C.EXCL.1"
-    },
-    {
-      "from_clause": "AP-PAP-2026-DEF.FAMILY_MEMBER",
-      "relation": "defines",
-      "to_clause": "AP-PAP-2026-C.INS"
     },
     {
       "from_clause": "AP-PAP-2026-DEF.FAMILY_MEMBER",
@@ -91,6 +96,11 @@
       "to_clause": "AP-PAP-2026-B.INS"
     },
     {
+      "from_clause": "AP-PAP-2026-DEF.OCCUPYING",
+      "relation": "defines",
+      "to_clause": "AP-PAP-2026-B.LIMIT"
+    },
+    {
       "from_clause": "AP-PAP-2026-DEF.PROPERTY_DAMAGE",
       "relation": "defines",
       "to_clause": "AP-PAP-2026-A.INS"
@@ -99,11 +109,6 @@
       "from_clause": "AP-PAP-2026-DEF.PROPERTY_DAMAGE",
       "relation": "defines",
       "to_clause": "AP-PAP-2026-A.LIMIT"
-    },
-    {
-      "from_clause": "AP-PAP-2026-DEF.TRAILER",
-      "relation": "defines",
-      "to_clause": "AP-PAP-2026-DEF.COVERED_AUTO"
     },
     {
       "from_clause": "AP-PAP-2026-E.DUTIES.A.1",

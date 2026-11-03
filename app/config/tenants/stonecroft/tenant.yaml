@@ -16,7 +16,7 @@ kind: carrier
 # Espanol, coherente con el recorrido 7.1 del PRD. El llamante puede cambiar a
 # ingles: esto es el idioma con el que se abre, no una restriccion.
 default_language: es
-jurisdiction: corvane
+jurisdiction: colombia
 quote_enabled: false
 # El chat sigue un caso que se empezo por llamada si la persona escribe su numero desde el mismo
 # navegador (US1.20). Apagado, explica que un caso se retoma por el canal donde empezo (AC1.19.5).

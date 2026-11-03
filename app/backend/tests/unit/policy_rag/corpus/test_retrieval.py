@@ -56,7 +56,7 @@ def _clausula(clause_id: str, *, language: Locale = "es", form_id: str = "TCO-PA
         clause_key=clause_id,
         form_id=form_id,
         form_version="2026.1",
-        part="Parte A",
+        part="Responsabilidad civil extracontractual",
         language=language,
         text=f"Texto de {clause_id}.",
         is_distractor=False,

@@ -69,7 +69,7 @@ async def test_dice_que_clausulas_cito_por_pregunta_y_si_las_verifico(
     [clausula] = respuesta.clauses
     assert (clausula.clause_id, clausula.part, clausula.verified) == (
         "u13-razon-D.EXCL.5",
-        "Parte D",
+        "Pérdida del vehículo por daños y por hurto",
         True,
     )
     assert pensamiento.fields, "los datos del caso, con si ya quedaron"

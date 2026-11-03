@@ -66,7 +66,7 @@ def _clausula(tenant_id: str, *, texto: str) -> Clause:
             "clause_key": "A.1",
             "form_id": "TCO-PAP-2026",
             "form_version": "2026.1",
-            "part": "Parte A",
+            "part": "Responsabilidad civil extracontractual",
             "language": "es",
             "text": texto,
             "is_distractor": False,

@@ -27,7 +27,7 @@ tenant_id: {tenant_id}
 display_name: {display_name}
 kind: carrier
 default_language: es
-jurisdiction: corvane
+jurisdiction: colombia
 quote_enabled: false
 example_policy: XX-000001
 case_number_prefix: {prefix}
@@ -94,8 +94,8 @@ def test_las_tres_aseguradoras_reales_cargan_con_sus_nombres_y_sus_personas() ->
     assert kinds["knotwell"] is TenantKind.AGENCY
     assert kinds["stonecroft"] is TenantKind.CARRIER
 
-    # Las tres en la misma jurisdiccion ficticia (FR9.5).
-    assert {t.jurisdiction for t in cargadas.available} == {"corvane"}
+    # Las tres en la misma jurisdiccion, Colombia (FR9.5).
+    assert {t.jurisdiction for t in cargadas.available} == {"colombia"}
 
 
 def test_las_tres_aseguradoras_declaran_su_configuracion_de_insultos() -> None:

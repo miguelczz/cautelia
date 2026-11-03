@@ -519,7 +519,7 @@ describe("los seis bloques de evidencia", () => {
               {
                 clause_id: "PAP-2026-SUN-001-4.1",
                 clause_version: "2026.1",
-                part: "Part D",
+                part: "Loss of the vehicle by damage and by theft",
                 text: "La compania responde por los danos al vehiculo.",
                 clause_language: "es",
                 amount_deferred: false,
@@ -540,8 +540,8 @@ describe("los seis bloques de evidencia", () => {
 });
 
 describe("el nombre de la parte de cada clausula (C17, 2026-10-13)", () => {
-  const EN_INGLES = "Part D — Coverage for Damage to Your Auto";
-  const EN_ESPANOL = "Parte D — Daños a su vehículo";
+  const EN_INGLES = "Loss of the vehicle by damage and by theft";
+  const EN_ESPANOL = "Pérdida del vehículo por daños y por hurto";
 
   function conUnaClausula(
     idioma: "es" | "en",

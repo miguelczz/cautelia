@@ -8,8 +8,8 @@
       "is_distractor": false,
       "issuer_label": "Seguros Aburrá",
       "language": "es",
-      "part": "Documento de jurisdicción de Corvane",
-      "text": "En Corvane, todo vehículo que circule por vías públicas debe tener un seguro de responsabilidad civil con estos mínimos: $25.000 por las lesiones corporales de una persona, $50.000 por todas las lesiones de un mismo accidente y $20.000 por los daños a bienes."
+      "part": "Marco legal",
+      "text": "En Colombia, todo vehículo que circule por vías públicas debe tener el SOAT. El seguro de responsabilidad civil de esta póliza es voluntario y se suma al SOAT. Seguros Aburrá no lo emite con límites menores a estos mínimos: $25.000.000 por la muerte o las lesiones de una persona, $50.000.000 por todas las víctimas de un mismo accidente y $20.000.000 por los daños a bienes de terceros."
     },
     {
       "clause_id": "SA-JUR-2026-J.2",
@@ -19,8 +19,8 @@
       "is_distractor": false,
       "issuer_label": "Seguros Aburrá",
       "language": "es",
-      "part": "Documento de jurisdicción de Corvane",
-      "text": "La aseguradora que decida cancelar una póliza debe avisarlo al asegurado con al menos veinte días de anticipación. Si la causa es la falta de pago de la prima, el aviso puede ser de diez días."
+      "part": "Marco legal",
+      "text": "La aseguradora que decida revocar una póliza debe avisarlo al asegurado por escrito, con al menos diez días de anticipación, y devolverle la prima no devengada (Código de Comercio, art. 1071). Si la prima no se paga, el contrato termina automáticamente (Código de Comercio, art. 1068)."
     },
     {
       "clause_id": "SA-JUR-2026-J.3",
@@ -30,8 +30,8 @@
       "is_distractor": false,
       "issuer_label": "Seguros Aburrá",
       "language": "es",
-      "part": "Documento de jurisdicción de Corvane",
-      "text": "Quien sufra un accidente o una pérdida debe avisarlo a su aseguradora dentro de los sesenta días siguientes, salvo que demuestre que no pudo hacerlo antes."
+      "part": "Marco legal",
+      "text": "Quien sufra un siniestro debe avisarlo a su aseguradora dentro de los tres días hábiles siguientes a que lo conozca. Las partes pueden ampliar ese plazo, pero no reducirlo (Código de Comercio, arts. 1075 y 829)."
     },
     {
       "clause_id": "SA-JUR-2026-J.4",
@@ -41,8 +41,8 @@
       "is_distractor": false,
       "issuer_label": "Seguros Aburrá",
       "language": "es",
-      "part": "Documento de jurisdicción de Corvane",
-      "text": "El conductor debe llevar consigo la prueba vigente de su seguro, en papel o en formato digital, y mostrarla cuando una autoridad de tránsito se la pida."
+      "part": "Marco legal",
+      "text": "El conductor debe tener vigente el SOAT, que las autoridades de tránsito verifican en el registro nacional. La ley no exige el seguro voluntario de esta póliza para circular."
     },
     {
       "clause_id": "SA-JUR-2026-J.5",
@@ -52,8 +52,8 @@
       "is_distractor": false,
       "issuer_label": "Seguros Aburrá",
       "language": "es",
-      "part": "Documento de jurisdicción de Corvane",
-      "text": "La demanda contra una aseguradora por una póliza de automóvil debe presentarse dentro de los dos años siguientes al accidente o a la pérdida."
+      "part": "Marco legal",
+      "text": "Las acciones que nacen del contrato de seguro prescriben en dos años desde que el interesado conoció, o debió conocer, el hecho que les da origen, y en todo caso en cinco años desde que nace el derecho (Código de Comercio, art. 1081)."
     }
   ],
   "form_id": "SA-JUR-2026"

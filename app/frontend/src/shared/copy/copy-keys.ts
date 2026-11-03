@@ -226,12 +226,12 @@ export type CopyKey =
   | "comparison.examples.blown_tire"
   | "comparison.examples.hail"
   | "comparison.examples.lend_car"
+  | "comparison.examples.other_driver_no_insurance"
   | "comparison.examples.passenger_medical"
   | "comparison.examples.rental_car"
   | "comparison.examples.ride_app"
   | "comparison.examples.stolen_keys"
   | "comparison.examples.title"
-  | "comparison.examples.uninsured_driver"
   | "comparison.out_of_scope.chat_link"
   | "comparison.out_of_scope.explanation"
   | "comparison.page.lead"
@@ -607,10 +607,9 @@ export type CopyKey =
   | "policies.limit.a_bodily_injury_per_person"
   | "policies.limit.a_property_damage"
   | "policies.limit.b_medical_payments_per_person"
-  | "policies.limit.c_uninsured_per_accident"
-  | "policies.limit.c_uninsured_per_person"
-  | "policies.limit.d_collision_deductible"
-  | "policies.limit.d_other_than_collision_deductible"
+  | "policies.limit.c_driver_personal_accident"
+  | "policies.limit.d_damage_deductible"
+  | "policies.limit.d_theft_deductible"
   | "policies.loading"
   | "policies.money_note"
   | "policies.nav_insurers"
@@ -620,6 +619,7 @@ export type CopyKey =
   | "policies.question.covered_auto_definition_changed"
   | "policies.question.hail"
   | "policies.question.lend_car"
+  | "policies.question.other_driver_no_insurance"
   | "policies.question.passengers_medical"
   | "policies.question.rental_car"
   | "policies.question.report_deadline"
@@ -629,7 +629,6 @@ export type CopyKey =
   | "policies.question.tire_exclusion_reopened"
   | "policies.question.towing"
   | "policies.question.transport_expense_extension"
-  | "policies.question.uninsured_driver"
   | "policies.questions_hint"
   | "policies.questions_title"
   | "policies.title"
@@ -1292,12 +1291,12 @@ export const COPY_KEYS = [
   "comparison.examples.blown_tire",
   "comparison.examples.hail",
   "comparison.examples.lend_car",
+  "comparison.examples.other_driver_no_insurance",
   "comparison.examples.passenger_medical",
   "comparison.examples.rental_car",
   "comparison.examples.ride_app",
   "comparison.examples.stolen_keys",
   "comparison.examples.title",
-  "comparison.examples.uninsured_driver",
   "comparison.out_of_scope.chat_link",
   "comparison.out_of_scope.explanation",
   "comparison.page.lead",
@@ -1673,10 +1672,9 @@ export const COPY_KEYS = [
   "policies.limit.a_bodily_injury_per_person",
   "policies.limit.a_property_damage",
   "policies.limit.b_medical_payments_per_person",
-  "policies.limit.c_uninsured_per_accident",
-  "policies.limit.c_uninsured_per_person",
-  "policies.limit.d_collision_deductible",
-  "policies.limit.d_other_than_collision_deductible",
+  "policies.limit.c_driver_personal_accident",
+  "policies.limit.d_damage_deductible",
+  "policies.limit.d_theft_deductible",
   "policies.loading",
   "policies.money_note",
   "policies.nav_insurers",
@@ -1686,6 +1684,7 @@ export const COPY_KEYS = [
   "policies.question.covered_auto_definition_changed",
   "policies.question.hail",
   "policies.question.lend_car",
+  "policies.question.other_driver_no_insurance",
   "policies.question.passengers_medical",
   "policies.question.rental_car",
   "policies.question.report_deadline",
@@ -1695,7 +1694,6 @@ export const COPY_KEYS = [
   "policies.question.tire_exclusion_reopened",
   "policies.question.towing",
   "policies.question.transport_expense_extension",
-  "policies.question.uninsured_driver",
   "policies.questions_hint",
   "policies.questions_title",
   "policies.title",

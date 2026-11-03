@@ -32,14 +32,13 @@ from untangle.policy_rag.facts import formatting, records
 from untangle.policy_rag.facts.models import PolicyStatus
 
 #: Las claves del corpus que cada plantilla nombra. Si el registro no trae alguna, no hay respuesta.
-COLLISION_DEDUCTIBLE = "d.collision_deductible"
-OTHER_DEDUCTIBLE = "d.other_than_collision_deductible"
+DAMAGE_DEDUCTIBLE = "d.damage_deductible"
+THEFT_DEDUCTIBLE = "d.theft_deductible"
 BODILY_PER_PERSON = "a.bodily_injury_per_person"
 BODILY_PER_ACCIDENT = "a.bodily_injury_per_accident"
 PROPERTY_DAMAGE = "a.property_damage"
 MEDICAL_PER_PERSON = "b.medical_payments_per_person"
-UNINSURED_PER_PERSON = "c.uninsured_per_person"
-UNINSURED_PER_ACCIDENT = "c.uninsured_per_accident"
+DRIVER_PERSONAL_ACCIDENT = "c.driver_personal_accident"
 
 #: Las plantillas del catalogo. Constantes de modulo con la clave literal: el chequeo de claves del
 #: catalogo (BR3.4) las encuentra con un grep y una clave armada en ejecucion no.
@@ -109,14 +108,14 @@ def _amounts(policy: IssuedPolicy, language: Locale, spoken: bool) -> dict[str, 
 
 def _deductible(policy: IssuedPolicy, language: Locale, spoken: bool) -> RigidAnswer | None:
     montos = _amounts(policy, language, spoken)
-    if COLLISION_DEDUCTIBLE not in montos or OTHER_DEDUCTIBLE not in montos:
+    if DAMAGE_DEDUCTIBLE not in montos or THEFT_DEDUCTIBLE not in montos:
         return None
     texto = copy_api.t(
         DEDUCTIBLE_KEY,
         locale=language,
         policy_number=policy.policy_number,
-        collision=montos[COLLISION_DEDUCTIBLE],
-        other=montos[OTHER_DEDUCTIBLE],
+        damage=montos[DAMAGE_DEDUCTIBLE],
+        theft=montos[THEFT_DEDUCTIBLE],
     )
     return RigidAnswer(RigidTopic.DEDUCTIBLE, DEDUCTIBLE_KEY, texto)
 
@@ -128,8 +127,7 @@ def _limits(policy: IssuedPolicy, language: Locale, spoken: bool) -> RigidAnswer
         BODILY_PER_ACCIDENT,
         PROPERTY_DAMAGE,
         MEDICAL_PER_PERSON,
-        UNINSURED_PER_PERSON,
-        UNINSURED_PER_ACCIDENT,
+        DRIVER_PERSONAL_ACCIDENT,
     )
     if any(k not in montos for k in necesarios):
         return None
@@ -141,8 +139,7 @@ def _limits(policy: IssuedPolicy, language: Locale, spoken: bool) -> RigidAnswer
         bodily_accident=montos[BODILY_PER_ACCIDENT],
         property_damage=montos[PROPERTY_DAMAGE],
         medical_person=montos[MEDICAL_PER_PERSON],
-        uninsured_person=montos[UNINSURED_PER_PERSON],
-        uninsured_accident=montos[UNINSURED_PER_ACCIDENT],
+        driver_personal_accident=montos[DRIVER_PERSONAL_ACCIDENT],
     )
     return RigidAnswer(RigidTopic.LIMITS, LIMITS_KEY, texto)
 

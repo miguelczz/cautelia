@@ -7,7 +7,8 @@ Dos chequeos independientes del lenguaje, porque protegen principios y no estilo
    cumplimiento que nadie audito es una promesa que la demostracion no sostiene.
 2. **ISO y ACORD**: el chequeo distingue **estructura** -- nombres de seccion y
    numeracion, permitidos y documentados en
-   `docs/reference/estructura-poliza-iso-pap.md` -- de **texto de clausula**, que
+   `docs/reference/estructura-poliza-autos-colombia.md` (la de ISO,
+   `estructura-poliza-iso-pap.md`, es el antecedente) -- de **texto de clausula**, que
    es lo prohibido (P8, W6). Tiene dos mitades: los marcadores, que buscan
    arranques de prosa de formulario en todo lo que se publica, y las **huellas**
    (U7, BR5.2), que buscan el calco entero en cada clausula del corpus: ninguna

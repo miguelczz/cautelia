@@ -43,7 +43,7 @@ GENERAL_QUESTIONS: tuple[str, ...] = (
     "hail",
     "rental_car",
     "theft",
-    "uninsured_driver",
+    "other_driver_no_insurance",
     "lend_car",
     "passengers_medical",
     "report_deadline",

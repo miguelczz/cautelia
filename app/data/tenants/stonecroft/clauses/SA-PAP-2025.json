@@ -9,7 +9,7 @@
       "issuer_label": "Seguros Aburrá",
       "language": "es",
       "part": "Definiciones",
-      "text": "«Usted» es solamente la persona que aparece como asegurada principal en la carátula; su pareja no queda incluida aunque viva con ella."
+      "text": "«Usted» es solamente el tomador que aparece como asegurado en la carátula; su cónyuge o compañero permanente no queda incluido aunque viva con esa persona."
     },
     {
       "clause_id": "SA-PAP-2025-DEF.COVERED_AUTO",
@@ -20,7 +20,7 @@
       "issuer_label": "Seguros Aburrá",
       "language": "es",
       "part": "Definiciones",
-      "text": "«Vehículo cubierto» es el vehículo que figura en la carátula. Un vehículo comprado durante la vigencia solo queda cubierto desde que se incluye en la carátula mediante un endoso."
+      "text": "«Vehículo asegurado» es el automóvil que figura en la carátula. Un vehículo comprado durante la vigencia solo queda asegurado desde que se incluye en la carátula mediante un endoso."
     },
     {
       "clause_id": "SA-PAP-2025-A.INS",
@@ -30,8 +30,8 @@
       "is_distractor": true,
       "issuer_label": "Seguros Aburrá",
       "language": "es",
-      "part": "Parte A — Responsabilidad civil",
-      "text": "Seguros Aburrá paga los daños que el asegurado cause con un vehículo cubierto, hasta el límite de esta parte, pero no asume su defensa: los honorarios de los abogados corren por cuenta del asegurado."
+      "part": "Responsabilidad civil extracontractual",
+      "text": "Seguros Aburrá paga los perjuicios que usted cause a terceros con el vehículo asegurado, hasta el límite de esta sección, pero no asume su defensa: los honorarios de los abogados corren por su cuenta."
     },
     {
       "clause_id": "SA-PAP-2025-A.EXCL.A.5.ALT",
@@ -41,7 +41,7 @@
       "is_distractor": true,
       "issuer_label": "Seguros Aburrá",
       "language": "es",
-      "part": "Parte A — Responsabilidad civil",
+      "part": "Responsabilidad civil extracontractual",
       "text": "No cubrimos la responsabilidad que surja mientras el vehículo transporta personas o mercancías, con pago o sin él, incluidos los viajes en que conocidos comparten los gastos."
     },
     {
@@ -52,8 +52,8 @@
       "is_distractor": true,
       "issuer_label": "Seguros Aburrá",
       "language": "es",
-      "part": "Parte C — Conductores sin seguro",
-      "text": "Seguros Aburrá paga la indemnización por lesiones corporales que usted o un familiar tengan derecho a reclamar al conductor de un vehículo sin seguro, siempre que ese conductor esté identificado. Los accidentes en que el responsable huye no quedan cubiertos."
+      "part": "Accidentes personales del conductor",
+      "text": "Seguros Aburrá paga el valor asegurado de accidentes personales si el conductor autorizado muere o queda con una incapacidad permanente total a causa de un accidente de tránsito. La incapacidad permanente parcial no queda cubierta."
     },
     {
       "clause_id": "SA-PAP-2025-D.INS.COLLISION.ALT",
@@ -63,8 +63,8 @@
       "is_distractor": true,
       "issuer_label": "Seguros Aburrá",
       "language": "es",
-      "part": "Parte D — Daños a su vehículo",
-      "text": "Seguros Aburrá paga los daños directos que sufra su vehículo cubierto por chocar o volcarse, menos el deducible de colisión, solo si el choque lo causó otra persona."
+      "part": "Pérdida del vehículo por daños y por hurto",
+      "text": "Seguros Aburrá paga los daños directos que sufra el vehículo asegurado por choque o vuelco, menos el deducible de pérdida parcial por daños, solo si el choque lo causó otra persona."
     },
     {
       "clause_id": "SA-PAP-2025-D.TRANSPORT",
@@ -74,8 +74,8 @@
       "is_distractor": true,
       "issuer_label": "Seguros Aburrá",
       "language": "es",
-      "part": "Parte D — Daños a su vehículo",
-      "text": "Si su vehículo cubierto queda fuera de servicio por un robo o por un daño cubierto, le reembolsamos los gastos de transporte hasta $12 por día y $360 en total, a partir del tercer día."
+      "part": "Pérdida del vehículo por daños y por hurto",
+      "text": "Si su vehículo asegurado sufre una pérdida total por daños o por hurto, le reembolsamos los gastos de transporte hasta $30.000 por día y $900.000 en total, a partir del tercer día."
     },
     {
       "clause_id": "SA-PAP-2025-E.DUTIES.A.1.ALT",
@@ -85,8 +85,8 @@
       "is_distractor": true,
       "issuer_label": "Seguros Aburrá",
       "language": "es",
-      "part": "Parte E — Obligaciones después de un accidente o pérdida",
-      "text": "Avísenos de cualquier accidente o pérdida dentro de los treinta días siguientes; pasado ese plazo, el aviso ya no se recibe."
+      "part": "Obligaciones en caso de siniestro",
+      "text": "Avísenos de cualquier siniestro dentro de los treinta días siguientes; pasado ese plazo, el aviso ya no se recibe."
     }
   ],
   "form_id": "SA-PAP-2025"

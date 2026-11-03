@@ -55,8 +55,7 @@ def test_los_limites_salen_del_registro_y_no_incluyen_los_deducibles(
         "a.bodily_injury_per_accident",
         "a.property_damage",
         "b.medical_payments_per_person",
-        "c.uninsured_per_person",
-        "c.uninsured_per_accident",
+        "c.driver_personal_accident",
     }
     por_persona = limites["a.bodily_injury_per_person"].amount
     assert (por_persona.units, por_persona.pesos) == (100000, 100_000_000)
@@ -68,10 +67,10 @@ def test_los_limites_salen_del_registro_y_no_incluyen_los_deducibles(
 def test_los_deducibles_son_solo_las_claves_de_deducible(poliza_de_ejemplo: IssuedPolicy) -> None:
     deducibles = {f.key: f for f in records.deductibles_of(poliza_de_ejemplo, language="en")}
 
-    assert set(deducibles) == {"d.collision_deductible", "d.other_than_collision_deductible"}
-    assert deducibles["d.collision_deductible"].amount.formatted == "COP\xa01,500,000"
-    assert deducibles["d.other_than_collision_deductible"].amount.pesos == 250_000
-    assert deducibles["d.collision_deductible"].label == "Your vehicle's deductible in a collision"
+    assert set(deducibles) == {"d.damage_deductible", "d.theft_deductible"}
+    assert deducibles["d.damage_deductible"].amount.formatted == "COP\xa01,500,000"
+    assert deducibles["d.theft_deductible"].amount.pesos == 250_000
+    assert deducibles["d.damage_deductible"].label == "Partial loss by damage deductible"
 
 
 def test_una_clave_que_el_catalogo_no_conoce_se_rotula_con_la_clave() -> None:

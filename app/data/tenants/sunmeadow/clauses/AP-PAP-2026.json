@@ -8,8 +8,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Agreement",
-      "text": "This policy is a contract between Autos Poblado and the policyholder named on the declarations page. Once the premium is paid, we provide the protection described in each part of this policy, in the territory set out in Part F."
+      "part": "Purpose of the insurance and policy period",
+      "text": "Once the premium is paid, Autos Poblado commits to pay, on the terms of this contract, the coverages that the declarations page shows as contracted, when the loss event happens within the territory set out in the general conditions. A loss event is the occurrence that causes the damage or the loss. This insurance is voluntary and does not replace the SOAT."
     },
     {
       "clause_id": "AP-PAP-2026-AGREEMENT.2",
@@ -19,8 +19,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Agreement",
-      "text": "Coverage runs for the policy period shown on the declarations page. Keeping it in force depends on the policyholder meeting the duties this contract assigns, especially those in Part E."
+      "part": "Purpose of the insurance and policy period",
+      "text": "Coverage runs for the policy period shown on the declarations page, as long as the premium is paid. Keeping it in force depends on the policyholder meeting the duties this contract assigns, especially those in the section \"Duties after a loss event\"."
     },
     {
       "clause_id": "AP-PAP-2026-DEF.YOU",
@@ -31,7 +31,7 @@
       "issuer_label": "Autos Poblado",
       "language": "en",
       "part": "Definitions",
-      "text": "\"You\" means the policyholder listed on the declarations page. It also includes that person's spouse or partner while the two share a home."
+      "text": "\"You\" means the policyholder, the person who bought the insurance and is listed as the insured on the declarations page. It also includes that person's spouse or permanent partner while the two share a home. The beneficiary of the payment for damage to the vehicle is you, unless the declarations page names someone else, such as a bank holding a pledge on the vehicle."
     },
     {
       "clause_id": "AP-PAP-2026-DEF.WE",
@@ -42,7 +42,7 @@
       "issuer_label": "Autos Poblado",
       "language": "en",
       "part": "Definitions",
-      "text": "\"We\" means Autos Poblado, the company that issues this policy and stands behind it."
+      "text": "\"We\" means Autos Poblado, the insurer that issues this policy and stands behind it."
     },
     {
       "clause_id": "AP-PAP-2026-DEF.BODILY_INJURY",
@@ -53,7 +53,7 @@
       "issuer_label": "Autos Poblado",
       "language": "en",
       "part": "Definitions",
-      "text": "\"Bodily injury\" means any harm to a person's health caused by an accident, including wounds, illness that follows from them and, when it happens, death."
+      "text": "\"Personal injury\" means any harm to a person's health caused by the accident, including wounds, illness that follows from them and, when it happens, death."
     },
     {
       "clause_id": "AP-PAP-2026-DEF.PROPERTY_DAMAGE",
@@ -64,7 +64,7 @@
       "issuer_label": "Autos Poblado",
       "language": "en",
       "part": "Definitions",
-      "text": "\"Property damage\" means breaking, destroying or making unusable a physical object that belongs to someone else, such as another car, a fence or a storefront."
+      "text": "\"Property damage\" means breaking, destroying or making unusable a physical object that belongs to a third party, such as another car, a fence or a storefront. A third party is anyone other than you, your spouse or permanent partner, and whoever drives with your permission."
     },
     {
       "clause_id": "AP-PAP-2026-DEF.COVERED_AUTO",
@@ -75,18 +75,18 @@
       "issuer_label": "Autos Poblado",
       "language": "en",
       "part": "Definitions",
-      "text": "\"Covered auto\" means the vehicle listed on the declarations page and any trailer listed there. A vehicle you buy during the policy period is also a covered auto if you tell us about it within 20 days of taking delivery."
+      "text": "\"Covered auto\" means the private passenger car listed on the declarations page. A vehicle you buy during the policy period is also a covered auto if you tell us about it within 20 days of taking delivery."
     },
     {
-      "clause_id": "AP-PAP-2026-DEF.TRAILER",
-      "clause_key": "DEF.TRAILER",
+      "clause_id": "AP-PAP-2026-DEF.COMMERCIAL_VALUE",
+      "clause_key": "DEF.COMMERCIAL_VALUE",
       "form_id": "AP-PAP-2026",
       "form_version": "2026.1",
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
       "part": "Definitions",
-      "text": "\"Trailer\" means an unpowered vehicle built to be towed by a private passenger car, such as a small cargo trailer or a compact camper."
+      "text": "\"Commercial value\" means what your covered auto is worth on the market on the day of the loss event, according to the Fasecolda Value Guide. The guide is read with the vehicle's code and model year. The commercial value is the basis of the insured value."
     },
     {
       "clause_id": "AP-PAP-2026-DEF.FAMILY_MEMBER",
@@ -97,7 +97,7 @@
       "issuer_label": "Autos Poblado",
       "language": "en",
       "part": "Definitions",
-      "text": "\"Family member\" means someone who lives in your home and is related to you by birth, marriage, civil union or adoption, including children in your legal care."
+      "text": "\"Family member\" means someone who lives in your home and is related to you by birth, marriage, permanent partnership or adoption, including children in your legal care."
     },
     {
       "clause_id": "AP-PAP-2026-DEF.OCCUPYING",
@@ -108,7 +108,7 @@
       "issuer_label": "Autos Poblado",
       "language": "en",
       "part": "Definitions",
-      "text": "\"Occupying\" means being inside a vehicle, climbing in or out of it, or standing next to it while loading it or pushing it by hand."
+      "text": "\"Occupant\" means someone inside a vehicle, climbing in or out of it, or standing next to it while loading it or pushing it by hand."
     },
     {
       "clause_id": "AP-PAP-2026-A.INS",
@@ -118,8 +118,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "When an accident involving a covered auto makes an insured legally responsible to someone else for bodily injury or property damage, Autos Poblado pays those damages up to the Part A limit. We also handle the insured's defense against those claims with lawyers we choose, and we may settle a claim whenever we think it wise. Our defense duty stops once our Part A payments reach the limit."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "When you or an authorized driver cause, with the covered auto, a traffic accident for which they must answer to a third party under the law, Autos Poblado pays the damages for property damage, for death or injury to one person and for death or injury to two or more people. We pay up to the limits of this section and in excess of what the SOAT covers. An authorized driver is someone who drives with your permission and a valid driver's license. We also handle your defense against those claims with lawyers we choose, and we may settle with the victim whenever we think it wise. Our defense duty stops once our payments reach the limit."
     },
     {
       "clause_id": "AP-PAP-2026-A.SUPP",
@@ -129,8 +129,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "Besides the Part A limit, we cover the insured's reasonable out-of-pocket costs when we ask for help with a claim, including travel to court and up to $150 for each day of work missed, plus the cost of any court bond needed in a case we defend."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "In addition to the limit of this section, and without reducing it, we pay the costs of the lawsuit that the victim files against you or against us over a covered accident (Commercial Code, art. 1128), any court bond needed, and your reasonable out-of-pocket costs when we ask for help with the case, including travel to hearings and up to COP 120,000 for each day of work missed. We do not pay them if the accident was caused on purpose or is excluded, or if you face the lawsuit against our written instruction."
     },
     {
       "clause_id": "AP-PAP-2026-A.EXCL.A.1",
@@ -140,8 +140,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "Part A does not cover harm that an insured causes on purpose, or harm someone else causes following the insured's instructions."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "This section does not cover harm that you or an authorized driver cause on purpose, or harm someone else causes following your instructions."
     },
     {
       "clause_id": "AP-PAP-2026-A.EXCL.A.2",
@@ -151,8 +151,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "Part A does not cover damage to things the insured owns or is carrying in the vehicle."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "This section does not cover damage to things you own or are carrying in the vehicle."
     },
     {
       "clause_id": "AP-PAP-2026-A.EXCL.A.3",
@@ -162,8 +162,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "Part A does not cover damage to things the insured has rented, borrowed or is looking after for someone else."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "This section does not cover damage to things you have rented, borrowed or are looking after for someone else."
     },
     {
       "clause_id": "AP-PAP-2026-A.EXCL.A.4",
@@ -173,8 +173,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "Part A does not cover injuries to the insured's own employees that happen while they are working; those are handled by the applicable workplace injury system."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "This section does not cover injuries to your own employees that happen while they are working; those are handled by the labor and occupational risk systems."
     },
     {
       "clause_id": "AP-PAP-2026-A.EXCL.A.5",
@@ -184,8 +184,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "Part A does not cover accidents that happen while a vehicle is carrying people or goods for pay, including trips booked through a ride app. Friends splitting the cost of a trip is not considered pay."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "This section does not cover accidents that happen while the vehicle provides public transport service or carries people or goods for pay, including trips booked through a ride app. Friends splitting the cost of a trip is not considered pay."
     },
     {
       "clause_id": "AP-PAP-2026-A.EXCL.A.6",
@@ -195,8 +195,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "Part A does not cover an insured who is using a vehicle as part of a business that sells, repairs, washes, parks or stores vehicles."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "This section does not cover liability that arises while the vehicle is used in a business that sells, repairs, washes, parks or stores vehicles."
     },
     {
       "clause_id": "AP-PAP-2026-A.EXCL.A.7",
@@ -206,8 +206,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "Part A does not cover anyone driving a vehicle without the owner's permission or without a sound reason to believe they had it."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "This section does not cover anyone driving a vehicle without the owner's permission or without a sound reason to believe they had it."
     },
     {
       "clause_id": "AP-PAP-2026-A.EXCL.A.8",
@@ -217,8 +217,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "Part A does not cover accidents during races, speed contests or performance tests, or while practicing for them."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "This section does not cover accidents during races, speed contests or performance tests, or while practicing for them."
     },
     {
       "clause_id": "AP-PAP-2026-A.EXCL.A.9",
@@ -228,8 +228,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "Part A does not pay fines, penalties or damages that a court imposes to punish rather than to repair harm."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "This section does not pay fines, traffic tickets, penalties or damages that a court imposes to punish rather than to repair harm."
     },
     {
       "clause_id": "AP-PAP-2026-A.EXCL.B.1",
@@ -239,8 +239,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "Part A does not cover driving a motorcycle, a motorized three-wheeler or any other two- or three-wheeled vehicle."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "This section does not cover driving a motorcycle, a motorized three-wheeler or any other two- or three-wheeled vehicle."
     },
     {
       "clause_id": "AP-PAP-2026-A.EXCL.B.2",
@@ -250,8 +250,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "Part A does not cover using a vehicle you own that is not listed on the declarations page, except a newly bought vehicle that the covered auto definition includes."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "This section does not cover using a vehicle you own that is not listed on the declarations page, except a newly bought vehicle that the covered auto definition includes."
     },
     {
       "clause_id": "AP-PAP-2026-A.EXCL.B.3",
@@ -261,8 +261,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "Part A does not cover using a vehicle that a family member owns, or that a family member has on hand for regular use, unless that vehicle is listed on the declarations page."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "This section does not cover using a vehicle that a family member owns, or that a family member has on hand for regular use, unless that vehicle is listed on the declarations page."
     },
     {
       "clause_id": "AP-PAP-2026-A.LIMIT",
@@ -272,30 +272,30 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "The per-person limit on the declarations page is the most we pay for all bodily injury to one person in one accident. The per-accident limit is the most for all bodily injury in that accident, and the property damage limit is the most for all property damaged. Adding insureds, vehicles or claims does not raise these limits."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "The declarations page sets three limits. The limit for death or injury to one person is the most we pay for each victim in one accident. The limit for death or injury to two or more people is the most for all victims of that accident. The property damage limit is the most for all third-party property damaged. Adding insureds, vehicles or claims does not raise these limits."
     },
     {
-      "clause_id": "AP-PAP-2026-A.OUT_OF_STATE",
-      "clause_key": "A.OUT_OF_STATE",
+      "clause_id": "AP-PAP-2026-A.OUT_OF_COUNTRY",
+      "clause_key": "A.OUT_OF_COUNTRY",
       "form_id": "AP-PAP-2026",
       "form_version": "2026.1",
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "If an accident happens outside Corvane and the local law there requires higher minimum limits than this policy has, we apply those higher minimums to that accident. We never pay twice for the same loss."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "If an accident happens outside Colombia, this section responds only when a territory endorsement allows it. In that case, if the law of the place requires compulsory insurance to drive, that insurance pays first and we pay the excess, up to the limit on the declarations page. We never pay twice for the same loss."
     },
     {
-      "clause_id": "AP-PAP-2026-A.FIN_RESP",
-      "clause_key": "A.FIN_RESP",
+      "clause_id": "AP-PAP-2026-A.SOAT",
+      "clause_key": "A.SOAT",
       "form_id": "AP-PAP-2026",
       "form_version": "2026.1",
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
-      "text": "When a Corvane authority asks for proof that a driver carries liability insurance, this policy serves as that proof, with at least the minimum limits set in the jurisdiction document."
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
+      "text": "This section does not replace the SOAT, which the law requires of every vehicle on the road. What the SOAT covers responds first, and this policy pays the excess, with at least the minimum limits set in the \"Legal framework\" document."
     },
     {
       "clause_id": "AP-PAP-2026-A.OTHER",
@@ -305,7 +305,7 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part A — Liability Coverage",
+      "part": "Third-party civil liability (responsabilidad civil extracontractual)",
       "text": "If another liability policy also responds to the accident, we split the payment in proportion to each policy's limits. For a vehicle you do not own, that vehicle's own insurance pays first and we pay what remains."
     },
     {
@@ -316,8 +316,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part B — Medical Payments Coverage",
-      "text": "Autos Poblado pays reasonable medical and funeral costs that result from a traffic accident and are incurred within two years of it. We cover you and your family members whether they are riding in a vehicle or struck by one, and anyone else while occupying your covered auto."
+      "part": "Medical expenses of occupants",
+      "text": "Autos Poblado pays the reasonable medical, hospital and funeral costs of the occupants of the covered auto when they suffer a traffic accident, as long as the costs arise within two years of it. We pay in excess of what the SOAT covers."
     },
     {
       "clause_id": "AP-PAP-2026-B.EXCL.1",
@@ -327,8 +327,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part B — Medical Payments Coverage",
-      "text": "Part B does not pay for injuries suffered on a motorcycle or any other two- or three-wheeled vehicle."
+      "part": "Medical expenses of occupants",
+      "text": "This section does not pay for injuries suffered on a motorcycle or any other two- or three-wheeled vehicle."
     },
     {
       "clause_id": "AP-PAP-2026-B.EXCL.2",
@@ -338,8 +338,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part B — Medical Payments Coverage",
-      "text": "Part B does not pay for injuries suffered while the vehicle is carrying passengers for pay."
+      "part": "Medical expenses of occupants",
+      "text": "This section does not pay for injuries suffered while the vehicle provides public transport service or carries passengers for pay."
     },
     {
       "clause_id": "AP-PAP-2026-B.EXCL.3",
@@ -349,8 +349,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part B — Medical Payments Coverage",
-      "text": "Part B does not pay for injuries that happen while the vehicle is being used as a home or as a fixed workplace."
+      "part": "Medical expenses of occupants",
+      "text": "This section does not pay for injuries that happen while the vehicle is being used as a home or as a fixed workplace."
     },
     {
       "clause_id": "AP-PAP-2026-B.EXCL.4",
@@ -360,8 +360,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part B — Medical Payments Coverage",
-      "text": "Part B does not pay for injuries suffered in races, speed contests or performance tests."
+      "part": "Medical expenses of occupants",
+      "text": "This section does not pay for injuries suffered in races, speed contests or performance tests."
     },
     {
       "clause_id": "AP-PAP-2026-B.LIMIT",
@@ -371,8 +371,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part B — Medical Payments Coverage",
-      "text": "The per-person limit on the declarations page is the most we pay toward each injured person's medical costs from one accident, however many people or vehicles are involved."
+      "part": "Medical expenses of occupants",
+      "text": "The per-person limit on the declarations page is the most we pay toward each injured occupant's medical costs from one accident, however many people or vehicles are involved."
     },
     {
       "clause_id": "AP-PAP-2026-B.OTHER",
@@ -382,8 +382,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part B — Medical Payments Coverage",
-      "text": "If another medical payments policy covers the same costs, we pay only what is left unpaid after that policy, up to our limit."
+      "part": "Medical expenses of occupants",
+      "text": "If the SOAT or another medical expenses policy covers the same costs, we pay only what is left unpaid after it, up to our limit."
     },
     {
       "clause_id": "AP-PAP-2026-C.INS",
@@ -393,8 +393,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part C — Uninsured Motorists Coverage",
-      "text": "Autos Poblado pays the damages for bodily injury that you or a family member are entitled to claim from the driver or owner of an uninsured vehicle. This includes an accident where the vehicle at fault drives off and neither its driver nor its owner can be identified, as long as the police received a report of it."
+      "part": "Personal accident cover for the driver",
+      "text": "If the authorized driver of the covered auto dies, or is left with a permanent disability, because of a traffic accident that happens while driving, Autos Poblado pays the personal accident insured value shown on the declarations page. For a permanent disability we pay according to the percentage of lost capacity determined by the competent authority. If the driver dies, we pay the driver's beneficiaries."
     },
     {
       "clause_id": "AP-PAP-2026-C.EXCL.1",
@@ -404,8 +404,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part C — Uninsured Motorists Coverage",
-      "text": "Part C does not cover injuries to anyone riding in a vehicle owned by you or a family member that is not insured under this policy."
+      "part": "Personal accident cover for the driver",
+      "text": "This section does not cover an accident of the driver while driving a vehicle that is not the covered auto."
     },
     {
       "clause_id": "AP-PAP-2026-C.EXCL.2",
@@ -415,8 +415,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part C — Uninsured Motorists Coverage",
-      "text": "Part C does not cover a claim the insured settled with the at-fault party or its insurer without our written agreement."
+      "part": "Personal accident cover for the driver",
+      "text": "This section does not cover death or disability that the driver causes to themselves on purpose."
     },
     {
       "clause_id": "AP-PAP-2026-C.EXCL.3",
@@ -426,8 +426,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part C — Uninsured Motorists Coverage",
-      "text": "Part C does not apply while the vehicle is carrying people or goods for pay."
+      "part": "Personal accident cover for the driver",
+      "text": "This section does not apply while the vehicle provides public transport service or carries people or goods for pay."
     },
     {
       "clause_id": "AP-PAP-2026-C.EXCL.4",
@@ -437,8 +437,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part C — Uninsured Motorists Coverage",
-      "text": "Part C does not cover anyone using a vehicle without the owner's permission or without a sound reason to believe they had it."
+      "part": "Personal accident cover for the driver",
+      "text": "This section does not cover anyone driving the vehicle without the owner's permission or without a sound reason to believe they had it."
     },
     {
       "clause_id": "AP-PAP-2026-C.LIMIT",
@@ -448,8 +448,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part C — Uninsured Motorists Coverage",
-      "text": "The most we pay under this part is the uninsured motorist limit shown on the declarations page, per person and per accident, however many vehicles or people are involved. Anything the at-fault party has already paid is subtracted."
+      "part": "Personal accident cover for the driver",
+      "text": "The most we pay under this section is the personal accident insured value shown on the declarations page, once per accident, however many vehicles or people are involved. What the at-fault party pays the victim is not subtracted."
     },
     {
       "clause_id": "AP-PAP-2026-C.OTHER",
@@ -459,8 +459,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part C — Uninsured Motorists Coverage",
-      "text": "If several policies cover the same person for the same accident, we split the payment in proportion to each policy's limits."
+      "part": "Personal accident cover for the driver",
+      "text": "If the driver has other personal accident insurance, each policy pays its own insured value: what the others pay does not reduce what we pay."
     },
     {
       "clause_id": "AP-PAP-2026-C.ARBITRATION",
@@ -470,8 +470,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part C — Uninsured Motorists Coverage",
-      "text": "If we and the insured disagree about whether damages are owed or about how much, either side may ask for the question to be decided by a single arbitrator in Corvane. Each side pays its own costs and half of the arbitrator's fee."
+      "part": "Personal accident cover for the driver",
+      "text": "If we disagree with you or the beneficiaries about whether a payment is owed, about the degree of disability or about the amount, either side may ask for the question to be decided by a single arbitrator in Colombia. Each side pays its own costs and half of the arbitrator's fee."
     },
     {
       "clause_id": "AP-PAP-2026-D.INS.COLLISION",
@@ -481,19 +481,19 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "Autos Poblado pays for sudden, accidental damage to your covered auto from hitting another vehicle or object or from rolling over, minus the collision deductible on the declarations page. We pay even if you caused the crash."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "Autos Poblado pays for sudden, accidental damage to the covered auto from a crash, rollover, fire, flood, hail, falling objects, vandalism, broken glass or hitting an animal. If repairing the vehicle costs less than 75% of the insured value, it is a partial loss: we pay the repair, minus the partial-loss-by-damage deductible on the declarations page, which is the share of the loss you pay. If it costs 75% or more, it is a total loss and we pay it under the limit of this section. We pay even if you caused the crash."
     },
     {
-      "clause_id": "AP-PAP-2026-D.INS.OTC",
-      "clause_key": "D.INS.OTC",
+      "clause_id": "AP-PAP-2026-D.INS.THEFT",
+      "clause_key": "D.INS.THEFT",
       "form_id": "AP-PAP-2026",
       "form_version": "2026.1",
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "We also pay, minus the matching deductible, for damage to your covered auto that does not come from a crash: theft of the car or its parts, fire, flood, hail, falling objects, vandalism, broken glass and hitting an animal."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "We also pay for theft of the covered auto, minus the partial-loss-by-theft deductible on the declarations page. It is a total loss by theft if the vehicle disappears and does not turn up after the report, and a partial loss by theft if parts or accessories are stolen."
     },
     {
       "clause_id": "AP-PAP-2026-D.TRANSPORT",
@@ -503,8 +503,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "If your covered auto is out of use because it was stolen or damaged in a covered loss, we reimburse what you spend getting around in the meantime, up to $25 a day and $750 in total. Reimbursement starts on the third day after the theft or damage."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "If your covered auto suffers a total loss by damage or theft, we reimburse what you spend getting around in the meantime, up to COP 60,000 a day and COP 1,800,000 in total, which is 30 days. Reimbursement starts on the third day after the loss event."
     },
     {
       "clause_id": "AP-PAP-2026-D.EXCL.1",
@@ -514,8 +514,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "Part D does not cover damage that happens while the vehicle is carrying people or goods for pay."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "This section does not cover damage that happens while the vehicle provides public transport service or carries people or goods for pay."
     },
     {
       "clause_id": "AP-PAP-2026-D.EXCL.2",
@@ -525,8 +525,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "Part D does not cover wear from use, rust, mechanical or electrical failure, or freezing, unless it results from a theft or another covered loss."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "This section does not cover wear from use, rust, lack of maintenance, or mechanical or electrical failure, unless it results from a theft or another covered loss."
     },
     {
       "clause_id": "AP-PAP-2026-D.EXCL.3",
@@ -536,8 +536,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "Part D does not cover sound systems, screens, navigation units or other electronics that were not installed at the factory."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "This section does not cover sound systems, screens, navigation units or other electronics that were not installed at the factory."
     },
     {
       "clause_id": "AP-PAP-2026-D.EXCL.4",
@@ -547,8 +547,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "Part D does not cover personal belongings inside the vehicle, such as clothing, tools, cash or phones."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "This section does not cover personal belongings inside the vehicle, such as clothing, tools, cash or phones."
     },
     {
       "clause_id": "AP-PAP-2026-D.EXCL.5",
@@ -558,8 +558,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "Part D does not cover damage limited to the tires, such as flats or blowouts, unless it comes from fire, theft or vandalism."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "This section does not cover damage limited to the tires, such as flats or blowouts, unless it comes from fire, theft or vandalism."
     },
     {
       "clause_id": "AP-PAP-2026-D.EXCL.6",
@@ -569,8 +569,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "Part D does not cover losing the vehicle to seizure, impoundment or destruction ordered by an authority."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "This section does not cover losing the vehicle to seizure, impoundment or destruction ordered by an authority."
     },
     {
       "clause_id": "AP-PAP-2026-D.EXCL.7",
@@ -580,8 +580,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "Part D does not cover damage caused by war, rebellion, organized terrorism or nuclear energy."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "This section does not cover damage caused by war, rebellion, organized terrorism or nuclear energy."
     },
     {
       "clause_id": "AP-PAP-2026-D.EXCL.8",
@@ -591,8 +591,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "Part D does not cover damage suffered in races, speed contests or performance tests, or while practicing for them."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "This section does not cover damage suffered in races, speed contests or performance tests, or while practicing for them."
     },
     {
       "clause_id": "AP-PAP-2026-D.EXCL.9",
@@ -602,8 +602,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "Part D does not cover parts, accessories or modifications added to the vehicle without telling us, such as custom wheels, altered suspension or engine upgrades."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "This section does not cover parts, accessories or modifications added to the vehicle without telling us, such as custom wheels, altered suspension or engine upgrades."
     },
     {
       "clause_id": "AP-PAP-2026-D.EXCL.10",
@@ -613,8 +613,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "Part D does not cover damage that you or a family member cause to the vehicle on purpose."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "This section does not cover damage that you or a family member cause to the vehicle on purpose."
     },
     {
       "clause_id": "AP-PAP-2026-D.EXCL.11",
@@ -624,8 +624,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "Part D does not cover damage caused by loading the vehicle beyond the weight its manufacturer allows."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "This section does not cover damage caused by loading the vehicle beyond the weight its manufacturer allows."
     },
     {
       "clause_id": "AP-PAP-2026-D.EXCL.12",
@@ -635,8 +635,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "Part D does not cover theft when the vehicle was left unlocked with the keys inside or with the engine running in a public place."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "This section does not cover theft when the vehicle was left unlocked with the keys inside or with the engine running in a public place."
     },
     {
       "clause_id": "AP-PAP-2026-D.EXCL.13",
@@ -646,8 +646,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "Part D does not cover flood damage when the driver entered a road that authorities had closed or marked as flooded."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "This section does not cover flood damage when the driver entered a road that authorities had closed or marked as flooded."
     },
     {
       "clause_id": "AP-PAP-2026-D.LIMIT",
@@ -657,8 +657,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "The most we pay for a loss is the lower of the vehicle's market value at the time of the loss and the cost of repairing it, or of replacing stolen parts with equivalent ones."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "The most we pay for a loss event is the insured value, which is the vehicle's commercial value in the Fasecolda Value Guide on the date of the loss event. If repairing the vehicle costs 75% or more of that value, it is a total loss. If it costs less, it is a partial loss and we pay the repair or the replacement of the parts with equivalent ones."
     },
     {
       "clause_id": "AP-PAP-2026-D.PAYMENT",
@@ -668,8 +668,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
-      "text": "We choose whether to pay the loss in cash or to arrange the repair or replacement ourselves. If we pay for a total loss, the vehicle or what remains of it becomes ours. If we recover a stolen vehicle, we give it back to you and pay for any damage it suffered."
+      "part": "Loss of the vehicle by damage and by theft",
+      "text": "We choose whether to pay the loss in cash or to arrange the repair or replacement ourselves. We pay within one month of the day you prove the loss event and its amount (Commercial Code, art. 1080). If the loss is total, the vehicle or what remains of it, which is the salvage, becomes ours and you sign the transfer. If a stolen vehicle turns up before we pay, we give it back to you and pay for any damage it suffered."
     },
     {
       "clause_id": "AP-PAP-2026-D.NO_BAILEE",
@@ -679,7 +679,7 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
+      "part": "Loss of the vehicle by damage and by theft",
       "text": "This coverage does not benefit anyone who has the vehicle in their care as a business, such as a repair shop, a parking garage or a car transport company; if they caused the damage, we may recover it from them."
     },
     {
@@ -690,7 +690,7 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
+      "part": "Loss of the vehicle by damage and by theft",
       "text": "If another policy or source covers the same loss, we pay only our share, in proportion to our limit against the total."
     },
     {
@@ -701,7 +701,7 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part D — Coverage for Damage to Your Auto",
+      "part": "Loss of the vehicle by damage and by theft",
       "text": "If we and you disagree on the amount of a loss, each side names an appraiser and the two appraisers choose a third. What any two of the three agree on binds both sides. Each side pays its own appraiser and half of the third."
     },
     {
@@ -712,8 +712,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part E — Duties After an Accident or Loss",
-      "text": "Tell us about any accident or loss as soon as you can, and always within the deadline set in the Corvane jurisdiction document."
+      "part": "Duties after a loss event",
+      "text": "Tell us about the loss event within three business days of learning about it, as the legal framework sets (Commercial Code, art. 1075)."
     },
     {
       "clause_id": "AP-PAP-2026-E.DUTIES.A.2",
@@ -723,7 +723,7 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part E — Duties After an Accident or Loss",
+      "part": "Duties after a loss event",
       "text": "Tell us how, when and where it happened, and which vehicles and people were involved."
     },
     {
@@ -734,7 +734,7 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part E — Duties After an Accident or Loss",
+      "part": "Duties after a loss event",
       "text": "Give us the name and a way to reach any injured person and any witness you know of."
     },
     {
@@ -745,7 +745,7 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part E — Duties After an Accident or Loss",
+      "part": "Duties after a loss event",
       "text": "Work with us as we look into the claim and as we defend any claim made against you."
     },
     {
@@ -756,8 +756,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part E — Duties After an Accident or Loss",
-      "text": "Send us right away a copy of any notice, summons or lawsuit you receive about the accident."
+      "part": "Duties after a loss event",
+      "text": "Send us right away a copy of any notice, summons or lawsuit you receive about the loss event, including a summons to a conciliation hearing."
     },
     {
       "clause_id": "AP-PAP-2026-E.DUTIES.B.3",
@@ -767,7 +767,7 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part E — Duties After an Accident or Loss",
+      "part": "Duties after a loss event",
       "text": "If the claim involves injuries, attend the medical exams we request, with doctors we pay for, as often as is reasonable."
     },
     {
@@ -778,8 +778,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part E — Duties After an Accident or Loss",
-      "text": "Allow us to obtain your medical records and other documents about the injuries, and give us a written account of the loss if we ask for one."
+      "part": "Duties after a loss event",
+      "text": "Give us the evidence that the loss event happened and what it cost (Commercial Code, art. 1077), a written account of the loss if we ask for one, and your authorization to obtain your medical records if there were injuries."
     },
     {
       "clause_id": "AP-PAP-2026-E.DUTIES.C.1",
@@ -789,8 +789,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part E — Duties After an Accident or Loss",
-      "text": "If the vehicle at fault drove off without being identified, report it to the police within 24 hours."
+      "part": "Duties after a loss event",
+      "text": "If the accident leaves injured or dead people, or the vehicle at fault drove off without being identified, tell the traffic authority within 24 hours and ask for the accident report."
     },
     {
       "clause_id": "AP-PAP-2026-E.DUTIES.C.2",
@@ -800,8 +800,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part E — Duties After an Accident or Loss",
-      "text": "If you sue an uninsured driver, send us a copy of the lawsuit and of any papers you receive in that case."
+      "part": "Duties after a loss event",
+      "text": "Do not admit liability, settle or pay anything to the third party without our written authorization."
     },
     {
       "clause_id": "AP-PAP-2026-E.DUTIES.D.1",
@@ -811,8 +811,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part E — Duties After an Accident or Loss",
-      "text": "Take reasonable steps to keep the vehicle from further damage; we pay back what you spend doing so."
+      "part": "Duties after a loss event",
+      "text": "Take reasonable steps to keep the vehicle from further damage (Commercial Code, art. 1074); we pay back what you spend doing so."
     },
     {
       "clause_id": "AP-PAP-2026-E.DUTIES.D.2",
@@ -822,8 +822,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part E — Duties After an Accident or Loss",
-      "text": "If the vehicle or any of its parts was stolen, report it to the police immediately."
+      "part": "Duties after a loss event",
+      "text": "If the vehicle or any of its parts was stolen, report it to the competent authority immediately."
     },
     {
       "clause_id": "AP-PAP-2026-E.DUTIES.D.3",
@@ -833,7 +833,7 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part E — Duties After an Accident or Loss",
+      "part": "Duties after a loss event",
       "text": "Let us see and appraise the vehicle before you repair it or get rid of it."
     },
     {
@@ -844,8 +844,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part F — General Provisions",
-      "text": "If an insured goes bankrupt or becomes insolvent, Autos Poblado still owes what this policy covers."
+      "part": "General conditions",
+      "text": "If you become insolvent, Autos Poblado still owes what this policy covers. For civil liability, the payment is for the victim (Commercial Code, art. 1127)."
     },
     {
       "clause_id": "AP-PAP-2026-F.CHANGES",
@@ -855,8 +855,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part F — General Provisions",
-      "text": "This contract changes only in writing, through an endorsement we issue. If a change you request alters the risk, we adjust the premium from the date of the change."
+      "part": "General conditions",
+      "text": "This contract changes only in writing, through an endorsement we issue. You tell us in writing about any change that alters the risk, such as a change in how the vehicle is used, and we adjust the premium from the date of the change. Notices are sent to the address or email you gave us."
     },
     {
       "clause_id": "AP-PAP-2026-F.FRAUD",
@@ -866,8 +866,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part F — General Provisions",
-      "text": "We give no coverage to anyone who knowingly lied about or hid an important fact about the accident, the loss or the information given to us when buying the policy."
+      "part": "General conditions",
+      "text": "You described the state of the risk when buying the policy, and you must have done so truthfully. We give no coverage to anyone who knowingly lied about or hid an important fact about the accident, the loss or the state of the risk; if the inaccuracy was in good faith, the payment may be reduced as the law provides (Commercial Code, art. 1058)."
     },
     {
       "clause_id": "AP-PAP-2026-F.LEGAL_ACTION",
@@ -877,8 +877,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part F — General Provisions",
-      "text": "No one may sue us over this policy without first meeting the duties it sets, and the suit must be filed within the deadline set in the Corvane jurisdiction document."
+      "part": "General conditions",
+      "text": "The rights arising from this policy expire within the periods the law sets (Commercial Code, art. 1081), and no one may sue without first meeting the duties the policy sets."
     },
     {
       "clause_id": "AP-PAP-2026-F.RECOVERY",
@@ -888,8 +888,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part F — General Provisions",
-      "text": "When we pay for harm that someone else caused, we may collect what we paid from that person in place of the insured. The insured helps us do so and does nothing to undermine it."
+      "part": "General conditions",
+      "text": "When we pay for harm that someone else caused, we take your place to collect what we paid from that person, up to that amount (Commercial Code, art. 1096). You help us do so and do nothing to undermine it."
     },
     {
       "clause_id": "AP-PAP-2026-F.PERIOD_TERRITORY",
@@ -899,8 +899,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part F — General Provisions",
-      "text": "The policy covers accidents and losses that happen during the policy period shown on the declarations page and within the territory of Corvane."
+      "part": "General conditions",
+      "text": "The policy covers loss events that happen during the policy period shown on the declarations page and within the territory of Colombia."
     },
     {
       "clause_id": "AP-PAP-2026-F.TERMINATION",
@@ -910,8 +910,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part F — General Provisions",
-      "text": "You may cancel the policy at any time by telling us in writing. We may cancel it only with the advance notice the Corvane jurisdiction document requires, and we refund the premium for the time that had not yet run."
+      "part": "General conditions",
+      "text": "You may revoke the policy at any time by telling us in writing. We may revoke it only with the advance notice the legal framework requires, and we refund the premium for the time that had not yet run. If the premium is not paid on time, the policy ends automatically (Commercial Code, art. 1068)."
     },
     {
       "clause_id": "AP-PAP-2026-F.TRANSFER",
@@ -921,8 +921,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part F — General Provisions",
-      "text": "Your rights under this policy do not pass to anyone else without our written consent."
+      "part": "General conditions",
+      "text": "If you sell the covered auto, or transfer your rights under this policy, the insurance does not pass to the buyer or to anyone else without our written consent."
     },
     {
       "clause_id": "AP-PAP-2026-F.TWO_POLICIES",
@@ -932,8 +932,8 @@
       "is_distractor": false,
       "issuer_label": "Autos Poblado",
       "language": "en",
-      "part": "Part F — General Provisions",
-      "text": "If two or more Autos Poblado policies cover the same accident, the most we pay is the highest limit of any single one of them."
+      "part": "General conditions",
+      "text": "If two or more insurances cover the same loss event, you must tell us about all of them. If they are Autos Poblado policies, the most we pay is the highest limit of any single one of them."
     }
   ],
   "form_id": "AP-PAP-2026"

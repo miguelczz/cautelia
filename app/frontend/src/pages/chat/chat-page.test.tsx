@@ -176,7 +176,7 @@ describe("la pantalla del chat", () => {
   });
 
   it("dos clausulas de la misma parte se rotulan distinto, y una condicion especial se llama asi", async () => {
-    // C17 de la auditoria del 2026-10-10: dos tarjetas "Parte D — Daños a su vehiculo"
+    // C17 de la auditoria del 2026-10-10: dos tarjetas "Pérdida del vehículo por daños y por hurto"
     // sin forma de distinguirlas. El corpus no trae un titulo por clausula.
     const cable = flujoDeMentira();
     renderWithProviders(
@@ -184,7 +184,7 @@ describe("la pantalla del chat", () => {
     );
     const clausula = {
       clause_version: "2026.1",
-      part: "Parte D — Daños a su vehículo",
+      part: "Pérdida del vehículo por daños y por hurto",
       text: "No cubrimos los daños sufridos en carreras.",
       clause_language: "es" as const,
       amount_deferred: false,
@@ -858,8 +858,8 @@ describe("la pantalla del chat", () => {
           outcome: "verified",
           clauses: [
             {
-              clause_id: "STO-D.INS.OTC",
-              part: "Parte D",
+              clause_id: "STO-D.INS.COLLISION",
+              part: "Pérdida del vehículo por daños y por hurto",
               verified: true,
               claim: "paga los daños por granizo",
             },
@@ -883,7 +883,7 @@ describe("la pantalla del chat", () => {
     expect(await within(ventana).findByText(es("chat.reasoning.wants_question"))).toBeTruthy();
     expect(within(ventana).getByText(/POL-11/)).toBeTruthy();
     expect(within(ventana).getByTestId("reasoning-clauses").textContent).toContain(
-      "Parte D: paga los daños por granizo",
+      "Pérdida del vehículo por daños y por hurto: paga los daños por granizo",
     );
     expect(pensamiento).toHaveBeenCalledWith("una-aseguradora", "es");
     // Lo anotado se muestra, no solo "Anotado" (decision de Miguel del 2026-10-11);

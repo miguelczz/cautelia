@@ -125,7 +125,7 @@ def test_cada_emisora_tiene_todas_las_partes_cinco_endosos_y_ocho_distractores()
         assert base is not None
         partes = {uno.part_of[c.clause_id] for c in uno.clauses[base.form_id]}
         assert {p.value for p in corpus_mod.BASE_PARTS} <= partes, emisora
-        # El documento de jurisdiccion de Corvane existe y el base lo referencia.
+        # El documento de marco legal existe y el base lo referencia.
         assert base.jurisdiction_ref is not None
         assert uno.forms[base.jurisdiction_ref].form_kind.value == "jurisdiction"
         assert len(uno.clauses[base.jurisdiction_ref]) >= 4

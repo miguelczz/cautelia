@@ -12,13 +12,9 @@ const LIMITES: ReadonlyMap<string, Message> = new Map<string, Message>([
   ["a.bodily_injury_per_accident", (t) => t("policies.limit.a_bodily_injury_per_accident")],
   ["a.property_damage", (t) => t("policies.limit.a_property_damage")],
   ["b.medical_payments_per_person", (t) => t("policies.limit.b_medical_payments_per_person")],
-  ["c.uninsured_per_person", (t) => t("policies.limit.c_uninsured_per_person")],
-  ["c.uninsured_per_accident", (t) => t("policies.limit.c_uninsured_per_accident")],
-  ["d.collision_deductible", (t) => t("policies.limit.d_collision_deductible")],
-  [
-    "d.other_than_collision_deductible",
-    (t) => t("policies.limit.d_other_than_collision_deductible"),
-  ],
+  ["c.driver_personal_accident", (t) => t("policies.limit.c_driver_personal_accident")],
+  ["d.damage_deductible", (t) => t("policies.limit.d_damage_deductible")],
+  ["d.theft_deductible", (t) => t("policies.limit.d_theft_deductible")],
 ]);
 
 const ENDOSOS: ReadonlyMap<string, Message> = new Map<string, Message>([
@@ -38,7 +34,7 @@ const PREGUNTAS: ReadonlyMap<string, Message> = new Map<string, Message>([
   ["hail", (t) => t("policies.question.hail")],
   ["rental_car", (t) => t("policies.question.rental_car")],
   ["theft", (t) => t("policies.question.theft")],
-  ["uninsured_driver", (t) => t("policies.question.uninsured_driver")],
+  ["other_driver_no_insurance", (t) => t("policies.question.other_driver_no_insurance")],
   ["lend_car", (t) => t("policies.question.lend_car")],
   ["passengers_medical", (t) => t("policies.question.passengers_medical")],
   ["report_deadline", (t) => t("policies.question.report_deadline")],
@@ -57,7 +53,7 @@ const PREGUNTAS: ReadonlyMap<string, Message> = new Map<string, Message>([
   ],
 ]);
 
-/** El orden en que se leen los limites: de la Parte A a la D, como la poliza. */
+/** El orden en que se leen los limites: de la responsabilidad civil a los deducibles, como la poliza. */
 export const LIMIT_ORDER: readonly string[] = [...LIMITES.keys()];
 
 export function limitLabel(key: string): Message | undefined {

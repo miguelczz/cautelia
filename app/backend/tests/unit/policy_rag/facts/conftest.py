@@ -19,10 +19,9 @@ LIMITES: dict[str, Any] = {
     "a.bodily_injury_per_accident": 200000,
     "a.property_damage": 50000,
     "b.medical_payments_per_person": 10000,
-    "c.uninsured_per_person": 100000,
-    "c.uninsured_per_accident": 200000,
-    "d.collision_deductible": 1500,
-    "d.other_than_collision_deductible": 250,
+    "c.driver_personal_accident": 100000,
+    "d.damage_deductible": 1500,
+    "d.theft_deductible": 250,
 }
 
 
@@ -98,7 +97,7 @@ def clausula(clause_id: str, form_id: str, *, distractor: bool = False) -> Claus
         clause_key="B.INS",
         form_id=form_id,
         form_version="2026.1",
-        part="Parte B",
+        part="Gastos médicos de los ocupantes",
         language="es",
         text="Texto sintetico de la clausula.",
         is_distractor=distractor,

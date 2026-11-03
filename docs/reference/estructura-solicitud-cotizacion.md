@@ -33,7 +33,7 @@ registro `quote_request`.
 | `driver_name` | texto | Dato personal: se redacta en cada punto de salida como cualquier nombre |
 | `driver_birth_date` | fecha | Dato personal |
 | `license_years` | entero | Años con licencia vigente. **Lo leen las reglas de elegibilidad** |
-| `license_jurisdiction` | texto corto | El estado ficticio de Corvane, o los de las aseguradoras sembradas |
+| `license_jurisdiction` | texto corto | El país donde se emitió la licencia: Colombia para las aseguradoras sembradas |
 
 ### 2. Vehículo
 

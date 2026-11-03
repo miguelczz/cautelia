@@ -206,7 +206,7 @@ def policy_structure_reference_path() -> Path:
     Es la unica fuente del prompt de redaccion, ademas de la plantilla versionada
     del paquete (BR2.3).
     """
-    return repo_root() / "docs" / "reference" / "estructura-poliza-iso-pap.md"
+    return repo_root() / "docs" / "reference" / "estructura-poliza-autos-colombia.md"
 
 
 def cases_dir() -> Path:

@@ -8,10 +8,10 @@
 # Por que no hay clausula (buscado el 2026-10-11 en todo el corpus de la poliza: formulario base, endosos,
 # documento de jurisdiccion y version anterior). Se busco gasolina, combustible, asistencia, auxilio, grua y
 # bateria en espanol, y gas, gasoline, fuel, roadside, assistance y battery en ingles, y no aparece ninguno.
-# Lo unico que sale por 'remolque' ('towed') es la definicion de trailer, y por 'ayuda' ('help'), la ayuda
-# que el asegurado le da a la aseguradora con un caso (A.SUPP, F.RECOVERY). Quedarse sin combustible no es
-# un dano ni una falla mecanica, asi que ni el reembolso de transporte (D.TRANSPORT, que pide robo o dano
-# cubierto) ni la exclusion de fallas (D.EXCL.2) lo tocan.
+# Nada sale por 'remolque' ('towed'), y por 'ayuda' ('help') sale solo la ayuda que el asegurado le da a
+# la aseguradora con un caso (A.SUPP, F.RECOVERY). Quedarse sin combustible no es
+# un dano ni una falla mecanica, asi que ni el reembolso de transporte (D.TRANSPORT, que pide una
+# perdida total por danos o por hurto) ni la exclusion de fallas (D.EXCL.2) lo tocan.
 # Escrito el 2026-10-11 para reponer los 'sin clausula' que se perdieron al corregir tres casos que si tenian
 # respuesta (auditoria del 2026-10-10, E10), y aun sin correr contra un modelo. Si `evals:citas` encuentra una
 # clausula que la toca, se corrige el caso con su razon: no se baja el criterio.

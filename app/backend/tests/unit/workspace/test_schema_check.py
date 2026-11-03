@@ -21,7 +21,7 @@ tenant_id: {tenant_id}
 display_name: {tenant_id}
 kind: carrier
 default_language: es
-jurisdiction: corvane
+jurisdiction: colombia
 quote_enabled: false
 example_policy: XX-000001
 case_number_prefix: {prefix}

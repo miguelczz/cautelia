@@ -28,7 +28,7 @@ cedula y movil colombianos.
 
 **Los limites** salen de tablas iguales para todas: la diferencia entre
 aseguradoras esta en sus formularios y sus endosos, no aqui (BR4.2 de U2). Los
-minimos respetan los del documento de jurisdiccion de Corvane.
+minimos respetan los del documento de marco legal de cada aseguradora.
 """
 
 from __future__ import annotations
@@ -71,13 +71,14 @@ POLICIES_PER_TENANT: Final = 6
 _PRIMER_INICIO: Final = date(2026, 1, 1)
 _DIAS_DE_INICIO: Final = 240
 
-#: Opciones de limites y deducibles. Los de responsabilidad empiezan en los
-#: minimos de Corvane: $25.000 por persona, $50.000 por accidente, $20.000 en bienes.
+#: Opciones de limites y deducibles, en miles de pesos colombianos (el corpus guarda miles; un 25.000 son
+#: $25.000.000). Los de responsabilidad empiezan en los minimos del marco legal de las aseguradoras:
+#: $25.000.000 por persona, $50.000.000 por accidente y $20.000.000 en bienes de terceros.
 _POR_PERSONA: Final = (25_000, 50_000, 100_000)
 _BIENES: Final = (20_000, 50_000, 100_000)
 _GASTOS_MEDICOS: Final = (2_000, 5_000, 10_000)
-_DEDUCIBLE_COLISION: Final = (250, 500, 1_000)
-_DEDUCIBLE_OTROS: Final = (100, 250, 500)
+_DEDUCIBLE_DANOS: Final = (250, 500, 1_000)
+_DEDUCIBLE_HURTO: Final = (100, 250, 500)
 
 #: Cuantos conductores adicionales declara una poliza, ademas del titular: de ninguno a dos. La
 #: de ejemplo declara al menos uno, para que la demostracion tenga un conductor declarado que
@@ -128,10 +129,9 @@ def _limites(chooser: ChooserFactory, ruta: str) -> dict[str, int]:
         "a.bodily_injury_per_accident": por_persona * 2,
         "a.property_damage": elegidor.choice(_BIENES),
         "b.medical_payments_per_person": elegidor.choice(_GASTOS_MEDICOS),
-        "c.uninsured_per_person": por_persona,
-        "c.uninsured_per_accident": por_persona * 2,
-        "d.collision_deductible": elegidor.choice(_DEDUCIBLE_COLISION),
-        "d.other_than_collision_deductible": elegidor.choice(_DEDUCIBLE_OTROS),
+        "c.driver_personal_accident": por_persona,
+        "d.damage_deductible": elegidor.choice(_DEDUCIBLE_DANOS),
+        "d.theft_deductible": elegidor.choice(_DEDUCIBLE_HURTO),
     }
 
 

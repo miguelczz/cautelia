@@ -1,8 +1,7 @@
-# Textos fuente revisados de Autos Poblado, en ingles (U7, F2).
-# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
-# Los borradores del modelo en ingles calcaban giros del formulario de referencia: se
-# reescribieron a mano y por eso casi todos dicen drafted_with: hand.
-# Se edita a mano y se regenera con `mise run synthetic:generate`.
+# Textos fuente revisados de Autos Poblado, en inglés (U7, F2).
+# Redacción propia con la estructura de una póliza de automóviles colombiana
+# (docs/reference/estructura-poliza-autos-colombia.md); ningún texto de ISO, de ACORD
+# ni de una aseguradora real (P8). Se edita a mano y se regenera con `mise run synthetic:generate`.
 format_version: 1
 tenant_id: sunmeadow
 language: en
@@ -11,21 +10,23 @@ texts:
 - source_id: AP-PAP-2026-AGREEMENT.1
   kind: clause
   clause_key: AGREEMENT.1
-  part: Agreement
+  part: Purpose of the insurance and policy period
   version: '2026.1'
-  text: This policy is a contract between Autos Poblado and the policyholder named on the declarations
-    page. Once the premium is paid, we provide the protection described in each part of this policy, in
-    the territory set out in Part F.
-  reviewed_at: '2026-09-21'
+  text: Once the premium is paid, Autos Poblado commits to pay, on the terms of this contract, the coverages
+    that the declarations page shows as contracted, when the loss event happens within the territory set
+    out in the general conditions. A loss event is the occurrence that causes the damage or the loss.
+    This insurance is voluntary and does not replace the SOAT.
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: hand
+  drafted_with: claude-sonnet-5-5
 - source_id: AP-PAP-2026-AGREEMENT.2
   kind: clause
   clause_key: AGREEMENT.2
-  part: Agreement
+  part: Purpose of the insurance and policy period
   version: '2026.1'
-  text: Coverage runs for the policy period shown on the declarations page. Keeping it in force depends
-    on the policyholder meeting the duties this contract assigns, especially those in Part E.
-  reviewed_at: '2026-09-21'
+  text: Coverage runs for the policy period shown on the declarations page, as long as the premium is
+    paid. Keeping it in force depends on the policyholder meeting the duties this contract assigns, especially
+    those in the section "Duties after a loss event".
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: hand
+  drafted_with: claude-sonnet-5-5

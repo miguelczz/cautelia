@@ -13,7 +13,7 @@ tenant_id: testhaven
 display_name: Testhaven Mutual
 kind: carrier
 default_language: es
-jurisdiction: corvane
+jurisdiction: colombia
 quote_enabled: false
 # Su poliza de ejemplo esta en el corpus de esta misma fixture, y la validacion
 # de la carpeta comprueba que el archivo existe y que declara este numero.

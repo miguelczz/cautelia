@@ -3,8 +3,10 @@
 # Es la otra mitad de la plantilla versionada, junto a `synthetic_draft.<idioma>.md`:
 # la instruccion de sistema dice las reglas, y este archivo arma el pedido de cada
 # parte, que viaja como **contenido**. El prompt sale solo de aqui y de la
-# referencia de estructura (`docs/reference/estructura-poliza-iso-pap.md`); nada
-# de `tmp/` llega a el.
+# referencia de estructura (`docs/reference/estructura-poliza-autos-colombia.md`);
+# nada de `tmp/` llega a el. Las claves de cada cláusula (`A.INS`, `D.INS.COLLISION`...)
+# son identificadores neutros que se conservan; lo que cambia es el concepto de
+# cada ranura y el encabezado visible de la parte.
 #
 # Cambiar este archivo es un cambio de codigo: su hash entra en `prompt_version`
 # de cada borrador.
@@ -14,30 +16,31 @@
 # elige al redactar con `--variant`, y lo declara despues el manifiesto (BR3.7).
 #
 # Los distractores suman ocho por emisora (Q2): dos en definiciones, dos en la
-# parte A, uno en la C, dos en la D y uno en la E.
+# responsabilidad civil, uno en accidentes personales, dos en pérdidas por daños y hurto
+# y uno en obligaciones.
 format_version: 1
 
 labels:
   es:
-    reference: Referencia de estructura (solo nombres de parte y numeración)
+    reference: Referencia de estructura (solo nombres de sección y de qué trata)
     no_reference: La referencia de estructura no trae esta parte; escríbela desde el pedido.
     request: Pedido
     insurer: Aseguradora ficticia
-    jurisdiction: Jurisdicción ficticia
+    jurisdiction: Ley aplicable
     language: Idioma
-    part: Parte
+    part: Sección
     heading: "Encabezado de la parte (campo part)"
     write: Qué redactar
     distractors: "Distractores de esta parte (kind: distractor), mezclando near_duplicate y superseded_version"
     endorsements: "Endosos (kind: endorsement), numerados desde 1"
   en:
-    reference: Structure reference (part names and numbering only)
+    reference: Structure reference (section names and what each covers only)
     no_reference: The structure reference does not cover this part; write it from the request.
     request: Request
     insurer: Fictional insurer
-    jurisdiction: Fictional jurisdiction
+    jurisdiction: Applicable law
     language: Language
-    part: Part
+    part: Section
     heading: "Heading of the part (field part)"
     write: What to write
     distractors: "Distractors in this part (kind: distractor), mixing near_duplicate and superseded_version"
@@ -45,131 +48,159 @@ labels:
 
 parts:
   agreement:
-    reference: [Agreement]
-    heading: {es: Acuerdo, en: Agreement}
+    reference: [Objeto del seguro y vigencia]
+    heading: {es: Objeto del seguro y vigencia, en: Purpose of the insurance and policy period}
     distractors: 0
     ask:
       es: >-
-        El acuerdo de la póliza, en una o dos cláusulas con claves AGREEMENT.1 y
-        AGREEMENT.2: quién asegura a quién, qué cubre en términos generales y durante
-        qué periodo, sin cifras.
+        El objeto del seguro y su vigencia, en una o dos cláusulas con claves
+        AGREEMENT.1 y AGREEMENT.2: quién asegura a quién, qué amparos cubre en
+        términos generales, que es un seguro voluntario que no reemplaza el SOAT y
+        durante qué periodo rige, sin cifras.
       en: >-
-        The policy agreement, in one or two clauses keyed AGREEMENT.1 and AGREEMENT.2:
-        who insures whom, what it covers in general terms and for which period, with
-        no amounts.
+        The purpose of the insurance and its policy period, in one or two clauses
+        keyed AGREEMENT.1 and AGREEMENT.2: who insures whom, which coverages it gives
+        in general terms, that it is voluntary insurance that does not replace the
+        SOAT, and for which period it runs, with no amounts.
 
   definitions:
-    reference: [Definitions]
+    reference: [Definiciones]
     heading: {es: Definiciones, en: Definitions}
     distractors: 2
     ask:
       es: >-
         Una cláusula por término definido, con clave DEF.<NOMBRE> en mayúsculas, en
-        inglés y sin tildes, como en esta lista. Al menos: DEF.YOU (usted y su), DEF.WE (nosotros), DEF.BODILY_INJURY,
-        DEF.PROPERTY_DAMAGE, DEF.COVERED_AUTO, DEF.TRAILER, DEF.FAMILY_MEMBER y
-        DEF.OCCUPYING.
+        inglés y sin tildes, como en esta lista. Al menos: DEF.YOU (usted: el tomador
+        y asegurado, y quién es el beneficiario), DEF.WE (nosotros: el asegurador),
+        DEF.BODILY_INJURY (lesión personal), DEF.PROPERTY_DAMAGE (daño a bienes de
+        terceros, y quién es un tercero), DEF.COVERED_AUTO (vehículo asegurado),
+        DEF.COMMERCIAL_VALUE (valor comercial según la Guía de Valores de Fasecolda),
+        DEF.FAMILY_MEMBER y DEF.OCCUPYING (ocupante).
       en: >-
         One clause per defined term, keyed DEF.<TERM> in capitals. At least: DEF.YOU
-        (you and your), DEF.WE, DEF.BODILY_INJURY, DEF.PROPERTY_DAMAGE,
-        DEF.COVERED_AUTO, DEF.TRAILER, DEF.FAMILY_MEMBER and DEF.OCCUPYING.
+        (you: the policyholder and insured, and who the beneficiary is), DEF.WE (the
+        insurer), DEF.BODILY_INJURY (personal injury), DEF.PROPERTY_DAMAGE (damage to
+        third-party property, and who a third party is), DEF.COVERED_AUTO (the covered
+        auto), DEF.COMMERCIAL_VALUE (commercial value according to the Fasecolda Value
+        Guide), DEF.FAMILY_MEMBER and DEF.OCCUPYING (occupant).
 
   part_a:
-    reference: [Part A]
-    heading: {es: "Parte A — Responsabilidad civil", en: "Part A — Liability Coverage"}
+    reference: [Responsabilidad civil extracontractual]
+    heading: {es: "Responsabilidad civil extracontractual", en: "Third-party civil liability (responsabilidad civil extracontractual)"}
     distractors: 2
     ask:
       es: >-
-        El acuerdo de cobertura (A.INS), los pagos suplementarios (A.SUPP), las
-        exclusiones A.EXCL.A.1 a A.EXCL.A.9 y A.EXCL.B.1 a A.EXCL.B.3, el límite de
-        responsabilidad (A.LIMIT), la cobertura fuera de la jurisdicción
-        (A.OUT_OF_STATE), la responsabilidad financiera (A.FIN_RESP) y otros seguros
-        (A.OTHER).
+        El amparo (A.INS), que cubre daños a bienes de terceros, muerte o lesiones a
+        una persona y muerte o lesiones a dos o más personas, en exceso del SOAT y con
+        la defensa del asegurado; los costos del proceso como pago adicional
+        (A.SUPP); las exclusiones A.EXCL.A.1 a A.EXCL.A.9 y A.EXCL.B.1 a A.EXCL.B.3;
+        los límites (A.LIMIT); los accidentes fuera de Colombia (A.OUT_OF_COUNTRY); la
+        relación con el SOAT (A.SOAT) y otros seguros (A.OTHER).
       en: >-
-        The insuring agreement (A.INS), supplementary payments (A.SUPP), exclusions
-        A.EXCL.A.1 to A.EXCL.A.9 and A.EXCL.B.1 to A.EXCL.B.3, the limit of liability
-        (A.LIMIT), out-of-jurisdiction coverage (A.OUT_OF_STATE), financial
-        responsibility (A.FIN_RESP) and other insurance (A.OTHER).
+        The coverage (A.INS), which covers damage to third-party property, death or
+        injury to one person and death or injury to two or more people, in excess of
+        the SOAT and with the insured's defense; the costs of the lawsuit as an
+        additional payment (A.SUPP); exclusions A.EXCL.A.1 to A.EXCL.A.9 and
+        A.EXCL.B.1 to A.EXCL.B.3; the limits (A.LIMIT); accidents outside Colombia
+        (A.OUT_OF_COUNTRY); the relation with the SOAT (A.SOAT) and other insurance
+        (A.OTHER).
 
   part_b:
-    reference: [Part B]
-    heading: {es: "Parte B — Gastos médicos", en: "Part B — Medical Payments Coverage"}
+    reference: [Gastos médicos de los ocupantes]
+    heading: {es: "Gastos médicos de los ocupantes", en: "Medical expenses of occupants"}
     distractors: 0
     ask:
       es: >-
-        El acuerdo de cobertura (B.INS), de tres a seis exclusiones numeradas
-        (B.EXCL.1 en adelante), el límite de responsabilidad (B.LIMIT) y otros seguros
-        (B.OTHER).
+        El amparo de gastos médicos de los ocupantes del vehículo, en exceso del SOAT
+        (B.INS), de tres a seis exclusiones numeradas (B.EXCL.1 en adelante), el
+        límite (B.LIMIT) y otros seguros, incluido el SOAT (B.OTHER).
       en: >-
-        The insuring agreement (B.INS), three to six numbered exclusions (B.EXCL.1
-        onwards), the limit of liability (B.LIMIT) and other insurance (B.OTHER).
+        The coverage of the medical expenses of the vehicle's occupants, in excess of
+        the SOAT (B.INS), three to six numbered exclusions (B.EXCL.1 onwards), the
+        limit (B.LIMIT) and other insurance, including the SOAT (B.OTHER).
 
   part_c:
-    reference: [Part C]
-    heading: {es: "Parte C — Conductores sin seguro", en: "Part C — Uninsured Motorists Coverage"}
+    reference: [Accidentes personales del conductor]
+    heading: {es: "Accidentes personales del conductor", en: "Personal accident cover for the driver"}
     distractors: 1
     ask:
       es: >-
-        El acuerdo de cobertura, que incluye al conductor que huye sin identificarse
-        (C.INS), de tres a cinco exclusiones numeradas (C.EXCL.1 en adelante), el
-        límite de responsabilidad (C.LIMIT), otros seguros (C.OTHER) y el arbitraje
-        (C.ARBITRATION).
+        El amparo de muerte o incapacidad permanente del conductor autorizado a causa
+        de un accidente de tránsito (C.INS), de tres a cinco exclusiones numeradas
+        (C.EXCL.1 en adelante), el valor asegurado (C.LIMIT), otros seguros de
+        accidentes personales (C.OTHER) y el arbitraje (C.ARBITRATION).
       en: >-
-        The insuring agreement, including the driver who flees unidentified (C.INS),
-        three to five numbered exclusions (C.EXCL.1 onwards), the limit of liability
-        (C.LIMIT), other insurance (C.OTHER) and arbitration (C.ARBITRATION).
+        The coverage of death or permanent disability of the authorized driver because
+        of a traffic accident (C.INS), three to five numbered exclusions (C.EXCL.1
+        onwards), the insured value (C.LIMIT), other personal accident insurance
+        (C.OTHER) and arbitration (C.ARBITRATION).
 
   part_d:
-    reference: [Part D]
-    heading: {es: "Parte D — Daños a su vehículo", en: "Part D — Coverage for Damage to Your Auto"}
+    reference: [Pérdida parcial y pérdida total por daños, Pérdida parcial y pérdida total por hurto, Gastos de transporte]
+    heading: {es: "Pérdida del vehículo por daños y por hurto", en: "Loss of the vehicle by damage and by theft"}
     distractors: 2
     ask:
       es: >-
-        El acuerdo de cobertura por colisión (D.INS.COLLISION) y por otros daños
-        (D.INS.OTC), los gastos de transporte (D.TRANSPORT), las exclusiones D.EXCL.1 a
-        D.EXCL.13, el límite de responsabilidad (D.LIMIT), el pago de la pérdida
-        (D.PAYMENT), la cláusula sin beneficio para el depositario (D.NO_BAILEE),
-        otras fuentes de recuperación (D.OTHER_SOURCES) y la tasación (D.APPRAISAL).
+        El amparo de pérdida parcial y total por daños (D.INS.COLLISION), con el
+        umbral del 75 % del valor asegurado, y por hurto (D.INS.THEFT), los gastos de
+        transporte por pérdida total (D.TRANSPORT), las exclusiones D.EXCL.1 a
+        D.EXCL.13, el límite, que es el valor comercial según la Guía de Valores de
+        Fasecolda (D.LIMIT), el pago de la pérdida con el salvamento (D.PAYMENT), la
+        cláusula sin beneficio para quien tiene el vehículo por negocio
+        (D.NO_BAILEE), otras fuentes de recuperación (D.OTHER_SOURCES) y el peritaje
+        (D.APPRAISAL).
       en: >-
-        The insuring agreement for collision (D.INS.COLLISION) and for other than
-        collision (D.INS.OTC), transportation expenses (D.TRANSPORT), exclusions
-        D.EXCL.1 to D.EXCL.13, the limit of liability (D.LIMIT), payment of loss
-        (D.PAYMENT), no benefit to bailee (D.NO_BAILEE), other sources of recovery
-        (D.OTHER_SOURCES) and appraisal (D.APPRAISAL).
+        The coverage of partial and total loss by damage (D.INS.COLLISION), with the
+        75% threshold of the insured value, and by theft (D.INS.THEFT), transportation
+        expenses for total loss (D.TRANSPORT), exclusions D.EXCL.1 to D.EXCL.13, the
+        limit, which is the commercial value in the Fasecolda Value Guide (D.LIMIT),
+        payment of the loss with the salvage (D.PAYMENT), no benefit to whoever holds
+        the vehicle as a business (D.NO_BAILEE), other sources of recovery
+        (D.OTHER_SOURCES) and appraisal by experts (D.APPRAISAL).
 
   part_e:
-    reference: [Part E]
-    heading: {es: "Parte E — Obligaciones después de un accidente o pérdida", en: "Part E — Duties After an Accident or Loss"}
+    reference: [Obligaciones en caso de siniestro]
+    heading: {es: "Obligaciones en caso de siniestro", en: "Duties after a loss event"}
     distractors: 1
     ask:
       es: >-
-        Las obligaciones en cuatro grupos, una cláusula por obligación: aviso
-        oportuno (E.DUTIES.A.1 en adelante), cooperación y pruebas de la pérdida
-        (E.DUTIES.B.1 en adelante), deberes adicionales ante un conductor sin seguro
-        (E.DUTIES.C.1 en adelante) y deberes para la parte D (E.DUTIES.D.1 en
-        adelante).
+        Las obligaciones en cuatro grupos, una cláusula por obligación: aviso dentro
+        de los tres días hábiles siguientes a conocer el siniestro (E.DUTIES.A.1 en
+        adelante), colaboración y pruebas del siniestro (E.DUTIES.B.1 en adelante),
+        aviso a la autoridad si hay lesionados y no reconocer responsabilidad ni
+        conciliar sin autorización (E.DUTIES.C.1 en adelante) y deberes ante el daño o
+        el hurto del vehículo: evitar que el daño crezca, denunciar el hurto y
+        permitir la inspección (E.DUTIES.D.1 en adelante).
       en: >-
-        The duties in four groups, one clause per duty: prompt notice (E.DUTIES.A.1
-        onwards), cooperation and proof of loss (E.DUTIES.B.1 onwards), additional
-        duties with an uninsured driver (E.DUTIES.C.1 onwards) and duties for Part D
+        The duties in four groups, one clause per duty: notice within three business
+        days of learning about the loss event (E.DUTIES.A.1 onwards), cooperation and
+        proof of the loss event (E.DUTIES.B.1 onwards), notice to the authority when
+        there are injured people and not admitting liability or settling without
+        authorization (E.DUTIES.C.1 onwards) and duties for vehicle damage or theft:
+        keeping the damage from growing, reporting the theft and allowing inspection
         (E.DUTIES.D.1 onwards).
 
   part_f:
-    reference: [Part F]
-    heading: {es: "Parte F — Disposiciones generales", en: "Part F — General Provisions"}
+    reference: [Condiciones generales]
+    heading: {es: "Condiciones generales", en: "General conditions"}
     distractors: 0
     ask:
       es: >-
-        Una cláusula por disposición: quiebra (F.BANKRUPTCY), cambios (F.CHANGES),
-        fraude (F.FRAUD), acciones legales contra la aseguradora (F.LEGAL_ACTION),
-        derecho a recuperar pagos (F.RECOVERY), periodo y territorio
-        (F.PERIOD_TERRITORY), terminación (F.TERMINATION), transferencia del interés
-        (F.TRANSFER) y dos o más pólizas de auto (F.TWO_POLICIES).
+        Una cláusula por condición: insolvencia del asegurado y la víctima como
+        beneficiaria (F.BANKRUPTCY), modificaciones, cambios del riesgo y
+        notificaciones (F.CHANGES), declaración del estado del riesgo y fraude
+        (F.FRAUD), prescripción (F.LEGAL_ACTION), subrogación (F.RECOVERY), vigencia y
+        territorio (F.PERIOD_TERRITORY), revocación y terminación por mora en la prima
+        (F.TERMINATION), venta del vehículo (F.TRANSFER) y coexistencia de seguros
+        (F.TWO_POLICIES).
       en: >-
-        One clause per provision: bankruptcy (F.BANKRUPTCY), changes (F.CHANGES),
-        fraud (F.FRAUD), legal action against the insurer (F.LEGAL_ACTION), our right
-        to recover payment (F.RECOVERY), policy period and territory
-        (F.PERIOD_TERRITORY), termination (F.TERMINATION), transfer of your interest
-        (F.TRANSFER) and two or more auto policies (F.TWO_POLICIES).
+        One clause per condition: insolvency of the insured and the victim as
+        beneficiary (F.BANKRUPTCY), changes, changes in the risk and notices
+        (F.CHANGES), declaration of the state of the risk and fraud (F.FRAUD),
+        expiry of rights (F.LEGAL_ACTION), subrogation (F.RECOVERY), policy period and
+        territory (F.PERIOD_TERRITORY), revocation and termination for unpaid premium
+        (F.TERMINATION), sale of the vehicle (F.TRANSFER) and coexistence of
+        insurance (F.TWO_POLICIES).
 
   endorsements:
     # Los endosos modifican o amplian elementos de cualquier parte: por eso llevan
@@ -182,13 +213,13 @@ parts:
       es: >-
         Cinco endosos, uno por número del 1 al 5. Cada uno modifica o amplía un
         elemento concreto de la póliza, y su clause_key es la numeración de ese
-        elemento. Al menos uno reabre una exclusión de la parte D y al menos uno
-        cambia una definición.
+        elemento. Al menos uno reabre una exclusión de pérdidas por daños y hurto y al
+        menos uno cambia una definición.
       en: >-
         Five endorsements, one per number from 1 to 5. Each one modifies or extends a
         specific element of the policy, and its clause_key is that element's
-        numbering. At least one reopens a Part D exclusion and at least one changes a
-        definition.
+        numbering. At least one reopens an exclusion of losses by damage and theft and
+        at least one changes a definition.
     variants:
       with-transport:
         es: >-
@@ -203,16 +234,20 @@ parts:
 
   jurisdiction:
     reference: []
-    heading: {es: "Documento de jurisdicción de {jurisdiction}", en: "{jurisdiction} Jurisdiction Document"}
+    heading: {es: "Marco legal", en: "Legal framework"}
     distractors: 0
     ask:
       es: >-
-        El documento de jurisdicción de {jurisdiction}, una jurisdicción ficticia: de
-        cuatro a seis cláusulas con claves J.1 en adelante sobre los límites mínimos
-        de responsabilidad, el aviso previo de cancelación, el plazo para presentar
-        una reclamación y la prueba de seguro que debe llevar el conductor.
+        El marco legal del contrato ({jurisdiction}): de cuatro a seis cláusulas con
+        claves J.1 en adelante sobre el SOAT y los límites mínimos de la
+        responsabilidad civil, el aviso previo de revocación (Código de Comercio, arts.
+        1071 y 1068), el plazo para avisar el siniestro (art. 1075), la prueba del
+        SOAT que debe tener el conductor y la prescripción (art. 1081). Cita el
+        artículo de la ley, nunca su texto.
       en: >-
-        The jurisdiction document of {jurisdiction}, a fictional jurisdiction: four to
-        six clauses keyed J.1 onwards on minimum liability limits, advance notice of
-        cancellation, the deadline to file a claim and the proof of insurance a driver
-        must carry.
+        The legal framework of the contract ({jurisdiction}): four to six clauses
+        keyed J.1 onwards on the SOAT and the minimum limits of civil liability,
+        advance notice of revocation (Commercial Code, arts. 1071 and 1068), the
+        deadline to report a loss event (art. 1075), the proof of SOAT a driver must
+        have and expiry of rights (art. 1081). Cite the article of the law, never its
+        text.

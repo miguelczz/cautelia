@@ -8,9 +8,11 @@
 # Por que no hay clausula (buscado el 2026-10-11 en todo el corpus de la poliza: formulario base, endosos,
 # documento de jurisdiccion y version anterior). Se busco prestamo, credito, cuota, financiacion, hipoteca,
 # banco, acreedor, empleo y desempleo en espanol, y loan, credit, installment, financing, mortgage, lender,
-# unemployment y job en ingles, y no aparece ninguno. Lo unico que sale por 'empleado' y 'trabajo' es otra
-# cosa: las lesiones de un empleado del asegurado (A.EXCL.A.4) y el vehiculo usado como lugar de trabajo
-# fijo (B.EXCL.3). Lo que la poliza paga cuando se pierde el auto es su valor (D.LIMIT, D.PAYMENT), no las
+# unemployment y job en ingles, y no aparece ninguno. Lo unico que sale por 'trabajador' y 'trabajo' es otra
+# cosa: las lesiones de un trabajador del asegurado (A.EXCL.A.4) y el vehiculo usado como lugar de trabajo
+# fijo (B.EXCL.3). Por 'banco' sale DEF.YOU (el beneficiario puede ser un banco con prenda), que dice a quien
+# se paga una indemnizacion por danos al vehiculo, no que la poliza pague deudas. Reescrito el 2026-11-02
+# con la estructura colombiana: lo confirma la proxima corrida de `evals:citas`. Lo que la poliza paga cuando se pierde el auto es su valor (D.LIMIT, D.PAYMENT), no las
 # deudas del asegurado ni los ingresos que pierda.
 # Escrito el 2026-10-11 para reponer los 'sin clausula' que se perdieron al corregir tres casos que si tenian
 # respuesta (auditoria del 2026-10-10, E10), y aun sin correr contra un modelo. Si `evals:citas` encuentra una

@@ -1,6 +1,7 @@
-# Textos fuente revisados de Seguros Aburrá, en espanol (U7, F2).
-# Redaccion propia con la estructura de la referencia; ningun texto de ISO ni de ACORD (P8).
-# Se edita a mano y se regenera con `mise run synthetic:generate`.
+# Textos fuente revisados de Seguros Aburrá, en español (U7, F2).
+# Redacción propia con la estructura de una póliza de automóviles colombiana
+# (docs/reference/estructura-poliza-autos-colombia.md); ningún texto de ISO, de ACORD
+# ni de una aseguradora real (P8). Se edita a mano y se regenera con `mise run synthetic:generate`.
 format_version: 1
 tenant_id: stonecroft
 language: es
@@ -11,86 +12,93 @@ texts:
   clause_key: DEF.YOU
   part: Definiciones
   version: '2026.1'
-  text: «Usted» es la persona que aparece como asegurada principal en la carátula. También lo es quien
-    comparte con ella la vida en pareja y la vivienda, mientras mantenga esa convivencia.
-  reviewed_at: '2026-09-21'
+  text: «Usted» es el tomador, la persona que contrató el seguro y aparece como asegurada en la carátula.
+    También lo es su cónyuge o compañero permanente, mientras viva con usted. El beneficiario de la indemnización
+    por los daños al vehículo es usted, salvo que la carátula nombre a otro, como el banco que tiene una
+    prenda sobre el vehículo.
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: hand
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-PAP-2026-DEF.WE
   kind: clause
   clause_key: DEF.WE
   part: Definiciones
   version: '2026.1'
-  text: «Nosotros» es Seguros Aburrá, la aseguradora que emite este contrato y responde por él.
-  reviewed_at: '2026-09-21'
+  text: «Nosotros» es Seguros Aburrá, el asegurador que emite este contrato y responde por él.
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: hand
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-PAP-2026-DEF.BODILY_INJURY
   kind: clause
   clause_key: DEF.BODILY_INJURY
   part: Definiciones
   version: '2026.1'
-  text: '«Lesión corporal» es todo daño a la salud de una persona causado por el accidente: las heridas,
+  text: '«Lesión personal» es todo daño a la salud de una persona causado por el accidente: las heridas,
     la enfermedad que se derive de ellas y, si ocurre, la muerte.'
   defines_terms:
-  - lesión corporal
-  - lesiones corporales
-  reviewed_at: '2026-09-21'
+  - lesión personal
+  - lesiones personales
+  - lesiones a una persona
+  - lesiones a dos o más personas
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: hand
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-PAP-2026-DEF.PROPERTY_DAMAGE
   kind: clause
   clause_key: DEF.PROPERTY_DAMAGE
   part: Definiciones
   version: '2026.1'
-  text: «Daño a bienes» es la rotura, la destrucción o la imposibilidad de usar un objeto que se puede
-    tocar, como un vehículo, una cerca o una fachada, cuando es de otra persona.
+  text: «Daño a bienes de terceros» es la rotura, la destrucción o la imposibilidad de usar un objeto
+    que se puede tocar, como un vehículo, una cerca o una fachada. Un tercero es cualquier persona distinta
+    de usted, de su cónyuge o compañero permanente y de quien conduce con su permiso.
   defines_terms:
   - daño a bienes
   - daños a bienes
-  reviewed_at: '2026-09-21'
+  - bienes de terceros
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: hand
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-PAP-2026-DEF.COVERED_AUTO
   kind: clause
   clause_key: DEF.COVERED_AUTO
   part: Definiciones
   version: '2026.1'
-  text: «Vehículo cubierto» es el vehículo que figura en la carátula y el remolque que figure en ella.
+  text: «Vehículo asegurado» es el automóvil de uso particular que figura en la carátula.
     También lo es el vehículo que usted compre durante la vigencia, si nos avisa dentro de los diez días
     siguientes a recibirlo.
   defines_terms:
-  - vehículo cubierto
-  - vehículos cubiertos
-  reviewed_at: '2026-09-21'
+  - vehículo asegurado
+  - vehículos asegurados
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: hand
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-PAP-2026-DEF.TEMPORARY_SUBSTITUTE
   kind: clause
   clause_key: DEF.TEMPORARY_SUBSTITUTE
   part: Definiciones
   version: '2026.1'
-  text: «Vehículo sustituto» es el que usted maneja de forma temporal, sin ser su dueño, mientras su vehículo
-    cubierto está fuera de servicio por reparación, avería, robo o pérdida total. Mientras dure esa situación,
-    recibe la misma protección que el vehículo cubierto.
+  text: «Vehículo de reemplazo» es el que usted maneja de forma temporal, sin ser su dueño, mientras su
+    vehículo asegurado está fuera de servicio por reparación, avería, hurto o pérdida total. Mientras
+    dure esa situación, recibe la misma protección que el vehículo asegurado.
   defines_terms:
-  - vehículo sustituto
-  reviewed_at: '2026-09-21'
+  - vehículo de reemplazo
+  - vehículos de reemplazo
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: hand
-- source_id: SA-PAP-2026-DEF.TRAILER
+  drafted_with: claude-sonnet-5-5
+- source_id: SA-PAP-2026-DEF.COMMERCIAL_VALUE
   kind: clause
-  clause_key: DEF.TRAILER
+  clause_key: DEF.COMMERCIAL_VALUE
   part: Definiciones
   version: '2026.1'
-  text: «Remolque» es un vehículo sin motor propio pensado para ir enganchado a un automóvil de uso particular,
-    como un tráiler de carga liviana o una casa rodante pequeña.
+  text: «Valor comercial» es lo que vale su vehículo asegurado en el mercado el día del siniestro, según
+    la Guía de Valores de Fasecolda. Esa guía se consulta con el código del vehículo y su año modelo.
+    El valor comercial es la base del valor asegurado.
   defines_terms:
-  - remolque
-  - remolques
-  reviewed_at: '2026-09-21'
+  - valor comercial
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: hand
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-PAP-2026-DEF.FAMILY_MEMBER
   kind: clause
   clause_key: DEF.FAMILY_MEMBER
@@ -101,9 +109,9 @@ texts:
   defines_terms:
   - familiar
   - familiares
-  reviewed_at: '2026-09-21'
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: hand
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-PAP-2026-DEF.OCCUPYING
   kind: clause
   clause_key: DEF.OCCUPYING
@@ -114,30 +122,30 @@ texts:
   defines_terms:
   - ocupante
   - ocupantes
-  reviewed_at: '2026-09-21'
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: hand
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-PAP-2025-DEF.YOU.ALT
   kind: distractor
   clause_key: DEF.YOU.ALT
   part: Definiciones
   version: '2025.1'
-  text: «Usted» es solamente la persona que aparece como asegurada principal en la carátula; su pareja
-    no queda incluida aunque viva con ella.
+  text: «Usted» es solamente el tomador que aparece como asegurado en la carátula; su cónyuge o compañero
+    permanente no queda incluido aunque viva con esa persona.
   distractor_of: SA-PAP-2026-DEF.YOU
   distractor_reason: near_duplicate
-  reviewed_at: '2026-09-21'
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: gemini-3.1-flash-lite
+  drafted_with: claude-sonnet-5-5
 - source_id: SA-PAP-2025-DEF.COVERED_AUTO
   kind: distractor
   clause_key: DEF.COVERED_AUTO
   part: Definiciones
   version: '2025.1'
-  text: «Vehículo cubierto» es el vehículo que figura en la carátula. Un vehículo comprado durante la
-    vigencia solo queda cubierto desde que se incluye en la carátula mediante un endoso.
+  text: «Vehículo asegurado» es el automóvil que figura en la carátula. Un vehículo comprado durante la
+    vigencia solo queda asegurado desde que se incluye en la carátula mediante un endoso.
   distractor_of: SA-PAP-2026-DEF.COVERED_AUTO
   distractor_reason: superseded_version
-  reviewed_at: '2026-09-21'
+  reviewed_at: '2026-11-02'
   reviewed_by: conductor
-  drafted_with: hand
+  drafted_with: claude-sonnet-5-5

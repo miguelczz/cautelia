@@ -15,7 +15,7 @@ De dos cosas, y solo de dos (BR2.3):
 1. **La plantilla versionada** de `draft_template/`: la instruccion de sistema
    por idioma, que carga el cargador de prompts de U5 (sin huecos ni variables),
    y `parts.yaml`, que dice que se pide en cada parte.
-2. **La referencia de estructura** (`docs/reference/estructura-poliza-iso-pap.md`):
+2. **La referencia de estructura** (`docs/reference/estructura-poliza-autos-colombia.md`):
    nombres de parte y numeracion, nunca texto de clausula (P8).
 
 La referencia se lee con `read_structure_reference`, que se niega a leer nada de
@@ -100,7 +100,7 @@ PARTS_FILE: Final = "parts.yaml"
 ALL_REFERENCE_ITEMS: Final = "*"
 
 #: La seccion de la referencia que trae las partes y su numeracion.
-_SECCION_DE_PARTES: Final = "## Secciones del formulario"
+_SECCION_DE_PARTES: Final = "## Secciones habituales"
 _ELEMENTO = re.compile(r"^\d+\.\s+\*\*(?P<nombre>[^*]+)\*\*")
 
 #: Que tipos admite cada parte. Los repertorios de datos ficticios no se redactan
@@ -151,7 +151,7 @@ class PartSpec(Frozen):
     """Lo que se pide al redactar una parte."""
 
     #: Que elementos de la referencia se citan: el nombre con que empieza cada uno
-    #: (`Part A`), `*` para toda la lista, o ninguno si la referencia no la trae.
+    #: (`Responsabilidad civil extracontractual`), `*` para toda la lista, o ninguno si la referencia no la trae.
     reference: tuple[str, ...]
     heading: dict[Locale, str]
     distractors: int = Field(ge=0)

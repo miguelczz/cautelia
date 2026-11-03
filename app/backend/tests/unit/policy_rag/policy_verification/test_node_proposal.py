@@ -37,7 +37,7 @@ from .test_node import (
 )
 
 ENDOSO = _clausula("SA-PAP-2026-END-3-D.EXCL.3", part="Endoso 3")
-BASE = _clausula("SA-PAP-2026-D.EXCL.3", part="Parte D")
+BASE = _clausula("SA-PAP-2026-D.EXCL.3", part="Pérdida del vehículo por daños y por hurto")
 
 
 def _recuperadas() -> RetrievalResult:

@@ -63,7 +63,9 @@ class _EmbedderFalso:
         return [self.vector for _ in texts]
 
 
-def _clausula(clause_id: str, *, part: str = "Parte A", language: str = "es") -> Clause:
+def _clausula(
+    clause_id: str, *, part: str = "Responsabilidad civil extracontractual", language: str = "es"
+) -> Clause:
     return Clause(
         tenant_id=TENANT_ID,
         clause_id=clause_id,
@@ -342,7 +344,7 @@ def test_una_cita_verificada_trae_identificador_parte_e_idioma(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """AC2.7.1, BR5.4: el canal de texto recibe identificador y parte."""
-    clausula = _clausula("SA-PAP-2026-A.1", part="Parte A — Responsabilidad Civil")
+    clausula = _clausula("SA-PAP-2026-A.1", part="Responsabilidad civil extracontractual")
     poliza = _poliza()
 
     async def _retrieve(*args: Any, **kwargs: Any) -> RetrievalResult:
@@ -376,7 +378,7 @@ def test_una_cita_verificada_trae_identificador_parte_e_idioma(
     assert len(salida.citations) == 1
     vista = salida.citations[0]
     assert vista.clause_id == clausula.clause_id
-    assert vista.part == "Parte A — Responsabilidad Civil"
+    assert vista.part == "Responsabilidad civil extracontractual"
     assert vista.clause_language == "es"
     assert vista.amount_deferred is False
     assert vista.voice_summary == phrases.voice_summary_text(locale="es", part=vista.part)

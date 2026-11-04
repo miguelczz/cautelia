@@ -205,6 +205,44 @@ def test_la_exencion_de_montos_es_de_la_clave_y_solo_de_los_montos(
     assert GuardCategory.AMOUNT in categorias("chat.rigid.vehicles.listed")
 
 
+@pytest.mark.parametrize(
+    ("idioma", "permitida", "culpa"),
+    [
+        (
+            "es",
+            "Tu póliza cubre los daños de tu carro y el deducible es $ 1.500.000.",
+            "Tu póliza cubre los daños, y eso fue culpa del otro conductor.",
+        ),
+        (
+            "en",
+            "Your policy covers the damage to your car and the deductible is COP 1,500,000.",
+            "Your policy covers the damage, but honestly, it was his fault.",
+        ),
+    ],
+)
+def test_la_decision_del_ajustador_de_ia_puede_decir_que_cubre_y_nombrar_cifras_y_nada_mas(
+    biblioteca: patterns.PatternLibrary,
+    aseguradoras: tuple[TenantConfig, ...],
+    idioma: str,
+    permitida: str,
+    culpa: str,
+) -> None:
+    """A7: la clave `adjuster.decision` exime promesas de cobertura y montos; la culpa sigue."""
+
+    def categorias(frase: str, source_key: str | None) -> set[GuardCategory]:
+        resultado = guard.evaluate(
+            frase,
+            library=biblioteca,
+            context=contexto_de(aseguradoras, idioma, source_key=source_key),
+            turn=GuardTurn(),
+        )
+        return {i.category for i in resultado.interventions if i.category is not None}
+
+    assert categorias(permitida, None) >= {GuardCategory.COVERAGE_PROMISE, GuardCategory.AMOUNT}
+    assert categorias(permitida, "adjuster.decision") == set()
+    assert categorias(culpa, "adjuster.decision") == {GuardCategory.FAULT}
+
+
 def test_la_revelacion_se_detecta_por_forma_y_con_las_otras_aseguradoras_de_la_configuracion(
     biblioteca: patterns.PatternLibrary, aseguradoras: tuple[TenantConfig, ...]
 ) -> None:

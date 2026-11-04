@@ -18,6 +18,36 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["action.go_home", "Ir al inicio"],
   ["action.retry", "Reintentar"],
   ["action.start_over", "Empezar de nuevo"],
+  ["adjuster.step.case_read.body", "Leí el reporte del caso {case_number}: tiene {fields} datos anotados, con el relato de lo que pasó."],
+  ["adjuster.step.case_read.title", "Lee el reporte"],
+  ["adjuster.step.clauses.found", "Busqué en la póliza las cláusulas que se parecen a lo que pasó y encontré {count}. Solo cito las que compruebo una por una contra la póliza."],
+  ["adjuster.step.clauses.no_policy", "No busqué cláusulas porque no tengo una póliza que leer."],
+  ["adjuster.step.clauses.none_found", "Busqué en la póliza cláusulas que se parezcan a lo que pasó y no encontré ninguna."],
+  ["adjuster.step.clauses.not_in_force", "No busqué cláusulas: la póliza no está vigente, así que ninguna se puede citar."],
+  ["adjuster.step.clauses.title", "Busca las cláusulas"],
+  ["adjuster.step.decision.title", "Decide"],
+  ["adjuster.step.decision.uncertainties", "Lo que no pude confirmar: {items}"],
+  ["adjuster.step.firmness.high", "confianza alta"],
+  ["adjuster.step.firmness.low", "confianza baja"],
+  ["adjuster.step.firmness.medium", "confianza media"],
+  ["adjuster.step.nothing", "ninguno"],
+  ["adjuster.step.policy_read.details", "Vehículos: {vehicles}. Conductores declarados: {drivers}. Deducibles: {deductibles}. Límites: {limits}. Condiciones especiales: {endorsements}."],
+  ["adjuster.step.policy_read.expired", "Leí la póliza {policy_number} de {holder}: ya no está vigente, su periodo fue del {start} al {end}. {details}"],
+  ["adjuster.step.policy_read.in_force", "Leí la póliza {policy_number} de {holder}: está vigente hoy, del {start} al {end}. {details}"],
+  ["adjuster.step.policy_read.no_policy", "El reporte no trae una póliza identificada, así que no pude leerla."],
+  ["adjuster.step.policy_read.not_found", "No encontré la póliza {policy_number} de esta aseguradora, así que no pude leerla."],
+  ["adjuster.step.policy_read.not_yet_in_force", "Leí la póliza {policy_number} de {holder}: todavía no está vigente, empieza el {start}. {details}"],
+  ["adjuster.step.policy_read.source", "Póliza {policy_number}"],
+  ["adjuster.step.policy_read.title", "Lee la póliza"],
+  ["adjuster.step.rules.fired", "Las reglas de la aseguradora pasaron este caso a revisión. {reason}"],
+  ["adjuster.step.rules.missing", "No encontré el resultado de las reglas para este caso."],
+  ["adjuster.step.rules.none_fired", "Las reglas de la aseguradora no marcaron nada especial en este caso. {reason}"],
+  ["adjuster.step.rules.title", "Mira las reglas"],
+  ["adjuster.step.vehicle_value.found", "Busqué el valor de referencia del {vehicle} y encontré {value}, con {firmness}. Es solo una referencia: la decisión no depende de él."],
+  ["adjuster.step.vehicle_value.no_policy", "Sin una póliza que leer no hay un vehículo del que buscar el valor."],
+  ["adjuster.step.vehicle_value.no_vehicle", "La póliza no trae un vehículo, así que no busqué su valor de referencia."],
+  ["adjuster.step.vehicle_value.not_verified", "Busqué el valor de referencia del {vehicle} y no pude verificar un valor confiable. Decido sin él."],
+  ["adjuster.step.vehicle_value.title", "Valor de referencia del vehículo"],
   ["case.channel.chat", "Chat"],
   ["case.channel.voice", "Llamada"],
   ["case.derivation_reason.demo_limit", "Se alcanzó el límite de la demostración"],
@@ -234,6 +264,9 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["comparison.examples.other_driver_no_insurance", "¿Qué pasa si me choca alguien que no tiene seguro?"],
   ["comparison.examples.passenger_medical", "¿Pagan los gastos médicos de mis pasajeros?"],
   ["comparison.examples.rental_car", "¿Me pagan un carro de alquiler mientras reparan el mío?"],
+];
+
+const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["comparison.examples.ride_app", "¿Estoy cubierto si uso mi carro en una app de transporte?"],
   ["comparison.examples.stolen_keys", "¿Me cubren si me roban el carro y dejé las llaves adentro?"],
   ["comparison.examples.title", "Preguntas de ejemplo"],
@@ -264,9 +297,6 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["compliance.handoff.adjuster_review_inquiry", "Listo: un ajustador revisa tu consulta con la cláusula que encontramos. Le paso todo para que no tengas que repetirlo."],
   ["compliance.identity.answer", "No, soy una asistente de inteligencia artificial, pero te voy a ayudar con todo esto, y si prefieres, paso tu caso a un ajustador."],
   ["demo.notice.label", "Aviso de demostración"],
-];
-
-const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["demo.notice.less", "Menos información"],
   ["demo.notice.more", "Más información"],
   ["demo.reset.conversation_notice", "La demostración se reinició y tu caso anterior ya no existe. Tu siguiente mensaje abre un caso nuevo."],
@@ -487,6 +517,9 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.closing.fast_claim_offer", "Listo: ya tengo lo necesario para tu caso {case_number}. ¿Quieres agregar {missing}, o lo dejamos así?"],
   ["intake.closing.fast_claim_registered", "Tu caso {case_number} ya quedó registrado; puedes verlo con el enlace de arriba."],
   ["intake.closing.fast_claim_review_after_extra", "Anotado, gracias. Reviso tu reporte y te confirmo en un momento."],
+];
+
+const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["intake.closing.fast_claim_review_already", "Tu caso {case_number} está en revisión; te confirmo en un momento."],
   ["intake.closing.fast_claim_review_declined", "De acuerdo. Reviso tu reporte y te confirmo en un momento."],
   ["intake.closing.summary_coverage", "Para cerrar: {identity_and_policy}; tu pregunta es {question_asked}. ¿Es correcto?"],
@@ -517,9 +550,6 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.question.quote_annual_mileage_band", "¿Cuánto usa el vehículo al año: poco, normal o mucho?"],
   ["intake.question.quote_at_fault_losses_3y", "¿Cuántos siniestros con culpa tuviste en los últimos tres años?"],
   ["intake.question.quote_claims_3y", "¿Cuántos siniestros reportaste en esos tres años, con o sin culpa?"],
-];
-
-const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["intake.question.quote_driver_birth_date", "¿Cuál es la fecha de nacimiento del conductor?"],
   ["intake.question.quote_driver_name", "¿Cuál es el nombre completo del conductor principal?"],
   ["intake.question.quote_garaging_jurisdiction", "¿En qué ciudad se guarda el vehículo por las noches?"],
@@ -740,6 +770,9 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["quality.pending.count", "{count} situaciones:"],
   ["quality.pending.lead", "No medido no es lo mismo que bien. Por eso va aparte, con su motivo."],
   ["quality.pending.none", "Todo lo que esta corrida intentó medir, se midió."],
+];
+
+const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["quality.pending.other", "otro motivo"],
   ["quality.pending.provider_key_missing", "falta la clave del proveedor"],
   ["quality.pending.provider_timeout", "el modelo tardó más del plazo"],
@@ -770,9 +803,6 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["quote.value.mileage.high", "alto"],
   ["quote.value.mileage.low", "bajo"],
   ["quote.value.mileage.medium", "normal"],
-];
-
-const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["quote.value.prior_coverage.false", "sin seguro vigente"],
   ["quote.value.prior_coverage.true", "con seguro vigente"],
   ["quote.value.salvage_title.false", "nunca declarado pérdida total"],
@@ -993,6 +1023,9 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.availability.rate_limited_site", "Hoy ya se hicieron todas las llamadas de la demostración; vuelve mañana o usa el chat."],
   ["voice.barge_in.acknowledge", "Sí, dime."],
   ["voice.closing.case_number", "Tu número de caso con {insurer} es {spoken}."],
+];
+
+const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
   ["voice.closing.farewell", "Que estés muy bien."],
   ["voice.closing.next_step", "Un ajustador revisa tu caso; la decisión te aparece en esta pantalla."],
   ["voice.closing.pending", "Tu reporte quedó guardado. El resultado te aparece en esta pantalla."],
@@ -1023,9 +1056,6 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.console.outcome_hand_off", "Que lo revise un ajustador"],
   ["voice.console.outcome_in_progress", "Quedó en curso: todavía falta información."],
   ["voice.console.outcome_number", "Número de tu caso: {number}. Sirve para retomarlo o consultarlo."],
-];
-
-const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
   ["voice.console.outcome_open_case", "Abrir mi caso"],
   ["voice.console.outcome_title", "Dónde quedó tu caso"],
   ["voice.console.sample_button", "¿Qué póliza digo?"],

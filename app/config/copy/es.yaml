@@ -4135,3 +4135,108 @@ documents:
   loading:
     text: "Cargando el documento…"
     surface: system
+
+# El ajustador de IA (plan 09, fase 5): lo que dice cada uno de los seis pasos de su proceso.
+# El titular de cada paso lo resuelve la interfaz por su clave; el cuerpo lo escribe el codigo con los
+# hechos que acaba de leer (cifras, fechas, identificadores). La explicacion de la decision no esta
+# aqui: la escribe el modelo y pasa por la validacion y la guardia. Los pasos dicen «no pude verificar»
+# cuando no pudieron, y es distinto de «no encontre»: son dos resultados distintos.
+adjuster:
+  step:
+    nothing:
+      text: ninguno
+      surface: inbox
+    case_read:
+      title:
+        text: Lee el reporte
+        surface: inbox
+      body:
+        text: "Leí el reporte del caso {case_number}: tiene {fields} datos anotados, con el relato de lo que pasó."
+        surface: inbox
+    policy_read:
+      title:
+        text: Lee la póliza
+        surface: inbox
+      in_force:
+        text: "Leí la póliza {policy_number} de {holder}: está vigente hoy, del {start} al {end}. {details}"
+        surface: inbox
+      expired:
+        text: "Leí la póliza {policy_number} de {holder}: ya no está vigente, su periodo fue del {start} al {end}. {details}"
+        surface: inbox
+      not_yet_in_force:
+        text: "Leí la póliza {policy_number} de {holder}: todavía no está vigente, empieza el {start}. {details}"
+        surface: inbox
+      no_policy:
+        text: El reporte no trae una póliza identificada, así que no pude leerla.
+        surface: inbox
+      not_found:
+        text: "No encontré la póliza {policy_number} de esta aseguradora, así que no pude leerla."
+        surface: inbox
+      details:
+        text: "Vehículos: {vehicles}. Conductores declarados: {drivers}. Deducibles: {deductibles}. Límites: {limits}. Condiciones especiales: {endorsements}."
+        surface: inbox
+      source:
+        text: "Póliza {policy_number}"
+        surface: inbox
+    clauses:
+      title:
+        text: Busca las cláusulas
+        surface: inbox
+      found:
+        text: "Busqué en la póliza las cláusulas que se parecen a lo que pasó y encontré {count}. Solo cito las que compruebo una por una contra la póliza."
+        surface: inbox
+      none_found:
+        text: Busqué en la póliza cláusulas que se parezcan a lo que pasó y no encontré ninguna.
+        surface: inbox
+      not_in_force:
+        text: "No busqué cláusulas: la póliza no está vigente, así que ninguna se puede citar."
+        surface: inbox
+      no_policy:
+        text: No busqué cláusulas porque no tengo una póliza que leer.
+        surface: inbox
+    rules:
+      title:
+        text: Mira las reglas
+        surface: inbox
+      fired:
+        text: "Las reglas de la aseguradora pasaron este caso a revisión. {reason}"
+        surface: inbox
+      none_fired:
+        text: "Las reglas de la aseguradora no marcaron nada especial en este caso. {reason}"
+        surface: inbox
+      missing:
+        text: No encontré el resultado de las reglas para este caso.
+        surface: inbox
+    vehicle_value:
+      title:
+        text: Valor de referencia del vehículo
+        surface: inbox
+      found:
+        text: "Busqué el valor de referencia del {vehicle} y encontré {value}, con {firmness}. Es solo una referencia: la decisión no depende de él."
+        surface: inbox
+      not_verified:
+        text: "Busqué el valor de referencia del {vehicle} y no pude verificar un valor confiable. Decido sin él."
+        surface: inbox
+      no_vehicle:
+        text: La póliza no trae un vehículo, así que no busqué su valor de referencia.
+        surface: inbox
+      no_policy:
+        text: Sin una póliza que leer no hay un vehículo del que buscar el valor.
+        surface: inbox
+    firmness:
+      high:
+        text: confianza alta
+        surface: inbox
+      medium:
+        text: confianza media
+        surface: inbox
+      low:
+        text: confianza baja
+        surface: inbox
+    decision:
+      title:
+        text: Decide
+        surface: inbox
+      uncertainties:
+        text: "Lo que no pude confirmar: {items}"
+        surface: inbox

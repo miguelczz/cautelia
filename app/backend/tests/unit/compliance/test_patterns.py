@@ -181,10 +181,15 @@ def test_una_exencion_de_montos_que_no_es_una_clave_del_catalogo_no_carga(
         patterns.load_library(patrones_copiados)
 
 
-def test_la_biblioteca_versionada_exime_de_los_montos_solo_el_deducible_y_los_limites(
+def test_la_biblioteca_versionada_exime_de_los_montos_solo_lo_que_dice_la_poliza_y_la_decision(
     biblioteca: patterns.PatternLibrary,
 ) -> None:
-    assert biblioteca.amount_exempt_catalog_keys == {"chat.rigid.deductible", "chat.rigid.limits"}
+    assert biblioteca.amount_exempt_catalog_keys == {
+        "chat.rigid.deductible",
+        "chat.rigid.limits",
+        "adjuster.decision",
+    }
+    assert biblioteca.exempt_catalog_keys == {"adjuster.decision"}
 
 
 def test_la_biblioteca_del_proceso_se_carga_una_vez_y_se_puede_instalar(

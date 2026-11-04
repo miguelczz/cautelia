@@ -3989,3 +3989,108 @@ documents:
   loading:
     text: "Loading the document…"
     surface: system
+
+# The AI adjuster (plan 09, phase 5): what each of the six steps of its process says. The title of
+# each step is resolved by the interface from its key; the body is written by the code with the facts
+# it just read (figures, dates, identifiers). The explanation of the decision is not here: the model
+# writes it and it goes through validation and the guard. The steps say "could not verify" when they
+# could not, and that is different from "did not find": they are two different results.
+adjuster:
+  step:
+    nothing:
+      text: none
+      surface: inbox
+    case_read:
+      title:
+        text: Reads the report
+        surface: inbox
+      body:
+        text: "I read the report for case {case_number}: it has {fields} noted details, with the account of what happened."
+        surface: inbox
+    policy_read:
+      title:
+        text: Reads the policy
+        surface: inbox
+      in_force:
+        text: "I read policy {policy_number} of {holder}: it is in force today, from {start} to {end}. {details}"
+        surface: inbox
+      expired:
+        text: "I read policy {policy_number} of {holder}: it is no longer in force, its period was from {start} to {end}. {details}"
+        surface: inbox
+      not_yet_in_force:
+        text: "I read policy {policy_number} of {holder}: it is not in force yet, it starts on {start}. {details}"
+        surface: inbox
+      no_policy:
+        text: The report has no policy identified, so I could not read it.
+        surface: inbox
+      not_found:
+        text: "I did not find policy {policy_number} with this insurer, so I could not read it."
+        surface: inbox
+      details:
+        text: "Vehicles: {vehicles}. Declared drivers: {drivers}. Deductibles: {deductibles}. Limits: {limits}. Special conditions: {endorsements}."
+        surface: inbox
+      source:
+        text: "Policy {policy_number}"
+        surface: inbox
+    clauses:
+      title:
+        text: Looks for the clauses
+        surface: inbox
+      found:
+        text: "I searched the policy for clauses that resemble what happened and found {count}. I only cite the ones I check one by one against the policy."
+        surface: inbox
+      none_found:
+        text: I searched the policy for clauses that resemble what happened and found none.
+        surface: inbox
+      not_in_force:
+        text: "I did not search for clauses: the policy is not in force, so none can be cited."
+        surface: inbox
+      no_policy:
+        text: I did not search for clauses because I have no policy to read.
+        surface: inbox
+    rules:
+      title:
+        text: Looks at the rules
+        surface: inbox
+      fired:
+        text: "The insurer's rules sent this case to review. {reason}"
+        surface: inbox
+      none_fired:
+        text: "The insurer's rules flagged nothing special in this case. {reason}"
+        surface: inbox
+      missing:
+        text: I did not find the result of the rules for this case.
+        surface: inbox
+    vehicle_value:
+      title:
+        text: Reference value of the vehicle
+        surface: inbox
+      found:
+        text: "I looked up the reference value of the {vehicle} and found {value}, with {firmness}. It is only a reference: the decision does not depend on it."
+        surface: inbox
+      not_verified:
+        text: "I looked up the reference value of the {vehicle} and could not verify a reliable value. I decide without it."
+        surface: inbox
+      no_vehicle:
+        text: The policy has no vehicle, so I did not look up its reference value.
+        surface: inbox
+      no_policy:
+        text: With no policy to read there is no vehicle to look up the value of.
+        surface: inbox
+    firmness:
+      high:
+        text: high confidence
+        surface: inbox
+      medium:
+        text: medium confidence
+        surface: inbox
+      low:
+        text: low confidence
+        surface: inbox
+    decision:
+      title:
+        text: Decides
+        surface: inbox
+      uncertainties:
+        text: "What I could not confirm: {items}"
+        surface: inbox

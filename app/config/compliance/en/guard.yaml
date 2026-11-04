@@ -10,19 +10,12 @@
 # tipograficos en rectos antes de que ningun patron mire la frase.
 language: en
 family: guard
-version: "2026-11-02.1"
+version: "2026-11-04.1"
 
-# BR1.8. La misma lista que `es/guard.yaml`; el cargador falla si difieren.
-exempt_catalog_keys: []
-# Sigue vacia, y ahora por una razon medida y no por una pendiente.
-#
-# U13 la iba a usar para el aviso de la decision del ajustador (BR5.2), hasta que
-# se comprobo dos cosas el 2026-09-28. La primera: la plantilla del aviso **no
-# dispara ningun patron** --afirmar que un ajustador aprobo un caso no es afirmar
-# cobertura-- asi que la exencion no hacia falta. La segunda, que es la que
-# importa: el aviso lleva dentro el **comentario libre del ajustador**, y eximir
-# la clave eximia el texto entero. Un comentario que dijera "su poliza cubre el
-# choque" pasaba sin intervencion; sin la exencion, la guardia lo sustituye.
+# BR1.8, and the AI adjuster's decision: the same list as `es/guard.yaml`, where the reason is
+# written out; the loader fails if they differ.
+exempt_catalog_keys:
+  - adjuster.decision
 #
 # La firma de una persona autoriza **su decision**, no cualquier frase que
 # escriba. Por eso el comentario pasa por la guardia por su cuenta y la plantilla
@@ -33,6 +26,7 @@ exempt_catalog_keys: []
 amount_exempt_catalog_keys:
   - chat.rigid.deductible
   - chat.rigid.limits
+  - adjuster.decision
 
 patterns:
   # --- Promesa de cobertura (AC1.11.1, AC4.15.1) ------------------------------

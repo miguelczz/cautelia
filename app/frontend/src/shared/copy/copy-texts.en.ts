@@ -18,6 +18,36 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["action.go_home", "Go to the home page"],
   ["action.retry", "Try again"],
   ["action.start_over", "Start over"],
+  ["adjuster.step.case_read.body", "I read the report for case {case_number}: it has {fields} noted details, with the account of what happened."],
+  ["adjuster.step.case_read.title", "Reads the report"],
+  ["adjuster.step.clauses.found", "I searched the policy for clauses that resemble what happened and found {count}. I only cite the ones I check one by one against the policy."],
+  ["adjuster.step.clauses.no_policy", "I did not search for clauses because I have no policy to read."],
+  ["adjuster.step.clauses.none_found", "I searched the policy for clauses that resemble what happened and found none."],
+  ["adjuster.step.clauses.not_in_force", "I did not search for clauses: the policy is not in force, so none can be cited."],
+  ["adjuster.step.clauses.title", "Looks for the clauses"],
+  ["adjuster.step.decision.title", "Decides"],
+  ["adjuster.step.decision.uncertainties", "What I could not confirm: {items}"],
+  ["adjuster.step.firmness.high", "high confidence"],
+  ["adjuster.step.firmness.low", "low confidence"],
+  ["adjuster.step.firmness.medium", "medium confidence"],
+  ["adjuster.step.nothing", "none"],
+  ["adjuster.step.policy_read.details", "Vehicles: {vehicles}. Declared drivers: {drivers}. Deductibles: {deductibles}. Limits: {limits}. Special conditions: {endorsements}."],
+  ["adjuster.step.policy_read.expired", "I read policy {policy_number} of {holder}: it is no longer in force, its period was from {start} to {end}. {details}"],
+  ["adjuster.step.policy_read.in_force", "I read policy {policy_number} of {holder}: it is in force today, from {start} to {end}. {details}"],
+  ["adjuster.step.policy_read.no_policy", "The report has no policy identified, so I could not read it."],
+  ["adjuster.step.policy_read.not_found", "I did not find policy {policy_number} with this insurer, so I could not read it."],
+  ["adjuster.step.policy_read.not_yet_in_force", "I read policy {policy_number} of {holder}: it is not in force yet, it starts on {start}. {details}"],
+  ["adjuster.step.policy_read.source", "Policy {policy_number}"],
+  ["adjuster.step.policy_read.title", "Reads the policy"],
+  ["adjuster.step.rules.fired", "The insurer's rules sent this case to review. {reason}"],
+  ["adjuster.step.rules.missing", "I did not find the result of the rules for this case."],
+  ["adjuster.step.rules.none_fired", "The insurer's rules flagged nothing special in this case. {reason}"],
+  ["adjuster.step.rules.title", "Looks at the rules"],
+  ["adjuster.step.vehicle_value.found", "I looked up the reference value of the {vehicle} and found {value}, with {firmness}. It is only a reference: the decision does not depend on it."],
+  ["adjuster.step.vehicle_value.no_policy", "With no policy to read there is no vehicle to look up the value of."],
+  ["adjuster.step.vehicle_value.no_vehicle", "The policy has no vehicle, so I did not look up its reference value."],
+  ["adjuster.step.vehicle_value.not_verified", "I looked up the reference value of the {vehicle} and could not verify a reliable value. I decide without it."],
+  ["adjuster.step.vehicle_value.title", "Reference value of the vehicle"],
   ["case.channel.chat", "Chat"],
   ["case.channel.voice", "Call"],
   ["case.derivation_reason.demo_limit", "The demo reached its limit"],
@@ -234,6 +264,9 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["comparison.examples.other_driver_no_insurance", "What happens if I am hit by someone with no insurance?"],
   ["comparison.examples.passenger_medical", "Does my policy pay my passengers' medical bills?"],
   ["comparison.examples.rental_car", "Will you pay for a rental car while mine is being repaired?"],
+];
+
+const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["comparison.examples.ride_app", "Am I covered if I use my car for a ride-hailing app?"],
   ["comparison.examples.stolen_keys", "Am I covered if my car is stolen with the keys inside?"],
   ["comparison.examples.title", "Example questions"],
@@ -264,9 +297,6 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["compliance.handoff.adjuster_review_inquiry", "Done: an adjuster reviews your question with the clause we found. I am passing everything along so you do not have to repeat it."],
   ["compliance.identity.answer", "No, I'm an AI assistant. I'll help you with all of this, and if you'd rather, I'll pass your case to an adjuster."],
   ["demo.notice.label", "Demo notice"],
-];
-
-const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["demo.notice.less", "Less information"],
   ["demo.notice.more", "More information"],
   ["demo.reset.conversation_notice", "The demo was reset and your previous case no longer exists. Your next message opens a new case."],
@@ -487,6 +517,9 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.closing.fast_claim_offer", "Done: I have what I need for your case {case_number}. Would you like to add {missing}, or shall we leave it as is?"],
   ["intake.closing.fast_claim_registered", "Your case {case_number} is already registered; you can see it with the link above."],
   ["intake.closing.fast_claim_review_after_extra", "Noted, thank you. I'm reviewing your report and I'll confirm in a moment."],
+];
+
+const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["intake.closing.fast_claim_review_already", "Your case {case_number} is under review; I'll confirm in a moment."],
   ["intake.closing.fast_claim_review_declined", "All right. I'm reviewing your report and I'll confirm in a moment."],
   ["intake.closing.summary_coverage", "Before I close: {identity_and_policy}; your question is {question_asked}. Is that correct?"],
@@ -517,9 +550,6 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.question.quote_annual_mileage_band", "How much do you use the vehicle per year: low, medium, or high?"],
   ["intake.question.quote_at_fault_losses_3y", "How many at-fault accidents did you have in the last three years?"],
   ["intake.question.quote_claims_3y", "How many claims did you report in those three years, at fault or not?"],
-];
-
-const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["intake.question.quote_driver_birth_date", "What is the driver's date of birth?"],
   ["intake.question.quote_driver_name", "What is the main driver's full name?"],
   ["intake.question.quote_garaging_jurisdiction", "In which city is the vehicle kept at night?"],
@@ -740,6 +770,9 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["quality.pending.count", "{count} situations:"],
   ["quality.pending.lead", "Not measured is not the same as fine. That is why it is listed apart, with its reason."],
   ["quality.pending.none", "Everything this run tried to measure was measured."],
+];
+
+const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["quality.pending.other", "another reason"],
   ["quality.pending.provider_key_missing", "the provider key is missing"],
   ["quality.pending.provider_timeout", "the model took longer than the deadline"],
@@ -770,9 +803,6 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["quote.value.mileage.high", "high"],
   ["quote.value.mileage.low", "low"],
   ["quote.value.mileage.medium", "medium"],
-];
-
-const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["quote.value.prior_coverage.false", "without active insurance"],
   ["quote.value.prior_coverage.true", "with active insurance"],
   ["quote.value.salvage_title.false", "never declared a total loss"],
@@ -993,6 +1023,9 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.availability.rate_limited_site", "All of today's demo calls have been used; come back tomorrow or use the chat."],
   ["voice.barge_in.acknowledge", "Yes, go ahead."],
   ["voice.closing.case_number", "Your case number with {insurer} is {spoken}."],
+];
+
+const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
   ["voice.closing.farewell", "Take care."],
   ["voice.closing.next_step", "An adjuster reviews your case; the decision will show up on this screen."],
   ["voice.closing.pending", "Your report is saved. The result will show up on this screen."],
@@ -1023,9 +1056,6 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.console.outcome_hand_off", "Have an adjuster review it"],
   ["voice.console.outcome_in_progress", "It is still in progress: some details are missing."],
   ["voice.console.outcome_number", "Your case number: {number}. Use it to pick the case back up or look it up."],
-];
-
-const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
   ["voice.console.outcome_open_case", "Open my case"],
   ["voice.console.outcome_title", "Where your case stands"],
   ["voice.console.sample_button", "Which policy do I say?"],

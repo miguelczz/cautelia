@@ -265,21 +265,23 @@ caps:
   - provider: anthropic
     use: chat_reply
     cap_kind: prepaid_balance
-    cap_value: "4,05 USD de credito prepagado restante, recarga automatica apagada"
-    last_checked_at: 2026-10-13
+    cap_value: "3,42 USD de credito prepagado restante, recarga automatica apagada"
+    last_checked_at: 2026-11-04
   # Las evaluaciones de la comprension, con su propia clave de la misma cuenta: el
   # credito prepagado es de la organizacion, asi que comparten los mismos 5 USD.
   - provider: anthropic
     use: evals_chat
     cap_kind: prepaid_balance
-    cap_value: "el mismo credito prepagado de la cuenta (4,05 USD restantes), recarga automatica apagada"
-    last_checked_at: 2026-10-13
-  # El ajustador de IA, con su propia clave de la misma cuenta: comparte el credito prepagado.
-  # La fecha es la de la ultima lectura real de ese credito. **Pendiente de Miguel antes de
-  # publicar**: crear la clave `UNTANGLE_ANTHROPIC_API_KEY_ADJUSTER` en la consola de Claude,
-  # con su propio limite de gasto, y actualizar esta fila con la cifra vista.
+    cap_value: "el mismo credito prepagado de la cuenta (3,42 USD restantes), recarga automatica apagada"
+    last_checked_at: 2026-11-04
+  # El ajustador de IA, con su propia clave de la misma cuenta (creada por Miguel el 2026-11-04):
+  # comparte el credito prepagado. La cuenta no tiene workspaces, asi que la clave **no tiene
+  # limite de gasto propio** en el proveedor; el techo es el credito prepagado de la cuenta
+  # (recarga automatica apagada) y, dentro de la aplicacion, el tope diario de casos
+  # (`adjuster/config.py`). Cifra de credito de la ultima lectura real (2026-11-04, Gastos y
+  # facturacion de la consola: 3,42 USD, recarga automatica desactivada).
   - provider: anthropic
     use: adjuster
     cap_kind: prepaid_balance
-    cap_value: "el mismo credito prepagado de la cuenta (4,05 USD restantes), recarga automatica apagada"
-    last_checked_at: 2026-10-13
+    cap_value: "el mismo credito prepagado de la cuenta (3,42 USD restantes), recarga automatica apagada"
+    last_checked_at: 2026-11-04

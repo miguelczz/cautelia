@@ -13,6 +13,36 @@ export type CopyKey =
   | "action.go_home"
   | "action.retry"
   | "action.start_over"
+  | "adjuster.step.case_read.body"
+  | "adjuster.step.case_read.title"
+  | "adjuster.step.clauses.found"
+  | "adjuster.step.clauses.no_policy"
+  | "adjuster.step.clauses.none_found"
+  | "adjuster.step.clauses.not_in_force"
+  | "adjuster.step.clauses.title"
+  | "adjuster.step.decision.title"
+  | "adjuster.step.decision.uncertainties"
+  | "adjuster.step.firmness.high"
+  | "adjuster.step.firmness.low"
+  | "adjuster.step.firmness.medium"
+  | "adjuster.step.nothing"
+  | "adjuster.step.policy_read.details"
+  | "adjuster.step.policy_read.expired"
+  | "adjuster.step.policy_read.in_force"
+  | "adjuster.step.policy_read.no_policy"
+  | "adjuster.step.policy_read.not_found"
+  | "adjuster.step.policy_read.not_yet_in_force"
+  | "adjuster.step.policy_read.source"
+  | "adjuster.step.policy_read.title"
+  | "adjuster.step.rules.fired"
+  | "adjuster.step.rules.missing"
+  | "adjuster.step.rules.none_fired"
+  | "adjuster.step.rules.title"
+  | "adjuster.step.vehicle_value.found"
+  | "adjuster.step.vehicle_value.no_policy"
+  | "adjuster.step.vehicle_value.no_vehicle"
+  | "adjuster.step.vehicle_value.not_verified"
+  | "adjuster.step.vehicle_value.title"
   | "case.channel.chat"
   | "case.channel.voice"
   | "case.derivation_reason.demo_limit"
@@ -1088,6 +1118,36 @@ export const COPY_KEYS = [
   "action.go_home",
   "action.retry",
   "action.start_over",
+  "adjuster.step.case_read.body",
+  "adjuster.step.case_read.title",
+  "adjuster.step.clauses.found",
+  "adjuster.step.clauses.no_policy",
+  "adjuster.step.clauses.none_found",
+  "adjuster.step.clauses.not_in_force",
+  "adjuster.step.clauses.title",
+  "adjuster.step.decision.title",
+  "adjuster.step.decision.uncertainties",
+  "adjuster.step.firmness.high",
+  "adjuster.step.firmness.low",
+  "adjuster.step.firmness.medium",
+  "adjuster.step.nothing",
+  "adjuster.step.policy_read.details",
+  "adjuster.step.policy_read.expired",
+  "adjuster.step.policy_read.in_force",
+  "adjuster.step.policy_read.no_policy",
+  "adjuster.step.policy_read.not_found",
+  "adjuster.step.policy_read.not_yet_in_force",
+  "adjuster.step.policy_read.source",
+  "adjuster.step.policy_read.title",
+  "adjuster.step.rules.fired",
+  "adjuster.step.rules.missing",
+  "adjuster.step.rules.none_fired",
+  "adjuster.step.rules.title",
+  "adjuster.step.vehicle_value.found",
+  "adjuster.step.vehicle_value.no_policy",
+  "adjuster.step.vehicle_value.no_vehicle",
+  "adjuster.step.vehicle_value.not_verified",
+  "adjuster.step.vehicle_value.title",
   "case.channel.chat",
   "case.channel.voice",
   "case.derivation_reason.demo_limit",

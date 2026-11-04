@@ -21,22 +21,23 @@
 # cambio a la vista: sube `version`.
 language: es
 family: guard
-version: "2026-11-02.1"
+version: "2026-11-04.1"
 
-# BR1.8. Vacia hasta que U8 publique las plantillas de respuesta verificada:
-# son de U8 y todavia no existen, y eximir aqui una clave que nadie compone
-# seria abrir una puerta que no lleva a ninguna parte. La misma lista va en
-# `en/guard.yaml`; el cargador falla si las dos no coinciden.
-exempt_catalog_keys: []
-# Sigue vacia, y ahora por una razon medida y no por una pendiente.
+# BR1.8, y la decision del ajustador de IA (decision de Miguel, 2026-11-02; A7 de
+# `docs/propuesta-2026-10/11-ajustador-de-ia.md`). Es la decision misma lo que puede decir «cubre» y
+# nombrar cifras, y la **escribe el modelo**: por eso la clave no la trae el texto sino quien llama a
+# la guardia (`adjuster.validation`), y solo para el texto de la decision. Se exime aqui la promesa
+# de cobertura y, en la lista de abajo, los montos; la culpa, el consejo legal, la revelacion de
+# configuracion y afirmar ser una persona siguen vigilados, y si la guardia interviene el intento
+# falla en vez de mostrar la frase generica. La misma lista va en `en/guard.yaml`; el cargador falla
+# si las dos no coinciden.
+exempt_catalog_keys:
+  - adjuster.decision
 #
-# U13 la iba a usar para el aviso de la decision del ajustador (BR5.2), hasta que
-# se comprobo dos cosas el 2026-09-28. La primera: la plantilla del aviso **no
-# dispara ningun patron** --afirmar que un ajustador aprobo un caso no es afirmar
-# cobertura-- asi que la exencion no hacia falta. La segunda, que es la que
-# importa: el aviso lleva dentro el **comentario libre del ajustador**, y eximir
-# la clave eximia el texto entero. Un comentario que dijera "su poliza cubre el
-# choque" pasaba sin intervencion; sin la exencion, la guardia lo sustituye.
+# Lo que **no** se exime, y por que (medido el 2026-09-28): el aviso del chat con la decision de una
+# persona. La plantilla del aviso no dispara ningun patron, y lo que importa es que lleva dentro el
+# comentario libre del ajustador: eximir la clave eximia el texto entero, y un comentario que dijera
+# "su poliza cubre el choque" pasaba sin intervencion.
 #
 # La firma de una persona autoriza **su decision**, no cualquier frase que
 # escriba. Por eso el comentario pasa por la guardia por su cuenta y la plantilla
@@ -47,13 +48,14 @@ exempt_catalog_keys: []
 # promete», asi que antes la respuesta a «¿cuanto es mi deducible?» salia como la frase generica.
 # Estas dos plantillas las compone el codigo con las cifras del registro de la poliza emitida
 # (`policy_rag/facts/rigid.py`); el modelo no escribe ni una palabra de ellas, y por eso se exime
-# la **clave**, no el texto. Solo se exime la categoria de montos: una plantilla eximida sigue
+# la **clave**, no el texto (la unica que escribe el modelo es `adjuster.decision`, arriba). Solo se exime la categoria de montos: una plantilla eximida sigue
 # vigilada contra promesas de cobertura, culpa y consejo legal. Una clave nueva aqui es un cambio a
 # la vista, y su texto no puede llevar nada que no salga del registro. La misma lista va en
 # `en/guard.yaml`; el cargador falla si difieren.
 amount_exempt_catalog_keys:
   - chat.rigid.deductible
   - chat.rigid.limits
+  - adjuster.decision
 
 patterns:
   # --- Promesa de cobertura: afirmarla o negarla (AC1.11.1, AC4.15.1) --------

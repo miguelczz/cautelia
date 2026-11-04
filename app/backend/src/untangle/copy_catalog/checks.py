@@ -30,6 +30,11 @@ from untangle import paths
 from untangle.copy_catalog.loading import LOCALES
 from untangle.copy_catalog.loading import load_raw_entries as load_raw_entries
 from untangle.copy_catalog.models import COPY_KEY_PATTERN, CopyEntry
+from untangle.copy_catalog.server_only import (
+    BROWSER_KEY_EXCEPTIONS,
+    SERVER_ONLY_PREFIXES,
+    is_server_only,
+)
 
 RawEntries = dict[tuple[str, str], dict[str, Any]]
 
@@ -515,8 +520,75 @@ def check_schema(entries: RawEntries) -> list[Finding]:
     return hallazgos
 
 
+#: Una clave de catalogo escrita entre comillas en un archivo de la interfaz.
+CLAVE_ENTRE_COMILLAS = re.compile(r"""["'`]([a-z][a-z0-9_]*(?:\.[a-z0-9_]+)+)["'`]""")
+
+
+def frontend_literal_keys(root: Path) -> set[str]:
+    """Las claves que la interfaz escribe literales, sin los modulos generados ni pruebas.
+
+    Cubre `t("clave")` y las tablas de claves que el servidor manda como dato
+    (`chat-copy.ts`, `voice-copy.ts`, `inbox-labels.ts`, `tenant-characters.ts`), que
+    tambien las escriben literales (BR3.4). `copy-keys.ts` y `copy-texts.*.ts` quedan
+    fuera: son el catalogo, no quien lo consume.
+    """
+    base = root / "app" / "frontend" / "src"
+    literales: set[str] = set()
+    if not base.is_dir():
+        return literales
+    for archivo in sorted(base.rglob("*")):
+        if archivo.suffix not in (".ts", ".tsx") or not archivo.is_file():
+            continue
+        if _es_archivo_de_prueba(archivo) or archivo.name.startswith(("copy-texts.", "copy-keys.")):
+            continue
+        literales.update(CLAVE_ENTRE_COMILLAS.findall(archivo.read_text(encoding="utf-8")))
+    return literales
+
+
+def check_server_only_keys(entries: RawEntries, root: Path) -> list[Finding]:
+    """SO-1 - Una clave solo-servidor no la escribe la interfaz; una excepcion sigue vigente.
+
+    El modulo `server_only.py` deja fuera del catalogo que baja al navegador las frases que
+    el servidor emite ya resueltas (PERF-U6.1). Es seguro solo mientras ninguna pantalla las
+    pida por clave: aqui se comprueba, y tambien que cada prefijo y cada excepcion siga
+    significando algo.
+    """
+    if not (root / "app" / "frontend" / "src").is_dir():
+        return []
+    claves = set(_keys(entries))
+    literales = frontend_literal_keys(root)
+    hallazgos: list[Finding] = []
+
+    for clave in sorted(claves):
+        if is_server_only(clave) and clave in literales:
+            hallazgos.append(
+                Finding(
+                    "SO-1",
+                    clave,
+                    "esta marcada solo-servidor (copy_catalog/server_only.py) pero la "
+                    "interfaz la escribe literal: quitar su prefijo o agregarla a "
+                    "BROWSER_KEY_EXCEPTIONS",
+                )
+            )
+    for prefijo in SERVER_ONLY_PREFIXES:
+        if not any(clave == prefijo or clave.startswith(prefijo + ".") for clave in claves):
+            hallazgos.append(
+                Finding("SO-1", prefijo, "el prefijo solo-servidor no cubre ninguna clave")
+            )
+    for clave in BROWSER_KEY_EXCEPTIONS:
+        if clave not in claves:
+            hallazgos.append(Finding("SO-1", clave, "la excepcion no existe en el catalogo"))
+        elif clave not in literales:
+            hallazgos.append(
+                Finding("SO-1", clave, "la excepcion vencio: la interfaz ya no escribe esta clave")
+            )
+        elif not any(clave.startswith(prefijo + ".") for prefijo in SERVER_ONLY_PREFIXES):
+            hallazgos.append(Finding("SO-1", clave, "la excepcion no cuelga de ningun prefijo"))
+    return hallazgos
+
+
 def run_all(root: Path | None = None) -> list[Finding]:
-    """Los siete chequeos, en el orden del Flujo 3."""
+    """Los ocho chequeos, en el orden del Flujo 3 (mas SO-1, de las frases solo-servidor)."""
     base = root if root is not None else paths.repo_root()
     entradas = load_raw_entries(base / "app" / "config" / "copy")
 
@@ -528,6 +600,7 @@ def run_all(root: Path | None = None) -> list[Finding]:
         *check_literal_keys(entradas, base),
         *check_version_decisions(entradas),
         *check_forbidden_forms(entradas, base),
+        *check_server_only_keys(entradas, base),
     ]
 
 
@@ -538,7 +611,7 @@ def main() -> int:
     if hallazgos:
         print(f"\n{len(hallazgos)} hallazgo(s) en el catalogo de textos", file=sys.stderr)
         return 1
-    print("catalogo de textos: los siete chequeos pasan")
+    print("catalogo de textos: los ocho chequeos pasan")
     return 0
 
 

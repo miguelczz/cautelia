@@ -20,6 +20,7 @@ import json
 from collections.abc import Mapping, Sequence
 
 from untangle.copy_catalog.models import CopyEntry
+from untangle.copy_catalog.server_only import is_server_only
 
 ENCABEZADO = """\
 // GENERADO. No editar a mano.
@@ -35,7 +36,9 @@ ENCABEZADO = """\
 
 def render_keys_module(entries: Mapping[tuple[str, str], CopyEntry]) -> str:
     """El contenido del modulo de TypeScript, determinista."""
-    claves = sorted({clave for clave, _ in entries})
+    # Las claves solo-servidor no son del navegador (`server_only.py`): escribirlas en la
+    # interfaz es un error de tipos.
+    claves = sorted({clave for clave, _ in entries if not is_server_only(clave)})
     superficies = sorted({entrada.surface.value for entrada in entries.values()})
 
     if claves:
@@ -48,7 +51,7 @@ def render_keys_module(entries: Mapping[tuple[str, str], CopyEntry]) -> str:
     union_superficies = " | ".join(f'"{s}"' for s in superficies) if superficies else "never"
 
     return f"""{ENCABEZADO}
-/** Toda clave del catalogo, en los dos idiomas. */
+/** Toda clave del catalogo que la interfaz resuelve, en los dos idiomas. */
 export type CopyKey =
 {union};
 
@@ -101,10 +104,13 @@ def render_texts_module(entries: Mapping[tuple[str, str], CopyEntry], locale: st
     descarga antes de la pagina de espera (PERF-U6.1), y con los dos idiomas juntos
     la pasaba. La interfaz carga el del arranque antes de pintar y el otro despues
     (`shared/i18n/catalog.ts`). Una clave que le falta a este idioma simplemente no
-    va: el chequeo de paridad (BR3.1) es quien lo dice, nombrando la clave.
+    va: el chequeo de paridad (BR3.1) es quien lo dice, nombrando la clave. Tampoco van las
+    claves solo-servidor (`server_only.py`): el servidor las emite ya resueltas.
     """
     frases = sorted(
-        (entrada.key, entrada.text) for (_, idioma), entrada in entries.items() if idioma == locale
+        (entrada.key, entrada.text)
+        for (_, idioma), entrada in entries.items()
+        if idioma == locale and not is_server_only(entrada.key)
     )
     tramos = [
         frases[desde : desde + FRASES_POR_TRAMO]

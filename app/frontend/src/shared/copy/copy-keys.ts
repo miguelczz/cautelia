@@ -7,7 +7,7 @@
 // Una clave que no existe es un error de tipos aqui, no un texto vacio en
 // pantalla.
 
-/** Toda clave del catalogo, en los dos idiomas. */
+/** Toda clave del catalogo que la interfaz resuelve, en los dos idiomas. */
 export type CopyKey =
   | "action.back_to_conversation"
   | "action.go_home"
@@ -27,35 +27,11 @@ export type CopyKey =
   | "adjuster.source.kind.web"
   | "adjuster.source.new_tab"
   | "adjuster.source.rule"
-  | "adjuster.step.case_read.body"
   | "adjuster.step.case_read.title"
-  | "adjuster.step.clauses.found"
-  | "adjuster.step.clauses.no_policy"
-  | "adjuster.step.clauses.none_found"
-  | "adjuster.step.clauses.not_in_force"
   | "adjuster.step.clauses.title"
   | "adjuster.step.decision.title"
-  | "adjuster.step.decision.uncertainties"
-  | "adjuster.step.firmness.high"
-  | "adjuster.step.firmness.low"
-  | "adjuster.step.firmness.medium"
-  | "adjuster.step.nothing"
-  | "adjuster.step.policy_read.details"
-  | "adjuster.step.policy_read.expired"
-  | "adjuster.step.policy_read.in_force"
-  | "adjuster.step.policy_read.no_policy"
-  | "adjuster.step.policy_read.not_found"
-  | "adjuster.step.policy_read.not_yet_in_force"
-  | "adjuster.step.policy_read.source"
   | "adjuster.step.policy_read.title"
-  | "adjuster.step.rules.fired"
-  | "adjuster.step.rules.missing"
-  | "adjuster.step.rules.none_fired"
   | "adjuster.step.rules.title"
-  | "adjuster.step.vehicle_value.found"
-  | "adjuster.step.vehicle_value.no_policy"
-  | "adjuster.step.vehicle_value.no_vehicle"
-  | "adjuster.step.vehicle_value.not_verified"
   | "adjuster.step.vehicle_value.title"
   | "case.channel.chat"
   | "case.channel.voice"
@@ -160,20 +136,10 @@ export type CopyKey =
   | "chat.citation.special_condition"
   | "chat.citation.trace_link"
   | "chat.citation.translation_note"
-  | "chat.closed_case.already_decided"
-  | "chat.decision.adjuster_ai"
-  | "chat.decision.approved"
-  | "chat.decision.pending"
-  | "chat.decision.rejected"
-  | "chat.decision.sent_to_insurer"
   | "chat.greeting.hello"
   | "chat.limit.rate"
   | "chat.limit.site_day"
   | "chat.limit.size"
-  | "chat.off_topic.lead"
-  | "chat.off_topic.resume"
-  | "chat.offer.options"
-  | "chat.offer.options_with_quote"
   | "chat.opening.capabilities"
   | "chat.opening.capabilities_with_quote"
   | "chat.opening.disclosure"
@@ -231,24 +197,6 @@ export type CopyKey =
   | "chat.reasoning.wants_question"
   | "chat.reasoning.wants_quote"
   | "chat.reasoning.you_asked"
-  | "chat.resume.continued"
-  | "chat.resume.continued_open"
-  | "chat.resume.in_review"
-  | "chat.resume.not_found"
-  | "chat.resume.original_channel"
-  | "chat.resume.with_adjuster"
-  | "chat.rigid.deductible"
-  | "chat.rigid.drivers.listed"
-  | "chat.rigid.drivers.none"
-  | "chat.rigid.endorsements.count_only"
-  | "chat.rigid.endorsements.listed"
-  | "chat.rigid.endorsements.none"
-  | "chat.rigid.limits"
-  | "chat.rigid.validity.expired"
-  | "chat.rigid.validity.in_force"
-  | "chat.rigid.validity.not_yet"
-  | "chat.rigid.vehicles.listed"
-  | "chat.rigid.vehicles.none"
   | "chat.turn.error"
   | "chat.turn.waiting"
   | "comparison.asked.label"
@@ -289,9 +237,6 @@ export type CopyKey =
   | "compliance.closure.direct"
   | "compliance.emergency.local"
   | "compliance.emergency.public"
-  | "compliance.finding.attachment_missing"
-  | "compliance.finding.disclosure_missing"
-  | "compliance.finding.human_route_missed"
   | "compliance.guard.amount"
   | "compliance.guard.config_disclosure"
   | "compliance.guard.coverage_promise"
@@ -301,7 +246,6 @@ export type CopyKey =
   | "compliance.guard.transfer_or_deadline"
   | "compliance.handoff.adjuster_review"
   | "compliance.handoff.adjuster_review_inquiry"
-  | "compliance.identity.answer"
   | "demo.notice.label"
   | "demo.notice.less"
   | "demo.notice.more"
@@ -498,106 +442,9 @@ export type CopyKey =
   | "insurer.character.agency"
   | "insurer.character.conservative"
   | "insurer.character.flexible"
-  | "intake.ack.anger"
-  | "intake.ack.fear_or_crying"
-  | "intake.block.identity_and_policy"
-  | "intake.block.other_parties"
-  | "intake.block.quote_driver"
-  | "intake.block.quote_history"
-  | "intake.block.quote_usage"
-  | "intake.block.quote_vehicle"
-  | "intake.block.safety"
-  | "intake.block.vehicle_and_driver"
-  | "intake.block.what_happened"
-  | "intake.block.when_and_where"
-  | "intake.claim_item.identity_and_policy"
-  | "intake.claim_item.other_parties"
-  | "intake.claim_item.safety"
-  | "intake.claim_item.vehicle_and_driver"
-  | "intake.claim_item.what_happened"
-  | "intake.claim_item.when_and_where"
-  | "intake.claim_item.when_only"
-  | "intake.claim_item.where_only"
-  | "intake.closing.fast_claim_after_extra"
-  | "intake.closing.fast_claim_already"
-  | "intake.closing.fast_claim_declined"
-  | "intake.closing.fast_claim_done"
-  | "intake.closing.fast_claim_offer"
-  | "intake.closing.fast_claim_registered"
-  | "intake.closing.fast_claim_review_after_extra"
-  | "intake.closing.fast_claim_review_already"
-  | "intake.closing.fast_claim_review_declined"
-  | "intake.closing.summary_coverage"
-  | "intake.closing.summary_quote"
-  | "intake.closing.voice_fast_after_extra"
-  | "intake.closing.voice_fast_already"
-  | "intake.closing.voice_fast_declined"
-  | "intake.closing.voice_fast_done"
-  | "intake.closing.voice_fast_offer"
-  | "intake.closing.voice_fast_registered"
-  | "intake.correction.applied"
   | "intake.degraded"
-  | "intake.emergency.continuation"
-  | "intake.identity.name_permission"
-  | "intake.policy.confirm_again"
-  | "intake.policy.confirm_again_driver"
-  | "intake.policy.confirmed_identity"
-  | "intake.policy.confirmed_vehicle"
-  | "intake.policy.declined"
-  | "intake.policy.found"
-  | "intake.policy.found_no_vehicle"
-  | "intake.policy.not_found_repeat"
-  | "intake.question.claim_all"
-  | "intake.question.claim_rest"
-  | "intake.question.identity_and_policy"
-  | "intake.question.other_parties"
-  | "intake.question.quote_all"
-  | "intake.question.quote_annual_mileage_band"
-  | "intake.question.quote_at_fault_losses_3y"
-  | "intake.question.quote_claims_3y"
-  | "intake.question.quote_driver_birth_date"
-  | "intake.question.quote_driver_name"
-  | "intake.question.quote_garaging_jurisdiction"
-  | "intake.question.quote_lapse_months"
-  | "intake.question.quote_license_jurisdiction"
-  | "intake.question.quote_license_years"
-  | "intake.question.quote_prior_coverage_active"
-  | "intake.question.quote_salvage_title"
-  | "intake.question.quote_use_type"
-  | "intake.question.quote_vehicle_make"
-  | "intake.question.quote_vehicle_model"
-  | "intake.question.quote_vehicle_year"
-  | "intake.question.quote_vin"
-  | "intake.question.safety"
-  | "intake.question.vehicle_and_driver"
-  | "intake.question.what_happened"
-  | "intake.question.when_and_where"
-  | "intake.question.when_only"
-  | "intake.question.where_only"
-  | "intake.readback.identity_and_policy"
-  | "intake.readback.other_parties"
-  | "intake.readback.quote_all"
-  | "intake.readback.quote_driver"
-  | "intake.readback.quote_driver_part"
-  | "intake.readback.quote_history"
-  | "intake.readback.quote_history_part"
-  | "intake.readback.quote_usage"
-  | "intake.readback.quote_usage_part"
-  | "intake.readback.quote_vehicle"
-  | "intake.readback.quote_vehicle_part"
-  | "intake.readback.safety"
-  | "intake.readback.vehicle_and_driver"
-  | "intake.readback.what_happened"
-  | "intake.readback.when_and_where"
-  | "intake.social.goodbye"
-  | "intake.social.greeting"
-  | "intake.social.progress"
-  | "intake.social.thanks"
   | "intake.tone.calm"
   | "intake.tone.closing_abuse"
-  | "intake.transition.confirmed"
-  | "intake.transition.corrected"
-  | "intake.unfinished"
   | "metrics.cause.criterion_absent"
   | "metrics.cause.criterion_not_built"
   | "metrics.cause.latency_not_in_baseline"
@@ -638,8 +485,6 @@ export type CopyKey =
   | "metrics.source.date"
   | "metrics.source.run"
   | "metrics.title"
-  | "orchestration.turn.error"
-  | "orchestration.turn.waiting"
   | "policies.ask_chat"
   | "policies.ask_identity"
   | "policies.ask_question"
@@ -689,29 +534,8 @@ export type CopyKey =
   | "policies.questions_title"
   | "policies.title"
   | "policies.vehicles"
-  | "policy_rag.coverage.amount_deferred"
-  | "policy_rag.coverage.ask_question"
-  | "policy_rag.coverage.back_to_report"
-  | "policy_rag.coverage.checking"
-  | "policy_rag.coverage.cross_language_notice"
-  | "policy_rag.coverage.found_chat"
-  | "policy_rag.coverage.found_chat_claim"
-  | "policy_rag.coverage.found_voice"
-  | "policy_rag.coverage.found_voice_claim"
-  | "policy_rag.coverage.need_policy"
   | "policy_rag.coverage.no_clause_found"
-  | "policy_rag.coverage.part.a"
-  | "policy_rag.coverage.part.b"
-  | "policy_rag.coverage.part.c"
-  | "policy_rag.coverage.part.d"
-  | "policy_rag.coverage.part.definitions"
-  | "policy_rag.coverage.part.e"
-  | "policy_rag.coverage.part.f"
-  | "policy_rag.coverage.part.other"
-  | "policy_rag.coverage.part.special"
-  | "policy_rag.coverage.part.territory"
   | "policy_rag.coverage.unverifiable"
-  | "policy_rag.coverage.voice_summary"
   | "problem.conflict"
   | "problem.conflict_state"
   | "problem.forbidden_origin"
@@ -792,64 +616,6 @@ export type CopyKey =
   | "quality.run.when"
   | "quality.totals.hint"
   | "quality.totals.passed"
-  | "quote.band.elevated_risk"
-  | "quote.band.outside_appetite"
-  | "quote.band.pending_review"
-  | "quote.band.standard_risk"
-  | "quote.reply.eligible"
-  | "quote.reply.not_eligible"
-  | "quote.reply.price_refusal"
-  | "quote.reply.price_refusal_with_band"
-  | "quote.reply.referred"
-  | "quote.reply.unavailable"
-  | "quote.value.mileage.high"
-  | "quote.value.mileage.low"
-  | "quote.value.mileage.medium"
-  | "quote.value.prior_coverage.false"
-  | "quote.value.prior_coverage.true"
-  | "quote.value.salvage_title.false"
-  | "quote.value.salvage_title.true"
-  | "quote.value.use_type.commercial"
-  | "quote.value.use_type.commuting"
-  | "quote.value.use_type.personal"
-  | "redaction.degraded"
-  | "redaction.label.email"
-  | "redaction.label.license_plate"
-  | "redaction.label.location"
-  | "redaction.label.national_id"
-  | "redaction.label.person"
-  | "redaction.label.phone"
-  | "redaction.label.policy_number"
-  | "redaction.label.unclassified"
-  | "redaction.label.vin"
-  | "redaction.spoken.email"
-  | "redaction.spoken.license_plate"
-  | "redaction.spoken.location"
-  | "redaction.spoken.national_id"
-  | "redaction.spoken.person"
-  | "redaction.spoken.phone"
-  | "redaction.spoken.policy_number"
-  | "redaction.spoken.unclassified"
-  | "redaction.spoken.vin"
-  | "rules.explain.agency_case"
-  | "rules.explain.amount_noted"
-  | "rules.explain.amount_review"
-  | "rules.explain.complex_case"
-  | "rules.explain.coverage_review"
-  | "rules.explain.default"
-  | "rules.explain.fraud_review"
-  | "rules.explain.high_value_review"
-  | "rules.explain.injuries_reported"
-  | "rules.explain.quote_at_fault_losses"
-  | "rules.explain.quote_commercial_use"
-  | "rules.explain.quote_elevated_risk"
-  | "rules.explain.quote_new_license"
-  | "rules.explain.quote_old_vehicle"
-  | "rules.explain.quote_salvage_title"
-  | "rules.explain.quote_standard_risk"
-  | "rules.explain.simple_claim"
-  | "rules.explain.third_party_pending"
-  | "rules.explain.unlisted_driver_review"
   | "shell.brand_name"
   | "shell.footer.demo"
   | "shell.footer.github"
@@ -992,20 +758,10 @@ export type CopyKey =
   | "visitor.title_inquiry"
   | "visitor.title_quote"
   | "visitor.valid_until"
-  | "voice.answer.back_to_report"
-  | "voice.answer.delayed"
   | "voice.availability.misconfigured"
   | "voice.availability.not_configured"
   | "voice.availability.rate_limited_daily"
   | "voice.availability.rate_limited_site"
-  | "voice.barge_in.acknowledge"
-  | "voice.closing.case_number"
-  | "voice.closing.farewell"
-  | "voice.closing.next_step"
-  | "voice.closing.pending"
-  | "voice.closing.registered"
-  | "voice.closing.saved"
-  | "voice.closing.time_is_up"
   | "voice.console.audio_blocked"
   | "voice.console.audio_enable"
   | "voice.console.call"
@@ -1043,13 +799,6 @@ export type CopyKey =
   | "voice.console.transcript_label"
   | "voice.console.unavailable"
   | "voice.console.use_chat"
-  | "voice.decision.approved"
-  | "voice.decision.note"
-  | "voice.decision.pending"
-  | "voice.decision.rejected"
-  | "voice.decision.sent_to_insurer"
-  | "voice.duration.minute"
-  | "voice.duration.minutes"
   | "voice.ended.completed"
   | "voice.ended.dropped"
   | "voice.ended.error"
@@ -1058,13 +807,6 @@ export type CopyKey =
   | "voice.ended.resume_until"
   | "voice.ended.saved"
   | "voice.ended.silence"
-  | "voice.filler.one"
-  | "voice.filler.three"
-  | "voice.filler.two"
-  | "voice.first_turn.clarify"
-  | "voice.hold.acknowledge"
-  | "voice.languages.only_two"
-  | "voice.languages.switched"
   | "voice.mic_check.answer_no"
   | "voice.mic_check.answer_yes"
   | "voice.mic_check.browser_default"
@@ -1077,25 +819,9 @@ export type CopyKey =
   | "voice.mic_check.silent"
   | "voice.mic_check.start"
   | "voice.notice.time_running_out"
-  | "voice.offer.choose"
-  | "voice.offer.handed_off"
-  | "voice.offer.save_or_adjuster"
-  | "voice.opening.disclosure"
-  | "voice.opening.first_question"
-  | "voice.quote.by_chat"
-  | "voice.readback.confirm"
-  | "voice.resume.accepted"
-  | "voice.resume.continue_open"
-  | "voice.resume.new_case"
-  | "voice.resume.offer"
-  | "voice.retry.not_understood"
-  | "voice.silence.farewell"
-  | "voice.silence.still_there"
-  | "voice.spoken.policy"
   | "voice.state.ended"
   | "voice.state.listening"
-  | "voice.state.speaking"
-  | "voice.time.running_out";
+  | "voice.state.speaking";
 
 /** Los idiomas admitidos por el producto. */
 export type Locale = "es" | "en";
@@ -1123,35 +849,11 @@ export const COPY_KEYS = [
   "adjuster.source.kind.web",
   "adjuster.source.new_tab",
   "adjuster.source.rule",
-  "adjuster.step.case_read.body",
   "adjuster.step.case_read.title",
-  "adjuster.step.clauses.found",
-  "adjuster.step.clauses.no_policy",
-  "adjuster.step.clauses.none_found",
-  "adjuster.step.clauses.not_in_force",
   "adjuster.step.clauses.title",
   "adjuster.step.decision.title",
-  "adjuster.step.decision.uncertainties",
-  "adjuster.step.firmness.high",
-  "adjuster.step.firmness.low",
-  "adjuster.step.firmness.medium",
-  "adjuster.step.nothing",
-  "adjuster.step.policy_read.details",
-  "adjuster.step.policy_read.expired",
-  "adjuster.step.policy_read.in_force",
-  "adjuster.step.policy_read.no_policy",
-  "adjuster.step.policy_read.not_found",
-  "adjuster.step.policy_read.not_yet_in_force",
-  "adjuster.step.policy_read.source",
   "adjuster.step.policy_read.title",
-  "adjuster.step.rules.fired",
-  "adjuster.step.rules.missing",
-  "adjuster.step.rules.none_fired",
   "adjuster.step.rules.title",
-  "adjuster.step.vehicle_value.found",
-  "adjuster.step.vehicle_value.no_policy",
-  "adjuster.step.vehicle_value.no_vehicle",
-  "adjuster.step.vehicle_value.not_verified",
   "adjuster.step.vehicle_value.title",
   "case.channel.chat",
   "case.channel.voice",
@@ -1256,20 +958,10 @@ export const COPY_KEYS = [
   "chat.citation.special_condition",
   "chat.citation.trace_link",
   "chat.citation.translation_note",
-  "chat.closed_case.already_decided",
-  "chat.decision.adjuster_ai",
-  "chat.decision.approved",
-  "chat.decision.pending",
-  "chat.decision.rejected",
-  "chat.decision.sent_to_insurer",
   "chat.greeting.hello",
   "chat.limit.rate",
   "chat.limit.site_day",
   "chat.limit.size",
-  "chat.off_topic.lead",
-  "chat.off_topic.resume",
-  "chat.offer.options",
-  "chat.offer.options_with_quote",
   "chat.opening.capabilities",
   "chat.opening.capabilities_with_quote",
   "chat.opening.disclosure",
@@ -1327,24 +1019,6 @@ export const COPY_KEYS = [
   "chat.reasoning.wants_question",
   "chat.reasoning.wants_quote",
   "chat.reasoning.you_asked",
-  "chat.resume.continued",
-  "chat.resume.continued_open",
-  "chat.resume.in_review",
-  "chat.resume.not_found",
-  "chat.resume.original_channel",
-  "chat.resume.with_adjuster",
-  "chat.rigid.deductible",
-  "chat.rigid.drivers.listed",
-  "chat.rigid.drivers.none",
-  "chat.rigid.endorsements.count_only",
-  "chat.rigid.endorsements.listed",
-  "chat.rigid.endorsements.none",
-  "chat.rigid.limits",
-  "chat.rigid.validity.expired",
-  "chat.rigid.validity.in_force",
-  "chat.rigid.validity.not_yet",
-  "chat.rigid.vehicles.listed",
-  "chat.rigid.vehicles.none",
   "chat.turn.error",
   "chat.turn.waiting",
   "comparison.asked.label",
@@ -1385,9 +1059,6 @@ export const COPY_KEYS = [
   "compliance.closure.direct",
   "compliance.emergency.local",
   "compliance.emergency.public",
-  "compliance.finding.attachment_missing",
-  "compliance.finding.disclosure_missing",
-  "compliance.finding.human_route_missed",
   "compliance.guard.amount",
   "compliance.guard.config_disclosure",
   "compliance.guard.coverage_promise",
@@ -1397,7 +1068,6 @@ export const COPY_KEYS = [
   "compliance.guard.transfer_or_deadline",
   "compliance.handoff.adjuster_review",
   "compliance.handoff.adjuster_review_inquiry",
-  "compliance.identity.answer",
   "demo.notice.label",
   "demo.notice.less",
   "demo.notice.more",
@@ -1594,106 +1264,9 @@ export const COPY_KEYS = [
   "insurer.character.agency",
   "insurer.character.conservative",
   "insurer.character.flexible",
-  "intake.ack.anger",
-  "intake.ack.fear_or_crying",
-  "intake.block.identity_and_policy",
-  "intake.block.other_parties",
-  "intake.block.quote_driver",
-  "intake.block.quote_history",
-  "intake.block.quote_usage",
-  "intake.block.quote_vehicle",
-  "intake.block.safety",
-  "intake.block.vehicle_and_driver",
-  "intake.block.what_happened",
-  "intake.block.when_and_where",
-  "intake.claim_item.identity_and_policy",
-  "intake.claim_item.other_parties",
-  "intake.claim_item.safety",
-  "intake.claim_item.vehicle_and_driver",
-  "intake.claim_item.what_happened",
-  "intake.claim_item.when_and_where",
-  "intake.claim_item.when_only",
-  "intake.claim_item.where_only",
-  "intake.closing.fast_claim_after_extra",
-  "intake.closing.fast_claim_already",
-  "intake.closing.fast_claim_declined",
-  "intake.closing.fast_claim_done",
-  "intake.closing.fast_claim_offer",
-  "intake.closing.fast_claim_registered",
-  "intake.closing.fast_claim_review_after_extra",
-  "intake.closing.fast_claim_review_already",
-  "intake.closing.fast_claim_review_declined",
-  "intake.closing.summary_coverage",
-  "intake.closing.summary_quote",
-  "intake.closing.voice_fast_after_extra",
-  "intake.closing.voice_fast_already",
-  "intake.closing.voice_fast_declined",
-  "intake.closing.voice_fast_done",
-  "intake.closing.voice_fast_offer",
-  "intake.closing.voice_fast_registered",
-  "intake.correction.applied",
   "intake.degraded",
-  "intake.emergency.continuation",
-  "intake.identity.name_permission",
-  "intake.policy.confirm_again",
-  "intake.policy.confirm_again_driver",
-  "intake.policy.confirmed_identity",
-  "intake.policy.confirmed_vehicle",
-  "intake.policy.declined",
-  "intake.policy.found",
-  "intake.policy.found_no_vehicle",
-  "intake.policy.not_found_repeat",
-  "intake.question.claim_all",
-  "intake.question.claim_rest",
-  "intake.question.identity_and_policy",
-  "intake.question.other_parties",
-  "intake.question.quote_all",
-  "intake.question.quote_annual_mileage_band",
-  "intake.question.quote_at_fault_losses_3y",
-  "intake.question.quote_claims_3y",
-  "intake.question.quote_driver_birth_date",
-  "intake.question.quote_driver_name",
-  "intake.question.quote_garaging_jurisdiction",
-  "intake.question.quote_lapse_months",
-  "intake.question.quote_license_jurisdiction",
-  "intake.question.quote_license_years",
-  "intake.question.quote_prior_coverage_active",
-  "intake.question.quote_salvage_title",
-  "intake.question.quote_use_type",
-  "intake.question.quote_vehicle_make",
-  "intake.question.quote_vehicle_model",
-  "intake.question.quote_vehicle_year",
-  "intake.question.quote_vin",
-  "intake.question.safety",
-  "intake.question.vehicle_and_driver",
-  "intake.question.what_happened",
-  "intake.question.when_and_where",
-  "intake.question.when_only",
-  "intake.question.where_only",
-  "intake.readback.identity_and_policy",
-  "intake.readback.other_parties",
-  "intake.readback.quote_all",
-  "intake.readback.quote_driver",
-  "intake.readback.quote_driver_part",
-  "intake.readback.quote_history",
-  "intake.readback.quote_history_part",
-  "intake.readback.quote_usage",
-  "intake.readback.quote_usage_part",
-  "intake.readback.quote_vehicle",
-  "intake.readback.quote_vehicle_part",
-  "intake.readback.safety",
-  "intake.readback.vehicle_and_driver",
-  "intake.readback.what_happened",
-  "intake.readback.when_and_where",
-  "intake.social.goodbye",
-  "intake.social.greeting",
-  "intake.social.progress",
-  "intake.social.thanks",
   "intake.tone.calm",
   "intake.tone.closing_abuse",
-  "intake.transition.confirmed",
-  "intake.transition.corrected",
-  "intake.unfinished",
   "metrics.cause.criterion_absent",
   "metrics.cause.criterion_not_built",
   "metrics.cause.latency_not_in_baseline",
@@ -1734,8 +1307,6 @@ export const COPY_KEYS = [
   "metrics.source.date",
   "metrics.source.run",
   "metrics.title",
-  "orchestration.turn.error",
-  "orchestration.turn.waiting",
   "policies.ask_chat",
   "policies.ask_identity",
   "policies.ask_question",
@@ -1785,29 +1356,8 @@ export const COPY_KEYS = [
   "policies.questions_title",
   "policies.title",
   "policies.vehicles",
-  "policy_rag.coverage.amount_deferred",
-  "policy_rag.coverage.ask_question",
-  "policy_rag.coverage.back_to_report",
-  "policy_rag.coverage.checking",
-  "policy_rag.coverage.cross_language_notice",
-  "policy_rag.coverage.found_chat",
-  "policy_rag.coverage.found_chat_claim",
-  "policy_rag.coverage.found_voice",
-  "policy_rag.coverage.found_voice_claim",
-  "policy_rag.coverage.need_policy",
   "policy_rag.coverage.no_clause_found",
-  "policy_rag.coverage.part.a",
-  "policy_rag.coverage.part.b",
-  "policy_rag.coverage.part.c",
-  "policy_rag.coverage.part.d",
-  "policy_rag.coverage.part.definitions",
-  "policy_rag.coverage.part.e",
-  "policy_rag.coverage.part.f",
-  "policy_rag.coverage.part.other",
-  "policy_rag.coverage.part.special",
-  "policy_rag.coverage.part.territory",
   "policy_rag.coverage.unverifiable",
-  "policy_rag.coverage.voice_summary",
   "problem.conflict",
   "problem.conflict_state",
   "problem.forbidden_origin",
@@ -1888,64 +1438,6 @@ export const COPY_KEYS = [
   "quality.run.when",
   "quality.totals.hint",
   "quality.totals.passed",
-  "quote.band.elevated_risk",
-  "quote.band.outside_appetite",
-  "quote.band.pending_review",
-  "quote.band.standard_risk",
-  "quote.reply.eligible",
-  "quote.reply.not_eligible",
-  "quote.reply.price_refusal",
-  "quote.reply.price_refusal_with_band",
-  "quote.reply.referred",
-  "quote.reply.unavailable",
-  "quote.value.mileage.high",
-  "quote.value.mileage.low",
-  "quote.value.mileage.medium",
-  "quote.value.prior_coverage.false",
-  "quote.value.prior_coverage.true",
-  "quote.value.salvage_title.false",
-  "quote.value.salvage_title.true",
-  "quote.value.use_type.commercial",
-  "quote.value.use_type.commuting",
-  "quote.value.use_type.personal",
-  "redaction.degraded",
-  "redaction.label.email",
-  "redaction.label.license_plate",
-  "redaction.label.location",
-  "redaction.label.national_id",
-  "redaction.label.person",
-  "redaction.label.phone",
-  "redaction.label.policy_number",
-  "redaction.label.unclassified",
-  "redaction.label.vin",
-  "redaction.spoken.email",
-  "redaction.spoken.license_plate",
-  "redaction.spoken.location",
-  "redaction.spoken.national_id",
-  "redaction.spoken.person",
-  "redaction.spoken.phone",
-  "redaction.spoken.policy_number",
-  "redaction.spoken.unclassified",
-  "redaction.spoken.vin",
-  "rules.explain.agency_case",
-  "rules.explain.amount_noted",
-  "rules.explain.amount_review",
-  "rules.explain.complex_case",
-  "rules.explain.coverage_review",
-  "rules.explain.default",
-  "rules.explain.fraud_review",
-  "rules.explain.high_value_review",
-  "rules.explain.injuries_reported",
-  "rules.explain.quote_at_fault_losses",
-  "rules.explain.quote_commercial_use",
-  "rules.explain.quote_elevated_risk",
-  "rules.explain.quote_new_license",
-  "rules.explain.quote_old_vehicle",
-  "rules.explain.quote_salvage_title",
-  "rules.explain.quote_standard_risk",
-  "rules.explain.simple_claim",
-  "rules.explain.third_party_pending",
-  "rules.explain.unlisted_driver_review",
   "shell.brand_name",
   "shell.footer.demo",
   "shell.footer.github",
@@ -2088,20 +1580,10 @@ export const COPY_KEYS = [
   "visitor.title_inquiry",
   "visitor.title_quote",
   "visitor.valid_until",
-  "voice.answer.back_to_report",
-  "voice.answer.delayed",
   "voice.availability.misconfigured",
   "voice.availability.not_configured",
   "voice.availability.rate_limited_daily",
   "voice.availability.rate_limited_site",
-  "voice.barge_in.acknowledge",
-  "voice.closing.case_number",
-  "voice.closing.farewell",
-  "voice.closing.next_step",
-  "voice.closing.pending",
-  "voice.closing.registered",
-  "voice.closing.saved",
-  "voice.closing.time_is_up",
   "voice.console.audio_blocked",
   "voice.console.audio_enable",
   "voice.console.call",
@@ -2139,13 +1621,6 @@ export const COPY_KEYS = [
   "voice.console.transcript_label",
   "voice.console.unavailable",
   "voice.console.use_chat",
-  "voice.decision.approved",
-  "voice.decision.note",
-  "voice.decision.pending",
-  "voice.decision.rejected",
-  "voice.decision.sent_to_insurer",
-  "voice.duration.minute",
-  "voice.duration.minutes",
   "voice.ended.completed",
   "voice.ended.dropped",
   "voice.ended.error",
@@ -2154,13 +1629,6 @@ export const COPY_KEYS = [
   "voice.ended.resume_until",
   "voice.ended.saved",
   "voice.ended.silence",
-  "voice.filler.one",
-  "voice.filler.three",
-  "voice.filler.two",
-  "voice.first_turn.clarify",
-  "voice.hold.acknowledge",
-  "voice.languages.only_two",
-  "voice.languages.switched",
   "voice.mic_check.answer_no",
   "voice.mic_check.answer_yes",
   "voice.mic_check.browser_default",
@@ -2173,25 +1641,9 @@ export const COPY_KEYS = [
   "voice.mic_check.silent",
   "voice.mic_check.start",
   "voice.notice.time_running_out",
-  "voice.offer.choose",
-  "voice.offer.handed_off",
-  "voice.offer.save_or_adjuster",
-  "voice.opening.disclosure",
-  "voice.opening.first_question",
-  "voice.quote.by_chat",
-  "voice.readback.confirm",
-  "voice.resume.accepted",
-  "voice.resume.continue_open",
-  "voice.resume.new_case",
-  "voice.resume.offer",
-  "voice.retry.not_understood",
-  "voice.silence.farewell",
-  "voice.silence.still_there",
-  "voice.spoken.policy",
   "voice.state.ended",
   "voice.state.listening",
   "voice.state.speaking",
-  "voice.time.running_out",
 ] as const satisfies readonly CopyKey[];
 
 export const LOCALES = ["es", "en"] as const satisfies readonly Locale[];

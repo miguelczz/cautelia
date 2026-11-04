@@ -35,7 +35,7 @@ from untangle.base import Locale, Use
 from untangle.case_record import api as casos
 from untangle.case_record import crypto
 from untangle.case_record import purge as case_purge
-from untangle.case_record.models import CaseState, Channel, FieldStatus, Resolution
+from untangle.case_record.models import ActorType, CaseState, Channel, FieldStatus, Resolution
 from untangle.chat import api as chat_api
 from untangle.chat import case_opening
 from untangle.chat import notice as chat_notice
@@ -97,6 +97,7 @@ from untangle.providers.transport import CallTimeouts
 from untangle.rules import repository as rules_repository
 from untangle.rules.fields import RuleValue
 from untangle.server import (
+    adjuster_wiring,
     corpus_ingest,
     health,
     policies,
@@ -1334,6 +1335,9 @@ async def _avisar_la_decision_al_chat(decision: inbox_decision.DecisionMade) -> 
             resolution=Resolution(decision.resolution),
             comment=decision.comment,
             ref=decision.ref,
+            # La explicacion del ajustador de IA no entra a la conversacion (A6): sale por la
+            # pantalla del caso, y el chat solo avisa que hay decision.
+            by_adjuster_ai=decision.actor_type is ActorType.ADJUSTER_AI,
         ),
         tenant_id=decision.tenant_id,
         language=decision.language,  # type: ignore[arg-type]
@@ -1779,7 +1783,7 @@ def build_app(  # noqa: PLR0915 -- la raiz de composicion crece una linea por pi
     envio_de_trazas = None if for_evals else trace_shipping.build(opciones)
 
     @asynccontextmanager
-    async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+    async def lifespan(aplicacion: FastAPI) -> AsyncIterator[None]:
         await _cargar_el_detector()
         # La asercion de aislamiento es condicion de arranque cuando hay base
         # (C-10). Sin base declarada no hay nada que comprobar y no se inventa
@@ -1803,6 +1807,9 @@ def build_app(  # noqa: PLR0915 -- la raiz de composicion crece una linea por pi
             # llenarse--, despues se cierran los clientes del proveedor, y solo
             # entonces se suelta la base. La ultima exportacion de trazas va antes de
             # todo: si falla, marca perdidos resumenes que viven en la base.
+            # Y el ajustador antes que la base: lo que corre de fondo la usa.
+            if (ajustador := getattr(aplicacion.state, "adjuster", None)) is not None:
+                await ajustador.stop()
             if envio_de_trazas is not None:
                 await envio_de_trazas.stop()
             await spend.stop_deferred_writer()
@@ -1894,6 +1901,18 @@ def build_app(  # noqa: PLR0915 -- la raiz de composicion crece una linea por pi
     # da al colgar (decision de Miguel, 2026-10-06): la misma clave de U2.
     chat_api.install_case_link_key(opciones.case_link_signing_key)
     _enchufar_la_bandeja()
+    # El ajustador de IA (plan 09, fase 5): decide los casos que se derivan y muestra como. No en
+    # una corrida de evaluaciones, que no atiende visitantes y no debe gastar su saldo.
+    app.state.adjuster = (
+        None
+        if for_evals
+        else adjuster_wiring.install(
+            opciones,
+            configuracion,
+            cipher=cifrador,
+            embed=lambda textos: plataforma.embedder.embed(textos, use=Use.CORPUS),
+        )
+    )
     # El canje del enlace del visitante (C-07). Va aparte del router de la bandeja
     # porque no cuelga de ninguna aseguradora: quien lo usa no tiene credencial.
     app.include_router(inbox_api.visitor_router())

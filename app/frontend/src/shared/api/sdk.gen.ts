@@ -169,15 +169,13 @@ export const correctInboxCaseField = <ThrowOnError extends boolean = false>(opti
  *
  * Anota el monto estimado, la cobertura disputada y la sospecha de fraude.
  *
- * Dos puertas, igual que decidir: la credencial de personal con el permiso del rol, y el
- * enlace del caso del visitante (2026-10-13), que anota **solo su propio caso** y queda como
- * visitante. Guarda lo anotado --`null` es "sin anotar"--, deja su entrada en el historial
+ * Solo el personal con credencial y el permiso del rol; el visitante con enlace recibe `403`
+ * (plan 09, fase 5: antes anotaba su propio caso haciendo de ajustador). Guarda lo anotado --`null` es "sin anotar"--, deja su entrada en el historial
  * del caso y vuelve a evaluar las reglas de la aseguradora con todos los insumos del caso.
  * No cambia el estado del caso ni escribe en el chat.
  *
- * Lo que cambia para el visitante: no lee ni pisa la nota que escribio el personal, guardar
- * lo que ya estaba no escribe nada, y las entradas que puede dejar tienen tope. Los tres
- * rechazos responden `409` y no escriben.
+ * Los rechazos del caso --otro estado u otro tipo, o una aseguradora sin reglas-- responden
+ * `409` y no escriben.
  */
 export const annotateInboxCaseTriage = <ThrowOnError extends boolean = false>(options: Options<AnnotateInboxCaseTriageData, ThrowOnError>): RequestResult<AnnotateInboxCaseTriageResponses, AnnotateInboxCaseTriageErrors, ThrowOnError> => (options.client ?? client).put<AnnotateInboxCaseTriageResponses, AnnotateInboxCaseTriageErrors, ThrowOnError>({
     url: '/api/inbox/{tenant_id}/cases/{case_id}/triage-note',
@@ -202,12 +200,10 @@ export const streamInbox = <ThrowOnError extends boolean = false>(options: Optio
 /**
  * Decide Case
  *
- * Aprobar, rechazar o marcar como enviado (BR4.1 a BR4.6, BR5.5).
+ * Aprobar, rechazar o marcar como enviado (BR4.1 a BR4.6).
  *
- * Dos puertas para la misma accion: la credencial de personal y la cookie de
- * caso del visitante. Lo que cambia entre las dos es **quien queda como
- * autor**, y nada mas: las reglas de que se puede decidir y con que
- * comentario son las mismas.
+ * Solo el personal con credencial. El visitante abre su caso con su enlace pero no lo
+ * decide (`403`): lo decide el ajustador de IA, por `decision.decide`, no por esta ruta.
  */
 export const decideInboxCase = <ThrowOnError extends boolean = false>(options: Options<DecideInboxCaseData, ThrowOnError>): RequestResult<DecideInboxCaseResponses, DecideInboxCaseErrors, ThrowOnError> => (options.client ?? client).post<DecideInboxCaseResponses, DecideInboxCaseErrors, ThrowOnError>({
     url: '/api/inbox/{tenant_id}/cases/{case_id}/decision',

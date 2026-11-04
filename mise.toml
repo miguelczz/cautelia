@@ -423,14 +423,6 @@ description = "Emite el enlace de un caso a la salida estandar: mise run tenancy
 # puede abrir con las manos. Es para Miguel, el despliegue local y las pruebas.
 run = "uv run --env-file .env --project app/backend python -m untangle.tenancy.cli issue-case-link"
 
-[tasks."demo:ajustador"]
-description = "Un siniestro listo para hacer de ajustador en la demo local, con su enlace de una hora: mise run demo:ajustador [-- --tenant <id>]"
-# Busca uno que admita anotaciones (derivado o esperando al asegurado), prefiere los del
-# visitante a los del generador, y escribe la direccion entera a la salida estandar, nunca a
-# un archivo, igual que `tenancy:case-link`. Lo que se anote o decida sobre un caso del
-# generador lo deshace el siguiente reinicio.
-run = "uv run --env-file .env --project app/backend python -m untangle.server.demo_adjuster_link"
-
 [tasks.mcp]
 description = "El servidor MCP de los datos rigidos de la poliza, por stdio: mise run mcp"
 # Plan 09, punto 6 (2026-11-02). Publica `untangle.policy_rag.facts` como herramientas MCP de

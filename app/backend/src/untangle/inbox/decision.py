@@ -112,6 +112,8 @@ class DecisionMade:
     #: El recibo que la registro: es lo que autoriza al aviso a afirmar un resultado.
     ref: str
     language: str
+    #: Quien firmo. El aviso del ajustador de IA no repite su explicacion en el chat (A6).
+    actor_type: ActorType = ActorType.STAFF
 
 
 #: Quien le avisa la decision a la conversacion del caso (fase 1, 2026-10-08). Antes
@@ -203,13 +205,17 @@ def _evidencia(detalle: case_view.CaseDetail) -> ClosingEvidence:
     )
 
 
-def actor_of(*, principal_id: str | None) -> Actor:
-    """Quien actua: el personal con su identificador, o con enlace un visitante (BR5.5).
+def actor_of(*, principal_id: str | None, adjuster_ai: bool = False) -> Actor:
+    """Quien actua: el personal con su identificador, el ajustador de IA o, con enlace, un visitante.
+
+    El ajustador de IA no es una persona con credencial: no lleva identificador (BR5.5).
 
     Publica porque la decision y las anotaciones para las reglas atribuyen igual a quien
     entra con el enlace de su caso: dos copias de esta tabla serian dos sitios donde el
     visitante podria quedar como alguien que no es.
     """
+    if adjuster_ai:
+        return Actor(actor_type=ActorType.ADJUSTER_AI)
     if principal_id is None:
         return Actor(actor_type=ActorType.INSURED, actor_id=VISITOR_ACTOR_ID)
     return Actor(actor_type=ActorType.STAFF, actor_id=principal_id)
@@ -258,8 +264,17 @@ async def decide(  # noqa: PLR0913 -- la accion, el comentario, la clave, quien 
     idempotency_key: str,
     principal_id: str | None,
     now: datetime,
+    adjuster_ai: bool = False,
 ) -> DecisionRecorded:
-    """Registra la decision, cierra el caso y reanuda el grafo, en ese orden."""
+    """Registra la decision, cierra el caso y reanuda el grafo, en ese orden.
+
+    `adjuster_ai` la firma el ajustador de IA (plan 09, fase 5): no es personal --no toma un
+    caso que la agente aun evalua--, no lleva identificador, y las reglas de que se decide y
+    con que comentario son las mismas de siempre (A3).
+    """
+    if adjuster_ai and principal_id is not None:
+        msg = "el ajustador de IA no es una persona con credencial: no lleva identificador"
+        raise ValueError(msg)
     if not comment.strip():
         msg = "toda decision exige comentario: es lo que la hace auditable (BR4.1)"
         raise CommentRequiredError(msg)
@@ -297,7 +312,7 @@ async def decide(  # noqa: PLR0913 -- la accion, el comentario, la clave, quien 
     resolucion = actions.require_allowed(
         tenant, action=action, state=detalle.state, by_staff=principal_id is not None
     )
-    actor = actor_of(principal_id=principal_id)
+    actor = actor_of(principal_id=principal_id, adjuster_ai=adjuster_ai)
 
     # 0. Un caso que la agente aun evalua se toma antes de decidirlo: se deriva a nombre
     #    de quien lo toma, con su rastro, y solo despues sigue el camino de siempre.
@@ -362,6 +377,7 @@ async def decide(  # noqa: PLR0913 -- la accion, el comentario, la clave, quien 
             comment=comentario,
             ref=recibo.receipt_id,
             language=detalle.language,
+            actor_type=actor.actor_type,
         )
     )
 

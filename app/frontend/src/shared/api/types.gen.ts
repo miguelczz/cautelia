@@ -16,6 +16,91 @@ export type ActivitySpend = {
 };
 
 /**
+ * AdjusterRunOut
+ *
+ * La corrida del ajustador sobre el caso, tal como la ve quien abre el caso.
+ */
+export type AdjusterRunOut = {
+    /**
+     * Status
+     */
+    status: 'running' | 'decided' | 'capped' | 'failed';
+    /**
+     * Attempt
+     */
+    attempt: number;
+    /**
+     * Steps
+     */
+    steps?: Array<AdjusterStepOut>;
+    decision?: InboxAction | null;
+    /**
+     * Headline
+     */
+    headline?: string | null;
+    /**
+     * Explanation
+     */
+    explanation?: string | null;
+    /**
+     * Searches Used
+     */
+    searches_used?: number;
+    /**
+     * Updated At
+     */
+    updated_at: string;
+};
+
+/**
+ * AdjusterSourceOut
+ *
+ * Lo que respalda un paso: una clausula, una regla, un dato de la poliza o una pagina.
+ */
+export type AdjusterSourceOut = {
+    /**
+     * Kind
+     */
+    kind: 'clause' | 'rule' | 'policy' | 'case' | 'web';
+    /**
+     * Ref
+     */
+    ref: string;
+    /**
+     * Label
+     */
+    label: string;
+    /**
+     * Url
+     */
+    url?: string | null;
+};
+
+/**
+ * AdjusterStepOut
+ *
+ * Un paso del proceso, con su texto y sus fuentes.
+ */
+export type AdjusterStepOut = {
+    /**
+     * Id
+     */
+    id: 'case_read' | 'policy_read' | 'clauses' | 'rules' | 'vehicle_value' | 'decision';
+    /**
+     * Title Key
+     */
+    title_key?: string | null;
+    /**
+     * Text
+     */
+    text: string;
+    /**
+     * Sources
+     */
+    sources?: Array<AdjusterSourceOut>;
+};
+
+/**
  * Answer
  *
  * Como quedo respondida una de las cinco preguntas.
@@ -281,6 +366,7 @@ export type CaseDetailOut = {
      * Trace Url
      */
     trace_url?: string | null;
+    adjuster?: AdjusterRunOut | null;
 };
 
 /**

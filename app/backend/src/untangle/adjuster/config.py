@@ -1,7 +1,7 @@
 """La configuracion versionada del ajustador de IA: `app/config/adjuster/adjuster.yaml`.
 
-Cuatro decisiones del proyecto y no mas --cuanto busca, donde, cuantos casos por dia y cuantas
-veces reintenta-- mas el rango en que un valor de vehiculo es creible. El modelo, la clave y el
+Cinco decisiones del proyecto y no mas --cuanto busca, donde, cuantos casos por dia, cuantas
+veces reintenta y cuanto espera a una corrida que no avanza-- mas el rango en que un valor de vehiculo es creible. El modelo, la clave y el
 precio no estan aqui: viven en `providers.yaml` y `prices.yaml` con todos los demas usos, y una
 cifra escrita en dos archivos acaba diciendo cosas distintas.
 
@@ -13,6 +13,7 @@ el que se lee cuando hay que explicar por que un caso no se atendio hoy.
 from __future__ import annotations
 
 import re
+from datetime import timedelta
 from pathlib import Path
 from typing import Literal
 
@@ -47,6 +48,9 @@ class AdjusterConfig(Frozen):
     daily_case_cap: int = Field(ge=1)
     #: Intentos por caso antes de dejarlo fallido.
     attempts: int = Field(ge=1, le=10)
+    #: Segundos sin avanzar tras los que una corrida `running` se da por perdida (el proceso que
+    #: la llevaba se cayo) y el siguiente arranque la reabre. Mas que lo que tarda un caso sano.
+    running_stale_seconds: int = Field(ge=60, le=3600)
     #: Minimo y maximo plausibles del valor de un vehiculo, en pesos colombianos.
     vehicle_value_range_cop: tuple[int, int]
 
@@ -77,6 +81,10 @@ class AdjusterConfig(Frozen):
             )
             raise ValueError(msg)
         return rango
+
+    @property
+    def running_stale_after(self) -> timedelta:
+        return timedelta(seconds=self.running_stale_seconds)
 
     def is_plausible_vehicle_value(self, valor_cop: int) -> bool:
         """Si un valor encontrado en la web cae dentro del rango creible, extremos incluidos."""

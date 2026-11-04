@@ -19,6 +19,7 @@ CONFIGURACION = config.AdjusterConfig.model_validate(
         "allowed_domains": ["fasecolda.com"],
         "daily_case_cap": 7,
         "attempts": 3,
+        "running_stale_seconds": 300,
         "vehicle_value_range_cop": [8_000_000, 800_000_000],
     }
 )

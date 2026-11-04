@@ -121,8 +121,12 @@ async def test_un_enlace_legitimo_abre_su_caso(app: FastAPI, emisora: str) -> No
     assert visitor.CASE_COOKIE in canje.headers.get("set-cookie", "")
 
 
-async def test_con_la_cookie_se_abre_el_caso_y_se_decide(app: FastAPI, emisora: str) -> None:
-    """El recorrido entero del visitante, que es el otro control positivo."""
+async def test_con_la_cookie_se_abre_el_caso_pero_no_se_decide(app: FastAPI, emisora: str) -> None:
+    """El recorrido del visitante: ve su caso con el enlace, y decidirlo no es suyo.
+
+    Desde el plan 09 (fase 5) lo decide el ajustador de IA: la misma ruta que acepta al personal
+    responde `403` a quien entro con su enlace, y no cambia el caso.
+    """
     caso = await nuevo_caso(emisora)
     token = await _emitir(emisora, caso)
 
@@ -138,7 +142,11 @@ async def test_con_la_cookie_se_abre_el_caso_y_se_decide(app: FastAPI, emisora: 
 
     assert vista.status_code == 200, vista.text
     assert vista.json()["case_id"] == caso
-    assert decidido.status_code == 202, decidido.text
+    assert vista.json()["available_actions"] == []
+    assert decidido.status_code == 403, decidido.text
+    actual = await casos.get_case(emisora, caso)
+    assert actual is not None
+    assert actual.state is not CaseState.CLOSED
 
 
 async def test_una_credencial_de_personal_que_no_vale_no_le_quita_el_caso_al_visitante(
@@ -173,13 +181,11 @@ def _credencial_que_no_vale(tipo: str, emisora: str) -> str:
 
 
 @pytest.mark.parametrize("tipo", ["ilegible", "vencida", "de_otra_aseguradora"])
-async def test_una_credencial_que_no_vale_tampoco_le_quita_al_visitante_la_decision(
+async def test_una_credencial_que_no_vale_no_convierte_al_visitante_en_quien_decide(
     app: FastAPI, emisora: str, tipo: str
 ) -> None:
-    """2026-10-12: quien tenia una credencial vieja de la bandeja en el navegador abria su
-    caso con el enlace, escribia su nota y al decidir leia «el enlace vencio mientras
-    escribias». La ruta de decidir volvia a pedir la credencial aunque ya hubiera entrado
-    por el enlace: arreglada para ver el caso el 2026-10-09, quedaba esta."""
+    """Una credencial vieja en el navegador no suma ni resta: con el enlace vivo, el caso se
+    abre; decidir sigue siendo del personal, y no queda ninguna entrada de decision."""
     from untangle.case_record import history as historial
 
     caso = await nuevo_caso(emisora)
@@ -194,11 +200,9 @@ async def test_una_credencial_que_no_vale_tampoco_le_quita_al_visitante_la_decis
             headers={"Idempotency-Key": f"visitante-vieja-{tipo}"},
         )
 
-    assert decidido.status_code == 202, decidido.text
-    # Y queda a nombre de un visitante: la credencial que no vale no suma nada, ni siquiera
-    # un nombre en el registro.
+    assert decidido.status_code == 403, decidido.text
     entradas = await historial.of_case(emisora, caso)
-    assert any(e.actor.actor_id == decision.VISITOR_ACTOR_ID for e in entradas)
+    assert not any(e.actor.actor_id == decision.VISITOR_ACTOR_ID for e in entradas)
 
 
 async def test_sin_el_enlace_una_credencial_que_no_vale_sigue_sin_dejar_decidir(
@@ -399,32 +403,30 @@ async def _con_el_enlace_vencido(http: Any, tenant_id: str, case_id: str) -> Any
 # --- BR5.5: quien decidio con un enlace no es una persona de la aseguradora ----
 
 
-async def test_la_decision_con_enlace_se_atribuye_a_un_visitante(
+async def test_la_decision_con_enlace_no_se_acepta_ni_se_atribuye_a_nadie(
     app: FastAPI, emisora: str
 ) -> None:
-    """Y nunca a quien tiene credencial.
+    """Quien entra con enlace ya no decide, asi que ninguna decision queda a su nombre.
 
-    Falsificar esto falsificaria la respuesta a "quien decidio", que es justo lo
-    que la explicacion del caso existe para contestar.
+    Falsificar la respuesta a "quien decidio" era lo que la regla BR5.5 prohibia; ahora la
+    respuesta honesta es que decide el ajustador de IA o el personal, nunca el visitante.
     """
     from untangle.case_record import history as historial
-    from untangle.case_record.models import ActorType
 
     caso = await nuevo_caso(emisora)
     token = await _emitir(emisora, caso)
 
     async with cliente(app) as http:
         await http.post(f"/api{visitor.REDEEM_PATH}", json={"token": token})
-        await http.post(
+        respuesta = await http.post(
             f"/api/inbox/{emisora}/cases/{caso}/decision",
             json={"decision": "approve", "comment": "Lo apruebo yo mismo."},
             headers={"Idempotency-Key": "visitante-2"},
         )
 
+    assert respuesta.status_code == 403, respuesta.text
     entradas = await historial.of_case(emisora, caso)
-    cierre = [e for e in entradas if e.actor.actor_id == decision.VISITOR_ACTOR_ID]
-    assert cierre, "la decision no quedo a nombre de un visitante"
-    assert all(e.actor.actor_type is not ActorType.STAFF for e in cierre)
+    assert not [e for e in entradas if e.actor.actor_id == decision.VISITOR_ACTOR_ID]
 
 
 async def test_el_visitante_sabe_que_decidio_un_ajustador_pero_no_cual(
@@ -505,14 +507,12 @@ async def test_un_caso_derivado_en_una_conversacion_se_puede_decidir(
         tenant_id=emisora, case_id=caso, reason=HandoffReason.RULE, turn_id=turno, now=AHORA
     )
     assert derivado is True
-    token = await _emitir(emisora, caso)
 
-    async with cliente(app) as http:
-        await http.post(f"/api{visitor.REDEEM_PATH}", json={"token": token})
+    async with cliente(app, credencial=credencial_de(emisora)) as http:
         decidido = await http.post(
             f"/api/inbox/{emisora}/cases/{caso}/decision",
-            json={"decision": "approve", "comment": "Lo apruebo yo mismo."},
-            headers={"Idempotency-Key": "visitante-derivado-1"},
+            json={"decision": "approve", "comment": "Lo apruebo."},
+            headers={"Idempotency-Key": "personal-derivado-1"},
         )
         vista = await http.get(f"/api/inbox/{emisora}/cases/{caso}")
 

@@ -1041,7 +1041,7 @@
           "inbox"
         ],
         "summary": "Annotate Triage",
-        "description": "Anota el monto estimado, la cobertura disputada y la sospecha de fraude.\n\nDos puertas, igual que decidir: la credencial de personal con el permiso del rol, y el\nenlace del caso del visitante (2026-10-13), que anota **solo su propio caso** y queda como\nvisitante. Guarda lo anotado --`null` es \"sin anotar\"--, deja su entrada en el historial\ndel caso y vuelve a evaluar las reglas de la aseguradora con todos los insumos del caso.\nNo cambia el estado del caso ni escribe en el chat.\n\nLo que cambia para el visitante: no lee ni pisa la nota que escribio el personal, guardar\nlo que ya estaba no escribe nada, y las entradas que puede dejar tienen tope. Los tres\nrechazos responden `409` y no escriben.",
+        "description": "Anota el monto estimado, la cobertura disputada y la sospecha de fraude.\n\nSolo el personal con credencial y el permiso del rol; el visitante con enlace recibe `403`\n(plan 09, fase 5: antes anotaba su propio caso haciendo de ajustador). Guarda lo anotado --`null` es \"sin anotar\"--, deja su entrada en el historial\ndel caso y vuelve a evaluar las reglas de la aseguradora con todos los insumos del caso.\nNo cambia el estado del caso ni escribe en el chat.\n\nLos rechazos del caso --otro estado u otro tipo, o una aseguradora sin reglas-- responden\n`409` y no escriben.",
         "operationId": "annotateInboxCaseTriage",
         "parameters": [
           {
@@ -1224,7 +1224,7 @@
           "inbox"
         ],
         "summary": "Decide Case",
-        "description": "Aprobar, rechazar o marcar como enviado (BR4.1 a BR4.6, BR5.5).\n\nDos puertas para la misma accion: la credencial de personal y la cookie de\ncaso del visitante. Lo que cambia entre las dos es **quien queda como\nautor**, y nada mas: las reglas de que se puede decidir y con que\ncomentario son las mismas.",
+        "description": "Aprobar, rechazar o marcar como enviado (BR4.1 a BR4.6).\n\nSolo el personal con credencial. El visitante abre su caso con su enlace pero no lo\ndecide (`403`): lo decide el ajustador de IA, por `decision.decide`, no por esta ruta.",
         "operationId": "decideInboxCase",
         "parameters": [
           {
@@ -2155,6 +2155,172 @@
         "title": "ActivitySpend",
         "description": "Lo que costo una actividad: llamadas, chat, pruebas, lectura de polizas."
       },
+      "AdjusterRunOut": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "running",
+              "decided",
+              "capped",
+              "failed"
+            ],
+            "title": "Status"
+          },
+          "attempt": {
+            "type": "integer",
+            "title": "Attempt"
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/AdjusterStepOut"
+            },
+            "type": "array",
+            "title": "Steps",
+            "default": []
+          },
+          "decision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/InboxAction"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "headline": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Headline"
+          },
+          "explanation": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Explanation"
+          },
+          "searches_used": {
+            "type": "integer",
+            "title": "Searches Used",
+            "default": 0
+          },
+          "updated_at": {
+            "type": "string",
+            "title": "Updated At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status",
+          "attempt",
+          "updated_at"
+        ],
+        "title": "AdjusterRunOut",
+        "description": "La corrida del ajustador sobre el caso, tal como la ve quien abre el caso."
+      },
+      "AdjusterSourceOut": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "clause",
+              "rule",
+              "policy",
+              "case",
+              "web"
+            ],
+            "title": "Kind"
+          },
+          "ref": {
+            "type": "string",
+            "title": "Ref"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "kind",
+          "ref",
+          "label"
+        ],
+        "title": "AdjusterSourceOut",
+        "description": "Lo que respalda un paso: una clausula, una regla, un dato de la poliza o una pagina."
+      },
+      "AdjusterStepOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "case_read",
+              "policy_read",
+              "clauses",
+              "rules",
+              "vehicle_value",
+              "decision"
+            ],
+            "title": "Id"
+          },
+          "title_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title Key"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/AdjusterSourceOut"
+            },
+            "type": "array",
+            "title": "Sources",
+            "default": []
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "text"
+        ],
+        "title": "AdjusterStepOut",
+        "description": "Un paso del proceso, con su texto y sus fuentes."
+      },
       "Answer": {
         "type": "string",
         "enum": [
@@ -2626,6 +2792,16 @@
               }
             ],
             "title": "Trace Url"
+          },
+          "adjuster": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AdjusterRunOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,

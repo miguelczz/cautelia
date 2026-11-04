@@ -28,6 +28,8 @@ class ErrorKind(StrEnum):
     CASE_NOT_FOUND = "case_not_found"
     #: El caso ya no esta derivado: lo tomo otro o ya se decidio.
     CASE_NOT_DECIDABLE = "case_not_decidable"
+    #: El proceso que llevaba la corrida se cayo sin cerrarla y ya no quedaban intentos.
+    RUN_ABANDONED = "run_abandoned"
     #: Un fallo que el proceso no sabia nombrar. Se registra el tipo de la excepcion, no su texto.
     INTERNAL_ERROR = "internal_error"
     #: Los cuatro de la frontera del proveedor, con la misma grafia del adaptador.

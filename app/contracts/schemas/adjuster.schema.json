@@ -32,6 +32,12 @@
       "title": "Attempts",
       "type": "integer"
     },
+    "running_stale_seconds": {
+      "maximum": 3600,
+      "minimum": 60,
+      "title": "Running Stale Seconds",
+      "type": "integer"
+    },
     "vehicle_value_range_cop": {
       "maxItems": 2,
       "minItems": 2,
@@ -53,6 +59,7 @@
     "allowed_domains",
     "daily_case_cap",
     "attempts",
+    "running_stale_seconds",
     "vehicle_value_range_cop"
   ],
   "title": "AdjusterConfig",

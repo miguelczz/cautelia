@@ -34,6 +34,11 @@ daily_case_cap: 20
 # la busqueda o de una cita nunca inventa una decision: el caso sigue en revision.
 attempts: 3
 
+# Cuantos segundos puede una corrida estar corriendo sin avanzar un paso antes de darla por
+# perdida: el proceso que la llevaba se cayo, y el siguiente arranque la reabre (gasta un
+# intento). Mas que lo que tarda un caso sano, que guarda un paso cada pocos segundos.
+running_stale_seconds: 300
+
 # El rango, en pesos colombianos, dentro del que un valor de referencia es plausible. Fuera
 # de el se descarta y la explicacion dice que no se pudo verificar el valor: una busqueda puede
 # traer un numero equivocado, y un precio de repuesto o de otra moneda no es el del vehiculo.

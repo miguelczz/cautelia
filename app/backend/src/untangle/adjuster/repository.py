@@ -9,6 +9,12 @@ reabre nunca; una que esta corriendo tampoco (hay otro proceso en ello); una cap
 gastar intento --nunca llego a intentar--; una fallida gasta uno, hasta el maximo que declara la
 configuracion.
 
+**Una corrida que corre y no avanza se reabre.** Si el proceso que la llevaba se cayo, su fila
+sigue en `running` para siempre y nadie la tomaria. Pasado `stale_after` sin que anexe un paso
+(`updated_at`), cuenta como un intento perdido: se reabre gastando uno y, si ya no quedan, se cierra
+como fallida con `run_abandoned`. Dos arranques simultaneos siguen sin trabajar a la vez: la fila se
+lee `FOR UPDATE` y el segundo ve la corrida ya renovada.
+
 **Cerrar es de una sola vez.** Solo una corrida `running` se cierra. Cerrarla otra vez con lo mismo
 devuelve lo que ya hay; cerrarla con otra cosa levanta `RunConflictError`, porque dos procesos que
 creen haber decidido el mismo caso distinto es exactamente lo que la idempotencia del cierre
@@ -19,9 +25,10 @@ from __future__ import annotations
 
 import json
 from collections.abc import Mapping
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Any
 
+from untangle.adjuster.errors import ErrorKind
 from untangle.adjuster.models import AdjusterRun, OpenedRun, RunStatus, RunStep
 from untangle.inbox.actions import InboxAction
 from untangle.tenancy import api as tenancy
@@ -69,6 +76,14 @@ _REABRIR = """
            error_kind, created_at, updated_at
 """
 
+_ABANDONAR = """
+    UPDATE adjuster_run
+       SET status = 'failed', error_kind = :error_kind, updated_at = :now
+     WHERE tenant_id = :tenant_id AND case_id = :case_id AND status = 'running'
+    RETURNING tenant_id, case_id, status, attempt, steps, decision, summary, model, searches_used,
+           error_kind, created_at, updated_at
+"""
+
 # Un paso no se anexa dos veces: el segundo intento de anexar el mismo identificador es un
 # reintento del mismo trabajo y no cambia nada.
 _ANEXAR = """
@@ -108,12 +123,19 @@ async def read(tenant_id: TenantId, case_id: str) -> AdjusterRun | None:
     return None if fila is None else _corrida(fila)
 
 
-async def open_run(
-    tenant_id: TenantId, case_id: str, *, model: str, max_attempts: int, now: datetime
+async def open_run(  # noqa: PLR0913 -- aseguradora, caso, modelo, intentos, caducidad y reloj
+    tenant_id: TenantId,
+    case_id: str,
+    *,
+    model: str,
+    max_attempts: int,
+    stale_after: timedelta,
+    now: datetime,
 ) -> OpenedRun:
     """Crea la corrida del caso o la reabre, y dice si esta llamada es la duena del trabajo.
 
-    Idempotente: abrirla dos veces seguidas deja una corrida y un solo `started`.
+    Idempotente: abrirla dos veces seguidas deja una corrida y un solo `started`. Una que corre
+    desde hace mas de `stale_after` sin avanzar es de un proceso caido y se reabre.
     """
     async with tenancy.session_for(tenant_id) as sesion:
         creada = await tenancy.fetch_one(
@@ -130,13 +152,33 @@ async def open_run(
             raise RunNotFoundError(msg)
         actual = _corrida(fila)
 
-        if actual.status in {RunStatus.DECIDED, RunStatus.RUNNING}:
+        if actual.status is RunStatus.DECIDED:
             return OpenedRun(run=actual, started=False)
-        if actual.status is RunStatus.FAILED and actual.attempt >= max_attempts:
+        perdida = actual.status is RunStatus.RUNNING
+        if perdida and now - actual.updated_at < stale_after:
             return OpenedRun(run=actual, started=False)
+        if actual.attempt >= max_attempts and actual.status in {
+            RunStatus.FAILED,
+            RunStatus.RUNNING,
+        }:
+            if not perdida:
+                return OpenedRun(run=actual, started=False)
+            # Sin intentos que gastar, la corrida perdida deja de aparentar que sigue en curso.
+            cerrada = await tenancy.fetch_one(
+                sesion,
+                _ABANDONAR,
+                tenant_id=tenant_id,
+                case_id=case_id,
+                error_kind=ErrorKind.RUN_ABANDONED.value,
+                now=now,
+            )
+            if cerrada is None:  # pragma: no cover -- la fila esta bloqueada por esta transaccion
+                raise RunNotFoundError(case_id)
+            return OpenedRun(run=_corrida(cerrada), started=False)
 
-        # Una capada nunca llego a intentar: reabrirla no gasta intento. Una fallida si.
-        intento = actual.attempt + 1 if actual.status is RunStatus.FAILED else actual.attempt
+        # Una capada nunca llego a intentar: reabrirla no gasta intento. Una fallida o una
+        # perdida si.
+        intento = actual.attempt if actual.status is RunStatus.CAPPED else actual.attempt + 1
         reabierta = await tenancy.fetch_one(
             sesion,
             _REABRIR,

@@ -147,6 +147,7 @@ export type CopyKey =
   | "chat.citation.trace_link"
   | "chat.citation.translation_note"
   | "chat.closed_case.already_decided"
+  | "chat.decision.adjuster_ai"
   | "chat.decision.approved"
   | "chat.decision.pending"
   | "chat.decision.rejected"
@@ -1252,6 +1253,7 @@ export const COPY_KEYS = [
   "chat.citation.trace_link",
   "chat.citation.translation_note",
   "chat.closed_case.already_decided",
+  "chat.decision.adjuster_ai",
   "chat.decision.approved",
   "chat.decision.pending",
   "chat.decision.rejected",

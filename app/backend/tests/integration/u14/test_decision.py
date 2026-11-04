@@ -320,7 +320,7 @@ async def test_un_visitante_con_enlace_no_toma_un_caso_que_la_agente_aun_evalua(
 ) -> None:
     """Le quitaria a su propio caso el cierre directo, y la ruta lo rechaza sin tocarlo.
 
-    Con el control positivo al final: el mismo caso lo toma el personal, asi que el `409`
+    Con el control positivo al final: el mismo caso lo toma el personal, asi que el rechazo
     de antes no se debe a que el caso no se pudiera decidir sino a **quien** lo pedia.
     """
     from untangle.case_record import history as historial
@@ -346,7 +346,9 @@ async def test_un_visitante_con_enlace_no_toma_un_caso_que_la_agente_aun_evalua(
             headers={"Idempotency-Key": "visitante-toma-1"},
         )
 
-    assert rechazo.status_code == 409, rechazo.text
+    # Desde el plan 09 (fase 5) el visitante no decide en absoluto: `403` antes de mirar el
+    # estado del caso. Lo que prueba esto sigue siendo que el rechazo no mueve nada.
+    assert rechazo.status_code == 403, rechazo.text
     vista = await casos.get_case(emisora, caso)
     assert vista is not None
     assert vista.state is CaseState.DECIDING, "el rechazo movio el caso"

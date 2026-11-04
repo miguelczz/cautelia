@@ -10,13 +10,13 @@ from __future__ import annotations
 
 import asyncio
 from dataclasses import replace
-from datetime import date
+from datetime import date, timedelta
 from typing import Any
 
 import pytest
 
 from untangle.adjuster import pipeline
-from untangle.adjuster.models import RunStatus, SourceKind, StepId
+from untangle.adjuster.models import AdjusterRun, RunStatus, SourceKind, StepId
 from untangle.adjuster.pipeline import RunOutcome
 from untangle.base import ProviderErrorKind, ProviderName, Use
 from untangle.case_record.models import CaseState
@@ -27,6 +27,7 @@ from untangle.telemetry.spend.models import QuotaDecision, QuotaReason
 
 from .support import (
     AGENCIA,
+    AHORA,
     CLAUSULA_CHOQUE,
     CONFIGURACION,
     RELATO,
@@ -584,6 +585,43 @@ async def test_dos_ejecuciones_simultaneas_del_mismo_caso_solo_trabaja_una(mundo
     assert len(mundo.cupos) == 1
     perdedora = a if not a.started else b
     assert perdedora.status is RunStatus.RUNNING
+
+
+def _corrida_corriendo_desde(mundo: Mundo, *, hace: timedelta) -> None:
+    mundo.repo.filas[(mundo.tenant_id, mundo.case_id)] = AdjusterRun(
+        tenant_id=mundo.tenant_id,
+        case_id=mundo.case_id,
+        status=RunStatus.RUNNING,
+        attempt=1,
+        model="claude-haiku-5-5",
+        created_at=AHORA - hace,
+        updated_at=AHORA - hace,
+    )
+
+
+async def test_una_corrida_que_lleva_corriendo_mas_de_lo_que_tarda_un_caso_sano_se_retoma(
+    mundo: Mundo,
+) -> None:
+    """El proceso que la llevaba se cayo: sin esto el caso esperaria para siempre."""
+    _corrida_corriendo_desde(mundo, hace=CONFIGURACION.running_stale_after + timedelta(seconds=1))
+
+    resultado = await _correr(mundo)
+
+    assert resultado.started
+    assert resultado.status is RunStatus.DECIDED
+    assert _corrida(mundo).attempt == 2
+    assert len(mundo.modelo.llamadas) == 1
+
+
+async def test_una_corrida_reciente_no_se_toca_porque_otro_proceso_la_lleva(mundo: Mundo) -> None:
+    _corrida_corriendo_desde(mundo, hace=timedelta(seconds=30))
+
+    resultado = await _correr(mundo)
+
+    assert not resultado.started
+    assert resultado.status is RunStatus.RUNNING
+    assert mundo.modelo.llamadas == []
+    assert _corrida(mundo).attempt == 1
 
 
 async def test_un_error_inesperado_no_deja_la_corrida_corriendo_para_siempre(

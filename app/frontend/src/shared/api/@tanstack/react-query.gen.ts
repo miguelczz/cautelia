@@ -393,15 +393,13 @@ export const correctInboxCaseFieldMutation = (options?: Partial<Options<CorrectI
  *
  * Anota el monto estimado, la cobertura disputada y la sospecha de fraude.
  *
- * Dos puertas, igual que decidir: la credencial de personal con el permiso del rol, y el
- * enlace del caso del visitante (2026-10-13), que anota **solo su propio caso** y queda como
- * visitante. Guarda lo anotado --`null` es "sin anotar"--, deja su entrada en el historial
+ * Solo el personal con credencial y el permiso del rol; el visitante con enlace recibe `403`
+ * (plan 09, fase 5: antes anotaba su propio caso haciendo de ajustador). Guarda lo anotado --`null` es "sin anotar"--, deja su entrada en el historial
  * del caso y vuelve a evaluar las reglas de la aseguradora con todos los insumos del caso.
  * No cambia el estado del caso ni escribe en el chat.
  *
- * Lo que cambia para el visitante: no lee ni pisa la nota que escribio el personal, guardar
- * lo que ya estaba no escribe nada, y las entradas que puede dejar tienen tope. Los tres
- * rechazos responden `409` y no escriben.
+ * Los rechazos del caso --otro estado u otro tipo, o una aseguradora sin reglas-- responden
+ * `409` y no escriben.
  */
 export const annotateInboxCaseTriageMutation = (options?: Partial<Options<AnnotateInboxCaseTriageData>>): UseMutationOptions<AnnotateInboxCaseTriageResponse, AnnotateInboxCaseTriageError, Options<AnnotateInboxCaseTriageData>> => {
     const mutationOptions: UseMutationOptions<AnnotateInboxCaseTriageResponse, AnnotateInboxCaseTriageError, Options<AnnotateInboxCaseTriageData>> = {
@@ -444,12 +442,10 @@ export const streamInboxOptions = (options: Options<StreamInboxData>) => queryOp
 /**
  * Decide Case
  *
- * Aprobar, rechazar o marcar como enviado (BR4.1 a BR4.6, BR5.5).
+ * Aprobar, rechazar o marcar como enviado (BR4.1 a BR4.6).
  *
- * Dos puertas para la misma accion: la credencial de personal y la cookie de
- * caso del visitante. Lo que cambia entre las dos es **quien queda como
- * autor**, y nada mas: las reglas de que se puede decidir y con que
- * comentario son las mismas.
+ * Solo el personal con credencial. El visitante abre su caso con su enlace pero no lo
+ * decide (`403`): lo decide el ajustador de IA, por `decision.decide`, no por esta ruta.
  */
 export const decideInboxCaseMutation = (options?: Partial<Options<DecideInboxCaseData>>): UseMutationOptions<DecideInboxCaseResponse, DecideInboxCaseError, Options<DecideInboxCaseData>> => {
     const mutationOptions: UseMutationOptions<DecideInboxCaseResponse, DecideInboxCaseError, Options<DecideInboxCaseData>> = {

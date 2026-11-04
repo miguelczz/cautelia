@@ -2162,6 +2162,12 @@ chat:
     sent_to_insurer:
       text: Your case {case_number} was sent to the insurer that issued your policy, with the note “{comment}”.
       surface: chat
+    # El ajustador de IA (2026-11-04): el chat solo avisa que hay decision, sin el texto de la
+    # explicacion (A6 del diseno): esa vive en su propia pantalla, y asi ningun turno de la
+    # agente afirma cobertura ni montos.
+    adjuster_ai:
+      text: "Your case {case_number} already has a decision. See it with “See my case”: it shows how it was decided."
+      surface: chat
     pending:
       text: An adjuster is reviewing your case. We'll let you know here as soon as there's an answer.
       surface: chat

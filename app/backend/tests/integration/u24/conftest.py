@@ -10,6 +10,6 @@ hermanas.
 from __future__ import annotations
 
 from ..u5.conftest import dinero
-from ..u14.conftest import AHORA, base_de_u14, cifrador, dos_aseguradoras, nuevo_caso
+from ..u14.conftest import AHORA, app, base_de_u14, cifrador, dos_aseguradoras, nuevo_caso
 
-__all__ = ["AHORA", "base_de_u14", "cifrador", "dinero", "dos_aseguradoras", "nuevo_caso"]
+__all__ = ["AHORA", "app", "base_de_u14", "cifrador", "dinero", "dos_aseguradoras", "nuevo_caso"]

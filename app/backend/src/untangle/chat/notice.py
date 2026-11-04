@@ -44,6 +44,8 @@ APPROVED = CopyKey("chat.decision.approved")
 REJECTED = CopyKey("chat.decision.rejected")
 SENT_TO_INSURER = CopyKey("chat.decision.sent_to_insurer")
 PENDING = CopyKey("chat.decision.pending")
+#: La decision del ajustador de IA: una sola frase para los tres desenlaces, sin su explicacion.
+ADJUSTER_AI = CopyKey("chat.decision.adjuster_ai")
 
 
 class MissingDecisionError(RuntimeError):
@@ -114,6 +116,9 @@ class Decision:
     #: La entrada del historial que la escribio. Es el identificador que autoriza
     #: al aviso a afirmar un resultado (BR5.2).
     ref: str | None
+    #: Si la firmo el ajustador de IA. Su explicacion vive en la pantalla del caso y no entra a
+    #: la conversacion (A6): el aviso es la plantilla, sin comentario.
+    by_adjuster_ai: bool = False
 
 
 async def for_decision(decision: Decision, *, tenant_id: TenantId, language: Locale) -> Notice:
@@ -129,6 +134,15 @@ async def for_decision(decision: Decision, *, tenant_id: TenantId, language: Loc
             f"(BR5.2)"
         )
         raise MissingDecisionError(msg)
+
+    if decision.by_adjuster_ai:
+        return _aviso_del_ajustador_de_ia(
+            decision,
+            resolution=decision.resolution,
+            ref=decision.ref,
+            tenant_id=tenant_id,
+            language=language,
+        )
 
     # El comentario primero y **solo**: es texto libre de una persona, y es la
     # unica parte del aviso que puede decir algo que la guardia tenga que parar.
@@ -160,6 +174,33 @@ async def for_decision(decision: Decision, *, tenant_id: TenantId, language: Loc
     return Notice(copy_key=clave, text=texto, decision_ref=decision.ref)
 
 
+def _aviso_del_ajustador_de_ia(
+    decision: Decision,
+    *,
+    resolution: Resolution,
+    ref: str,
+    tenant_id: TenantId,
+    language: Locale,
+) -> Notice:
+    """Avisa que el caso ya tiene decision, sin repetir lo que el ajustador escribio.
+
+    La explicacion de la decision --que puede decir "cubre" y cifras-- sale por la pantalla del
+    caso, que es su superficie; si saliera por aqui, un turno de la conversacion afirmaria
+    cobertura, y esa es la compuerta dura que el chat no puede romper. La plantilla no lleva
+    ningun texto generado, asi que no hay nada que la guardia tenga que parar.
+    """
+    texto = copy_api.t(ADJUSTER_AI, locale=language, case_number=decision.case_number)
+    observability.emit(
+        "chat.decision_notified",
+        tenant_id=tenant_id,
+        case_id=decision.case_id,
+        resolution=resolution.value,
+        decision_ref=ref,
+        by_adjuster_ai=True,
+    )
+    return Notice(copy_key=ADJUSTER_AI, text=texto, decision_ref=ref)
+
+
 def pending(*, state: CaseState, language: Locale) -> Notice | None:
     """Lo que se dice de un caso derivado y aun sin decidir (BR5.3).
 
@@ -179,6 +220,7 @@ def pending(*, state: CaseState, language: Locale) -> Notice | None:
 
 
 __all__ = [
+    "ADJUSTER_AI",
     "APPROVED",
     "PENDING",
     "REJECTED",

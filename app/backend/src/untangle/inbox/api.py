@@ -57,6 +57,7 @@ from untangle.case_record.models import (
 )
 from untangle.inbox import (
     actions,
+    adjuster_view,
     annotation,
     case_view,
     correction,
@@ -383,6 +384,10 @@ class CaseDetailOut(Frozen):
     #: perdio, cuando el backend no esta configurado y cuando no se pudo averiguar el proyecto.
     #: Aditivo.
     trace_url: str | None = None
+    #: Como decidio el ajustador de IA: los pasos con sus fuentes, la decision y su explicacion, y
+    #: en que va la corrida. `null` cuando el ajustador no ha empezado con el caso, y en los casos
+    #: de ejemplo, que se leen y nada mas. Aditivo.
+    adjuster: adjuster_view.AdjusterRunOut | None = None
 
 
 class ExampleCaseItem(Frozen):
@@ -630,6 +635,8 @@ def _al_cable(  # noqa: PLR0913 -- el caso, la aseguradora y lo que cambia segun
     puede_anotar: bool = False,
     ver_las_reglas_de_lo_anotado: bool = False,
     con_enlace_a_la_traza: bool = False,
+    puede_decidir: bool = True,
+    ajustador: adjuster_view.AdjusterRunOut | None = None,
 ) -> CaseDetailOut:
     """El caso con la forma del contrato.
 
@@ -652,6 +659,10 @@ def _al_cable(  # noqa: PLR0913 -- el caso, la aseguradora y lo que cambia segun
     `con_enlace_a_la_traza` lo **enciende** la ruta que tiene dueno --personal o visitante con el
     enlace de su caso--; apagado por omision, de modo que el caso de ejemplo, que es publico, no
     pueda recibirlo ni por descuido.
+
+    `puede_decidir` apagado deja el caso sin acciones: lo apaga la ruta del visitante, que ya no
+    decide su caso --lo decide el ajustador de IA-- aunque lo vea. `ajustador` es la corrida de
+    ese ajustador, que la ruta pide a quien la guarda.
     """
     regla = detalle.rule_evaluation
     revision = detalle.compliance
@@ -726,7 +737,7 @@ def _al_cable(  # noqa: PLR0913 -- el caso, la aseguradora y lo que cambia segun
         resolution=detalle.resolution.value if detalle.resolution is not None else None,
         available_actions=(
             ()
-            if solo_lectura
+            if solo_lectura or not puede_decidir
             else tuple(
                 sorted(
                     actions.offered_for(tenant, state=detalle.state, by_staff=por_personal),
@@ -748,6 +759,7 @@ def _al_cable(  # noqa: PLR0913 -- el caso, la aseguradora y lo que cambia segun
         can_annotate_triage=se_ofrece_anotar,
         triage_amount_steps=_pasos_del_monto(tenant) if se_ofrece_anotar else (),
         trace_url=_enlace_a_la_traza(detalle) if con_enlace_a_la_traza else None,
+        adjuster=ajustador,
     )
 
 
@@ -1071,27 +1083,24 @@ def router() -> APIRouter:  # noqa: C901, PLR0915 -- seis rutas declaradas, ning
         # se pueda cambiar, ni las reglas que disparo (la pantalla del personal lo promete).
         de_quien_pide = por_personal or annotation.note_is_visitors(nota)
         response.headers["Cache-Control"] = "private, no-store"
+        # Primero lo que hay y despues el reintento: leer el caso despierta al ajustador si lo
+        # dejo esperando (fallo, cupo, proceso caido), pero esta respuesta no lo espera.
+        ajustador = await adjuster_view.read(tenant_id, case_id)
+        await adjuster_view.retry_if_needed(tenant_id, case_id, detalle.state)
         return _al_cable(
             detalle,
             tenancy.require(tenant_id),
             anotado=anotado,
+            ajustador=ajustador,
+            # El visitante ve su caso y la decision del ajustador de IA, pero ya no decide ni anota.
+            puede_decidir=por_personal,
             por_personal=por_personal,
             # A quien entra con el enlace de su caso se le dice que lo decidio un
             # ajustador, no cual: el identificador del personal es para el personal.
             nombrar_personal=por_personal,
             nota_de_triage=nota if de_quien_pide else None,
             puede_anotar=(
-                _permitido(tenant_id, untangle_staff, Action.ANNOTATE_TRIAGE)
-                if por_personal
-                else (
-                    de_quien_pide
-                    # El tope se cuenta solo si el estado ya deja anotar: la cuenta es una
-                    # consulta y no tiene sentido pagarla por un caso cerrado.
-                    and annotation.can_annotate(
-                        state=detalle.state, record_type=detalle.record_type
-                    )
-                    and await annotation.visitor_has_budget(tenant_id, case_id)
-                )
+                por_personal and _permitido(tenant_id, untangle_staff, Action.ANNOTATE_TRIAGE)
             ),
             # Las reglas que dispararon lo anotado las ve quien lo escribio: el personal siempre,
             # y el visitante cuando la nota existe y es suya (sin nota no hay nada que mostrar).
@@ -1171,15 +1180,13 @@ def router() -> APIRouter:  # noqa: C901, PLR0915 -- seis rutas declaradas, ning
     ) -> TriageNoteOut:
         """Anota el monto estimado, la cobertura disputada y la sospecha de fraude.
 
-        Dos puertas, igual que decidir: la credencial de personal con el permiso del rol, y el
-        enlace del caso del visitante (2026-10-13), que anota **solo su propio caso** y queda como
-        visitante. Guarda lo anotado --`null` es "sin anotar"--, deja su entrada en el historial
+        Solo el personal con credencial y el permiso del rol; el visitante con enlace recibe `403`
+        (plan 09, fase 5: antes anotaba su propio caso haciendo de ajustador). Guarda lo anotado --`null` es "sin anotar"--, deja su entrada en el historial
         del caso y vuelve a evaluar las reglas de la aseguradora con todos los insumos del caso.
         No cambia el estado del caso ni escribe en el chat.
 
-        Lo que cambia para el visitante: no lee ni pisa la nota que escribio el personal, guardar
-        lo que ya estaba no escribe nada, y las entradas que puede dejar tienen tope. Los tres
-        rechazos responden `409` y no escriben.
+        Los rechazos del caso --otro estado u otro tipo, o una aseguradora sin reglas-- responden
+        `409` y no escriben.
         """
         # Primero quien entra, con el permiso minimo de **ver**: no se anota lo que no se puede
         # abrir. Un enlace de otro caso, vencido o alterado responde como un caso que no existe.
@@ -1190,10 +1197,11 @@ def router() -> APIRouter:  # noqa: C901, PLR0915 -- seis rutas declaradas, ning
             credencial=untangle_staff,
             cookie_de_caso=ut_case,
         )
-        if principal is not None:
-            # Quien entro con credencial necesita ademas el permiso de anotar; quien entro por su
-            # enlace no tiene rol, y lo que puede lo decide `annotation.apply`.
-            _credencial(tenant_id, untangle_staff, Action.ANNOTATE_TRIAGE)
+        if principal is None:
+            # El visitante ya no anota para las reglas (plan 09, fase 5): su enlace abre el
+            # caso, no esta accion.
+            raise HTTPException(status_code=403)
+        _credencial(tenant_id, untangle_staff, Action.ANNOTATE_TRIAGE)
         if not idempotency_key:
             # Sin clave, un segundo envio del formulario escribiria una segunda evaluacion.
             raise HTTPException(status_code=422)
@@ -1271,12 +1279,10 @@ def router() -> APIRouter:  # noqa: C901, PLR0915 -- seis rutas declaradas, ning
         untangle_staff: Annotated[str | None, Cookie()] = None,
         ut_case: Annotated[str | None, Cookie()] = None,
     ) -> DecisionOut:
-        """Aprobar, rechazar o marcar como enviado (BR4.1 a BR4.6, BR5.5).
+        """Aprobar, rechazar o marcar como enviado (BR4.1 a BR4.6).
 
-        Dos puertas para la misma accion: la credencial de personal y la cookie de
-        caso del visitante. Lo que cambia entre las dos es **quien queda como
-        autor**, y nada mas: las reglas de que se puede decidir y con que
-        comentario son las mismas.
+        Solo el personal con credencial. El visitante abre su caso con su enlace pero no lo
+        decide (`403`): lo decide el ajustador de IA, por `decision.decide`, no por esta ruta.
         """
         # Primero quien entra, con el permiso minimo de **ver**: no se decide lo
         # que no se puede abrir, y hasta leer el caso no se sabe que permiso pide
@@ -1288,6 +1294,11 @@ def router() -> APIRouter:  # noqa: C901, PLR0915 -- seis rutas declaradas, ning
             credencial=untangle_staff,
             cookie_de_caso=ut_case,
         )
+        if principal is None:
+            # El visitante abre su caso, pero ya no lo decide: lo decide el ajustador de IA
+            # (plan 09, fase 5). Entro por su enlace --una puerta valida--, asi que no es un
+            # caso que no existe sino una accion que su puerta no tiene: `403`.
+            raise HTTPException(status_code=403)
         caso = await casos.get_case(tenancy.require(tenant_id).tenant_id, case_id)
         if caso is None:
             raise _rechazo()
@@ -1303,18 +1314,11 @@ def router() -> APIRouter:  # noqa: C901, PLR0915 -- seis rutas declaradas, ning
         # cookie de caso valida; comprobarla otra vez aqui por el solo hecho de que
         # llego rechazaba al visitante que habia entrado por su enlace, y la pantalla lo
         # contaba como "el enlace vencio" aunque faltara casi una hora.
-        if principal is not None:
-            _credencial(
-                tenant_id,
-                untangle_staff,
-                permiso_de_decision(record_type=caso.record_type, action=body.decision),
-            )
-        elif caso.record_type is RecordType.QUOTE_REQUEST:
-            # Un enlace de demostracion deja ver el caso propio y, en un siniestro,
-            # decidirlo como visitante (BR5.5 de U14). Una solicitud de cotizacion
-            # no: quien la pidio aprobandola a si misma no es una decision, y el
-            # rol que la decide es el del suscriptor (BR4.1 de U19).
-            raise _rechazo()
+        _credencial(
+            tenant_id,
+            untangle_staff,
+            permiso_de_decision(record_type=caso.record_type, action=body.decision),
+        )
 
         if not idempotency_key:
             raise HTTPException(status_code=422)

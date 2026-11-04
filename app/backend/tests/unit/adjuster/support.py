@@ -12,7 +12,7 @@ from __future__ import annotations
 import asyncio
 from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass, field
-from datetime import UTC, date, datetime
+from datetime import UTC, date, datetime, timedelta
 from typing import Any
 
 import pytest
@@ -65,6 +65,7 @@ CONFIGURACION = AdjusterConfig.model_validate(
         "allowed_domains": ["fasecolda.com", "tucarro.com.co"],
         "daily_case_cap": 20,
         "attempts": 3,
+        "running_stale_seconds": 300,
         "vehicle_value_range_cop": [8_000_000, 800_000_000],
     }
 )
@@ -174,8 +175,15 @@ class RepositorioEnMemoria:
     async def read(self, tenant_id: str, case_id: str) -> AdjusterRun | None:
         return self.filas.get((tenant_id, case_id))
 
-    async def open_run(
-        self, tenant_id: str, case_id: str, *, model: str, max_attempts: int, now: datetime
+    async def open_run(  # noqa: PLR0913 -- misma firma que `repository.open_run`
+        self,
+        tenant_id: str,
+        case_id: str,
+        *,
+        model: str,
+        max_attempts: int,
+        stale_after: timedelta,
+        now: datetime,
     ) -> OpenedRun:
         clave = (tenant_id, case_id)
         actual = self.filas.get(clave)
@@ -191,11 +199,23 @@ class RepositorioEnMemoria:
             )
             self.filas[clave] = nueva
             return OpenedRun(run=nueva, started=True)
-        if actual.status in {RunStatus.DECIDED, RunStatus.RUNNING}:
+        if actual.status is RunStatus.DECIDED:
             return OpenedRun(run=actual, started=False)
-        if actual.status is RunStatus.FAILED and actual.attempt >= max_attempts:
+        perdida = actual.status is RunStatus.RUNNING
+        if perdida and now - actual.updated_at < stale_after:
             return OpenedRun(run=actual, started=False)
-        intento = actual.attempt + 1 if actual.status is RunStatus.FAILED else actual.attempt
+        if actual.attempt >= max_attempts and actual.status is not RunStatus.CAPPED:
+            if perdida:
+                actual = actual.model_copy(
+                    update={
+                        "status": RunStatus.FAILED,
+                        "error_kind": "run_abandoned",
+                        "updated_at": now,
+                    }
+                )
+                self.filas[clave] = actual
+            return OpenedRun(run=actual, started=False)
+        intento = actual.attempt if actual.status is RunStatus.CAPPED else actual.attempt + 1
         reabierta = AdjusterRun(
             tenant_id=tenant_id,
             case_id=case_id,

@@ -152,6 +152,7 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["chat.citation.trace_link", "Ver cómo se respondió"],
   ["chat.citation.translation_note", "Traducción de referencia. El texto que rige es el original, en {language}."],
   ["chat.closed_case.already_decided", "Tu caso {case_number} ya tiene una decisión: la puedes ver con «Ver mi caso». Para reportar o preguntar algo nuevo, reinicia la conversación con el botón de arriba."],
+  ["chat.decision.adjuster_ai", "Tu caso {case_number} ya tiene una decisión. Míralo con «Ver mi caso», ahí está cómo se decidió."],
   ["chat.decision.approved", "Un ajustador revisó tu caso {case_number} y lo aprobó. Tu nota fue «{comment}»."],
   ["chat.decision.pending", "Un ajustador está revisando tu caso. Te avisamos por aquí en cuanto haya una respuesta."],
   ["chat.decision.rejected", "Un ajustador revisó tu caso {case_number} y no lo aprobó. Tu nota fue «{comment}». Si quieres, puedes responder aquí y un ajustador lo mira de nuevo."],
@@ -263,10 +264,10 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["comparison.examples.lend_car", "¿Estoy cubierto si le presto mi carro a un amigo?"],
   ["comparison.examples.other_driver_no_insurance", "¿Qué pasa si me choca alguien que no tiene seguro?"],
   ["comparison.examples.passenger_medical", "¿Pagan los gastos médicos de mis pasajeros?"],
-  ["comparison.examples.rental_car", "¿Me pagan un carro de alquiler mientras reparan el mío?"],
 ];
 
 const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
+  ["comparison.examples.rental_car", "¿Me pagan un carro de alquiler mientras reparan el mío?"],
   ["comparison.examples.ride_app", "¿Estoy cubierto si uso mi carro en una app de transporte?"],
   ["comparison.examples.stolen_keys", "¿Me cubren si me roban el carro y dejé las llaves adentro?"],
   ["comparison.examples.title", "Preguntas de ejemplo"],
@@ -516,10 +517,10 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.closing.fast_claim_done", "Listo: ya tengo lo necesario para tu caso {case_number}. Reviso tu reporte y te confirmo en un momento."],
   ["intake.closing.fast_claim_offer", "Listo: ya tengo lo necesario para tu caso {case_number}. ¿Quieres agregar {missing}, o lo dejamos así?"],
   ["intake.closing.fast_claim_registered", "Tu caso {case_number} ya quedó registrado; puedes verlo con el enlace de arriba."],
-  ["intake.closing.fast_claim_review_after_extra", "Anotado, gracias. Reviso tu reporte y te confirmo en un momento."],
 ];
 
 const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
+  ["intake.closing.fast_claim_review_after_extra", "Anotado, gracias. Reviso tu reporte y te confirmo en un momento."],
   ["intake.closing.fast_claim_review_already", "Tu caso {case_number} está en revisión; te confirmo en un momento."],
   ["intake.closing.fast_claim_review_declined", "De acuerdo. Reviso tu reporte y te confirmo en un momento."],
   ["intake.closing.summary_coverage", "Para cerrar: {identity_and_policy}; tu pregunta es {question_asked}. ¿Es correcto?"],
@@ -769,10 +770,10 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["quality.pending.budget_exhausted", "se llegó al tope de gasto"],
   ["quality.pending.count", "{count} situaciones:"],
   ["quality.pending.lead", "No medido no es lo mismo que bien. Por eso va aparte, con su motivo."],
-  ["quality.pending.none", "Todo lo que esta corrida intentó medir, se midió."],
 ];
 
 const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
+  ["quality.pending.none", "Todo lo que esta corrida intentó medir, se midió."],
   ["quality.pending.other", "otro motivo"],
   ["quality.pending.provider_key_missing", "falta la clave del proveedor"],
   ["quality.pending.provider_timeout", "el modelo tardó más del plazo"],
@@ -1022,10 +1023,10 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.availability.rate_limited_daily", "Ya usaste tus llamadas de hoy desde esta conexión; mañana puedes volver a llamar. El chat sigue disponible."],
   ["voice.availability.rate_limited_site", "Hoy ya se hicieron todas las llamadas de la demostración; vuelve mañana o usa el chat."],
   ["voice.barge_in.acknowledge", "Sí, dime."],
-  ["voice.closing.case_number", "Tu número de caso con {insurer} es {spoken}."],
 ];
 
 const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
+  ["voice.closing.case_number", "Tu número de caso con {insurer} es {spoken}."],
   ["voice.closing.farewell", "Que estés muy bien."],
   ["voice.closing.next_step", "Un ajustador revisa tu caso; la decisión te aparece en esta pantalla."],
   ["voice.closing.pending", "Tu reporte quedó guardado. El resultado te aparece en esta pantalla."],

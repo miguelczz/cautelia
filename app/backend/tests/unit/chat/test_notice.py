@@ -147,6 +147,56 @@ async def test_el_aviso_de_la_agencia_no_promete_que_la_aseguradora_llame() -> N
     assert "llamar" not in aviso.text.lower()
 
 
+# --- El ajustador de IA: avisa que hay decision, sin su explicacion (A6) ------------------------
+
+EXPLICACION = "su póliza cubre el choque y le vamos a pagar 900 dólares, cláusula D.INS.COLLISION"
+
+
+@pytest.mark.parametrize(
+    "resolution", [Resolution.APPROVED, Resolution.REJECTED, Resolution.SENT_TO_INSURER]
+)
+@pytest.mark.parametrize(("idioma", "enlace"), [("es", "Ver mi caso"), ("en", "See my case")])
+async def test_el_aviso_del_ajustador_de_ia_remite_a_la_pantalla_sin_repetir_su_explicacion(
+    resolution: Resolution, idioma: str, enlace: str
+) -> None:
+    decision = notice.Decision(
+        case_id="caso-1",
+        case_number="SA-482",
+        resolution=resolution,
+        comment=EXPLICACION,
+        ref="change-abc123",
+        by_adjuster_ai=True,
+    )
+
+    aviso = await notice.for_decision(
+        decision,
+        tenant_id=_aseguradora(),
+        language=idioma,  # type: ignore[arg-type]
+    )
+
+    assert aviso.copy_key == notice.ADJUSTER_AI
+    assert "SA-482" in aviso.text
+    assert enlace in aviso.text
+    assert "cubre" not in aviso.text
+    assert "900" not in aviso.text
+    assert "COLLISION" not in aviso.text
+    assert aviso.decision_ref == "change-abc123"
+
+
+async def test_el_aviso_del_ajustador_de_ia_tambien_exige_la_firma() -> None:
+    sin_firma = notice.Decision(
+        case_id="caso-1",
+        case_number="SA-482",
+        resolution=Resolution.APPROVED,
+        comment=EXPLICACION,
+        ref=None,
+        by_adjuster_ai=True,
+    )
+
+    with pytest.raises(notice.MissingDecisionError):
+        await notice.for_decision(sin_firma, tenant_id=_aseguradora(), language="es")
+
+
 # --- BR5.3: derivado y sin decidir -------------------------------------------
 
 

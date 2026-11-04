@@ -46,6 +46,7 @@ from untangle.case_record.models import (
     RecordType,
 )
 from untangle.compliance.controls.api import HandoffReason
+from untangle.orchestration import derivation_trigger
 from untangle.orchestration.nodes.intake import blocks
 from untangle.orchestration.nodes.intake.blocks import Block
 from untangle.orchestration.nodes.intake.extraction import ExtractedField
@@ -312,6 +313,7 @@ async def derive_case(  # noqa: PLR0913 -- el caso, el motivo, el turno, el relo
             detail=str(error),
         )
         return False
+    await derivation_trigger.notify_derived(tenant_id, case_id)
     return True
 
 

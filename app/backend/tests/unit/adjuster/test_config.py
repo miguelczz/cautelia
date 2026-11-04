@@ -17,6 +17,7 @@ VALIDA: dict[str, Any] = {
     "allowed_domains": ["fasecolda.com", "tucarro.com.co"],
     "daily_case_cap": 20,
     "attempts": 3,
+    "running_stale_seconds": 300,
     "vehicle_value_range_cop": [8_000_000, 800_000_000],
 }
 
@@ -34,6 +35,7 @@ def test_el_archivo_versionado_declara_lo_que_el_diseno_pide() -> None:
     assert cargada.max_searches == 3
     assert cargada.daily_case_cap == 20
     assert cargada.attempts == 3
+    assert cargada.running_stale_after.total_seconds() == 300
     assert cargada.vehicle_value_range_cop == (8_000_000, 800_000_000)
     assert set(cargada.allowed_domains) == {
         "fasecolda.com",
@@ -107,6 +109,8 @@ def test_un_dominio_repetido_se_rechaza(tmp_path: Path) -> None:
         ("daily_case_cap", 0),
         ("attempts", 0),
         ("attempts", 11),
+        ("running_stale_seconds", 59),
+        ("running_stale_seconds", 3601),
         ("config_version", 2),
         ("vehicle_value_range_cop", [0, 100]),
         ("vehicle_value_range_cop", [100, 100]),

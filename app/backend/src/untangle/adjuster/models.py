@@ -22,6 +22,16 @@ from untangle.base import Frozen
 from untangle.inbox.actions import InboxAction
 from untangle.tenancy.models import TenantId
 
+#: El titular y la explicacion de una decision viajan en una sola columna, separados por una
+#: linea en blanco: el titular es el comentario con que se registra el cierre del caso (A5).
+SUMMARY_SEPARATOR = "\n\n"
+
+
+def split_summary(summary: str | None) -> tuple[str, str]:
+    """El titular y la explicacion de una corrida decidida."""
+    titular, _, explicacion = (summary or "").partition(SUMMARY_SEPARATOR)
+    return titular, explicacion
+
 
 class RunStatus(StrEnum):
     """En que va la corrida de un caso."""

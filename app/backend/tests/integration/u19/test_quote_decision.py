@@ -177,9 +177,10 @@ async def test_el_suscriptor_no_decide_un_siniestro(
 async def test_un_visitante_con_su_enlace_no_decide_su_propia_solicitud(
     app: FastAPI, aseguradora_que_cotiza: str
 ) -> None:
-    """El enlace deja ver el caso propio y, en un siniestro, decidirlo (BR5.5 de U14).
+    """El enlace deja ver el caso propio y nada mas: desde el plan 09 (fase 5) el visitante no
+    decide ni un siniestro.
 
-    Una solicitud de cotizacion no: quien la pidio aprobandose a si misma no es una
+    Una solicitud de cotizacion tampoco: quien la pidio aprobandose a si misma no es una
     decision, y el rol que la decide es el del suscriptor.
     """
     caso = await nueva_solicitud(aseguradora_que_cotiza)
@@ -201,7 +202,7 @@ async def test_un_visitante_con_su_enlace_no_decide_su_propia_solicitud(
         )
 
     assert vista.status_code == 200, vista.text
-    assert decidido.status_code == 404, decidido.text
+    assert decidido.status_code == 403, decidido.text
     actual = await casos.get_case(aseguradora_que_cotiza, caso)
     assert actual is not None
     assert actual.state is CaseState.DERIVED

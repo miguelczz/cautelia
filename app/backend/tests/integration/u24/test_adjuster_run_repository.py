@@ -23,11 +23,12 @@ pytestmark = pytest.mark.usefixtures("base_de_u14")
 
 MODELO = "claude-haiku-5-5"
 MAXIMO = 3
+CADUCA = timedelta(minutes=5)
 
 
 async def _abrir(tenant_id: str, case_id: str, *, cuando: datetime = AHORA) -> OpenedRun:
     return await repository.open_run(
-        tenant_id, case_id, model=MODELO, max_attempts=MAXIMO, now=cuando
+        tenant_id, case_id, model=MODELO, max_attempts=MAXIMO, stale_after=CADUCA, now=cuando
     )
 
 
@@ -260,6 +261,57 @@ async def test_una_corrida_fallida_se_reabre_gastando_un_intento_hasta_el_maximo
     assert not agotada.started, "al agotar los intentos el caso queda en revision"
     assert agotada.run.status is RunStatus.FAILED
     assert agotada.run.attempt == MAXIMO
+
+
+async def test_una_corrida_que_corre_y_no_avanza_se_reabre_gastando_un_intento(
+    dos_aseguradoras: tuple[str, str],
+) -> None:
+    """El proceso que la llevaba se cayo: su fila seguia en `running` y nadie la tomaba."""
+    _, propia = dos_aseguradoras
+    caso = await nuevo_caso(propia)
+    await _abrir(propia, caso)
+    await repository.append_step(propia, caso, _paso(), now=AHORA)
+
+    antes = await _abrir(propia, caso, cuando=AHORA + CADUCA - timedelta(seconds=1))
+    despues = await _abrir(propia, caso, cuando=AHORA + CADUCA)
+
+    assert not antes.started, "mientras avanza o no ha caducado, otro proceso la lleva"
+    assert despues.started
+    assert despues.run.status is RunStatus.RUNNING
+    assert despues.run.attempt == 2
+    assert despues.run.steps == (), "el intento nuevo parte sin los pasos del perdido"
+
+
+async def test_dos_arranques_sobre_una_corrida_perdida_tienen_un_solo_dueno(
+    dos_aseguradoras: tuple[str, str],
+) -> None:
+    _, propia = dos_aseguradoras
+    caso = await nuevo_caso(propia)
+    await _abrir(propia, caso)
+    tarde = AHORA + CADUCA + timedelta(minutes=1)
+
+    resultados = await asyncio.gather(*(_abrir(propia, caso, cuando=tarde) for _ in range(4)))
+
+    assert sum(1 for r in resultados if r.started) == 1
+    assert {r.run.attempt for r in resultados} == {2}
+
+
+async def test_una_corrida_perdida_sin_intentos_que_gastar_queda_fallida(
+    dos_aseguradoras: tuple[str, str],
+) -> None:
+    _, propia = dos_aseguradoras
+    caso = await nuevo_caso(propia)
+    for esperado in range(1, MAXIMO + 1):
+        abierta = await _abrir(propia, caso, cuando=AHORA + timedelta(hours=esperado))
+        assert abierta.started
+        assert abierta.run.attempt == esperado
+
+    cerrada = await _abrir(propia, caso, cuando=AHORA + timedelta(days=1))
+
+    assert not cerrada.started
+    assert cerrada.run.status is RunStatus.FAILED
+    assert cerrada.run.error_kind == "run_abandoned"
+    assert cerrada.run.attempt == MAXIMO
 
 
 async def test_cada_aseguradora_lee_solo_sus_corridas(dos_aseguradoras: tuple[str, str]) -> None:

@@ -27,7 +27,13 @@ from untangle.adjuster import clauses as clause_search
 from untangle.adjuster import gather, prompting, quota, repository, steps, validation, vehicle_value
 from untangle.adjuster.config import AdjusterConfig
 from untangle.adjuster.errors import ErrorKind
-from untangle.adjuster.models import AdjusterRun, RunStatus, RunStep
+from untangle.adjuster.models import (
+    SUMMARY_SEPARATOR,
+    AdjusterRun,
+    RunStatus,
+    RunStep,
+    split_summary,
+)
 from untangle.adjuster.ports import AdjusterPorts, DecisionToRecord
 from untangle.adjuster.schema import AdjusterDecision
 from untangle.base import Use
@@ -39,9 +45,6 @@ from untangle.policy_rag.facts.models import PolicyStatus
 from untangle.providers.ports import BudgetExhausted, ProviderError
 from untangle.tenancy import config as tenancy_config
 from untangle.tenancy.models import TenantId
-
-#: El titular y la explicacion viajan en una sola columna, separados por una linea en blanco.
-_SEPARATOR = "\n\n"
 
 
 @dataclass(frozen=True)
@@ -76,7 +79,12 @@ async def run_case(
         return _failed(ErrorKind.CASE_NOT_DECIDABLE)
 
     abierta = await repository.open_run(
-        tenant_id, case_id, model=ports.model, max_attempts=config.attempts, now=ports.now()
+        tenant_id,
+        case_id,
+        model=ports.model,
+        max_attempts=config.attempts,
+        stale_after=config.running_stale_after,
+        now=ports.now(),
     )
     if not abierta.started:
         corrida = abierta.run
@@ -240,7 +248,7 @@ async def _decide(  # noqa: PLR0913 -- el caso, su poliza, si reserva cupo y los
         tenant_id,
         case_id,
         decision=decision.action,
-        summary=f"{decision.headline}{_SEPARATOR}{decision.explanation}",
+        summary=f"{decision.headline}{SUMMARY_SEPARATOR}{decision.explanation}",
         now=ports.now(),
     )
     registrado = await _record(
@@ -291,7 +299,7 @@ async def _settle_decided(
     corrida: AdjusterRun, *, state: CaseState, ports: AdjusterPorts
 ) -> RunOutcome:
     """Una corrida que ya decidio: si el caso sigue derivado, repite el registro; si no, nada."""
-    titular, _, explicacion = (corrida.summary or "").partition(_SEPARATOR)
+    titular, explicacion = split_summary(corrida.summary)
     registrado = False
     if state is CaseState.DERIVED and corrida.decision is not None:
         registrado = await _record(

@@ -17,6 +17,7 @@ const COPY_TEXTS = new Map<Locale, typeof ES>([
 ]);
 import type { Locale } from "../../shared/copy/copy-keys";
 import { createTranslate } from "../../shared/i18n/translate";
+import { decidedByMessage } from "./evidence-blocks";
 import {
   actionLabel,
   caseReasonLabel,
@@ -25,6 +26,7 @@ import {
   derivationReasonLabel,
   fieldLabel,
   findingLabel,
+  isAdjusterPending,
   isClosedByRules,
   isUnderReview,
   KNOWN_FIELD_LABEL_KEYS,
@@ -178,6 +180,58 @@ describe("los estados de evaluacion y el cierre directo", () => {
     expect(isClosedByRules(detalle("closed", "registered", "staff"))).toBe(false);
     expect(isClosedByRules(detalle("closed", "registered", "insured"))).toBe(false);
     expect(isClosedByRules(detalle("closed", null, null))).toBe(false);
+  });
+
+  it("el ajustador de IA no es un cierre directo, aunque el caso este cerrado y registrado", () => {
+    expect(isClosedByRules(detalle("closed", "registered", "adjuster_ai"))).toBe(false);
+  });
+
+  // El ajustador de IA todavia tiene que decidir un caso derivado sin corrida, en curso, en
+  // espera de cupo o fallido: la pantalla del visitante lo sigue leyendo mientras tanto.
+  describe("si el ajustador de IA todavia tiene que decidir el caso", () => {
+    const conCorrida = (state: CaseState, status: string | null): CaseDetailOut =>
+      ({
+        ...detalle(state, null, null),
+        adjuster: status === null ? null : { status },
+      }) as unknown as CaseDetailOut;
+
+    it.each([null, "running", "capped", "failed"])(
+      "derivado con la corrida %s: todavia no esta decidido",
+      (status) => {
+        expect(isAdjusterPending(conCorrida("derived", status))).toBe(true);
+      },
+    );
+
+    it("con la corrida decidida, o en cualquier otro estado, ya no", () => {
+      expect(isAdjusterPending(conCorrida("derived", "decided"))).toBe(false);
+      for (const estado of ESTADOS.filter((e) => e !== "derived")) {
+        expect(isAdjusterPending(conCorrida(estado, null)), estado).toBe(false);
+      }
+    });
+  });
+
+  // «Quien decidio» nombra al ajustador de IA por lo que es, en los dos idiomas.
+  describe("quien decidio, para el ajustador de IA", () => {
+    it.each(IDIOMAS)("lo dice con «IA» y no como personal de la aseguradora (%s)", (idioma) => {
+      const t = createTranslate(idioma);
+      const decidido = detalle("closed", "approved", "adjuster_ai");
+
+      const frase = decidedByMessage(decidido)(t);
+
+      expect(frase).toBe(t("inbox.explanation.by_adjuster_ai"));
+      expect(frase).toMatch(/IA|AI/);
+      expect(frase).not.toBe(t("inbox.explanation.by_adjuster"));
+    });
+
+    it.each(IDIOMAS)(
+      "si lo que hizo fue enviar el caso a la aseguradora, dice eso (%s)",
+      (idioma) => {
+        const t = createTranslate(idioma);
+        const enviado = detalle("closed", "sent_to_insurer", "adjuster_ai");
+
+        expect(decidedByMessage(enviado)(t)).toBe(t("inbox.explanation.by_adjuster_ai_agency"));
+      },
+    );
   });
 
   // El renglon «Por que llego aqui» (2026-10-13): «sin motivo de derivacion registrado» se

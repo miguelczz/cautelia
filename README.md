@@ -4,7 +4,7 @@
 
 ![Cautelia: two cars with copper and blue headlights approach on a wet road at night](docs/assets/banner.jpg)
 
-**Cautelia is an AI agent that takes car-accident reports and answers questions about your auto policy, by chat or by phone, in Spanish and English.** It asks only what is missing, checks your policy, cites the exact clause it relies on, and closes the simple cases on its own. Anything about coverage or money goes to a human adjuster, who signs the decision.
+**Cautelia is an AI agent that takes car-accident reports and answers questions about your auto policy, by chat or by phone, in Spanish and English.** It asks only what is missing, checks your policy, cites the exact clause it relies on, and closes the simple cases on its own. Anything about coverage or money goes to an AI adjuster, separate from the agent, that decides the case and explains each step with its sources.
 
 It is a portfolio demonstration: the three insurers, their policies and every person in them are fictional.
 
@@ -23,7 +23,7 @@ It is a portfolio demonstration: the three insurers, their policies and every pe
 
 ![A chat in English: the agent finds the policy, asks the missing details and closes the report](docs/assets/readme/chat.png)
 
-**3. You get a clear outcome.** With the report complete, the insurer's rules decide what happens next: a simple case (no injuries, nobody else involved) is registered without an adjuster; anything else goes to an adjuster with everything already captured, so you never repeat yourself. Either way you get a case number and a page that shows what was recorded and which rule decided.
+**3. You get a clear outcome.** With the report complete, the insurer's rules decide what happens next: a simple case (no injuries, nobody else involved) is registered without an adjuster; anything else goes to the AI adjuster with everything already captured, so you never repeat yourself. Either way you get a case number and a page that shows what was recorded and which rule decided.
 
 ![The case page: the report details on the right and the rule that closed the case](docs/assets/readme/case.png)
 
@@ -31,9 +31,7 @@ It is a portfolio demonstration: the three insurers, their policies and every pe
 
 When the question is about a fact written in the policy itself (the validity dates, the insured vehicles, the listed drivers, the special conditions), the agent reads it straight from the policy record with plain code: no clause search and no model writing the answer, so it is exact and costs no tokens. Only a question that needs interpreting the clauses goes through the search with citations.
 
-**5. In this demo, you can also play the adjuster.** Note the estimated repair cost, a doubt about coverage or a suspicion of fraud, and watch the insurer's rules classify the case again. Then approve or reject it, and the conversation continues with your decision.
-
-![Playing the adjuster: noting a repair estimate makes the rules send the case to an adjuster](docs/assets/readme/adjuster-rules.png)
+**5. An AI adjuster decides the case, and shows how.** When a case goes to an adjuster, a second AI, separate from the agent, reads the report, the policy and the insurer's rules, looks up the vehicle's reference value on the web and decides. The case page shows its steps as they arrive and, when it finishes, the decision with the six steps and the sources of each one: the clauses it cites, the rules and the web page. It says the explanation was written by an AI. A visitor no longer decides or notes anything: the conversation continues with a notice that the case has a decision.
 
 **6. You can call.** The same agent answers by voice in the browser: it introduces itself as an AI, says the call is transcribed, and hands you the case number at the end.
 
@@ -45,7 +43,7 @@ When the question is about a fact written in the policy itself (the validity dat
 
 ## What it does not do
 
-- **It never decides coverage or payments.** It does not say "you are covered", give amounts or assign fault. An adjuster signs those decisions.
+- **The agent you talk to never decides coverage or payments.** It does not say "you are covered", give amounts or assign fault. A separate AI adjuster decides the case and writes down how; the agent only passes the case to it.
 - **It is not connected to any real insurer.** No real policies, no real claims system, no payments.
 - **Do not type real personal data.** The conversation is stored as you wrote it, and visitor data is deleted every night.
 - **Voice works in the browser only,** with a limit of calls per visitor and per day. There is no phone number.
@@ -74,12 +72,12 @@ flowchart LR
   A --> G["Case workflow<br/>LangGraph: intake, policy,<br/>decision, compliance"]
   G --> R["Insurer rules<br/>versioned, one file<br/>per insurer"]
   G --> C["Policy search<br/>with exact citations"]
-  R --> I["Adjuster<br/>signs coverage<br/>and money"]
+  R --> I["AI adjuster<br/>decides the case<br/>and explains it"]
   G --> O["Output guard<br/>checks every message"]
   O --> P
 ```
 
-In words: the person talks to the agent; a language model (Claude Haiku) reads each message and writes the reply, and can only **propose** actions from a closed list (note a detail, look up the policy, pass the case to an adjuster, close the report). Code validates every action against the case before it runs, along a fixed workflow. The insurer's rules, not the model, decide where a case goes. Every message passes an output guard before the person sees it.
+In words: the person talks to the agent; a language model (Claude Haiku) reads each message and writes the reply, and can only **propose** actions from a closed list (note a detail, look up the policy, pass the case to an adjuster, close the report). Code validates every action against the case before it runs, along a fixed workflow. The insurer's rules, not the model, decide where a case goes. Every message passes an output guard before the person sees it. When a case goes to an adjuster, a separate background process, the AI adjuster, takes it: it reads the report, the policy and the rules with plain code, searches the web for the vehicle's reference value (up to three searches) and makes one structured decision. Code validates the action and every clause it cites before the case closes, and the case page shows the steps with their sources.
 
 | Piece | What it uses |
 | --- | --- |

@@ -62,7 +62,7 @@ describe("la guia con todo montado", () => {
         t("guide.steps.choose.title"),
         t("guide.steps.report.title"),
         t("guide.steps.link.title"),
-        t("guide.steps.decide.title"),
+        t("guide.steps.adjuster.title"),
       ]);
       // El paso de contar lo que paso dice los dos canales y que hacer con la poliza.
       expect(pasos[1]?.textContent).toContain(t("guide.steps.report.both"));

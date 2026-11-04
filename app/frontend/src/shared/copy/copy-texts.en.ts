@@ -18,6 +18,20 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["action.go_home", "Go to the home page"],
   ["action.retry", "Try again"],
   ["action.start_over", "Start over"],
+  ["adjuster.panel.ai_notice", "This explanation was written by an AI, from the policy, the insurer's rules and what was told in the case."],
+  ["adjuster.panel.capped", "Today the AI adjuster has already handled all the cases it can. This case is waiting its turn and will be decided as soon as there is room."],
+  ["adjuster.panel.decided", "The AI adjuster decided this case."],
+  ["adjuster.panel.decision", "Decision"],
+  ["adjuster.panel.failed", "The case is still under review. When the adjuster decides it, the decision appears here."],
+  ["adjuster.panel.running", "The AI adjuster is reviewing the case: {done} of {total} steps."],
+  ["adjuster.panel.sources", "Sources for this step"],
+  ["adjuster.panel.steps", "Adjuster steps"],
+  ["adjuster.panel.title", "How the adjuster decided"],
+  ["adjuster.panel.title_pending", "How the adjuster decides"],
+  ["adjuster.source.kind.clause", "Clause"],
+  ["adjuster.source.kind.web", "External source"],
+  ["adjuster.source.new_tab", "(opens in a new tab)"],
+  ["adjuster.source.rule", "Insurer rule {number}"],
   ["adjuster.step.case_read.body", "I read the report for case {case_number}: it has {fields} noted details, with the account of what happened."],
   ["adjuster.step.case_read.title", "Reads the report"],
   ["adjuster.step.clauses.found", "I searched the policy for clauses that resemble what happened and found {count}. I only cite the ones I check one by one against the policy."],
@@ -94,7 +108,7 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["case.state.open", "Open"],
   ["case.state.verifying", "Checking the policy"],
   ["cases.example.back", "Back to Cases"],
-  ["cases.example.note", "This is a sample case: you can read it but not decide it. To decide a case as an adjuster, create your own in the chat."],
+  ["cases.example.note", "This is a sample case: you can read it but not change it. To see how the AI adjuster decides a case of yours, create your own in the chat."],
   ["cases.example.title", "Sample case {case_number}"],
   ["cases.examples.empty", "This insurer has no sample cases right now."],
   ["cases.examples.hint", "Made-up cases each insurer comes with, as an adjuster sees them. Open one to see how a case ends up."],
@@ -106,7 +120,7 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["cases.group.deciding", "The agent is working out what comes next."],
   ["cases.group.derived", "It has gone to an adjuster, who decides what comes next."],
   ["cases.group.verifying", "The agent is checking the policy."],
-  ["cases.intro", "A case is what the agent builds from what you tell it: your details, the conversation and what it found in your policy, so an adjuster can review and decide it. Here you see yours and sample cases from each insurer."],
+  ["cases.intro", "A case is what the agent builds from what you tell it: your details, the conversation and what it found in your policy, so the AI adjuster can review and decide it. Here you see yours and sample cases from each insurer."],
   ["cases.mine.chat", "Continue in the chat"],
   ["cases.mine.chat_with", "Continue in {insurer}'s chat"],
   ["cases.mine.empty", "You don't have any case yet. Tell an insurer's agent what happened and it shows up here."],
@@ -181,7 +195,6 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["chat.page.composer_hint", "This is a demo with example policies, so please don't write real personal data."],
   ["chat.page.composer_label", "Your message"],
   ["chat.page.connecting", "Connecting…"],
-  ["chat.page.decide_as_adjuster", "Decide this case as the adjuster"],
   ["chat.page.history_restored", "We picked your conversation back up. What you wrote before is stored with personal data masked, which is why you see labels in its place."],
   ["chat.page.reset", "Restart conversation"],
   ["chat.page.reset_body", "This conversation closes and you start a new one from scratch."],
@@ -251,6 +264,9 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["comparison.column.interrupted", "The answer did not arrive before you left the page."],
   ["comparison.column.loading", "Checking {insurer}'s policy…"],
   ["comparison.column.policy", "Clauses of policy {policy}"],
+];
+
+const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["comparison.column.policy_issued_by", "Clauses of policy {policy}, issued by {issuer}"],
   ["comparison.column.rejected_title", "A limit was reached"],
   ["comparison.column.retry", "Ask again"],
@@ -264,9 +280,6 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["comparison.examples.lend_car", "Am I covered if I lend my car to a friend?"],
   ["comparison.examples.other_driver_no_insurance", "What happens if I am hit by someone with no insurance?"],
   ["comparison.examples.passenger_medical", "Does my policy pay my passengers' medical bills?"],
-];
-
-const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["comparison.examples.rental_car", "Will you pay for a rental car while mine is being repaired?"],
   ["comparison.examples.ride_app", "Am I covered if I use my car for a ride-hailing app?"],
   ["comparison.examples.stolen_keys", "Am I covered if my car is stolen with the keys inside?"],
@@ -323,7 +336,7 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["documents.title", "Documents {agent} consults"],
   ["documents.translation_note", "Reference translation into English. The governing text is the original."],
   ["evals.scripted_insured.unknown_field", "I don't know, I don't have that."],
-  ["guide.about.limit", "The agent does not decide coverage or payments: an adjuster signs that. In this demo, the adjuster is you."],
+  ["guide.about.limit", "The agent you talk to does not decide coverage or payments: an AI adjuster does, separately from it, and explains each step with its sources."],
   ["guide.about.sample", "Everything is sample data: the insurers are fictional, and the policies and details are made up."],
   ["guide.about.what", "Cautelia is a demo of an AI agent for auto insurance. It helps someone who has just had a crash: it gathers what happened, builds the case and answers policy questions, showing the clause it relies on."],
   ["guide.differences.agent", "{agent} helps you."],
@@ -331,10 +344,10 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["guide.differences.tip", "To notice it, report the same crash to two of them."],
   ["guide.differences.title", "What changes between insurers"],
   ["guide.start", "Choose an insurer"],
+  ["guide.steps.adjuster.body", "On your case, an AI adjuster reads the policy and the rules, decides and explains its decision step by step."],
+  ["guide.steps.adjuster.title", "See how the adjuster decides"],
   ["guide.steps.choose.body", "Each one comes with its sample policy. You can try several."],
   ["guide.steps.choose.title", "Pick an insurer"],
-  ["guide.steps.decide.body", "With that link you decide your own case, as an adjuster would."],
-  ["guide.steps.decide.title", "Decide as the adjuster"],
   ["guide.steps.link.body", "The agent asks for what is missing and gives you the link to your case."],
   ["guide.steps.link.title", "Get your case"],
   ["guide.steps.report.both", "By chat or by voice, in your own words."],
@@ -419,6 +432,8 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["inbox.decision.takeover_note", "The agent is still evaluating this case. If you decide it now, it is yours and the rules no longer close it on their own."],
   ["inbox.decision.title", "Decide the case"],
   ["inbox.explanation.by_adjuster", "Decided by an adjuster at the insurer"],
+  ["inbox.explanation.by_adjuster_ai", "Decided by the AI adjuster"],
+  ["inbox.explanation.by_adjuster_ai_agency", "Sent to the insurer by the AI adjuster"],
   ["inbox.explanation.by_agency", "Sent to the insurer by the agency"],
   ["inbox.explanation.by_rules", "No adjuster: the insurer's rules closed it"],
   ["inbox.explanation.by_staff", "Decided by {who}"],
@@ -502,6 +517,9 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.block.safety", "whether anyone was hurt"],
   ["intake.block.vehicle_and_driver", "the vehicle and who was driving"],
   ["intake.block.what_happened", "what happened"],
+];
+
+const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["intake.block.when_and_where", "when and where"],
   ["intake.claim_item.identity_and_policy", "your full name and policy number"],
   ["intake.claim_item.other_parties", "whether anyone else or another vehicle was involved (optional)"],
@@ -517,9 +535,6 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.closing.fast_claim_done", "Done: I have what I need for your case {case_number}. I'm reviewing your report and I'll confirm in a moment."],
   ["intake.closing.fast_claim_offer", "Done: I have what I need for your case {case_number}. Would you like to add {missing}, or shall we leave it as is?"],
   ["intake.closing.fast_claim_registered", "Your case {case_number} is already registered; you can see it with the link above."],
-];
-
-const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["intake.closing.fast_claim_review_after_extra", "Noted, thank you. I'm reviewing your report and I'll confirm in a moment."],
   ["intake.closing.fast_claim_review_already", "Your case {case_number} is under review; I'll confirm in a moment."],
   ["intake.closing.fast_claim_review_declined", "All right. I'm reviewing your report and I'll confirm in a moment."],
@@ -755,6 +770,9 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["quality.gate.no_promises", "It does not promise coverage, payments or fault"],
   ["quality.gate.not_measured", "Not measured"],
   ["quality.gate.personal_data", "It stores personal data masked"],
+];
+
+const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["quality.gate.some_failed", "{failed} of {total} failed"],
   ["quality.gates.lead", "A single failure in any of them and the version is not published."],
   ["quality.gates.title", "Rules that cannot be broken"],
@@ -770,9 +788,6 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["quality.pending.budget_exhausted", "the spending cap was reached"],
   ["quality.pending.count", "{count} situations:"],
   ["quality.pending.lead", "Not measured is not the same as fine. That is why it is listed apart, with its reason."],
-];
-
-const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["quality.pending.none", "Everything this run tried to measure was measured."],
   ["quality.pending.other", "another reason"],
   ["quality.pending.provider_key_missing", "the provider key is missing"],
@@ -982,14 +997,7 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["trace.summary.lost", "The trace for this answer never arrived"],
   ["trace.summary.ready", "Ready"],
   ["trace.summary.recording", "Recording…"],
-  ["visitor.adjuster.title", "Play the adjuster"],
   ["visitor.block.fields", "Your report details"],
-  ["visitor.decide_intro", "Check the details and decide. The conversation continues with your decision."],
-  ["visitor.decision.title", "Decide"],
-  ["visitor.decision_not_saved", "We could not save your decision. Try again; your note is still below."],
-  ["visitor.done_body", "The notice with the decision reaches you in your conversation."],
-  ["visitor.done_title", "Done, your case has a decision"],
-  ["visitor.expired_with_comment", "The link expired while you were writing. Your note is still below so you can copy it before you leave."],
   ["visitor.intro", "What you told us, what your policy says and what the adjuster decides."],
   ["visitor.number", "Case {case_number} · use it to pick it up again or look it up"],
   ["visitor.opening", "Opening your case…"],
@@ -997,24 +1005,6 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["visitor.title_claim", "Your accident report"],
   ["visitor.title_inquiry", "Your policy question"],
   ["visitor.title_quote", "Your quote request"],
-  ["visitor.triage.amount_examples", "Try:"],
-  ["visitor.triage.amount_help", "From {first} the amount is reviewed; from {last}, in more detail."],
-  ["visitor.triage.amount_help_none", "A rough estimate."],
-  ["visitor.triage.amount_help_one", "From {first} the amount is reviewed."],
-  ["visitor.triage.amount_invalid", "Type numbers only, with no dots, commas or letters."],
-  ["visitor.triage.amount_label", "How much would the repair cost? (in pesos)"],
-  ["visitor.triage.amount_preview", "It will be noted as {amount}."],
-  ["visitor.triage.coverage_help", "For example, if it might be an exclusion."],
-  ["visitor.triage.coverage_label", "Any doubt the policy covers it?"],
-  ["visitor.triage.expired", "The link expired before these notes were saved. What you wrote is still here, but it was not saved."],
-  ["visitor.triage.fraud_help", "For example, accounts that don't match."],
-  ["visitor.triage.fraud_label", "Anything that suggests fraud?"],
-  ["visitor.triage.intro", "If you note these, the rules classify the case again."],
-  ["visitor.triage.limit", "These notes cannot be changed any more on this case."],
-  ["visitor.triage.result", "Rules updated."],
-  ["visitor.triage.save", "Save and see the rules"],
-  ["visitor.triage.title", "Review (optional)"],
-  ["visitor.triage.unset", "I have not checked"],
   ["visitor.valid_until", "This link works until {time} today."],
   ["voice.answer.back_to_report", "Back to your report:"],
   ["voice.answer.delayed", "I'm still checking your policy; I'll tell you as soon as I have it."],
@@ -1023,9 +1013,6 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.availability.rate_limited_daily", "You've used your calls for today from this connection; you can call again tomorrow. Chat is still available."],
   ["voice.availability.rate_limited_site", "All of today's demo calls have been used; come back tomorrow or use the chat."],
   ["voice.barge_in.acknowledge", "Yes, go ahead."],
-];
-
-const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
   ["voice.closing.case_number", "Your case number with {insurer} is {spoken}."],
   ["voice.closing.farewell", "Take care."],
   ["voice.closing.next_step", "An adjuster reviews your case; the decision will show up on this screen."],
@@ -1036,6 +1023,9 @@ const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
   ["voice.console.audio_blocked", "Your browser has the sound blocked, and you won't hear the agent until you turn it on."],
   ["voice.console.audio_enable", "Turn on the sound"],
   ["voice.console.call", "Call"],
+];
+
+const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
   ["voice.console.call_language", "Call in English."],
   ["voice.console.checking", "Checking whether voice is available"],
   ["voice.console.connecting", "Connecting"],

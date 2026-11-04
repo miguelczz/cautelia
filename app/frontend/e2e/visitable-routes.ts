@@ -13,7 +13,13 @@
 // que el chequeo de identificadores literales admite. `readiness` marca las dos paginas de la espera, que no
 // son rutas: el arnes las obtiene interceptando la salud de listo.
 
-import type { ExampleCaseList, QualityBoard, SiteDirectory, SpendPanel } from "../src/shared/api";
+import type {
+  AdjusterRunOut,
+  ExampleCaseList,
+  QualityBoard,
+  SiteDirectory,
+  SpendPanel,
+} from "../src/shared/api";
 
 export type Audience = "visitor" | "staff";
 
@@ -63,6 +69,95 @@ export interface VisitableRoute {
     readonly sse?: boolean;
   }[];
 }
+
+/**
+ * La corrida del ajustador de IA para el arnes: decidida, con los seis pasos y una fuente de cada
+ * tipo (cláusula, regla, póliza, reporte y una página externa), para que el panel «Cómo decidió el
+ * ajustador» se mida lleno: contraste de la raya y las marcas de la marca en claro y en oscuro,
+ * encabezados, lista ordenada, enlace externo y ausencia de desbordamiento a 360 de ancho. Datos
+ * sintéticos; la regla viaja con su identificador y la pantalla no lo enseña.
+ */
+const AJUSTADOR_DECIDIDO: AdjusterRunOut = {
+  status: "decided",
+  attempt: 1,
+  steps: [
+    {
+      id: "case_read",
+      title_key: "adjuster.step.case_read.title",
+      text: "Leí el reporte del caso SA-1: tiene 5 datos anotados, con el relato de lo que pasó.",
+      sources: [{ kind: "case", ref: "SA-1", label: "Reporte del caso SA-1" }],
+    },
+    {
+      id: "policy_read",
+      title_key: "adjuster.step.policy_read.title",
+      text: "Leí la póliza POL-1: está vigente hoy.",
+      sources: [{ kind: "policy", ref: "POL-1", label: "Póliza POL-1" }],
+    },
+    {
+      id: "clauses",
+      title_key: "adjuster.step.clauses.title",
+      text: "Busqué en la póliza las cláusulas que se parecen a lo que pasó y encontré 1.",
+      sources: [
+        {
+          kind: "clause",
+          ref: "PAP-2026-STO-001-4.1",
+          label: "Pérdida del vehículo por daños y por hurto",
+        },
+      ],
+    },
+    {
+      id: "rules",
+      title_key: "adjuster.step.rules.title",
+      text: "Las reglas de la aseguradora pasaron este caso a revisión.",
+      sources: [{ kind: "rule", ref: "STO-R-12@1", label: "STO-R-12" }],
+    },
+    {
+      id: "vehicle_value",
+      title_key: "adjuster.step.vehicle_value.title",
+      text: "Busqué el valor de referencia del vehículo y encontré un valor, con confianza media.",
+      sources: [
+        {
+          kind: "web",
+          ref: "https://example.com/guia-de-valores",
+          label: "Guía de valores de referencia",
+          url: "https://example.com/guia-de-valores",
+        },
+      ],
+    },
+    {
+      id: "decision",
+      title_key: "adjuster.step.decision.title",
+      text: "Apruebo el caso con la cláusula encontrada.",
+      sources: [],
+    },
+  ],
+  decision: "approve",
+  headline: "Aprobado: el choque está cubierto por la póliza",
+  explanation:
+    "La póliza estaba vigente y la cláusula de pérdida por daños cubre el choque descrito.\nLas reglas de la aseguradora no encontraron nada que lo impida.",
+  searches_used: 1,
+  updated_at: "2026-09-28T12:05:00+00:00",
+};
+
+/** El mismo caso mientras el ajustador trabaja: dos pasos listos y cuatro por llegar (esqueleto). */
+const AJUSTADOR_EN_CURSO: AdjusterRunOut = {
+  ...AJUSTADOR_DECIDIDO,
+  status: "running",
+  steps: AJUSTADOR_DECIDIDO.steps?.slice(0, 2) ?? [],
+  decision: null,
+  headline: null,
+  explanation: null,
+};
+
+/** Cuando el ajustador falló: la pantalla solo dice que el caso sigue en revisión. */
+const AJUSTADOR_FALLIDO: AdjusterRunOut = {
+  ...AJUSTADOR_DECIDIDO,
+  status: "failed",
+  decision: null,
+  headline: null,
+  explanation: null,
+  steps: [],
+};
 
 /**
  * Un caso de ejemplo para el arnes: los seis bloques con algo en cada uno.
@@ -141,6 +236,7 @@ const CASO_DE_EJEMPLO = {
   resolution: null,
   available_actions: ["approve", "reject"],
   can_correct_fields: true,
+  adjuster: AJUSTADOR_DECIDIDO,
   explanation: {
     asked: "present",
     cited: "present",
@@ -765,6 +861,35 @@ export const VISITABLE_ROUTES: readonly VisitableRoute[] = [
     // bloquea la entrega.
     audience: "visitor",
     stub: [{ url: "**/api/inbox/*/cases/*", body: CASO_DE_EJEMPLO }],
+  },
+  {
+    // El panel del ajustador en curso: pasos que ya llegaron y esqueleto de los que faltan. La
+    // pantalla lo vuelve a leer sola y el arnes lo sirve siempre igual.
+    routeId: "visitor-case-adjuster-running",
+    route: "/c/$tenantId/$caseId",
+    path: "/c/stonecroft/case-a11y",
+    owningUnit: "U14",
+    audience: "visitor",
+    stub: [
+      {
+        url: "**/api/inbox/*/cases/*",
+        body: { ...CASO_DE_EJEMPLO, available_actions: [], adjuster: AJUSTADOR_EN_CURSO },
+      },
+    ],
+  },
+  {
+    // «Sigue en revisión»: el ajustador falló y la pantalla no cuenta el motivo ni inventa decisión.
+    routeId: "visitor-case-adjuster-failed",
+    route: "/c/$tenantId/$caseId",
+    path: "/c/stonecroft/case-a11y",
+    owningUnit: "U14",
+    audience: "visitor",
+    stub: [
+      {
+        url: "**/api/inbox/*/cases/*",
+        body: { ...CASO_DE_EJEMPLO, available_actions: [], adjuster: AJUSTADOR_FALLIDO },
+      },
+    ],
   },
   {
     routeId: "waking",

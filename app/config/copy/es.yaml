@@ -1138,7 +1138,7 @@ guide:
       text: "Cautelia es una demostración de una agente de inteligencia artificial para seguros de auto. Atiende a quien acaba de chocar: recoge lo que pasó, arma el caso y responde dudas de la póliza mostrando la cláusula en la que se apoya."
       surface: system
     limit:
-      text: "La agente no decide coberturas ni pagos: eso lo firma un ajustador. En esta demo, el ajustador eres tú."
+      text: "La agente que conversa no decide coberturas ni pagos: eso lo decide un ajustador de IA, aparte de ella, que explica cada paso con sus fuentes."
       surface: system
     sample:
       text: "Todo es de ejemplo: las aseguradoras son ficticias y las pólizas y los datos, inventados."
@@ -1177,12 +1177,12 @@ guide:
       body:
         text: La agente pregunta lo que falta y te da el enlace a tu caso.
         surface: system
-    decide:
+    adjuster:
       title:
-        text: Decide como ajustador
+        text: Mira cómo decide el ajustador
         surface: system
       body:
-        text: Con ese enlace decides tu propio caso, como lo haría un ajustador.
+        text: En tu caso, un ajustador de IA lee la póliza y las reglas, decide y explica su decisión paso a paso.
         surface: system
   try:
     title:
@@ -2387,9 +2387,6 @@ chat:
     see_reasoning:
       text: "Pensamiento de {agent}"
       surface: chat
-    decide_as_adjuster:
-      text: "Decidir este caso como ajustador"
-      surface: chat
     # Empezar de cero (decisión de Miguel, 2026-10-06): botón de solo icono entre las
     # acciones del encabezado, que abre una ventana (2026-10-11). El caso anterior
     # queda guardado con su número, pero la pantalla ya no lo muestra.
@@ -3450,6 +3447,14 @@ inbox:
     by_agency:
       text: Enviado a la aseguradora por la agencia
       surface: inbox
+    # El ajustador de IA (2026-11-03) no es personal de nadie: se nombra como lo que es. La
+    # agencia no decide, así que si lo que hizo fue enviar el caso, se dice eso.
+    by_adjuster_ai:
+      text: Decidido por el ajustador de IA
+      surface: inbox
+    by_adjuster_ai_agency:
+      text: Enviado a la aseguradora por el ajustador de IA
+      surface: inbox
     # US1.17: el cierre directo lo aplican las reglas y nadie decide. Un actor «system»
     # nunca se imprime: se dice que no hubo ajustador.
     by_rules:
@@ -3589,21 +3594,11 @@ visitor:
   title_quote:
     text: Tu solicitud de cotización
     surface: inbox
-  # El panel donde el visitante hace de ajustador (2026-10-14): su título, el del paso de
-  # decidir y el bloque de datos que reemplaza, en esta pantalla, a «Completitud por campo»
-  # (jerga de quien decide con credencial).
-  # Sin nada que decidir ni que anotar, el panel dice cómo está el caso (2026-10-14).
+  # Sin ajustador que contar (cerrado por las reglas, espera al asegurado), el panel solo
+  # dice cómo está el caso (2026-10-14). El visitante ya no decide ni anota (2026-11-04).
   status:
     title:
       text: Estado de tu caso
-      surface: inbox
-  adjuster:
-    title:
-      text: Haz de ajustador
-      surface: inbox
-  decision:
-    title:
-      text: Decide
       surface: inbox
   block:
     fields:
@@ -3619,92 +3614,9 @@ visitor:
   valid_until:
     text: Este enlace funciona hasta las {time} de hoy.
     surface: inbox
-  decide_intro:
-    text: Revisa los datos y decide. La conversación sigue con tu decisión.
-    surface: inbox
   opening:
     text: Abriendo tu caso…
     surface: inbox
-  # Lo que se ve al confirmar: el caso quedó decidido, el aviso que recibe la
-  # persona y la vuelta a la conversación (Flujo 3, paso 6).
-  done_title:
-    text: Listo, tu caso ya tiene una decisión
-    surface: inbox
-  done_body:
-    text: El aviso con la decisión te llega en tu conversación.
-    surface: inbox
-  # BR5.4: si el enlace vence mientras se escribe, el texto se conserva para
-  # copiarlo. Perderlo convierte un vencimiento en trabajo perdido, y lo sufre
-  # justo quien estaba terminando.
-  expired_with_comment:
-    text: El enlace venció mientras escribías. Tu nota sigue aquí abajo para que la copies antes de salir.
-    surface: inbox
-  # El rechazo de la decisión con el enlace todavía vigente (2026-10-12): no venció,
-  # no se pudo guardar. Decir «venció» ahí es mentirle a quien aún puede reintentar.
-  decision_not_saved:
-    text: No pudimos guardar tu decisión. Inténtalo de nuevo; tu nota sigue aquí abajo.
-    surface: inbox
-  # Lo que el visitante anota haciendo de ajustador (2026-10-13): el monto, si hay dudas sobre
-  # la cobertura y si sospecha de fraude. Es opcional, se escribe en pesos y viene con ayuda
-  # (desde qué montos cambian las reglas, qué es cada pregunta), porque quien lo hace no sabe
-  # qué mira un ajustador. Sin jerga del sistema (U-07): aquí no se dice bandeja, cola ni triaje.
-  triage:
-    title:
-      text: Revisa (opcional)
-      surface: inbox
-    intro:
-      text: Si anotas estos datos, las reglas vuelven a clasificar el caso.
-      surface: inbox
-    amount_label:
-      text: ¿Cuánto costaría el arreglo? (en pesos)
-      surface: inbox
-    # Los montos salen del archivo de reglas de la aseguradora, nunca de la pantalla: tres
-    # frases según cuántos umbrales tenga (dos o más, uno, ninguno).
-    amount_help:
-      text: "Desde {first} se revisa el monto; desde {last}, con más detalle."
-      surface: inbox
-    amount_help_one:
-      text: "Desde {first} se revisa el monto."
-      surface: inbox
-    amount_help_none:
-      text: Un cálculo aproximado.
-      surface: inbox
-    amount_examples:
-      text: "Prueba con:"
-      surface: inbox
-    amount_preview:
-      text: Se anota como {amount}.
-      surface: inbox
-    amount_invalid:
-      text: Escribe solo números, sin puntos, comas ni letras.
-      surface: inbox
-    coverage_label:
-      text: ¿Hay dudas de que la póliza lo cubra?
-      surface: inbox
-    coverage_help:
-      text: Por ejemplo, si podría ser una exclusión.
-      surface: inbox
-    fraud_label:
-      text: ¿Algo hace sospechar fraude?
-      surface: inbox
-    fraud_help:
-      text: Por ejemplo, versiones que no coinciden.
-      surface: inbox
-    unset:
-      text: No lo he revisado
-      surface: inbox
-    save:
-      text: Guardar y ver las reglas
-      surface: inbox
-    result:
-      text: Reglas actualizadas.
-      surface: inbox
-    limit:
-      text: Ya no se pueden cambiar más estas anotaciones en este caso.
-      surface: inbox
-    expired:
-      text: El enlace venció antes de guardar estas anotaciones. Lo que escribiste sigue aquí, pero no quedó guardado.
-      surface: inbox
 
 # El panel de cifras (U22, AC4.16). Cada cifra dice de donde sale o por que no se
 # midio: "no medida" lleva siempre su causa y nunca un cero (BR1.2).
@@ -4004,7 +3916,7 @@ cases:
     text: Casos
     surface: system
   intro:
-    text: "Un caso es lo que la agente arma con lo que le cuentas: tus datos, la conversación y lo que encontró en tu póliza, para que un ajustador lo revise y lo decida. Aquí ves el tuyo y casos de ejemplo de cada aseguradora."
+    text: "Un caso es lo que la agente arma con lo que le cuentas: tus datos, la conversación y lo que encontró en tu póliza, para que el ajustador de IA lo revise y lo decida. Aquí ves el tuyo y casos de ejemplo de cada aseguradora."
     surface: system
   start:
     text: Empezar un caso
@@ -4073,7 +3985,7 @@ cases:
       text: Caso de ejemplo {case_number}
       surface: system
     note:
-      text: "Este es un caso de ejemplo: se puede leer, pero no decidir. Para decidir un caso como ajustador, crea el tuyo en el chat."
+      text: "Este es un caso de ejemplo: se puede leer, pero no cambiar. Para ver cómo decide el ajustador de IA un caso tuyo, crea el tuyo en el chat."
       surface: system
     back:
       text: Volver a Casos
@@ -4148,6 +4060,55 @@ documents:
 # aqui: la escribe el modelo y pasa por la validacion y la guardia. Los pasos dicen «no pude verificar»
 # cuando no pudieron, y es distinto de «no encontre»: son dos resultados distintos.
 adjuster:
+  # El panel «Cómo decidió el ajustador» (2026-11-04), que comparten la pantalla del visitante y
+  # la del personal, de solo lectura. Nunca dice el motivo técnico de un fallo: «sigue en
+  # revisión». Las fuentes se nombran en palabras: una regla es «Regla 1 de la aseguradora», no su
+  # identificador versionado.
+  panel:
+    title:
+      text: Cómo decidió el ajustador
+      surface: inbox
+    title_pending:
+      text: Cómo decide el ajustador
+      surface: inbox
+    running:
+      text: "El ajustador de IA está revisando el caso: {done} de {total} pasos."
+      surface: inbox
+    decided:
+      text: Lo decidió el ajustador de IA.
+      surface: inbox
+    capped:
+      text: Hoy el ajustador de IA ya atendió todos los casos que puede. Este caso espera su turno y se decide en cuanto haya cupo.
+      surface: inbox
+    failed:
+      text: El caso sigue en revisión. Cuando el ajustador lo decida, la decisión aparece aquí.
+      surface: inbox
+    decision:
+      text: Decisión
+      surface: inbox
+    ai_notice:
+      text: Esta explicación la escribió una IA, a partir de la póliza, las reglas de la aseguradora y lo que se contó en el caso.
+      surface: inbox
+    steps:
+      text: Pasos del ajustador
+      surface: inbox
+    sources:
+      text: Fuentes del paso
+      surface: inbox
+  source:
+    kind:
+      clause:
+        text: Cláusula
+        surface: inbox
+      web:
+        text: Fuente externa
+        surface: inbox
+    rule:
+      text: "Regla {number} de la aseguradora"
+      surface: inbox
+    new_tab:
+      text: (se abre en otra pestaña)
+      surface: inbox
   step:
     nothing:
       text: ninguno

@@ -1112,7 +1112,7 @@ guide:
       text: "Cautelia is a demo of an AI agent for auto insurance. It helps someone who has just had a crash: it gathers what happened, builds the case and answers policy questions, showing the clause it relies on."
       surface: system
     limit:
-      text: "The agent does not decide coverage or payments: an adjuster signs that. In this demo, the adjuster is you."
+      text: "The agent you talk to does not decide coverage or payments: an AI adjuster does, separately from it, and explains each step with its sources."
       surface: system
     sample:
       text: "Everything is sample data: the insurers are fictional, and the policies and details are made up."
@@ -1151,12 +1151,12 @@ guide:
       body:
         text: The agent asks for what is missing and gives you the link to your case.
         surface: system
-    decide:
+    adjuster:
       title:
-        text: Decide as the adjuster
+        text: See how the adjuster decides
         surface: system
       body:
-        text: With that link you decide your own case, as an adjuster would.
+        text: On your case, an AI adjuster reads the policy and the rules, decides and explains its decision step by step.
         surface: system
   try:
     title:
@@ -2271,9 +2271,6 @@ chat:
     see_reasoning:
       text: "{agent}'s reasoning"
       surface: chat
-    decide_as_adjuster:
-      text: "Decide this case as the adjuster"
-      surface: chat
     # Starting over (Miguel's decision, 2026-10-06): an icon-only button among the
     # header actions, which opens a window (2026-10-11). The previous case stays
     # saved under its number, but the screen no longer shows it.
@@ -3303,6 +3300,14 @@ inbox:
     by_agency:
       text: Sent to the insurer by the agency
       surface: inbox
+    # The AI adjuster (2026-11-03) is nobody's staff: it is named for what it is. The agency
+    # does not decide, so if what it did was send the case, that is what is said.
+    by_adjuster_ai:
+      text: Decided by the AI adjuster
+      surface: inbox
+    by_adjuster_ai_agency:
+      text: Sent to the insurer by the AI adjuster
+      surface: inbox
     # US1.17: a direct close is applied by the rules and nobody decides. A "system"
     # actor is never printed: it says there was no adjuster.
     by_rules:
@@ -3442,21 +3447,11 @@ visitor:
   title_quote:
     text: Your quote request
     surface: inbox
-  # The panel where the visitor plays the adjuster (2026-10-14): its title, the title of the
-  # decide step and the data block that replaces, on this screen, "Completeness by field"
-  # (jargon for whoever decides with a credential).
-  # With nothing to decide or note, the panel says how the case stands (2026-10-14).
+  # With no adjuster to tell about (closed by the rules, waiting on the insured), the panel
+  # only says how the case stands (2026-10-14). The visitor no longer decides or notes (2026-11-04).
   status:
     title:
       text: Your case status
-      surface: inbox
-  adjuster:
-    title:
-      text: Play the adjuster
-      surface: inbox
-  decision:
-    title:
-      text: Decide
       surface: inbox
   block:
     fields:
@@ -3472,93 +3467,9 @@ visitor:
   valid_until:
     text: This link works until {time} today.
     surface: inbox
-  decide_intro:
-    text: Check the details and decide. The conversation continues with your decision.
-    surface: inbox
   opening:
     text: Opening your case…
     surface: inbox
-  # What shows on confirming: the case has a decision, the notice the person
-  # receives, and the way back to the conversation (Flow 3, step 6).
-  done_title:
-    text: Done, your case has a decision
-    surface: inbox
-  done_body:
-    text: The notice with the decision reaches you in your conversation.
-    surface: inbox
-  # BR5.4: if the link expires while you are writing, the text is kept so you can
-  # copy it. Losing it turns an expiry into lost work, and it falls on exactly the
-  # person who was finishing.
-  expired_with_comment:
-    text: The link expired while you were writing. Your note is still below so you can copy it before you leave.
-    surface: inbox
-  # The decision rejected while the link is still valid (2026-10-12): it did not
-  # expire, it could not be saved. Saying "expired" there misleads someone who can retry.
-  decision_not_saved:
-    text: We could not save your decision. Try again; your note is still below.
-    surface: inbox
-  # What the visitor notes while playing adjuster (2026-10-13): the amount, whether there are
-  # doubts about the coverage and whether they suspect fraud. It is optional, the amount is
-  # written in pesos and it comes with help (from which amounts the rules change, what each
-  # question means), because whoever does this does not know what an adjuster looks at. No
-  # system jargon (U-07): nothing here says inbox, queue or triage.
-  triage:
-    title:
-      text: Review (optional)
-      surface: inbox
-    intro:
-      text: If you note these, the rules classify the case again.
-      surface: inbox
-    amount_label:
-      text: How much would the repair cost? (in pesos)
-      surface: inbox
-    # The amounts come from the insurer's rules file, never from the screen: three phrases
-    # depending on how many thresholds it has (two or more, one, none).
-    amount_help:
-      text: "From {first} the amount is reviewed; from {last}, in more detail."
-      surface: inbox
-    amount_help_one:
-      text: "From {first} the amount is reviewed."
-      surface: inbox
-    amount_help_none:
-      text: A rough estimate.
-      surface: inbox
-    amount_examples:
-      text: "Try:"
-      surface: inbox
-    amount_preview:
-      text: It will be noted as {amount}.
-      surface: inbox
-    amount_invalid:
-      text: Type numbers only, with no dots, commas or letters.
-      surface: inbox
-    coverage_label:
-      text: Any doubt the policy covers it?
-      surface: inbox
-    coverage_help:
-      text: For example, if it might be an exclusion.
-      surface: inbox
-    fraud_label:
-      text: Anything that suggests fraud?
-      surface: inbox
-    fraud_help:
-      text: For example, accounts that don't match.
-      surface: inbox
-    unset:
-      text: I have not checked
-      surface: inbox
-    save:
-      text: Save and see the rules
-      surface: inbox
-    result:
-      text: Rules updated.
-      surface: inbox
-    limit:
-      text: These notes cannot be changed any more on this case.
-      surface: inbox
-    expired:
-      text: The link expired before these notes were saved. What you wrote is still here, but it was not saved.
-      surface: inbox
 
 # The figures panel (U22, AC4.16). Every figure says where it comes from or why it
 # was not measured: "not measured" always carries its cause and never a zero (BR1.2).
@@ -3858,7 +3769,7 @@ cases:
     text: Cases
     surface: system
   intro:
-    text: "A case is what the agent builds from what you tell it: your details, the conversation and what it found in your policy, so an adjuster can review and decide it. Here you see yours and sample cases from each insurer."
+    text: "A case is what the agent builds from what you tell it: your details, the conversation and what it found in your policy, so the AI adjuster can review and decide it. Here you see yours and sample cases from each insurer."
     surface: system
   start:
     text: Start a case
@@ -3927,7 +3838,7 @@ cases:
       text: Sample case {case_number}
       surface: system
     note:
-      text: "This is a sample case: you can read it but not decide it. To decide a case as an adjuster, create your own in the chat."
+      text: "This is a sample case: you can read it but not change it. To see how the AI adjuster decides a case of yours, create your own in the chat."
       surface: system
     back:
       text: Back to Cases
@@ -4002,6 +3913,54 @@ documents:
 # writes it and it goes through validation and the guard. The steps say "could not verify" when they
 # could not, and that is different from "did not find": they are two different results.
 adjuster:
+  # The "How the adjuster decided" panel (2026-11-04), shared by the visitor's screen and the
+  # staff screen, read-only. It never states the technical cause of a failure: "still under
+  # review". Sources are named in words: a rule is "Insurer rule 1", not its versioned identifier.
+  panel:
+    title:
+      text: How the adjuster decided
+      surface: inbox
+    title_pending:
+      text: How the adjuster decides
+      surface: inbox
+    running:
+      text: "The AI adjuster is reviewing the case: {done} of {total} steps."
+      surface: inbox
+    decided:
+      text: The AI adjuster decided this case.
+      surface: inbox
+    capped:
+      text: Today the AI adjuster has already handled all the cases it can. This case is waiting its turn and will be decided as soon as there is room.
+      surface: inbox
+    failed:
+      text: The case is still under review. When the adjuster decides it, the decision appears here.
+      surface: inbox
+    decision:
+      text: Decision
+      surface: inbox
+    ai_notice:
+      text: This explanation was written by an AI, from the policy, the insurer's rules and what was told in the case.
+      surface: inbox
+    steps:
+      text: Adjuster steps
+      surface: inbox
+    sources:
+      text: Sources for this step
+      surface: inbox
+  source:
+    kind:
+      clause:
+        text: Clause
+        surface: inbox
+      web:
+        text: External source
+        surface: inbox
+    rule:
+      text: "Insurer rule {number}"
+      surface: inbox
+    new_tab:
+      text: (opens in a new tab)
+      surface: inbox
   step:
     nothing:
       text: none

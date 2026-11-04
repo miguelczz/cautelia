@@ -104,8 +104,8 @@ function stepsFor(directory: SiteDirectory): readonly Paso[] {
         body: (t) => t("guide.steps.link.body"),
       },
       {
-        title: (t) => t("guide.steps.decide.title"),
-        body: (t) => t("guide.steps.decide.body"),
+        title: (t) => t("guide.steps.adjuster.title"),
+        body: (t) => t("guide.steps.adjuster.body"),
       },
     );
   }

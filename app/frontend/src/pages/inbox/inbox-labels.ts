@@ -48,6 +48,16 @@ export function isClosedByRules(detail: CaseDetailOut): boolean {
 }
 
 /**
+ * Si el ajustador de IA todavia tiene que decidir el caso: esta derivado y su corrida no existe
+ * (acaba de derivarse), sigue en curso, espera cupo o fallo --leer el caso la reintenta--. Con
+ * la corrida decidida el caso ya salio de `derived`, y cualquier otro estado no es suyo. Lo usa
+ * la pantalla del visitante para seguir leyendo el caso hasta que haya decision.
+ */
+export function isAdjusterPending(detail: CaseDetailOut): boolean {
+  return detail.state === "derived" && detail.adjuster?.status !== "decided";
+}
+
+/**
  * Lo que dice quien abre su caso mientras la agente lo evalua, en una linea: la que ya
  * usa la pagina de casos. No dice que este con un ajustador, porque todavia no lo esta.
  * Sin frase (`undefined`) en cualquier otro estado.

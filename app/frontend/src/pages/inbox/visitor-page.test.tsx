@@ -1,20 +1,17 @@
 import { act, screen, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { renderWithProviders } from "../../app/testing";
 import type {
+  AdjusterRunOut,
   CaseDetailOut,
   InboxResult,
   RedeemOut,
-  TriageNoteIn,
-  TriageNoteOut,
 } from "../../shared/api-client/inbox";
 import type { ProblemView } from "../../shared/api-client/problems";
 import { createTranslate } from "../../shared/i18n/translate";
 import { statusKindForCaseProblem } from "../status/case-link-status";
 import { StatusPage } from "../status/status-page";
-import { formatPesos } from "../policies/policies-page";
 import { callMemory } from "../voice/call-memory";
 import type { WireFrame } from "../voice/voice-events";
 import { VisitorCasePage, type CaseSession } from "./visitor-page";
@@ -26,27 +23,6 @@ const canjeado = vi.hoisted(() => vi.fn<(token: string) => Promise<InboxResult<R
 const pedido = vi.hoisted(() =>
   vi.fn<(tenantId: string, caseId: string) => Promise<InboxResult<CaseDetailOut>>>(),
 );
-const decidido = vi.hoisted(() =>
-  vi.fn<
-    (
-      tenantId: string,
-      caseId: string,
-      decision: string,
-      comment: string,
-      key: string,
-    ) => Promise<InboxResult<{ decision_id: string; resolution: string }>>
-  >(),
-);
-const anotado = vi.hoisted(() =>
-  vi.fn<
-    (
-      tenantId: string,
-      caseId: string,
-      note: TriageNoteIn,
-      key: string,
-    ) => Promise<InboxResult<TriageNoteOut>>
-  >(),
-);
 
 vi.mock("../../shared/api-client/inbox", async (original) => {
   const real = await original<typeof import("../../shared/api-client/inbox")>();
@@ -54,8 +30,6 @@ vi.mock("../../shared/api-client/inbox", async (original) => {
     ...real,
     redeemLink: canjeado,
     caseDetail: pedido,
-    decideCase: decidido,
-    annotateTriage: anotado,
   };
 });
 
@@ -67,6 +41,103 @@ const SESION: RedeemOut = {
   access: "view_and_decide",
   expires_at: "2026-09-28T13:00:00+00:00",
 };
+
+/**
+ * La corrida del ajustador de IA ya decidida, con los seis pasos y fuentes de cada tipo: una
+ * clausula, dos reglas, la poliza, el reporte y una pagina externa. El identificador versionado
+ * de una regla viaja en la fuente (`STO-R-12`) y la pantalla **no** lo enseña.
+ */
+function corrida(extra: Partial<AdjusterRunOut> = {}): AdjusterRunOut {
+  return {
+    status: "decided",
+    attempt: 1,
+    steps: [
+      {
+        id: "case_read",
+        title_key: "adjuster.step.case_read.title",
+        text: "Lei el reporte del caso CA-1: tiene 5 datos anotados.",
+        sources: [{ kind: "case", ref: "CA-1", label: "Reporte del caso CA-1" }],
+      },
+      {
+        id: "policy_read",
+        title_key: "adjuster.step.policy_read.title",
+        text: "Lei la poliza POL-1: esta vigente hoy.",
+        sources: [{ kind: "policy", ref: "POL-1", label: "Póliza POL-1" }],
+      },
+      {
+        id: "clauses",
+        title_key: "adjuster.step.clauses.title",
+        text: "Busque en la poliza y encontre 1 clausula.",
+        sources: [{ kind: "clause", ref: "D.INS.COLLISION", label: "Parte D - Daños propios" }],
+      },
+      {
+        id: "rules",
+        title_key: "adjuster.step.rules.title",
+        text: "Las reglas de la aseguradora no marcaron nada especial.",
+        sources: [
+          { kind: "rule", ref: "STO-R-12@1", label: "STO-R-12" },
+          { kind: "rule", ref: "STO-R-15@2", label: "STO-R-15" },
+        ],
+      },
+      {
+        id: "vehicle_value",
+        title_key: "adjuster.step.vehicle_value.title",
+        text: "Busque el valor de referencia del vehiculo.",
+        sources: [
+          {
+            kind: "web",
+            ref: "https://guia.example.com/valores",
+            label: "Guía de valores",
+            url: "https://guia.example.com/valores",
+          },
+        ],
+      },
+      { id: "decision", title_key: "adjuster.step.decision.title", text: "Apruebo.", sources: [] },
+    ],
+    decision: "approve",
+    headline: "Aprobado: el choque esta cubierto",
+    explanation:
+      "El choque esta cubierto por la clausula de dano propio.\nLa poliza estaba vigente.",
+    searches_used: 1,
+    updated_at: "2026-09-28T12:05:00+00:00",
+    ...extra,
+  };
+}
+
+/** Un caso que el ajustador de IA ya decidio: cerrado, aprobado y sin nada que decidir. */
+const DECIDIDO_POR_IA: Partial<CaseDetailOut> = {
+  state: "closed",
+  resolution: "approved",
+  derivation_reason: "rule",
+  available_actions: [],
+  can_correct_fields: false,
+  adjuster: corrida(),
+  explanation: {
+    asked: "none",
+    cited: "none",
+    rule: "present",
+    decided_by: "present",
+    decided_at: "present",
+    decided_by_kind: "adjuster_ai",
+    decided_by_id: null,
+    decided_at_iso: "2026-09-28T12:05:00+00:00",
+  },
+};
+
+/** El caso derivado mientras el ajustador de IA trabaja: `pasos` ya llegaron de los seis. */
+function enCurso(pasos: number): Partial<CaseDetailOut> {
+  return {
+    state: "derived",
+    available_actions: [],
+    adjuster: corrida({
+      status: "running",
+      decision: null,
+      headline: null,
+      explanation: null,
+      steps: corrida().steps?.slice(0, pasos) ?? [],
+    }),
+  };
+}
 
 function caso(extra: Partial<CaseDetailOut> = {}): CaseDetailOut {
   return {
@@ -100,7 +171,7 @@ function caso(extra: Partial<CaseDetailOut> = {}): CaseDetailOut {
     trace_latency_ms: 1800,
     updated_at: "2026-09-28T12:01:00+00:00",
     resolution: null,
-    available_actions: ["approve", "reject"],
+    available_actions: [],
     can_correct_fields: true,
     explanation: {
       asked: "none",
@@ -112,6 +183,8 @@ function caso(extra: Partial<CaseDetailOut> = {}): CaseDetailOut {
       decided_by_id: null,
       decided_at_iso: null,
     },
+    // Por omision el caso ya lo decidio el ajustador de IA: es lo que lee quien abre su caso.
+    ...DECIDIDO_POR_IA,
     ...extra,
   };
 }
@@ -138,8 +211,6 @@ function dibujar(props: Partial<React.ComponentProps<typeof VisitorCasePage>> = 
 beforeEach(() => {
   canjeado.mockReset();
   pedido.mockReset();
-  decidido.mockReset();
-  anotado.mockReset();
   canjeado.mockResolvedValue({ ok: true, value: SESION });
   pedido.mockResolvedValue({ ok: true, value: caso() });
 });
@@ -540,6 +611,7 @@ describe("un caso que cerraron las reglas, o que la agente aun evalua", () => {
     fired_rules: ["R-CIERRE-DIRECTO"],
     available_actions: [],
     can_correct_fields: false,
+    adjuster: null,
     explanation: {
       asked: "none",
       cited: "none",
@@ -584,7 +656,7 @@ describe("un caso que cerraron las reglas, o que la agente aun evalua", () => {
     expect(pantalla.toLowerCase()).not.toContain("bandeja");
   });
 
-  it("sin nada que decidir ni anotar, el panel dice el estado del caso y no invita a hacer de ajustador", async () => {
+  it("sin ajustador que contar, el panel dice el estado del caso y no es el del ajustador", async () => {
     pedido.mockResolvedValue({ ok: true, value: caso(cierreDirecto) });
     dibujar();
     const panel = await screen.findByTestId("visitor-adjuster");
@@ -592,8 +664,8 @@ describe("un caso que cerraron las reglas, o que la agente aun evalua", () => {
     expect(within(panel).getByRole("heading", { level: 2 }).textContent).toBe(
       t("visitor.status.title"),
     );
-    expect(panel.textContent).not.toContain(t("visitor.adjuster.title"));
-    expect(panel.textContent).not.toContain(t("visitor.decision.title"));
+    expect(panel.textContent).not.toContain(t("adjuster.panel.title"));
+    expect(panel.textContent).not.toContain(t("adjuster.panel.title_pending"));
     expect(panel.className).not.toContain("border-l-brand");
   });
 
@@ -610,6 +682,7 @@ describe("un caso que cerraron las reglas, o que la agente aun evalua", () => {
           rule_category: "referral",
           available_actions: [],
           can_correct_fields: true,
+          adjuster: null,
         }),
       });
       dibujar();
@@ -629,13 +702,15 @@ describe("un caso que cerraron las reglas, o que la agente aun evalua", () => {
     },
   );
 
-  it("un caso derivado sigue contando lo de siempre", async () => {
+  it("un caso derivado sigue contando lo de siempre, con el panel del ajustador y sin botones", async () => {
     // El control positivo: sin el, las frases nuevas podrian estar pintandose siempre.
+    pedido.mockResolvedValue({ ok: true, value: caso(DECIDIDO_POR_IA) });
     dibujar();
     await screen.findByTestId("visitor-case");
 
     expect(screen.getByTestId("visitor-intro").textContent).toBe(t("visitor.intro"));
-    expect(screen.getByTestId("decision-form")).toBeTruthy();
+    expect(screen.getByTestId("adjuster-panel")).toBeTruthy();
+    expect(screen.queryByTestId("decision-form")).toBeNull();
   });
 });
 
@@ -647,7 +722,7 @@ describe("«Ver mi caso» abierto mientras la agente evalua el caso", () => {
   });
 
   const EN_REVISION = () =>
-    caso({ state: "deciding", derivation_reason: null, available_actions: [] });
+    caso({ state: "deciding", derivation_reason: null, available_actions: [], adjuster: null });
 
   /** Solo `setTimeout` falso: el resto de la pantalla sigue con el reloj de verdad. */
   async function abrirConFechasFalsas() {
@@ -678,7 +753,7 @@ describe("«Ver mi caso» abierto mientras la agente evalua el caso", () => {
     await abrirConFechasFalsas();
 
     expect(screen.getByTestId("visitor-intro").textContent).toBe(t("cases.group.deciding"));
-    expect(screen.queryByTestId("decision-form")).toBeNull();
+    expect(screen.queryByTestId("adjuster-panel")).toBeNull();
     expect(pedido).toHaveBeenCalledTimes(1);
     await pasar(2999);
     expect(pedido).toHaveBeenCalledTimes(1);
@@ -687,7 +762,7 @@ describe("«Ver mi caso» abierto mientras la agente evalua el caso", () => {
     expect(pedido).toHaveBeenCalledTimes(2);
     expect(pedido).toHaveBeenLastCalledWith("una-aseguradora", "case-1");
     expect(screen.getByTestId("visitor-intro").textContent).toBe(t("visitor.intro"));
-    expect(screen.getByTestId("decision-form")).toBeTruthy();
+    expect(screen.getByTestId("adjuster-panel")).toBeTruthy();
     // Y no canjea otra vez el enlace: solo vuelve a pedir el caso.
     expect(canjeado).toHaveBeenCalledTimes(1);
   });
@@ -702,6 +777,7 @@ describe("«Ver mi caso» abierto mientras la agente evalua el caso", () => {
         rule_category: "direct_close",
         available_actions: [],
         can_correct_fields: false,
+        adjuster: null,
         explanation: {
           asked: "none",
           cited: "none",
@@ -848,135 +924,461 @@ describe("un enlace que no vale", () => {
   });
 });
 
-describe("decidir su propio caso", () => {
-  it("la decision se manda y la pantalla muestra que el caso se retomo", async () => {
-    decidido.mockResolvedValue({ ok: true, value: { decision_id: "d1", resolution: "approved" } });
-    pedido.mockResolvedValueOnce({ ok: true, value: caso() }).mockResolvedValueOnce({
-      ok: true,
-      value: caso({ state: "closed", resolution: "approved", available_actions: [] }),
-    });
-    dibujar();
-    await screen.findByTestId("visitor-case");
-
-    await userEvent.type(
-      screen.getByLabelText(t("inbox.decision.comment_label")),
-      "Me parece bien",
-    );
-    await userEvent.click(screen.getByRole("button", { name: t("inbox.decision.approve") }));
-
-    expect(decidido).toHaveBeenCalledWith(
-      "una-aseguradora",
-      "case-1",
-      "approve",
-      "Me parece bien",
-      expect.stringMatching(/^visitor-/),
-    );
-    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(t("visitor.done_title"));
-    expect(screen.getByTestId("visitor-resolution").textContent).toBe(
-      t("case.resolution.approved"),
-    );
-    // Y la vuelta a la conversacion, que es por donde llego.
-    expect(screen.getByRole("link", { name: t("action.back_to_conversation") })).toBeTruthy();
-  });
-
-  it("si el enlace vence mientras escribe, la nota sigue en pantalla (BR5.4)", async () => {
-    // Perderla convierte un vencimiento en trabajo perdido, y lo sufre justo quien
-    // estaba terminando de decidir.
-    vi.spyOn(console, "warn").mockImplementation(() => undefined);
-    decidido.mockResolvedValue({
-      ok: false,
-      problem: { code: "link_invalid", message: (tt) => tt("problem.link_invalid") },
-    });
-    // Vencio de verdad: el caso ya no se sirve (2026-10-12; antes se daba por vencido
-    // cualquier rechazo de la decision).
-    pedido.mockResolvedValueOnce({ ok: true, value: caso() }).mockResolvedValue({
-      ok: false,
-      problem: { code: "link_invalid", message: (tt) => tt("problem.link_invalid") },
-    });
-    dibujar();
-    await screen.findByTestId("visitor-case");
-
-    await userEvent.type(
-      screen.getByLabelText(t("inbox.decision.comment_label")),
-      "No estoy de acuerdo con esto",
-    );
-    await userEvent.click(screen.getByRole("button", { name: t("inbox.decision.reject") }));
-
-    // No el mensaje generico de enlace no valido: **la frase que dice que la nota se
-    // queda**. Sin ella, quien ve "enlace no valido" cierra la pestana y pierde lo
-    // escrito, que es exactamente lo que la regla existe para evitar.
-    expect(await screen.findByTestId("decision-problem")).toBeTruthy();
-    expect(screen.getByTestId("decision-problem").textContent).toBe(
-      t("visitor.expired_with_comment"),
-    );
-    expect(
-      screen.getByLabelText<HTMLTextAreaElement>(t("inbox.decision.comment_label")).value,
-    ).toBe("No estoy de acuerdo con esto");
-  });
-
-  it("si el enlace sigue vigente, el rechazo no se llama vencimiento", async () => {
-    // 2026-10-12: el servidor rechazaba la decision con un enlace de una hora que no habia
-    // vencido, y la pantalla decia "el enlace vencio mientras escribias". El caso se sigue
-    // sirviendo --`pedido` responde bien--, asi que lo que falto fue guardar la decision.
-    vi.spyOn(console, "warn").mockImplementation(() => undefined);
-    decidido.mockResolvedValue({
-      ok: false,
-      problem: { code: "not_found", message: (tt) => tt("problem.not_found") },
-    });
-    dibujar();
-    await screen.findByTestId("visitor-case");
-
-    await userEvent.type(screen.getByLabelText(t("inbox.decision.comment_label")), "Lo apruebo");
-    await userEvent.click(screen.getByRole("button", { name: t("inbox.decision.approve") }));
-
-    expect(await screen.findByTestId("decision-problem")).toBeTruthy();
-    expect(screen.getByTestId("decision-problem").textContent).toBe(
-      t("visitor.decision_not_saved"),
-    );
-    expect(screen.getByTestId("decision-problem").textContent).not.toBe(
-      t("visitor.expired_with_comment"),
-    );
-    // La nota sigue ahi para reintentar.
-    expect(
-      screen.getByLabelText<HTMLTextAreaElement>(t("inbox.decision.comment_label")).value,
-    ).toBe("Lo apruebo");
-  });
-
-  it("ofrece solo las acciones que su aseguradora permite (BR4.5)", async () => {
-    pedido.mockResolvedValue({ ok: true, value: caso({ available_actions: ["mark_sent"] }) });
-    dibujar();
-    await screen.findByTestId("visitor-case");
-
-    expect(screen.getByRole("button", { name: t("inbox.decision.mark_sent") })).toBeTruthy();
-    expect(screen.queryByRole("button", { name: t("inbox.decision.approve") })).toBeNull();
-  });
-
-  it("un caso que no admite decision lo dice, sin ofrecer el formulario", async () => {
+// El visitante ya no decide ni anota (plan 09, fase 5, 2026-11-04): las rutas le devuelven 403 y la
+// pantalla ya no las llama. Lo que lee es como decidio el ajustador de IA.
+describe("el visitante no decide ni anota", () => {
+  it("aunque el cable trajera acciones, no hay formulario ni botones de decision", async () => {
     pedido.mockResolvedValue({
       ok: true,
-      value: caso({ state: "awaiting_insured", available_actions: [] }),
+      value: caso({ state: "derived", adjuster: null, available_actions: ["approve", "reject"] }),
     });
     dibujar();
     await screen.findByTestId("visitor-case");
 
     expect(screen.queryByTestId("decision-form")).toBeNull();
+    expect(screen.queryByRole("button", { name: t("inbox.decision.approve") })).toBeNull();
+    expect(screen.queryByRole("button", { name: t("inbox.decision.reject") })).toBeNull();
+  });
+
+  it("aunque el servidor ofreciera anotar, no hay formulario de anotaciones ni nota del visitante", async () => {
+    pedido.mockResolvedValue({
+      ok: true,
+      value: caso({ can_annotate_triage: true, triage_amount_steps: [1000, 10000] }),
+    });
+    dibujar();
+    await screen.findByTestId("visitor-case");
+
+    expect(screen.queryByTestId("visitor-triage")).toBeNull();
+    expect(screen.queryByRole("button", { name: /guardar/i })).toBeNull();
+    expect(screen.queryByRole("textbox")).toBeNull();
+  });
+
+  it("un caso que espera al asegurado lo dice, sin panel del ajustador ni formulario", async () => {
+    pedido.mockResolvedValue({
+      ok: true,
+      value: caso({ state: "awaiting_insured", available_actions: [], adjuster: null }),
+    });
+    dibujar();
+    await screen.findByTestId("visitor-case");
+
+    expect(screen.queryByTestId("decision-form")).toBeNull();
+    expect(screen.queryByTestId("adjuster-panel")).toBeNull();
     expect(screen.getByTestId("visitor-no-actions").textContent).toBe(
       t("inbox.decision.none_awaiting"),
     );
   });
 });
 
-// Los dos paneles (Miguel, 2026-10-14): a la izquierda el del ajustador --anotar y decidir-- y a la
-// derecha los datos del reporte con las reglas; debajo de los dos, a todo el ancho, la conversacion
-// y lo demas. jsdom no calcula estilos ni puntos de quiebre: lo que aqui se prueba es el orden del
-// documento (que es el de pantalla angosta), la estructura y las clases que arman la rejilla en
-// escritorio. Que la rejilla se vea como se dice solo se comprueba en el navegador.
-describe("los dos paneles: el del ajustador y los datos del reporte", () => {
-  const OFRECE: Partial<CaseDetailOut> = {
-    can_annotate_triage: true,
-    triage_amount_steps: [1000, 10000],
-  };
+describe("el panel «Cómo decidió el ajustador»", () => {
+  const panel = () => screen.getByRole("region", { name: t("adjuster.panel.title") });
 
+  async function abrir(extra: Partial<CaseDetailOut> = {}) {
+    pedido.mockResolvedValue({ ok: true, value: caso(extra) });
+    dibujar();
+    await screen.findByTestId("visitor-case");
+  }
+
+  it("decidido: la decision con su etiqueta, el titular, la explicacion y el aviso de que lo escribio una IA", async () => {
+    await abrir();
+
+    const region = panel();
+    expect(within(region).getByRole("heading", { level: 2 }).textContent).toBe(
+      t("adjuster.panel.title"),
+    );
+    // Dice quien decidio, con las palabras «ajustador de IA»: nunca una persona.
+    expect(within(region).getByTestId("adjuster-status").textContent).toBe(
+      t("adjuster.panel.decided"),
+    );
+    expect(within(region).getByTestId("adjuster-decision-label").textContent).toBe(
+      t("case.resolution.approved"),
+    );
+    expect(within(region).getByTestId("adjuster-headline").textContent).toBe(
+      "Aprobado: el choque esta cubierto",
+    );
+    expect(within(region).getByTestId("adjuster-explanation").textContent).toContain(
+      "La poliza estaba vigente.",
+    );
+    expect(within(region).getByTestId("adjuster-ai-notice").textContent).toBe(
+      t("adjuster.panel.ai_notice"),
+    );
+    // Lo que no se puede hacer aqui: ningun control.
+    expect(within(region).queryAllByRole("button")).toEqual([]);
+  });
+
+  it.each([
+    ["approve", "approved", (tt: typeof t) => tt("case.resolution.approved")],
+    ["reject", "rejected", (tt: typeof t) => tt("case.resolution.rejected")],
+    ["mark_sent", "sent_to_insurer", (tt: typeof t) => tt("case.resolution.sent_to_insurer")],
+  ] as const)(
+    "la etiqueta de la decision %s es la de su resolucion",
+    async (accion, resolucion, etiqueta) => {
+      await abrir({ adjuster: corrida({ decision: accion }), resolution: resolucion });
+
+      expect(screen.getByTestId("adjuster-decision-label").textContent).toBe(etiqueta(t));
+    },
+  );
+
+  it("los seis pasos, en una lista ordenada con su titular y su marca numerica", async () => {
+    await abrir();
+
+    const lista = within(panel()).getByRole("list", { name: t("adjuster.panel.steps") });
+    expect(lista.tagName).toBe("OL");
+    // El nombre accesible no cuenta la marca numerica, que va oculta para el lector de pantalla.
+    const titulos = within(lista).getAllByRole("heading", { level: 3 });
+    expect(titulos).toHaveLength(6);
+    [
+      t("adjuster.step.case_read.title"),
+      t("adjuster.step.policy_read.title"),
+      t("adjuster.step.clauses.title"),
+      t("adjuster.step.rules.title"),
+      t("adjuster.step.vehicle_value.title"),
+      t("adjuster.step.decision.title"),
+    ].forEach((nombre, indice) => {
+      expect(within(lista).getByRole("heading", { level: 3, name: nombre })).toBe(
+        titulos.at(indice),
+      );
+    });
+    expect(
+      within(lista)
+        .getAllByTestId("step-mark")
+        .map((marca) => marca.textContent),
+    ).toEqual(["1", "2", "3", "4", "5", "6"]);
+    expect(screen.getByTestId("adjuster-step-case_read").textContent).toContain(
+      "Lei el reporte del caso CA-1",
+    );
+  });
+
+  it("las fuentes se leen con nombre legible: la clausula con su cita, la regla numerada, la poliza y la pagina externa", async () => {
+    await abrir();
+
+    const clausulas = within(screen.getByTestId("adjuster-step-clauses"));
+    const fuenteClausula = clausulas.getByRole("listitem");
+    expect(fuenteClausula.textContent).toContain(t("adjuster.source.kind.clause"));
+    expect(fuenteClausula.textContent).toContain("Parte D - Daños propios");
+    expect(fuenteClausula.textContent).toContain("D.INS.COLLISION");
+
+    const reglas = within(screen.getByTestId("adjuster-step-rules")).getAllByRole("listitem");
+    expect(reglas.map((regla) => regla.textContent)).toEqual([
+      t("adjuster.source.rule", { number: 1 }),
+      t("adjuster.source.rule", { number: 2 }),
+    ]);
+
+    expect(
+      within(screen.getByTestId("adjuster-step-policy_read")).getByRole("listitem").textContent,
+    ).toBe("Póliza POL-1");
+
+    const enlace = within(screen.getByTestId("adjuster-step-vehicle_value")).getByRole("link", {
+      name: /Guía de valores/,
+    });
+    expect(enlace.getAttribute("href")).toBe("https://guia.example.com/valores");
+    expect(enlace.getAttribute("target")).toBe("_blank");
+    expect(enlace.getAttribute("rel")).toContain("noopener");
+    // Quien usa lector de pantalla oye que se abre en otra pestana.
+    expect(enlace.textContent).toContain(t("adjuster.source.new_tab"));
+  });
+
+  it("una pagina que no es https se nombra pero no se convierte en enlace", async () => {
+    const base = corrida();
+    await abrir({
+      adjuster: corrida({
+        steps: (base.steps ?? []).map((paso) =>
+          paso.id === "vehicle_value"
+            ? {
+                ...paso,
+                sources: [
+                  {
+                    kind: "web" as const,
+                    ref: "javascript:alert(1)",
+                    label: "Pagina rara",
+                    url: "javascript:alert(1)",
+                  },
+                ],
+              }
+            : paso,
+        ),
+      }),
+    });
+
+    const paso = within(screen.getByTestId("adjuster-step-vehicle_value"));
+    expect(paso.queryByRole("link")).toBeNull();
+    expect(paso.getByText("Pagina rara")).toBeTruthy();
+  });
+
+  it("no ensena identificadores de regla, ni el aviso de la IA habla de una persona", async () => {
+    await abrir();
+
+    const texto = panel().textContent;
+    expect(texto).not.toMatch(/STO-R|@\d|FNOL|tenant|endoso/i);
+    // El ajustador de IA nunca se presenta como una persona.
+    expect(texto).not.toMatch(/una persona|un humano|person/i);
+  });
+
+  it("al decidirse el caso ofrece volver a la conversacion", async () => {
+    await abrir();
+
+    const volver = screen.getByRole("link", { name: t("action.back_to_conversation") });
+    expect(volver.getAttribute("href")).toBe("/t/una-aseguradora/chat");
+  });
+
+  it("en curso: los pasos que ya llegaron, el lugar de los que faltan y una sola linea que anuncia el avance", async () => {
+    await abrir(enCurso(2));
+
+    const region = screen.getByRole("region", { name: t("adjuster.panel.title_pending") });
+    expect(region.getAttribute("data-status")).toBe("running");
+    const estado = within(region).getByTestId("adjuster-status");
+    expect(estado.textContent).toBe(t("adjuster.panel.running", { done: 2, total: 6 }));
+    // La unica region viva del panel: cortes de a una frase, sin repetir lo ya dicho.
+    expect(estado.getAttribute("aria-live")).toBe("polite");
+    expect(estado.getAttribute("aria-atomic")).toBe("true");
+    expect(region.querySelectorAll("[aria-live]")).toHaveLength(1);
+
+    expect(within(region).getAllByTestId("step-mark")).toHaveLength(2);
+    // Los cuatro que faltan: su titular y su esqueleto, ocultos para el lector de pantalla.
+    const faltan = within(region).getAllByTestId("adjuster-step-pending");
+    expect(faltan).toHaveLength(4);
+    for (const fila of faltan) {
+      expect(fila.getAttribute("aria-hidden")).toBe("true");
+    }
+    expect(faltan[0]?.textContent).toContain(t("adjuster.step.clauses.title"));
+    // Ni decision ni explicacion antes de tiempo.
+    expect(within(region).queryByTestId("adjuster-decision")).toBeNull();
+    expect(screen.queryByRole("link", { name: t("action.back_to_conversation") })).toBeNull();
+  });
+
+  it("el esqueleto solo pulsa si la persona no pidio menos movimiento", async () => {
+    await abrir(enCurso(0));
+
+    const esqueleto = screen
+      .getByTestId("adjuster-panel")
+      .querySelectorAll('[data-testid="adjuster-step-pending"] div');
+    expect(esqueleto.length).toBeGreaterThan(0);
+    for (const bloque of esqueleto) {
+      const clases = bloque.className.split(/\s+/);
+      expect(clases).toContain("motion-safe:animate-pulse");
+      expect(clases).not.toContain("animate-pulse");
+    }
+  });
+
+  it("el caso recien derivado, sin corrida todavia, ya se ve en curso: 0 de 6", async () => {
+    await abrir({ state: "derived", adjuster: null, available_actions: [], resolution: null });
+
+    const region = screen.getByRole("region", { name: t("adjuster.panel.title_pending") });
+    expect(within(region).getByTestId("adjuster-status").textContent).toBe(
+      t("adjuster.panel.running", { done: 0, total: 6 }),
+    );
+    expect(within(region).getAllByTestId("adjuster-step-pending")).toHaveLength(6);
+  });
+
+  it("en espera de cupo: lo dice, sin pasos ni decision", async () => {
+    await abrir({
+      state: "derived",
+      resolution: null,
+      adjuster: corrida({ status: "capped", decision: null, headline: null, explanation: null }),
+    });
+
+    const region = screen.getByRole("region", { name: t("adjuster.panel.title_pending") });
+    expect(region.getAttribute("data-status")).toBe("capped");
+    expect(within(region).getByTestId("adjuster-status").textContent).toBe(
+      t("adjuster.panel.capped"),
+    );
+    expect(within(region).queryByTestId("adjuster-steps")).toBeNull();
+    expect(within(region).queryByTestId("adjuster-decision")).toBeNull();
+  });
+
+  it("si fallo dice que sigue en revision: ni decision inventada, ni pasos, ni el motivo tecnico", async () => {
+    await abrir({
+      state: "derived",
+      resolution: null,
+      adjuster: corrida({
+        status: "failed",
+        // Aunque el cable trajera restos de lo que el modelo alcanzo a escribir, no se ensenan.
+        decision: "approve",
+        headline: "Aprobado por error",
+        explanation: "timeout llamando al modelo",
+      }),
+    });
+
+    const region = screen.getByRole("region", { name: t("adjuster.panel.title_pending") });
+    expect(region.getAttribute("data-status")).toBe("failed");
+    expect(within(region).getByTestId("adjuster-status").textContent).toBe(
+      t("adjuster.panel.failed"),
+    );
+    expect(region.textContent).not.toContain("Aprobado por error");
+    expect(region.textContent).not.toMatch(/timeout|failed|error/i);
+    expect(within(region).queryByTestId("adjuster-decision-label")).toBeNull();
+    expect(within(region).queryByTestId("adjuster-steps")).toBeNull();
+  });
+
+  it("una corrida «decidida» sin titular o sin explicacion se trata como «sigue en revision»", async () => {
+    await abrir({
+      state: "derived",
+      resolution: null,
+      adjuster: corrida({ headline: "", explanation: null }),
+    });
+
+    const region = screen.getByRole("region", { name: t("adjuster.panel.title_pending") });
+    expect(region.getAttribute("data-status")).toBe("failed");
+    expect(within(region).queryByTestId("adjuster-decision-label")).toBeNull();
+  });
+
+  it("en ingles el panel se lee en ingles", async () => {
+    const en = createTranslate("en");
+    renderWithProviders(
+      <VisitorCasePage token="un-token" conversationHref={() => "/"} renderRejected={rechazo} />,
+      "en",
+    );
+
+    const region = await screen.findByRole("region", { name: en("adjuster.panel.title") });
+    expect(within(region).getByTestId("adjuster-status").textContent).toBe(
+      en("adjuster.panel.decided"),
+    );
+    expect(within(region).getByTestId("adjuster-decision-label").textContent).toBe(
+      en("case.resolution.approved"),
+    );
+    expect(within(region).getByTestId("adjuster-ai-notice").textContent).toBe(
+      en("adjuster.panel.ai_notice"),
+    );
+    expect(
+      within(region).getByRole("heading", { level: 3, name: en("adjuster.step.clauses.title") }),
+    ).toBeTruthy();
+    expect(within(region).getAllByRole("link")[0]?.textContent).toContain(
+      en("adjuster.source.new_tab"),
+    );
+  });
+});
+
+// Mientras el ajustador de IA decide el caso, la pagina lo vuelve a leer cada 3 s: los pasos
+// aparecen a medida que llegan, y se detiene al decidirse, al tope (30 lecturas) y al dejar la
+// pantalla.
+describe("«Ver mi caso» abierto mientras el ajustador de IA decide", () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  async function abrirConFechasFalsas() {
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
+    const dibujo = renderWithProviders(
+      <VisitorCasePage
+        token="un-token"
+        conversationHref={(sesion) => `/t/${sesion.tenantId}/chat`}
+        renderRejected={rechazo}
+      />,
+    );
+    await pasar(0);
+    await pasar(0);
+    return dibujo;
+  }
+
+  async function pasar(ms: number) {
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(ms);
+    });
+  }
+
+  it("los pasos aparecen a medida que llegan y, al decidirse, muestra la decision", async () => {
+    pedido
+      .mockResolvedValueOnce({ ok: true, value: caso(enCurso(1)) })
+      .mockResolvedValueOnce({ ok: true, value: caso(enCurso(3)) })
+      .mockResolvedValue({ ok: true, value: caso() });
+
+    await abrirConFechasFalsas();
+    expect(screen.getByTestId("adjuster-status").textContent).toBe(
+      t("adjuster.panel.running", { done: 1, total: 6 }),
+    );
+
+    await pasar(3000);
+    expect(screen.getByTestId("adjuster-status").textContent).toBe(
+      t("adjuster.panel.running", { done: 3, total: 6 }),
+    );
+    expect(screen.getAllByTestId("step-mark")).toHaveLength(3);
+
+    await pasar(3000);
+    expect(screen.getByTestId("adjuster-status").textContent).toBe(t("adjuster.panel.decided"));
+    expect(screen.getByTestId("adjuster-decision-label")).toBeTruthy();
+    expect(pedido).toHaveBeenCalledTimes(3);
+    // Y no canjea otra vez el enlace: solo vuelve a pedir el caso.
+    expect(canjeado).toHaveBeenCalledTimes(1);
+  });
+
+  it("se detiene en cuanto el ajustador decide: no vuelve a pedir", async () => {
+    pedido
+      .mockResolvedValueOnce({ ok: true, value: caso(enCurso(2)) })
+      .mockResolvedValue({ ok: true, value: caso() });
+
+    await abrirConFechasFalsas();
+    await pasar(3000);
+    await pasar(3000 * 40);
+
+    expect(pedido).toHaveBeenCalledTimes(2);
+  });
+
+  it("un caso ya decidido se pide una sola vez", async () => {
+    await abrirConFechasFalsas();
+    await pasar(3000 * 40);
+
+    expect(pedido).toHaveBeenCalledTimes(1);
+  });
+
+  it("sigue leyendo mientras espera cupo o fallo --leer el caso lo reintenta-- y se queda en el tope, sin aviso", async () => {
+    pedido.mockImplementation(() =>
+      Promise.resolve({
+        ok: true,
+        value: caso({
+          state: "derived",
+          resolution: null,
+          adjuster: corrida({
+            status: "capped",
+            decision: null,
+            headline: null,
+            explanation: null,
+          }),
+        }),
+      }),
+    );
+
+    await abrirConFechasFalsas();
+    await pasar(3000 * 100);
+
+    // La primera lectura y treinta mas: el tope de la espera del ajustador.
+    expect(pedido).toHaveBeenCalledTimes(1 + 30);
+    expect(screen.getByTestId("adjuster-status").textContent).toBe(t("adjuster.panel.capped"));
+  });
+
+  it("limpia el temporizador al dejar la pantalla: no vuelve a pedir", async () => {
+    pedido.mockImplementation(() => Promise.resolve({ ok: true, value: caso(enCurso(1)) }));
+
+    const dibujo = await abrirConFechasFalsas();
+    await pasar(3000);
+    expect(pedido).toHaveBeenCalledTimes(2);
+
+    dibujo.unmount();
+    await pasar(3000 * 40);
+
+    expect(pedido).toHaveBeenCalledTimes(2);
+  });
+
+  it("si una lectura falla --el enlace vencio-- se queda como esta y no insiste", async () => {
+    pedido
+      .mockResolvedValueOnce({ ok: true, value: caso(enCurso(1)) })
+      .mockResolvedValue({ ok: false, problem: { code: "not_found", message: () => "" } });
+
+    await abrirConFechasFalsas();
+    await pasar(3000 * 40);
+
+    expect(pedido).toHaveBeenCalledTimes(2);
+    expect(screen.getByTestId("adjuster-status").textContent).toBe(
+      t("adjuster.panel.running", { done: 1, total: 6 }),
+    );
+  });
+});
+
+// Los dos paneles (Miguel, 2026-10-14): a la izquierda el del ajustador y a la derecha los datos del
+// reporte con las reglas; debajo de los dos, a todo el ancho, la conversacion y lo demas. jsdom no
+// calcula estilos ni puntos de quiebre: lo que aqui se prueba es el orden del documento (que es el
+// de pantalla angosta), la estructura y las clases que arman la rejilla en escritorio. Que la
+// rejilla se vea como se dice, en claro y en oscuro y sin desbordar, solo se comprueba en el
+// navegador (`e2e/a11y.spec.ts`, rutas `visitor-case*`).
+describe("los dos paneles: el del ajustador y los datos del reporte", () => {
   /** Verdadero si `a` queda antes que `b` en el orden del documento. */
   const antes = (a: Node, b: Node): boolean =>
     (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
@@ -987,15 +1389,17 @@ describe("los dos paneles: el del ajustador y los datos del reporte", () => {
     await screen.findByTestId("visitor-case");
   }
 
-  const panelDelAjustador = () => screen.getByRole("region", { name: t("visitor.adjuster.title") });
+  const panelDelAjustador = () => screen.getByTestId("adjuster-panel");
   const panelDeDatos = () => screen.getByRole("region", { name: t("visitor.block.fields") });
 
   it("cada panel es una region con nombre, y los datos no se llaman «completitud por campo»", async () => {
-    await abrir(OFRECE);
+    await abrir();
 
-    expect(within(panelDelAjustador()).getByRole("heading", { level: 2 }).textContent).toBe(
-      t("visitor.adjuster.title"),
-    );
+    expect(
+      within(screen.getByRole("region", { name: t("adjuster.panel.title") })).getByRole("heading", {
+        level: 2,
+      }).textContent,
+    ).toBe(t("adjuster.panel.title"));
     expect(within(panelDeDatos()).getByRole("heading", { level: 2 }).textContent).toBe(
       t("visitor.block.fields"),
     );
@@ -1005,7 +1409,7 @@ describe("los dos paneles: el del ajustador y los datos del reporte", () => {
   });
 
   it("los encabezados bajan de a un nivel: titulo, paneles y pasos", async () => {
-    await abrir(OFRECE);
+    await abrir();
 
     const niveles = within(screen.getByTestId("visitor-case"))
       .getAllByRole("heading")
@@ -1015,22 +1419,16 @@ describe("los dos paneles: el del ajustador y los datos del reporte", () => {
       // Cada encabezado es, como mucho, un nivel mas hondo que el anterior.
       expect(nivel).toBeLessThanOrEqual((niveles.at(indice) ?? 0) + 1);
     });
-    // Los dos pasos cuelgan del panel del ajustador, como encabezados de nivel 3.
-    // El nombre accesible no cuenta la marca numerica, que va oculta para el lector de pantalla.
-    const panel = panelDelAjustador();
-    expect(within(panel).getAllByRole("heading", { level: 3 })).toHaveLength(2);
-    for (const paso of [t("visitor.triage.title"), t("visitor.decision.title")]) {
-      expect(within(panel).getByRole("heading", { level: 3, name: paso })).toBeTruthy();
-    }
+    // Los seis pasos cuelgan del panel del ajustador, como encabezados de nivel 3.
+    expect(within(panelDelAjustador()).getAllByRole("heading", { level: 3 })).toHaveLength(6);
   });
 
   it("en el orden del documento --el de pantalla angosta-- los datos y las reglas van antes que el panel del ajustador", async () => {
-    await abrir(OFRECE);
+    await abrir();
 
     const datos = screen.getByTestId("visitor-data");
     const ajustador = panelDelAjustador();
     expect(antes(datos, ajustador)).toBe(true);
-    // Las reglas viven en la columna de los datos, despues de ellos y antes del ajustador.
     expect(datos.contains(screen.getByTestId("block-fields"))).toBe(true);
     expect(datos.contains(screen.getByTestId("block-rule"))).toBe(true);
     expect(antes(screen.getByTestId("block-fields"), screen.getByTestId("block-rule"))).toBe(true);
@@ -1042,7 +1440,7 @@ describe("los dos paneles: el del ajustador y los datos del reporte", () => {
   });
 
   it("la conversacion, las citas, los controles y la respuesta van despues de los dos, en ese orden", async () => {
-    await abrir(OFRECE);
+    await abrir();
 
     const rejilla = screen.getByTestId("visitor-panes");
     const debajo = ["block-transcript", "block-citations", "block-controls", "block-trace"].map(
@@ -1057,12 +1455,11 @@ describe("los dos paneles: el del ajustador y los datos del reporte", () => {
       const previo = debajo.at(indice);
       expect(previo !== undefined && antes(previo, bloque)).toBe(true);
     });
-    // Las reglas ya no estan abajo: subieron junto a los datos.
     expect(rejilla.contains(screen.getByTestId("block-rule"))).toBe(true);
   });
 
   it("en escritorio: 7/12 para el ajustador a la izquierda y 5/12 para los datos a la derecha, alineados arriba", async () => {
-    await abrir(OFRECE);
+    await abrir();
 
     const rejilla = screen.getByTestId("visitor-panes").className;
     expect(rejilla).toContain("grid");
@@ -1084,7 +1481,7 @@ describe("los dos paneles: el del ajustador y los datos del reporte", () => {
   });
 
   it("la columna de los datos se queda a la vista: pegajosa bajo la cabecera, con alto maximo y desplazamiento propio", async () => {
-    await abrir(OFRECE);
+    await abrir();
 
     const datos = screen.getByTestId("visitor-data");
     expect(datos.className).toContain("desktop:sticky");
@@ -1099,15 +1496,13 @@ describe("los dos paneles: el del ajustador y los datos del reporte", () => {
   });
 
   it("el panel del ajustador lleva el color de la marca con tokens: raya, titulo y marcas", async () => {
-    await abrir(OFRECE);
+    await abrir();
 
     const clasesDe = (elemento: HTMLElement) => elemento.className.split(/\s+/);
     const panel = panelDelAjustador();
     expect(clasesDe(panel)).toEqual(
       expect.arrayContaining(["border-l-4", "border-l-brand", "bg-surface"]),
     );
-    // Sin tinte de fondo: un campo sobre un fondo con tinte de cobre baja el borde del campo de
-    // los 3 a 1 que pide un control (2,6 a 1 medido en oscuro).
     expect(clasesDe(panel)).not.toContain("bg-selected");
     // El titulo va en el token de la marca --la tinta en modo claro, nunca el cobre sobre claro--.
     const titulo = within(panel).getByRole("heading", { level: 2 });
@@ -1121,7 +1516,7 @@ describe("los dos paneles: el del ajustador y los datos del reporte", () => {
   });
 
   it("los datos van en una superficie neutra distinta a la del panel, sin nada de la marca", async () => {
-    await abrir(OFRECE);
+    await abrir();
 
     const clasesDe = (elemento: HTMLElement) => elemento.className.split(/\s+/);
     for (const bloque of [panelDeDatos(), screen.getByTestId("block-rule")]) {
@@ -1129,418 +1524,27 @@ describe("los dos paneles: el del ajustador y los datos del reporte", () => {
       expect(clasesDe(bloque)).not.toContain("bg-surface");
       expect(bloque.className).not.toMatch(/brand|selected/);
     }
-    // El panel del ajustador, en cambio, usa la superficie normal: es la que distingue a los dos.
     expect(clasesDe(panelDelAjustador())).not.toContain("bg-surface-alt");
   });
 
   it("ningun elemento de la pantalla escribe un color a mano ni usa el cobre como letra", async () => {
-    await abrir(OFRECE);
-
-    for (const elemento of screen.getByTestId("visitor-case").querySelectorAll("[class]")) {
-      const clases = elemento.getAttribute("class") ?? "";
-      expect(clases, clases).not.toMatch(/copper|\[#|\[rgb|\[hsl|\[oklch|text-\[color/);
+    // En los cuatro estados del panel: decidido, en curso, en espera y fallido.
+    for (const extra of [
+      {},
+      enCurso(2),
+      { state: "derived" as const, adjuster: corrida({ status: "capped" as const }) },
+      { state: "derived" as const, adjuster: corrida({ status: "failed" as const }) },
+    ]) {
+      pedido.mockResolvedValue({ ok: true, value: caso(extra) });
+      const { unmount } = renderWithProviders(
+        <VisitorCasePage token="un-token" conversationHref={() => "/"} renderRejected={rechazo} />,
+      );
+      await screen.findByTestId("visitor-case");
+      for (const elemento of screen.getByTestId("visitor-case").querySelectorAll("[class]")) {
+        const clases = elemento.getAttribute("class") ?? "";
+        expect(clases, clases).not.toMatch(/copper|\[#|\[rgb|\[hsl|\[oklch|text-\[color/);
+      }
+      unmount();
     }
-  });
-
-  it("dos pasos numerados: revisa (1) y decide (2), y el formulario va dentro del segundo", async () => {
-    await abrir(OFRECE);
-
-    const panel = panelDelAjustador();
-    expect(
-      within(panel)
-        .getAllByTestId("step-mark")
-        .map((marca) => marca.textContent),
-    ).toEqual(["1", "2"]);
-    const revisa = screen.getByTestId("visitor-triage");
-    const decide = screen.getByTestId("visitor-decision");
-    expect(
-      within(revisa).getByRole("heading", { level: 3, name: t("visitor.triage.title") }),
-    ).toBeTruthy();
-    expect(
-      within(decide).getByRole("heading", { level: 3, name: t("visitor.decision.title") }),
-    ).toBeTruthy();
-    expect(decide.contains(screen.getByTestId("decision-form"))).toBe(true);
-    expect(antes(revisa, decide)).toBe(true);
-    // La introduccion del panel dice que hacer; la del paso 1, para que sirve anotar.
-    expect(panel.textContent).toContain(t("visitor.decide_intro"));
-    expect(revisa.textContent).toContain(t("visitor.triage.intro"));
-  });
-
-  it("sin que el servidor ofrezca anotar, el paso de decidir va solo y sin numero", async () => {
-    await abrir({ can_annotate_triage: false, triage_note: null });
-
-    const panel = panelDelAjustador();
-    expect(within(panel).queryByTestId("step-mark")).toBeNull();
-    expect(screen.queryByTestId("visitor-triage")).toBeNull();
-    expect(
-      within(panel).getByRole("heading", { level: 3, name: t("visitor.decision.title") }),
-    ).toBeTruthy();
-    expect(within(panel).getByTestId("decision-form")).toBeTruthy();
-  });
-
-  it("un caso que espera al asegurado: el paso de decidir dice por que no se decide, dentro del panel", async () => {
-    await abrir({ ...OFRECE, state: "awaiting_insured", available_actions: [] });
-
-    const panel = panelDelAjustador();
-    expect(within(panel).getByTestId("visitor-no-actions").textContent).toBe(
-      t("inbox.decision.none_awaiting"),
-    );
-    expect(within(panel).queryByTestId("decision-form")).toBeNull();
-    // Se anota (paso 1) y se lee por que no se decide (paso 2).
-    expect(
-      within(panel)
-        .getAllByTestId("step-mark")
-        .map((marca) => marca.textContent),
-    ).toEqual(["1", "2"]);
-    // Sin botones no se invita a decidir.
-    expect(panel.textContent).not.toContain(t("visitor.decide_intro"));
-  });
-
-  it("mientras la agente evalua no hay panel del ajustador, y los datos quedan solos, sin pegarse a nada", async () => {
-    await abrir({ state: "deciding", derivation_reason: null, available_actions: [] });
-
-    expect(screen.queryByRole("region", { name: t("visitor.adjuster.title") })).toBeNull();
-    const datos = screen.getByTestId("visitor-data");
-    expect(datos.contains(screen.getByTestId("block-fields"))).toBe(true);
-    // Sin otra columna no hay nada a lo que pegarse: ni rejilla, ni pegajosa, ni foco.
-    expect(screen.getByTestId("visitor-panes").className).not.toContain("grid");
-    expect(datos.className).not.toContain("sticky");
-    expect(datos.hasAttribute("tabindex")).toBe(false);
-    // Y no se estiran a los 76 rem: conservan la columna de lectura.
-    expect(datos.className).toContain("max-w-[52rem]");
-  });
-
-  it("decidido el caso no hay paso de decidir ni marcas, y lo que anoto se lee en el panel", async () => {
-    decidido.mockResolvedValue({ ok: true, value: { decision_id: "d1", resolution: "approved" } });
-    pedido.mockResolvedValueOnce({ ok: true, value: caso(OFRECE) }).mockResolvedValueOnce({
-      ok: true,
-      value: caso({
-        state: "closed",
-        resolution: "approved",
-        available_actions: [],
-        can_annotate_triage: false,
-        triage_note: { claim_amount: 2500, coverage_disputed: false, fraud_suspected: true },
-      }),
-    });
-    dibujar();
-    await screen.findByTestId("visitor-triage-form");
-
-    await userEvent.type(screen.getByLabelText(t("inbox.decision.comment_label")), "Lo apruebo");
-    await userEvent.click(screen.getByRole("button", { name: t("inbox.decision.approve") }));
-    await screen.findByTestId("visitor-resolution");
-
-    const panel = panelDelAjustador();
-    expect(within(panel).getByTestId("visitor-triage-readonly")).toBeTruthy();
-    expect(screen.queryByTestId("visitor-decision")).toBeNull();
-    expect(screen.queryByTestId("step-mark")).toBeNull();
-    // Los datos siguen a la vista, y siguen antes que el panel.
-    expect(antes(screen.getByTestId("visitor-data"), panel)).toBe(true);
-  });
-
-  it("en ingles los dos paneles se leen en ingles", async () => {
-    const en = createTranslate("en");
-    pedido.mockResolvedValue({ ok: true, value: caso(OFRECE) });
-    renderWithProviders(
-      <VisitorCasePage token="un-token" conversationHref={() => "/"} renderRejected={rechazo} />,
-      "en",
-    );
-    await screen.findByTestId("visitor-case");
-
-    expect(screen.getByRole("region", { name: en("visitor.adjuster.title") })).toBeTruthy();
-    expect(screen.getByRole("region", { name: en("visitor.block.fields") })).toBeTruthy();
-    expect(
-      screen.getByRole("heading", { level: 3, name: en("visitor.decision.title") }),
-    ).toBeTruthy();
-    expect(screen.getByTestId("visitor-case").textContent).not.toContain(en("inbox.block.fields"));
-  });
-});
-
-describe("lo que anota el personal para las reglas", () => {
-  it("la pantalla del personal no se dibuja aqui, aunque el cable trajera lo mismo", async () => {
-    // El servidor no le manda al visitante la nota del personal (`triage_note` en null y
-    // `can_annotate_triage` en false), y lo que el cable traiga lo dibuja la pantalla
-    // guiada del visitante, nunca el formulario del personal ni su lectura.
-    pedido.mockResolvedValue({
-      ok: true,
-      value: caso({
-        can_annotate_triage: true,
-        triage_note: { claim_amount: 7318, coverage_disputed: true, fraud_suspected: true },
-      }),
-    });
-    dibujar();
-
-    const pantalla = await screen.findByTestId("visitor-case");
-
-    expect(screen.queryByTestId("block-triage")).toBeNull();
-    expect(screen.queryByTestId("triage-form")).toBeNull();
-    expect(pantalla.textContent).not.toContain(t("inbox.triage.title"));
-    expect(pantalla.textContent).not.toContain(t("inbox.triage.intro"));
-  });
-
-  it("sin que el servidor ofrezca anotar y sin nota del visitante, no hay bloque", async () => {
-    // Lo que manda el servidor cuando la nota es del personal, el caso esta cerrado o el
-    // visitante llego al tope: ni formulario ni lectura, ni un hueco donde estaban.
-    pedido.mockResolvedValue({
-      ok: true,
-      value: caso({ can_annotate_triage: false, triage_note: null, triage_amount_steps: [] }),
-    });
-    dibujar();
-
-    await screen.findByTestId("visitor-case");
-
-    expect(screen.queryByTestId("visitor-triage")).toBeNull();
-    expect(screen.queryByText(t("visitor.triage.title"))).toBeNull();
-  });
-});
-
-// El visitante que hace de ajustador anota, con ayuda, lo que revisaria un ajustador
-// (2026-10-13). Lo que se pinta lo decide el servidor; aqui se prueba la pantalla entera.
-describe("anotar antes de decidir", () => {
-  const OFRECE: Partial<CaseDetailOut> = {
-    can_annotate_triage: true,
-    triage_amount_steps: [1000, 10000],
-  };
-  const RESPUESTA: TriageNoteOut = {
-    receipt_id: "rec-1",
-    rule_category: "referral",
-    fired_rules: ["SUN-R-03", "SUN-R-07"],
-  };
-
-  const bloque = () => within(screen.getByTestId("visitor-triage"));
-
-  beforeEach(() => {
-    pedido.mockResolvedValue({ ok: true, value: caso(OFRECE) });
-    anotado.mockResolvedValue({ ok: true, value: RESPUESTA });
-  });
-
-  it("se pinta dentro del panel del ajustador, antes del formulario de la decision", async () => {
-    dibujar();
-    const triage = await screen.findByTestId("visitor-triage");
-
-    const seccion = screen.getByRole("region", { name: t("visitor.adjuster.title") });
-    expect(seccion.contains(triage)).toBe(true);
-    expect(seccion.textContent).toContain(t("visitor.decide_intro"));
-    expect(seccion.contains(screen.getByTestId("decision-form"))).toBe(true);
-    expect(
-      triage.compareDocumentPosition(screen.getByTestId("decision-form")) &
-        Node.DOCUMENT_POSITION_FOLLOWING,
-    ).toBeTruthy();
-    // Y trae la ayuda de esta aseguradora, con las cifras del servidor.
-    expect(screen.getByTestId("visitor-triage-examples").textContent).toContain(
-      formatPesos(20000, "es"),
-    );
-  });
-
-  it("no dice una palabra de la jerga del sistema (U-07)", async () => {
-    dibujar();
-    const pantalla = await screen.findByTestId("visitor-case");
-
-    for (const jerga of ["bandeja", "derivado", "cola", "inbox", "tenant", "triage", "triaje"]) {
-      expect(pantalla.textContent.toLowerCase()).not.toContain(jerga);
-    }
-  });
-
-  it("guarda con una clave por intento, vuelve a leer el caso y el bloque de las reglas cambia", async () => {
-    pedido
-      .mockResolvedValueOnce({
-        ok: true,
-        value: caso({ ...OFRECE, rule_category: "standard_review", fired_rules: ["SUN-R-10"] }),
-      })
-      .mockResolvedValue({
-        ok: true,
-        value: caso({
-          ...OFRECE,
-          rule_category: "referral",
-          fired_rules: ["SUN-R-03", "SUN-R-07"],
-          triage_note: { claim_amount: 2500, coverage_disputed: null, fraud_suspected: true },
-        }),
-      });
-    dibujar();
-    await screen.findByTestId("visitor-triage");
-    expect(screen.getByTestId("rule-reference").textContent).toBe(
-      t("inbox.rule.reference", { rules: "SUN-R-10" }),
-    );
-
-    await userEvent.type(screen.getByLabelText(t("visitor.triage.amount_label")), "2500000");
-    await userEvent.selectOptions(screen.getByLabelText(t("visitor.triage.fraud_label")), "yes");
-    await userEvent.click(screen.getByRole("button", { name: t("visitor.triage.save") }));
-
-    expect(anotado).toHaveBeenCalledTimes(1);
-    expect(anotado).toHaveBeenCalledWith(
-      "una-aseguradora",
-      "case-1",
-      { claim_amount: 2500, coverage_disputed: null, fraud_suspected: true },
-      expect.stringMatching(/^visitor-note-/),
-    );
-    // El caso se volvio a leer y el bloque de las reglas cuenta lo nuevo --el que vive en la
-    // columna de los datos, a la vista mientras se anota--.
-    expect(pedido).toHaveBeenCalledTimes(2);
-    expect(screen.getByTestId("rule-reference").textContent).toBe(
-      t("inbox.rule.reference", { rules: "SUN-R-03, SUN-R-07" }),
-    );
-    expect(
-      within(screen.getByTestId("visitor-data")).getByTestId("rule-reference").textContent,
-    ).toBe(t("inbox.rule.reference", { rules: "SUN-R-03, SUN-R-07" }));
-    // Y el bloque de anotar dice, en su sitio, como quedo clasificado.
-    const estado = bloque().getByTestId("visitor-triage-result");
-    expect(estado.textContent).toContain(t("visitor.triage.result"));
-    expect(estado.textContent).toContain(t("inbox.rule.reason.referral"));
-    // El formulario sigue ahi con lo escrito: no se remonto al volver a leer.
-    expect(screen.getByLabelText<HTMLInputElement>(t("visitor.triage.amount_label")).value).toBe(
-      "2500000",
-    );
-  });
-
-  it("dos guardados llevan dos claves distintas: uno por intento", async () => {
-    dibujar();
-    await screen.findByTestId("visitor-triage");
-
-    await userEvent.click(screen.getByRole("button", { name: t("visitor.triage.save") }));
-    await userEvent.selectOptions(screen.getByLabelText(t("visitor.triage.fraud_label")), "no");
-    await userEvent.click(screen.getByRole("button", { name: t("visitor.triage.save") }));
-
-    expect(anotado).toHaveBeenCalledTimes(2);
-    expect(anotado.mock.calls[0]?.[3]).not.toBe(anotado.mock.calls[1]?.[3]);
-  });
-
-  it("si guardo lo que ya estaba no vuelve a leer el caso ni dice que evaluo otra vez", async () => {
-    anotado.mockResolvedValue({
-      ok: true,
-      value: { receipt_id: null, rule_category: "standard_review", fired_rules: ["SUN-R-10"] },
-    });
-    dibujar();
-    await screen.findByTestId("visitor-triage");
-
-    await userEvent.click(screen.getByRole("button", { name: t("visitor.triage.save") }));
-
-    expect(pedido).toHaveBeenCalledTimes(1);
-    const estado = bloque().getByTestId("visitor-triage-result");
-    expect(estado.textContent).not.toContain(t("visitor.triage.result"));
-    expect(estado.textContent).toContain(t("inbox.rule.reason.standard_review"));
-  });
-
-  it("si el tope se alcanzo (409), lo dice, vuelve a leer y deja de ofrecer el formulario", async () => {
-    vi.spyOn(console, "warn").mockImplementation(() => undefined);
-    anotado.mockResolvedValue({
-      ok: false,
-      problem: { code: "conflict_state", message: (tt) => tt("problem.conflict_state") },
-    });
-    pedido.mockResolvedValueOnce({ ok: true, value: caso(OFRECE) }).mockResolvedValue({
-      ok: true,
-      value: caso({
-        can_annotate_triage: false,
-        triage_amount_steps: [],
-        triage_note: { claim_amount: null, coverage_disputed: null, fraud_suspected: true },
-      }),
-    });
-    dibujar();
-    await screen.findByTestId("visitor-triage-form");
-
-    await userEvent.selectOptions(screen.getByLabelText(t("visitor.triage.fraud_label")), "yes");
-    await userEvent.click(screen.getByRole("button", { name: t("visitor.triage.save") }));
-
-    expect((await screen.findByTestId("visitor-triage-problem")).textContent).toBe(
-      t("visitor.triage.limit"),
-    );
-    expect(pedido).toHaveBeenCalledTimes(2);
-    // Lo que anoto se sigue leyendo, y el formulario ya no esta.
-    expect(screen.queryByTestId("visitor-triage-form")).toBeNull();
-    expect(screen.getByTestId("visitor-triage-fraud-value").textContent).toBe(
-      t("inbox.triage.answer_yes"),
-    );
-    // La decision, que es otra cosa, sigue disponible.
-    expect(screen.getByTestId("decision-form")).toBeTruthy();
-  });
-
-  it("si el enlace vencio mientras anotaba, lo dice con su propia frase y lo escrito sigue", async () => {
-    vi.spyOn(console, "warn").mockImplementation(() => undefined);
-    anotado.mockResolvedValue({
-      ok: false,
-      problem: { code: "link_invalid", message: (tt) => tt("problem.link_invalid") },
-    });
-    pedido.mockResolvedValueOnce({ ok: true, value: caso(OFRECE) }).mockResolvedValue({
-      ok: false,
-      problem: { code: "link_invalid", message: (tt) => tt("problem.link_invalid") },
-    });
-    dibujar();
-    await screen.findByTestId("visitor-triage-form");
-
-    await userEvent.type(screen.getByLabelText(t("visitor.triage.amount_label")), "800000");
-    await userEvent.click(screen.getByRole("button", { name: t("visitor.triage.save") }));
-
-    expect((await screen.findByTestId("visitor-triage-problem")).textContent).toBe(
-      t("visitor.triage.expired"),
-    );
-    expect(screen.getByLabelText<HTMLInputElement>(t("visitor.triage.amount_label")).value).toBe(
-      "800000",
-    );
-  });
-
-  it("si el enlace sigue vigente, un rechazo no se llama vencimiento", async () => {
-    vi.spyOn(console, "warn").mockImplementation(() => undefined);
-    anotado.mockResolvedValue({
-      ok: false,
-      problem: { code: "not_found", message: (tt) => tt("problem.not_found") },
-    });
-    dibujar();
-    await screen.findByTestId("visitor-triage-form");
-
-    await userEvent.click(screen.getByRole("button", { name: t("visitor.triage.save") }));
-
-    const aviso = await screen.findByTestId("visitor-triage-problem");
-    expect(aviso.textContent).toBe(t("problem.not_found"));
-    expect(aviso.textContent).not.toBe(t("visitor.triage.expired"));
-  });
-
-  it("un caso que espera al asegurado no se decide pero si se anota, aparte", async () => {
-    pedido.mockResolvedValue({
-      ok: true,
-      value: caso({ ...OFRECE, state: "awaiting_insured", available_actions: [] }),
-    });
-    dibujar();
-
-    await screen.findByTestId("visitor-triage-form");
-
-    expect(screen.queryByTestId("decision-form")).toBeNull();
-    expect(screen.getByTestId("visitor-no-actions").textContent).toBe(
-      t("inbox.decision.none_awaiting"),
-    );
-  });
-
-  it("decidido el caso, lo que anoto se sigue leyendo, sin formulario", async () => {
-    decidido.mockResolvedValue({ ok: true, value: { decision_id: "d1", resolution: "approved" } });
-    pedido.mockResolvedValueOnce({ ok: true, value: caso(OFRECE) }).mockResolvedValueOnce({
-      ok: true,
-      value: caso({
-        state: "closed",
-        resolution: "approved",
-        available_actions: [],
-        can_annotate_triage: false,
-        triage_note: { claim_amount: 2500, coverage_disputed: false, fraud_suspected: true },
-      }),
-    });
-    dibujar();
-    await screen.findByTestId("visitor-triage-form");
-
-    await userEvent.type(screen.getByLabelText(t("inbox.decision.comment_label")), "Lo apruebo");
-    await userEvent.click(screen.getByRole("button", { name: t("inbox.decision.approve") }));
-
-    expect(await screen.findByTestId("visitor-resolution")).toBeTruthy();
-    expect(screen.queryByTestId("visitor-triage-form")).toBeNull();
-    expect(screen.getByTestId("visitor-triage-amount-value").textContent).toBe(
-      formatPesos(2500, "es"),
-    );
-  });
-
-  it("en ingles el bloque se lee en ingles", async () => {
-    const en = createTranslate("en");
-    renderWithProviders(
-      <VisitorCasePage token="un-token" conversationHref={() => "/"} renderRejected={rechazo} />,
-      "en",
-    );
-
-    expect((await screen.findByTestId("visitor-triage")).textContent).toContain(
-      en("visitor.triage.title"),
-    );
   });
 });

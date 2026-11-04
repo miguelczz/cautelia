@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { renderWithProviders } from "../../app/testing";
-import type { CaseDetailOut, InboxResult } from "../../shared/api-client/inbox";
+import type { AdjusterRunOut, CaseDetailOut, InboxResult } from "../../shared/api-client/inbox";
 import type { Locale } from "../../shared/copy/copy-keys";
 import { createTranslate } from "../../shared/i18n/translate";
 import { CaseDetailPage } from "./case-page";
@@ -947,8 +947,7 @@ describe("la pantalla del personal no cambio de diseno", () => {
     ]) {
       expect(screen.queryByTestId(propio), propio).toBeNull();
     }
-    // Ninguna region del visitante: ni el panel del ajustador ni los datos de su reporte.
-    expect(screen.queryByRole("region", { name: t("visitor.adjuster.title") })).toBeNull();
+    // Ninguna region del visitante: ni los datos de su reporte.
     expect(screen.queryByRole("region", { name: t("visitor.block.fields") })).toBeNull();
   });
 
@@ -1044,3 +1043,112 @@ async function dibujarYEsperarEncabezado(): Promise<HTMLElement> {
   dibujar();
   return screen.findByTestId("case-header");
 }
+
+// El ajustador de IA decide los casos derivados y explica su decision (plan 09, fase 5): quien
+// entra con credencial ve el mismo panel que el visitante, **de solo lectura**, y la explicacion de
+// «quien decidio» lo nombra por lo que es.
+describe("el panel del ajustador de IA en la pantalla del personal", () => {
+  const corrida = (extra: Partial<AdjusterRunOut> = {}): AdjusterRunOut => ({
+    status: "decided",
+    attempt: 1,
+    steps: [
+      {
+        id: "case_read",
+        title_key: "adjuster.step.case_read.title",
+        text: "Lei el reporte del caso CA-1.",
+        sources: [],
+      },
+      {
+        id: "decision",
+        title_key: "adjuster.step.decision.title",
+        text: "Rechazo.",
+        sources: [{ kind: "clause", ref: "D.INS.COLLISION", label: "Parte D" }],
+      },
+    ],
+    decision: "reject",
+    headline: "Rechazado: no hay cobertura",
+    explanation: "La clausula no cubre este uso.",
+    searches_used: 0,
+    updated_at: "2026-09-28T12:05:00+00:00",
+    ...extra,
+  });
+
+  it("decidido: la decision, el titular y los pasos, sin ningun control propio", async () => {
+    pedido.mockResolvedValue({
+      ok: true,
+      value: caso({
+        state: "closed",
+        resolution: "rejected",
+        available_actions: [],
+        adjuster: corrida(),
+      }),
+    });
+    dibujar();
+
+    const panel = await screen.findByRole("region", { name: t("adjuster.panel.title") });
+    expect(within(panel).getByTestId("adjuster-decision-label").textContent).toBe(
+      t("case.resolution.rejected"),
+    );
+    expect(within(panel).getByTestId("adjuster-headline").textContent).toBe(
+      "Rechazado: no hay cobertura",
+    );
+    expect(within(panel).getAllByRole("heading", { level: 3 })).toHaveLength(2);
+    expect(within(panel).queryAllByRole("button")).toEqual([]);
+    expect(within(panel).queryByRole("textbox")).toBeNull();
+  });
+
+  it("derivado y sin corrida todavia: el panel dice que esta en curso", async () => {
+    pedido.mockResolvedValue({ ok: true, value: caso({ adjuster: null }) });
+    dibujar();
+
+    const panel = await screen.findByRole("region", { name: t("adjuster.panel.title_pending") });
+    expect(within(panel).getByTestId("adjuster-status").textContent).toBe(
+      t("adjuster.panel.running", { done: 0, total: 6 }),
+    );
+  });
+
+  it("un caso sin corrida que no esta derivado no pinta el panel", async () => {
+    pedido.mockResolvedValue({
+      ok: true,
+      value: caso({ state: "awaiting_insured", adjuster: null, available_actions: [] }),
+    });
+    await dibujarYEsperarEncabezado();
+
+    expect(screen.queryByTestId("adjuster-panel")).toBeNull();
+  });
+
+  it.each([
+    ["rejected", (tt: typeof t) => tt("inbox.explanation.by_adjuster_ai")],
+    ["approved", (tt: typeof t) => tt("inbox.explanation.by_adjuster_ai")],
+    ["sent_to_insurer", (tt: typeof t) => tt("inbox.explanation.by_adjuster_ai_agency")],
+  ] as const)(
+    "quien decidio dice «ajustador de IA» (resolucion %s), nunca una persona del personal",
+    async (resolucion, esperado) => {
+      pedido.mockResolvedValue({
+        ok: true,
+        value: caso({
+          state: "closed",
+          resolution: resolucion,
+          available_actions: [],
+          adjuster: corrida(),
+          explanation: {
+            asked: "none",
+            cited: "none",
+            rule: "present",
+            decided_by: "present",
+            decided_at: "present",
+            decided_by_kind: "adjuster_ai",
+            decided_by_id: null,
+            decided_at_iso: "2026-09-28T12:05:00+00:00",
+          },
+        }),
+      });
+      await dibujarYEsperarEncabezado();
+
+      const quien = screen.getByTestId("case-decided-by").textContent;
+      expect(quien).toBe(esperado(t));
+      expect(quien).toMatch(/IA/);
+      expect(quien).not.toBe(t("inbox.explanation.by_staff", { who: "" }));
+    },
+  );
+});

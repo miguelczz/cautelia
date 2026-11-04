@@ -1,10 +1,9 @@
 // Lo que el ajustador anota para las reglas: monto estimado, cobertura en duda y sospecha de
 // fraude (2026-10-13).
 //
-// **Es la pantalla de quien entro con credencial de personal.** El visitante que hace de
-// ajustador tiene la suya, guiada (`visitor-triage.tsx`), que reutiliza de aqui las funciones
-// puras. Lo que el servidor manda resuelto (`can_annotate_triage`) es lo que se dibuja: esta
-// pantalla no vuelve a decidirlo.
+// **Es la pantalla de quien entro con credencial de personal.** El visitante ya no anota
+// (2026-11-04: los datos de triaje los saca el modelo del relato). Lo que el servidor manda
+// resuelto (`can_annotate_triage`) es lo que se dibuja: esta pantalla no vuelve a decidirlo.
 //
 // **«Sin anotar» y «No» son dos respuestas distintas, y la pantalla puede volver a dejar un
 // dato sin anotar.** Una regla no dispara con un dato sin anotar y un «No» afirma que se

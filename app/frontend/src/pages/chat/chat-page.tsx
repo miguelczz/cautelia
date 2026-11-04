@@ -42,7 +42,6 @@ import {
   ArrowCounterClockwiseIcon,
   BrainIcon,
   FolderOpenIcon,
-  GavelIcon,
   PaperPlaneRightIcon,
 } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
@@ -459,22 +458,6 @@ export function ChatPage({
   // Y solo cuando la respuesta ya se ve entera: los botones antes que el texto confunden.
   const revelando = ultimo?.speaker === "agent" && ultimo.progressive && !reveladas.has(ultimo.id);
   const botones = !enVuelo && !revelando && ultimo?.speaker === "agent" ? ultimo.suggestions : [];
-  // Bajo la ultima respuesta, decidir el caso como ajustador cuando espera esa decision.
-  const ultimaDeLaAgente =
-    !enVuelo && !revelando && ultimo?.speaker === "agent" ? ultimo : undefined;
-  const enlaceParaDecidir =
-    caso !== null && caso.case_link !== null && caso.state === "derived" ? caso.case_link : null;
-  // El boton aparece cuando llega el estado del caso, que se pide **despues** de la
-  // respuesta: el desplazamiento de arriba ya paso, el boton nace debajo del ultimo
-  // mensaje y el cuadro de escribir lo dejaba fuera de la ventana hasta que la persona
-  // desplazara (auditoria del 2026-10-10, C12). Al aparecer, se baja hasta mostrarlo.
-  const decidirVisible = ultimaDeLaAgente !== undefined && enlaceParaDecidir !== null;
-  useEffect(() => {
-    const caja = transcripcion.current;
-    if (decidirVisible && caja !== null) {
-      caja.scrollTop = caja.scrollHeight;
-    }
-  }, [decidirVisible]);
   // El aviso de lo tapado solo si queda algo tapado: lo escrito en esta pestana ya
   // volvio a su burbuja.
   const quedaTapado = conversacion.messages.some(
@@ -677,21 +660,6 @@ export function ChatPage({
                         : {})}
                     />
                   ))}
-                </div>
-              )}
-              {mensaje !== ultimaDeLaAgente || enlaceParaDecidir === null ? null : (
-                <div className="flex flex-wrap gap-2" data-testid="chat-inside">
-                  <Button asChild variant="secondary" size="compact" className="gap-1.5">
-                    <a href={enlaceParaDecidir}>
-                      <GavelIcon
-                        aria-hidden="true"
-                        focusable="false"
-                        size={18}
-                        className="text-tenant"
-                      />
-                      {t("chat.page.decide_as_adjuster")}
-                    </a>
-                  </Button>
                 </div>
               )}
             </li>

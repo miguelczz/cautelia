@@ -1,5 +1,69 @@
 {
   "$defs": {
+    "AdjusterExpectation": {
+      "additionalProperties": false,
+      "description": "Un caso del ajustador de IA (plan 09, fase 5, tanda 2c): un caso derivado y lo que el\nproceso entero tiene que decidir, con las cifras y los hechos que se comprueban por codigo.\n\nEl caso corre `adjuster.pipeline.run_case` contra el corpus de la base del proyecto y\nClaude (decision y busqueda web), asi que cuesta centavos y se corre a mano y por hito\n(`mise run evals:ajustador`). El relato es sintetico y la poliza es del corpus versionado.",
+      "properties": {
+        "policy_number": {
+          "minLength": 1,
+          "title": "Policy Number",
+          "type": "string"
+        },
+        "narrative": {
+          "minLength": 1,
+          "title": "Narrative",
+          "type": "string"
+        },
+        "evaluated_on": {
+          "default": "2026-11-15",
+          "format": "date",
+          "title": "Evaluated On",
+          "type": "string"
+        },
+        "allowed_actions": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Allowed Actions",
+          "type": "array"
+        },
+        "expected_action": {
+          "title": "Expected Action",
+          "type": "string"
+        },
+        "policy_in_force": {
+          "title": "Policy In Force",
+          "type": "boolean"
+        },
+        "cites_any_of": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Cites Any Of",
+          "type": "array"
+        },
+        "vehicle_value": {
+          "default": "open",
+          "enum": [
+            "open",
+            "not_found"
+          ],
+          "title": "Vehicle Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_number",
+        "narrative",
+        "allowed_actions",
+        "expected_action",
+        "policy_in_force"
+      ],
+      "title": "AdjusterExpectation",
+      "type": "object"
+    },
     "AnswerKind": {
       "description": "Una respuesta del guion, o la correccion que la sustituye.",
       "enum": [
@@ -641,6 +705,22 @@
         }
       ],
       "default": null
+    },
+    "adjuster": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AdjusterExpectation"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "subset_only": {
+      "default": false,
+      "title": "Subset Only",
+      "type": "boolean"
     }
   },
   "required": [

@@ -13,6 +13,20 @@ export type CopyKey =
   | "action.go_home"
   | "action.retry"
   | "action.start_over"
+  | "adjuster.panel.ai_notice"
+  | "adjuster.panel.capped"
+  | "adjuster.panel.decided"
+  | "adjuster.panel.decision"
+  | "adjuster.panel.failed"
+  | "adjuster.panel.running"
+  | "adjuster.panel.sources"
+  | "adjuster.panel.steps"
+  | "adjuster.panel.title"
+  | "adjuster.panel.title_pending"
+  | "adjuster.source.kind.clause"
+  | "adjuster.source.kind.web"
+  | "adjuster.source.new_tab"
+  | "adjuster.source.rule"
   | "adjuster.step.case_read.body"
   | "adjuster.step.case_read.title"
   | "adjuster.step.clauses.found"
@@ -176,7 +190,6 @@ export type CopyKey =
   | "chat.page.composer_hint"
   | "chat.page.composer_label"
   | "chat.page.connecting"
-  | "chat.page.decide_as_adjuster"
   | "chat.page.history_restored"
   | "chat.page.reset"
   | "chat.page.reset_body"
@@ -323,10 +336,10 @@ export type CopyKey =
   | "guide.differences.tip"
   | "guide.differences.title"
   | "guide.start"
+  | "guide.steps.adjuster.body"
+  | "guide.steps.adjuster.title"
   | "guide.steps.choose.body"
   | "guide.steps.choose.title"
-  | "guide.steps.decide.body"
-  | "guide.steps.decide.title"
   | "guide.steps.link.body"
   | "guide.steps.link.title"
   | "guide.steps.report.both"
@@ -411,6 +424,8 @@ export type CopyKey =
   | "inbox.decision.takeover_note"
   | "inbox.decision.title"
   | "inbox.explanation.by_adjuster"
+  | "inbox.explanation.by_adjuster_ai"
+  | "inbox.explanation.by_adjuster_ai_agency"
   | "inbox.explanation.by_agency"
   | "inbox.explanation.by_rules"
   | "inbox.explanation.by_staff"
@@ -968,14 +983,7 @@ export type CopyKey =
   | "trace.summary.lost"
   | "trace.summary.ready"
   | "trace.summary.recording"
-  | "visitor.adjuster.title"
   | "visitor.block.fields"
-  | "visitor.decide_intro"
-  | "visitor.decision.title"
-  | "visitor.decision_not_saved"
-  | "visitor.done_body"
-  | "visitor.done_title"
-  | "visitor.expired_with_comment"
   | "visitor.intro"
   | "visitor.number"
   | "visitor.opening"
@@ -983,24 +991,6 @@ export type CopyKey =
   | "visitor.title_claim"
   | "visitor.title_inquiry"
   | "visitor.title_quote"
-  | "visitor.triage.amount_examples"
-  | "visitor.triage.amount_help"
-  | "visitor.triage.amount_help_none"
-  | "visitor.triage.amount_help_one"
-  | "visitor.triage.amount_invalid"
-  | "visitor.triage.amount_label"
-  | "visitor.triage.amount_preview"
-  | "visitor.triage.coverage_help"
-  | "visitor.triage.coverage_label"
-  | "visitor.triage.expired"
-  | "visitor.triage.fraud_help"
-  | "visitor.triage.fraud_label"
-  | "visitor.triage.intro"
-  | "visitor.triage.limit"
-  | "visitor.triage.result"
-  | "visitor.triage.save"
-  | "visitor.triage.title"
-  | "visitor.triage.unset"
   | "visitor.valid_until"
   | "voice.answer.back_to_report"
   | "voice.answer.delayed"
@@ -1119,6 +1109,20 @@ export const COPY_KEYS = [
   "action.go_home",
   "action.retry",
   "action.start_over",
+  "adjuster.panel.ai_notice",
+  "adjuster.panel.capped",
+  "adjuster.panel.decided",
+  "adjuster.panel.decision",
+  "adjuster.panel.failed",
+  "adjuster.panel.running",
+  "adjuster.panel.sources",
+  "adjuster.panel.steps",
+  "adjuster.panel.title",
+  "adjuster.panel.title_pending",
+  "adjuster.source.kind.clause",
+  "adjuster.source.kind.web",
+  "adjuster.source.new_tab",
+  "adjuster.source.rule",
   "adjuster.step.case_read.body",
   "adjuster.step.case_read.title",
   "adjuster.step.clauses.found",
@@ -1282,7 +1286,6 @@ export const COPY_KEYS = [
   "chat.page.composer_hint",
   "chat.page.composer_label",
   "chat.page.connecting",
-  "chat.page.decide_as_adjuster",
   "chat.page.history_restored",
   "chat.page.reset",
   "chat.page.reset_body",
@@ -1429,10 +1432,10 @@ export const COPY_KEYS = [
   "guide.differences.tip",
   "guide.differences.title",
   "guide.start",
+  "guide.steps.adjuster.body",
+  "guide.steps.adjuster.title",
   "guide.steps.choose.body",
   "guide.steps.choose.title",
-  "guide.steps.decide.body",
-  "guide.steps.decide.title",
   "guide.steps.link.body",
   "guide.steps.link.title",
   "guide.steps.report.both",
@@ -1517,6 +1520,8 @@ export const COPY_KEYS = [
   "inbox.decision.takeover_note",
   "inbox.decision.title",
   "inbox.explanation.by_adjuster",
+  "inbox.explanation.by_adjuster_ai",
+  "inbox.explanation.by_adjuster_ai_agency",
   "inbox.explanation.by_agency",
   "inbox.explanation.by_rules",
   "inbox.explanation.by_staff",
@@ -2074,14 +2079,7 @@ export const COPY_KEYS = [
   "trace.summary.lost",
   "trace.summary.ready",
   "trace.summary.recording",
-  "visitor.adjuster.title",
   "visitor.block.fields",
-  "visitor.decide_intro",
-  "visitor.decision.title",
-  "visitor.decision_not_saved",
-  "visitor.done_body",
-  "visitor.done_title",
-  "visitor.expired_with_comment",
   "visitor.intro",
   "visitor.number",
   "visitor.opening",
@@ -2089,24 +2087,6 @@ export const COPY_KEYS = [
   "visitor.title_claim",
   "visitor.title_inquiry",
   "visitor.title_quote",
-  "visitor.triage.amount_examples",
-  "visitor.triage.amount_help",
-  "visitor.triage.amount_help_none",
-  "visitor.triage.amount_help_one",
-  "visitor.triage.amount_invalid",
-  "visitor.triage.amount_label",
-  "visitor.triage.amount_preview",
-  "visitor.triage.coverage_help",
-  "visitor.triage.coverage_label",
-  "visitor.triage.expired",
-  "visitor.triage.fraud_help",
-  "visitor.triage.fraud_label",
-  "visitor.triage.intro",
-  "visitor.triage.limit",
-  "visitor.triage.result",
-  "visitor.triage.save",
-  "visitor.triage.title",
-  "visitor.triage.unset",
   "visitor.valid_until",
   "voice.answer.back_to_report",
   "voice.answer.delayed",

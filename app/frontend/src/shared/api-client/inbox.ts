@@ -18,6 +18,8 @@ import {
   getInboxCase,
   listInboxCases,
   redeemCaseLink,
+  type AdjusterRunOut,
+  type AdjusterSourceOut,
   type Answer,
   type CaseDetailOut,
   type CaseFieldView,
@@ -45,6 +47,8 @@ import { toProblemView, type ProblemView } from "./problems";
 // texto del catalogo--. Reexportar el **tipo** no abre esa puerta y evita copiar la
 // forma del cable a mano, que es como una copia se queda atras.
 export type {
+  AdjusterRunOut,
+  AdjusterSourceOut,
   Answer,
   CaseDetailOut,
   CaseFieldView,

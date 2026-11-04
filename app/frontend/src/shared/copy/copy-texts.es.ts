@@ -18,6 +18,20 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["action.go_home", "Ir al inicio"],
   ["action.retry", "Reintentar"],
   ["action.start_over", "Empezar de nuevo"],
+  ["adjuster.panel.ai_notice", "Esta explicación la escribió una IA, a partir de la póliza, las reglas de la aseguradora y lo que se contó en el caso."],
+  ["adjuster.panel.capped", "Hoy el ajustador de IA ya atendió todos los casos que puede. Este caso espera su turno y se decide en cuanto haya cupo."],
+  ["adjuster.panel.decided", "Lo decidió el ajustador de IA."],
+  ["adjuster.panel.decision", "Decisión"],
+  ["adjuster.panel.failed", "El caso sigue en revisión. Cuando el ajustador lo decida, la decisión aparece aquí."],
+  ["adjuster.panel.running", "El ajustador de IA está revisando el caso: {done} de {total} pasos."],
+  ["adjuster.panel.sources", "Fuentes del paso"],
+  ["adjuster.panel.steps", "Pasos del ajustador"],
+  ["adjuster.panel.title", "Cómo decidió el ajustador"],
+  ["adjuster.panel.title_pending", "Cómo decide el ajustador"],
+  ["adjuster.source.kind.clause", "Cláusula"],
+  ["adjuster.source.kind.web", "Fuente externa"],
+  ["adjuster.source.new_tab", "(se abre en otra pestaña)"],
+  ["adjuster.source.rule", "Regla {number} de la aseguradora"],
   ["adjuster.step.case_read.body", "Leí el reporte del caso {case_number}: tiene {fields} datos anotados, con el relato de lo que pasó."],
   ["adjuster.step.case_read.title", "Lee el reporte"],
   ["adjuster.step.clauses.found", "Busqué en la póliza las cláusulas que se parecen a lo que pasó y encontré {count}. Solo cito las que compruebo una por una contra la póliza."],
@@ -94,7 +108,7 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["case.state.open", "Abierto"],
   ["case.state.verifying", "Verificando la póliza"],
   ["cases.example.back", "Volver a Casos"],
-  ["cases.example.note", "Este es un caso de ejemplo: se puede leer, pero no decidir. Para decidir un caso como ajustador, crea el tuyo en el chat."],
+  ["cases.example.note", "Este es un caso de ejemplo: se puede leer, pero no cambiar. Para ver cómo decide el ajustador de IA un caso tuyo, crea el tuyo en el chat."],
   ["cases.example.title", "Caso de ejemplo {case_number}"],
   ["cases.examples.empty", "Esta aseguradora no tiene casos de ejemplo por ahora."],
   ["cases.examples.hint", "Son casos inventados que ya trae cada aseguradora, tal como los ve un ajustador. Ábrelos para ver cómo queda un caso."],
@@ -106,7 +120,7 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["cases.group.deciding", "La agente está evaluando qué sigue."],
   ["cases.group.derived", "Ya pasó a un ajustador, que decide qué sigue."],
   ["cases.group.verifying", "La agente está comprobando la póliza."],
-  ["cases.intro", "Un caso es lo que la agente arma con lo que le cuentas: tus datos, la conversación y lo que encontró en tu póliza, para que un ajustador lo revise y lo decida. Aquí ves el tuyo y casos de ejemplo de cada aseguradora."],
+  ["cases.intro", "Un caso es lo que la agente arma con lo que le cuentas: tus datos, la conversación y lo que encontró en tu póliza, para que el ajustador de IA lo revise y lo decida. Aquí ves el tuyo y casos de ejemplo de cada aseguradora."],
   ["cases.mine.chat", "Seguir en el chat"],
   ["cases.mine.chat_with", "Seguir en el chat de {insurer}"],
   ["cases.mine.empty", "Todavía no tienes ningún caso. Cuéntale a la agente de una aseguradora qué te pasó y aquí aparece."],
@@ -181,7 +195,6 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["chat.page.composer_hint", "Es una demostración con pólizas de ejemplo: no escribas datos personales reales."],
   ["chat.page.composer_label", "Tu mensaje"],
   ["chat.page.connecting", "Conectando…"],
-  ["chat.page.decide_as_adjuster", "Decidir este caso como ajustador"],
   ["chat.page.history_restored", "Retomamos tu conversación. Lo que escribiste antes se guarda con los datos personales tapados, por eso ves etiquetas en su lugar."],
   ["chat.page.reset", "Reiniciar conversación"],
   ["chat.page.reset_body", "Esta conversación se cierra y empiezas otra desde cero."],
@@ -251,6 +264,9 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["comparison.column.interrupted", "La respuesta no llegó antes de que salieras de la página."],
   ["comparison.column.loading", "Revisando la póliza de {insurer}…"],
   ["comparison.column.policy", "Cláusulas de la póliza {policy}"],
+];
+
+const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["comparison.column.policy_issued_by", "Cláusulas de la póliza {policy}, emitida por {issuer}"],
   ["comparison.column.rejected_title", "Se alcanzó un límite"],
   ["comparison.column.retry", "Volver a preguntar"],
@@ -264,9 +280,6 @@ const TRAMO_0: readonly (readonly [CopyKey, string])[] = [
   ["comparison.examples.lend_car", "¿Estoy cubierto si le presto mi carro a un amigo?"],
   ["comparison.examples.other_driver_no_insurance", "¿Qué pasa si me choca alguien que no tiene seguro?"],
   ["comparison.examples.passenger_medical", "¿Pagan los gastos médicos de mis pasajeros?"],
-];
-
-const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["comparison.examples.rental_car", "¿Me pagan un carro de alquiler mientras reparan el mío?"],
   ["comparison.examples.ride_app", "¿Estoy cubierto si uso mi carro en una app de transporte?"],
   ["comparison.examples.stolen_keys", "¿Me cubren si me roban el carro y dejé las llaves adentro?"],
@@ -323,7 +336,7 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["documents.title", "Documentos que consulta {agent}"],
   ["documents.translation_note", "Traducción de referencia al español. El texto que rige es el original."],
   ["evals.scripted_insured.unknown_field", "No sé, eso no lo tengo."],
-  ["guide.about.limit", "La agente no decide coberturas ni pagos: eso lo firma un ajustador. En esta demo, el ajustador eres tú."],
+  ["guide.about.limit", "La agente que conversa no decide coberturas ni pagos: eso lo decide un ajustador de IA, aparte de ella, que explica cada paso con sus fuentes."],
   ["guide.about.sample", "Todo es de ejemplo: las aseguradoras son ficticias y las pólizas y los datos, inventados."],
   ["guide.about.what", "Cautelia es una demostración de una agente de inteligencia artificial para seguros de auto. Atiende a quien acaba de chocar: recoge lo que pasó, arma el caso y responde dudas de la póliza mostrando la cláusula en la que se apoya."],
   ["guide.differences.agent", "Te atiende {agent}."],
@@ -331,10 +344,10 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["guide.differences.tip", "Para notarlo, reporta el mismo choque en dos de ellas."],
   ["guide.differences.title", "Qué cambia entre aseguradoras"],
   ["guide.start", "Elegir una aseguradora"],
+  ["guide.steps.adjuster.body", "En tu caso, un ajustador de IA lee la póliza y las reglas, decide y explica su decisión paso a paso."],
+  ["guide.steps.adjuster.title", "Mira cómo decide el ajustador"],
   ["guide.steps.choose.body", "Cada una trae su póliza de ejemplo. Puedes probar varias."],
   ["guide.steps.choose.title", "Elige una aseguradora"],
-  ["guide.steps.decide.body", "Con ese enlace decides tu propio caso, como lo haría un ajustador."],
-  ["guide.steps.decide.title", "Decide como ajustador"],
   ["guide.steps.link.body", "La agente pregunta lo que falta y te da el enlace a tu caso."],
   ["guide.steps.link.title", "Recibe tu caso"],
   ["guide.steps.report.both", "Por chat o por voz, con tus palabras."],
@@ -419,6 +432,8 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["inbox.decision.takeover_note", "La agente todavía está evaluando este caso. Si lo decides ahora, queda en tus manos y las reglas ya no lo cierran solas."],
   ["inbox.decision.title", "Decidir el caso"],
   ["inbox.explanation.by_adjuster", "Decidido por un ajustador de la aseguradora"],
+  ["inbox.explanation.by_adjuster_ai", "Decidido por el ajustador de IA"],
+  ["inbox.explanation.by_adjuster_ai_agency", "Enviado a la aseguradora por el ajustador de IA"],
   ["inbox.explanation.by_agency", "Enviado a la aseguradora por la agencia"],
   ["inbox.explanation.by_rules", "Sin ajustador: lo cerraron las reglas de la aseguradora"],
   ["inbox.explanation.by_staff", "Decidido por {who}"],
@@ -502,6 +517,9 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.block.safety", "si hubo heridos"],
   ["intake.block.vehicle_and_driver", "el vehículo y quién conducía"],
   ["intake.block.what_happened", "qué pasó"],
+];
+
+const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["intake.block.when_and_where", "cuándo y dónde"],
   ["intake.claim_item.identity_and_policy", "tu nombre completo y el número de tu póliza"],
   ["intake.claim_item.other_parties", "si hubo otras personas o vehículos involucrados (opcional)"],
@@ -517,9 +535,6 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["intake.closing.fast_claim_done", "Listo: ya tengo lo necesario para tu caso {case_number}. Reviso tu reporte y te confirmo en un momento."],
   ["intake.closing.fast_claim_offer", "Listo: ya tengo lo necesario para tu caso {case_number}. ¿Quieres agregar {missing}, o lo dejamos así?"],
   ["intake.closing.fast_claim_registered", "Tu caso {case_number} ya quedó registrado; puedes verlo con el enlace de arriba."],
-];
-
-const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["intake.closing.fast_claim_review_after_extra", "Anotado, gracias. Reviso tu reporte y te confirmo en un momento."],
   ["intake.closing.fast_claim_review_already", "Tu caso {case_number} está en revisión; te confirmo en un momento."],
   ["intake.closing.fast_claim_review_declined", "De acuerdo. Reviso tu reporte y te confirmo en un momento."],
@@ -755,6 +770,9 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["quality.gate.no_promises", "No promete cobertura, pagos ni culpa"],
   ["quality.gate.not_measured", "No se midió"],
   ["quality.gate.personal_data", "Guarda los datos personales tapados"],
+];
+
+const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["quality.gate.some_failed", "{failed} de {total} fallaron"],
   ["quality.gates.lead", "Con un solo fallo en una de ellas, la versión no se publica."],
   ["quality.gates.title", "Reglas que no se pueden romper"],
@@ -770,9 +788,6 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["quality.pending.budget_exhausted", "se llegó al tope de gasto"],
   ["quality.pending.count", "{count} situaciones:"],
   ["quality.pending.lead", "No medido no es lo mismo que bien. Por eso va aparte, con su motivo."],
-];
-
-const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["quality.pending.none", "Todo lo que esta corrida intentó medir, se midió."],
   ["quality.pending.other", "otro motivo"],
   ["quality.pending.provider_key_missing", "falta la clave del proveedor"],
@@ -982,14 +997,7 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["trace.summary.lost", "El rastro de esta respuesta no llegó"],
   ["trace.summary.ready", "Listo"],
   ["trace.summary.recording", "Registrándose…"],
-  ["visitor.adjuster.title", "Haz de ajustador"],
   ["visitor.block.fields", "Datos de tu reporte"],
-  ["visitor.decide_intro", "Revisa los datos y decide. La conversación sigue con tu decisión."],
-  ["visitor.decision.title", "Decide"],
-  ["visitor.decision_not_saved", "No pudimos guardar tu decisión. Inténtalo de nuevo; tu nota sigue aquí abajo."],
-  ["visitor.done_body", "El aviso con la decisión te llega en tu conversación."],
-  ["visitor.done_title", "Listo, tu caso ya tiene una decisión"],
-  ["visitor.expired_with_comment", "El enlace venció mientras escribías. Tu nota sigue aquí abajo para que la copies antes de salir."],
   ["visitor.intro", "Lo que contaste, lo que dice tu póliza y lo que decide el ajustador."],
   ["visitor.number", "Caso {case_number} · sirve para retomarlo o consultarlo"],
   ["visitor.opening", "Abriendo tu caso…"],
@@ -997,24 +1005,6 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["visitor.title_claim", "Tu reporte de accidente"],
   ["visitor.title_inquiry", "Tu consulta de póliza"],
   ["visitor.title_quote", "Tu solicitud de cotización"],
-  ["visitor.triage.amount_examples", "Prueba con:"],
-  ["visitor.triage.amount_help", "Desde {first} se revisa el monto; desde {last}, con más detalle."],
-  ["visitor.triage.amount_help_none", "Un cálculo aproximado."],
-  ["visitor.triage.amount_help_one", "Desde {first} se revisa el monto."],
-  ["visitor.triage.amount_invalid", "Escribe solo números, sin puntos, comas ni letras."],
-  ["visitor.triage.amount_label", "¿Cuánto costaría el arreglo? (en pesos)"],
-  ["visitor.triage.amount_preview", "Se anota como {amount}."],
-  ["visitor.triage.coverage_help", "Por ejemplo, si podría ser una exclusión."],
-  ["visitor.triage.coverage_label", "¿Hay dudas de que la póliza lo cubra?"],
-  ["visitor.triage.expired", "El enlace venció antes de guardar estas anotaciones. Lo que escribiste sigue aquí, pero no quedó guardado."],
-  ["visitor.triage.fraud_help", "Por ejemplo, versiones que no coinciden."],
-  ["visitor.triage.fraud_label", "¿Algo hace sospechar fraude?"],
-  ["visitor.triage.intro", "Si anotas estos datos, las reglas vuelven a clasificar el caso."],
-  ["visitor.triage.limit", "Ya no se pueden cambiar más estas anotaciones en este caso."],
-  ["visitor.triage.result", "Reglas actualizadas."],
-  ["visitor.triage.save", "Guardar y ver las reglas"],
-  ["visitor.triage.title", "Revisa (opcional)"],
-  ["visitor.triage.unset", "No lo he revisado"],
   ["visitor.valid_until", "Este enlace funciona hasta las {time} de hoy."],
   ["voice.answer.back_to_report", "Volviendo a tu reporte:"],
   ["voice.answer.delayed", "Sigo revisando tu póliza; te lo digo apenas lo tenga."],
@@ -1023,9 +1013,6 @@ const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.availability.rate_limited_daily", "Ya usaste tus llamadas de hoy desde esta conexión; mañana puedes volver a llamar. El chat sigue disponible."],
   ["voice.availability.rate_limited_site", "Hoy ya se hicieron todas las llamadas de la demostración; vuelve mañana o usa el chat."],
   ["voice.barge_in.acknowledge", "Sí, dime."],
-];
-
-const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
   ["voice.closing.case_number", "Tu número de caso con {insurer} es {spoken}."],
   ["voice.closing.farewell", "Que estés muy bien."],
   ["voice.closing.next_step", "Un ajustador revisa tu caso; la decisión te aparece en esta pantalla."],
@@ -1036,6 +1023,9 @@ const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
   ["voice.console.audio_blocked", "El navegador tiene el sonido bloqueado, y no vas a oír a la agente hasta que lo actives."],
   ["voice.console.audio_enable", "Activar el sonido"],
   ["voice.console.call", "Llamar"],
+];
+
+const TRAMO_4: readonly (readonly [CopyKey, string])[] = [
   ["voice.console.call_language", "Llamada en español."],
   ["voice.console.checking", "Comprobando si hay voz"],
   ["voice.console.connecting", "Conectando"],

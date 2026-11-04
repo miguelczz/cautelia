@@ -443,6 +443,9 @@ export function ResponseBlock({ detail }: { readonly detail: CaseDetailOut }) {
  * Entonces se dice que lo decidio un ajustador de la aseguradora, o --si lo cerro la
  * agencia, que no decide los casos-- que la agencia lo envio a la emisora. Cual de las dos
  * lo da la resolucion, que es lo que separa a las dos acciones del personal.
+ *
+ * **El ajustador de IA tiene su propia frase** (tipo `adjuster_ai`): dice «ajustador de IA» y
+ * no «un ajustador de la aseguradora», porque no es personal de nadie.
  */
 export function decidedByMessage(detail: CaseDetailOut): Message {
   const { decided_by: estado, decided_by_kind: tipo, decided_by_id: quien } = detail.explanation;
@@ -451,6 +454,14 @@ export function decidedByMessage(detail: CaseDetailOut): Message {
   }
   if (tipo === "insured") {
     return (t) => t("inbox.explanation.by_visitor");
+  }
+  // El ajustador de IA decide los casos derivados (2026-11-03). Se nombra como lo que es, nunca
+  // como una persona ni como el personal; la agencia no decide, asi que si lo que hizo fue
+  // enviar el caso a la aseguradora, se dice eso.
+  if (tipo === "adjuster_ai") {
+    return detail.resolution === "sent_to_insurer"
+      ? (t) => t("inbox.explanation.by_adjuster_ai_agency")
+      : (t) => t("inbox.explanation.by_adjuster_ai");
   }
   // El cierre directo lo aplica el sistema: nadie decidio, y un actor `system` no se
   // imprime ni se nombra como quien decidio (US1.17).

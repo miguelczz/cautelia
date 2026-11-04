@@ -40,6 +40,7 @@ import { InlineAlert } from "../../shared/ui/inline-alert";
 import { DETAIL_TITLE } from "../../shared/ui/page-layout";
 import { Tag } from "../../shared/ui/tag";
 import { PageSkeleton } from "../../shared/ui/page-skeletons";
+import { AdjusterPanel } from "./adjuster-panel";
 import { DecisionForm } from "./decision-form";
 import {
   CitationList,
@@ -349,6 +350,13 @@ export function CaseDetailPage({ tenantId, caseId, queueHref, openStream }: Case
       <OpenBlock title={t("inbox.block.citations")} testId="block-citations">
         <CitationList answers={caso.coverage_answers} conversationLocale={caso.language} />
       </OpenBlock>
+
+      {/* Como decidio el ajustador de IA, de solo lectura: quien entra con credencial lo ve igual
+          que el visitante, con sus pasos y sus fuentes. Existe cuando el caso tiene corrida o
+          esta derivado, que es cuando el servidor la abre al leerlo. */}
+      {(caso.adjuster !== null && caso.adjuster !== undefined) || caso.state === "derived" ? (
+        <AdjusterPanel run={caso.adjuster} idPrefix="staff-adjuster" />
+      ) : null}
 
       {/* Lo que el ajustador anota para las reglas va justo antes del bloque que dice que
           decidieron: al guardar, ese bloque se actualiza con la evaluacion nueva. La clave

@@ -4,7 +4,7 @@
 
 ![Cautelia: dos carros con luces cobre y azul se acercan de noche por una carretera mojada](docs/assets/banner.jpg)
 
-**Cautelia es una agente de inteligencia artificial que toma el reporte de un accidente de carro y responde dudas sobre la póliza de auto, por chat o por teléfono, en español y en inglés.** Pregunta solo lo que falta, verifica la póliza, cita la cláusula exacta en la que se apoya y cierra sola los casos sencillos. Todo lo que toca cobertura o dinero pasa a un ajustador humano, que firma la decisión.
+**Cautelia es una agente de inteligencia artificial que toma el reporte de un accidente de carro y responde dudas sobre la póliza de auto, por chat o por teléfono, en español y en inglés.** Pregunta solo lo que falta, verifica la póliza, cita la cláusula exacta en la que se apoya y cierra sola los casos sencillos. Todo lo que toca cobertura o dinero pasa a un ajustador de IA, aparte de la agente, que decide el caso y explica cada paso con sus fuentes.
 
 Es una demostración de portafolio: las tres aseguradoras, sus pólizas y todas las personas que aparecen son ficticias.
 
@@ -23,7 +23,7 @@ Es una demostración de portafolio: las tres aseguradoras, sus pólizas y todas 
 
 ![Un chat en inglés: la agente encuentra la póliza, pregunta los datos que faltan y cierra el reporte](docs/assets/readme/chat.png)
 
-**3. Recibes un resultado claro.** Con el reporte completo, las reglas de la aseguradora deciden qué sigue: un caso sencillo (sin heridos y sin nadie más involucrado) se registra sin ajustador; cualquier otro pasa a un ajustador con todo ya capturado, para que no tengas que repetir nada. En ambos casos recibes un número de caso y una página que muestra lo que quedó registrado y qué regla decidió.
+**3. Recibes un resultado claro.** Con el reporte completo, las reglas de la aseguradora deciden qué sigue: un caso sencillo (sin heridos y sin nadie más involucrado) se registra sin ajustador; cualquier otro pasa al ajustador de IA con todo ya capturado, para que no tengas que repetir nada. En ambos casos recibes un número de caso y una página que muestra lo que quedó registrado y qué regla decidió.
 
 ![La página del caso: los datos del reporte a la derecha y la regla que cerró el caso](docs/assets/readme/case.png)
 
@@ -31,9 +31,7 @@ Es una demostración de portafolio: las tres aseguradoras, sus pólizas y todas 
 
 Cuando la pregunta es sobre un dato escrito en la propia póliza (las fechas de vigencia, los vehículos asegurados, los conductores declarados, las condiciones especiales), la agente lo lee directamente del registro de la póliza con código simple: sin búsqueda de cláusulas y sin un modelo que escriba la respuesta, así que es exacto y no gasta tokens. Solo una pregunta que necesita interpretar las cláusulas pasa por la búsqueda con citas.
 
-**5. En esta demostración también puedes hacer de ajustador.** Anota el costo estimado de la reparación, una duda sobre la cobertura o una sospecha de fraude, y mira cómo las reglas de la aseguradora vuelven a clasificar el caso. Después apruébalo o recházalo, y la conversación sigue con tu decisión.
-
-![Haciendo de ajustador: anotar un estimado de reparación hace que las reglas envíen el caso a un ajustador](docs/assets/readme/adjuster-rules.png)
+**5. Un ajustador de IA decide el caso y muestra cómo.** Cuando un caso pasa a un ajustador, otra IA, aparte de la agente, lee el reporte, la póliza y las reglas de la aseguradora, busca en la web el valor de referencia del vehículo y decide. La página del caso muestra sus pasos a medida que llegan y, al terminar, la decisión con los seis pasos y las fuentes de cada uno: las cláusulas que cita, las reglas y la página web. Dice que la explicación la escribió una IA. Quien visita ya no decide ni anota nada: la conversación sigue con un aviso de que el caso ya tiene una decisión.
 
 **6. Puedes llamar.** La misma agente responde por voz en el navegador: se presenta como una inteligencia artificial, avisa que la llamada se transcribe y al final te da el número de caso.
 
@@ -45,7 +43,7 @@ Cuando la pregunta es sobre un dato escrito en la propia póliza (las fechas de 
 
 ## Qué no hace
 
-- **Nunca decide coberturas ni pagos.** No dice "estás cubierto", no da montos ni asigna culpas. Esas decisiones las firma un ajustador.
+- **La agente con la que hablas nunca decide coberturas ni pagos.** No dice "estás cubierto", no da montos ni asigna culpas. Un ajustador de IA aparte decide el caso y deja escrito cómo; la agente solo se lo pasa.
 - **No está conectada a ninguna aseguradora real.** No hay pólizas reales, ni sistema real de reclamaciones, ni pagos.
 - **No escribas datos personales reales.** La conversación se guarda tal como la escribiste, y los datos de los visitantes se borran cada noche.
 - **La voz funciona solo en el navegador,** con un límite de llamadas por visitante y por día. No hay número de teléfono.
@@ -66,12 +64,12 @@ flowchart LR
   A --> G["Flujo del caso<br/>LangGraph: admisión, póliza,<br/>decisión, cumplimiento"]
   G --> R["Reglas de la aseguradora<br/>versionadas, un archivo<br/>por aseguradora"]
   G --> C["Búsqueda en la póliza<br/>con citas exactas"]
-  R --> I["Ajustador<br/>firma cobertura<br/>y dinero"]
+  R --> I["Ajustador de IA<br/>decide el caso<br/>y lo explica"]
   G --> O["Guardia de salida<br/>revisa cada mensaje"]
   O --> P
 ```
 
-En palabras: la persona habla con la agente; un modelo de lenguaje (Claude Haiku) lee cada mensaje y escribe la respuesta, y solo puede **proponer** acciones de una lista cerrada (anotar un dato, buscar la póliza, pasar el caso a un ajustador, cerrar el reporte). El código valida cada acción contra el caso antes de ejecutarla, siguiendo un flujo fijo. Son las reglas de la aseguradora, no el modelo, las que deciden a dónde va un caso. Cada mensaje pasa por una guardia de salida antes de que la persona lo vea.
+En palabras: la persona habla con la agente; un modelo de lenguaje (Claude Haiku) lee cada mensaje y escribe la respuesta, y solo puede **proponer** acciones de una lista cerrada (anotar un dato, buscar la póliza, pasar el caso a un ajustador, cerrar el reporte). El código valida cada acción contra el caso antes de ejecutarla, siguiendo un flujo fijo. Son las reglas de la aseguradora, no el modelo, las que deciden a dónde va un caso. Cada mensaje pasa por una guardia de salida antes de que la persona lo vea. Cuando un caso pasa a un ajustador lo toma un proceso aparte en segundo plano, el ajustador de IA: lee el reporte, la póliza y las reglas con código, busca en la web el valor de referencia del vehículo (hasta tres búsquedas) y toma una decisión con salida estructurada. El código valida la acción y cada cláusula que cita antes de cerrar el caso, y la página del caso muestra los pasos con sus fuentes.
 
 | Pieza | Qué usa |
 | --- | --- |

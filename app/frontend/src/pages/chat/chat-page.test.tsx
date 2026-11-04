@@ -528,7 +528,7 @@ describe("la pantalla del chat", () => {
     expect(within(screen.getByTestId("chat-case")).queryByRole("link")).toBeNull();
   });
 
-  it("bajo la ultima respuesta, con el caso derivado, ofrece decidirlo; la traza va en el encabezado", async () => {
+  it("con el caso derivado no hay boton de decidir bajo la respuesta (lo decide el ajustador de IA): el enlace al caso y la traza van en el encabezado", async () => {
     // 2026-10-09: las dos puertas a lo que pasa por dentro, sin salir a buscarlas.
     estadoDelCaso.mockResolvedValue({
       case_number: "SA-124",
@@ -557,14 +557,12 @@ describe("la pantalla del chat", () => {
       trace_ref: "tr-1",
     });
 
-    const fila = await screen.findByTestId("chat-inside");
-    // Ya no se repite la traza bajo la respuesta: vive en el boton del encabezado.
-    expect(within(fila).queryByRole("link", { name: /pensó|pensamiento/ })).toBeNull();
-    expect(
-      within(fila)
-        .getByRole("link", { name: "Decidir este caso como ajustador" })
-        .getAttribute("href"),
-    ).toBe("/c#token-derivado");
+    // El visitante ya no decide su caso: lo decide el ajustador de IA y el aviso llega al chat.
+    // Bajo la respuesta no hay ningun boton; el enlace «Ver mi caso» sigue en el encabezado.
+    const enlace = await screen.findByRole("link", { name: "Ver mi caso" });
+    expect(enlace.getAttribute("href")).toBe("/c#token-derivado");
+    expect(screen.queryByTestId("chat-inside")).toBeNull();
+    expect(screen.queryByRole("link", { name: /decidir este caso/i })).toBeNull();
   });
 
   it.each(["verifying", "deciding", "closed"] as const)(
@@ -572,7 +570,7 @@ describe("la pantalla del chat", () => {
     async (estado) => {
       // Despues de la captura el caso pasa unos segundos evaluandose y puede cerrarse solo
       // (cierre directo): ninguno de esos estados es «derivado», y el boton de decidir como
-      // ajustador es solo del derivado.
+      // ajustador ya no existe.
       estadoDelCaso.mockResolvedValue({
         case_number: "SA-124",
         state: estado,
@@ -596,7 +594,6 @@ describe("la pantalla del chat", () => {
 
       const enlace = await screen.findByRole("link", { name: "Ver mi caso" });
       expect(enlace.getAttribute("href")).toBe("/c#token-de-prueba");
-      expect(screen.queryByRole("link", { name: "Decidir este caso como ajustador" })).toBeNull();
       expect(screen.queryByTestId("chat-inside")).toBeNull();
       // La linea del caso no pinta el estado con palabras del derivado ni uno en crudo.
       const linea = screen.getByTestId("chat-case").textContent;
@@ -607,7 +604,7 @@ describe("la pantalla del chat", () => {
   // El resultado del cierre llega segundos despues y sin turno de la persona: es un
   // `turn.final` de fondo (`message_id` «background-…») que se publica cuando el caso ya cambio de
   // estado (2026-10-13). La pantalla relee el estado del caso con ese evento, una vez por evento.
-  it("el aviso de fondo con el resultado relee el estado del caso: aparece el boton de decidir", async () => {
+  it("el aviso de fondo con el resultado relee el estado del caso: el enlace apunta al caso derivado", async () => {
     estadoDelCaso
       .mockResolvedValueOnce({
         case_number: "SA-124",
@@ -637,8 +634,7 @@ describe("la pantalla del chat", () => {
       citations: [],
     });
     await screen.findByTestId("chat-case");
-    // Con el caso evaluandose no hay boton de decidir, pero si el enlace a su caso.
-    expect(screen.queryByRole("link", { name: "Decidir este caso como ajustador" })).toBeNull();
+    // Con el caso evaluandose ya esta el enlace a su caso.
     expect(screen.getByRole("link", { name: "Ver mi caso" }).getAttribute("href")).toBe("/c#token");
     expect(estadoDelCaso).toHaveBeenCalledTimes(1);
 
@@ -651,11 +647,11 @@ describe("la pantalla del chat", () => {
       citations: [],
     });
 
-    expect(
-      (await screen.findByRole("link", { name: "Decidir este caso como ajustador" })).getAttribute(
-        "href",
-      ),
-    ).toBe("/c#token-derivado");
+    await waitFor(() => {
+      expect(screen.getByRole("link", { name: "Ver mi caso" }).getAttribute("href")).toBe(
+        "/c#token-derivado",
+      );
+    });
     // Una relectura por evento: la del turno y la del aviso, ni una mas.
     expect(estadoDelCaso).toHaveBeenCalledTimes(2);
   });
@@ -704,13 +700,13 @@ describe("la pantalla del chat", () => {
         "/c#token-cerrado",
       );
     });
-    expect(screen.queryByRole("link", { name: "Decidir este caso como ajustador" })).toBeNull();
+    expect(screen.queryByRole("link", { name: /decidir este caso/i })).toBeNull();
     expect(estadoDelCaso).toHaveBeenCalledTimes(2);
   });
 
   it("una lectura vieja que llega tarde no pisa la del aviso de fondo", async () => {
     // La del turno tarda mas que la del aviso: sin numerarlas, el estado «evaluando» de la
-    // primera pisaria al «derivado» de la segunda y el boton de decidir nunca aparecia.
+    // primera pisaria al «derivado» de la segunda y el enlace quedaba con el caso viejo.
     let resolverLaVieja: (valor: ChatCaseStatus) => void = () => undefined;
     estadoDelCaso
       .mockImplementationOnce(
@@ -747,7 +743,9 @@ describe("la pantalla del chat", () => {
       case_id: "caso-1",
       citations: [],
     });
-    await screen.findByRole("link", { name: "Decidir este caso como ajustador" });
+    await waitFor(() => {
+      expect(screen.getByTestId("chat-case-link").getAttribute("href")).toBe("/c#token-derivado");
+    });
 
     await act(async () => {
       resolverLaVieja({
@@ -760,65 +758,7 @@ describe("la pantalla del chat", () => {
       await Promise.resolve();
     });
 
-    expect(
-      screen.getByRole("link", { name: "Decidir este caso como ajustador" }).getAttribute("href"),
-    ).toBe("/c#token-derivado");
     expect(screen.getByTestId("chat-case-link").getAttribute("href")).toBe("/c#token-derivado");
-  });
-
-  it("cuando el caso se deriva, el boton de decidir aparece a la vista: la conversacion baja hasta mostrarlo", async () => {
-    // C12 de la auditoria del 2026-10-10. El estado del caso se pide despues de la
-    // respuesta: la conversacion ya habia bajado, y el boton nacia debajo de lo visible,
-    // oculto tras el cuadro de escribir hasta que la persona desplazaba.
-    estadoDelCaso
-      .mockResolvedValueOnce({
-        case_number: "SA-124",
-        state: "capturing",
-        complete: 6,
-        total: 7,
-        case_link: "/c#token",
-      })
-      .mockResolvedValue({
-        case_number: "SA-124",
-        state: "derived",
-        complete: 7,
-        total: 7,
-        case_link: "/c#token-derivado",
-      });
-    const cable = flujoDeMentira();
-    renderWithProviders(
-      <ChatPage tenantId="una-aseguradora" insurerLabel="Stonecroft" openStream={cable.abrir} />,
-    );
-    cable.conectar();
-    // jsdom no mide: el alto del contenido crece cuando el boton esta dibujado.
-    const conversacion = screen.getByTestId("chat-transcript");
-    Object.defineProperty(conversacion, "scrollHeight", {
-      configurable: true,
-      get: () => (screen.queryByTestId("chat-inside") === null ? 500 : 560),
-    });
-
-    cable.empujar({
-      kind: "turn.final",
-      message_id: "m1",
-      text: "¿Hubo alguien herido?",
-      language: "es",
-      case_id: "caso-1",
-      citations: [],
-    });
-    await screen.findByTestId("chat-case");
-    cable.empujar({
-      kind: "turn.final",
-      message_id: "m2",
-      text: "Listo, le paso su caso a un ajustador.",
-      language: "es",
-      case_id: "caso-1",
-      citations: [],
-    });
-
-    await screen.findByTestId("chat-inside");
-    await waitFor(() => {
-      expect(conversacion.scrollTop).toBe(560);
-    });
   });
 
   it("el boton del encabezado abre el pensamiento de la agente sobre el caso", async () => {

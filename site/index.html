@@ -363,7 +363,7 @@ footer .brand{color:var(--text-primary);font-size:1rem}
 
     <div class="band" data-band="4" data-entrance="rise" data-a="0.86" data-b="1" data-ramp="0.05">
       <h1 class="split" data-i18n="h1"><span class="sr">Cautelia.</span><span class="vis" aria-hidden="true"></span></h1>
-      <p class="sub" data-i18n="sub">Takes the report, checks the policy, hands it to an adjuster. A portfolio project on how real agents are built.</p>
+      <p class="sub" data-i18n="sub">Takes the report, checks the policy, hands it to an AI adjuster. A portfolio project on how real agents are built.</p>
       <div class="cta-row">
         <a class="btn" href="/home" data-i18n="cta">Try the demo</a>
         <a class="quiet" href="#how"><span data-i18n="cta2">or see how it works</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v11M3.5 8.5 8 13l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -375,7 +375,7 @@ footer .brand{color:var(--text-primary);font-size:1rem}
 
     <div class="static-hero">
       <h1 data-i18n="st.h">Someone just had a crash and does not know what their policy covers.</h1>
-      <p data-i18n="st.p">Cautelia takes the report by voice or text, finds the answer in the insurer’s policy and leaves the decision to an adjuster. A portfolio project.</p>
+      <p data-i18n="st.p">Cautelia takes the report by voice or text, finds the answer in the insurer’s policy and leaves the decision to an AI adjuster that explains it. A portfolio project.</p>
       <div><a class="btn" href="/home" data-i18n="cta">Try the demo</a></div>
     </div>
   </div>
@@ -393,7 +393,7 @@ footer .brand{color:var(--text-primary);font-size:1rem}
           <li data-i18n="s1.c1">Every citation verified</li>
           <li data-i18n="s1.c2">Insurers kept apart, tested</li>
           <li data-i18n="s1.c3">Data redacted in logs and traces</li>
-          <li data-i18n="s1.c4">An adjuster decides coverage</li>
+          <li data-i18n="s1.c4">An AI adjuster decides coverage</li>
         </ul>
       </div>
       <figure class="shot panel trace part" data-i18n-aria="s1.tr.a" aria-label="One case, step by step. Scripted example, not a recording.">
@@ -404,7 +404,7 @@ footer .brand{color:var(--text-primary);font-size:1rem}
           <li><span class="t" data-i18n="s1.tr.2">Reads the policy</span><b data-i18n="s1.tr.r2">2 clauses</b></li>
           <li><span class="t" data-i18n="s1.tr.3">Checks the citation</span><b class="ok" data-i18n="s1.tr.r3">verified</b></li>
           <li><span class="t" data-i18n="s1.tr.4">Reviews the case</span><b data-i18n="s1.tr.r4">3 checks</b></li>
-          <li class="humano"><span class="t" data-i18n="s1.tr.5">An adjuster decides</span><b data-i18n="s1.tr.r5">with the trace</b></li>
+          <li class="humano"><span class="t" data-i18n="s1.tr.5">An AI adjuster decides</span><b data-i18n="s1.tr.r5">with the trace</b></li>
         </ol>
       </figure>
     </div>
@@ -417,7 +417,7 @@ footer .brand{color:var(--text-primary);font-size:1rem}
       <p class="lede part" data-i18n="s2.p">Code, not the model, decides which node handles each turn. Nodes return structured results, never raw reasoning, so the context stays small and the trace reads top to bottom.</p>
 
       <svg class="diagram" viewBox="0 0 1200 560" role="img" aria-labelledby="diagTitle">
-        <title id="diagTitle" data-i18n="s2.diag">Architecture: voice layer to orchestrator, orchestrator to specialist agents, agents to tools, orchestrator to adjuster handoff.</title>
+        <title id="diagTitle" data-i18n="s2.diag">Architecture: voice layer to orchestrator, orchestrator to specialist agents, agents to tools, orchestrator to AI adjuster handoff.</title>
         <text class="lbl" x="735" y="22" text-anchor="middle" data-i18n="s2.l1">Nodes</text>
         <text class="lbl" x="1015" y="22" text-anchor="middle" data-i18n="s2.l2">Tools</text>
         <path class="link" style="--i:0" pathLength="1" d="M210 280 H320"/>
@@ -436,18 +436,18 @@ footer .brand{color:var(--text-primary);font-size:1rem}
         <g class="node" style="--i:5"><rect x="620" y="420" width="230" height="52" rx="10"/><text x="735" y="451" text-anchor="middle" data-i18n="s2.n.compliance">Compliance</text></g>
         <g class="node" style="--i:6"><rect x="910" y="200" width="210" height="52" rx="10"/><text x="1015" y="231" text-anchor="middle" data-i18n="s2.n.corpus">Policy corpus</text></g>
         <g class="node" style="--i:7"><rect x="910" y="310" width="210" height="52" rx="10"/><text x="1015" y="341" text-anchor="middle" data-i18n="s2.n.rules">Rules engine</text></g>
-        <g class="node human" style="--i:8"><rect x="320" y="440" width="200" height="60" rx="10"/><text x="420" y="475" text-anchor="middle" data-i18n="s2.n.human">Adjuster</text></g>
+        <g class="node human" style="--i:8"><rect x="320" y="440" width="200" height="60" rx="10"/><text x="420" y="475" text-anchor="middle" data-i18n="s2.n.human">AI adjuster</text></g>
       </svg>
       <ol class="flow-list" aria-label="Flow">
         <li data-i18n="s2.n.voice">Voice layer</li>
         <li data-i18n="s2.n.orch">Orchestrator</li>
         <li data-i18n="s2.l1">Specialist agents</li>
         <li data-i18n="s2.l2">Tools</li>
-        <li data-i18n="s2.n.human">Adjuster</li>
+        <li data-i18n="s2.n.human">AI adjuster</li>
       </ol>
 
       <ul class="cards">
-        <li class="part"><span class="idx">01</span><h3 data-i18n="s2.a1.t">Orchestrator</h3><p data-i18n="s2.a1.p">Routes each turn in code and decides when an adjuster steps in.</p></li>
+        <li class="part"><span class="idx">01</span><h3 data-i18n="s2.a1.t">Orchestrator</h3><p data-i18n="s2.a1.p">Routes each turn in code and decides when the AI adjuster steps in.</p></li>
         <li class="part"><span class="idx">02</span><h3 data-i18n="s2.a2.t">Intake</h3><p data-i18n="s2.a2.p">Gathers who, what, when and where while the caller talks, in any order.</p></li>
         <li class="part"><span class="idx">03</span><h3 data-i18n="s2.a3.t">Policy verification</h3><p data-i18n="s2.a3.p">Cites only clauses that exist, belong to that policy and are in force. “Nothing found” and “could not check” are different answers.</p></li>
         <li class="part"><span class="idx">04</span><h3 data-i18n="s2.a4.t">Decision</h3><p data-i18n="s2.a4.p">Applies the insurer’s versioned, tested rules. The model never picks the category.</p></li>
@@ -494,8 +494,8 @@ footer .brand{color:var(--text-primary);font-size:1rem}
       <div class="wrap">
         <div class="copy">
           <p class="kicker part" data-i18n="s4.k">Guardrails</p>
-          <h2 class="part" data-i18n="s4.h">The agents gather. Adjusters decide.</h2>
-          <p class="lede part" data-i18n="s4.p">A report is intake and coordination, not judgment. Cautelia never says something is covered, never denies it and never mentions amounts: it hands the case to an adjuster with the trace attached.</p>
+          <h2 class="part" data-i18n="s4.h">The agents gather. An AI adjuster decides.</h2>
+          <p class="lede part" data-i18n="s4.p">A report is intake and coordination, not judgment. Cautelia never says something is covered, never denies it and never mentions amounts: it hands the case to an AI adjuster that decides and explains each step with its sources.</p>
           <ul class="rails">
             <li class="part" data-i18n-html="s4.r1"><b>Before the model:</b> outside text enters as data, never inside the prompt.</li>
             <li class="part" data-i18n-html="s4.r2"><b>In flight:</b> every tool call is validated against its schema.</li>
@@ -569,22 +569,22 @@ en:{
  skip:'Skip to content',
  'nav.how':'How it works','nav.voice':'Voice','nav.guard':'Guardrails','nav.evals':'Evals',
  h1:'Cautelia.',
- sub:'Takes the report, checks the policy, hands it to an adjuster. A portfolio project on how real agents are built.',
+ sub:'Takes the report, checks the policy, hands it to an AI adjuster. A portfolio project on how real agents are built.',
  cta:'Try the demo', cta2:'or see how it works', hud1:'voice · agents · claims', cue:'Scroll',
  'st.h':'Someone just had a crash and does not know what their policy covers.',
  'h.q':'« I got rear-ended on 43A »',
  'h.f1':'date','h.v1':'2026-10-05 20:14','h.f2':'place','h.v2':'Cra. 43A at Cl. 7','h.f3':'vehicle','h.v3':'plate JKL123','h.f4':'other parties','h.v4':'1','h.f5':'injuries','h.v5':'none',
- 'st.p':'Cautelia takes the report by voice or text, finds the answer in the insurer’s policy and leaves the decision to an adjuster. A portfolio project.',
- 's1.tr.a':'One case, step by step. Scripted example, not a recording.','s1.tr.h':'One case, step by step','s1.tr.1':'Takes the report','s1.tr.r1':'4 turns','s1.tr.2':'Reads the policy','s1.tr.r2':'2 clauses','s1.tr.3':'Checks the citation','s1.tr.r3':'verified','s1.tr.4':'Reviews the case','s1.tr.r4':'3 checks','s1.tr.5':'An adjuster decides','s1.tr.r5':'with the trace',
+ 'st.p':'Cautelia takes the report by voice or text, finds the answer in the insurer’s policy and leaves the decision to an AI adjuster that explains it. A portfolio project.',
+ 's1.tr.a':'One case, step by step. Scripted example, not a recording.','s1.tr.h':'One case, step by step','s1.tr.1':'Takes the report','s1.tr.r1':'4 turns','s1.tr.2':'Reads the policy','s1.tr.r2':'2 clauses','s1.tr.3':'Checks the citation','s1.tr.r3':'verified','s1.tr.4':'Reviews the case','s1.tr.r4':'3 checks','s1.tr.5':'An AI adjuster decides','s1.tr.r5':'with the trace',
  's1.k':'Why this exists','s1.h':'Not another wrapper.',
  's1.p':'Calling a model is the easy part. Cautelia shows what most demos skip: what happens when the provider fails, where the state lives, where each figure comes from, and proof that it works.',
- 's1.c1':'Every citation verified','s1.c2':'Insurers kept apart, tested','s1.c3':'Data redacted in logs and traces','s1.c4':'An adjuster decides coverage',
+ 's1.c1':'Every citation verified','s1.c2':'Insurers kept apart, tested','s1.c3':'Data redacted in logs and traces','s1.c4':'An AI adjuster decides coverage',
  's2.k':'How it works','s2.h':'One orchestrator. Four nodes. A small shared state.',
  's2.p':'Code, not the model, decides which node handles each turn. Nodes return structured results, never raw reasoning, so the context stays small and the trace reads top to bottom.',
- 's2.diag':'Architecture: voice layer to orchestrator, orchestrator to four nodes, nodes to tools, orchestrator to adjuster handoff.',
+ 's2.diag':'Architecture: voice layer to orchestrator, orchestrator to four nodes, nodes to tools, orchestrator to AI adjuster handoff.',
  's2.l1':'Nodes','s2.l2':'Tools',
- 's2.n.voice':'Voice layer','s2.n.orch':'Orchestrator','s2.n.intake':'Intake','s2.n.verify':'Policy verification','s2.n.decision':'Decision','s2.n.compliance':'Compliance','s2.n.corpus':'Policy corpus','s2.n.rules':'Rules engine','s2.n.human':'Adjuster',
- 's2.a1.t':'Orchestrator','s2.a1.p':'Routes each turn in code and decides when an adjuster steps in.',
+ 's2.n.voice':'Voice layer','s2.n.orch':'Orchestrator','s2.n.intake':'Intake','s2.n.verify':'Policy verification','s2.n.decision':'Decision','s2.n.compliance':'Compliance','s2.n.corpus':'Policy corpus','s2.n.rules':'Rules engine','s2.n.human':'AI adjuster',
+ 's2.a1.t':'Orchestrator','s2.a1.p':'Routes each turn in code and decides when the AI adjuster steps in.',
  's2.a2.t':'Intake','s2.a2.p':'Gathers who, what, when and where while the caller talks, in any order.',
  's2.a3.t':'Policy verification','s2.a3.p':'Cites only clauses that exist, belong to that policy and are in force. “Nothing found” and “could not check” are different answers.',
  's2.a4.t':'Decision','s2.a4.p':'Applies the insurer’s versioned, tested rules. The model never picks the category.',
@@ -601,8 +601,8 @@ en:{
  's3.t3':'On 43A with 7th, around eight.',
  's3.t4':'Got it: 43A with 7th, about 8 a.m. Did you exchange details with the other driver?',
  's3.ro':'<span class="ro-h">record</span><span class="ro-i"><i>location</i><b class="ok">✓</b></span><span class="ro-i"><i>time</i><b class="ok">✓</b></span><span class="ro-i"><i>injuries</i><b class="ok">none ✓</b></span><span class="ro-i"><i>other party</i><b class="pend">pending</b></span>',
- 's4.k':'Guardrails','s4.h':'The agents gather. Adjusters decide.',
- 's4.p':'A report is intake and coordination, not judgment. Cautelia never says something is covered, never denies it and never mentions amounts: it hands the case to an adjuster with the trace attached.',
+ 's4.k':'Guardrails','s4.h':'The agents gather. An AI adjuster decides.',
+ 's4.p':'A report is intake and coordination, not judgment. Cautelia never says something is covered, never denies it and never mentions amounts: it hands the case to an AI adjuster that decides and explains each step with its sources.',
  's4.r1':'<b>Before the model:</b> outside text enters as data, never inside the prompt.',
  's4.r2':'<b>In flight:</b> every tool call is validated against its schema.',
  's4.r3':'<b>Before anything leaves:</b> every message, errors included, passes one exit guard.',
@@ -621,22 +621,22 @@ es:{
  skip:'Saltar al contenido',
  'nav.how':'Cómo funciona','nav.voice':'Voz','nav.guard':'Barandas','nav.evals':'Evaluaciones',
  h1:'Cautelia.',
- sub:'Toma el reporte, comprueba la póliza y lo pasa a un ajustador. Un proyecto de portafolio sobre cómo se construyen agentes reales.',
+ sub:'Toma el reporte, comprueba la póliza y lo pasa a un ajustador de IA. Un proyecto de portafolio sobre cómo se construyen agentes reales.',
  cta:'Pruébalo', cta2:'o mira cómo funciona', hud1:'voz · agentes · siniestros', cue:'Baja',
  'st.h':'Alguien acaba de chocar y no sabe qué cubre su póliza.',
  'h.q':'« me chocaron por detrás en la 43A »',
  'h.f1':'fecha','h.v1':'2026-10-05 20:14','h.f2':'lugar','h.v2':'Cra. 43A con Cl. 7','h.f3':'vehículo','h.v3':'placa JKL123','h.f4':'terceros','h.v4':'1','h.f5':'heridos','h.v5':'ninguno',
- 'st.p':'Cautelia toma el reporte por voz o por texto, busca la respuesta en la póliza de la aseguradora y deja la decisión a un ajustador. Un proyecto de portafolio.',
- 's1.tr.a':'Un caso, paso a paso. Ejemplo guionado, no una grabación.','s1.tr.h':'Un caso, paso a paso','s1.tr.1':'Toma el reporte','s1.tr.r1':'4 turnos','s1.tr.2':'Lee la póliza','s1.tr.r2':'2 cláusulas','s1.tr.3':'Comprueba la cita','s1.tr.r3':'verificada','s1.tr.4':'Revisa el caso','s1.tr.r4':'3 controles','s1.tr.5':'Un ajustador decide','s1.tr.r5':'con la traza',
+ 'st.p':'Cautelia toma el reporte por voz o por texto, busca la respuesta en la póliza de la aseguradora y deja la decisión a un ajustador de IA que la explica. Un proyecto de portafolio.',
+ 's1.tr.a':'Un caso, paso a paso. Ejemplo guionado, no una grabación.','s1.tr.h':'Un caso, paso a paso','s1.tr.1':'Toma el reporte','s1.tr.r1':'4 turnos','s1.tr.2':'Lee la póliza','s1.tr.r2':'2 cláusulas','s1.tr.3':'Comprueba la cita','s1.tr.r3':'verificada','s1.tr.4':'Revisa el caso','s1.tr.r4':'3 controles','s1.tr.5':'Un ajustador de IA decide','s1.tr.r5':'con la traza',
  's1.k':'Por qué existe','s1.h':'No es otro envoltorio.',
  's1.p':'Llamar a un modelo es la parte fácil. Cautelia muestra lo que casi toda demo se salta: qué pasa cuando el proveedor falla, dónde vive el estado, de dónde sale cada cifra y la prueba de que funciona.',
- 's1.c1':'Cada cita, verificada','s1.c2':'Aseguradoras aisladas, con prueba','s1.c3':'Datos tapados en registros y trazas','s1.c4':'La cobertura la decide un ajustador',
+ 's1.c1':'Cada cita, verificada','s1.c2':'Aseguradoras aisladas, con prueba','s1.c3':'Datos tapados en registros y trazas','s1.c4':'La cobertura la decide un ajustador de IA',
  's2.k':'Cómo funciona','s2.h':'Un orquestador. Cuatro nodos. Estado compartido pequeño.',
  's2.p':'El código, no el modelo, decide qué nodo atiende cada turno. Los nodos devuelven resultados con forma, nunca razonamiento en bruto: el contexto queda pequeño y la traza se lee de arriba abajo.',
- 's2.diag':'Arquitectura: capa de voz al orquestador, orquestador a cuatro nodos, nodos a herramientas, orquestador a la derivación al ajustador.',
+ 's2.diag':'Arquitectura: capa de voz al orquestador, orquestador a cuatro nodos, nodos a herramientas, orquestador a la derivación al ajustador de IA.',
  's2.l1':'Nodos','s2.l2':'Herramientas',
- 's2.n.voice':'Capa de voz','s2.n.orch':'Orquestador','s2.n.intake':'Captura','s2.n.verify':'Verificación de póliza','s2.n.decision':'Decisión','s2.n.compliance':'Cumplimiento','s2.n.corpus':'Corpus de pólizas','s2.n.rules':'Motor de reglas','s2.n.human':'Ajustador',
- 's2.a1.t':'Orquestador','s2.a1.p':'Enruta cada turno en código y decide cuándo entra un ajustador.',
+ 's2.n.voice':'Capa de voz','s2.n.orch':'Orquestador','s2.n.intake':'Captura','s2.n.verify':'Verificación de póliza','s2.n.decision':'Decisión','s2.n.compliance':'Cumplimiento','s2.n.corpus':'Corpus de pólizas','s2.n.rules':'Motor de reglas','s2.n.human':'Ajustador de IA',
+ 's2.a1.t':'Orquestador','s2.a1.p':'Enruta cada turno en código y decide cuándo entra el ajustador de IA.',
  's2.a2.t':'Captura','s2.a2.p':'Reúne quién, qué, cuándo y dónde mientras el asegurado habla, en cualquier orden.',
  's2.a3.t':'Verificación de póliza','s2.a3.p':'Cita solo cláusulas que existen, son de esa póliza y están vigentes. «No encontré nada» y «no pude comprobar» son respuestas distintas.',
  's2.a4.t':'Decisión','s2.a4.p':'Aplica las reglas versionadas y probadas de la aseguradora. El modelo nunca elige la categoría.',
@@ -653,8 +653,8 @@ es:{
  's3.t3':'En la 43A con 7ma, como a las ocho.',
  's3.t4':'Anotado: 43A con 7ma, cerca de las 8. ¿Intercambiaron datos con el otro conductor?',
  's3.ro':'<span class="ro-h">expediente</span><span class="ro-i"><i>lugar</i><b class="ok">✓</b></span><span class="ro-i"><i>hora</i><b class="ok">✓</b></span><span class="ro-i"><i>heridos</i><b class="ok">ninguno ✓</b></span><span class="ro-i"><i>tercero</i><b class="pend">pendiente</b></span>',
- 's4.k':'Barandas','s4.h':'Los agentes reúnen. Los ajustadores deciden.',
- 's4.p':'Un reporte es tomar datos y coordinar, no juzgar. Cautelia nunca dice que algo está cubierto, nunca lo niega y nunca menciona montos: pasa el caso a un ajustador con la traza adjunta.',
+ 's4.k':'Barandas','s4.h':'Los agentes reúnen. Un ajustador de IA decide.',
+ 's4.p':'Un reporte es tomar datos y coordinar, no juzgar. Cautelia nunca dice que algo está cubierto, nunca lo niega y nunca menciona montos: pasa el caso a un ajustador de IA que decide y explica cada paso con sus fuentes.',
  's4.r1':'<b>Antes del modelo:</b> el texto de fuera entra como dato, nunca dentro de las instrucciones.',
  's4.r2':'<b>Durante:</b> cada llamada a una herramienta se valida contra su esquema.',
  's4.r3':'<b>Antes de salir:</b> todo mensaje, errores incluidos, pasa por una sola guardia.',

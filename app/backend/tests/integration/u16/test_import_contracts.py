@@ -106,6 +106,9 @@ ARBOL: dict[str, str] = {
     "untangle/orchestration/__init__.py": "",
     "untangle/orchestration/contracts.py": "",
     "untangle/inbox/__init__.py": "",
+    # El ajustador de IA (fase 5 del plan 09): comparte fila con `inbox` en las capas, y el contrato
+    # de capas se niega a correr si una de sus capas no existe.
+    "untangle/adjuster/__init__.py": "",
     "untangle/chat/__init__.py": "",
     "untangle/voice/__init__.py": "",
     "untangle/voice/models.py": "from untangle.telemetry.spend import models\n",

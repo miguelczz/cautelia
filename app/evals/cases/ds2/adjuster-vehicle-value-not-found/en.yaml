@@ -1,0 +1,45 @@
+# El ajustador de IA decide el caso derivado, de punta a punta (lado ingles).
+#
+# El valor de referencia del vehiculo no se encuentra: la busqueda web de este caso no puede
+# traer ninguna fuente (el corredor la restringe a un dominio sin resultados). El ajustador
+# tiene que decir que no pudo verificar el valor y decidir igual, porque la decision no
+# depende de el: aprobar el choque citando `D.INS.COLLISION`.
+#
+# Lo mide `mise run evals:ajustador` (a mano y por hito, centavos): siembra el caso en la base del
+# proyecto, corre `adjuster.pipeline.run_case` con Claude y la busqueda web, y comprueba ocho criterios
+# por codigo, sin juez de lenguaje. Poliza y relato son sinteticos. Sin la clave del uso `adjuster` el
+# caso queda no medido; nunca entra a la compuerta de cada entrega (`subset_only`).
+#
+# La pareja en el otro idioma es `DS-2/es/adjuster-vehicle-value-not-found`: los mismos hechos y la misma meta,
+# medidos por idioma y nunca como promedio combinado (P12).
+
+case_key: DS-2/en/adjuster-vehicle-value-not-found
+dataset: DS-2
+language: en
+tenant: stonecroft
+axes:
+  - ajustador
+  - vehicle-value
+  - carrier
+adjuster:
+  policy_number: POL-14
+  narrative: >-
+    On November 12, 2026 I was driving the Volkswagen Gol on the highway and hit the guardrail
+    on a wet curve. The right side is scratched and dented. No other cars and nobody hurt. I
+    want to know if the repair is covered.
+  allowed_actions: [approve, reject]
+  expected_action: approve
+  policy_in_force: true
+  cites_any_of: [D.INS.COLLISION]
+  vehicle_value: not_found
+expected_verdicts:
+  adjuster_action_allowed_vehicle_value_not_found: pass
+  adjuster_citations_verified_vehicle_value_not_found: pass
+  adjuster_language_vehicle_value_not_found: pass
+  adjuster_searches_within_limit_vehicle_value_not_found: pass
+  adjuster_guard_unsubstituted_vehicle_value_not_found: pass
+  adjuster_facts_agree_vehicle_value_not_found: pass
+  adjuster_cites_expected_clause_vehicle_value_not_found: pass
+  adjuster_vehicle_value_reported_vehicle_value_not_found: pass
+requires_provider_key: true
+subset_only: true

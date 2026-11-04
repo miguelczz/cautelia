@@ -1,0 +1,44 @@
+# El ajustador de IA decide el caso derivado, de punta a punta (lado ingles).
+#
+# Uso del carro en una plataforma de viajes sin endoso que lo cubra: la poliza esta vigente,
+# pero la exclusion de transporte de personas por pago aplica. El ajustador tiene que rechazar
+# citando esa exclusion. Ninguna poliza del corpus trae un endoso que levante la exclusion;
+# POL-22 no tiene ninguno.
+#
+# Lo mide `mise run evals:ajustador` (a mano y por hito, centavos): siembra el caso en la base del
+# proyecto, corre `adjuster.pipeline.run_case` con Claude y la busqueda web, y comprueba ocho criterios
+# por codigo, sin juez de lenguaje. Poliza y relato son sinteticos. Sin la clave del uso `adjuster` el
+# caso queda no medido; nunca entra a la compuerta de cada entrega (`subset_only`).
+#
+# La pareja en el otro idioma es `DS-2/es/adjuster-platform-excluded`: los mismos hechos y la misma meta,
+# medidos por idioma y nunca como promedio combinado (P12).
+
+case_key: DS-2/en/adjuster-platform-excluded
+dataset: DS-2
+language: en
+tenant: sunmeadow
+axes:
+  - ajustador
+  - exclusion
+  - carrier
+adjuster:
+  policy_number: POL-22
+  narrative: >-
+    On November 13, 2026 I was working through a ride-hailing app with a paying passenger in the
+    Jeep on Carrera 70 when another car hit me on the right side. The door and the fender are
+    caved in. The passenger was not hurt. I want my car repaired.
+  allowed_actions: [approve, reject]
+  expected_action: reject
+  policy_in_force: true
+  cites_any_of: [D.EXCL.1, A.EXCL.A.5, B.EXCL.2, C.EXCL.3]
+expected_verdicts:
+  adjuster_action_allowed_platform_excluded: pass
+  adjuster_citations_verified_platform_excluded: pass
+  adjuster_language_platform_excluded: pass
+  adjuster_searches_within_limit_platform_excluded: pass
+  adjuster_guard_unsubstituted_platform_excluded: pass
+  adjuster_facts_agree_platform_excluded: pass
+  adjuster_cites_expected_clause_platform_excluded: pass
+  adjuster_vehicle_value_reported_platform_excluded: pass
+requires_provider_key: true
+subset_only: true

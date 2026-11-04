@@ -15,7 +15,7 @@ datasets:
       Corpus de polizas de los tres tenants. Lo genera U7 `synthetic-data`.
 
   - dataset: DS-2
-    count: 174
+    count: 184
     reason: >
       Golden set de FNOL en texto. Los casos los escriben las unidades que miden
       cada conducta; U1 entrega el corredor, no los casos. El primer lote es de
@@ -200,6 +200,13 @@ datasets:
       modelo, y por voz sigue de a una pregunta. Corren el nodo `intake` de verdad con lo entendido
       ya entregado, sin modelo y sin base, y se escribieron antes del cambio del nodo. Con todas el
       conjunto tiene **174 archivos, 87 por idioma**.
+      El 2026-11-04 (ajustador de IA, tanda 2c) entran diez mas, cinco parejas `adjuster-*`:
+      choque cubierto, uso en plataforma de viajes, poliza vencida, agencia y valor del vehiculo
+      que no se encuentra. Corren el proceso del ajustador entero contra Claude, la base y el
+      corpus, con ocho criterios por codigo; llevan `subset_only` y solo corren por el
+      subconjunto `ajustador` (`mise run evals:ajustador`, a mano y por hito), nunca en la
+      compuerta de cada entrega ni en la corrida completa. Con todas el conjunto tiene
+      **184 archivos, 92 por idioma**.
     runs_per_delivery: true
 
   - dataset: DS-3

@@ -40,8 +40,11 @@ from pathlib import Path
 from typing import Any
 
 from untangle import paths
+from untangle.adjuster import config as adjuster_config
 from untangle.base import Use
+from untangle.case_record import crypto
 from untangle.evals import (
+    adjuster_probes,
     citation_probes,
     injection_probes,
     transcript_recorder,
@@ -57,7 +60,7 @@ from untangle.orchestration import turn as orchestration_turn
 from untangle.orchestration.nodes.policy_verification import node as policy_verification_node
 from untangle.orchestration.nodes.policy_verification.proposal import ProposerPort
 from untangle.providers import config as provider_config
-from untangle.server import composition, corpus_ingest, manual_ledger
+from untangle.server import adjuster_eval, composition, corpus_ingest, manual_ledger
 from untangle.settings import EVALS_ANTHROPIC_API_KEY_VAR, Settings
 from untangle.tenancy import api as tenancy
 
@@ -69,7 +72,9 @@ from untangle.tenancy import api as tenancy
 #: 178 casos se perdio con el reinicio de la sesion.
 #: `conversaciones` arma la aplicacion igual que `completa` y corre solo los casos
 #: del chat (2026-10-11): centavos, y sin resumen versionado.
-SUBSETS = ("entender", "citas", "conversaciones", "completa")
+#: `ajustador` corre el proceso del ajustador de IA entero sobre los casos `adjuster-*` de DS-2
+#: (2026-11-04): ni usa la comprension ni arma la aplicacion, y tiene su propia clave.
+SUBSETS = ("entender", "citas", "conversaciones", "completa", "ajustador")
 #: Los que conversan con el grafo de verdad y por eso arman la aplicacion.
 _CON_APLICACION = ("conversaciones", "completa")
 
@@ -117,11 +122,73 @@ def _analizador() -> argparse.ArgumentParser:
     return analizador
 
 
+def _correr_ajustador(
+    argumentos: argparse.Namespace,
+    ajustes: Settings,
+    config: provider_config.ProviderPlatformConfig,
+) -> int:
+    """`evals:ajustador`: el proceso del ajustador de IA, de punta a punta, sobre la base del proyecto.
+
+    Sin la clave del uso `adjuster` no se llama a nadie: el corredor se detiene diciendo cual falta
+    (BR1.2) y los casos no quedan medidos, nunca en verde. Para la corrida a mano se puede exportar,
+    solo en ese comando, la clave de evaluaciones con el nombre de la del ajustador (ver la tarea).
+    """
+    url = manual_ledger.project_ledger_url(ajustes, purpose="evaluacion del ajustador de IA")
+    evals_cli.register_all_probes()
+    decisor = None
+    # Sin la clave del uso no se arma nada: el corredor se detiene diciendo cual falta.
+    if ajustes.anthropic_api_key_adjuster:
+        if not ajustes.case_field_encryption_key:
+            print(
+                f"falta {crypto.KEY_ENV_VAR}: el caso sembrado guarda el relato cifrado, igual que "
+                "uno de verdad. No se llamo a nadie.",
+                file=sys.stderr,
+            )
+            return 2
+        cifrador = crypto.Cipher.from_settings(ajustes)
+        crypto.install(cifrador)
+        plataforma = composition.build_provider_platform(ajustes, config)
+        decisor = adjuster_eval.build_decider(
+            ajustes,
+            config,
+            cipher=cifrador,
+            embed=lambda textos: plataforma.embedder.embed(textos, use=Use.CORPUS),
+            adjuster_config=adjuster_config.load(),
+        )
+    adjuster_probes.install(decisor)
+
+    async def _correr() -> tuple[runner.RunOutcome, object]:
+        await manual_ledger.open_ledger(config, url)
+        try:
+            resultado = await runner.run_evaluation(
+                subset=argumentos.subset, settings=ajustes, model_ids=pinned_models(config)
+            )
+        finally:
+            gastado = await manual_ledger.close_ledger()
+        return resultado, gastado
+
+    try:
+        resultado, gastado = asyncio.run(_correr())
+    except runner.EnvironmentNotReadyError as error:
+        print(str(error), file=sys.stderr)
+        return 2
+
+    destino = argumentos.out or (paths.reports_dir() / f"{resultado.run.run_id}.json")
+    escrito = evals_cli.write_report(resultado.report, destino)
+    print(evals_cli.summarize(resultado.report))
+    print(adjuster_probes.summarize_by_criterion(resultado.run.results))
+    print(f"gasto acumulado de la ventana: {gastado} USD")
+    print(f"reporte: {escrito}")
+    return resultado.exit_code
+
+
 def main(argv: list[str] | None = None) -> int:
     argumentos = _analizador().parse_args(argv)
     ajustes = Settings()
     config = provider_config.load()
     tenancy.install(tenancy.load())
+    if argumentos.subset == "ajustador":
+        return _correr_ajustador(argumentos, ajustes, config)
 
     entendedor = composition.build_understander(ajustes, config, for_evals=True)
     if entendedor is None:

@@ -36,7 +36,7 @@ def test_cada_caso_existe_en_los_dos_idiomas_con_su_criterio() -> None:
 def test_el_manifiesto_cuenta_los_archivos_del_arbol() -> None:
     assert loading.check_manifest_counts(loading.load_manifest(), loading.load_cases()) == ()
     declaracion = loading.load_manifest().declaration_for(Dataset.DS_2)
-    assert declaracion.count == 174
+    assert declaracion.count == 184
 
 
 def test_corren_en_la_compuerta_pero_no_en_el_arranque_porque_necesitan_los_modelos() -> None:

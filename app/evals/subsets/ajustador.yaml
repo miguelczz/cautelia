@@ -1,0 +1,32 @@
+name: ajustador
+reason: >
+  El ajustador de IA de punta a punta (tanda 2c de la fase 5 de
+  `docs/propuesta-2026-10/11-ajustador-de-ia.md`): siembra un caso derivado en la base del
+  proyecto y corre el proceso entero --lee el caso y la poliza, recupera clausulas, busca el valor
+  del vehiculo y decide con Claude-- sobre la poliza del corpus versionado. Mide ocho criterios por
+  codigo, sin juez de lenguaje: la accion es de las que ofrece ese tipo de aseguradora; toda
+  clausula citada esta recuperada y la verifica el verificador exacto; la explicacion esta en el
+  idioma del caso; no hay mas de 3 busquedas; la guardia no sustituye nada; la decision y la
+  vigencia concuerdan con los hechos de la poliza; cita la clausula que el caso exige; y, cuando el
+  valor del vehiculo no se encuentra, lo dice y decide igual.
+
+  Necesita la base con el corpus cargado (`mise run corpus:ingest`), la clave de embeddings del uso
+  `corpus` y la clave del uso `adjuster` (`UNTANGLE_ANTHROPIC_API_KEY_ADJUSTER`). Se corre a mano con
+  `mise run evals:ajustador` y en cada hito: cuesta centavos (una decision y hasta tres busquedas web
+  por caso, diez casos) contra un saldo prepagado. **No entra a la compuerta de cada entrega, ni a
+  `verify.sh`, ni a la corrida completa**: los casos llevan `subset_only`. Sin la clave del uso, el
+  corredor se detiene diciendo cual falta y los casos no quedan medidos, nunca en verde.
+
+  Tope escrito: los cinco casos `adjuster-*` por idioma y ninguno mas.
+requires_provider_key: true
+case_keys:
+  - DS-2/es/adjuster-collision-approved
+  - DS-2/en/adjuster-collision-approved
+  - DS-2/es/adjuster-platform-excluded
+  - DS-2/en/adjuster-platform-excluded
+  - DS-2/es/adjuster-policy-expired
+  - DS-2/en/adjuster-policy-expired
+  - DS-2/es/adjuster-agency-mark-sent
+  - DS-2/en/adjuster-agency-mark-sent
+  - DS-2/es/adjuster-vehicle-value-not-found
+  - DS-2/en/adjuster-vehicle-value-not-found

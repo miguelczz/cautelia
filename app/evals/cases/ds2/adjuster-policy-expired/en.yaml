@@ -1,0 +1,44 @@
+# El ajustador de IA decide el caso derivado, de punta a punta (lado ingles).
+#
+# Poliza vencida: el caso se evalua el 2027-06-01, despues del fin de la vigencia de POL-26
+# (2027-03-25). El ajustador tiene que rechazar por vigencia, sin cita, y nunca aprobar. El
+# corpus de hoy no trae ninguna poliza vencida, asi que el dia de evaluacion es el que la
+# vence.
+#
+# Lo mide `mise run evals:ajustador` (a mano y por hito, centavos): siembra el caso en la base del
+# proyecto, corre `adjuster.pipeline.run_case` con Claude y la busqueda web, y comprueba ocho criterios
+# por codigo, sin juez de lenguaje. Poliza y relato son sinteticos. Sin la clave del uso `adjuster` el
+# caso queda no medido; nunca entra a la compuerta de cada entrega (`subset_only`).
+#
+# La pareja en el otro idioma es `DS-2/es/adjuster-policy-expired`: los mismos hechos y la misma meta,
+# medidos por idioma y nunca como promedio combinado (P12).
+
+case_key: DS-2/en/adjuster-policy-expired
+dataset: DS-2
+language: en
+tenant: sunmeadow
+axes:
+  - ajustador
+  - vigencia
+  - carrier
+adjuster:
+  policy_number: POL-26
+  narrative: >-
+    On May 20, 2027 I hit a gate with the Equinox while backing out of the parking lot. It is
+    scratched and the bumper is broken. Nobody was hurt and no other vehicle was involved. I
+    want to know if the repair is covered.
+  evaluated_on: 2027-06-01
+  allowed_actions: [approve, reject]
+  expected_action: reject
+  policy_in_force: false
+expected_verdicts:
+  adjuster_action_allowed_policy_expired: pass
+  adjuster_citations_verified_policy_expired: pass
+  adjuster_language_policy_expired: pass
+  adjuster_searches_within_limit_policy_expired: pass
+  adjuster_guard_unsubstituted_policy_expired: pass
+  adjuster_facts_agree_policy_expired: pass
+  adjuster_cites_expected_clause_policy_expired: pass
+  adjuster_vehicle_value_reported_policy_expired: pass
+requires_provider_key: true
+subset_only: true

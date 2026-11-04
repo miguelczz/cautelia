@@ -351,6 +351,42 @@ class PoisonedClauseExpectation(Frozen):
     question: str = Field(min_length=1)
 
 
+class AdjusterExpectation(Frozen):
+    """Un caso del ajustador de IA (plan 09, fase 5, tanda 2c): un caso derivado y lo que el
+    proceso entero tiene que decidir, con las cifras y los hechos que se comprueban por codigo.
+
+    El caso corre `adjuster.pipeline.run_case` contra el corpus de la base del proyecto y
+    Claude (decision y busqueda web), asi que cuesta centavos y se corre a mano y por hito
+    (`mise run evals:ajustador`). El relato es sintetico y la poliza es del corpus versionado.
+    """
+
+    policy_number: str = Field(min_length=1)
+    #: Lo que la persona conto, tal como se guardaria en el campo `description` del caso.
+    narrative: str = Field(min_length=1)
+    #: El dia contra el que se evalua la poliza (su vigencia). Fijo, para que dos corridas del
+    #: mismo commit vean lo mismo y para poder probar una poliza vencida con el corpus de hoy.
+    evaluated_on: date = date(2026, 11, 15)
+    #: Las acciones que ofrece ese tipo de aseguradora. Se escribe en el caso y no se lee del
+    #: codigo que la valida: un criterio que usara la misma funcion no detectaria que cambia.
+    allowed_actions: tuple[str, ...] = Field(min_length=1)
+    expected_action: str
+    #: Si la poliza rige en `evaluated_on`: el hecho del registro contra el que se mide la decision.
+    policy_in_force: bool
+    #: Sufijos de clausula (`D.INS.COLLISION`) de los que la decision cita al menos uno. Vacio:
+    #: el caso no exige ninguna cita (una agencia que solo envia, o rechazar por vigencia).
+    cites_any_of: tuple[str, ...] = ()
+    #: `not_found`: la busqueda web no puede traer nada (ningun dominio le sirve) y el proceso
+    #: tiene que decirlo y decidir igual. `open`: la busqueda corre normal y el caso no mide el valor.
+    vehicle_value: Literal["open", "not_found"] = "open"
+
+    @model_validator(mode="after")
+    def _la_decision_esperada_es_una_de_las_permitidas(self) -> Self:
+        if self.expected_action not in self.allowed_actions:
+            msg = f"la accion esperada '{self.expected_action}' no esta entre las permitidas"
+            raise ValueError(msg)
+        return self
+
+
 class GoldenCase(Frozen):
     """Un caso de prueba versionado, uno por archivo."""
 
@@ -371,6 +407,11 @@ class GoldenCase(Frozen):
     rigid_facts: RigidFactsExpectation | None = None
     citation: CitationExpectation | None = None
     poisoned_clause: PoisonedClauseExpectation | None = None
+    adjuster: AdjusterExpectation | None = None
+    #: `True`: el caso solo corre por un subconjunto declarado que lo nombra; la corrida sin
+    #: subconjunto (la completa) no lo toma. Es para lo que cuesta dinero y se corre a mano y
+    #: por hito, y que no debe volver no comparable una corrida que no lo pidio.
+    subset_only: bool = False
 
     @model_validator(mode="after")
     def _el_identificador_concuerda_con_el_conjunto_y_el_idioma(self) -> Self:

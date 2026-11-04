@@ -128,6 +128,13 @@ unmatched_ignore_imports_alerting = none
 ; que no se monta en el proceso servido ni corre en ninguna compuerta, y necesita
 ; a la vez el corredor y el puerto de comprension que solo la raiz de composicion
 ; construye.
+;
+; **Cuarta arista, del 2026-11-04 (ajustador de IA, tanda 2c):**
+; `untangle.server.adjuster_eval -> untangle.evals.**`. Se mide igual que la tercera: corre solo
+; por `mise run evals:ajustador` (a mano y por hito), no se monta en el proceso servido ni corre en
+; ninguna compuerta, y necesita a la vez los tipos de la sonda y el proceso del ajustador con los
+; puertos de verdad, que solo la raiz de composicion construye. Importa del corredor unicamente
+; `evals.adjuster_probes` (sus tipos de entrada y salida).
 [importlinter:contract:produccion-sin-evals]
 name = El codigo de produccion no importa untangle.evals
 type = forbidden
@@ -155,6 +162,7 @@ ignore_imports =
     untangle.server.voice_cli -> untangle.evals.**
     untangle.server.evidence_routes -> untangle.evals.evidence.**
     untangle.server.understanding_cli -> untangle.evals.**
+    untangle.server.adjuster_eval -> untangle.evals.adjuster_probes
 
 ; --- El servidor MCP solo lee la poliza emitida (plan 09, punto 6) --------------
 ; `untangle.policy_mcp` publica `policy_rag.facts` como herramientas MCP de solo lectura sobre datos

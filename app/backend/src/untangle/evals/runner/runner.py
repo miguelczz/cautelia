@@ -55,7 +55,12 @@ from untangle.evals.report import (
     RunHeader,
 )
 from untangle.evals.runner import api, failures
-from untangle.settings import EVALS_ANTHROPIC_API_KEY_VAR, EVALS_MODEL_API_KEY_VAR, Settings
+from untangle.settings import (
+    ADJUSTER_ANTHROPIC_API_KEY_VAR,
+    EVALS_ANTHROPIC_API_KEY_VAR,
+    EVALS_MODEL_API_KEY_VAR,
+    Settings,
+)
 
 
 class EnvironmentNotReadyError(Exception):
@@ -141,13 +146,17 @@ def _required_variables(cases: tuple[GoldenCase, ...]) -> dict[str, tuple[str, .
         # La comprension de un mensaje, las citas y la clausula envenenada llaman a Claude
         # con su propia clave de evaluaciones (2026-10-07); el resto, al modelo del uso
         # `evals`.
-        variable = (
-            EVALS_ANTHROPIC_API_KEY_VAR
-            if caso.understanding is not None
+        # El ajustador de IA tiene la suya, propia del uso `adjuster` (2026-11-03).
+        if caso.adjuster is not None:
+            variable = ADJUSTER_ANTHROPIC_API_KEY_VAR
+        elif (
+            caso.understanding is not None
             or caso.citation is not None
             or caso.poisoned_clause is not None
-            else EVALS_MODEL_API_KEY_VAR
-        )
+        ):
+            variable = EVALS_ANTHROPIC_API_KEY_VAR
+        else:
+            variable = EVALS_MODEL_API_KEY_VAR
         por_variable[variable] = (*por_variable.get(variable, ()), caso.case_key)
     return por_variable
 
@@ -166,6 +175,7 @@ def validate_environment(cases: tuple[GoldenCase, ...], settings: Settings) -> f
     presentes = {
         EVALS_MODEL_API_KEY_VAR: settings.evals_model_api_key,
         EVALS_ANTHROPIC_API_KEY_VAR: settings.anthropic_api_key_evals,
+        ADJUSTER_ANTHROPIC_API_KEY_VAR: settings.anthropic_api_key_adjuster,
     }
     sin_medir: set[str] = set()
 
@@ -550,7 +560,9 @@ async def run_evaluation(
         seleccionados = loading.resolve_subset_cases(definicion, todos)
     else:
         corren = {d.dataset for d in manifiesto.datasets if d.built and d.runs_per_delivery}
-        seleccionados = tuple(caso for caso in todos if caso.dataset in corren)
+        seleccionados = tuple(
+            caso for caso in todos if caso.dataset in corren and not caso.subset_only
+        )
 
     # Paso 1 -- el entorno, mirando lo que va a correr.
     sin_clave = validate_environment(seleccionados, opciones)

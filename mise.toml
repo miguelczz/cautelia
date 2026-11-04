@@ -268,6 +268,28 @@ description = "Evalua la comprension de un mensaje contra Claude Haiku (a mano y
 # real, ademas del techo, es el saldo prepagado de Anthropic, sin recarga.
 run = "uv run --env-file .env --project app/backend python -m untangle.server.understanding_cli --subset entender"
 
+[tasks."evals:ajustador"]
+description = "El ajustador de IA de punta a punta contra Claude, la base y el corpus (a mano y por hito, centavos)"
+# Plan 09, fase 5, tanda 2c (`docs/propuesta-2026-10/11-ajustador-de-ia.md`): siembra un caso
+# derivado por cada caso `adjuster-*` de DS-2, corre `adjuster.pipeline.run_case` con Claude y la
+# busqueda web, y mide ocho criterios por codigo (reporte por caso, por criterio y por idioma).
+# **No corre en GitHub Actions ni en `verify.sh` ni en la corrida completa**: llama a un modelo de
+# pago y los casos llevan `subset_only`. Sobre la base del proyecto, que es la que tiene el corpus
+# (`mise run corpus:ingest`) y el libro de gasto; necesita la base levantada y la clave de
+# embeddings del uso `corpus`. Los casos que siembra son de origen `public_chat` y los borra el
+# reinicio nocturno; no se cierran.
+#
+# La clave es la del uso `adjuster` (`UNTANGLE_ANTHROPIC_API_KEY_ADJUSTER`). Mientras ese uso no
+# tenga la suya, se puede usar **solo en este comando** la de evaluaciones, exportada con ese nombre
+# (sin imprimirla ni dejarla en el entorno de la terminal):
+#
+#   UNTANGLE_ANTHROPIC_API_KEY_ADJUSTER="$(grep -m1 '^UNTANGLE_ANTHROPIC_API_KEY_EVALS=' .env | cut -d= -f2-)" mise run evals:ajustador
+#
+# Sin ninguna de las dos el corredor se detiene diciendo cual falta y no llama a nadie: los casos
+# quedan no medidos, nunca omitidos ni en verde. El gasto se atribuye al uso `adjuster` y pasa por
+# el techo y el libro, como cualquier llamada.
+run = "uv run --env-file .env --project app/backend python -m untangle.server.understanding_cli --subset ajustador"
+
 [tasks."evals:citas"]
 description = "Evalua las citas de DS-3 contra Claude Haiku y el corpus (a mano y por hito, centavos)"
 # Fase 1 de docs/propuesta-2026-10/03-propuesta-y-diseno.md (2026-10-08): recupera,

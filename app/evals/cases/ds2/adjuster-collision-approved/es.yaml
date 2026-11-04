@@ -1,0 +1,44 @@
+# El ajustador de IA decide el caso derivado, de punta a punta (lado espanol).
+#
+# Choque cubierto: una poliza vigente de una aseguradora, un golpe contra un objeto fijo y sin
+# terceros. El ajustador tiene que aprobar y citar la cobertura por choque (`D.INS.COLLISION`)
+# con la clausula recuperada y verificada.
+#
+# Lo mide `mise run evals:ajustador` (a mano y por hito, centavos): siembra el caso en la base del
+# proyecto, corre `adjuster.pipeline.run_case` con Claude y la busqueda web, y comprueba ocho criterios
+# por codigo, sin juez de lenguaje. Poliza y relato son sinteticos. Sin la clave del uso `adjuster` el
+# caso queda no medido; nunca entra a la compuerta de cada entrega (`subset_only`).
+#
+# La pareja en el otro idioma es `DS-2/en/adjuster-collision-approved`: los mismos hechos y la misma meta,
+# medidos por idioma y nunca como promedio combinado (P12).
+
+case_key: DS-2/es/adjuster-collision-approved
+dataset: DS-2
+language: es
+tenant: sunmeadow
+axes:
+  - ajustador
+  - covered-collision
+  - carrier
+adjuster:
+  policy_number: POL-21
+  narrative: >-
+    Ayer, 14 de noviembre de 2026, iba en la Kia Soul por la Avenida 80 y me estrellé contra un
+    poste de luz al esquivar un hueco. El carro quedó con el capó abierto y el panel delantero
+    destrozado. No había nadie más involucrado y nadie resultó herido. Quiero saber qué pasa con
+    la reparación.
+  allowed_actions: [approve, reject]
+  expected_action: approve
+  policy_in_force: true
+  cites_any_of: [D.INS.COLLISION]
+expected_verdicts:
+  adjuster_action_allowed_collision_approved: pass
+  adjuster_citations_verified_collision_approved: pass
+  adjuster_language_collision_approved: pass
+  adjuster_searches_within_limit_collision_approved: pass
+  adjuster_guard_unsubstituted_collision_approved: pass
+  adjuster_facts_agree_collision_approved: pass
+  adjuster_cites_expected_clause_collision_approved: pass
+  adjuster_vehicle_value_reported_collision_approved: pass
+requires_provider_key: true
+subset_only: true

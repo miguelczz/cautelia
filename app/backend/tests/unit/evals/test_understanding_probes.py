@@ -307,7 +307,11 @@ async def test_con_el_modelo_instalado_corre_el_caso_de_su_archivo() -> None:
 def test_cada_caso_de_comprension_pide_la_clave_de_claude_para_evaluaciones() -> None:
     casos = loading.load_cases(paths.repo_root() / Path("app/evals/cases"))
     de_comprension = tuple(c for c in casos if c.understanding is not None)
-    otro = next(c for c in casos if c.requires_provider_key and c.understanding is None)
+    otro = next(
+        c
+        for c in casos
+        if c.requires_provider_key and c.understanding is None and c.adjuster is None
+    )
 
     variables = _required_variables((*de_comprension, otro))
 

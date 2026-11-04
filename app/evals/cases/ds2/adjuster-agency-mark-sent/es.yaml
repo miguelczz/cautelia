@@ -1,0 +1,41 @@
+# El ajustador de IA decide el caso derivado, de punta a punta (lado espanol).
+#
+# Agencia: coloca polizas que emite otra aseguradora y su unica accion es marcar el caso como
+# enviado a la emisora. El ajustador no aprueba ni rechaza, y no hace falta que cite.
+#
+# Lo mide `mise run evals:ajustador` (a mano y por hito, centavos): siembra el caso en la base del
+# proyecto, corre `adjuster.pipeline.run_case` con Claude y la busqueda web, y comprueba ocho criterios
+# por codigo, sin juez de lenguaje. Poliza y relato son sinteticos. Sin la clave del uso `adjuster` el
+# caso queda no medido; nunca entra a la compuerta de cada entrega (`subset_only`).
+#
+# La pareja en el otro idioma es `DS-2/en/adjuster-agency-mark-sent`: los mismos hechos y la misma meta,
+# medidos por idioma y nunca como promedio combinado (P12).
+
+case_key: DS-2/es/adjuster-agency-mark-sent
+dataset: DS-2
+language: es
+tenant: knotwell
+axes:
+  - ajustador
+  - agency
+  - tenant-policy
+adjuster:
+  policy_number: POL-31
+  narrative: >-
+    Ayer, 14 de noviembre de 2026, choqué la Camry contra un poste en la calle 10 al esquivar
+    una moto. El guardabarros delantero quedó doblado y la farola rota. Nadie resultó herido y
+    no hubo otro vehículo. Necesito saber cómo sigue el trámite.
+  allowed_actions: [mark_sent]
+  expected_action: mark_sent
+  policy_in_force: true
+expected_verdicts:
+  adjuster_action_allowed_agency_mark_sent: pass
+  adjuster_citations_verified_agency_mark_sent: pass
+  adjuster_language_agency_mark_sent: pass
+  adjuster_searches_within_limit_agency_mark_sent: pass
+  adjuster_guard_unsubstituted_agency_mark_sent: pass
+  adjuster_facts_agree_agency_mark_sent: pass
+  adjuster_cites_expected_clause_agency_mark_sent: pass
+  adjuster_vehicle_value_reported_agency_mark_sent: pass
+requires_provider_key: true
+subset_only: true

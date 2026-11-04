@@ -19,6 +19,7 @@ from pathlib import Path
 
 from untangle import paths
 from untangle.evals import (
+    adjuster_probes,
     citation_probes,
     compliance_probes,
     content_checks,
@@ -196,6 +197,10 @@ def register_all_probes() -> None:
     # clausula del fixture entregada a mano y sin base. Lo instala `understanding_cli` en
     # `citas` y `completa`; sin el, el caso queda no medido con su causa.
     injection_probes.register_injection_probes()
+    # El ajustador de IA (plan 09, fase 5, tanda 2c): ocho criterios por codigo sobre el proceso
+    # entero. Lo instala `untangle.server.understanding_cli` en `evals:ajustador`; sin el, o sin la
+    # clave del uso, los casos quedan no medidos. Solo corren por su subconjunto (`subset_only`).
+    adjuster_probes.register_adjuster_probes(paths.repo_root())
 
 
 def main(argv: list[str] | None = None) -> int:

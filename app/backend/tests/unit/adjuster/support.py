@@ -54,6 +54,7 @@ from untangle.providers.ports import (
 )
 from untangle.rules.models import FiredRule, RuleEvaluation
 from untangle.telemetry.spend.models import QuotaDecision
+from untangle.telemetry.traces import api as traces
 
 AHORA = datetime(2026, 11, 3, 15, 0, tzinfo=UTC)
 
@@ -314,6 +315,13 @@ class RepositorioEnMemoria:
 # --- Los puertos, con dobles que anotan lo que se les pidio ------------------------------------
 
 
+def _exigir_turno_abierto() -> None:
+    """Como el adaptador real: una llamada sin tramo de turno abierto muere (BR6.1)."""
+    if traces.current_trace_id() is None:
+        msg = "no hay turno abierto"
+        raise traces.SpanNestingError(msg)
+
+
 @dataclass
 class ModeloFalso:
     """El puerto `TextGenerator`: responde lo que el escenario diga y anota cada llamada."""
@@ -325,6 +333,7 @@ class ModeloFalso:
     async def generate(
         self, prompt: Prompt, *, schema: type[BaseModel] | None, use: Use
     ) -> GenerationResult:
+        _exigir_turno_abierto()
         self.llamadas.append((prompt, schema, use))
         if self.esperar:
             await asyncio.sleep(0)
@@ -360,6 +369,7 @@ class InvestigadorFalso:
         max_searches: int,
         allowed_domains: Sequence[str],
     ) -> ResearchResult:
+        _exigir_turno_abierto()
         self.llamadas.append(
             {
                 "prompt": prompt,

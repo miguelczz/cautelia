@@ -28,6 +28,8 @@ from untangle.providers.ports import (
 
 from .support import CONFIGURACION, Mundo, investigacion
 
+pytestmark = pytest.mark.usefixtures("turno_abierto")
+
 HOY = date(2026, 11, 3)
 
 

@@ -43,6 +43,7 @@ from untangle.inbox.actions import InboxAction
 from untangle.policy_rag.corpus.models import Clause
 from untangle.policy_rag.facts.models import PolicyStatus
 from untangle.providers.ports import BudgetExhausted, ProviderError
+from untangle.telemetry.traces import api as traces
 from untangle.tenancy import config as tenancy_config
 from untangle.tenancy.models import TenantId
 
@@ -96,14 +97,19 @@ async def run_case(
     # tras un fallo ya lo pago.
     reservar = previa is None or previa.status is RunStatus.CAPPED
     try:
-        resultado = await _decide(
-            tenant_id,
-            case_id,
-            policy_ref=vista.policy_ref,
-            reserve=reservar,
-            ports=ports,
-            config=config,
-        )
+        # Un trabajo de fondo del caso: las llamadas al modelo y a la busqueda cuelgan de un
+        # tramo de turno abierto (BR6.1), y sin el la primera moriria con `SpanNestingError`.
+        with traces.turn_span(
+            tenant_id=tenant_id, case_id=case_id, use=Use.ADJUSTER, turn_id=f"adjuster-{case_id}"
+        ):
+            resultado = await _decide(
+                tenant_id,
+                case_id,
+                policy_ref=vista.policy_ref,
+                reserve=reservar,
+                ports=ports,
+                config=config,
+            )
     except BudgetExhausted:
         resultado = await _cap(tenant_id, case_id, ports=ports)
     except ProviderError as error:

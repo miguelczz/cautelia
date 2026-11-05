@@ -24,7 +24,7 @@ from untangle.adjuster.models import AdjusterRun, OpenedRun, RunStatus, RunStep
 from untangle.adjuster.ports import AdjusterPorts, DecisionToRecord
 from untangle.adjuster.schema import AdjusterDecision, DecisionReason
 from untangle.base import Locale, ProviderName, SpendSource, Use
-from untangle.case_record.crypto import Cipher
+from untangle.case_record.crypto import Cipher, from_storage
 from untangle.case_record.models import (
     CaseField,
     CaseState,
@@ -32,7 +32,6 @@ from untangle.case_record.models import (
     FieldStatus,
     Priority,
     RecordType,
-    Sealed,
     Speaker,
     TranscriptTurn,
 )
@@ -459,7 +458,7 @@ def _detalle(mundo: Mundo) -> CaseDetail | None:
             CaseField(
                 case_id=mundo.case_id,
                 field_key=clave,
-                value=Sealed(b"sellado"),
+                value=from_storage(b"sellado"),
                 status=FieldStatus.STATED,
                 evidence_turn_id="t-1",
                 updated_at=AHORA,

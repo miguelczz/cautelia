@@ -141,7 +141,7 @@ function SourceView({
             href={direccion}
             target="_blank"
             rel="noopener noreferrer"
-            className="underline underline-offset-2"
+            className="inline-flex min-h-11 items-center underline underline-offset-2"
           >
             {source.label}
             <span className="sr-only"> {t("adjuster.source.new_tab")}</span>

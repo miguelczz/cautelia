@@ -215,6 +215,6 @@ async def _guard(texts: Sequence[str], *, facts: CaseFacts) -> None:
                 tenant_id=facts.tenant_id,
                 case_id=facts.case_id,
                 categories=[str(i.category) for i in resultado.interventions],
-                patterns=[str(i.pattern) for i in resultado.interventions],
+                patterns=[str(i.pattern_id) for i in resultado.interventions],
             )
             raise DecisionRejected(ErrorKind.GUARD_BLOCKED)

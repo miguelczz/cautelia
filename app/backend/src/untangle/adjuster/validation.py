@@ -25,6 +25,7 @@ from dataclasses import dataclass
 from datetime import datetime
 
 from untangle import language as language_detection
+from untangle import observability
 from untangle.adjuster.errors import ErrorKind
 from untangle.adjuster.schema import AdjusterDecision, DecisionReason
 from untangle.base import Locale
@@ -209,4 +210,11 @@ async def _guard(texts: Sequence[str], *, facts: CaseFacts) -> None:
             source_key=GUARD_SOURCE_KEY,
         )
         if not resultado.unchanged:
+            observability.emit(
+                "adjuster.guard_blocked",
+                tenant_id=facts.tenant_id,
+                case_id=facts.case_id,
+                categories=[str(i.category) for i in resultado.interventions],
+                patterns=[str(i.pattern) for i in resultado.interventions],
+            )
             raise DecisionRejected(ErrorKind.GUARD_BLOCKED)

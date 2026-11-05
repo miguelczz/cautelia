@@ -44,6 +44,7 @@ from untangle.policy_rag.corpus.models import Clause
 from untangle.policy_rag.facts.models import PolicyStatus
 from untangle.providers.ports import BudgetExhausted, ProviderError
 from untangle.telemetry.traces import api as traces
+from untangle.telemetry.traces.models import NodeName
 from untangle.tenancy import config as tenancy_config
 from untangle.tenancy.models import TenantId
 
@@ -97,10 +98,17 @@ async def run_case(
     # tras un fallo ya lo pago.
     reservar = previa is None or previa.status is RunStatus.CAPPED
     try:
-        # Un trabajo de fondo del caso: las llamadas al modelo y a la busqueda cuelgan de un
-        # tramo de turno abierto (BR6.1), y sin el la primera moriria con `SpanNestingError`.
-        with traces.turn_span(
-            tenant_id=tenant_id, case_id=case_id, use=Use.ADJUSTER, turn_id=f"adjuster-{case_id}"
+        # Un trabajo de fondo del caso: la llamada a un proveedor cuelga de un tramo de nodo y este
+        # de uno de turno (BR6.1, BR6.3); sin ellos la primera llamada muere con
+        # `SpanNestingError`. Es el trabajo del nodo de decision.
+        with (
+            traces.turn_span(
+                tenant_id=tenant_id,
+                case_id=case_id,
+                use=Use.ADJUSTER,
+                turn_id=f"adjuster-{case_id}",
+            ),
+            traces.node_span(NodeName.DECISION),
         ):
             resultado = await _decide(
                 tenant_id,

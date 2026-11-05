@@ -315,11 +315,10 @@ class RepositorioEnMemoria:
 # --- Los puertos, con dobles que anotan lo que se les pidio ------------------------------------
 
 
-def _exigir_turno_abierto() -> None:
-    """Como el adaptador real: una llamada sin tramo de turno abierto muere (BR6.1)."""
-    if traces.current_trace_id() is None:
-        msg = "no hay turno abierto"
-        raise traces.SpanNestingError(msg)
+def _exigir_turno_abierto(use: Use = Use.ADJUSTER) -> None:
+    """Como el adaptador real: una llamada sin turno y nodo abiertos muere (BR6.1, BR6.3)."""
+    with traces.call_span(provider=ProviderName.ANTHROPIC, model="claude-test", use=use):
+        pass
 
 
 @dataclass
@@ -333,7 +332,7 @@ class ModeloFalso:
     async def generate(
         self, prompt: Prompt, *, schema: type[BaseModel] | None, use: Use
     ) -> GenerationResult:
-        _exigir_turno_abierto()
+        _exigir_turno_abierto(use)
         self.llamadas.append((prompt, schema, use))
         if self.esperar:
             await asyncio.sleep(0)

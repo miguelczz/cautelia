@@ -664,5 +664,21 @@ async def test_el_texto_de_los_pasos_sale_del_catalogo_en_el_idioma_del_caso(mun
 async def test_las_clausulas_se_buscan_con_el_relato(mundo: Mundo) -> None:
     await _correr(mundo)
 
-    (consulta,) = mundo.recuperaciones
-    assert RELATO in consulta
+    relato, cobertura = mundo.recuperaciones
+    assert RELATO in relato
+    # La segunda consulta es fija y pide la cobertura de daños propios, para que un relato que no
+    # la nombra no deje fuera la clausula que lo cubre.
+    assert "daños propios" in cobertura
+    assert RELATO not in cobertura
+
+
+async def test_la_segunda_consulta_no_duplica_las_clausulas_que_el_relato_ya_trajo(
+    mundo: Mundo,
+) -> None:
+    await _correr(mundo)
+
+    ids = [c.clause_id for c in mundo.recuperadas]
+    paso = next(p for p in _corrida(mundo).steps if p.id.value == "clauses")
+    citadas = [f.ref for f in paso.sources]
+    assert len(citadas) == len(set(citadas))
+    assert set(citadas) <= set(ids)

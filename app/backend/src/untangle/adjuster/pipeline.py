@@ -208,6 +208,7 @@ async def _decide(  # noqa: PLR0913 -- el caso, su poliza, si reserva cupo y los
                 tenant_id,
                 policy_number=poliza.policy_number,
                 narrative=leido.narrative,
+                language=idioma,
                 ports=ports,
             )
     paso_clausulas = steps.clauses(recuperadas, poliza, idioma)

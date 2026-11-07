@@ -78,17 +78,16 @@ jobs:
 
       - run: scripts/verify.sh --only secrets
 
-  verify:
-    name: verificacion
+  # Los pasos 2 a 9 se reparten en trabajos paralelos para que la corrida dure lo que dura
+  # el mas lento y no la suma (la corrida secuencial pasaba de una hora). El guion sigue
+  # siendo la unica fuente de los controles: cada trabajo lo invoca con `--only`, y la
+  # union de los grupos es exactamente los pasos 2 a 9. Los trabajos en paralelo no gastan
+  # minutos en un repositorio publico.
+  rapido:
+    name: pasos rapidos (2, 3, 4, 6, 7, 8, 9)
     needs: secrets
     runs-on: ${{ fromJSON(vars.RUNS_ON || '["ubuntu-latest"]') }}
-    # Sin techo, GitHub espera seis horas: el 2026-10-07 la instalacion de
-    # navegadores se colgo hora y media y se comio esos minutos del plan gratuito.
-    # El techo es cerca de vez y media lo normal. Lo normal crecio con las pruebas:
-    # unos 21 minutos al principio, 45 el 2026-10-13, y el 2026-10-14 la corrida se
-    # corto a los 45 con las pruebas del servidor al 86 %, sin ningun rojo. Subirlo
-    # no relaja ninguna compuerta: es cuanto se espera, no que se exige.
-    timeout-minutes: 75
+    timeout-minutes: 30
     permissions:
       contents: read
     steps:
@@ -103,39 +102,11 @@ jobs:
       - name: dependencias
         run: mise run deps:install
 
-      # Los tres navegadores del arnes de accesibilidad (U6), con las bibliotecas
-      # del sistema que piden en Linux. Paso propio y **fuera** de `bootstrap`
-      # (NFR21.3): son cientos de megas que el camino del clon al reporte no
-      # necesita. El guion los usa en su paso 5.
-      # El espejo de Ubuntu del corredor dejo de responder el 2026-10-07 y `apt`
-      # esperaba su tiempo por defecto en cada archivo antes de pasar al espejo
-      # publico: la instalacion de navegadores se colgo dos veces. Con espera
-      # corta y reintentos, el salto al espejo que responde es inmediato.
-      - name: apt con espera corta
-        if: runner.os == 'Linux'
-        run: printf 'Acquire::http::Timeout "15";\nAcquire::https::Timeout "15";\nAcquire::Retries "3";\n' | sudo tee /etc/apt/apt.conf.d/99-espera-corta
-
-      - name: navegadores del arnes
-        # Tarda un minuto; colgado, no deja correr nada mas (2026-10-07).
-        timeout-minutes: 10
-        # Las bibliotecas del sistema (`--with-deps`) son cosa de Linux y piden `sudo`.
-        # En la Mac los tres navegadores ya estan y este paso solo lo comprueba.
-        run: mise run browsers:install ${{ runner.os == 'Linux' && '-- --with-deps' || '' }}
-
-      # **No se levanta `docker compose`, y sigue sin haber contenedor de
-      # servicio del flujo.** Desde U2 hay pasos que necesitan base de datos, y
-      # la levanta la propia suite con la misma imagen anclada por huella que el
-      # entorno local y con el rol del aplicativo --el que no puede saltarse las
-      # politicas de fila--. Asi hay **un solo camino**: lo que corre en la
-      # maquina de Miguel es literalmente lo que corre aqui. Un contenedor de
-      # servicio seria un segundo camino que solo existe en la tuberia, y los
-      # fallos de aislamiento son tan a menudo de configuracion como de codigo.
-      #
-      # El motor de contenedores ya viene en el corredor de GitHub; en la Mac de
-      # Miguel tiene que estar abierto. Si falta, la suite falla nombrandolo en vez
-      # de saltarse la compuerta.
-      - name: los ocho pasos restantes
-        run: scripts/verify.sh --skip secrets
+      # No se levanta `docker compose`: las pruebas que necesitan base de datos la
+      # levantan ellas mismas, con la misma imagen anclada y el rol del aplicativo. Un
+      # solo camino, local y en la tuberia. El motor de contenedores ya viene en el
+      # corredor de GitHub; en la Mac de Miguel tiene que estar abierto.
+      - run: scripts/verify.sh --only rapido
 
       - name: reporte de la corrida
         if: always()
@@ -145,3 +116,122 @@ jobs:
           path: tmp/evals/reports/
           if-no-files-found: warn
           retention-days: 30
+
+  interfaz:
+    name: interfaz y arnes de accesibilidad
+    needs: secrets
+    runs-on: ${{ fromJSON(vars.RUNS_ON || '["ubuntu-latest"]') }}
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+        with:
+          cache: ${{ runner.environment == 'github-hosted' }}
+
+      - name: dependencias
+        run: mise run deps:install
+
+      # Los tres navegadores del arnes de accesibilidad (U6), con las bibliotecas del
+      # sistema que piden en Linux. Paso propio y **fuera** de `bootstrap` (NFR21.3).
+      # El espejo de Ubuntu del corredor dejo de responder el 2026-10-07 y `apt`
+      # esperaba su tiempo por defecto en cada archivo: con espera corta y reintentos
+      # el salto al espejo que responde es inmediato.
+      - name: apt con espera corta
+        if: runner.os == 'Linux'
+        run: printf 'Acquire::http::Timeout "15";\nAcquire::https::Timeout "15";\nAcquire::Retries "3";\n' | sudo tee /etc/apt/apt.conf.d/99-espera-corta
+
+      - name: navegadores del arnes
+        # Tarda un minuto; colgado, no deja correr nada mas (2026-10-07).
+        timeout-minutes: 10
+        run: mise run browsers:install ${{ runner.os == 'Linux' && '-- --with-deps' || '' }}
+
+      # Incluye el presupuesto de PERF-U6.3 del arnes, que el guion aplica donde lo mide.
+      - run: scripts/verify.sh --only frontend
+
+      - name: cobertura de la interfaz
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: cov-frontend
+          path: app/frontend/coverage/
+          if-no-files-found: error
+          retention-days: 2
+
+  servidor:
+    name: pruebas del servidor ${{ matrix.tanda }}/6
+    needs: secrets
+    runs-on: ${{ fromJSON(vars.RUNS_ON || '["ubuntu-latest"]') }}
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    strategy:
+      # Que una tanda roja no cancele a las demas: la corrida dice todo lo que hay que
+      # arreglar, no un problema por vuelta.
+      fail-fast: false
+      matrix:
+        tanda: [1, 2, 3, 4, 5, 6]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+        with:
+          cache: ${{ runner.environment == 'github-hosted' }}
+
+      - name: dependencias
+        run: mise run deps:install
+
+      # Cada tanda corre en su propio corredor con su propio motor de contenedores, asi que
+      # las bases efimeras no pueden chocar entre tandas. Sus datos de cobertura se
+      # combinan en el trabajo `piso`; una tanda sola no mide ni declara el piso.
+      - run: scripts/verify.sh --only backend-shard ${{ matrix.tanda }}/6
+
+      - name: datos de cobertura de la tanda
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: cov-servidor-${{ matrix.tanda }}
+          path: app/backend/coverage/data/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 2
+
+  piso:
+    name: piso de cobertura combinada
+    needs: [secrets, interfaz, servidor]
+    runs-on: ${{ fromJSON(vars.RUNS_ON || '["ubuntu-latest"]') }}
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+        with:
+          cache: ${{ runner.environment == 'github-hosted' }}
+
+      - name: dependencias
+        run: mise run deps:install
+
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: cov-servidor-*
+          merge-multiple: true
+          path: app/backend/coverage/data
+
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: cov-frontend
+          path: app/frontend/coverage
+
+      # Combina las seis tandas y corre la misma compuerta de siempre (piso agregado y de
+      # modulos criticos) sobre la cobertura combinada.
+      - run: scripts/verify.sh --only gate

@@ -20,6 +20,15 @@
 #   scripts/verify.sh                 los nueve pasos
 #   scripts/verify.sh --only secrets  solo el paso 1
 #   scripts/verify.sh --skip secrets  del 2 al 9
+#
+# El flujo de GitHub reparte los mismos nueve pasos en trabajos paralelos con estos
+# grupos; juntos son exactamente los pasos 2 a 9, sin tocar ninguno:
+#   --only rapido            pasos 2, 3, 4, 6, 7, 8 y 9
+#   --only frontend          paso 5, interfaz: pruebas con cobertura y arnes de
+#                            accesibilidad con su presupuesto (PERF-U6.3)
+#   --only backend-shard K/N paso 5, servidor: la tanda K de N de las pruebas
+#   --only gate              paso 5, el piso: combina la cobertura de todas las tandas
+#                            y corre la compuerta sobre la cobertura combinada
 
 set -Eeuo pipefail
 
@@ -28,12 +37,18 @@ cd "$RAIZ"
 
 SOLO=""
 SALTAR=""
+TANDA=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --only)
       SOLO="${2:-}"
       shift 2
+      if [[ "$SOLO" == "backend-shard" ]]; then
+        TANDA="${1:-}"
+        [[ "$TANDA" =~ ^[0-9]+/[0-9]+$ ]] || { echo "uso: --only backend-shard K/N" >&2; exit 64; }
+        shift
+      fi
       ;;
     --skip)
       SALTAR="${2:-}"
@@ -144,7 +159,13 @@ INCIDENTE
   return 1
 }
 
-if [[ -z "$SALTAR" || "$SALTAR" != "secrets" ]]; then
+case "$SOLO" in
+  "" | secrets) ;;
+  rapido | frontend | backend-shard | gate) SALTAR="secrets" ;;
+  *) echo "grupo desconocido: $SOLO" >&2; exit 64 ;;
+esac
+
+if [[ "$SALTAR" != "secrets" ]]; then
   if ! escaneo_de_secretos; then
     printf '\n%sla corrida se detiene aqui%s: una clave filtrada es un incidente.\n' \
       "$NEGRITA" "$FIN" >&2
@@ -159,15 +180,21 @@ fi
 # --- Pasos 2 a 9 --------------------------------------------------------------
 # Corren hasta el final y reportan juntos.
 
-paso "2/9 formato"                    mise_run fmt:check
-paso "3/9 lint y contratos de importacion" mise_run lint
-paso "4/9 chequeo de tipos"           mise_run types
+quiere() { [[ -z "$SOLO" || "$SOLO" == "$1" ]]; }
+
+if quiere rapido; then
+  paso "2/9 formato"                    mise_run fmt:check
+  paso "3/9 lint y contratos de importacion" mise_run lint
+  paso "4/9 chequeo de tipos"           mise_run types
+fi
 # La preparacion del paso 5, no un paso del guion: el guion sigue teniendo
 # nueve. Es lo mismo que levantar la base efimera para las pruebas de U2. Va
 # aqui y no en `deps:install` porque a ese lo corre tambien `bootstrap`, que es
 # el camino del clon al reporte, y ahi es justo donde no queremos los 72 MB de
 # modelos (INF-U3-2, INF-U3-7).
-mise_run models:install
+if [[ "$SOLO" != "gate" ]]; then
+  mise_run models:install
+fi
 
 # El paso 5 son las pruebas con su piso de cobertura y, despues, el arnes de
 # accesibilidad y de tiempos (U6, F9): el mismo paso, no uno nuevo, porque el
@@ -189,7 +216,21 @@ PRESUPUESTO_ARNES_S=360
 pruebas_deterministas() {
   local fallo=0
   mise_run cov || fallo=1
+  arnes_de_accesibilidad || fallo=1
+  return "$fallo"
+}
 
+# Las pruebas de la interfaz con cobertura y el arnes: la mitad del paso 5 que el flujo
+# corre en su propio trabajo.
+pruebas_de_interfaz() {
+  local fallo=0
+  mise_run cov:frontend || fallo=1
+  arnes_de_accesibilidad || fallo=1
+  return "$fallo"
+}
+
+arnes_de_accesibilidad() {
+  local fallo=0
   local inicio=$SECONDS
   mise_run a11y || fallo=1
   local duracion=$((SECONDS - inicio))
@@ -218,7 +259,14 @@ pruebas_deterministas() {
   return "$fallo"
 }
 
-paso "5/9 pruebas deterministas"      pruebas_deterministas
+case "$SOLO" in
+  "") paso "5/9 pruebas deterministas"  pruebas_deterministas ;;
+  frontend) paso "5/9 pruebas deterministas (interfaz y arnes)" pruebas_de_interfaz ;;
+  backend-shard) paso "5/9 pruebas deterministas (servidor, tanda $TANDA)" mise_run cov:backend-shard "$TANDA" ;;
+  gate) paso "5/9 piso de cobertura (cobertura combinada)" mise_run cov:gate ;;
+esac
+
+if quiere rapido; then
 # El paso 6 crece por dentro, no de lista: U2 anade sus tres comprobaciones aqui
 # --el aislamiento contra el catalogo vivo, las migraciones y los identificadores
 # de aseguradora literales-- y U3 anade las dos suyas --quien produce el tipo
@@ -246,6 +294,8 @@ paso "8/9 auditoria de dependencias"  bash -c 'mise run audit && mise run licens
 # redaccion, que el camino del clon al reporte no instala; aqui si estan (los
 # instala la preparacion del paso 5).
 paso "9/9 golden sets de texto"       bash -c 'mise run evals:gate -- --subset smoke && mise run evals:gate -- --subset captura-con-redaccion'
+
+fi
 
 # --- Una sola lista al final --------------------------------------------------
 

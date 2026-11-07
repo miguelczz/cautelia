@@ -249,6 +249,25 @@ run = [
   "uv run --project app/backend python -m untangle.workspace.coverage_gate",
 ]
 
+# `cov` partido en tres para el flujo de GitHub, que reparte el servidor en tandas
+# paralelas. Mismos comandos, mismas rutas, mismo piso: `cov:gate` combina los datos de
+# todas las tandas y corre la misma compuerta sobre la cobertura combinada.
+[tasks."cov:backend-shard"]
+description = "Una tanda K/N de las pruebas del servidor con cobertura (argumento: K/N)"
+run = "scripts/pruebas-shard.sh"
+
+[tasks."cov:frontend"]
+description = "Pruebas de la interfaz con cobertura"
+run = "pnpm --dir app/frontend exec vitest run --coverage"
+
+[tasks."cov:gate"]
+description = "Combina la cobertura de las tandas del servidor y corre la compuerta del piso"
+run = [
+  "uv run --project app/backend coverage combine --keep --rcfile=app/backend/pyproject.toml --data-file=app/backend/coverage/.coverage app/backend/coverage/data",
+  "uv run --project app/backend coverage xml --rcfile=app/backend/pyproject.toml --data-file=app/backend/coverage/.coverage -o app/backend/coverage/coverage.xml",
+  "uv run --project app/backend python -m untangle.workspace.coverage_gate",
+]
+
 # --- Evaluaciones -------------------------------------------------------------
 
 [tasks."evals:run"]

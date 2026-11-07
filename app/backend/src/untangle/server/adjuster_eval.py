@@ -230,6 +230,7 @@ async def _observe(
             request.tenant_id,
             policy_number=request.policy_number,
             narrative=request.narrative,
+            language=request.language,
             ports=mundo.ports,
         )
     recuperadas_ids = tuple(

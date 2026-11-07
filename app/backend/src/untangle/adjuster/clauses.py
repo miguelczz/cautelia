@@ -33,6 +33,15 @@ _COVERAGE_QUERY = {
     "en": "coverage for damage to the insured's own vehicle from a collision, and its deductible",
 }
 
+#: La tercera: las exclusiones que se miran antes de aprobar. Aprobar sin haberlas buscado es el
+#: error caro (uso comercial o de plataformas, conductores no declarados, actos intencionales).
+_EXCLUSIONS_QUERY = {
+    "es": "exclusiones de la cobertura: uso comercial o de plataformas, conductores no declarados, "
+    "actos intencionales y otros casos que la póliza no cubre",
+    "en": "coverage exclusions: commercial or platform use, undeclared drivers, intentional acts "
+    "and other cases the policy does not cover",
+}
+
 
 async def retrieve(
     tenant_id: TenantId,
@@ -42,16 +51,16 @@ async def retrieve(
     language: Locale,
     ports: AdjusterPorts,
 ) -> tuple[Clause, ...]:
-    """Las clausulas recuperadas para el relato y para la cobertura de daños propios.
+    """Las clausulas recuperadas para el relato, para la cobertura de daños propios y para las exclusiones.
 
-    Primero las del relato, en el orden en que la fusion las dejo, y despues las de la segunda
-    consulta que no estaban ya. Una sola llamada de embeddings para las dos consultas.
+    Primero las del relato, en el orden en que la fusion las dejo, y despues las de las otras dos
+    consultas que no estaban ya. Una sola llamada de embeddings para las tres.
     """
     relato = narrative[:_MAX_QUERY_CHARS] or " "
-    cobertura = _COVERAGE_QUERY[language]
-    vector_relato, vector_cobertura = await ports.embed([relato, cobertura])
+    consultas = [relato, _COVERAGE_QUERY[language], _EXCLUSIONS_QUERY[language]]
+    vectores = await ports.embed(consultas)
     por_id: dict[str, Clause] = {}
-    for consulta, vector in ((relato, vector_relato), (cobertura, vector_cobertura)):
+    for consulta, vector in zip(consultas, vectores, strict=True):
         resultado = await corpus.retrieve(
             tenant_id,
             policy_number=policy_number,

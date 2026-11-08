@@ -17,7 +17,7 @@ Es una demostración de portafolio: las tres aseguradoras, sus pólizas y todas 
 
 **1. Eliges una aseguradora.** Tres compañías ficticias, cada una con sus propias reglas: una agencia que pasa cada caso a la compañía que emitió la póliza, una aseguradora prudente cuyo ajustador revisa todos los casos y una ágil que cierra sola los reportes sencillos.
 
-![La página de inicio con las tres aseguradoras ficticias y los botones para chatear, llamar o ver sus pólizas](docs/assets/readme/home.png)
+![La página de inicio con las tres aseguradoras ficticias y los botones para chatear, llamar o ver sus pólizas](docs/assets/readme/home.es.png)
 
 **2. Cuentas qué pasó, por chat o por voz.** La agente hace una pregunta a la vez y solo sobre lo que todavía falta. Cuando das tu nombre y tu número de póliza, busca la póliza en los registros de la aseguradora y te pide confirmar que es tuya. Puedes cambiar entre español e inglés en medio de la conversación.
 
@@ -25,7 +25,7 @@ Es una demostración de portafolio: las tres aseguradoras, sus pólizas y todas 
 
 **3. Recibes un resultado claro.** Con el reporte completo, las reglas de la aseguradora deciden qué sigue: un caso sencillo (sin heridos y sin nadie más involucrado) se registra sin ajustador; cualquier otro pasa al ajustador de IA con todo ya capturado, para que no tengas que repetir nada. En ambos casos recibes un número de caso y una página que muestra lo que quedó registrado y qué regla decidió.
 
-![La página del caso: los datos del reporte a la derecha y la regla que cerró el caso](docs/assets/readme/case.png)
+![La página del caso: los datos del reporte a la derecha y la regla que cerró el caso](docs/assets/readme/case.es.png)
 
 **4. Puedes preguntar por tu póliza.** "¿Mi póliza cubre un carro de reemplazo?" La respuesta cita la cláusula de la que sale. Si ninguna cláusula lo cubre, la agente lo dice en vez de adivinar, y si no pudo verificarlo, también lo dice: son dos respuestas distintas.
 

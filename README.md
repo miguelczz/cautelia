@@ -25,7 +25,7 @@ Es una demostración de portafolio: las tres aseguradoras, sus pólizas y todas 
 
 **3. Recibes un resultado claro.** Con el reporte completo, las reglas de la aseguradora deciden qué sigue: un caso sencillo (sin heridos y sin nadie más involucrado) se registra sin ajustador; cualquier otro pasa al ajustador de IA con todo ya capturado, para que no tengas que repetir nada. En ambos casos recibes un número de caso y una página que muestra lo que quedó registrado y qué regla decidió.
 
-![La página del caso: los datos del reporte a la derecha y la regla que cerró el caso](docs/assets/readme/case.es.png)
+![La página del caso con la decisión del ajustador de IA: sus seis pasos, las cláusulas que cita y los datos del reporte a la derecha (captura con la interfaz en inglés)](docs/assets/readme/adjuster-decision-six-steps.png)
 
 **4. Puedes preguntar por tu póliza.** "¿Mi póliza cubre un carro de reemplazo?" La respuesta cita la cláusula de la que sale. Si ninguna cláusula lo cubre, la agente lo dice en vez de adivinar, y si no pudo verificarlo, también lo dice: son dos respuestas distintas.
 

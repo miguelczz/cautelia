@@ -1,60 +1,60 @@
 # Cautelia
 
-**English** · [Español](README.es.md)
+**Español** · [English](README.en.md)
 
-![Cautelia: two cars with copper and blue headlights approach on a wet road at night](docs/assets/banner.jpg)
+![Cautelia: dos carros con luces cobre y azul se acercan de noche por una carretera mojada](docs/assets/banner.jpg)
 
-**Cautelia is an AI agent that takes car-accident reports and answers questions about your auto policy, by chat or by phone, in Spanish and English.** It asks only what is missing, checks your policy, cites the exact clause it relies on, and closes the simple cases on its own. Anything about coverage or money goes to an AI adjuster, separate from the agent, that decides the case and explains each step with its sources.
+**Cautelia es una agente de inteligencia artificial que toma el reporte de un accidente de carro y responde dudas sobre la póliza de auto, por chat o por teléfono, en español y en inglés.** Pregunta solo lo que falta, verifica la póliza, cita la cláusula exacta en la que se apoya y cierra sola los casos sencillos. Todo lo que toca cobertura o dinero pasa a un ajustador de IA, aparte de la agente, que decide el caso y explica cada paso con sus fuentes.
 
-It is a portfolio demonstration: the three insurers, their policies and every person in them are fictional.
+Es una demostración de portafolio: las tres aseguradoras, sus pólizas y todas las personas que aparecen son ficticias.
 
-- **Try it:** [cautelia.app](https://cautelia.app) (chat and in-browser calls, with a daily limit on calls).
-- **Watch it:** the 60-second walkthrough below, or the [full video (MP4)](docs/assets/readme/demo.mp4).
+- **Pruébala:** [cautelia.app](https://cautelia.app) (chat y llamadas desde el navegador, con un límite diario de llamadas).
+- **Mírala:** el recorrido de 60 segundos de abajo, o el [video completo (MP4)](docs/assets/readme/demo.mp4).
 
-![A one-minute walkthrough: choosing an insurer, reporting a crash by chat and seeing the case closed by the insurer's rules](docs/assets/readme/demo.gif)
+![Recorrido de un minuto: elegir una aseguradora, reportar un choque por chat y ver el caso cerrado por las reglas de la aseguradora](docs/assets/readme/demo.gif)
 
-## What it does
+## Qué hace
 
-**1. You pick an insurer.** Three fictional companies, each with its own rules: an agency that passes every case to the company that issued the policy, a cautious insurer whose adjuster reviews every case, and an agile one that closes simple reports on its own.
+**1. Eliges una aseguradora.** Tres compañías ficticias, cada una con sus propias reglas: una agencia que pasa cada caso a la compañía que emitió la póliza, una aseguradora prudente cuyo ajustador revisa todos los casos y una ágil que cierra sola los reportes sencillos.
 
-![The home page with the three fictional insurers and the buttons to chat, call or see their policies](docs/assets/readme/home.png)
+![La página de inicio con las tres aseguradoras ficticias y los botones para chatear, llamar o ver sus pólizas](docs/assets/readme/home.png)
 
-**2. You tell it what happened, by chat or by voice.** The agent asks one question at a time and only for what is still missing. When you give your name and policy number, it finds the policy in the insurer's records and asks you to confirm it is yours. You can switch between Spanish and English in the middle of the conversation.
+**2. Cuentas qué pasó, por chat o por voz.** La agente hace una pregunta a la vez y solo sobre lo que todavía falta. Cuando das tu nombre y tu número de póliza, busca la póliza en los registros de la aseguradora y te pide confirmar que es tuya. Puedes cambiar entre español e inglés en medio de la conversación.
 
-![A chat in English: the agent finds the policy, asks the missing details and closes the report](docs/assets/readme/chat.png)
+![Un chat en inglés: la agente encuentra la póliza, pregunta los datos que faltan y cierra el reporte](docs/assets/readme/chat.png)
 
-**3. You get a clear outcome.** With the report complete, the insurer's rules decide what happens next: a simple case (no injuries, nobody else involved) is registered without an adjuster; anything else goes to the AI adjuster with everything already captured, so you never repeat yourself. Either way you get a case number and a page that shows what was recorded and which rule decided.
+**3. Recibes un resultado claro.** Con el reporte completo, las reglas de la aseguradora deciden qué sigue: un caso sencillo (sin heridos y sin nadie más involucrado) se registra sin ajustador; cualquier otro pasa al ajustador de IA con todo ya capturado, para que no tengas que repetir nada. En ambos casos recibes un número de caso y una página que muestra lo que quedó registrado y qué regla decidió.
 
-![The case page: the report details on the right and the rule that closed the case](docs/assets/readme/case.png)
+![La página del caso: los datos del reporte a la derecha y la regla que cerró el caso](docs/assets/readme/case.png)
 
-**4. You can ask about your policy.** "Does my policy cover a rental car?" The answer quotes the clause it comes from. If no clause covers it, the agent says so instead of guessing, and if it could not check, it says that too: those are two different answers.
+**4. Puedes preguntar por tu póliza.** "¿Mi póliza cubre un carro de reemplazo?" La respuesta cita la cláusula de la que sale. Si ninguna cláusula lo cubre, la agente lo dice en vez de adivinar, y si no pudo verificarlo, también lo dice: son dos respuestas distintas.
 
-When the question is about a fact written in the policy itself (the validity dates, the insured vehicles, the listed drivers, the special conditions), the agent reads it straight from the policy record with plain code: no clause search and no model writing the answer, so it is exact and costs no tokens. Only a question that needs interpreting the clauses goes through the search with citations.
+Cuando la pregunta es sobre un dato escrito en la propia póliza (las fechas de vigencia, los vehículos asegurados, los conductores declarados, las condiciones especiales), la agente lo lee directamente del registro de la póliza con código simple: sin búsqueda de cláusulas y sin un modelo que escriba la respuesta, así que es exacto y no gasta tokens. Solo una pregunta que necesita interpretar las cláusulas pasa por la búsqueda con citas.
 
-**5. An AI adjuster decides the case, and shows how.** When a case goes to an adjuster, a second AI, separate from the agent, reads the report, the policy and the insurer's rules, looks up the vehicle's reference value on the web and decides. The case page shows its steps as they arrive and, when it finishes, the decision with the six steps and the sources of each one: the clauses it cites, the rules and the web page. It says the explanation was written by an AI. A visitor no longer decides or notes anything: the conversation continues with a notice that the case has a decision.
+**5. Un ajustador de IA decide el caso y muestra cómo.** Cuando un caso pasa a un ajustador, otra IA, aparte de la agente, lee el reporte, la póliza y las reglas de la aseguradora, busca en la web el valor de referencia del vehículo y decide. La página del caso muestra sus pasos a medida que llegan y, al terminar, la decisión con los seis pasos y las fuentes de cada uno: las cláusulas que cita, las reglas y la página web. Dice que la explicación la escribió una IA. Quien visita ya no decide ni anota nada: la conversación sigue con un aviso de que el caso ya tiene una decisión.
 
-**6. You can call.** The same agent answers by voice in the browser: it introduces itself as an AI, says the call is transcribed, and hands you the case number at the end.
+**6. Puedes llamar.** La misma agente responde por voz en el navegador: se presenta como una inteligencia artificial, avisa que la llamada se transcribe y al final te da el número de caso.
 
-![The call screen before a call starts](docs/assets/readme/call.png)
+![La pantalla de llamada antes de empezar](docs/assets/readme/call.png)
 
-**7. You can see what it costs and how well it works.** The Telemetry page shows the money spent per provider, per day and per case, and the results of the latest evaluation. From there you can open your own conversation in [Langfuse](https://langfuse.com), step by step: which model ran, how long it took and what it cost.
+**7. Puedes ver cuánto cuesta y qué tan bien funciona.** La página de Telemetría muestra el gasto por proveedor, por día y por caso, y los resultados de la última evaluación. Desde ahí puedes abrir tu propia conversación en [Langfuse](https://langfuse.com), paso a paso: qué modelo corrió, cuánto tardó y cuánto costó.
 
-![The Telemetry page with the spending per provider and per case](docs/assets/readme/telemetry-cost.png)
+![La página de Telemetría con el gasto por proveedor y por caso](docs/assets/readme/telemetry-cost.png)
 
-## What it does not do
+## Qué no hace
 
-- **The agent you talk to never decides coverage or payments.** It does not say "you are covered", give amounts or assign fault. A separate AI adjuster decides the case and writes down how; the agent only passes the case to it.
-- **It is not connected to any real insurer.** No real policies, no real claims system, no payments.
-- **Do not type real personal data.** The conversation is stored as you wrote it, and visitor data is deleted every night.
-- **Voice works in the browser only,** with a limit of calls per visitor and per day. There is no phone number.
-- **Quotes are by chat only.** By voice the agent says so and offers the chat.
-- **It is not legal or insurance advice,** and it does not claim to comply with any regulation: its controls are inspired by them.
+- **La agente con la que hablas nunca decide coberturas ni pagos.** No dice "estás cubierto", no da montos ni asigna culpas. Un ajustador de IA aparte decide el caso y deja escrito cómo; la agente solo se lo pasa.
+- **No está conectada a ninguna aseguradora real.** No hay pólizas reales, ni sistema real de reclamaciones, ni pagos.
+- **No escribas datos personales reales.** La conversación se guarda tal como la escribiste, y los datos de los visitantes se borran cada noche.
+- **La voz funciona solo en el navegador,** con un límite de llamadas por visitante y por día. No hay número de teléfono.
+- **Las cotizaciones son solo por chat.** Por voz, la agente lo dice y ofrece el chat.
+- **No es asesoría legal ni de seguros,** y no afirma cumplir ninguna norma: sus controles están inspirados en ellas.
 
-## How it fails
+## Cómo falla
 
-The evaluation is a set of situations written in advance, the same ones in Spanish and English: crash reports, policy questions and attempts to trick the agent. A program plays the person, talks to the real agent and checks the result with code. The section below is generated from the latest full run and is never edited by hand.
+La evaluación es un conjunto de situaciones escritas de antemano, las mismas en español y en inglés: reportes de choques, preguntas sobre la póliza e intentos de engañar a la agente. Un programa hace de persona, habla con la agente real y revisa el resultado con código.
 
-The 13 failures of the 2026-10-14 run were in the evaluation itself, not in the agent: it read each case while the agent was still waiting, for up to two minutes, for an answer to its last offer, and one script never reached the attack it measures. Both are fixed; the next full run replaces this section.
+El bloque de abajo se genera automáticamente desde la última corrida completa y se publica en inglés, para que nunca haya dos versiones distintas.
 
 <!-- generated:how-it-fails:begin -->
 _Generated from the current baseline and the last full run by `mise run readme:gen`. Do not edit by hand: `mise run readme:check` fails when this differs from what they produce._
@@ -64,41 +64,43 @@ Last full run `run-20275e512642`, commit `c7afffaa8eb1b3a75e0034187705914488c3d8
 No case failed in this run (258 cases recorded).
 <!-- generated:how-it-fails:end -->
 
-## Architecture
+## Arquitectura
 
 ```mermaid
 flowchart LR
-  P["Person<br/>chat or voice"] --> A["Agent<br/>Claude Haiku understands<br/>and writes the reply"]
-  A --> G["Case workflow<br/>LangGraph: intake, policy,<br/>decision, compliance"]
-  G --> R["Insurer rules<br/>versioned, one file<br/>per insurer"]
-  G --> C["Policy search<br/>with exact citations"]
-  R --> I["AI adjuster<br/>decides the case<br/>and explains it"]
-  G --> O["Output guard<br/>checks every message"]
+  P["Persona<br/>chat o voz"] --> A["Agente<br/>Claude Haiku entiende<br/>y escribe la respuesta"]
+  A --> G["Flujo del caso<br/>LangGraph: admisión, póliza,<br/>decisión, cumplimiento"]
+  G --> R["Reglas de la aseguradora<br/>versionadas, un archivo<br/>por aseguradora"]
+  G --> C["Búsqueda en la póliza<br/>con citas exactas"]
+  R --> I["Ajustador de IA<br/>decide el caso<br/>y lo explica"]
+  G --> O["Guardia de salida<br/>revisa cada mensaje"]
   O --> P
 ```
 
-In words: the person talks to the agent; a language model (Claude Haiku) reads each message and writes the reply, and can only **propose** actions from a closed list (note a detail, look up the policy, pass the case to an adjuster, close the report). Code validates every action against the case before it runs, along a fixed workflow. The insurer's rules, not the model, decide where a case goes. Every message passes an output guard before the person sees it. When a case goes to an adjuster, a separate background process, the AI adjuster, takes it: it reads the report, the policy and the rules with plain code, searches the web for the vehicle's reference value (up to three searches) and makes one structured decision. Code validates the action and every clause it cites before the case closes, and the case page shows the steps with their sources.
+En palabras: la persona habla con la agente; un modelo de lenguaje (Claude Haiku) lee cada mensaje y escribe la respuesta, y solo puede **proponer** acciones de una lista cerrada (anotar un dato, buscar la póliza, pasar el caso a un ajustador, cerrar el reporte). El código valida cada acción contra el caso antes de ejecutarla, siguiendo un flujo fijo. Son las reglas de la aseguradora, no el modelo, las que deciden a dónde va un caso. Cada mensaje pasa por una guardia de salida antes de que la persona lo vea. Cuando un caso pasa a un ajustador lo toma un proceso aparte en segundo plano, el ajustador de IA: lee el reporte, la póliza y las reglas con código, busca en la web el valor de referencia del vehículo (hasta tres búsquedas) y toma una decisión con salida estructurada. El código valida la acción y cada cláusula que cita antes de cerrar el caso, y la página del caso muestra los pasos con sus fuentes.
 
-| Piece | What it uses |
+| Pieza | Qué usa |
 | --- | --- |
-| Screens | React, Vite, TanStack Router and Query, Tailwind CSS |
-| Server and workflow | Python, FastAPI, LangGraph |
-| Language models | Claude Haiku (conversation and citations), Gemini (other steps and the policy search) |
-| Voice | Deepgram (speech to text), Cartesia (text to speech), with Deepgram as the backup voice |
-| Data | PostgreSQL with pgvector, row-level security per insurer |
-| Hosting and traces | Google Cloud Run, Neon, Langfuse |
+| Pantallas | React, Vite, TanStack Router y Query, Tailwind CSS |
+| Servidor y flujo | Python, FastAPI, LangGraph |
+| Modelos de lenguaje | Claude Haiku (conversación y citas), Gemini (los demás pasos y la búsqueda en las pólizas) |
+| Voz | Deepgram (voz a texto), Cartesia (texto a voz), con Deepgram como voz de respaldo |
+| Datos | PostgreSQL con pgvector, seguridad a nivel de fila por aseguradora |
+| Hosting y trazas | Google Cloud Run, Neon, Langfuse |
 
-## Principles, controls and evidence
+## Principios, controles y evidencia
 
-- **A person signs every decision on coverage and money.** The output guard checks every message, in both languages, for anything that asserts or denies coverage, gives amounts, assigns fault or gives legal advice, and replaces it.
-- **Citations come only from retrieved clauses**, and an exact verifier checks that each one exists, belongs to that insurer and that policy, and is in force.
-- **Personal data is masked in logs, traces and evaluation reports**, by two detectors that work differently, in Spanish and English. The conversation itself is stored and shown as it was written.
-- **Insurers are isolated in the database** with row-level security and a single entry point that sets the insurer before any query. A test fails if any table lacks it.
-- **The rules are files, not code branches.** Each insurer has its own versioned rules, each rule with its own test.
-- **Spending has hard limits:** prepaid provider balances with automatic top-up turned off, a spending ceiling in the application, and daily limits per visitor.
-- **Every change is checked on GitHub:** secret scanning, lint, type checking, more than 4,000 automated tests with an 80% coverage floor, and an accessibility check of every screen in three browsers.
+- **Una persona firma cada decisión sobre cobertura y dinero.** La guardia de salida revisa cada mensaje, en los dos idiomas, buscando cualquier cosa que afirme o niegue cobertura, dé montos, asigne culpas o dé asesoría legal, y lo reemplaza.
+- **Las citas salen solo de cláusulas recuperadas,** y un verificador exacto comprueba que cada una exista, pertenezca a esa aseguradora y a esa póliza, y esté vigente.
+- **Los datos personales se enmascaran en logs, trazas y reportes de evaluación,** con dos detectores que funcionan de forma distinta, en español y en inglés. La conversación en sí se guarda y se muestra tal como se escribió.
+- **Las aseguradoras están aisladas en la base de datos** con seguridad a nivel de fila y un único punto de entrada que fija la aseguradora antes de cualquier consulta. Una prueba falla si alguna tabla no la tiene.
+- **Las reglas son archivos, no ramas en el código.** Cada aseguradora tiene sus propias reglas versionadas, cada regla con su propia prueba.
+- **El gasto tiene límites firmes:** saldos prepagados con los proveedores y la recarga automática apagada, un tope de gasto en la aplicación y límites diarios por visitante.
+- **Cada cambio se revisa en GitHub:** búsqueda de secretos, lint, revisión de tipos, más de 4.000 pruebas automáticas con un piso de cobertura del 80 % y una revisión de accesibilidad de cada pantalla en tres navegadores.
 
-## Evaluation report
+## Reporte de evaluación
+
+El bloque de abajo se genera automáticamente desde la línea base vigente y se publica en inglés.
 
 <!-- generated:evaluation-report:begin -->
 _Generated from the current baseline and the last full run by `mise run readme:gen`. Do not edit by hand: `mise run readme:check` fails when this differs from what they produce._
@@ -123,29 +125,29 @@ Baseline `2026-10-15-c7afffa`, commit `c7afffa`, published 2026-10-15.
   - not measured (not recorded in the baseline; the live panel shows it)
 <!-- generated:evaluation-report:end -->
 
-## MCP server
+## Servidor MCP
 
-The same policy facts the agent reads for those questions are published as a read-only [Model Context Protocol](https://modelcontextprotocol.io) server, so any MCP client (Claude Desktop, another agent) can query the synthetic sample policies. It is built with the official Python SDK, speaks over stdio, goes through the same single database entry point as the rest of the application (the insurer is set before any query, and row-level security does the rest) and does not import anything about cases, visitors, the chat or the model providers: an import contract checks that.
+Los mismos datos de la póliza que la agente lee para esas preguntas se publican como un servidor de solo lectura de [Model Context Protocol](https://modelcontextprotocol.io), de modo que cualquier cliente MCP (Claude Desktop, otra agente) puede consultar las pólizas de ejemplo sintéticas. Está hecho con el SDK oficial de Python, habla por stdio, pasa por el mismo punto único de entrada a la base de datos que el resto de la aplicación (la aseguradora se fija antes de cualquier consulta y la seguridad a nivel de fila hace el resto) y no importa nada de casos, visitantes, el chat ni los proveedores de modelos: un contrato de importación lo comprueba.
 
-| Tool | What it returns |
+| Herramienta | Qué devuelve |
 | --- | --- |
-| `get_policy_summary` | holder, issuer, period and whether the policy is in force on a date |
-| `get_limits` | the civil liability, occupant medical-expense and driver personal-accident limits, in Colombian pesos |
-| `get_deductibles` | the partial-loss-by-damage and partial-loss-by-theft deductibles |
-| `get_insured_vehicles` | make, model and year (no plate, no VIN) |
-| `get_listed_drivers` | the drivers the policy declares, holder first |
-| `get_endorsements` | the special conditions and which clauses each one changes |
-| `get_clause` | one clause by id, only if it belongs to that policy |
+| `get_policy_summary` | titular, emisor, periodo y si la póliza está vigente en una fecha |
+| `get_limits` | los límites de responsabilidad civil, gastos médicos de ocupantes y accidentes personales del conductor, en pesos colombianos |
+| `get_deductibles` | los deducibles de pérdida parcial por daño y por hurto |
+| `get_insured_vehicles` | marca, modelo y año (sin placa ni VIN) |
+| `get_listed_drivers` | los conductores que la póliza declara, el titular primero |
+| `get_endorsements` | las condiciones especiales y qué cláusulas modifica cada una |
+| `get_clause` | una cláusula por su id, solo si pertenece a esa póliza |
 
-Every tool takes a `tenant_id` (`stonecroft`, `sunmeadow` or `knotwell`) and a `policy_number` (the sample policies are listed on the Policies page). They return what the policy declares; none of them says whether something is covered.
+Cada herramienta recibe un `tenant_id` (`stonecroft`, `sunmeadow` o `knotwell`) y un `policy_number` (las pólizas de ejemplo están en la página de Pólizas). Devuelven lo que la póliza declara; ninguna dice si algo está cubierto.
 
-It needs the local database with the sample data loaded (`mise run services:up` and `mise run synthetic:seed`) and `UNTANGLE_DATABASE_URL` in `.env`. To run it in a terminal:
+Necesita la base de datos local con los datos de ejemplo cargados (`mise run services:up` y `mise run synthetic:seed`) y `UNTANGLE_DATABASE_URL` en `.env`. Para correrlo en una terminal:
 
 ```bash
 mise run mcp
 ```
 
-To plug it into Claude Desktop, add this to `claude_desktop_config.json` (Settings, Developer, Edit config) with the absolute path of your clone, and restart the app:
+Para conectarlo a Claude Desktop, agrega esto a `claude_desktop_config.json` (Settings, Developer, Edit config) con la ruta absoluta de tu clon, y reinicia la aplicación:
 
 ```json
 {
@@ -163,20 +165,20 @@ To plug it into Claude Desktop, add this to `claude_desktop_config.json` (Settin
 }
 ```
 
-Then ask, for example, "What is the deductible on policy POL-21 of sunmeadow?".
+Luego pregunta, por ejemplo: "What is the deductible on policy POL-21 of sunmeadow?".
 
-## Attributions
+## Atribuciones
 
-- Icons: [Phosphor Icons](https://phosphoricons.com) (MIT) and [Lucide](https://lucide.dev) (ISC) on the landing page.
-- Fonts: IBM Plex Sans, Bricolage Grotesque and JetBrains Mono (SIL Open Font License), served from the site itself.
-- The license of every dependency is recorded and checked on every change: [third-party licenses](docs/reference/licencias-de-terceros.md).
-- Insurers, policies, people and clauses are original and synthetic. The policies follow the structure of a Colombian voluntary auto policy (civil liability, occupant medical expenses, driver personal accident, loss by damage and by theft, duties after a loss event, general conditions, with the SOAT and the Fasecolda Value Guide as reference) without copying the text of any insurer's wording. See `docs/reference/estructura-poliza-autos-colombia.md`.
+- Iconos: [Phosphor Icons](https://phosphoricons.com) (MIT) y [Lucide](https://lucide.dev) (ISC) en la página de inicio.
+- Fuentes: IBM Plex Sans, Bricolage Grotesque y JetBrains Mono (SIL Open Font License), servidas desde el propio sitio.
+- La licencia de cada dependencia queda registrada y se revisa en cada cambio: [licencias de terceros](docs/reference/licencias-de-terceros.md).
+- Las aseguradoras, pólizas, personas y cláusulas son originales y sintéticas. Las pólizas siguen la estructura de una póliza voluntaria de autos colombiana (responsabilidad civil, gastos médicos de ocupantes, accidentes personales del conductor, pérdida por daño y por hurto, obligaciones tras un siniestro, condiciones generales, con el SOAT y la Guía de Valores de Fasecolda como referencia) sin copiar el texto del clausulado de ninguna aseguradora. Ver `docs/reference/estructura-poliza-autos-colombia.md`.
 
-Created by [Miguel Zuluaga](https://www.linkedin.com/in/miguelzuluaga/).
+Creado por [Miguel Zuluaga](https://www.linkedin.com/in/miguelzuluaga/).
 
-## Run it
+## Ejecutarlo
 
-You need [mise](https://mise.jdx.dev) and Docker.
+Necesitas [mise](https://mise.jdx.dev) y Docker.
 
 ```bash
 mise install
@@ -186,7 +188,7 @@ mise install
 cp .env.example .env
 ```
 
-Fill in the keys you have in `.env` (the file explains each one). Without model keys the chat falls back to its rule-based answers; without voice keys the call screen says the voice is unavailable.
+Llena en `.env` las llaves que tengas (el archivo explica cada una). Sin llaves de modelos, el chat usa sus respuestas por reglas; sin llaves de voz, la pantalla de llamada dice que la voz no está disponible.
 
 ```bash
 mise run services:up
@@ -200,7 +202,7 @@ mise run migrate
 mise run corpus:ingest
 ```
 
-The policies are searched by meaning, so loading them needs the Gemini key.
+Las pólizas se buscan por significado, así que cargarlas necesita la llave de Gemini.
 
 ```bash
 mise run synthetic:seed
@@ -214,7 +216,7 @@ mise run web:build
 mise run dev
 ```
 
-Open the address it prints. To run the evaluation subset that needs no keys:
+Abre la dirección que imprime. Para correr el subconjunto de la evaluación que no necesita llaves:
 
 ```bash
 mise run bootstrap

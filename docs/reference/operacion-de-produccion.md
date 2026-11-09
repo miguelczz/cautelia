@@ -19,7 +19,7 @@ arranque y el guion, y la vuelta atrás se volvió a probar con la versión sigu
 | El aplicativo (servidor y pantallas) | Cloud Run, servicio `cautelia`, región `us-east1` | 1 CPU, 1 GiB, **una sola instancia como máximo**, sin instancias mínimas, procesador asignado todo el tiempo, 80 peticiones simultáneas, espera máxima de 3.600 s por petición (los flujos del chat y la llamada) |
 | El reinicio nocturno | Cloud Run, trabajo `cautelia-reset`, misma imagen que el servicio | Corre `python -m untangle.server.demo_reset`; sin reintentos, 15 minutos de plazo |
 | Quién dispara el reinicio | Cloud Scheduler, `cautelia-reset-nocturno` | Todos los días a las 3:00 de Bogotá |
-| Las imágenes | Artifact Registry, repositorio `cautelia` en `us-central1` | Una etiqueta por commit, con sus siete primeros caracteres |
+| Las imágenes | Artifact Registry, repositorio `cautelia` en `us-central1` | Una etiqueta por commit, con sus siete primeros caracteres. Desde el 2026-11-09 una regla de limpieza conserva las tres más recientes y borra las demás con más de 7 días (habían llegado a 65 y 28 GB); volver atrás solo alcanza esas tres |
 | La base de datos | Neon (PostgreSQL) | La dirección va en la variable `UNTANGLE_DATABASE_URL` del servicio |
 | El dominio y la landing | Cloudflare (`cautelia.app`) | La landing (`site/`) se publica aparte y a mano; `site/_routes.json` decide qué rutas atiende la landing y cuáles pasan al aplicativo |
 | El tope de gasto de Google Cloud | Presupuesto «Tope duro de Cautelia» | 4.000 COP por periodo, con avisos al 50 %, 90 % y 100 %, y un tema de mensajes (`tope-de-gasto`) para el corte |

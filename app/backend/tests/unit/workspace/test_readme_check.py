@@ -159,33 +159,49 @@ def test_el_readme_del_repositorio_coincide_con_sus_fuentes() -> None:
     assert readme_check.check() == []
 
 
-#: Las ocho piezas que AC4.1.2 exige, con el encabezado que las lleva. Se
+#: Las ocho piezas que AC4.1.2 exige, con el encabezado que las lleva en cada idioma. Se
 #: comprueba que **estan y en este orden**, no que sean las unicas: las seis
 #: narrativas las escribe Miguel en la semana 11 (FD-U22-9), y un recuento exacto
-#: pondria rojo el dia que anada una seccion suya, que es trabajo legitimo.
-PIEZAS = (
-    "What it does",
-    "What it does not do",
-    "How it fails",
-    "Architecture",
-    "Principles, controls and evidence",
-    "Evaluation report",
-    "Attributions",
-    "Run it",
-)
+#: pondria rojo el dia que anada una seccion suya, que es trabajo legitimo. Desde el
+#: 2026-11-07 `README.md` esta en espanol y `README.en.md` en ingles: las dos tienen la
+#: misma estructura.
+PIEZAS = {
+    "README.md": (
+        "Qué hace",
+        "Qué no hace",
+        "Cómo falla",
+        "Arquitectura",
+        "Principios, controles y evidencia",
+        "Reporte de evaluación",
+        "Atribuciones",
+        "Ejecutarlo",
+    ),
+    "README.en.md": (
+        "What it does",
+        "What it does not do",
+        "How it fails",
+        "Architecture",
+        "Principles, controls and evidence",
+        "Evaluation report",
+        "Attributions",
+        "Run it",
+    ),
+}
 
 
-def test_el_readme_del_repositorio_tiene_la_estructura_que_fija_ac4_1() -> None:
-    texto = paths.readme_path().read_text(encoding="utf-8")
+@pytest.mark.parametrize("archivo", sorted(PIEZAS))
+def test_el_readme_del_repositorio_tiene_la_estructura_que_fija_ac4_1(archivo: str) -> None:
+    piezas = PIEZAS[archivo]
+    texto = (paths.repo_root() / archivo).read_text(encoding="utf-8")
     primero = texto.index("\n## ")
     encabezados = [linea[3:] for linea in texto.splitlines() if linea.startswith("## ")]
 
     assert texto[:primero].strip().splitlines()[0].startswith("# ")
     assert len(texto[:primero].split("\n\n")) >= 2  # el parrafo de arriba existe
     # Los tres primeros son esos tres y en ese orden (AC4.1.1).
-    assert encabezados[:3] == list(PIEZAS[:3])
+    assert encabezados[:3] == list(piezas[:3])
     # Y las ocho piezas estan, en orden, admitiendo secciones de Miguel entre ellas.
-    assert [e for e in encabezados if e in PIEZAS] == list(PIEZAS)
+    assert [e for e in encabezados if e in piezas] == list(piezas)
 
 
 def test_el_chequeo_esta_en_el_guion_de_verificacion_y_en_el_archivo_de_tareas() -> None:

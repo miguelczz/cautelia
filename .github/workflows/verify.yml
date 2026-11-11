@@ -163,7 +163,7 @@ jobs:
           retention-days: 2
 
   servidor:
-    name: pruebas del servidor ${{ matrix.tanda }}/6
+    name: pruebas del servidor ${{ matrix.tanda }}/8
     needs: secrets
     runs-on: ${{ fromJSON(vars.RUNS_ON || '["ubuntu-latest"]') }}
     timeout-minutes: 45
@@ -174,7 +174,7 @@ jobs:
       # arreglar, no un problema por vuelta.
       fail-fast: false
       matrix:
-        tanda: [1, 2, 3, 4, 5, 6]
+        tanda: [1, 2, 3, 4, 5, 6, 7, 8]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -190,7 +190,7 @@ jobs:
       # Cada tanda corre en su propio corredor con su propio motor de contenedores, asi que
       # las bases efimeras no pueden chocar entre tandas. Sus datos de cobertura se
       # combinan en el trabajo `piso`; una tanda sola no mide ni declara el piso.
-      - run: scripts/verify.sh --only backend-shard ${{ matrix.tanda }}/6
+      - run: scripts/verify.sh --only backend-shard ${{ matrix.tanda }}/8
 
       - name: datos de cobertura de la tanda
         if: always()
@@ -232,6 +232,6 @@ jobs:
           name: cov-frontend
           path: app/frontend/coverage
 
-      # Combina las seis tandas y corre la misma compuerta de siempre (piso agregado y de
+      # Combina las ocho tandas y corre la misma compuerta de siempre (piso agregado y de
       # modulos criticos) sobre la cobertura combinada.
       - run: scripts/verify.sh --only gate

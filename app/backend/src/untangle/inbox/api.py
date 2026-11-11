@@ -727,7 +727,7 @@ def _al_cable(  # noqa: PLR0913 -- el caso, la aseguradora y lo que cambia segun
         control_findings=(() if revision is None else tuple(f.value for f in revision.findings)),
         trace_status=traza.status.value if traza is not None else None,
         trace_cost_usd=(
-            str(traza.cost.amount_usd)
+            format(traza.cost.amount_usd.normalize(), "f")
             if traza is not None and traza.cost.amount_usd is not None
             else None
         ),

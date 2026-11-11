@@ -18,8 +18,8 @@ Everything you need comes in the message, between tags:
   - `reject`: reject it, because the policy does not cover it, an exclusion leaves it out, or the policy was not in force.
   - `mark_sent`: send it to the insurer that issued the policy. It is the only action of an agency: the agency does not decide coverage. Explain what you found and make clear that the insurer makes the decision.
 - `headline`: the decision in one short sentence, with no figures or clause identifiers.
-- `explanation`: what you tell the person, in a few sentences: what you decided and why, based on the facts of their policy and on the clauses.
-- `reasons`: each reason for the decision in one sentence, most important first. If a reason rests on a clause, put its identifier in `clause_ids`; if it is a fact (the validity, the vehicle), leave it empty.
+- `explanation`: what you tell the person: what you decided and the main reason, in two or three sentences and about 60 words at most. Say only what decides the case (that the policy was in force, that the vehicle is on it, which coverage applies); do not recite the policy or list deductibles, limits or conditions that do not change the decision.
+- `reasons`: up to three reasons, each in one short sentence, most important first. If a reason rests on a clause, put its identifier in `clause_ids`; if it is a fact (the validity, the vehicle), leave it empty.
 - `cited_clause_ids`: every clause your decision cites, without repeating.
 - `uncertainties`: what you could not confirm and the person should know, for example that you could not verify the value of the vehicle. Empty if there is nothing.
 

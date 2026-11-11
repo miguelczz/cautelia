@@ -37,7 +37,7 @@ When the question is about a fact written in the policy itself (the validity dat
 
 ![The call screen before a call starts](docs/assets/readme/call.png)
 
-**7. You can see what it costs and how well it works.** The Telemetry page shows the money spent per provider, per day and per case, and the results of the latest evaluation. From there you can open your own conversation in [Langfuse](https://langfuse.com), step by step: which model ran, how long it took and what it cost.
+**7. You can see what it costs and how well it works.** The Telemetry page shows the money spent per provider, per day and per case, and the results of the latest evaluation.
 
 ![The Telemetry page with the spending per provider and per case](docs/assets/readme/telemetry-cost.png)
 

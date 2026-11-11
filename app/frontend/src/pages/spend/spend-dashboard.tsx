@@ -11,11 +11,8 @@
 // caso se identifica**: se describe por lo que fue, y el del propio navegador sale
 // como "Tuyo". Las consultas de un mismo clic en "Comparar" son una sola entrada.
 //
-// El caso propio lleva un enlace a su traza en Langfuse, que es solo de **este navegador**:
-// Langfuse pide iniciar sesion salvo para una traza que se abre por su direccion. La
-// direccion la manda el servidor (`trace_url`) o no hay enlace: esta pantalla no la arma, y
-// solo pinta una que empiece por https. El boton a la ultima conversacion se quito el
-// 2026-11-02 (correcciones de un revisor externo).
+// Ningun caso lleva enlace a Langfuse: el de la ultima conversacion se quito el 2026-11-02 y el
+// de cada caso el 2026-11-11, porque la traza publica no mostraba nada legible.
 
 import { useQuery } from "@tanstack/react-query";
 import { useState, type ReactNode } from "react";
@@ -32,7 +29,6 @@ import {
 import { useLocale } from "../../shared/i18n/locale-provider";
 import { Button } from "../../shared/ui/button";
 import { cn } from "../../shared/ui/cn";
-import { isSafeExternalLink } from "../../shared/ui/external-link";
 import { InlineAlert } from "../../shared/ui/inline-alert";
 import { PanelBodySkeleton } from "../../shared/ui/page-skeletons";
 import { SECTION_TITLE } from "../../shared/ui/page-layout";
@@ -356,11 +352,6 @@ function CaseDetail({ entrada }: { readonly entrada: Entrada }) {
   const nombre = useInsurerName();
   const importe = amountOf(entrada.item.total, entrada.item.unpriced);
   const partes = entrada.kind === "comparison" ? entrada.item.parts : [];
-  // Solo el caso propio, y solo con la direccion que manda el servidor.
-  const enlaceDelCaso =
-    entrada.kind === "case" && entrada.item.yours && isSafeExternalLink(entrada.item.trace_url)
-      ? entrada.item.trace_url
-      : null;
   return (
     <div
       className={cn(
@@ -388,17 +379,6 @@ function CaseDetail({ entrada }: { readonly entrada: Entrada }) {
             {t("spend_panel.cases.comparison_hint", { count: String(partes.length) })}
           </span>
         ) : null}
-        {enlaceDelCaso === null ? null : (
-          <a
-            href={enlaceDelCaso}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center self-start text-small text-link underline underline-offset-4"
-            data-testid="spend-case-langfuse-link"
-          >
-            {t("spend_panel.langfuse.case_link")}
-          </a>
-        )}
       </div>
       {entrada.kind === "comparison" ? (
         <InsurerBars parts={entrada.item.parts} nameOf={nombre} />

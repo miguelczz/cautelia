@@ -1235,7 +1235,11 @@ def _contenido_de_comprension(peticion: understanding.UnderstandingRequest) -> s
         for linea in peticion.history
     )
     partes = {
-        e["hoy"]: peticion.today.isoformat(),
+        e["hoy"]: (
+            f"{peticion.today.isoformat()} {peticion.local_clock}"
+            if peticion.local_clock
+            else peticion.today.isoformat()
+        ),
         e["canal"]: e["voice"] if peticion.channel == "voice" else e["chat"],
         e["idioma"]: e["idioma_es"] if peticion.language == "es" else e["idioma_en"],
         e["nombre"]: peticion.agent_name or agent_name_of(peticion.tenant_id, peticion.language),

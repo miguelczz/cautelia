@@ -15,6 +15,7 @@ from __future__ import annotations
 from untangle.base import Locale
 from untangle.copy_catalog import api as copy_api
 from untangle.copy_catalog.api import CopyKey
+from untangle.orchestration.nodes.intake import composition
 
 CHIP_YES = CopyKey("chat.chip.answer_yes")
 CHIP_NO = CopyKey("chat.chip.answer_no")
@@ -37,6 +38,8 @@ CHIP_ANOTHER_QUESTION = CopyKey("chat.chip.another_question")
 CHIP_REPORT = CopyKey("chat.chip.report")
 CHIP_POLICY_QUESTION = CopyKey("chat.chip.policy_question")
 CHIP_QUOTE = CopyKey("chat.chip.quote")
+#: La linea de la lista del siniestro que pide el nombre y la poliza (la misma del nodo).
+CLAIM_ITEM_IDENTITY = CopyKey("intake.claim_item.identity_and_policy")
 
 #: Las preguntas de si o no, por la clave con que se hicieron.
 _DE_SI_O_NO: frozenset[str] = frozenset(
@@ -52,12 +55,36 @@ _DE_CUANDO: frozenset[str] = frozenset(
 )
 
 
+#: Las preguntas que vuelven a pedir el nombre y la poliza: quien declino la que encontramos.
+_PIDEN_IDENTIDAD: frozenset[str] = frozenset(
+    {"intake.question.identity_and_policy", "intake.policy.declined"}
+)
+_LISTAS_DEL_SINIESTRO: frozenset[str] = frozenset(composition.CLAIM_LIST_KEYS)
+
+
+def asks_for_identity(question_key: str, *, response_text: str, language: Locale) -> bool:
+    """Si lo que dice el codigo le pide a la persona su nombre y su poliza.
+
+    Las preguntas sueltas lo dicen por su clave. La lista del siniestro la comparten varios
+    datos: pide la identidad solo si su linea esta entre las que faltan, y eso se lee de la
+    frase que el propio codigo compuso con el catalogo (2026-11-11: la lista pedia la poliza y
+    no ofrecia el boton de la de ejemplo).
+    """
+    if question_key in _PIDEN_IDENTIDAD:
+        return True
+    if question_key in _LISTAS_DEL_SINIESTRO:
+        linea = copy_api.t(CLAIM_ITEM_IDENTITY, locale=language)
+        return linea in response_text
+    return False
+
+
 def for_question(  # noqa: PLR0911 -- una salida por tipo de pregunta, cada clave literal (BR3.4)
     question_key: str,
     *,
     language: Locale,
     example_policy: str,
     example_holder: str | None = None,
+    response_text: str = "",
 ) -> tuple[str, ...]:
     """Los botones de la pregunta que el codigo eligio, o ninguno.
 
@@ -77,7 +104,7 @@ def for_question(  # noqa: PLR0911 -- una salida por tipo de pregunta, cada clav
             copy_api.t(CHIP_NOBODY_HURT, locale=language),
             copy_api.t(CHIP_SOMEONE_HURT, locale=language),
         )
-    if question_key == "intake.question.identity_and_policy":
+    if asks_for_identity(question_key, response_text=response_text, language=language):
         # La pregunta pide nombre y poliza: el boton contesta las dos con el titular
         # de la poliza de ejemplo, y dice exactamente lo que manda.
         if example_holder:

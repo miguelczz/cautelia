@@ -908,14 +908,6 @@ spend_panel:
     empty:
       text: "Todavía no hay casos con gasto. Habla con la agente por chat o por llamada y tu caso aparecerá aquí."
       surface: system
-  # El acceso a Langfuse (2026-10-14). Solo se abre la traza de la conversación de este
-  # navegador: Langfuse pide iniciar sesión salvo para una traza que se abre por su
-  # dirección, y esta pantalla es pública. La nota que explica qué es Langfuse es la de
-  # la bandeja (`inbox.trace.langfuse_note`), una sola.
-  langfuse:
-    case_link:
-      text: "Ver en Langfuse"
-      surface: system
 
 # Los nombres de las superficies que el inicio y la barra enlazan cuando estan
 # montadas (U-03: sin jerga de proyecto).
@@ -3408,16 +3400,6 @@ inbox:
     cost:
       text: "{value} USD"
       surface: inbox
-    # El enlace a la traza del caso en Langfuse (2026-10-14). Lo ve quien abre su caso, con el
-    # enlace de la demo o con credencial; el caso de ejemplo público no lo tiene. La nota dice
-    # la verdad de lo que se manda: nombres de pasos, modelo, tiempos y costo, y ningún texto
-    # de la conversación (la lista de atributos de un tramo es cerrada).
-    langfuse_link:
-      text: Ver en Langfuse cómo trabajó la agente
-      surface: inbox
-    langfuse_note:
-      text: "Langfuse es una herramienta externa para revisar, paso a paso, qué hizo la agente: qué modelo usó, cuánto tardó y cuánto costó. No muestra lo que se escribió en la conversación."
-      surface: inbox
   # BR2.4: la explicación responde cinco preguntas y ninguna queda en blanco. Un
   # hueco se lee como un dato que se perdió.
   explanation:
@@ -4140,7 +4122,7 @@ adjuster:
         text: "No encontré la póliza {policy_number} de esta aseguradora, así que no pude leerla."
         surface: inbox
       details:
-        text: "Vehículos: {vehicles}. Conductores declarados: {drivers}. Deducibles: {deductibles}. Límites: {limits}. Condiciones especiales: {endorsements}."
+        text: "Vehículos: {vehicles}. Conductores declarados: {drivers}."
         surface: inbox
       source:
         text: "Póliza {policy_number}"

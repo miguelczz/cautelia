@@ -415,8 +415,6 @@ export type CopyKey =
   | "inbox.rule.reference"
   | "inbox.staff_note"
   | "inbox.trace.cost"
-  | "inbox.trace.langfuse_link"
-  | "inbox.trace.langfuse_note"
   | "inbox.transcript.empty"
   | "inbox.transcript.redacted_hint"
   | "inbox.transcript.speaker_agent"
@@ -683,7 +681,6 @@ export type CopyKey =
   | "spend_panel.kpi.per_chat_hint"
   | "spend_panel.kpi.total"
   | "spend_panel.kpi.total_hint"
-  | "spend_panel.langfuse.case_link"
   | "spend_panel.loading"
   | "spend_panel.not_measured"
   | "spend_panel.provider.anthropic"
@@ -1237,8 +1234,6 @@ export const COPY_KEYS = [
   "inbox.rule.reference",
   "inbox.staff_note",
   "inbox.trace.cost",
-  "inbox.trace.langfuse_link",
-  "inbox.trace.langfuse_note",
   "inbox.transcript.empty",
   "inbox.transcript.redacted_hint",
   "inbox.transcript.speaker_agent",
@@ -1505,7 +1500,6 @@ export const COPY_KEYS = [
   "spend_panel.kpi.per_chat_hint",
   "spend_panel.kpi.total",
   "spend_panel.kpi.total_hint",
-  "spend_panel.langfuse.case_link",
   "spend_panel.loading",
   "spend_panel.not_measured",
   "spend_panel.provider.anthropic",

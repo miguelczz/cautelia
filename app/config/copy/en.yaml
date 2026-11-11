@@ -894,14 +894,6 @@ spend_panel:
     empty:
       text: "No cases with spend yet. Talk to the agent by chat or by call and your case will show up here."
       surface: system
-  # Access to Langfuse (2026-10-14). Only the trace of this browser's conversation is
-  # opened: Langfuse asks for a sign-in except for a trace opened by its address, and this
-  # screen is public. The note that explains what Langfuse is comes from the inbox
-  # (`inbox.trace.langfuse_note`): there is only one.
-  langfuse:
-    case_link:
-      text: "See in Langfuse"
-      surface: system
 
 surface:
   telemetry:
@@ -3261,16 +3253,6 @@ inbox:
     cost:
       text: "{value} USD"
       surface: inbox
-    # The link to the case's trace in Langfuse (2026-10-14). Whoever opens their case sees it,
-    # with the demo link or with a credential; the public example case does not have it. The
-    # note says what is actually sent: step names, model, timings and cost, and no conversation
-    # text (a span's attribute list is closed).
-    langfuse_link:
-      text: See in Langfuse how the agent worked
-      surface: inbox
-    langfuse_note:
-      text: "Langfuse is an external tool for reviewing, step by step, what the agent did: which model it used, how long it took and what it cost. It does not show what was written in the conversation."
-      surface: inbox
   # BR2.4: the explanation answers five questions and none is left blank. A blank
   # reads as a datum that got lost.
   explanation:
@@ -3992,7 +3974,7 @@ adjuster:
         text: "I did not find policy {policy_number} with this insurer, so I could not read it."
         surface: inbox
       details:
-        text: "Vehicles: {vehicles}. Declared drivers: {drivers}. Deductibles: {deductibles}. Limits: {limits}. Special conditions: {endorsements}."
+        text: "Vehicles: {vehicles}. Declared drivers: {drivers}."
         surface: inbox
       source:
         text: "Policy {policy_number}"

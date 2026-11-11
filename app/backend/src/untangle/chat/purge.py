@@ -2,7 +2,8 @@
 
 **Se borra** la conversacion entera: su sujeto es el resumen de la clave de un
 navegador, y su tabla lleva la marca de dato de visitante. Con ella se va, por
-cascada de la base, todo lo que cuelgue de su caso.
+cascada de la base, todo lo que cuelgue de su caso y lo hablado antes de abrirlo
+(`chat_session_message`).
 
 **Se borra tambien** el contador del ambito `origin`, que apunta a la red desde la
 que alguien escribio. No lleva la marca --la tabla es aritmetica del sitio-- pero si
@@ -44,7 +45,9 @@ class _ChatPurger:
     """El purgador de U13, con la forma de `VisitorDataPurger` (C-11)."""
 
     name: str = "chat_session"
-    tables: tuple[str, ...] = ("chat_session",)
+    #: `chat_session_message` cae por la cascada de `chat_session`: se nombra aqui porque la
+    #: marca de dato de visitante la obliga a tener purgador, y lo tiene este.
+    tables: tuple[str, ...] = ("chat_session", "chat_session_message")
 
     async def purge(self, *, older_than: datetime, dry_run: bool = False) -> tenancy.PurgeResult:
         borradas = 0

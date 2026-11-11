@@ -69,6 +69,7 @@ from untangle.chat import (
     demo_window,
     latency,
     opening,
+    precase,
     resume,
     stream,
 )
@@ -389,7 +390,8 @@ async def _entender_el_primero(entrante: InboundTurn) -> understanding.Understan
         understanding.UnderstandingRequest(
             tenant_id=entrante.tenant_id,
             language=entrante.language,
-            today=entrante.received_at.date(),
+            today=understanding.local_moment(entrante.received_at)[0],
+            local_clock=understanding.local_moment(entrante.received_at)[1],
             record_type=None,
             quote_enabled=config.quote_enabled,
             noted=(),
@@ -401,7 +403,7 @@ async def _entender_el_primero(entrante: InboundTurn) -> understanding.Understan
                     speaker="agent",
                     text=opening.compose(config, language=entrante.language).text,
                 ),
-                *_HISTORIA_SIN_CASO.get(entrante.session_ref, ()),
+                *await _historia_previa(entrante),
             ),
         ),
     )
@@ -410,8 +412,9 @@ async def _entender_el_primero(entrante: InboundTurn) -> understanding.Understan
 #: Lo que se hablo antes de que hubiera caso (2026-10-13): un saludo, una duda general, «tengo
 #: una pregunta de mi poliza». Sin caso no hay transcripcion donde guardarlo, y sin guardarlo la
 #: agente contestaba cada mensaje como si fuera el primero. **Solo en memoria del proceso y por
-#: sesion**, igual que `_DATOS_SIN_CASO` y con su mismo tope: lo de la persona entra ya tapado,
-#: y si se pierde (otro proceso, reinicio) la agente vuelve a preguntar, como antes.
+#: sesion**, igual que `_DATOS_SIN_CASO` y con su mismo tope: lo de la persona entra ya tapado.
+#: Desde el 2026-11-11 el intercambio tambien se guarda en la base (`precase`), y si la memoria no
+#: tiene la sesion (otro proceso, reinicio) las ultimas lineas se reconstruyen de ahi.
 _HISTORIA_SIN_CASO: dict[str, tuple[understanding.HistoryLine, ...]] = {}
 _MAXIMO_LINEAS_SIN_CASO = 8
 
@@ -431,6 +434,63 @@ def _recordar_sin_caso(entrante: InboundTurn, dicho_por_la_agente: str) -> None:
         understanding.HistoryLine(speaker="agent", text=dicho_por_la_agente),
     )
     _HISTORIA_SIN_CASO[entrante.session_ref] = (*previas, *nuevas)[-_MAXIMO_LINEAS_SIN_CASO:]
+
+
+async def _historia_previa(entrante: InboundTurn) -> tuple[understanding.HistoryLine, ...]:
+    """Lo hablado antes de abrir caso, para el contexto del modelo.
+
+    De la memoria del proceso si la tiene; si no (reinicio, otra instancia) se reconstruyen las
+    ultimas lineas desde lo guardado (`precase`), tapadas como las de memoria. Si leerlo falla,
+    el turno sigue sin esa historia: la agente vuelve a preguntar, como antes de guardarla."""
+    en_memoria = _HISTORIA_SIN_CASO.get(entrante.session_ref)
+    if en_memoria is not None:
+        return en_memoria
+    try:
+        guardados = await precase.load_precase_messages(
+            tenant_id=entrante.tenant_id,
+            chat_session_id=entrante.session_ref,
+            last=_MAXIMO_LINEAS_SIN_CASO,
+        )
+        return tuple(
+            understanding.HistoryLine(
+                speaker=mensaje.speaker,
+                text=str(redaccion.redact(mensaje.text, language=mensaje.language)),
+            )
+            for mensaje in guardados
+        )
+    except Exception as error:  # noqa: BLE001 -- leer (o tapar) lo previo nunca tumba el turno
+        observability.emit(
+            "chat.precase_load_failed",
+            tenant_id=entrante.tenant_id,
+            session_ref=entrante.session_ref,
+            error=type(error).__name__,
+        )
+        return ()
+
+
+async def _guardar_sin_caso(entrante: InboundTurn, dicho_por_la_agente: str) -> None:
+    """Guarda el intercambio de un mensaje que no abrio caso, para que se vea al volver.
+
+    Tal como se escribio, sin tapar (decision de Miguel, 2026-10-30). Si guardarlo falla, el
+    turno no muere: se registra y sigue, y lo que pierde la persona es verlo al recargar."""
+    try:
+        await precase.append_precase_exchange(
+            tenant_id=entrante.tenant_id,
+            chat_session_id=entrante.session_ref,
+            exchange=precase.Exchange(
+                person_text=entrante.text,
+                agent_text=dicho_por_la_agente,
+                language=entrante.language,
+            ),
+            now=entrante.received_at,
+        )
+    except Exception as error:  # noqa: BLE001 -- guardar lo previo nunca tumba el turno
+        observability.emit(
+            "chat.precase_save_failed",
+            tenant_id=entrante.tenant_id,
+            session_ref=entrante.session_ref,
+            error=type(error).__name__,
+        )
 
 
 def _frase_sin_caso(
@@ -524,6 +584,7 @@ async def _responder_sin_caso(
     )
     publicado = queue.publish(stream.to_wire(evento))
     _recordar_sin_caso(entrante, texto)
+    await _guardar_sin_caso(entrante, texto)
     observability.emit(
         "chat.answered_without_case",
         tenant_id=entrante.tenant_id,

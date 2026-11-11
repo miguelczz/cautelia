@@ -423,8 +423,6 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["inbox.rule.reference", "Referencia: {rules}"],
   ["inbox.staff_note", "Página para el personal de la aseguradora: aquí los ajustadores revisan y deciden los casos."],
   ["inbox.trace.cost", "{value} USD"],
-  ["inbox.trace.langfuse_link", "Ver en Langfuse cómo trabajó la agente"],
-  ["inbox.trace.langfuse_note", "Langfuse es una herramienta externa para revisar, paso a paso, qué hizo la agente: qué modelo usó, cuánto tardó y cuánto costó. No muestra lo que se escribió en la conversación."],
   ["inbox.transcript.empty", "Todavía no hay conversación registrada."],
   ["inbox.transcript.redacted_hint", "Los datos personales aparecen como una etiqueta de su tipo. El valor completo está en los datos del caso."],
   ["inbox.transcript.speaker_agent", "La agente"],
@@ -517,11 +515,11 @@ const TRAMO_1: readonly (readonly [CopyKey, string])[] = [
   ["policies.limit.a_property_damage", "Responsabilidad civil: daños a bienes de terceros"],
   ["policies.limit.b_medical_payments_per_person", "Gastos médicos de los ocupantes, por persona"],
   ["policies.limit.c_driver_personal_accident", "Accidentes personales del conductor"],
+  ["policies.limit.d_damage_deductible", "Deducible pérdida parcial por daños"],
+  ["policies.limit.d_theft_deductible", "Deducible pérdida parcial por hurto"],
 ];
 
 const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
-  ["policies.limit.d_damage_deductible", "Deducible pérdida parcial por daños"],
-  ["policies.limit.d_theft_deductible", "Deducible pérdida parcial por hurto"],
   ["policies.loading", "Cargando las pólizas…"],
   ["policies.money_note", "Montos en pesos colombianos."],
   ["policies.nav_insurers", "Aseguradoras"],
@@ -694,7 +692,6 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["spend_panel.kpi.per_chat_hint", "En promedio. Conversaciones con caso: {count}."],
   ["spend_panel.kpi.total", "Gastado en total"],
   ["spend_panel.kpi.total_hint", "Desde el {date}: lo registrado por esta demostración, a precio de lista, más los ajustes que se anotan al comparar con lo que cobra cada proveedor."],
-  ["spend_panel.langfuse.case_link", "Ver en Langfuse"],
   ["spend_panel.loading", "Cargando el gasto"],
   ["spend_panel.not_measured", "Sin precio"],
   ["spend_panel.provider.anthropic", "Anthropic"],
@@ -770,12 +767,12 @@ const TRAMO_2: readonly (readonly [CopyKey, string])[] = [
   ["visitor.title_quote", "Tu solicitud de cotización"],
   ["visitor.valid_until", "Este enlace funciona hasta las {time} de hoy."],
   ["voice.availability.misconfigured", "La voz de esta aseguradora está apagada por un error de configuración. El chat sigue disponible."],
-];
-
-const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.availability.not_configured", "La voz de esta aseguradora todavía no está configurada. El chat sigue disponible."],
   ["voice.availability.rate_limited_daily", "Ya usaste tus llamadas de hoy desde esta conexión; mañana puedes volver a llamar. El chat sigue disponible."],
   ["voice.availability.rate_limited_site", "Hoy ya se hicieron todas las llamadas de la demostración; vuelve mañana o usa el chat."],
+];
+
+const TRAMO_3: readonly (readonly [CopyKey, string])[] = [
   ["voice.console.audio_blocked", "El navegador tiene el sonido bloqueado, y no vas a oír a la agente hasta que lo actives."],
   ["voice.console.audio_enable", "Activar el sonido"],
   ["voice.console.call", "Llamar"],

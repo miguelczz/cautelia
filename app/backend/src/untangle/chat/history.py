@@ -31,7 +31,7 @@ from typing import Literal
 from untangle.base import Frozen, Locale
 from untangle.case_record import api as casos
 from untangle.case_record.models import Speaker, TranscriptTurn
-from untangle.chat import citation, opening
+from untangle.chat import citation, opening, precase
 from untangle.chat import session as chat
 from untangle.orchestration.nodes.intake import suggestions as sugerencias
 from untangle.orchestration.transcript_writer import COVERAGE_TURN_PREFIX
@@ -125,15 +125,36 @@ def turn_view(
     )
 
 
-def compose(
+def precase_view(mensaje: precase.PrecaseMessage) -> HistoryTurn:
+    """Un mensaje de antes del caso en la forma de la pantalla.
+
+    El identificador es sintetico y estable --`pre-` y el del mensaje--: la pantalla quita los
+    repetidos por identificador, y el de un mensaje no cambia entre cargas ni choca con el de un
+    turno del caso, que nunca empieza por `pre-`."""
+    return HistoryTurn(
+        turn_id=f"pre-{mensaje.message_id}",
+        speaker="visitor" if mensaje.speaker == "person" else "agent",
+        text=mensaje.text,
+        language=mensaje.language,
+        channel="chat",
+        at=mensaje.created_at.isoformat(),
+    )
+
+
+def compose(  # noqa: PLR0913 -- la conversacion y, por nombre, cada cosa ya leida que se dibuja
     session_: chat.ChatSession,
     *,
     config: TenantConfig,
     turns: tuple[TranscriptTurn, ...],
     case_number: str | None,
     citations: Mapping[str, tuple[citation.CitationDetail, ...]] | None = None,
+    precase_messages: tuple[precase.PrecaseMessage, ...] = (),
 ) -> ChatHistory:
     """El historial, a partir de lo que ya se leyo. Pura: no toca la base.
+
+    **Primero lo hablado antes del caso, despues los turnos del caso** (2026-11-11). No se
+    solapan: lo previo nunca entro a la transcripcion del caso, que empieza con el mensaje que
+    lo abrio.
 
     La apertura solo se compone si la conversacion la tiene entregada. Componerla
     para una que no la tiene diria que la persona leyo algo que no leyo, que es
@@ -153,7 +174,10 @@ def compose(
     )
     return ChatHistory(
         opening=apertura,
-        turns=tuple(turn_view(turno, (citations or {}).get(turno.turn_id, ())) for turno in turns),
+        turns=(
+            *(precase_view(mensaje) for mensaje in precase_messages),
+            *(turn_view(turno, (citations or {}).get(turno.turn_id, ())) for turno in turns),
+        ),
         case_number=case_number,
         language=session_.language,
     )
@@ -162,8 +186,9 @@ def compose(
 async def load(session_: chat.ChatSession, *, config: TenantConfig) -> ChatHistory:
     """El historial de una conversacion viva, leyendo su caso si lo tiene.
 
-    Sin caso no hay transcripcion ni numero: la conversacion acaba de abrirse y lo
-    unico que la pantalla dibuja es la apertura. Un caso que la politica de fila
+    Sin caso no hay transcripcion ni numero: la pantalla dibuja la apertura y lo que se haya
+    hablado antes de abrir caso (`precase`), que desde el 2026-11-11 se guarda por conversacion y
+    se ve siempre, con caso o sin el. Un caso que la politica de fila
     no deje ver --no deberia ocurrir, la sesion es de esta aseguradora-- se trata
     como ausente y no como error: la pantalla sigue dibujando la apertura.
 
@@ -172,8 +197,13 @@ async def load(session_: chat.ChatSession, *, config: TenantConfig) -> ChatHisto
     hablo antes. El numero es el del caso en que esta la conversacion; la transcripcion de cada
     caso sigue siendo suya en la bandeja y en "Ver mi caso".
     """
+    previos = await precase.load_precase_messages(
+        tenant_id=session_.tenant_id, chat_session_id=session_.chat_session_id
+    )
     if session_.case_id is None:
-        return compose(session_, config=config, turns=(), case_number=None)
+        return compose(
+            session_, config=config, turns=(), case_number=None, precase_messages=previos
+        )
     vista = await casos.get_case(session_.tenant_id, session_.case_id)
     turnos = await casos.conversation_transcript(session_.tenant_id, session_.case_id)
     return compose(
@@ -182,6 +212,7 @@ async def load(session_: chat.ChatSession, *, config: TenantConfig) -> ChatHisto
         turns=turnos,
         case_number=None if vista is None else str(vista.case_number),
         citations=await _citas_de_la_conversacion(session_.tenant_id, turnos),
+        precase_messages=previos,
     )
 
 
@@ -255,6 +286,7 @@ __all__ = [
     "compose",
     "load",
     "opening_message_id",
+    "precase_view",
     "speaker_of",
     "turn_view",
 ]

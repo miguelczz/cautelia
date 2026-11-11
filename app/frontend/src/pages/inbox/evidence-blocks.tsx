@@ -19,7 +19,7 @@
 // del caso, que se ve en el bloque de arriba, y eso se dice con palabras para que
 // corregirlo sea posible sin leerlo en la conversacion.
 
-import { useId, useMemo, type ReactNode } from "react";
+import { useMemo, type ReactNode } from "react";
 
 import type {
   CaseDetailOut,
@@ -37,7 +37,6 @@ import {
   type StoredTurn,
 } from "../../shared/own-text/own-text";
 import { cn } from "../../shared/ui/cn";
-import { isSafeExternalLink } from "../../shared/ui/external-link";
 import { BLOCK_TITLE } from "../../shared/ui/page-layout";
 import { Tag } from "../../shared/ui/tag";
 import { Citation, withPositions } from "../chat/citation";
@@ -363,25 +362,20 @@ export function ControlsBlock({ detail }: { readonly detail: CaseDetailOut }) {
 }
 
 /**
- * Cuanto tardo la respuesta y cuanto costo (bloque abierto, E3), y el enlace para ver en
- * Langfuse como trabajo la agente (2026-10-14).
+ * Cuanto tardo la respuesta y cuanto costo (bloque abierto, E3).
  *
  * Solo lo medido: una fila sin dato no se pinta, y si no hay ninguno el bloque entero
  * tampoco ("No medido" en un cuadro no le dice nada a nadie). Un costo no medido nunca
  * se escribe como cero: un cero se suma despues como si fuera cierto, que es lo que el
  * tipo del servidor existe para impedir.
  *
- * **El enlace lo manda el servidor o no hay enlace.** `trace_url` llega solo por las dos
- * puertas con dueno (el personal y el visitante con el enlace de su caso) y nunca en un caso
- * de ejemplo; esta pieza no lo arma ni lo adivina. Se abre en otra pestana sin pasar el
- * origen (`noopener noreferrer`), y la nota dice con palabras que Langfuse es una herramienta
- * externa y que no muestra lo que se escribio.
+ * Sin enlace a Langfuse (2026-11-11): la traza publica no mostraba nada legible, porque los
+ * textos de la conversacion no viajan a Langfuse, y un enlace que abre una pagina vacia
+ * confunde mas de lo que ayuda.
  */
 export function ResponseBlock({ detail }: { readonly detail: CaseDetailOut }) {
   const { t } = useLocale();
-  const notaId = useId();
-  const enlace = isSafeExternalLink(detail.trace_url) ? detail.trace_url : null;
-  if (detail.trace_latency_ms === null && detail.trace_cost_usd === null && enlace === null) {
+  if (detail.trace_latency_ms === null && detail.trace_cost_usd === null) {
     return null;
   }
   return (
@@ -404,23 +398,6 @@ export function ResponseBlock({ detail }: { readonly detail: CaseDetailOut }) {
           </div>
         )}
       </dl>
-      {enlace === null ? null : (
-        <div className="mt-3 flex flex-col gap-1" data-testid="trace-langfuse">
-          <a
-            href={enlace}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-describedby={notaId}
-            className="inline-flex min-h-11 items-center self-start text-link underline underline-offset-4"
-            data-testid="trace-langfuse-link"
-          >
-            {t("inbox.trace.langfuse_link")}
-          </a>
-          <p id={notaId} className="text-caption text-fg-secondary">
-            {t("inbox.trace.langfuse_note")}
-          </p>
-        </div>
-      )}
     </OpenBlock>
   );
 }

@@ -2077,7 +2077,13 @@ async def _botones_del_turno(
     """Los botones de la pregunta, solo en el chat: la voz no tiene donde dibujarlos."""
     if turn.channel != "chat":
         return ()
-    return await _botones(runtime, salida.intake_response_key, turn.tenant_id, turn.language)
+    return await _botones(
+        runtime,
+        salida.intake_response_key,
+        turn.tenant_id,
+        turn.language,
+        response_text=salida.intake_response_text,
+    )
 
 
 def _con_la_pregunta_de_la_consulta(
@@ -2120,17 +2126,29 @@ def _ms_desde(empezo: float) -> int:
 
 
 async def _botones(
-    runtime: GraphRuntime, question_key: str, tenant_id: TenantId, language: Locale
+    runtime: GraphRuntime,
+    question_key: str,
+    tenant_id: TenantId,
+    language: Locale,
+    *,
+    response_text: str = "",
 ) -> tuple[str, ...]:
     """Los botones de la pregunta. El de la poliza de ejemplo nombra a su titular,
     para que conteste nombre y poliza a la vez (pedido de Miguel, 2026-10-08)."""
     ejemplo = tenancy_config.require(tenant_id).example_policy
     titular: str | None = None
-    if question_key == "intake.question.identity_and_policy" and runtime.policy_lookup:
+    if (
+        sugerencias.asks_for_identity(question_key, response_text=response_text, language=language)
+        and runtime.policy_lookup
+    ):
         coincidencia = await runtime.policy_lookup(tenant_id, ejemplo)
         titular = coincidencia.holder_name if coincidencia is not None else None
     return sugerencias.for_question(
-        question_key, language=language, example_policy=ejemplo, example_holder=titular
+        question_key,
+        language=language,
+        example_policy=ejemplo,
+        example_holder=titular,
+        response_text=response_text,
     )
 
 
@@ -2193,10 +2211,12 @@ def _peticion_de_comprension(  # noqa: PLR0913 -- el turno, el caso, el estado y
     """
     anotados, faltan = _datos_para_el_modelo(contexto)
     valores = noted_values or {}
+    hoy, hora_local = understanding.local_moment(ahora)
     return understanding.UnderstandingRequest(
         tenant_id=turn.tenant_id,
         language=turn.language,
-        today=ahora.date(),
+        today=hoy,
+        local_clock=hora_local,
         record_type=contexto.record_type,
         quote_enabled=contexto.quote_enabled,
         noted=tuple(

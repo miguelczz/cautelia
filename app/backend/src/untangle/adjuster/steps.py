@@ -133,11 +133,6 @@ def policy_read(reading: PolicyReading, language: Locale) -> RunStep:
             locale=language,
             vehicles=_listed([v.description for v in reading.vehicles], language),
             drivers=_listed([d.full_name for d in reading.drivers], language),
-            deductibles=_listed(
-                [f"{d.label} {d.amount.formatted}" for d in reading.deductibles], language
-            ),
-            limits=_listed([f"{x.label} {x.amount.formatted}" for x in reading.limits], language),
-            endorsements=_listed([s for e in reading.endorsements for s in e.summaries], language),
         )
         texto = _policy_sentence(resumen, detalle, language)
         fuentes = (

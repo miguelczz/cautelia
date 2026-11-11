@@ -303,3 +303,22 @@ def test_sin_nombre_de_agente_en_la_peticion_lo_resuelve_la_aseguradora() -> Non
 
     assert _etiqueta(contenido, "tu_nombre")
     assert _etiqueta(contenido, "aseguradora")
+
+
+def test_la_hora_local_viaja_con_la_fecha_para_resolver_hace_veinte_minutos() -> None:
+    """2026-11-11: el modelo solo recibia la fecha y escribia «2026-11-11 (hace 20 minutos)»
+    en vez de la hora exacta."""
+    contenido = composition._contenido_de_comprension(_peticion(local_clock="14:42"))
+
+    assert _etiqueta(contenido, "hoy") == "2026-10-12 14:42"
+
+
+def test_la_fecha_de_colombia_no_salta_al_dia_siguiente_a_las_siete_de_la_noche() -> None:
+    """El servidor corre en UTC: a las 8 p. m. de Colombia la fecha UTC ya es la de manana."""
+    from datetime import UTC, datetime
+
+    from untangle.orchestration.nodes.intake import understanding
+
+    fecha, hora = understanding.local_moment(datetime(2026, 11, 12, 1, 30, tzinfo=UTC))
+
+    assert (fecha, hora) == (date(2026, 11, 11), "20:30")

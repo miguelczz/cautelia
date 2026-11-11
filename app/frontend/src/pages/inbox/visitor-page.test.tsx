@@ -558,25 +558,17 @@ describe("los tres bloques del final dicen cada cosa en palabras (E3, 2026-10-12
     expect(within(regla).queryByTestId("rule-reference")).toBeNull();
   });
 
-  it("la pantalla del visitante ensena el enlace a Langfuse solo cuando el servidor manda la direccion", async () => {
-    const direccion = "https://us.cloud.langfuse.com/project/p1/traces/123";
-    pedido.mockResolvedValue({ ok: true, value: caso({ trace_url: direccion }) });
+  it("la pantalla del visitante no ensena enlace a Langfuse aunque el servidor mande la direccion", async () => {
+    pedido.mockResolvedValue({
+      ok: true,
+      value: caso({ trace_url: "https://us.cloud.langfuse.com/project/p1/traces/123" }),
+    });
     dibujar();
     await screen.findByTestId("visitor-case");
 
     const bloque = screen.getByTestId("block-trace");
-    const enlace = within(bloque).getByTestId("trace-langfuse-link");
-    expect(enlace.getAttribute("href")).toBe(direccion);
-    expect(enlace.getAttribute("target")).toBe("_blank");
-    expect(bloque.textContent).toContain(t("inbox.trace.langfuse_note"));
-  });
-
-  it("sin direccion del servidor la pantalla del visitante no ensena enlace a Langfuse", async () => {
-    pedido.mockResolvedValue({ ok: true, value: caso() });
-    dibujar();
-    await screen.findByTestId("visitor-case");
-
-    expect(screen.queryByTestId("trace-langfuse-link")).toBeNull();
+    expect(within(bloque).queryByRole("link")).toBeNull();
+    expect(bloque.textContent).not.toContain("Langfuse");
   });
 
   it("lo que no tiene dato no se pinta: ni reglas, ni controles, ni respuesta", async () => {

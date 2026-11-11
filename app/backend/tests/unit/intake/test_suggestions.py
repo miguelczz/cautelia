@@ -142,3 +142,54 @@ def test_la_pregunta_de_que_quiere_saber_ofrece_las_preguntas_de_ejemplo(idioma:
 
     assert botones == suggestions.sample_questions(language=idioma)
     assert len(botones) == 4
+
+
+@pytest.mark.parametrize("idioma", IDIOMAS)
+def test_la_lista_del_siniestro_que_pide_la_poliza_ofrece_el_boton_de_la_de_ejemplo(
+    idioma: Locale,
+) -> None:
+    """2026-11-11: la lista pedia el nombre y la poliza y no ofrecia el boton; quien no tenia
+    la poliza a mano tenia que ir a copiarla de la pestana de polizas."""
+    from untangle.orchestration.nodes.intake import composition
+    from untangle.orchestration.nodes.intake.blocks import Block
+
+    clave, texto = composition.compose_claim_list(
+        [
+            (Block.IDENTITY_AND_POLICY, ("identity_and_policy",)),
+            (Block.WHAT_HAPPENED, ("narrative",)),
+        ],
+        opening=True,
+        language=idioma,
+    )
+
+    [boton] = suggestions.for_question(
+        str(clave), language=idioma, example_policy="POL-1", response_text=texto
+    )
+
+    assert "POL-1" in boton
+
+
+@pytest.mark.parametrize("idioma", IDIOMAS)
+def test_la_lista_sin_la_identidad_no_ofrece_el_boton_de_la_poliza(idioma: Locale) -> None:
+    from untangle.orchestration.nodes.intake import composition
+    from untangle.orchestration.nodes.intake.blocks import Block
+
+    clave, texto = composition.compose_claim_list(
+        [(Block.WHAT_HAPPENED, ("narrative",))], opening=False, language=idioma
+    )
+
+    assert (
+        suggestions.for_question(
+            str(clave), language=idioma, example_policy="POL-1", response_text=texto
+        )
+        == ()
+    )
+
+
+@pytest.mark.parametrize("idioma", IDIOMAS)
+def test_quien_declina_la_poliza_encontrada_recibe_de_nuevo_el_boton(idioma: Locale) -> None:
+    [boton] = suggestions.for_question(
+        "intake.policy.declined", language=idioma, example_policy="POL-1"
+    )
+
+    assert "POL-1" in boton

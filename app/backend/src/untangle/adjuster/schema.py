@@ -39,7 +39,7 @@ class AdjusterDecision(Frozen):
     )
     explanation: str = Field(
         min_length=1,
-        max_length=3000,
+        max_length=900,
         description="The explanation for the person, in the language of the case.",
     )
     reasons: tuple[DecisionReason, ...] = Field(

@@ -33,9 +33,10 @@ import asyncio
 import time
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
-from datetime import date
+from datetime import UTC, date, datetime
 from enum import StrEnum
 from typing import Literal
+from zoneinfo import ZoneInfo
 
 from pydantic import BaseModel, ConfigDict
 
@@ -214,6 +215,21 @@ class UnderstandingRequest:
     #: Las ultimas `HISTORY_LINES` intervenciones del caso, de la mas vieja a la mas
     #: nueva y sin el mensaje actual, que va aparte y sin tapar.
     history: tuple[HistoryLine, ...] = ()
+    #: La hora local del mensaje (`HH:MM`), para que el modelo resuelva «hace 20 minutos» con una
+    #: hora exacta. `None` y solo se le dice la fecha.
+    local_clock: str | None = None
+
+
+#: La zona en la que la persona cuenta lo que le paso: la demostracion es colombiana. El servidor
+#: corre en UTC, y a partir de las 7 p. m. de Colombia la fecha UTC ya es la de manana.
+LOCAL_TIMEZONE = ZoneInfo("America/Bogota")
+
+
+def local_moment(now: datetime) -> tuple[date, str]:
+    """La fecha y la hora (`HH:MM`) de `now` en la zona de la persona."""
+    aware = now if now.tzinfo is not None else now.replace(tzinfo=UTC)
+    local = aware.astimezone(LOCAL_TIMEZONE)
+    return local.date(), local.strftime("%H:%M")
 
 
 #: El puerto: lo construye la raiz de composicion con el cliente de Claude. Puede

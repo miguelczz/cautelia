@@ -358,23 +358,16 @@ describe("los seis bloques de evidencia", () => {
     expect(bloque.textContent).not.toContain(t("trace.page.not_measured"));
   });
 
-  it("la pantalla del personal ensena el enlace a Langfuse solo cuando el servidor manda la direccion", async () => {
-    const direccion = "https://us.cloud.langfuse.com/project/p1/traces/123";
-    pedido.mockResolvedValue({ ok: true, value: caso({ trace_url: direccion }) });
-    dibujar();
-    await screen.findByTestId("case-header");
-
-    const enlace = within(screen.getByTestId("block-trace")).getByTestId("trace-langfuse-link");
-    expect(enlace.getAttribute("href")).toBe(direccion);
-    expect(enlace.getAttribute("rel")).toBe("noopener noreferrer");
-  });
-
-  it("sin direccion del servidor la pantalla del personal no ensena enlace a Langfuse", async () => {
-    pedido.mockResolvedValue({ ok: true, value: caso() });
+  it("la pantalla del personal no ensena enlace a Langfuse aunque el servidor mande la direccion", async () => {
+    pedido.mockResolvedValue({
+      ok: true,
+      value: caso({ trace_url: "https://us.cloud.langfuse.com/project/p1/traces/123" }),
+    });
     dibujar();
     await screen.findByTestId("case-header");
 
     expect(screen.queryByTestId("trace-langfuse-link")).toBeNull();
+    expect(within(screen.getByTestId("block-trace")).queryByRole("link")).toBeNull();
   });
 
   it("sin tiempo ni costo medidos no hay bloque 'Como se respondio'", async () => {

@@ -37,7 +37,7 @@ Cuando la pregunta es sobre un dato escrito en la propia póliza (las fechas de 
 
 ![La pantalla de llamada antes de empezar](docs/assets/readme/call.png)
 
-**7. Puedes ver cuánto cuesta y qué tan bien funciona.** La página de Telemetría muestra el gasto por proveedor, por día y por caso, y los resultados de la última evaluación. Desde ahí puedes abrir tu propia conversación en [Langfuse](https://langfuse.com), paso a paso: qué modelo corrió, cuánto tardó y cuánto costó.
+**7. Puedes ver cuánto cuesta y qué tan bien funciona.** La página de Telemetría muestra el gasto por proveedor, por día y por caso, y los resultados de la última evaluación.
 
 ![La página de Telemetría con el gasto por proveedor y por caso](docs/assets/readme/telemetry-cost.png)
 

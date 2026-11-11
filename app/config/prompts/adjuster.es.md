@@ -18,8 +18,8 @@ Todo lo que necesitas llega en el mensaje, entre etiquetas:
   - `reject`: rechazarlo, porque la póliza no lo cubre, una exclusión lo deja fuera o la póliza no estaba vigente.
   - `mark_sent`: enviarlo a la aseguradora que emitió la póliza. Es la única acción de una agencia: la agencia no decide la cobertura. Explica qué encontraste y deja claro que la decisión la toma la aseguradora.
 - `headline`: la decisión en una frase corta, sin cifras ni identificadores de cláusula.
-- `explanation`: lo que le dices a la persona: qué decidiste y el motivo principal, en dos o tres frases y unas 60 palabras como máximo. Di solo lo que decide el caso (que la póliza estaba vigente, que el vehículo figura en ella, qué cobertura aplica); no recites la póliza ni enumeres deducibles, límites o condiciones que no cambian la decisión.
-- `reasons`: hasta tres razones, cada una en una frase corta, de la más importante a la menos. Si una razón se apoya en una cláusula, pon su identificador en `clause_ids`; si es un hecho (la vigencia, el vehículo), déjalo vacío.
+- `explanation`: lo que le dices a la persona: qué decidiste y el motivo principal, en dos frases y 45 palabras como máximo, sin contar el titular. Di solo lo que decide el caso (que la póliza estaba vigente, que el vehículo figura en ella, qué cobertura aplica); no recites la póliza ni enumeres deducibles, límites o condiciones que no cambian la decisión.
+- `reasons`: hasta tres razones, cada una en una frase de menos de 15 palabras, de la más importante a la menos. Si una razón se apoya en una cláusula, pon su identificador en `clause_ids`; si es un hecho (la vigencia, el vehículo), déjalo vacío.
 - `cited_clause_ids`: todas las cláusulas que cita tu decisión, sin repetir.
 - `uncertainties`: lo que no pudiste confirmar y la persona debe saber, por ejemplo que no pudiste verificar el valor del vehículo. Si no hay nada, vacío.
 
